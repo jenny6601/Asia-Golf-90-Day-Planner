@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=course-gps-v1"></head>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=course-compare-v1"></head>
 <body><main class="shell"><header><p class="eyebrow">ASIA GOLF TRAVEL PLANNER</p><h1>90天高爾夫日期規劃</h1><p class="subtitle">先選目的地，再比較5天4夜、三場球的適打日期。</p></header>
 <section class="notice"><strong>原型測試｜日期推薦仍使用合成資料</strong><p>真實天氣資料測試獨立讀取 Open-Meteo 沖繩三區16天預報。兩種資料不混用，合成資料不會用於訂票決策。</p></section>
 <section class="panel"><h2>第一個測試目的地：沖繩本島</h2><div class="controls"><label>分析起始日<input id="start-date" type="date"></label><label>分析天數<select id="horizon"><option value="90" selected>90天</option><option value="60">60天</option><option value="30">30天</option></select></label><button id="run" type="button">重新計算日期</button></div><p class="trip-rule">5天4夜｜Day 2、3、4 打球｜Day 1、5 交通</p><p id="counts" class="counts" aria-live="polite"></p></section>
@@ -16,4 +16,9 @@
 <p id="course-weather-status" class="counts" aria-live="polite">尚未讀取球場天氣。</p>
 <div id="course-weather-results" class="weather-grid" aria-live="polite"></div>
 </section>
-<footer>Asia-Golf-90-Day-Planner · Forecast Test UI V2 · build 2026-11-23</footer></main><script type="module" src="./assets/js/app.js?v=course-gps-v1"></script></body></html>
+<section class="panel"><h2>三球場同日比較｜六小時降雨風險</h2>
+<p class="trip-rule">先讀取所選球場預報，再指定同一個日期及開球時間，比較各球場接下來六小時的降雨影響指數。只比較有完整逐時資料的球場。</p>
+<div class="controls"><label>比較日期<input id="compare-date" type="date" disabled></label><label>開球時間<select id="compare-tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label><button id="compare-courses" type="button" disabled>比較三球場降雨風險</button></div>
+<p id="comparison-status" class="counts" aria-live="polite">請先選擇球場並成功讀取預報。</p><div id="comparison-results" class="weather-grid" aria-live="polite"></div>
+<p class="data-note">比較指數為未經歷史回測校準的降雨影響原型；不是降雨事件機率或取消球賽機率。各球場座標仍需官方圖資核實。此比較僅適用已取得的16天逐時預報。</p></section>
+<footer>Asia-Golf-90-Day-Planner · Forecast Test UI V2 · build 2026-11-23</footer></main><script type="module" src="./assets/js/app.js?v=course-compare-v1"></script></body></html>
