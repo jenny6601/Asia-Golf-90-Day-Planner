@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=horizon-integration-v1"></head>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=golf-playability-v1"></head>
 <body><main class="shell"><header><p class="eyebrow">ASIA GOLF TRAVEL PLANNER</p><h1>90天高爾夫日期規劃</h1><p class="subtitle">先選目的地，再比較5天4夜、三場球的適打日期。</p></header>
 <section class="notice"><strong>日期推薦資料分層</strong><p>1–16天使用所選球場 GPS 的真實逐時預報；17–90天使用 ECMWF 週／月尺度區域趨勢作粗略篩選。兩種結果不混成同一風險分數，缺值不以合成資料補足。</p></section>
 <section class="panel"><h2>1–90天｜統一日期決策摘要</h2><p class="trip-rule">先讀取所選三個球場的16天逐時預報，再讀取沖繩北、中、南17–90天ECMWF長期展望，即可產生分層推薦。不同預報尺度不混成單一總分。</p><button id="run-unified-recommendations" type="button" disabled>整合短期與長期推薦</button><p id="unified-recommendation-status" class="counts" aria-live="polite">請先完成兩種資料讀取。</p><div id="unified-recommendations" class="weather-grid" aria-live="polite"></div></section>
@@ -21,7 +21,7 @@
 <p id="comparison-status" class="counts" aria-live="polite">請先選擇球場並成功讀取預報。</p><div id="comparison-results" class="weather-grid" aria-live="polite"></div>
 <p class="data-note">比較指數為未經歷史回測校準的降雨影響原型；不是降雨事件機率或取消球賽機率。各球場座標仍需官方圖資核實。此比較僅適用已取得的16天逐時預報。</p></section>
 <section class="panel"><h2>五天四夜｜三場球整體行程評分</h2>
-<p class="trip-rule">先選定三個球場並成功讀取逐時預報。系統依選取順序安排 Day 2、Day 3、Day 4，從真實資料中搜尋完整五天行程。推薦窗口至少相隔五天，避免三個推薦高度重疊。</p>
+<p class="trip-rule">先選定三個球場並成功讀取逐時預報。系統依選取順序安排 Day 2、Day 3、Day 4，從真實資料中搜尋完整五天行程，並額外標示風勢、陣風、體感溫度與雷雨適打性。推薦窗口至少相隔五天，避免三個推薦高度重疊。</p>
 <button id="recommend-live-dates" type="button">依真實預報推薦最佳出發日期</button>
 <p id="live-date-status" class="counts" aria-live="polite">尚未進行真實日期推薦。</p><div id="live-date-recommendations" class="weather-grid" aria-live="polite"></div>
 <div class="controls"><label>行程出發日<select id="itinerary-start" disabled><option value="">先讀取球場預報</option></select></label><label>每日開球時間<select id="itinerary-tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label><button id="score-itinerary" type="button" disabled>評估五天四夜行程</button></div>
@@ -34,4 +34,4 @@
 <p id="long-range-recommendation-status" class="counts" aria-live="polite">請先讀取長期展望資料。</p><div id="long-range-recommendations" class="weather-grid" aria-live="polite"></div>
 <p id="long-range-status" class="counts" aria-live="polite">尚未讀取長期展望。</p><div id="long-range-results" class="weather-grid" aria-live="polite"></div>
 <p class="data-note">EC46 約涵蓋46天，之後由 SEAS5 接續。模型空間解析度約36 km、51個集合成員；資料未做偏差校正，應視為區域尺度趨勢。EFI 是相對模式氣候基準的極端指標，不是降雨機率。<a href="https://open-meteo.com/en/docs/seasonal-forecast-api" target="_blank" rel="noopener">查看 API 說明</a></p></section>
-<footer>Asia-Golf-90-Day-Planner · Live Forecast Date Ranking V1 · build 2026-11-23</footer></main><script type="module" src="./assets/js/app.js?v=horizon-integration-v1"></script></body></html>
+<footer>Asia-Golf-90-Day-Planner · Live Forecast Date Ranking V1 · build 2026-11-23</footer></main><script type="module" src="./assets/js/app.js?v=golf-playability-v1"></script></body></html>
