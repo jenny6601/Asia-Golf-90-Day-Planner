@@ -2,7 +2,7 @@ const endpoint = "https://seasonal-api.open-meteo.com/v1/seasonal";
 const zones = [
   { id: "north", label: "北部／名護市", latitude: 26.5916, longitude: 127.9774 },
   { id: "central", label: "中部／沖繩市", latitude: 26.3344, longitude: 127.8056 },
-  { id: "south", label: "南部／那霸市", latitude: 26.2123, longitude: 127.6792 }
+  { id: "south", label: "南部／糸滿市", latitude: 26.1235, longitude: 127.6658 }
 ];
 const weeklyFields = ["precipitation_mean", "precipitation_anomaly", "precipitation_efi"];
 const monthlyFields = ["precipitation_mean", "precipitation_anomaly"];
@@ -72,7 +72,7 @@ const gridKeys = results.map(item => Number.isFinite(item.returnedCoordinates.la
 const uniqueGridCellCount = new Set(gridKeys).size;
 
 // Probe additional on-island coordinates to find genuinely distinct land grid cells.
-// These are diagnostic candidates only; they do not replace the three production zones.
+// These candidates validate the production zones and identify alternate distinct land grid cells.
 const candidateLocations = [
   { id: "chatan", label: "北谷町", latitude: 26.3098, longitude: 127.7634 },
   { id: "uruma", label: "うるま市", latitude: 26.3705, longitude: 127.8577 },
@@ -117,12 +117,13 @@ const report = {
     uniqueGridCellCount,
     spatiallyDistinct: uniqueGridCellCount === results.length,
     spatialWarning: uniqueGridCellCount < results.length ? "多個代表區域落在相同預報網格，不是獨立區域樣本" : null,
+    allThreeZonesUseDistinctGridCells: uniqueGridCellCount === 3,
     weeklyEfiAllZones: results.every(item => item.weekly.available && item.weekly.fields.precipitation_efi?.usable),
     monthlyRainAllZones: results.every(item => item.monthly.available &&
       item.monthly.fields.precipitation_mean?.usable && item.monthly.fields.precipitation_anomaly?.usable)
   }
 };
 console.log(JSON.stringify(report, null, 2));
-if (results.some(item => item.httpStatus !== 200 || !item.weekly.available && !item.monthly.available)) {
+if (results.some(item => item.httpStatus !== 200 || !item.weekly.available && !item.monthly.available) || uniqueGridCellCount !== 3) {
   process.exitCode = 1;
 }
