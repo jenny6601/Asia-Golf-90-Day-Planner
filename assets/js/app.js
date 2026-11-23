@@ -298,7 +298,7 @@ function renderLongRangeRecommendations(data){
  const referenceDate=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"});
  const result=recommendLongRangeWindows({referenceDate,points:data.points,limit:3,minStartGap:5});
  status.textContent=result.recommendations.length
-  ? `已評估 ${result.candidateCount} 個五天窗口｜完整可評分 ${result.scoredCount} 組｜資料不足 ${result.missingCount} 組｜符合條件推薦 ${result.recommendations.length} 組。推薦僅來自可完整評分的窗口，不代表未覆蓋日期較差。`
+  ? `已評估 ${result.candidateCount} 個五天窗口｜完整可評分 ${result.scoredCount} 組（覆蓋率 ${(result.coverageRate*100).toFixed(1)}%）｜資料不足 ${result.missingCount} 組｜符合條件推薦 ${result.recommendations.length} 組。推薦僅來自可完整評分的窗口，不代表未覆蓋日期較差。`
   : `目前沒有足夠資料可評估完整五天窗口｜已檢查 ${result.candidateCount} 組，資料不足 ${result.missingCount} 組。`;
  for(const item of result.recommendations){
   const card=document.createElement("article");card.className="weather-card";
