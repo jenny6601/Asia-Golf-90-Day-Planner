@@ -35,3 +35,15 @@ export async function fetchOkinawaLongRange(fetchImpl=fetch){
  }));
  return {provider:"Open-Meteo Seasonal Forecast API",model:"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),timezone:"Asia/Tokyo",points};
 }
+/**
+ * Convert precipitation EFI into a qualitative anomaly signal only.
+ * EFI is relative to model climatology; this is not rainfall probability.
+ */
+export function interpretPrecipitationEfi(value){
+ if(typeof value!=="number"||!Number.isFinite(value))return {label:"資料不足",tone:"unknown"};
+ if(value>=0.8)return {label:"顯著偏濕訊號",tone:"wet"};
+ if(value>=0.5)return {label:"偏濕訊號",tone:"wet"};
+ if(value<=-0.8)return {label:"顯著偏乾訊號",tone:"dry"};
+ if(value<=-0.5)return {label:"偏乾訊號",tone:"dry"};
+ return {label:"接近模式氣候基準／訊號不明顯",tone:"neutral"};
+}
