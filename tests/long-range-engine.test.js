@@ -39,3 +39,42 @@ test("long range recommendations are spaced and ranked by tendency tiers",()=>{
   assert.ok(gap>=5);
  }
 });
+
+test("weekly EFI is not carried beyond its seven-day bucket",()=>{
+ const p=points(.2,0);
+ p.forEach(x=>{x.weekly.time=["2026-12-10"];x.weekly.precipitation_efi=[.2];});
+ const r=evaluateLongRangeTripWindow({tripStart:"2026-12-20",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"insufficient-data");
+ assert.ok(r.rounds.every(x=>x.status==="insufficient-data"));
+});
+test("cross-month golf dates require monthly evidence for each actual golf month",()=>{
+ const p=points(.1,0);
+ p.forEach(x=>{
+  x.monthly.time=["2027-01-01"];
+  x.monthly.precipitation_mean=[100];
+  x.monthly.precipitation_anomaly=[0];
+ });
+ const r=evaluateLongRangeTripWindow({tripStart:"2027-01-30",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"insufficient-data");
+ assert.deepEqual(r.missingDates,["2027-02-01","2027-02-02"]);
+});
+test("46-to-47-day boundary switches from weekly EFI to monthly anomaly by golf date",()=>{
+ const p=points(.2,0);
+ p.forEach(x=>{
+  x.weekly.time=["2027-01-08"];
+  x.weekly.precipitation_efi=[.2];
+  x.monthly.time=["2027-01-01","2027-02-01"];
+  x.monthly.precipitation_mean=[100,100];
+  x.monthly.precipitation_anomaly=[0,0];
+ });
+ const r=evaluateLongRangeTripWindow({tripStart:"2027-01-07",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.rounds[0].date,"2027-01-08");
+ assert.equal(r.rounds[0].status,"scored");
+ assert.equal(r.rounds[1].date,"2027-01-09");
+ assert.equal(r.rounds[1].status,"scored");
+ assert.equal(r.rounds[2].date,"2027-01-10");
+ assert.equal(r.rounds[2].status,"scored");
+ assert.equal(r.rounds[0].rounds,undefined);
+ assert.equal(r.rounds[0].regional[0].signal.period,"2027-01-08");
+ assert.equal(r.rounds[1].regional[0].signal.period,"2027-01-01");
+});
