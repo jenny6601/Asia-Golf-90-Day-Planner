@@ -106,7 +106,8 @@ test("spatial coverage is reported separately from temporal confidence",()=>{
  assert.match(r.spatialWarning,/空間證據有限/);
 });
 
-\ntest("coverage accounting separates fully scored windows from missing evidence",()=>{
+
+test("coverage accounting separates fully scored windows from missing evidence",()=>{
  const p=points(.1,0);
  p.forEach(x=>{
   x.weekly.time=["2026-12-10","2026-12-17","2026-12-24"];
