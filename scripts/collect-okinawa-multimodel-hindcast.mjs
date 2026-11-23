@@ -38,13 +38,6 @@ function mapHourly(hourly){
 const samples=[],coverage=[];
 for(const point of points)for(const win of windows){
  const base={latitude:String(point.latitude),longitude:String(point.longitude),start_date:win.start,end_date:win.end,timezone:"Asia/Tokyo",wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius"};
- let era5;
- try{
-  const ep=new URLSearchParams({...base,hourly:variables.join(","),models:"era5"});
-  era5=await getJson("https://archive-api.open-meteo.com/v1/archive?"+ep);
-  await fs.writeFile("artifacts/multimodel-raw/"+point.id+"-"+win.start+"-era5.json",JSON.stringify(era5));
- }catch(e){coverage.push({point:point.id,window:win,model:"era5",ok:false,error:String(e)});continue;}
- const obsMap=mapHourly(era5.hourly);
  for(const model of models){
   const fields=[];
   for(const lead of leads)for(const v of variables)fields.push(v+"_previous_day"+lead);
@@ -52,6 +45,15 @@ for(const point of points)for(const win of windows){
   try{
    const forecast=await getJson("https://previous-runs-api.open-meteo.com/v1/forecast?"+fp);
    await fs.writeFile("artifacts/multimodel-raw/"+point.id+"-"+win.start+"-"+model.id+".json",JSON.stringify(forecast));
+   // Query ERA5 at the model's returned forecast grid coordinate, not the original requested point.
+   // This removes the avoidable location mismatch from the forecast-versus-reference pair.
+   const verificationParams=new URLSearchParams({
+    ...base,latitude:String(forecast.latitude),longitude:String(forecast.longitude),
+    hourly:variables.join(","),models:"era5"
+   });
+   const era5=await getJson("https://archive-api.open-meteo.com/v1/archive?"+verificationParams);
+   await fs.writeFile("artifacts/multimodel-raw/"+point.id+"-"+win.start+"-"+model.id+"-era5-at-grid.json",JSON.stringify(era5));
+   const obsMap=mapHourly(era5.hourly);
    const times=forecast.hourly?.time??[];
    let matched=0;
    for(let i=0;i<times.length;i++){
@@ -67,6 +69,7 @@ for(const point of points)for(const win of windows){
       requestedCoordinate:{latitude:point.latitude,longitude:point.longitude},
       forecastGrid:{latitude:forecast.latitude,longitude:forecast.longitude},
       verificationGrid:{latitude:era5.latitude,longitude:era5.longitude},
+      gridOffsetFromRequestedKm:null,
       gridAligned:Math.abs(forecast.latitude-era5.latitude)<1e-6&&Math.abs(forecast.longitude-era5.longitude)<1e-6,
       season:win.season,validTime,issuedAt:issue.toISOString(),timezone:"Asia/Tokyo",
       leadHours:lead*24,forecast:f,verification:obs,
@@ -109,7 +112,8 @@ const gridKeys=[...new Set(coverage.filter(c=>c.ok).map(c=>c.model+"|"+c.point+"
 const report={generatedAt:new Date().toISOString(),purpose:"Multi-model forecast-versus-ERA5 reanalysis comparison; ERA5 is a modelled proxy, not direct station truth.",scope:{models,points,windows,leads},sampleCount:samples.length,uniqueModelPointGridCount:gridKeys.length,coverage,metrics,limitations:[
  "Only the tested model/lead combinations with non-null fields are scored; ICON Global day 7 is excluded because the availability probe returned all-null values.",
  "ERA5 reanalysis is a modelled reference proxy, not rain-gauge or on-course observation truth.",
- "A model's forecast grid can differ from ERA5's grid; gridAligned is reported and misaligned samples must be interpreted cautiously.",
+ "ERA5 is queried at each model's returned forecast grid coordinate to reduce spatial pairing mismatch; ERA5 may still snap to a different native grid point, which is reported.",
+ "Different models have different native grid resolutions and spatial representativeness; same-coordinate matching does not make their effective resolution identical.",
  "North and central-south are two representative proxy points, not a full three-zone course-level validation.",
  "One seven-day window per month is a seasonal sample, not a complete annual hindcast.",
  "Metrics are model-specific paired samples; sample count and grid alignment must accompany every score.",
