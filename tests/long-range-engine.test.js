@@ -39,3 +39,49 @@ test("long range recommendations are spaced and ranked by tendency tiers",()=>{
   assert.ok(gap>=5);
  }
 });
+
+test("weekly EFI is not carried beyond its seven-day coverage window",()=>{
+ const p=points();
+ p.forEach(x=>{x.weekly.time=["2026-12-01"];x.weekly.precipitation_efi=[.8]});
+ const r=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"insufficient-data");
+ assert.equal(r.rounds[0].status,"insufficient-data");
+});
+test("weekly EFI switches at the next weekly period boundary",()=>{
+ const p=points();
+ p.forEach(x=>{x.weekly.time=["2026-12-10","2026-12-17"];x.weekly.precipitation_efi=[.8,-.6]});
+ const r=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"scored");
+ assert.equal(r.rounds[0].regional[0].signal.period,"2026-12-17");
+ assert.equal(r.rounds[0].regional[0].signal.rank,0);
+});
+test("a trip crossing a calendar month uses each golf day's own monthly anomaly",()=>{
+ const p=points();
+ p.forEach(x=>{
+  x.monthly.time=["2027-01-01","2027-02-01"];
+  x.monthly.precipitation_mean=[100,100];
+  x.monthly.precipitation_anomaly=[30,-30];
+ });
+ const r=evaluateLongRangeTripWindow({tripStart:"2027-01-30",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"scored");
+ assert.equal(r.rounds[0].date,"2027-01-31");
+ assert.equal(r.rounds[0].regional[0].signal.rank,3);
+ assert.equal(r.rounds[1].date,"2027-02-01");
+ assert.equal(r.rounds[1].regional[0].signal.rank,0);
+ assert.equal(r.rounds[1].regional[0].signal.period,"2027-02-01");
+});
+test("a three-round trip crossing lead day 46 to 47 switches weekly to monthly evidence",()=>{
+ const p=points();
+ p.forEach(x=>{
+  x.weekly.time=["2027-01-06","2027-01-13"];
+  x.weekly.precipitation_efi=[-.6,-.6];
+  x.monthly.time=["2027-01-01"];
+  x.monthly.precipitation_mean=[100];
+  x.monthly.precipitation_anomaly=[30];
+ });
+ const r=evaluateLongRangeTripWindow({tripStart:"2027-01-06",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"scored");
+ assert.deepEqual(r.rounds.map(x=>x.date),["2027-01-07","2027-01-08","2027-01-09"]);
+ assert.deepEqual(r.rounds.map(x=>x.regional[0].signal.period),["2027-01-06","2027-01-06","2027-01-01"]);
+ assert.deepEqual(r.rounds.map(x=>x.regional[0].signal.rank),[0,0,3]);
+});
