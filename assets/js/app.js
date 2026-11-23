@@ -1,5 +1,6 @@
 import {generateTripWindows,recommendTripDates} from "./date-engine.js";
 import {fetchOkinawa16DayForecast} from "./weather-api.js";
+import {scoreGolfRainWindow} from "./rain-risk.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -43,11 +44,18 @@ function renderWeather(data){
  }
 }
 function renderHourly(data,date){
+ const teeHour=Number($("tee-hour").value);
  const host=$("hourly-results");host.replaceChildren();
  for(const item of data.zones){
   const card=document.createElement("article");card.className="weather-card";
   const heading=document.createElement("h3");heading.textContent=`${item.zone.label}｜${item.zone.place}｜${fmt(date)}`;card.append(heading);
   const h=item.hourly,indices=h.time.map((t,i)=>({t,i})).filter(x=>x.t.startsWith(date)&&Number(x.t.slice(11,13))>=6&&Number(x.t.slice(11,13))<=18);
+  const risk=scoreGolfRainWindow(h,date,teeHour,6);
+  const riskSummary=document.createElement("p");riskSummary.className="risk-summary";
+  riskSummary.textContent=risk.status==="scored"
+   ? `開球 ${String(teeHour).padStart(2,"0")}:00｜連續6小時降雨影響：${risk.label}（指數 ${risk.rainRisk}/100）｜平均逐時降雨機率 ${risk.averageHourlyRainProbability}%｜預報雨量合計 ${risk.expectedRainAmountMm} mm｜最高單時雨量 ${risk.peakHourlyRainMm} mm`
+   : "資料不足：無法計算這個6小時時段的降雨影響指數。";
+  card.append(riskSummary);
   const rows=indices.map(({t,i})=>[
    t.slice(11,16),cell(h.precipitation_probability?.[i],"%"),cell(h.precipitation?.[i]," mm"),
    cell(h.temperature_2m?.[i],"°C"),cell(h.apparent_temperature?.[i],"°C"),
@@ -74,3 +82,4 @@ $("fetch-weather").addEventListener("click",async()=>{
  finally{button.disabled=false;}
 });
 $("hourly-date").addEventListener("change",()=>{if(latestWeather)renderHourly(latestWeather,$("hourly-date").value);});
+$("tee-hour").addEventListener("change",()=>{if(latestWeather)renderHourly(latestWeather,$("hourly-date").value);});
