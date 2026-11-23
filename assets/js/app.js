@@ -263,6 +263,11 @@ function renderLongRange(data){
   const card=document.createElement("article");card.className="weather-card";
   const heading=document.createElement("h3");heading.textContent=`${item.point.label}｜${item.point.place}`;card.append(heading);
   const meta=document.createElement("p");meta.className="weather-meta";meta.textContent=`ECMWF Seasonal Seamless｜座標 ${item.latitude.toFixed(3)}, ${item.longitude.toFixed(3)}｜${item.timezone}`;card.append(meta);
+  const audit=document.createElement("p");audit.className="data-note";
+  const q=item.dataQuality;
+  audit.textContent=`資料檢核｜週資料 ${q?.weekly?.count??0} 筆（EFI ${q?.weekly?.fields?.precipitation_efi?.validCount??0} 筆有效）｜月資料 ${q?.monthly?.count??0} 筆（平均雨量 ${q?.monthly?.fields?.precipitation_mean?.validCount??0} 筆有效、雨量距平 ${q?.monthly?.fields?.precipitation_anomaly?.validCount??0} 筆有效）`;
+  card.append(audit);
+  if(q?.warnings?.length){const warning=document.createElement("p");warning.className="data-note";warning.textContent="資料警示："+q.warnings.join("；");card.append(warning);}
   const weekly=item.weekly;
   if(weekly?.time?.length){
    const title=document.createElement("h4");title.textContent="週趨勢（次季節展望）";card.append(title);
@@ -312,7 +317,8 @@ $("fetch-long-range").addEventListener("click",async()=>{
  try{
   const data=await fetchOkinawaLongRange();latestLongRangeData=data;renderLongRange(data);$("recommend-long-range").disabled=false;$("run-unified-recommendations").disabled=!(latestCourseWeather?.courses?.length&&selectedCourses.length===3);renderLongRangeRecommendations(data);
   const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(data.fetchedAt));
-  status.textContent=`讀取成功｜${data.provider}｜三區均有回傳｜日本時間：${stamp}`;
+  const quality=data.dataQuality;
+  status.textContent=`讀取完成｜${data.provider}｜三區回傳 ${quality.zoneCount}/3｜週評分資料 ${quality.readyForWeeklyScoring?"完整":"不完整"}｜月評分資料 ${quality.readyForMonthlyScoring?"完整":"不完整"}｜日本時間：${stamp}${quality.warnings.length?"｜有資料警示，請查看各區檢核":"｜資料欄位檢核通過"}`;
  }catch(error){status.textContent=`讀取失敗：${error.message}。沒有以合成資料代替。`;}
  finally{button.disabled=false;}
 });
