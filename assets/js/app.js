@@ -297,9 +297,11 @@ function renderLongRangeRecommendations(data){
  const host=$("long-range-recommendations"),status=$("long-range-recommendation-status");host.replaceChildren();
  const referenceDate=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"});
  const result=recommendLongRangeWindows({referenceDate,points:data.points,limit:3,minStartGap:5});
+ const by=result.coverageByHorizon;
+ const coverageText=by?`17–46 天週 EFI ${by.weekly.scoredCount}/${by.weekly.candidateCount}（${(by.weekly.coverageRate*100).toFixed(1)}%）｜47–90 天月距平 ${by.monthly.scoredCount}/${by.monthly.candidateCount}（${(by.monthly.coverageRate*100).toFixed(1)}%）｜跨界窗口 ${by.transition.scoredCount}/${by.transition.candidateCount}`:"";
  status.textContent=result.recommendations.length
-  ? `已評估 ${result.candidateCount} 個五天窗口｜完整可評分 ${result.scoredCount} 組（覆蓋率 ${(result.coverageRate*100).toFixed(1)}%）｜資料不足 ${result.missingCount} 組｜符合條件推薦 ${result.recommendations.length} 組。推薦僅來自可完整評分的窗口，不代表未覆蓋日期較差。`
-  : `目前沒有足夠資料可評估完整五天窗口｜已檢查 ${result.candidateCount} 組，資料不足 ${result.missingCount} 組。`;
+  ? `已評估 ${result.candidateCount} 個五天窗口｜完整可評分 ${result.scoredCount} 組（總覆蓋率 ${(result.coverageRate*100).toFixed(1)}%）｜資料不足 ${result.missingCount} 組｜${coverageText}｜符合條件推薦 ${result.recommendations.length} 組。推薦僅來自可完整評分的窗口，不代表未覆蓋日期較差。`
+  : `目前沒有足夠資料可評估完整五天窗口｜已檢查 ${result.candidateCount} 組，資料不足 ${result.missingCount} 組｜${coverageText}。`;
  for(const item of result.recommendations){
   const card=document.createElement("article");card.className="weather-card";
   const h=document.createElement("h3");h.textContent=`長期候選 #${item.recommendationRank}｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
