@@ -83,6 +83,8 @@ function renderCoursePicker(){
   checkbox.disabled=course.coordinateStatus==="pending" || (!checkbox.checked && selectedCourses.length>=3);
   checkbox.addEventListener("change",()=>{
    if(checkbox.checked){selectedCourses.push(course);}else{selectedCourses=selectedCourses.filter(x=>x.id!==course.id);}
+   latestCourseWeather=null;$("run-unified-recommendations").disabled=true;
+   $("course-weather-status").textContent="球場選擇已變更，請重新讀取逐時預報。";
    $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
    $("fetch-course-weather").disabled=selectedCourses.length===0;
    renderCoursePicker();
