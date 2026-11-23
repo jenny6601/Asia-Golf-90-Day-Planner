@@ -32,7 +32,7 @@ function scoreZones(z){
  const fields=["suitability","rainRisk","windRisk","thermalRisk","severeRisk","dataCompleteness"];
  const out=Object.fromEntries(fields.map(f=>[f,avg(keys.map(k=>days[k][f]))]));
  const worstZone=keys.reduce((a,b)=>days[b].suitability<days[a].suitability?b:a,keys[0]);
- return {...out,perZone:days,worstZone,worstZoneSuitability:days[worstZone].suitability};
+ return {...out,perZone:days,worstZone,worstZoneSuitability:days[worstZone].suitability,worstZoneSevereRisk:Math.max(...keys.map(k=>days[k].severeRisk))};
 }
 export function scoreTripWindow(window,dailyInputs){
  const golfDays=window.golfDates.map(date=>{
@@ -49,7 +49,7 @@ export function scoreTripWindow(window,dailyInputs){
  const confidence=completeness>=.85?"high":completeness>=.60?"medium":"low";
  const zoned=golfDays.filter(x=>x.score.worstZone);
  const worstZone=zoned.length?zoned.reduce((a,x)=>x.score.worstZoneSuitability<a.suitability?{zone:x.score.worstZone,date:x.date,suitability:x.score.worstZoneSuitability}:a,{zone:zoned[0].score.worstZone,date:zoned[0].date,suitability:zoned[0].score.worstZoneSuitability}):null;
- const severeOverride=golfDays.some(x=>x.score.severeRisk>=90);
+ const severeOverride=golfDays.some(x=>x.score.severeRisk>=90 || x.score.worstZoneSevereRisk>=90 || (x.score.perZone && Object.values(x.score.perZone).some(z=>z.severeRisk>=90)));
  const band=severeOverride?"avoid":score>=85?"excellent":score>=70?"good":score>=55?"caution":"not-recommended";
  return {...window,status:"scored",score:Math.round(clamp(score)*10)/10,band,confidence,confidenceCompleteness:Math.round(completeness*100),golfDays:golfDays.map(x=>({date:x.date,suitability:Math.round(x.score.suitability*10)/10,rainRisk:x.score.rainRisk,severeRisk:x.score.severeRisk,worstZone:x.score.worstZone??null})),meanGolfSuitability:Math.round(mean*10)/10,worstGolfDaySuitability:Math.round(worst*10)/10,travelSuitability:travelSuitability===null?null:Math.round(travelSuitability*10)/10,worstZone,severeOverride};
 }
