@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=rain-risk-v1"></head>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=course-gps-v1"></head>
 <body><main class="shell"><header><p class="eyebrow">ASIA GOLF TRAVEL PLANNER</p><h1>90天高爾夫日期規劃</h1><p class="subtitle">先選目的地，再比較5天4夜、三場球的適打日期。</p></header>
 <section class="notice"><strong>原型測試｜日期推薦仍使用合成資料</strong><p>真實天氣資料測試獨立讀取 Open-Meteo 沖繩三區16天預報。兩種資料不混用，合成資料不會用於訂票決策。</p></section>
 <section class="panel"><h2>第一個測試目的地：沖繩本島</h2><div class="controls"><label>分析起始日<input id="start-date" type="date"></label><label>分析天數<select id="horizon"><option value="90" selected>90天</option><option value="60">60天</option><option value="30">30天</option></select></label><button id="run" type="button">重新計算日期</button></div><p class="trip-rule">5天4夜｜Day 2、3、4 打球｜Day 1、5 交通</p><p id="counts" class="counts" aria-live="polite"></p></section>
@@ -7,4 +7,13 @@
 <section class="panel"><h2>沖繩三區｜真實天氣資料測試</h2><p class="trip-rule">北部：名護市｜中部：沖繩市｜南部：那霸市。代表城市座標是區域代理點，並非特定球場座標。</p><button id="fetch-weather" type="button">讀取 Open-Meteo 16 天預報</button><p id="weather-status" class="counts" aria-live="polite">尚未讀取即時資料。</p><div id="weather-results" class="weather-grid" aria-live="polite"></div>
 <div id="hourly-panel" hidden><h3>選擇日期｜逐時球場天氣（06:00–18:00）</h3><div class="controls"><label>預報日期<input id="hourly-date" type="date"></label><label>預計開球時間<select id="tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label></div><p class="data-note">新增：依選定開球時間計算連續6小時降雨影響指數。此為未經歷史回測校準的原型，不代表取消球賽機率，也不會影響90天日期推薦。</p><div id="hourly-results" class="weather-grid"></div></div>
 <p class="data-note">資料來源：Open-Meteo Forecast API。每日摘要與逐時資料分開呈現。此測試尚未轉換為日期推薦風險分數。</p></section>
-<footer>Asia-Golf-90-Day-Planner · Forecast Test UI V2 · build 2026-11-23</footer></main><script type="module" src="./assets/js/app.js?v=rain-risk-v1"></script></body></html>
+
+<section class="panel"><h2>沖繩本島｜實際球場 GPS 天氣</h2>
+<p class="trip-rule">從已建立的六個球場中選擇最多三個，依球場座標讀取16天預報。座標尚未核實的球場會暫時鎖定，避免錯誤位置造成錯誤天氣。</p>
+<div id="course-picker" class="course-grid"></div>
+<p id="course-selection-status" class="counts" aria-live="polite">已選擇 0 / 3 個球場</p>
+<button id="fetch-course-weather" type="button" disabled>讀取所選球場 16 天預報</button>
+<p id="course-weather-status" class="counts" aria-live="polite">尚未讀取球場天氣。</p>
+<div id="course-weather-results" class="weather-grid" aria-live="polite"></div>
+</section>
+<footer>Asia-Golf-90-Day-Planner · Forecast Test UI V2 · build 2026-11-23</footer></main><script type="module" src="./assets/js/app.js?v=course-gps-v1"></script></body></html>
