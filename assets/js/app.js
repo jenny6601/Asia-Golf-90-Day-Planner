@@ -120,6 +120,39 @@ function renderCourseWeather(data){
   card.append(makeTable(["日期","降雨機率","雨量","低 / 高溫","最大風速","最大陣風"],rows));host.append(card);
  }
 }
+
+function runCourseComparison(){
+ if(!latestCourseWeather?.courses?.length)return;
+ const date=$("compare-date").value,teeHour=Number($("compare-tee-hour").value);
+ const results=latestCourseWeather.courses.map(item=>({
+  course:item.course,
+  score:scoreGolfRainWindow(item.hourly,date,teeHour,6)
+ }));
+ const valid=results.filter(x=>x.score.status==="scored");
+ const host=$("comparison-results");host.replaceChildren();
+ const sorted=[...valid].sort((a,b)=>a.score.rainRisk-b.score.rainRisk);
+ for(const item of sorted){
+  const card=document.createElement("article");card.className="weather-card";
+  const h=document.createElement("h3");h.textContent=`${item.course.name}｜${item.course.area}`;card.append(h);
+  const risk=document.createElement("p");risk.className="risk-summary";
+  risk.textContent=`降雨影響：${item.score.label}｜${item.score.rainRisk}/100`;card.append(risk);
+  const detail=document.createElement("p");
+  detail.textContent=`平均逐時降雨機率 ${item.score.averageHourlyRainProbability}%｜六小時預報雨量 ${item.score.expectedRainAmountMm} mm｜最高單時雨量 ${item.score.peakHourlyRainMm} mm｜濕時數 ${item.score.wetHours}/6`;
+  card.append(detail);
+  const note=document.createElement("p");note.className="weather-meta";note.textContent=`預報日期 ${fmt(date)}｜開球 ${String(teeHour).padStart(2,"0")}:00｜資料可信度尚未獨立校準｜GPS ${item.course.coordinateStatus==="provisional"?"暫定":"待核實"}`;card.append(note);
+  host.append(card);
+ }
+ const avg=valid.length?valid.reduce((s,x)=>s+x.score.rainRisk,0)/valid.length:null;
+ const worst=valid.length?Math.max(...valid.map(x=>x.score.rainRisk)):null;
+ const best=sorted[0];
+ $("comparison-status").textContent=valid.length===results.length
+  ? `比較完成｜${valid.length} 個球場｜平均風險指數 ${avg.toFixed(1)}｜最差球場風險 ${worst.toFixed(1)}｜最低風險：${best.course.name}`
+  : `僅 ${valid.length}/${results.length} 個球場有完整六小時資料；不以缺值當作零風險。`;
+}
+$("compare-courses").addEventListener("click",runCourseComparison);
+$("compare-tee-hour").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
+$("compare-date").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
+
 renderCoursePicker();
 $("fetch-course-weather").addEventListener("click",async()=>{
  const button=$("fetch-course-weather"),status=$("course-weather-status");
@@ -127,6 +160,17 @@ $("fetch-course-weather").addEventListener("click",async()=>{
  try{
   latestCourseWeather=await fetchCourseForecast(selectedCourses);
   renderCourseWeather(latestCourseWeather);
+  const commonDates=latestCourseWeather.courses.map(x=>new Set(x.hourly.time.map(t=>t.slice(0,10))));
+  const available=[...commonDates[0]].filter(d=>commonDates.every(set=>set.has(d))).sort();
+  const dateInput=$("compare-date");
+  if(available.length){
+   dateInput.min=available[0];dateInput.max=available.at(-1);dateInput.value=available[0];dateInput.disabled=false;
+   $("compare-courses").disabled=false;
+   $("comparison-status").textContent=`可比較日期：${available[0]} 至 ${available.at(-1)}｜${available.length} 天共同資料`;
+  }else{
+   dateInput.disabled=true;$("compare-courses").disabled=true;
+   $("comparison-status").textContent="所選球場沒有共同逐時預報日期，暫時無法公平比較。";
+  }
   const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(latestCourseWeather.fetchedAt));
   status.textContent=`成功｜${latestCourseWeather.courses.length} 個球場｜16天｜讀取時間（日本時間）：${stamp}`;
  }catch(error){status.textContent=`讀取失敗：${error.message}`;}
