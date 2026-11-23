@@ -42,16 +42,23 @@ export function evaluateLongRangeTripWindow({tripStart,referenceDate,points}){
  const rounds=golfDates.map(date=>{
   const days=lead(date,referenceDate);
   if(days<17||days>90)return {date,status:"out-of-range"};
-  const regional=points.map(p=>({zone:p.point.id,label:p.point.label,signal:signalForPoint(p,date,days)}));
+  const seenCells=new Set();
+  const independentPoints=points.filter(p=>{
+   const lat=p.latitude??p.point.latitude,lon=p.longitude??p.point.longitude;
+   const key=Number.isFinite(lat)&&Number.isFinite(lon)?lat.toFixed(4)+","+lon.toFixed(4):"zone:"+p.point.id;
+   if(seenCells.has(key))return false;
+   seenCells.add(key);return true;
+  });
+  const regional=independentPoints.map(p=>({zone:p.point.id,label:p.point.label,signal:signalForPoint(p,date,days)}));
   if(regional.some(x=>!x.signal))return {date,status:"insufficient-data",regional};
   const worst=regional.reduce((a,b)=>b.signal.rank>a.signal.rank?b:a,regional[0]);
   const average=regional.reduce((s,x)=>s+x.signal.rank,0)/regional.length;
-  return {date,status:"scored",regional,worstZone:worst.zone,worstZoneLabel:worst.label,worstSignal:worst.signal,regionalMeanRank:average,rank:Math.max(worst.signal.rank,Math.round(average))};
+  return {date,status:"scored",regional,regionalSampleCount:regional.length,worstZone:worst.zone,worstZoneLabel:worst.label,worstSignal:worst.signal,regionalMeanRank:average,rank:Math.max(worst.signal.rank,Math.round(average))};
  });
  if(rounds.some(x=>x.status!=="scored"))return {status:"insufficient-data",tripStart,tripEnd:addDays(tripStart,4),rounds,missingDates:rounds.filter(x=>x.status!=="scored").map(x=>x.date)};
  const ranks=rounds.map(x=>x.rank),mean=ranks.reduce((a,b)=>a+b,0)/3,worst=Math.max(...ranks);
  const tendencyRank=Math.max(Math.round(mean),worst);
- return {status:"scored",tripStart,tripEnd:addDays(tripStart,4),golfDates,rounds,tendencyRank,tendency:labelFor(tendencyRank),
+ return {status:"scored",tripStart,tripEnd:addDays(tripStart,4),golfDates,rounds,regionalSampleCount:Math.min(...rounds.map(x=>x.regionalSampleCount)),tendencyRank,tendency:labelFor(tendencyRank),
   confidence:tendencyRank>=2?"低":"極低",
   interpretation:"區域週／月尺度濕潤趨勢篩選；不是逐日降雨預報、降雨機率或取消機率"};
 }
