@@ -200,3 +200,52 @@ Interpretation:
 5. No production rain-risk or playability thresholds were changed.
 
 The full JSON, Markdown report, and raw API responses are retained in the workflow artifact. The artifact is the reproducible data source for this table.
+
+## Multi-model hindcast comparison — 2026-11-23
+
+### Availability gate
+
+The Previous Runs API availability probe completed successfully (workflow run 45105861653). Six model selectors were tested at two representative proxy points and two seasonal windows (January and July 2025).
+
+| Model | Successful requests | 1-day fields | 3-day fields | 7-day fields | Decision |
+|---|---:|---|---|---|---|
+| ECMWF IFS 0.25° | 4/4 | complete | complete | complete | Include |
+| NCEP GFS Global | 4/4 | complete | complete | complete | Include |
+| JMA Seamless | 4/4 | complete | complete | complete | Include |
+| JMA GSM | 4/4 | complete | complete | complete | Include |
+| CMA GRAPES Global | 4/4 | complete | complete | complete | Include, retain missingness |
+| DWD ICON Global | 4/4 | complete | complete | all-null | Include only for 1- and 3-day leads |
+
+All tested models returned 168 hourly timestamps. ICON Global day-7 values were all-null and are excluded from 7-day scores. CMA GRAPES had partial missingness in some month/point requests, so its n is lower.
+
+### Paired model comparison
+
+The first paired multi-model run completed (workflow run 45106138893; artifact `okinawa-multimodel-hindcast`). It collected 65,010 paired forecast-valid-time-lead rows from 12 seven-day monthly windows in 2025, two representative proxy points, six model selectors, and ERA5 reference data.
+
+Important spatial method: ERA5 is queried at each forecast model's returned grid coordinate rather than at the original requested proxy point. ERA5 may snap that coordinate to its own native grid; exact coordinate alignment is recorded. This is a better spatial pairing than comparing all models to ERA5 at one generic town coordinate, but it does not make different model grid resolutions identical.
+
+Selected diagnostics (values are from the two proxy points; n is per point/lead):
+
+| Model | Lead | Temperature MAE °C | Rain MAE mm/h | Wind MAE m/s | Wind bias m/s | Rain CSI |
+|---|---:|---:|---:|---:|---:|---:|
+| ECMWF IFS 0.25° | 1d | 1.21–1.31 | 0.19–0.21 | 2.36–2.41 | -2.27 to -2.33 | 0.42–0.44 |
+| JMA GSM | 1d | 0.90–1.16 | 0.18 | 3.58 | -3.57 | 0.43–0.44 |
+| NCEP GFS Global | 1d | 1.85–2.21 | 0.21–0.23 | 2.78–3.18 | -2.75 to -3.16 | 0.38–0.39 |
+| JMA Seamless | 1d | 1.25–1.32 | 0.26–0.35 | 3.60–3.85 | -3.57 to -3.84 | 0.39–0.40 |
+| CMA GRAPES Global | 1d | 1.90–2.26 | 0.22–0.30 | 2.00–3.06 | -1.74 to -3.03 | 0.38–0.39 |
+| DWD ICON Global | 1d | 0.78–1.03 | 0.17–0.18 | 2.07–2.66 | -1.94 to -2.60 | 0.36–0.39 |
+
+For 3-day and 7-day lead metrics, see the full Markdown/JSON artifact; ICON has no valid 7-day score. Each reported n and grid alignment is model- and point-specific.
+
+### Interpretation guardrails
+
+1. JMA GSM and ECMWF have the clearest exact coordinate match with ERA5 for the tested proxy cells. Other models' ERA5 query coordinates are snapped to a nearby ERA5 grid cell; their metrics must be interpreted with the recorded grid mismatch.
+2. JMA GSM's temperature MAE is relatively low in this sample, but its wind-speed bias is approximately -3.6 m/s. It is not a universally superior model.
+3. ECMWF shows comparatively low precipitation MAE and rain CSI around 0.42–0.44 at 1 day in this sample. This is a useful candidate signal, not a production model selection.
+4. Wind speed is negatively biased across all tested models. The CMA central proxy appears less biased in some lead bands, but that does not justify applying a correction or selecting it without a broader sample and grid audit.
+5. JMA Seamless and JMA GSM are related model products, not fully independent model families. Treat them as distinct product streams, not independent evidence.
+6. Model sample counts differ: CMA has missing values, and ICON only supports the tested 1- and 3-day leads. Do not compare scores without n and coverage.
+7. ERA5 is a reanalysis reference, not direct station or golf-course observation truth. The 12 monthly windows each cover only seven days, not the full year.
+8. No model is selected as the production winner. No wind correction, rain-risk adjustment, or playability threshold change is authorized by this pilot.
+
+Next validation gate: extend paired comparisons to additional weeks per month, quantify confidence intervals by month/season, and evaluate 6-hour golf tee-time windows using matched forecast and reference data. Keep model-specific grid coordinates, missingness, and lead-time coverage visible in every result.
