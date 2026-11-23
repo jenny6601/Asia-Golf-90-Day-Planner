@@ -93,3 +93,40 @@ Interpretation:
 - HTTP 200 alone is insufficient: the probe now checks non-null value counts and classifies HTTP 200 / all-null as unavailable.
 
 Probe workflow: .github/workflows/hindcast-api-probe.yml. Raw JSON and Markdown reports are uploaded as the okinawa-hindcast-api-probe workflow artifact. This probe verifies endpoint coverage only; it does not calculate forecast skill or compare forecasts with observations.
+
+## First paired pilot dataset — 2026-11-23
+
+The first collection workflow successfully paired ECMWF IFS 0.25 Previous Runs with ERA5 hourly reanalysis for four seven-day windows (15–21 January, April, July and October 2025), three regional proxy coordinates, and 1-, 3- and 7-day lead offsets.
+
+- Total paired forecast-valid-time-lead rows: 6,048.
+- Each zone/window: 168 hourly valid times × 3 lead offsets = 504 rows.
+- Each lead/zone aggregate: n = 672.
+- Rain event definition: hourly precipitation >= 0.1 mm.
+- Forecast variables scored: 2 m temperature, precipitation amount and 10 m wind speed.
+- Verification reference: ERA5 reanalysis; this is a modelled reference, not a rain-gauge or on-course observation.
+
+### Pilot metrics
+
+| Lead | Zone | n | Temperature MAE (°C) | Precipitation MAE (mm/h) | Wind MAE (m/s) | Rain POD | Rain FAR | Rain CSI |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|
+| 1 day | North | 672 | 1.32 | 0.30 | 2.57 | 0.80 | 0.35 | 0.56 |
+| 1 day | Central | 672 | 1.34 | 0.25 | 2.54 | 0.76 | 0.36 | 0.53 |
+| 1 day | South (Itoman proxy) | 672 | 1.40 | 0.27 | 2.57 | 0.73 | 0.38 | 0.51 |
+| 3 days | North | 672 | 1.22 | 0.25 | 2.59 | 0.65 | 0.48 | 0.40 |
+| 3 days | Central | 672 | 1.27 | 0.29 | 2.63 | 0.64 | 0.49 | 0.40 |
+| 3 days | South (Itoman proxy) | 672 | 1.32 | 0.29 | 2.70 | 0.60 | 0.52 | 0.37 |
+| 7 days | North | 672 | 1.24 | 0.24 | 2.62 | 0.70 | 0.41 | 0.47 |
+| 7 days | Central | 672 | 1.24 | 0.25 | 2.65 | 0.73 | 0.46 | 0.45 |
+| 7 days | South (Itoman proxy) | 672 | 1.28 | 0.26 | 2.67 | 0.72 | 0.47 | 0.44 |
+
+### Data interpretation and quality warnings
+
+1. The temperature and precipitation scores are preliminary diagnostics against ERA5, not against station observations.
+2. Wind speed has a large negative bias (approximately -2.5 m/s in all zones and lead bands). This needs a dedicated unit, variable-definition, grid and model-version audit before any wind threshold is changed.
+3. The 3-day rain CSI is lower than the 1-day and 7-day values in this small sample. Do not interpret this non-monotonic pattern as evidence that 7-day forecasts are intrinsically better; four isolated seasonal weeks are not a representative annual sample.
+4. The returned model grid coordinates for the central and southern proxy points both resolve to 26.25, 127.75; they are not independent spatial grid cells. Regional comparison must therefore not claim three independent forecast grid cells. North resolves to 26.50, 128.00.
+5. No precipitation probability was archived in this collection, so no Brier score is calculated. Gusts were omitted because the tested Previous Runs gust fields were null.
+6. Apparent temperature is stored only when supplied by the forecast API; it is not scored because the ERA5 verification pair was restricted to variables explicitly collected and paired.
+7. The dataset is a pilot only. It must not recalibrate production rain-risk or playability thresholds.
+
+The collection workflow writes the paired dataset, summary Markdown, and raw API responses to the `okinawa-hindcast-pilot-dataset` GitHub Actions artifact. The artifact is the reproducible source for the figures above.
