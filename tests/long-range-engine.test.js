@@ -50,7 +50,7 @@ test("weekly EFI is not carried beyond its seven-day coverage window",()=>{
 test("weekly EFI switches at the next weekly period boundary",()=>{
  const p=points();
  p.forEach(x=>{x.weekly.time=["2026-12-10","2026-12-17"];x.weekly.precipitation_efi=[.8,-.6]});
- const r=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:p});
+ const r=evaluateLongRangeTripWindow({tripStart:"2026-12-16",referenceDate:"2026-11-23",points:p});
  assert.equal(r.status,"scored");
  assert.equal(r.rounds[0].regional[0].signal.period,"2026-12-17");
  assert.equal(r.rounds[0].regional[0].signal.rank,0);
@@ -84,4 +84,16 @@ test("a three-round trip crossing lead day 46 to 47 switches weekly to monthly e
  assert.deepEqual(r.rounds.map(x=>x.date),["2027-01-07","2027-01-08","2027-01-09"]);
  assert.deepEqual(r.rounds.map(x=>x.regional[0].signal.period),["2027-01-06","2027-01-06","2027-01-01"]);
  assert.deepEqual(r.rounds.map(x=>x.regional[0].signal.rank),[0,0,3]);
+});
+
+test("confidence follows forecast horizon, not whether the seasonal signal is wet or dry",()=>{
+ const dry=points(-.7,-30),wet=points(.9,30);
+ const weeklyDry=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:dry});
+ const weeklyWet=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:wet});
+ assert.equal(weeklyDry.confidence,"低");
+ assert.equal(weeklyWet.confidence,"低");
+ const monthlyDry=evaluateLongRangeTripWindow({tripStart:"2027-01-15",referenceDate:"2026-11-23",points:dry});
+ const monthlyWet=evaluateLongRangeTripWindow({tripStart:"2027-01-15",referenceDate:"2026-11-23",points:wet});
+ assert.equal(monthlyDry.confidence,"極低");
+ assert.equal(monthlyWet.confidence,"極低");
 });
