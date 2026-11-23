@@ -55,3 +55,25 @@ export function scoreFiveDayItinerary({tripStart, courses, teeHour=7}) {
     calibration:"unvalidated"
   };
 }
+
+/**
+ * Rank non-overlapping five-day windows from real hourly course forecasts.
+ * Only dates with complete six-hour data for all three ordered rounds are eligible.
+ */
+export function recommendFiveDayWindows({courses,teeHour=7,limit=3,minStartGap=5,referenceDate}){
+ if(!Array.isArray(courses)||courses.length!==3)throw new RangeError("Exactly three selected courses are required");
+ if(!Number.isInteger(limit)||limit<1||!Number.isInteger(minStartGap)||minStartGap<1)throw new RangeError("Invalid ranking options");
+ const dates=courses.map(c=>new Set((c.hourly?.time??[]).map(t=>t.slice(0,10))));
+ const common=[...dates[0]].filter(d=>dates.every(s=>s.has(d))).sort();
+ if(common.length<5)return {candidateCount:0,scoredCount:0,missingCount:0,recommendations:[],all:[]};
+ const starts=common.filter(start=>[1,2,3].every(offset=>dates.every(s=>s.has(addDays(start,offset)))));
+ const all=starts.map(tripStart=>scoreFiveDayItinerary({tripStart,courses,teeHour}));
+ const scored=all.filter(x=>x.status==="scored").sort((a,b)=>a.itineraryRisk-b.itineraryRisk||a.tripStart.localeCompare(b.tripStart));
+ const selected=[];
+ for(const item of scored){
+  const gapOk=selected.every(x=>Math.abs((Date.parse(item.tripStart+"T00:00:00Z")-Date.parse(x.tripStart+"T00:00:00Z"))/DAY_MS)>=minStartGap);
+  if(gapOk){selected.push(item);if(selected.length===limit)break;}
+ }
+ const ranked=selected.map((x,i)=>({...x,recommendationRank:i+1,confidence:"medium",confidenceLabel:"中等（未校準）",confidenceNote:"使用16天逐時預報；沖繩歷史回測尚未完成"}));
+ return {candidateCount:starts.length,scoredCount:scored.length,missingCount:all.length-scored.length,recommendations:ranked,all};
+}
