@@ -1,4 +1,4 @@
-import {generateTripWindows,recommendTripDates} from "./date-engine.js";
+import {recommendFiveDayWindows} from "./itinerary-engine.js";
 import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
 import {OKINAWA_COURSES} from "./okinawa-courses.js";
 import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
@@ -11,22 +11,6 @@ const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommend
 let latestWeather=null;
 let selectedCourses=[];
 let latestCourseWeather=null;
-function syntheticInputs(startDate,horizonDays){
- const windows=generateTripWindows({startDate,horizonDays}),dates=new Set();
- windows.forEach(w=>[w.tripStart,w.tripEnd,...w.golfDates].forEach(d=>dates.add(d)));
- const data={};
- for(const date of dates){
-  const n=Math.round((Date.parse(date+"T00:00:00Z")-Date.parse(startDate+"T00:00:00Z"))/86400000),wave=(Math.sin(n/7)+1)/2;
-  data[date]={rainRisk:Math.min(100,18+wave*35+(n*13%17)),windRisk:15+n*7%30,thermalRisk:20+n*3%25,severeRisk:n%29===0?92:5+n*5%25,dataCompleteness:n<7?.95:n<16?.8:n<46?.55:.25};
- }
- return data;
-}
-function run(){
- const startDate=$("start-date").value,horizonDays=Number($("horizon").value),dailyInputs=syntheticInputs(startDate,horizonDays);
- const result=recommendTripDates({startDate,horizonDays,dailyInputs});
- $("counts").textContent=`候選行程 ${result.candidateCount} 組｜已評分 ${result.scoredCount} 組｜資料不足 ${result.missingCount} 組`;
- $("recommendations").innerHTML=result.recommendations.map(x=>`<article class="result-card"><div class="rank">推薦 #${x.recommendationRank}</div><div class="score">${x.score.toFixed(1)}<small>/100</small></div><h3>${fmt(x.tripStart)} – ${fmt(x.tripEnd)}</h3><p>打球：${x.golfDates.map(fmt).join("、")}</p><p>評級：${bands[x.band]}｜資料完整度：${x.confidenceCompleteness}%（${x.confidence}）</p><p>最弱打球日：${x.worstGolfDaySuitability.toFixed(1)} 分</p></article>`).join("")||"<p>沒有符合條件的推薦日期。</p>";
-}
 function cell(value,suffix=""){return value===null||value===undefined?"—":`${value}${suffix}`;}
 function makeTable(headers,rows,cls="weather-table"){
  const table=document.createElement("div");table.className=cls;
@@ -71,8 +55,6 @@ function renderHourly(data,date){
   card.append(makeTable(["時間","降雨機率","雨量","氣溫","體感","風速","陣風","濕度"],rows,"weather-table hourly-table"));host.append(card);
  }
 }
-$("start-date").value=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"});
-$("run").addEventListener("click",run);run();
 $("fetch-weather").addEventListener("click",async()=>{
  const button=$("fetch-weather"),status=$("weather-status");
  button.disabled=true;status.textContent="正在向 Open-Meteo 讀取沖繩北、中、南三區資料…";
@@ -178,6 +160,22 @@ function renderItinerary(){
  status.textContent="評估完成｜使用三個球場各自 GPS 的真實逐時預報｜僅評估打球日；交通日未計分。";
 }
 $("score-itinerary").addEventListener("click",renderItinerary);
+
+function renderLiveDateRecommendations(){
+ const host=$("live-date-recommendations"),status=$("live-date-status");host.replaceChildren();
+ if(!latestCourseWeather?.courses||selectedCourses.length!==3){status.textContent="請先選擇三個球場並成功讀取球場逐時預報。";return;}
+ const result=recommendFiveDayWindows({courses:latestCourseWeather.courses,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5});
+ status.textContent=result.recommendations.length?`真實預報評估 ${result.candidateCount} 個候選出發日｜完整評分 ${result.scoredCount} 組｜推薦 ${result.recommendations.length} 組`:"目前資料範圍內沒有三場均具完整六小時資料的五天行程；不以合成資料補足。";
+ for(const item of result.recommendations){
+  const card=document.createElement("article");card.className="weather-card";
+  const h=document.createElement("h3");h.textContent=`推薦 #${item.recommendationRank}｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
+  const score=document.createElement("p");score.className="risk-summary";score.textContent=`三場球降雨影響指數：${item.itineraryRisk}/100（${item.label}）`;card.append(score);
+  const p=document.createElement("p");p.textContent=`Day 2–4：${item.rounds.map(x=>fmt(x.date)+" "+x.courseName+"（"+x.score.rainRisk+"/100）").join("；")}`;card.append(p);
+  const c=document.createElement("p");c.className="weather-meta";c.textContent="可信度：中等（未校準）｜16天逐時預報｜尚未完成沖繩歷史回測；此指數不是取消球賽機率。";card.append(c);host.append(card);
+ }
+}
+$("recommend-live-dates").addEventListener("click",renderLiveDateRecommendations);
+
 $("itinerary-tee-hour").addEventListener("change",()=>{populateItineraryStartDates();});
 
 function runCourseComparison(){
