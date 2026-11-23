@@ -45,7 +45,7 @@ const results = await Promise.all(zones.map(async zone => {
       "cloud_cover_mean", "cloud_cover_anomaly", "sunshine_duration_mean",
       "sunshine_duration_anomaly"
     ].join(","),
-    forecast_days: "90", timezone: "Asia/Tokyo", wind_speed_unit: "ms",
+    forecast_days: "90", timezone: "Asia/Tokyo", cell_selection: "land", wind_speed_unit: "ms",
     precipitation_unit: "mm", temperature_unit: "celsius",
     models: "ecmwf_seasonal_seamless"
   });
@@ -70,12 +70,48 @@ const results = await Promise.all(zones.map(async zone => {
 const gridKeys = results.map(item => Number.isFinite(item.returnedCoordinates.latitude) && Number.isFinite(item.returnedCoordinates.longitude)
   ? item.returnedCoordinates.latitude.toFixed(4) + "," + item.returnedCoordinates.longitude.toFixed(4) : "unknown:" + item.zone);
 const uniqueGridCellCount = new Set(gridKeys).size;
+
+// Probe additional on-island coordinates to find genuinely distinct land grid cells.
+// These are diagnostic candidates only; they do not replace the three production zones.
+const candidateLocations = [
+  { id: "chatan", label: "北谷町", latitude: 26.3098, longitude: 127.7634 },
+  { id: "uruma", label: "うるま市", latitude: 26.3705, longitude: 127.8577 },
+  { id: "motobu", label: "本部町", latitude: 26.6597, longitude: 127.8911 },
+  { id: "itoman", label: "糸満市", latitude: 26.1235, longitude: 127.6658 },
+  { id: "cape-kyan", label: "喜屋武岬", latitude: 26.0818, longitude: 127.6731 },
+  { id: "nanjo", label: "南城市", latitude: 26.1442, longitude: 127.7661 }
+];
+const candidateGridProbe = await Promise.all(candidateLocations.map(async place => {
+  const params = new URLSearchParams({
+    latitude: String(place.latitude), longitude: String(place.longitude),
+    weekly: "precipitation_efi", monthly: "precipitation_mean",
+    forecast_days: "90", timezone: "Asia/Tokyo", cell_selection: "land",
+    models: "ecmwf_seasonal_seamless"
+  });
+  const response = await fetch(endpoint + "?" + params);
+  if (!response.ok) return { ...place, httpStatus: response.status, returnedCoordinates: null };
+  const payload = await response.json();
+  return {
+    ...place, httpStatus: response.status,
+    returnedCoordinates: { latitude: payload.latitude, longitude: payload.longitude },
+    timezone: payload.timezone ?? null
+  };
+}));
+const candidateGridGroups = Object.values(candidateGridProbe.reduce((groups, item) => {
+  const key = item.returnedCoordinates
+    ? item.returnedCoordinates.latitude.toFixed(4) + "," + item.returnedCoordinates.longitude.toFixed(4)
+    : "unavailable:" + item.id;
+  (groups[key] ??= []).push(item.id);
+  return groups;
+}, {}));
 const report = {
   checkedAt: new Date().toISOString(),
   provider: "Open-Meteo Seasonal Forecast API",
   endpoint,
   modelRequested: "ecmwf_seasonal_seamless",
   zones: results,
+  candidateGridProbe,
+  candidateGridGroups,
   readiness: {
     zoneCount: results.length,
     uniqueGridCellCount,
