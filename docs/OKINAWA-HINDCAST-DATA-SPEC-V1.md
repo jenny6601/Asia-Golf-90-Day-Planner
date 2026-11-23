@@ -165,3 +165,38 @@ The dedicated diagnostic workflow completed successfully (GitHub Actions run 451
 Interpretation: the audit rules out a basic m/s versus km/h mismatch but does not establish the cause of the wind bias. Differences in model representation, grid sampling, model version, or other processing remain possible. Do not apply a constant wind correction or change production playability thresholds based on this result.
 
 The paired-data collector has now been expanded from four seasonal weeks to one seven-day mid-month window in each of the 12 months of 2025. This improves month coverage but is still a sampled hindcast, not a complete annual record. The report now records unique forecast grid count and forecast/ERA5 grid coordinates per zone-window.
+
+## Expanded 12-month paired sample — 2026-11-23
+
+The expanded collector completed successfully (GitHub Actions run 45105600576; artifact `okinawa-hindcast-pilot-dataset`).
+
+- 12 windows: the 15th–21st of each month in 2025.
+- 3 nominal regional proxies × 12 windows × 168 valid hours × 3 lead offsets.
+- Total: 18,144 forecast-valid-time-lead rows.
+- All 36 zone-window requests completed; no coverage request failed.
+- Each lead/nominal-zone aggregate: n = 2,016.
+- Only two unique ECMWF forecast grid cells were returned: north 26.50, 128.00; central and south both 26.25, 127.75.
+- ERA5 grid coordinates match north and central, but the south proxy resolves to ERA5 latitude 26.00 while the Previous Runs forecast grid resolves to 26.25. South forecast-versus-ERA5 scores therefore include a spatial grid mismatch and must be treated cautiously.
+
+### Expanded sample diagnostics
+
+| Lead | Nominal zone | n | Temperature MAE °C | Precipitation MAE mm/h | Wind MAE m/s | Wind bias m/s | Rain POD | Rain FAR | Rain CSI |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1d | North | 2,016 | 1.19 | 0.21 | 2.41 | -2.33 | 0.67 | 0.44 | 0.44 |
+| 1d | Central | 2,016 | 1.31 | 0.19 | 2.36 | -2.27 | 0.64 | 0.45 | 0.42 |
+| 1d | South proxy | 2,016 | 1.40 | 0.20 | 2.41 | -2.32 | 0.62 | 0.44 | 0.42 |
+| 3d | North | 2,016 | 1.19 | 0.22 | 2.42 | -2.32 | 0.59 | 0.55 | 0.34 |
+| 3d | Central | 2,016 | 1.30 | 0.21 | 2.38 | -2.27 | 0.53 | 0.55 | 0.32 |
+| 3d | South proxy | 2,016 | 1.36 | 0.20 | 2.44 | -2.32 | 0.51 | 0.55 | 0.31 |
+| 7d | North | 2,016 | 1.22 | 0.21 | 2.54 | -2.34 | 0.59 | 0.59 | 0.32 |
+| 7d | Central | 2,016 | 1.30 | 0.20 | 2.53 | -2.29 | 0.58 | 0.56 | 0.34 |
+| 7d | South proxy | 2,016 | 1.35 | 0.20 | 2.56 | -2.33 | 0.56 | 0.55 | 0.33 |
+
+Interpretation:
+1. Wind bias remains consistently around -2.27 to -2.34 m/s across all lead bands and nominal zones. Both endpoints declare m/s, so a basic unit mismatch is not supported. This still does not prove which model or processing difference causes the bias.
+2. The 3-day and 7-day rain CSI are lower than the 1-day values in this sampled dataset. This is a useful diagnostic, not a claim of universal lead-time skill.
+3. The 12 monthly windows improve seasonal coverage over the first four-week pilot, but each month still contributes only one seven-day window. Do not call this a full-year hindcast.
+4. Central and south are not independent spatial forecast cells. Do not count their identical grid data as independent evidence or average the nominal zone metrics as if there were three independent locations.
+5. No production rain-risk or playability thresholds were changed.
+
+The full JSON, Markdown report, and raw API responses are retained in the workflow artifact. The artifact is the reproducible data source for this table.
