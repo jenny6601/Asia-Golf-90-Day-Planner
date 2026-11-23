@@ -6,13 +6,13 @@ const zones = [
   { id:"central", label:"中部", latitude:26.3344, longitude:127.8056 },
   { id:"south", label:"南部（糸滿代理點）", latitude:26.1240, longitude:127.6650 }
 ];
-// Four short, seasonally distributed windows; intentionally a pilot sample, not a climatological study.
-const windows = [
-  { start:"2025-01-15", end:"2025-01-21", season:"winter" },
-  { start:"2025-04-15", end:"2025-04-21", season:"spring" },
-  { start:"2025-07-15", end:"2025-07-21", season:"summer" },
-  { start:"2025-10-15", end:"2025-10-21", season:"autumn" }
-];
+// One seven-day mid-month window for every month of 2025.
+// This expands seasonal coverage but is still a sample, not a complete annual hindcast.
+const windows = Array.from({length:12},(_,i)=>{
+  const month=String(i+1).padStart(2,"0");
+  const season=i<2||i===11?"winter":i<5?"spring":i<8?"summer":"autumn";
+  return {start:"2025-"+month+"-15",end:"2025-"+month+"-21",season};
+});
 const leads = [1,3,7];
 const headers = { "User-Agent":"Asia-Golf-90-Day-Planner-hindcast-collector/1.0" };
 const cacheDir = "artifacts/hindcast-raw";
@@ -103,6 +103,8 @@ for(const zone of zones) {
       matchedSamples:matched,
       forecastGrid:{latitude:forecast.latitude,longitude:forecast.longitude},
       verificationGrid:{latitude:verification.latitude,longitude:verification.longitude},
+      forecastUnits:forecast.hourly_units??null,
+      verificationUnits:verification.hourly_units??null,
       forecastModel:forecast.model ?? "ecmwf_ifs025",
       verificationModel:verification.generationtime_ms!==undefined?"ERA5":"ERA5"
     });
@@ -125,6 +127,7 @@ for(const lead of leads) {
     metrics.push(row);
   }
 }
+const uniqueForecastGrids=[...new Set(coverage.filter(c=>c.ok).map(c=>c.forecastGrid.latitude+","+c.forecastGrid.longitude))];
 const report={
   generatedAt:new Date().toISOString(),
   purpose:"Pilot forecast-versus-ERA5 reanalysis comparison; ERA5 is a verification proxy, not direct station truth.",
@@ -132,11 +135,12 @@ const report={
   verification:"ERA5 hourly reanalysis",
   scope:{zones,windows,leadDays:leads},
   rainEventThresholdMmPerHour:0.1,
-  sampleCount:samples.length,coverage,metrics,
+  sampleCount:samples.length,uniqueForecastGridCount:uniqueForecastGrids.length,uniqueForecastGrids,coverage,metrics,
   limitations:[
     "Regional proxy coordinates are not golf-course surveyed GPS points.",
     "ERA5 reanalysis is a reference proxy, not direct rain-gauge or on-course observation truth.",
-    "This small four-window pilot is not a seasonal climatology or a robust model calibration dataset.",
+    "One seven-day mid-month sample per month is not a complete annual hindcast or a robust model calibration dataset.",
+    "Nominal zones that resolve to the same forecast grid cell are not independent spatial forecast samples.",
     "No archived precipitation probability is evaluated; no Brier score is calculated.",
     "Gust fields are omitted because the tested Previous Runs gust variables were all-null.",
     "Apparent temperature is retained in raw paired samples only if returned; no ERA5 apparent-temperature verification is inferred."
@@ -151,6 +155,8 @@ const md=[
 "",
 "**Samples:** "+samples.length+" forecast-valid-time-lead rows",
 "",
+"**Unique forecast grid cells:** "+uniqueForecastGrids.length+" ("+uniqueForecastGrids.join("; ")+")",
+"",
 "Verification reference: ERA5 reanalysis (proxy, not station truth).",
 "",
 "| Lead | Zone | N | Temp MAE / Bias | Rain MAE / Bias | Wind MAE / Bias | Rain POD / FAR / CSI |",
@@ -163,9 +169,9 @@ const md=[
 "",
 "## Coverage",
 "",
-"| Zone | Window | Forecast hours | ERA5 hours | Matched rows | Status |",
-"|---|---|---:|---:|---:|---|",
-...coverage.map(c=>"| "+c.zone+" | "+(c.window?.start??"")+"–"+(c.window?.end??"")+" | "+(c.forecastHours??0)+" | "+(c.verificationHours??0)+" | "+(c.matchedSamples??0)+" | "+(c.ok?"ok":c.error)+" |"),
+"| Zone | Window | Forecast grid | ERA5 grid | Forecast hours | ERA5 hours | Matched rows | Status |",
+"|---|---|---|---|---:|---:|---:|---|",
+...coverage.map(c=>"| "+c.zone+" | "+(c.window?.start??"")+"–"+(c.window?.end??"")+" | "+(c.forecastGrid?c.forecastGrid.latitude+", "+c.forecastGrid.longitude:"—")+" | "+(c.verificationGrid?c.verificationGrid.latitude+", "+c.verificationGrid.longitude:"—")+" | "+(c.forecastHours??0)+" | "+(c.verificationHours??0)+" | "+(c.matchedSamples??0)+" | "+(c.ok?"ok":c.error)+" |"),
 "",
 "## Limitations",
 ...report.limitations.map(x=>"- "+x),
