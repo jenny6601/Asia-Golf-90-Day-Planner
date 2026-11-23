@@ -306,7 +306,7 @@ function renderLongRangeRecommendations(data){
   const p=document.createElement("p");p.className="risk-summary";p.textContent=`區域趨勢：${item.tendency}｜分級 ${item.tendencyRank}/3`;card.append(p);
   const details=item.rounds.map(x=>`Day ${x.date}：${x.worstZoneLabel}最需留意（${x.worstSignal.label}）`).join("；");
   const d=document.createElement("p");d.textContent=details;card.append(d);
-  const note=document.createElement("p");note.className="weather-meta";note.textContent=`可信度：${item.confidence}｜EC46週展望／SEAS5月展望｜${item.interpretation}。同一趨勢分級內的日期不代表可精確排序。`;card.append(note);
+  const note=document.createElement("p");note.className="weather-meta";note.textContent=`時間尺度可信度：${item.temporalConfidence??item.confidence}｜空間代表性：${item.spatialConfidence??"未評估"}（${item.regionalSampleCount??"—"}個不同網格）｜EC46週展望／SEAS5月展望｜${item.interpretation}。同一趨勢分級內的日期不代表可精確排序。${item.spatialWarning?" "+item.spatialWarning:""}`;card.append(note);
   host.append(card);
  }
 }
