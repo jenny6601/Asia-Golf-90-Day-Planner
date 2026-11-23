@@ -31,3 +31,11 @@ The initial date engine is a deterministic planning component. It creates rollin
 
 ## Local test
 Run `npm test` with Node.js 20 or newer. Open `index.html` in a modern browser for the synthetic-data demo.
+
+## Preview deployment
+
+A GitHub Actions workflow is included at `.github/workflows/deploy-pages.yml`.
+In repository Settings → Pages, set the build and deployment source to **GitHub Actions**.
+After that one-time repository setting, pushes to `main` publish the static preview automatically.
+
+The preview currently uses synthetic demonstration data only. It is not a live forecast or booking recommendation.
