@@ -21,7 +21,7 @@ const MONTHLY=[
 function validateSeries(series,requiredFields,zoneLabel,seriesLabel){
  if(!series||!Array.isArray(series.time)||series.time.length===0)
   throw new Error(zoneLabel+" 缺少有效的"+seriesLabel+"日期序列");
- const invalidDates=series.time.filter(x=>typeof x!=="string"||!/^\\d{4}-\\d{2}-\\d{2}$/.test(x));
+ const invalidDates=series.time.filter(x=>typeof x!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(x));
  if(invalidDates.length)throw new Error(zoneLabel+" "+seriesLabel+"日期格式錯誤");
  const fields={};
  for(const key of requiredFields){
