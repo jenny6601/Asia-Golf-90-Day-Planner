@@ -78,5 +78,16 @@ export function recommendLongRangeWindows({referenceDate,points,limit=3,minStart
  }
  const missingCount=all.length-scored.length;
  const coverageRate=all.length?Number((scored.length/all.length).toFixed(3)):0;
- return {candidateCount:all.length,scoredCount:scored.length,missingCount,coverageRate,recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1})),all};
+ const buckets={weekly:{label:"17–46 天（週 EFI）",candidateCount:0,scoredCount:0},monthly:{label:"47–90 天（月距平）",candidateCount:0,scoredCount:0},transition:{label:"跨越 46／47 天邊界",candidateCount:0,scoredCount:0}};
+ for(const item of all){
+  const leads=item.rounds.map(round=>lead(round.date,referenceDate));
+  const key=Math.max(...leads)<=46?"weekly":Math.min(...leads)>=47?"monthly":"transition";
+  buckets[key].candidateCount++;
+  if(item.status==="scored")buckets[key].scoredCount++;
+ }
+ const coverageByHorizon=Object.fromEntries(Object.entries(buckets).map(([key,b])=>[key,{
+  ...b,missingCount:b.candidateCount-b.scoredCount,
+  coverageRate:b.candidateCount?Number((b.scoredCount/b.candidateCount).toFixed(3)):0
+ }]));
+ return {candidateCount:all.length,scoredCount:scored.length,missingCount,coverageRate,coverageByHorizon,recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1})),all};
 }
