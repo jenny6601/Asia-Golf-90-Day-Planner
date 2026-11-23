@@ -9,3 +9,5 @@
 @media(max-width:650px){.course-grid{grid-template-columns:1fr}}
 
 #compare-courses{white-space:nowrap}.comparison-rank{font-size:.78rem;color:#64786d;font-weight:750;letter-spacing:.03em}.comparison-results{display:grid;gap:10px}.course-option{cursor:pointer}.course-option input:disabled{cursor:not-allowed}
+
+#long-range-results h4{margin:16px 0 8px;color:#315b49}#long-range-results .weather-table{margin-bottom:14px}.long-range-note{font-size:.82rem;color:#65766d;line-height:1.6}
