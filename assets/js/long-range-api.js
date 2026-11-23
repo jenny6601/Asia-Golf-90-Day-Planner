@@ -5,7 +5,7 @@
 export const OKINAWA_LONG_RANGE_POINTS = Object.freeze([
  {id:"north",label:"北部",place:"名護市",latitude:26.5916,longitude:127.9774},
  {id:"central",label:"中部",place:"沖繩市",latitude:26.3344,longitude:127.8056},
- {id:"south",label:"南部",place:"那霸市",latitude:26.2123,longitude:127.6792}
+ {id:"south",label:"南部",place:"糸滿市",latitude:26.1235,longitude:127.6658}
 ]);
 const ENDPOINT="https://seasonal-api.open-meteo.com/v1/seasonal";
 const WEEKLY=[
