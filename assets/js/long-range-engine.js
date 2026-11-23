@@ -50,13 +50,14 @@ export function evaluateLongRangeTripWindow({tripStart,referenceDate,points}){
   if(regional.some(x=>!x.signal))return {date,status:"insufficient-data",regional};
   const worst=regional.reduce((a,b)=>b.signal.rank>a.signal.rank?b:a,regional[0]);
   const average=regional.reduce((s,x)=>s+x.signal.rank,0)/regional.length;
-  return {date,status:"scored",regional,worstZone:worst.zone,worstZoneLabel:worst.label,worstSignal:worst.signal,regionalMeanRank:average,rank:Math.max(worst.signal.rank,Math.round(average))};
+  return {date,leadDays:days,status:"scored",regional,worstZone:worst.zone,worstZoneLabel:worst.label,worstSignal:worst.signal,regionalMeanRank:average,rank:Math.max(worst.signal.rank,Math.round(average))};
  });
  if(rounds.some(x=>x.status!=="scored"))return {status:"insufficient-data",tripStart,tripEnd:addDays(tripStart,4),rounds,missingDates:rounds.filter(x=>x.status!=="scored").map(x=>x.date)};
  const ranks=rounds.map(x=>x.rank),mean=ranks.reduce((a,b)=>a+b,0)/3,worst=Math.max(...ranks);
  const tendencyRank=Math.max(Math.round(mean),worst);
  return {status:"scored",tripStart,tripEnd:addDays(tripStart,4),golfDates,rounds,tendencyRank,tendency:labelFor(tendencyRank),
-  confidence:tendencyRank>=2?"低":"極低",
+  confidence:rounds.some(x=>x.leadDays>46)?"極低":"低",
+  confidenceBasis:"依行程中最長預報提前期與資料解析度決定，不受濕潤趨勢等級影響",
   interpretation:"區域週／月尺度濕潤趨勢篩選；不是逐日降雨預報、降雨機率或取消機率"};
 }
 export function recommendLongRangeWindows({referenceDate,points,limit=3,minStartGap=5,horizonDays=90}){
