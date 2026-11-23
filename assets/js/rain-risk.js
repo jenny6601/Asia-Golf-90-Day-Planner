@@ -74,3 +74,26 @@ export function scoreGolfRainWindow(hourly, date, teeHour, durationHours = 6) {
     label
   };
 }
+
+/**
+ * Summarize same-date/same-tee-time course scores.
+ * Incomplete courses are excluded from arithmetic and explicitly counted.
+ */
+export function summarizeCourseRainRisks(results) {
+  if (!Array.isArray(results)) throw new TypeError("results must be an array");
+  const scored=results.filter(x=>x?.score?.status==="scored" && Number.isFinite(x.score.rainRisk));
+  if (!scored.length) return {
+    requestedCount:results.length,scoredCount:0,incompleteCount:results.length,
+    averageRisk:null,worstRisk:null,bestCourseId:null,worstCourseId:null
+  };
+  const total=scored.reduce((sum,x)=>sum+x.score.rainRisk,0);
+  const best=[...scored].sort((a,b)=>a.score.rainRisk-b.score.rainRisk)[0];
+  const worst=[...scored].sort((a,b)=>b.score.rainRisk-a.score.rainRisk)[0];
+  return {
+    requestedCount:results.length,scoredCount:scored.length,
+    incompleteCount:results.length-scored.length,
+    averageRisk:Math.round(total/scored.length*10)/10,
+    worstRisk:worst.score.rainRisk,
+    bestCourseId:best.course.id,worstCourseId:worst.course.id
+  };
+}
