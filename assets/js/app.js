@@ -318,7 +318,7 @@ $("fetch-long-range").addEventListener("click",async()=>{
   const data=await fetchOkinawaLongRange();latestLongRangeData=data;renderLongRange(data);$("recommend-long-range").disabled=false;$("run-unified-recommendations").disabled=!(latestCourseWeather?.courses?.length&&selectedCourses.length===3);renderLongRangeRecommendations(data);
   const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(data.fetchedAt));
   const quality=data.dataQuality;
-  status.textContent=`讀取完成｜${data.provider}｜三區回傳 ${quality.zoneCount}/3｜週評分資料 ${quality.readyForWeeklyScoring?"完整":"不完整"}｜月評分資料 ${quality.readyForMonthlyScoring?"完整":"不完整"}｜日本時間：${stamp}${quality.warnings.length?"｜有資料警示，請查看各區檢核":"｜資料欄位檢核通過"}`;
+  status.textContent=`讀取完成｜${data.provider}｜三區回傳 ${quality.zoneCount}/3｜週 EFI ${quality.readyForWeeklyScoring?"有資料":"無資料"}（全筆完整 ${quality.weeklyCoverageComplete?"是":"否"}）｜月雨量 ${quality.readyForMonthlyScoring?"有資料":"無資料"}（全筆完整 ${quality.monthlyCoverageComplete?"是":"否"}）｜日本時間：${stamp}${quality.warnings.length?"｜有資料警示，請查看各區檢核":"｜資料欄位檢核通過"}`;
  }catch(error){status.textContent=`讀取失敗：${error.message}。沒有以合成資料代替。`;}
  finally{button.disabled=false;}
 });
