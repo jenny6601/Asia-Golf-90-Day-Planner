@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=long-range-ranking-v1"></head>
 <body><main class="shell"><header><p class="eyebrow">ASIA GOLF TRAVEL PLANNER</p><h1>90天高爾夫日期規劃</h1><p class="subtitle">先選目的地，再比較5天4夜、三場球的適打日期。</p></header>
-<section class="notice"><strong>原型測試｜日期推薦仍使用合成資料</strong><p>真實天氣資料測試獨立讀取 Open-Meteo 沖繩三區16天預報。兩種資料不混用，合成資料不會用於訂票決策。</p></section>
+<section class="notice"><strong>日期推薦資料分層</strong><p>1–16天使用所選球場 GPS 的真實逐時預報；17–90天使用 ECMWF 週／月尺度區域趨勢作粗略篩選。兩種結果不混成同一風險分數，缺值不以合成資料補足。</p></section>
 <section class="panel"><h2>沖繩三區｜真實天氣資料測試</h2><p class="trip-rule">北部：名護市｜中部：沖繩市｜南部：那霸市。代表城市座標是區域代理點，並非特定球場座標。</p><button id="fetch-weather" type="button">讀取 Open-Meteo 16 天預報</button><p id="weather-status" class="counts" aria-live="polite">尚未讀取即時資料。</p><div id="weather-results" class="weather-grid" aria-live="polite"></div>
 <div id="hourly-panel" hidden><h3>選擇日期｜逐時球場天氣（06:00–18:00）</h3><div class="controls"><label>預報日期<input id="hourly-date" type="date"></label><label>預計開球時間<select id="tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label></div><p class="data-note">新增：依選定開球時間計算連續6小時降雨影響指數。此為未經歷史回測校準的原型，不代表取消球賽機率，也不會影響90天日期推薦。</p><div id="hourly-results" class="weather-grid"></div></div>
 <p class="data-note">資料來源：Open-Meteo Forecast API。每日摘要與逐時資料分開呈現。</p></section>
