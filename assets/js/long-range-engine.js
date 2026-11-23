@@ -7,16 +7,23 @@ const DAY=86400000;
 const addDays=(s,n)=>new Date(Date.parse(s+"T00:00:00Z")+n*DAY).toISOString().slice(0,10);
 const lead=(date,ref)=>(Date.parse(date+"T00:00:00Z")-Date.parse(ref+"T00:00:00Z"))/DAY;
 function weeklyAt(series,date){
- const times=series?.time??[];let idx=-1;
- for(let i=0;i<times.length;i++)if(times[i]<=date)idx=i;
- return idx<0?null:{index:idx,date:times[idx]};
+ const times=series?.time??[];
+ // Weekly records describe bounded periods. Never carry the last available
+ // EFI value forward indefinitely when a later week is missing.
+ for(let i=0;i<times.length;i++){
+  const start=times[i];
+  const next=times[i+1]??addDays(start,7);
+  if(typeof start==="string"&&date>=start&&date<next)
+   return {index:i,date:start,periodEnd:addDays(next,-1)};
+ }
+ return null;
 }
 function classifyWeekly(series,date){
  const rec=weeklyAt(series,date);if(!rec)return null;
  const efi=series.precipitation_efi?.[rec.index];
  if(typeof efi!=="number"||!Number.isFinite(efi))return null;
  const rank=efi>=0.8?3:efi>=0.5?2:efi<=-0.5?0:1;
- return {rank,label:rank===3?"顯著偏濕":rank===2?"偏濕":rank===0?"偏乾":"接近基準",period:rec.date,efi};
+ return {rank,label:rank===3?"顯著偏濕":rank===2?"偏濕":rank===0?"偏乾":"接近基準",period:rec.date,periodEnd:rec.periodEnd,efi};
 }
 function classifyMonthly(series,date){
  const month=date.slice(0,7),idx=(series?.time??[]).findIndex(x=>x.slice(0,7)===month);
@@ -63,5 +70,8 @@ export function recommendLongRangeWindows({referenceDate,points,limit=3,minStart
    selected.push(item);if(selected.length===limit)break;
   }
  }
- return {candidateCount:all.length,scoredCount:scored.length,missingCount:all.length-scored.length,recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1})),all};
+ return {candidateCount:all.length,scoredCount:scored.length,missingCount:all.length-scored.length,
+  rankingBasis:"ordinal-tendency-only",
+  rankingNote:"同一趨勢級別的候選日期視為同級；日期先後僅用於排列與間距，不代表天氣優劣差異。",
+  recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1,rankingNote:"同級候選日期不代表彼此有可量化的天氣差異。"})),all};
 }
