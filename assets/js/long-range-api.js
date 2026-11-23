@@ -37,7 +37,7 @@ export async function fetchOkinawaLongRange(fetchImpl=fetch){
   const params=new URLSearchParams({
    latitude:String(point.latitude),longitude:String(point.longitude),
    weekly:WEEKLY,monthly:MONTHLY,
-   forecast_days:"90",timezone:"Asia/Tokyo",
+   forecast_days:"90",timezone:"Asia/Tokyo",cell_selection:"land",
    wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius",
    models:"ecmwf_seasonal_seamless"
   });
