@@ -119,6 +119,13 @@ test("coverage accounting separates fully scored windows from missing evidence",
  const r=recommendLongRangeWindows({referenceDate:"2026-11-23",points:p});
  assert.equal(r.candidateCount,r.scoredCount+r.missingCount);
  assert.equal(r.coverageRate,Number((r.scoredCount/r.candidateCount).toFixed(3)));
+ assert.equal(r.coverageByHorizon.weekly.candidateCount+r.coverageByHorizon.monthly.candidateCount+r.coverageByHorizon.transition.candidateCount,r.candidateCount);
+ for(const bucket of Object.values(r.coverageByHorizon)){
+  assert.equal(bucket.candidateCount,bucket.scoredCount+bucket.missingCount);
+  assert.equal(bucket.coverageRate,bucket.candidateCount?Number((bucket.scoredCount/bucket.candidateCount).toFixed(3)):0);
+ }
+ assert.ok(r.coverageByHorizon.weekly.candidateCount>0);
+ assert.ok(r.coverageByHorizon.monthly.candidateCount>0);
  assert.ok(r.scoredCount>0);
  assert.ok(r.missingCount>0);
  assert.ok(r.recommendations.every(x=>x.status==="scored"));
