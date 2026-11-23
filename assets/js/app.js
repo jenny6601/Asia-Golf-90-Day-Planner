@@ -3,6 +3,7 @@ import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
 import {OKINAWA_COURSES} from "./okinawa-courses.js";
 import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
 import {scoreFiveDayItinerary} from "./itinerary-engine.js";
+import {fetchOkinawaLongRange,interpretPrecipitationEfi} from "./long-range-api.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -210,6 +211,46 @@ function runCourseComparison(){
 $("compare-courses").addEventListener("click",runCourseComparison);
 $("compare-tee-hour").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
 $("compare-date").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
+
+
+function renderLongRange(data){
+ const host=$("long-range-results");host.replaceChildren();
+ for(const item of data.points){
+  const card=document.createElement("article");card.className="weather-card";
+  const heading=document.createElement("h3");heading.textContent=`${item.point.label}｜${item.point.place}`;card.append(heading);
+  const meta=document.createElement("p");meta.className="weather-meta";meta.textContent=`ECMWF Seasonal Seamless｜座標 ${item.latitude.toFixed(3)}, ${item.longitude.toFixed(3)}｜${item.timezone}`;card.append(meta);
+  const weekly=item.weekly;
+  if(weekly?.time?.length){
+   const title=document.createElement("h4");title.textContent="週趨勢（次季節展望）";card.append(title);
+   const rows=weekly.time.map((date,i)=>{
+    const efi=interpretPrecipitationEfi(weekly.precipitation_efi?.[i]);
+    return [date,cell(weekly.precipitation_mean?.[i]," mm"),cell(weekly.precipitation_anomaly?.[i]," mm"),cell(weekly.precipitation_efi?.[i]),efi.label,cell(weekly.wind_speed_10m_mean?.[i]," m/s"),cell(weekly.temperature_2m_mean?.[i],"°C")];
+   });
+   card.append(makeTable(["週起始","平均雨量","雨量距平","降雨 EFI","濕潤訊號","平均風速","平均溫度"],rows));
+  }else{const p=document.createElement("p");p.textContent="沒有週展望資料。";card.append(p);}
+  const monthly=item.monthly;
+  if(monthly?.time?.length){
+   const title=document.createElement("h4");title.textContent="月趨勢（季節展望）";card.append(title);
+   const rows=monthly.time.map((date,i)=>[
+    date,cell(monthly.precipitation_mean?.[i]," mm"),cell(monthly.precipitation_anomaly?.[i]," mm"),
+    cell(monthly.wind_speed_10m_mean?.[i]," m/s"),cell(monthly.wind_speed_10m_anomaly?.[i]," m/s"),
+    cell(monthly.temperature_2m_mean?.[i],"°C"),cell(monthly.temperature_2m_anomaly?.[i],"°C")
+   ]);
+   card.append(makeTable(["月份","平均雨量","雨量距平","平均風速","風速距平","平均溫度","溫度距平"],rows));
+  }else{const p=document.createElement("p");p.textContent="沒有月展望資料。";card.append(p);}
+  host.append(card);
+ }
+}
+$("fetch-long-range").addEventListener("click",async()=>{
+ const button=$("fetch-long-range"),status=$("long-range-status");
+ button.disabled=true;status.textContent="正在讀取 ECMWF EC46 + SEAS5 長期展望…";
+ try{
+  const data=await fetchOkinawaLongRange();renderLongRange(data);
+  const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(data.fetchedAt));
+  status.textContent=`讀取成功｜${data.provider}｜三區均有回傳｜日本時間：${stamp}`;
+ }catch(error){status.textContent=`讀取失敗：${error.message}。沒有以合成資料代替。`;}
+ finally{button.disabled=false;}
+});
 
 renderCoursePicker();
 $("fetch-course-weather").addEventListener("click",async()=>{
