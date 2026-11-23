@@ -4,7 +4,7 @@ import { regressionMetrics, categoricalRainMetrics, groupByLeadTime } from "../a
 const zones = [
   { id:"north", label:"北部", latitude:26.5916, longitude:127.9774 },
   { id:"central", label:"中部", latitude:26.3344, longitude:127.8056 },
-  { id:"south", label:"南部", latitude:26.2123, longitude:127.6792 }
+  { id:"south", label:"南部（糸滿代理點）", latitude:26.1240, longitude:127.6650 }
 ];
 // Four short, seasonally distributed windows; intentionally a pilot sample, not a climatological study.
 const windows = [
