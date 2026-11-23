@@ -105,3 +105,34 @@ test("spatial coverage is reported separately from temporal confidence",()=>{
  assert.equal(r.spatialConfidence,"有限");
  assert.match(r.spatialWarning,/空間證據有限/);
 });
+
+\ntest("coverage accounting separates fully scored windows from missing evidence",()=>{
+ const p=points(.1,0);
+ p.forEach(x=>{
+  x.weekly.time=["2026-12-10","2026-12-17","2026-12-24"];
+  x.weekly.precipitation_efi=[.1,.1,.1];
+  x.monthly.time=["2027-01-01"];
+  x.monthly.precipitation_mean=[100];
+  x.monthly.precipitation_anomaly=[0];
+ });
+ const r=recommendLongRangeWindows({referenceDate:"2026-11-23",points:p});
+ assert.equal(r.candidateCount,r.scoredCount+r.missingCount);
+ assert.equal(r.coverageRate,Number((r.scoredCount/r.candidateCount).toFixed(3)));
+ assert.ok(r.scoredCount>0);
+ assert.ok(r.missingCount>0);
+ assert.ok(r.recommendations.every(x=>x.status==="scored"));
+ assert.ok(r.recommendations.every(x=>x.rounds.length===3&&x.rounds.every(round=>round.status==="scored")));
+});
+
+test("no-data horizon reports zero coverage and no recommendations",()=>{
+ const p=points();
+ p.forEach(x=>{
+  x.weekly={time:[],precipitation_efi:[]};
+  x.monthly={time:[],precipitation_mean:[],precipitation_anomaly:[]};
+ });
+ const r=recommendLongRangeWindows({referenceDate:"2026-11-23",points:p});
+ assert.equal(r.coverageRate,0);
+ assert.equal(r.scoredCount,0);
+ assert.equal(r.missingCount,r.candidateCount);
+ assert.deepEqual(r.recommendations,[]);
+});
