@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {evaluateLongRangeTripWindow,recommendLongRangeWindows} from "../assets/js/long-range-engine.js";
 const points=(weeklyEfi=0.1,monthlyAnomaly=0)=>[
- {point:{id:"north",label:"北部"},weekly:{time:["2026-12-10","2027-01-10"],precipitation_efi:[weeklyEfi,weeklyEfi]},monthly:{time:["2027-01-01","2027-02-01","2027-03-01"],precipitation_mean:[100,100,100],precipitation_anomaly:[monthlyAnomaly,monthlyAnomaly,monthlyAnomaly]}},
+ {point:{id:"north",label:"北部"},weekly:{time:["2026-12-10","2026-12-17","2026-12-24","2026-12-31","2027-01-07","2027-01-14"],precipitation_efi:Array(6).fill(weeklyEfi)},monthly:{time:["2027-01-01","2027-02-01","2027-03-01"],precipitation_mean:[100,100,100],precipitation_anomaly:[monthlyAnomaly,monthlyAnomaly,monthlyAnomaly]}},
  {point:{id:"central",label:"中部"},weekly:{time:["2026-12-10","2027-01-10"],precipitation_efi:[weeklyEfi,weeklyEfi]},monthly:{time:["2027-01-01","2027-02-01","2027-03-01"],precipitation_mean:[100,100,100],precipitation_anomaly:[monthlyAnomaly,monthlyAnomaly,monthlyAnomaly]}},
  {point:{id:"south",label:"南部"},weekly:{time:["2026-12-10","2027-01-10"],precipitation_efi:[weeklyEfi,weeklyEfi]},monthly:{time:["2027-01-01","2027-02-01","2027-03-01"],precipitation_mean:[100,100,100],precipitation_anomaly:[monthlyAnomaly,monthlyAnomaly,monthlyAnomaly]}}
 ];
