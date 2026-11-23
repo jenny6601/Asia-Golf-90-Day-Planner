@@ -49,7 +49,9 @@ test("live payload audit reports whether all three zones are scoreable",async()=
  assert.equal(r.dataQuality.zoneCount,3);
  assert.equal(r.dataQuality.readyForMonthlyScoring,true);
  assert.equal(r.dataQuality.readyForWeeklyScoring,false);
- assert.ok(r.dataQuality.warnings.some(x=>x.includes("中部")||x.includes("南部")));
+ assert.equal(r.dataQuality.uniqueGridCellCount,1);
+ assert.equal(r.dataQuality.spatiallyDistinct,false);
+ assert.ok(r.dataQuality.warnings.some(x=>x.includes("不能視為三份獨立區域證據")));
 });
 test("live payload audit flags mismatched arrays instead of treating them as complete",async()=>{
  const mock=async()=>({ok:true,json:async()=>({
