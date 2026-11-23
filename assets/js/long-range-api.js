@@ -18,6 +18,19 @@ const MONTHLY=[
  "temperature_2m_mean","temperature_2m_anomaly","cloud_cover_mean","cloud_cover_anomaly",
  "sunshine_duration_mean","sunshine_duration_anomaly"
 ].join(",");
+function validateSeries(series,requiredFields,zoneLabel,seriesLabel){
+ if(!series||!Array.isArray(series.time)||series.time.length===0)
+  throw new Error(zoneLabel+" 缺少有效的"+seriesLabel+"日期序列");
+ const invalidDates=series.time.filter(x=>typeof x!=="string"||!/^\\d{4}-\\d{2}-\\d{2}$/.test(x));
+ if(invalidDates.length)throw new Error(zoneLabel+" "+seriesLabel+"日期格式錯誤");
+ const fields={};
+ for(const key of requiredFields){
+  const values=series[key];
+  const valid=Array.isArray(values)&&values.length===series.time.length&&values.every(v=>v===null||(typeof v==="number"&&Number.isFinite(v)));
+  fields[key]={available:valid,validCount:valid?values.filter(v=>typeof v==="number"&&Number.isFinite(v)).length:0};
+ }
+ return {count:series.time.length,start:series.time[0],end:series.time.at(-1),fields};
+}
 export async function fetchOkinawaLongRange(fetchImpl=fetch){
  const points=await Promise.all(OKINAWA_LONG_RANGE_POINTS.map(async point=>{
   const params=new URLSearchParams({
@@ -30,10 +43,17 @@ export async function fetchOkinawaLongRange(fetchImpl=fetch){
   const response=await fetchImpl(`${ENDPOINT}?${params}`);
   if(!response.ok)throw new Error(`${point.label} 長期展望 API HTTP ${response.status}`);
   const payload=await response.json();
-  if(!payload.weekly?.time?.length && !payload.monthly?.time?.length)throw new Error(`${point.label} 未回傳週/月展望資料`);
-  return {point,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,timezone:payload.timezone,model:payload.model??"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null};
+  if(!payload.weekly?.time?.length && !payload.monthly?.time?.length)throw new Error(point.label+" 未回傳週/月展望資料");
+  const weeklyAudit=payload.weekly?.time?.length?validateSeries(payload.weekly,["precipitation_efi","precipitation_mean","precipitation_anomaly"],point.label,"週展望"):null;
+  const monthlyAudit=payload.monthly?.time?.length?validateSeries(payload.monthly,["precipitation_mean","precipitation_anomaly"],point.label,"月展望"):null;
+  const warnings=[];
+  if(!weeklyAudit?.fields.precipitation_efi.available)warnings.push("週展望缺少有效 precipitation_efi，17–46天可能無法評分");
+  if(!monthlyAudit?.fields.precipitation_mean.available||!monthlyAudit?.fields.precipitation_anomaly.available)warnings.push("月展望缺少有效雨量平均值／距平，47–90天可能無法評分");
+  if(payload.timezone&&payload.timezone!=="Asia/Tokyo")warnings.push("供應商回傳時區為 "+payload.timezone+"，預期 Asia/Tokyo");
+  return {point,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,timezone:payload.timezone,model:payload.model??"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null,dataQuality:{weekly:weeklyAudit,monthly:monthlyAudit,warnings}};
  }));
- return {provider:"Open-Meteo Seasonal Forecast API",model:"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),timezone:"Asia/Tokyo",points};
+ const warnings=points.flatMap(x=>x.dataQuality.warnings.map(message=>x.point.label+"："+message));
+ return {provider:"Open-Meteo Seasonal Forecast API",model:"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),timezone:"Asia/Tokyo",points,dataQuality:{zoneCount:points.length,completeZoneCount:points.filter(x=>x.weekly?.time?.length&&x.monthly?.time?.length).length,warnings,readyForWeeklyScoring:points.every(x=>x.dataQuality.weekly?.fields.precipitation_efi.available),readyForMonthlyScoring:points.every(x=>x.dataQuality.monthly?.fields.precipitation_mean.available&&x.dataQuality.monthly?.fields.precipitation_anomaly.available)}};
 }
 /**
  * Convert precipitation EFI into a qualitative anomaly signal only.
