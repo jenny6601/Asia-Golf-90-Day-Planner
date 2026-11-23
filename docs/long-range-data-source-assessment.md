@@ -34,10 +34,10 @@ The dataset lists ECMWF, UK Met Office, Météo-France, DWD, CMCC, NCEP, JMA, EC
 
 - Keep `open-meteo-ecmwf` as the existing baseline provider.
 - First retrieve a small CDS sample from `seasonal-original-single-levels` for `total_precipitation`, selecting at least two non-ECMWF originating centres and one common initialization date. Start with a tight Okinawa bounding box and a short lead-time subset. Confirm each centre's system identifier and available dates in the live CDS form; do not hard-code guessed system IDs.
-- Normalize each provider to a common monthly record: `provider`, `model`, `initialization`, `valid_period`, `latitude`, `longitude`, `precipitation_mean`, `precipitation_anomaly`, `probability_category`, `units`, `source_reference`.
+- Normalize daily ensemble records with `provider`, `originating_centre`, `system`, `initialization`, `leadtime_hour`, `valid_date`, `latitude`, `longitude`, `member_id`, `total_precipitation`, `units`, `source_reference`. Keep monthly mean / hindcast-climate-mean records in a separate schema.
 - Retain model-level records and a separate multi-model aggregate. Never merge them into a single undocumented value.
 - For 47–90 day screening, require at least two genuinely distinct forecast centres with compatible valid periods before producing a cross-model consensus label. Otherwise display the ECMWF baseline alone and mark independent confirmation unavailable.
-- Do not combine 17–46 day EC46 weekly EFI with monthly C3S seasonal probabilities as if they had identical temporal meaning.
+- Do not combine 17–46 day EC46 weekly EFI with daily C3S ensemble totals as if they had identical calibration, spatial resolution or skill. Treat them as separate model products until hindcast verification supports a calibrated blend.
 - Keep recommendations fail-closed when source coverage, initialization, valid period, or regional verification is missing.
 
 ## Acceptance gates before implementation
@@ -54,7 +54,9 @@ The dataset lists ECMWF, UK Met Office, Météo-France, DWD, CMCC, NCEP, JMA, EC
 ## Sources
 
 - Copernicus Climate Change Service, Seasonal forecasts: https://climate.copernicus.eu/seasonal-forecasts
-- C3S daily/subdaily single-level dataset: https://cds.climate.copernicus.eu/datasets/seasonal-original-single-levels\n- C3S monthly single-level dataset: https://cds.climate.copernicus.eu/datasets/seasonal-monthly-single-levels\n- CDS API setup: https://cds.climate.copernicus.eu/en/how-to-api\n- C3S seasonal dataset/API request guidance: https://confluence.ecmwf.int/pages/viewpage.action?pageId=462896337
+- C3S daily/subdaily single-level dataset: https://cds.climate.copernicus.eu/datasets/seasonal-original-single-levels 
+- C3S monthly single-level dataset: https://cds.climate.copernicus.eu/datasets/seasonal-monthly-single-levels\n- CDS API setup: https://cds.climate.copernicus.eu/en/how-to-api 
+- C3S seasonal dataset/API request guidance: https://confluence.ecmwf.int/pages/viewpage.action?pageId=462896337
 - Open-Meteo Seasonal Forecast API: https://open-meteo.com/en/docs/seasonal-forecast-api
 - ECMWF Long-Range (Seasonal) Forecast guide: https://confluence.ecmwf.int/pages/viewpage.action?pageId=212459706
 
