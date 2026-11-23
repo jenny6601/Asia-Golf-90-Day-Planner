@@ -1,0 +1,30 @@
+name: Okinawa Hindcast Pilot Dataset
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/collect-okinawa-hindcast-pilot.mjs"
+      - ".github/workflows/okinawa-hindcast-pilot.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Collect forecast and ERA5 pairs
+        run: node scripts/collect-okinawa-hindcast-pilot.mjs
+      - name: Upload pilot dataset and raw API responses
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-hindcast-pilot-dataset
+          path: artifacts/
+          if-no-files-found: warn
