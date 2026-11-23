@@ -7,3 +7,5 @@
 
 .course-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.course-option{display:flex;gap:10px;align-items:flex-start;border:1px solid #dce7e1;background:#fbfdfb;border-radius:10px;padding:12px;min-width:0}.course-option input{margin-top:4px;flex:0 0 auto}.course-option span{display:grid;gap:5px;min-width:0}.course-option strong{font-size:.92rem;line-height:1.35}.course-option small{font-size:.76rem;color:#718078;line-height:1.4;overflow-wrap:anywhere}.course-option:has(input:disabled){opacity:.58}.course-option:has(input:checked){border-color:#2b815a;background:#eff7f1}.course-option:has(input:disabled):not(:has(input:checked)){background:#f4f5f4}
 @media(max-width:650px){.course-grid{grid-template-columns:1fr}}
+
+#compare-courses{white-space:nowrap}.comparison-rank{font-size:.78rem;color:#64786d;font-weight:750;letter-spacing:.03em}.comparison-results{display:grid;gap:10px}.course-option{cursor:pointer}.course-option input:disabled{cursor:not-allowed}
