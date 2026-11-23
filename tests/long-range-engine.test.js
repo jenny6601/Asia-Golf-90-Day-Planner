@@ -80,3 +80,15 @@ test("46-to-47-day boundary switches from weekly EFI to monthly anomaly by golf 
  assert.equal(r.rounds[0].regional[0].signal.period,"2027-01-08");
  assert.equal(r.rounds[1].regional[0].signal.period,"2027-01-01");
 });
+
+test("duplicate returned grid cells are not double-weighted",()=>{
+ const p=points(.2,0);
+ p[0].latitude=26.5;p[0].longitude=127.9;
+ p[1].latitude=26.2;p[1].longitude=127.8;
+ p[2].latitude=26.2;p[2].longitude=127.8;
+ p.forEach(x=>{x.weekly.time=["2026-12-10","2026-12-17"];x.weekly.precipitation_efi=[.2,.2];});
+ const r=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"scored");
+ assert.equal(r.regionalSampleCount,2);
+ assert.equal(r.rounds[0].regional.length,2);
+});
