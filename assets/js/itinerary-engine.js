@@ -1,4 +1,5 @@
 import {scoreGolfRainWindow} from "./rain-risk.js";
+import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 
 const DAY_MS=86400000;
 const addDays=(date,n)=>new Date(Date.parse(date+"T00:00:00Z")+n*DAY_MS).toISOString().slice(0,10);
@@ -24,7 +25,8 @@ export function scoreFiveDayItinerary({tripStart, courses, teeHour=7}) {
   const rounds=courses.map((course,index)=>{
     const date=addDays(tripStart,index+1);
     const score=scoreGolfRainWindow(course.hourly,date,teeHour,6);
-    return {round:index+1,date,courseId:course.course.id,courseName:course.course.name,area:course.course.area,score};
+    const suitability=scoreGolfSuitabilityWindow(course.hourly,date,teeHour,6);
+    return {round:index+1,date,courseId:course.course.id,courseName:course.course.name,area:course.course.area,score,suitability};
   });
   const valid=rounds.filter(x=>x.score.status==="scored");
   if (valid.length !== 3) {
