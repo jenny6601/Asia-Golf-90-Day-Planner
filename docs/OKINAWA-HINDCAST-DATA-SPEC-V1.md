@@ -130,3 +130,23 @@ The first collection workflow successfully paired ECMWF IFS 0.25 Previous Runs w
 7. The dataset is a pilot only. It must not recalibrate production rain-risk or playability thresholds.
 
 The collection workflow writes the paired dataset, summary Markdown, and raw API responses to the `okinawa-hindcast-pilot-dataset` GitHub Actions artifact. The artifact is the reproducible source for the figures above.
+
+## Grid-cell and wind audit — next validation gate
+
+A dedicated reproducible diagnostic has been added:
+- Script: `scripts/audit-okinawa-grid-wind.mjs`
+- Workflow: `.github/workflows/okinawa-grid-wind-audit.yml`
+- Artifact: `okinawa-grid-wind-audit`
+
+The audit tests five southern/central/northern proxy candidates across winter and summer windows. For every point it records:
+- requested proxy coordinate versus the forecast API returned grid coordinate;
+- ERA5 returned grid coordinate and elevation;
+- API hourly units for wind speed;
+- paired wind sample count, MAE, bias, forecast mean and ERA5 mean;
+- raw sample values to make the comparison reproducible.
+
+The candidate south points are diagnostic only. No candidate is adopted as the final southern regional proxy until its returned model grid is distinct and its geographic relevance is reviewed. If a separate southern grid cell cannot be obtained at the selected model resolution, the analysis must explicitly report two independent grid cells rather than presenting three nominal zones as independent.
+
+Wind-speed bias must not be corrected by adding an offset or changing suitability thresholds. First confirm unit metadata, returned grid alignment, sample pairing, and raw values. ERA5 remains a reanalysis reference proxy, not direct on-course truth.
+
+After this gate, expand the paired hindcast sample across all 12 months of 2025, stratify by month and lead, and retain missingness and unique-grid counts in every report. The existing production risk and playability thresholds remain frozen until a larger, appropriately verified dataset supports recalibration.
