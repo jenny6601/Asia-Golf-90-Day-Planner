@@ -34,3 +34,38 @@ test("EFI is interpreted as a qualitative anomaly signal, not probability",()=>{
  assert.equal(interpretPrecipitationEfi(0.1).tone,"neutral");
  assert.equal(interpretPrecipitationEfi(null).tone,"unknown");
 });
+
+test("live payload audit reports whether all three zones are scoreable",async()=>{
+ const mock=async url=>{
+  const u=new URL(url);
+  const isNorth=u.searchParams.get("latitude")==="26.5916";
+  return {ok:true,json:async()=>({
+   timezone:"Asia/Tokyo",latitude:Number(u.searchParams.get("latitude")),longitude:Number(u.searchParams.get("longitude")),
+   weekly:{time:["2026-12-01","2026-12-08"],precipitation_efi:isNorth?[0.2,0.3]:[null,null],precipitation_mean:[20,22],precipitation_anomaly:[1,2]},
+   monthly:{time:["2027-01-01"],precipitation_mean:[100],precipitation_anomaly:[5]}
+  })};
+ };
+ const r=await fetchOkinawaLongRange(mock);
+ assert.equal(r.dataQuality.zoneCount,3);
+ assert.equal(r.dataQuality.readyForMonthlyScoring,true);
+ assert.equal(r.dataQuality.readyForWeeklyScoring,false);
+ assert.ok(r.dataQuality.warnings.some(x=>x.includes("中部")||x.includes("南部")));
+});
+test("live payload audit flags mismatched arrays instead of treating them as complete",async()=>{
+ const mock=async()=>({ok:true,json:async()=>({
+  timezone:"Asia/Tokyo",
+  weekly:{time:["2026-12-01","2026-12-08"],precipitation_efi:[0.1]},
+  monthly:{time:["2027-01-01"],precipitation_mean:[100],precipitation_anomaly:[0]}
+ })});
+ const r=await fetchOkinawaLongRange(mock);
+ assert.equal(r.dataQuality.readyForWeeklyScoring,false);
+ assert.equal(r.dataQuality.readyForMonthlyScoring,true);
+ assert.ok(r.points.every(x=>x.dataQuality.warnings.length>0));
+});
+test("malformed time coordinates are rejected",async()=>{
+ const mock=async()=>({ok:true,json:async()=>({
+  weekly:{time:["not-a-date"],precipitation_efi:[0.1]},
+  monthly:{time:["2027-01-01"],precipitation_mean:[100],precipitation_anomaly:[0]}
+ })});
+ await assert.rejects(fetchOkinawaLongRange(mock),/日期格式錯誤/);
+});
