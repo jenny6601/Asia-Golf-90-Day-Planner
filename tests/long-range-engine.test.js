@@ -13,7 +13,7 @@ test("17-46 day windows use weekly EFI as a qualitative signal",()=>{
  assert.match(r.interpretation,/不是逐日降雨預報/);
 });
 test("47-90 day windows use monthly anomaly ratios, not daily rain probability",()=>{
- const r=evaluateLongRangeTripWindow({tripStart:"2027-01-15",referenceDate:"2026-11-23",points(.1,30)});
+ const r=evaluateLongRangeTripWindow({tripStart:"2027-01-15",referenceDate:"2026-11-23",points:points(.1,30)});
  assert.equal(r.status,"scored");
  assert.equal(r.tendencyRank,3);
  assert.equal(r.rounds[0].rounds,undefined);
