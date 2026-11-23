@@ -36,6 +36,6 @@ test("rejects windows with missing required rain or wind values",()=>{
 test("reports rain event contingency metrics at threshold",()=>{
  const {windows}=buildSixHourWindows(rows(),[7]);
  const s=summarizeSixHourWindows(windows);
- assert.equal(s.rainEvents["1"].hit,1);
- assert.equal(s.rainEvents["1"].csi,1);
+ assert.equal(s.rainEvents["0.1"].hit,1);
+ assert.equal(s.rainEvents["0.1"].csi,1);
 });
