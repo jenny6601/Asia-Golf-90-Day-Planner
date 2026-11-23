@@ -60,6 +60,9 @@ export function evaluateLongRangeTripWindow({tripStart,referenceDate,points}){
  const tendencyRank=Math.max(Math.round(mean),worst);
  return {status:"scored",tripStart,tripEnd:addDays(tripStart,4),golfDates,rounds,regionalSampleCount:Math.min(...rounds.map(x=>x.regionalSampleCount)),tendencyRank,tendency:labelFor(tendencyRank),
   confidence:tendencyRank>=2?"低":"極低",
+  temporalConfidence:tendencyRank>=2?"低":"極低",
+  spatialConfidence:Math.min(...rounds.map(x=>x.regionalSampleCount))>=3?"較完整":Math.min(...rounds.map(x=>x.regionalSampleCount))===2?"有限":"非常有限",
+  spatialWarning:Math.min(...rounds.map(x=>x.regionalSampleCount))<3?"代表區域有重複預報網格，空間證據有限；不可解讀為多區獨立確認。":null,
   interpretation:"區域週／月尺度濕潤趨勢篩選；不是逐日降雨預報、降雨機率或取消機率"};
 }
 export function recommendLongRangeWindows({referenceDate,points,limit=3,minStartGap=5,horizonDays=90}){
