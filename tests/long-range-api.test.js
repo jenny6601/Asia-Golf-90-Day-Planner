@@ -69,3 +69,18 @@ test("malformed time coordinates are rejected",async()=>{
  })});
  await assert.rejects(fetchOkinawaLongRange(mock),/日期格式錯誤/);
 });
+
+test("field audit distinguishes partial availability from complete coverage",async()=>{
+ const mock=async()=>({ok:true,json:async()=>({
+  timezone:"Asia/Tokyo",
+  weekly:{time:["2026-12-01","2026-12-08"],precipitation_efi:[0.1,null],precipitation_mean:[20,null],precipitation_anomaly:[1,null]},
+  monthly:{time:["2027-01-01","2027-02-01"],precipitation_mean:[100,100],precipitation_anomaly:[5,5]}
+ })});
+ const r=await fetchOkinawaLongRange(mock);
+ assert.equal(r.points[0].dataQuality.weekly.fields.precipitation_efi.available,true);
+ assert.equal(r.points[0].dataQuality.weekly.fields.precipitation_efi.complete,false);
+ assert.equal(r.points[0].dataQuality.weekly.fields.precipitation_efi.coverage,0.5);
+ assert.equal(r.points[0].dataQuality.monthly.fields.precipitation_mean.complete,true);
+ assert.equal(r.dataQuality.weeklyCoverageComplete,false);
+ assert.equal(r.dataQuality.monthlyCoverageComplete,true);
+});
