@@ -12,6 +12,7 @@ const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommend
 let latestWeather=null;
 let selectedCourses=[];
 let latestCourseWeather=null;
+let latestLongRangeData=null;
 function cell(value,suffix=""){return value===null||value===undefined?"—":`${value}${suffix}`;}
 function makeTable(headers,rows,cls="weather-table"){
  const table=document.createElement("div");table.className=cls;
@@ -261,11 +262,12 @@ function renderLongRangeRecommendations(data){
   host.append(card);
  }
 }
+$("recommend-long-range").addEventListener("click",()=>{if(latestLongRangeData)renderLongRangeRecommendations(latestLongRangeData);});
 $("fetch-long-range").addEventListener("click",async()=>{
  const button=$("fetch-long-range"),status=$("long-range-status");
  button.disabled=true;status.textContent="正在讀取 ECMWF EC46 + SEAS5 長期展望…";
  try{
-  const data=await fetchOkinawaLongRange();window.__latestLongRangeData=data;renderLongRange(data);renderLongRangeRecommendations(data);
+  const data=await fetchOkinawaLongRange();latestLongRangeData=data;renderLongRange(data);$("recommend-long-range").disabled=false;renderLongRangeRecommendations(data);
   const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(data.fetchedAt));
   status.textContent=`讀取成功｜${data.provider}｜三區均有回傳｜日本時間：${stamp}`;
  }catch(error){status.textContent=`讀取失敗：${error.message}。沒有以合成資料代替。`;}
