@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 22
       - name: Query live Open-Meteo seasonal API
-        run: node scripts/seasonal-api-smoke-test.mjs | tee seasonal-api-smoke-report.json
+        run: node --input-type=module < scripts/seasonal-api-smoke-test.txt | tee seasonal-api-smoke-report.json
       - name: Upload live response audit
         if: always()
         uses: actions/upload-artifact@v4
