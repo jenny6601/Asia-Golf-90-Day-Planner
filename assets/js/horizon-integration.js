@@ -12,7 +12,7 @@ export function combineHorizonRecommendations({shortRange,longRange,shortFetched
   metric:"rain-impact-index",value:x.itineraryRisk,label:x.label,
   confidence:x.confidenceLabel??"中等（未校準）",
   source:"三個所選球場 GPS 的逐時預報",
-  rounds:x.rounds.map(r=>({date:r.date,courseName:r.courseName,value:r.score.rainRisk,label:r.score.label}))
+  rounds:x.rounds.map(r=>({date:r.date,courseName:r.courseName,value:r.score.rainRisk,label:r.score.label,suitability:r.suitability}))
  }));
  const long=longItems.map(x=>({
   horizon:"17-90天",kind:"seasonal",rank:x.recommendationRank,
