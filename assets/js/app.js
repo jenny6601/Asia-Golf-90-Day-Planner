@@ -1,7 +1,7 @@
 import {generateTripWindows,recommendTripDates} from "./date-engine.js";
 import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
 import {OKINAWA_COURSES} from "./okinawa-courses.js";
-import {scoreGolfRainWindow} from "./rain-risk.js";
+import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -128,6 +128,7 @@ function runCourseComparison(){
   course:item.course,
   score:scoreGolfRainWindow(item.hourly,date,teeHour,6)
  }));
+ const summary=summarizeCourseRainRisks(results);
  const valid=results.filter(x=>x.score.status==="scored");
  const host=$("comparison-results");host.replaceChildren();
  const sorted=[...valid].sort((a,b)=>a.score.rainRisk-b.score.rainRisk);
@@ -145,9 +146,9 @@ function runCourseComparison(){
  const avg=valid.length?valid.reduce((s,x)=>s+x.score.rainRisk,0)/valid.length:null;
  const worst=valid.length?Math.max(...valid.map(x=>x.score.rainRisk)):null;
  const best=sorted[0];
- $("comparison-status").textContent=valid.length===results.length
-  ? `比較完成｜${valid.length} 個球場｜平均風險指數 ${avg.toFixed(1)}｜最差球場風險 ${worst.toFixed(1)}｜最低風險：${best.course.name}`
-  : `僅 ${valid.length}/${results.length} 個球場有完整六小時資料；不以缺值當作零風險。`;
+ $("comparison-status").textContent=summary.scoredCount===summary.requestedCount
+  ? `比較完成｜${summary.scoredCount} 個球場｜平均風險指數 ${summary.averageRisk}｜最差球場風險 ${summary.worstRisk}｜最低風險：${best.course.name}`
+  : `僅 ${summary.scoredCount}/${summary.requestedCount} 個球場有完整六小時資料；不以缺值當作零風險。`;
 }
 $("compare-courses").addEventListener("click",runCourseComparison);
 $("compare-tee-hour").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
