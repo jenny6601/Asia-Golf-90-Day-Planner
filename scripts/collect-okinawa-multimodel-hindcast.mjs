@@ -8,8 +8,11 @@ const points=[
 const windows=Array.from({length:12},(_,i)=>{
  const month=String(i+1).padStart(2,"0");
  const season=i<2||i===11?"winter":i<5?"spring":i<8?"summer":"autumn";
- return {start:"2025-"+month+"-15",end:"2025-"+month+"-21",season};
-});
+ return [
+  {start:"2025-"+month+"-01",end:"2025-"+month+"-07",season,week:"early"},
+  {start:"2025-"+month+"-15",end:"2025-"+month+"-21",season,week:"mid"}
+ ];
+}).flat();
 const models=[
  {id:"ecmwf_ifs025",label:"ECMWF IFS 0.25°"},
  {id:"ncep_gfs_global",label:"NCEP GFS Global"},
