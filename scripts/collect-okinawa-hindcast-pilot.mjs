@@ -113,7 +113,7 @@ const keys=["temperature_2m","precipitation","wind_speed_10m"];
 for(const lead of leads) {
   for(const zone of zones) {
     const subset=samples.filter(s=>s.leadHours===lead*24&&s.zoneId===zone.id);
-    const row={leadDays:lead,zone:zone.id,nSamples:subset.length,variables:{}};
+    const row={leadDays:lead,zone:zone.id,zoneLabel:zone.label,nSamples:subset.length,variables:{}};
     for(const key of keys) {
       const fKey="forecast."+key, oKey="verification."+key;
       const pairs=subset.filter(s=>Number.isFinite(s.forecast[key])&&Number.isFinite(s.verification[key]));
