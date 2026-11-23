@@ -95,7 +95,7 @@ function renderCoursePicker(){
   checkbox.checked=selectedCourses.some(x=>x.id===course.id);
   checkbox.disabled=course.coordinateStatus==="pending" || (!checkbox.checked && selectedCourses.length>=3);
   checkbox.addEventListener("change",()=>{
-   selectedCourses=OKINAWA_COURSES.filter(x=>host.querySelector(`input[value="${x.id}"]`)?.checked);
+   if(checkbox.checked){selectedCourses.push(course);}else{selectedCourses=selectedCourses.filter(x=>x.id!==course.id);}
    $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
    $("fetch-course-weather").disabled=selectedCourses.length===0;
    renderCoursePicker();
