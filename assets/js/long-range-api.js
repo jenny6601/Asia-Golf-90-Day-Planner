@@ -28,7 +28,7 @@ function validateSeries(series,requiredFields,zoneLabel,seriesLabel){
   const values=series[key];
   const valid=Array.isArray(values)&&values.length===series.time.length&&values.every(v=>v===null||(typeof v==="number"&&Number.isFinite(v)));
   const validCount=valid?values.filter(v=>typeof v==="number"&&Number.isFinite(v)).length:0;
-  fields[key]={available:valid&&validCount>0,validCount};
+  fields[key]={available:valid&&validCount>0,complete:valid&&validCount===series.time.length,validCount,coverage:series.time.length?Number((validCount/series.time.length).toFixed(3)):0};
  }
  return {count:series.time.length,start:series.time[0],end:series.time.at(-1),fields};
 }
@@ -54,7 +54,7 @@ export async function fetchOkinawaLongRange(fetchImpl=fetch){
   return {point,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,timezone:payload.timezone,model:payload.model??"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null,dataQuality:{weekly:weeklyAudit,monthly:monthlyAudit,warnings}};
  }));
  const warnings=points.flatMap(x=>x.dataQuality.warnings.map(message=>x.point.label+"："+message));
- return {provider:"Open-Meteo Seasonal Forecast API",model:"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),timezone:"Asia/Tokyo",points,dataQuality:{zoneCount:points.length,completeZoneCount:points.filter(x=>x.weekly?.time?.length&&x.monthly?.time?.length).length,warnings,readyForWeeklyScoring:points.every(x=>x.dataQuality.weekly?.fields.precipitation_efi.available),readyForMonthlyScoring:points.every(x=>x.dataQuality.monthly?.fields.precipitation_mean.available&&x.dataQuality.monthly?.fields.precipitation_anomaly.available)}};
+ return {provider:"Open-Meteo Seasonal Forecast API",model:"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),timezone:"Asia/Tokyo",points,dataQuality:{zoneCount:points.length,completeZoneCount:points.filter(x=>x.weekly?.time?.length&&x.monthly?.time?.length).length,warnings,readyForWeeklyScoring:points.every(x=>x.dataQuality.weekly?.fields.precipitation_efi.available),weeklyCoverageComplete:points.every(x=>x.dataQuality.weekly?.fields.precipitation_efi.complete),readyForMonthlyScoring:points.every(x=>x.dataQuality.monthly?.fields.precipitation_mean.available&&x.dataQuality.monthly?.fields.precipitation_anomaly.available),monthlyCoverageComplete:points.every(x=>x.dataQuality.monthly?.fields.precipitation_mean.complete&&x.dataQuality.monthly?.fields.precipitation_anomaly.complete)}};
 }
 /**
  * Convert precipitation EFI into a qualitative anomaly signal only.
