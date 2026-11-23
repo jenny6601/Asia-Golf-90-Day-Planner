@@ -20,6 +20,10 @@ test("Okinawa adapter requests three distinct representative zones", async () =>
     assert.equal(url.searchParams.get("forecast_days"),"16");
     assert.equal(url.searchParams.get("timezone"),"Asia/Tokyo");
     assert.equal(url.searchParams.get("wind_speed_unit"),"ms");
+    assert.match(url.searchParams.get("hourly"),/apparent_temperature/);
+    assert.match(url.searchParams.get("hourly"),/precipitation_probability/);
+    assert.match(url.searchParams.get("hourly"),/wind_gusts_10m/);
+    assert.match(url.searchParams.get("daily"),/wind_gusts_10m_max/);
   }
   assert.deepEqual(OKINAWA_ZONES.map(x=>x.place),["名護市","沖繩市","那霸市"]);
 });
