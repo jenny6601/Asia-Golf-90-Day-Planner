@@ -53,6 +53,7 @@ export async function fetchOkinawaLongRange(fetchImpl=fetch){
   if(payload.timezone&&payload.timezone!=="Asia/Tokyo")warnings.push("供應商回傳時區為 "+payload.timezone+"，預期 Asia/Tokyo");
   return {point,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,timezone:payload.timezone,model:payload.model??"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null,dataQuality:{weekly:weeklyAudit,monthly:monthlyAudit,warnings}};
  }));
+ const warnings=[];
  const gridKey=x=>Number.isFinite(x.latitude)&&Number.isFinite(x.longitude)?x.latitude.toFixed(4)+","+x.longitude.toFixed(4):"unknown:"+x.point.id;
  const uniqueGridCells=new Set(points.map(gridKey));
  const uniqueGridCellCount=uniqueGridCells.size;
