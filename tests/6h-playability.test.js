@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {buildSixHourWindows,summarizeSixHourWindows} from "../scripts/evaluate-okinawa-6h-playability.mjs";
+import {buildSixHourWindows,summarizeSixHourWindows,clusterBootstrapIntervals} from "../scripts/evaluate-okinawa-6h-playability.mjs";
 
 function rows({missingHour=null,missingField=null}={}){
  const out=[];
@@ -38,4 +38,13 @@ test("reports rain event contingency metrics at threshold",()=>{
  const s=summarizeSixHourWindows(windows);
  assert.equal(s.rainEvents["0.1"].hit,1);
  assert.equal(s.rainEvents["0.1"].csi,1);
+});
+
+test("cluster bootstrap resamples whole local dates reproducibly",()=>{
+ const {windows}=buildSixHourWindows(rows(),[7]);
+ const duplicated=windows.map((w,i)=>({...w,date:"2025-07-"+String(15+i).padStart(2,"0")}));
+ const a=clusterBootstrapIntervals(duplicated,100,42);
+ const b=clusterBootstrapIntervals(duplicated,100,42);
+ assert.equal(a.clusterCount,1);
+ assert.deepEqual(a,b);
 });
