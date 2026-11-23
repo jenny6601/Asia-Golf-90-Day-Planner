@@ -4,10 +4,9 @@
  * Severity is driven by the worst forecast hour to avoid hiding short severe episodes.
  */
 const max=(xs)=>Math.max(...xs);
-const mean=xs=>xs.reduce((a,b)=>a+b,0)/xs.length;
 const valid=(x)=>typeof x==="number"&&Number.isFinite(x);
 export function scoreGolfSuitabilityWindow(hourly,date,teeHour,durationHours=6){
- if(!hourly||!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)||!Number.isInteger(teeHour)||teeHour<0||teeHour>23||!Number.isInteger(durationHours)||durationHours<1||durationHours>12)
+ if(!hourly||!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isInteger(teeHour)||teeHour<0||teeHour>23||!Number.isInteger(durationHours)||durationHours<1||durationHours>12)
   throw new TypeError("Invalid hourly data, date, teeHour or durationHours");
  const indexes=[];
  for(let h=0;h<durationHours;h++){
