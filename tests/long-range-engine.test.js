@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {evaluateLongRangeTripWindow,recommendLongRangeWindows} from "../assets/js/long-range-engine.js";
 const points=(weeklyEfi=0.1,monthlyAnomaly=0)=>[
- {point:{id:"north",label:"北部"},weekly:{time:["2026-12-10","2027-01-10"],precipitation_efi:[weeklyEfi,weeklyEfi]},monthly:{time:["2027-01-01","2027-02-01","2027-03-01"],precipitation_mean:[100,100,100],precipitation_anomaly:[monthlyAnomaly,monthlyAnomaly,monthlyAnomaly]}},
+ {point:{id:"north",label:"北部"},weekly:{time:["2026-12-10","2026-12-17","2026-12-24","2026-12-31","2027-01-07","2027-01-14"],precipitation_efi:Array(6).fill(weeklyEfi)},monthly:{time:["2027-01-01","2027-02-01","2027-03-01"],precipitation_mean:[100,100,100],precipitation_anomaly:[monthlyAnomaly,monthlyAnomaly,monthlyAnomaly]}},
  {point:{id:"central",label:"中部"},weekly:{time:["2026-12-10","2027-01-10"],precipitation_efi:[weeklyEfi,weeklyEfi]},monthly:{time:["2027-01-01","2027-02-01","2027-03-01"],precipitation_mean:[100,100,100],precipitation_anomaly:[monthlyAnomaly,monthlyAnomaly,monthlyAnomaly]}},
  {point:{id:"south",label:"南部"},weekly:{time:["2026-12-10","2027-01-10"],precipitation_efi:[weeklyEfi,weeklyEfi]},monthly:{time:["2027-01-01","2027-02-01","2027-03-01"],precipitation_mean:[100,100,100],precipitation_anomaly:[monthlyAnomaly,monthlyAnomaly,monthlyAnomaly]}}
 ];
@@ -38,4 +38,62 @@ test("long range recommendations are spaced and ranked by tendency tiers",()=>{
   const gap=(Date.parse(r.recommendations[i].tripStart+"T00:00:00Z")-Date.parse(r.recommendations[i-1].tripStart+"T00:00:00Z"))/86400000;
   assert.ok(gap>=5);
  }
+});
+
+test("weekly EFI is not carried beyond its seven-day coverage window",()=>{
+ const p=points();
+ p.forEach(x=>{x.weekly.time=["2026-12-01"];x.weekly.precipitation_efi=[.8]});
+ const r=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"insufficient-data");
+ assert.equal(r.rounds[0].status,"insufficient-data");
+});
+test("weekly EFI switches at the next weekly period boundary",()=>{
+ const p=points();
+ p.forEach(x=>{x.weekly.time=["2026-12-10","2026-12-17"];x.weekly.precipitation_efi=[.8,-.6]});
+ const r=evaluateLongRangeTripWindow({tripStart:"2026-12-16",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"scored");
+ assert.equal(r.rounds[0].regional[0].signal.period,"2026-12-17");
+ assert.equal(r.rounds[0].regional[0].signal.rank,0);
+});
+test("a trip crossing a calendar month uses each golf day's own monthly anomaly",()=>{
+ const p=points();
+ p.forEach(x=>{
+  x.monthly.time=["2027-01-01","2027-02-01"];
+  x.monthly.precipitation_mean=[100,100];
+  x.monthly.precipitation_anomaly=[30,-30];
+ });
+ const r=evaluateLongRangeTripWindow({tripStart:"2027-01-30",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"scored");
+ assert.equal(r.rounds[0].date,"2027-01-31");
+ assert.equal(r.rounds[0].regional[0].signal.rank,3);
+ assert.equal(r.rounds[1].date,"2027-02-01");
+ assert.equal(r.rounds[1].regional[0].signal.rank,0);
+ assert.equal(r.rounds[1].regional[0].signal.period,"2027-02-01");
+});
+test("a three-round trip crossing lead day 46 to 47 switches weekly to monthly evidence",()=>{
+ const p=points();
+ p.forEach(x=>{
+  x.weekly.time=["2027-01-06","2027-01-13"];
+  x.weekly.precipitation_efi=[-.6,-.6];
+  x.monthly.time=["2027-01-01"];
+  x.monthly.precipitation_mean=[100];
+  x.monthly.precipitation_anomaly=[30];
+ });
+ const r=evaluateLongRangeTripWindow({tripStart:"2027-01-06",referenceDate:"2026-11-23",points:p});
+ assert.equal(r.status,"scored");
+ assert.deepEqual(r.rounds.map(x=>x.date),["2027-01-07","2027-01-08","2027-01-09"]);
+ assert.deepEqual(r.rounds.map(x=>x.regional[0].signal.period),["2027-01-06","2027-01-06","2027-01-01"]);
+ assert.deepEqual(r.rounds.map(x=>x.regional[0].signal.rank),[0,0,3]);
+});
+
+test("confidence follows forecast horizon, not whether the seasonal signal is wet or dry",()=>{
+ const dry=points(-.7,-30),wet=points(.9,30);
+ const weeklyDry=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:dry});
+ const weeklyWet=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:wet});
+ assert.equal(weeklyDry.confidence,"低");
+ assert.equal(weeklyWet.confidence,"低");
+ const monthlyDry=evaluateLongRangeTripWindow({tripStart:"2027-01-15",referenceDate:"2026-11-23",points:dry});
+ const monthlyWet=evaluateLongRangeTripWindow({tripStart:"2027-01-15",referenceDate:"2026-11-23",points:wet});
+ assert.equal(monthlyDry.confidence,"極低");
+ assert.equal(monthlyWet.confidence,"極低");
 });
