@@ -2,6 +2,7 @@ import {generateTripWindows,recommendTripDates} from "./date-engine.js";
 import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
 import {OKINAWA_COURSES} from "./okinawa-courses.js";
 import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
+import {scoreFiveDayItinerary} from "./itinerary-engine.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -121,6 +122,62 @@ function renderCourseWeather(data){
  }
 }
 
+
+function populateItineraryStartDates(){
+ const select=$("itinerary-start");select.replaceChildren();
+ if(!latestCourseWeather?.courses || selectedCourses.length!==3){
+  select.disabled=true;select.add(new Option("請先選擇三個球場並讀取預報",""));return;
+ }
+ const startSet=new Set(latestCourseWeather.courses[0].hourly.time.map(t=>t.slice(0,10)));
+ const lastDates=latestCourseWeather.courses.map(x=>new Set(x.hourly.time.map(t=>t.slice(0,10))));
+ const candidates=[...startSet].sort().filter(start=>{
+  const golfDates=[1,2,3].map(n=>new Date(Date.parse(start+"T00:00:00Z")+n*86400000).toISOString().slice(0,10));
+  return lastDates.every(set=>golfDates.every(d=>set.has(d)));
+ });
+ const valid=candidates.filter(start=>scoreFiveDayItinerary({
+  tripStart:start,teeHour:Number($("itinerary-tee-hour").value),
+  courses:latestCourseWeather.courses
+ }).status==="scored");
+ if(!valid.length){
+  select.disabled=true;select.add(new Option("目前預報範圍內沒有完整五天行程",""));$("score-itinerary").disabled=true;return;
+ }
+ valid.forEach(start=>select.add(new Option(`${fmt(start)} 出發｜${fmt(new Date(Date.parse(start+"T00:00:00Z")+4*86400000).toISOString().slice(0,10))} 返回`,start)));
+ select.value=valid[0];select.disabled=false;$("score-itinerary").disabled=false;
+}
+function renderItinerary(){
+ const status=$("itinerary-status"),host=$("itinerary-results");host.replaceChildren();
+ if(!latestCourseWeather || selectedCourses.length!==3){
+  status.textContent="請先選擇三個球場並成功讀取預報。";return;
+ }
+ const result=scoreFiveDayItinerary({
+  tripStart:$("itinerary-start").value,
+  teeHour:Number($("itinerary-tee-hour").value),
+  courses:latestCourseWeather.courses
+ });
+ if(result.status!=="scored"){
+  status.textContent=result.message;return;
+ }
+ const card=document.createElement("article");card.className="weather-card";
+ const heading=document.createElement("h3");heading.textContent=`五天四夜｜${fmt(result.tripStart)} – ${fmt(result.tripEnd)}`;card.append(heading);
+ const score=document.createElement("p");score.className="risk-summary";score.textContent=`整趟三場球降雨影響：${result.label}｜${result.itineraryRisk}/100`;card.append(score);
+ const summary=document.createElement("p");summary.textContent=`三場平均風險 ${result.averageRoundRisk}｜最差一場 ${result.worstRoundRisk}｜每日開球 ${String(result.teeHour).padStart(2,"0")}:00`;card.append(summary);
+ const rows=result.rounds.map(x=>[
+  `Day ${x.round+1}｜${fmt(x.date)}`,
+  x.courseName,
+  x.score.label,
+  `${x.score.rainRisk}/100`,
+  `${x.score.averageHourlyRainProbability}%`,
+  `${x.score.expectedRainAmountMm} mm`
+ ]);
+ card.append(makeTable(["日期","球場","降雨風險","指數","平均逐時機率","六小時雨量"],rows));
+ const travel=document.createElement("p");travel.className="weather-meta";travel.textContent=`Day 1 ${fmt(result.travelDays[0].date)}：交通日（未納入風險分數）｜Day 5 ${fmt(result.travelDays[1].date)}：交通日（未納入風險分數）`;card.append(travel);
+ const worst=document.createElement("p");worst.textContent=`最需留意：Day ${result.worstRound.round+1}｜${result.worstRound.courseName}（${result.worstRound.risk}/100）`;card.append(worst);
+ host.append(card);
+ status.textContent="評估完成｜使用三個球場各自 GPS 的真實逐時預報｜僅評估打球日；交通日未計分。";
+}
+$("score-itinerary").addEventListener("click",renderItinerary);
+$("itinerary-tee-hour").addEventListener("change",()=>{populateItineraryStartDates();});
+
 function runCourseComparison(){
  if(!latestCourseWeather?.courses?.length)return;
  const date=$("compare-date").value,teeHour=Number($("compare-tee-hour").value);
@@ -172,6 +229,7 @@ $("fetch-course-weather").addEventListener("click",async()=>{
    dateInput.disabled=true;$("compare-courses").disabled=true;
    $("comparison-status").textContent="所選球場沒有共同逐時預報日期，暫時無法公平比較。";
   }
+  populateItineraryStartDates();
   const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(latestCourseWeather.fetchedAt));
   status.textContent=`成功｜${latestCourseWeather.courses.length} 個球場｜16天｜讀取時間（日本時間）：${stamp}`;
  }catch(error){status.textContent=`讀取失敗：${error.message}`;}
