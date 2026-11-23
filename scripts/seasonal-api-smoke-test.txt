@@ -67,6 +67,9 @@ const results = await Promise.all(zones.map(async zone => {
   };
 }));
 
+const gridKeys = results.map(item => Number.isFinite(item.returnedCoordinates.latitude) && Number.isFinite(item.returnedCoordinates.longitude)
+  ? item.returnedCoordinates.latitude.toFixed(4) + "," + item.returnedCoordinates.longitude.toFixed(4) : "unknown:" + item.zone);
+const uniqueGridCellCount = new Set(gridKeys).size;
 const report = {
   checkedAt: new Date().toISOString(),
   provider: "Open-Meteo Seasonal Forecast API",
@@ -75,6 +78,9 @@ const report = {
   zones: results,
   readiness: {
     zoneCount: results.length,
+    uniqueGridCellCount,
+    spatiallyDistinct: uniqueGridCellCount === results.length,
+    spatialWarning: uniqueGridCellCount < results.length ? "多個代表區域落在相同預報網格，不是獨立區域樣本" : null,
     weeklyEfiAllZones: results.every(item => item.weekly.available && item.weekly.fields.precipitation_efi?.usable),
     monthlyRainAllZones: results.every(item => item.monthly.available &&
       item.monthly.fields.precipitation_mean?.usable && item.monthly.fields.precipitation_anomaly?.usable)
