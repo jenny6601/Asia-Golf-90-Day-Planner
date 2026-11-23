@@ -1,0 +1,30 @@
+name: Seasonal API Live Smoke Test
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seasonal-api-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Query live Open-Meteo seasonal API
+        run: node --input-type=module < scripts/seasonal-api-smoke-test.txt | tee seasonal-api-smoke-report.json
+      - name: Upload live response audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seasonal-api-smoke-report
+          path: seasonal-api-smoke-report.json
+          if-no-files-found: warn
+          retention-days: 7

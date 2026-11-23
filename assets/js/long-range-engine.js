@@ -9,7 +9,10 @@ const lead=(date,ref)=>(Date.parse(date+"T00:00:00Z")-Date.parse(ref+"T00:00:00Z
 function weeklyAt(series,date){
  const times=series?.time??[];let idx=-1;
  for(let i=0;i<times.length;i++)if(times[i]<=date)idx=i;
- return idx<0?null:{index:idx,date:times[idx]};
+ if(idx<0)return null;
+ // A weekly signal applies only to its own seven-day bucket; never carry it forward.
+ if(date>=addDays(times[idx],7))return null;
+ return {index:idx,date:times[idx]};
 }
 function classifyWeekly(series,date){
  const rec=weeklyAt(series,date);if(!rec)return null;
@@ -39,17 +42,27 @@ export function evaluateLongRangeTripWindow({tripStart,referenceDate,points}){
  const rounds=golfDates.map(date=>{
   const days=lead(date,referenceDate);
   if(days<17||days>90)return {date,status:"out-of-range"};
-  const regional=points.map(p=>({zone:p.point.id,label:p.point.label,signal:signalForPoint(p,date,days)}));
+  const seenCells=new Set();
+  const independentPoints=points.filter(p=>{
+   const lat=p.latitude??p.point.latitude,lon=p.longitude??p.point.longitude;
+   const key=Number.isFinite(lat)&&Number.isFinite(lon)?lat.toFixed(4)+","+lon.toFixed(4):"zone:"+p.point.id;
+   if(seenCells.has(key))return false;
+   seenCells.add(key);return true;
+  });
+  const regional=independentPoints.map(p=>({zone:p.point.id,label:p.point.label,signal:signalForPoint(p,date,days)}));
   if(regional.some(x=>!x.signal))return {date,status:"insufficient-data",regional};
   const worst=regional.reduce((a,b)=>b.signal.rank>a.signal.rank?b:a,regional[0]);
   const average=regional.reduce((s,x)=>s+x.signal.rank,0)/regional.length;
-  return {date,status:"scored",regional,worstZone:worst.zone,worstZoneLabel:worst.label,worstSignal:worst.signal,regionalMeanRank:average,rank:Math.max(worst.signal.rank,Math.round(average))};
+  return {date,status:"scored",regional,regionalSampleCount:regional.length,worstZone:worst.zone,worstZoneLabel:worst.label,worstSignal:worst.signal,regionalMeanRank:average,rank:Math.max(worst.signal.rank,Math.round(average))};
  });
  if(rounds.some(x=>x.status!=="scored"))return {status:"insufficient-data",tripStart,tripEnd:addDays(tripStart,4),rounds,missingDates:rounds.filter(x=>x.status!=="scored").map(x=>x.date)};
  const ranks=rounds.map(x=>x.rank),mean=ranks.reduce((a,b)=>a+b,0)/3,worst=Math.max(...ranks);
  const tendencyRank=Math.max(Math.round(mean),worst);
- return {status:"scored",tripStart,tripEnd:addDays(tripStart,4),golfDates,rounds,tendencyRank,tendency:labelFor(tendencyRank),
+ return {status:"scored",tripStart,tripEnd:addDays(tripStart,4),golfDates,rounds,regionalSampleCount:Math.min(...rounds.map(x=>x.regionalSampleCount)),tendencyRank,tendency:labelFor(tendencyRank),
   confidence:tendencyRank>=2?"低":"極低",
+  temporalConfidence:tendencyRank>=2?"低":"極低",
+  spatialConfidence:Math.min(...rounds.map(x=>x.regionalSampleCount))>=3?"較完整":Math.min(...rounds.map(x=>x.regionalSampleCount))===2?"有限":"非常有限",
+  spatialWarning:Math.min(...rounds.map(x=>x.regionalSampleCount))<3?"代表區域有重複預報網格，空間證據有限；不可解讀為多區獨立確認。":null,
   interpretation:"區域週／月尺度濕潤趨勢篩選；不是逐日降雨預報、降雨機率或取消機率"};
 }
 export function recommendLongRangeWindows({referenceDate,points,limit=3,minStartGap=5,horizonDays=90}){
@@ -63,5 +76,18 @@ export function recommendLongRangeWindows({referenceDate,points,limit=3,minStart
    selected.push(item);if(selected.length===limit)break;
   }
  }
- return {candidateCount:all.length,scoredCount:scored.length,missingCount:all.length-scored.length,recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1})),all};
+ const missingCount=all.length-scored.length;
+ const coverageRate=all.length?Number((scored.length/all.length).toFixed(3)):0;
+ const buckets={weekly:{label:"17–46 天（週 EFI）",candidateCount:0,scoredCount:0},monthly:{label:"47–90 天（月距平）",candidateCount:0,scoredCount:0},transition:{label:"跨越 46／47 天邊界",candidateCount:0,scoredCount:0}};
+ for(const item of all){
+  const leads=item.rounds.map(round=>lead(round.date,referenceDate));
+  const key=Math.max(...leads)<=46?"weekly":Math.min(...leads)>=47?"monthly":"transition";
+  buckets[key].candidateCount++;
+  if(item.status==="scored")buckets[key].scoredCount++;
+ }
+ const coverageByHorizon=Object.fromEntries(Object.entries(buckets).map(([key,b])=>[key,{
+  ...b,missingCount:b.candidateCount-b.scoredCount,
+  coverageRate:b.candidateCount?Number((b.scoredCount/b.candidateCount).toFixed(3)):0
+ }]));
+ return {candidateCount:all.length,scoredCount:scored.length,missingCount,coverageRate,coverageByHorizon,recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1})),all};
 }

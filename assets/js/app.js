@@ -263,6 +263,11 @@ function renderLongRange(data){
   const card=document.createElement("article");card.className="weather-card";
   const heading=document.createElement("h3");heading.textContent=`${item.point.label}｜${item.point.place}`;card.append(heading);
   const meta=document.createElement("p");meta.className="weather-meta";meta.textContent=`ECMWF Seasonal Seamless｜座標 ${item.latitude.toFixed(3)}, ${item.longitude.toFixed(3)}｜${item.timezone}`;card.append(meta);
+  const audit=document.createElement("p");audit.className="data-note";
+  const q=item.dataQuality;
+  audit.textContent=`資料檢核｜週資料 ${q?.weekly?.count??0} 筆（EFI ${q?.weekly?.fields?.precipitation_efi?.validCount??0} 筆有效）｜月資料 ${q?.monthly?.count??0} 筆（平均雨量 ${q?.monthly?.fields?.precipitation_mean?.validCount??0} 筆有效、雨量距平 ${q?.monthly?.fields?.precipitation_anomaly?.validCount??0} 筆有效）`;
+  card.append(audit);
+  if(q?.warnings?.length){const warning=document.createElement("p");warning.className="data-note";warning.textContent="資料警示："+q.warnings.join("；");card.append(warning);}
   const weekly=item.weekly;
   if(weekly?.time?.length){
    const title=document.createElement("h4");title.textContent="週趨勢（次季節展望）";card.append(title);
@@ -292,16 +297,18 @@ function renderLongRangeRecommendations(data){
  const host=$("long-range-recommendations"),status=$("long-range-recommendation-status");host.replaceChildren();
  const referenceDate=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"});
  const result=recommendLongRangeWindows({referenceDate,points:data.points,limit:3,minStartGap:5});
+ const by=result.coverageByHorizon;
+ const coverageText=by?`17–46 天週 EFI ${by.weekly.scoredCount}/${by.weekly.candidateCount}（${(by.weekly.coverageRate*100).toFixed(1)}%）｜47–90 天月距平 ${by.monthly.scoredCount}/${by.monthly.candidateCount}（${(by.monthly.coverageRate*100).toFixed(1)}%）｜跨界窗口 ${by.transition.scoredCount}/${by.transition.candidateCount}`:"";
  status.textContent=result.recommendations.length
-  ? `已評估 ${result.candidateCount} 個五天窗口｜取得完整趨勢資料 ${result.scoredCount} 組｜候選推薦 ${result.recommendations.length} 組`
-  : "目前沒有足夠的週／月尺度資料可評估完整五天窗口。";
+  ? `已評估 ${result.candidateCount} 個五天窗口｜完整可評分 ${result.scoredCount} 組（總覆蓋率 ${(result.coverageRate*100).toFixed(1)}%）｜資料不足 ${result.missingCount} 組｜${coverageText}｜符合條件推薦 ${result.recommendations.length} 組。推薦僅來自可完整評分的窗口，不代表未覆蓋日期較差。`
+  : `目前沒有足夠資料可評估完整五天窗口｜已檢查 ${result.candidateCount} 組，資料不足 ${result.missingCount} 組｜${coverageText}。`;
  for(const item of result.recommendations){
   const card=document.createElement("article");card.className="weather-card";
   const h=document.createElement("h3");h.textContent=`長期候選 #${item.recommendationRank}｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
   const p=document.createElement("p");p.className="risk-summary";p.textContent=`區域趨勢：${item.tendency}｜分級 ${item.tendencyRank}/3`;card.append(p);
   const details=item.rounds.map(x=>`Day ${x.date}：${x.worstZoneLabel}最需留意（${x.worstSignal.label}）`).join("；");
   const d=document.createElement("p");d.textContent=details;card.append(d);
-  const note=document.createElement("p");note.className="weather-meta";note.textContent=`可信度：${item.confidence}｜EC46週展望／SEAS5月展望｜${item.interpretation}。同一趨勢分級內的日期不代表可精確排序。`;card.append(note);
+  const note=document.createElement("p");note.className="weather-meta";note.textContent=`時間尺度可信度：${item.temporalConfidence??item.confidence}｜空間代表性：${item.spatialConfidence??"未評估"}（${item.regionalSampleCount??"—"}個不同網格）｜EC46週展望／SEAS5月展望｜${item.interpretation}。同一趨勢分級內的日期不代表可精確排序。${item.spatialWarning?" "+item.spatialWarning:""}`;card.append(note);
   host.append(card);
  }
 }
@@ -312,7 +319,8 @@ $("fetch-long-range").addEventListener("click",async()=>{
  try{
   const data=await fetchOkinawaLongRange();latestLongRangeData=data;renderLongRange(data);$("recommend-long-range").disabled=false;$("run-unified-recommendations").disabled=!(latestCourseWeather?.courses?.length&&selectedCourses.length===3);renderLongRangeRecommendations(data);
   const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(data.fetchedAt));
-  status.textContent=`讀取成功｜${data.provider}｜三區均有回傳｜日本時間：${stamp}`;
+  const quality=data.dataQuality;
+  status.textContent=`讀取完成｜${data.provider}｜三區回傳 ${quality.zoneCount}/3｜週 EFI ${quality.readyForWeeklyScoring?"有資料":"無資料"}（全筆完整 ${quality.weeklyCoverageComplete?"是":"否"}）｜月雨量 ${quality.readyForMonthlyScoring?"有資料":"無資料"}（全筆完整 ${quality.monthlyCoverageComplete?"是":"否"}）｜日本時間：${stamp}${quality.warnings.length?"｜有資料警示，請查看各區檢核":"｜資料欄位檢核通過"}`;
  }catch(error){status.textContent=`讀取失敗：${error.message}。沒有以合成資料代替。`;}
  finally{button.disabled=false;}
 });
