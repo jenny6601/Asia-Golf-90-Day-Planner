@@ -20,6 +20,7 @@ test("long-range adapter requests weekly and monthly ECMWF seasonal diagnostics 
   assert.equal(u.searchParams.get("forecast_days"),"90");
   assert.equal(u.searchParams.get("timezone"),"Asia/Tokyo");
   assert.equal(u.searchParams.get("models"),"ecmwf_seasonal_seamless");
+  assert.equal(u.searchParams.get("cell_selection"),"land");
   assert.match(u.searchParams.get("weekly"),/precipitation_efi/);
   assert.match(u.searchParams.get("weekly"),/precipitation_anomaly_gt0/);
   assert.match(u.searchParams.get("monthly"),/precipitation_anomaly/);
