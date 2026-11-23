@@ -1,10 +1,13 @@
 import {generateTripWindows,recommendTripDates} from "./date-engine.js";
-import {fetchOkinawa16DayForecast} from "./weather-api.js";
+import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
+import {OKINAWA_COURSES} from "./okinawa-courses.js";
 import {scoreGolfRainWindow} from "./rain-risk.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
 let latestWeather=null;
+let selectedCourses=[];
+let latestCourseWeather=null;
 function syntheticInputs(startDate,horizonDays){
  const windows=generateTripWindows({startDate,horizonDays}),dates=new Set();
  windows.forEach(w=>[w.tripStart,w.tripEnd,...w.golfDates].forEach(d=>dates.add(d)));
@@ -82,4 +85,52 @@ $("fetch-weather").addEventListener("click",async()=>{
  finally{button.disabled=false;}
 });
 $("hourly-date").addEventListener("change",()=>{if(latestWeather)renderHourly(latestWeather,$("hourly-date").value);});
+
+function renderCoursePicker(){
+ const host=$("course-picker");host.replaceChildren();
+ for(const course of OKINAWA_COURSES){
+  const label=document.createElement("label");label.className="course-option";
+  const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.value=course.id;
+  checkbox.checked=selectedCourses.some(x=>x.id===course.id);
+  checkbox.disabled=course.coordinateStatus==="pending" || (!checkbox.checked && selectedCourses.length>=3);
+  checkbox.addEventListener("change",()=>{
+   selectedCourses=OKINAWA_COURSES.filter(x=>host.querySelector(`input[value="${x.id}"]`)?.checked);
+   $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
+   $("fetch-course-weather").disabled=selectedCourses.length===0;
+   renderCoursePicker();
+  });
+  const info=document.createElement("span");
+  const title=document.createElement("strong");title.textContent=`${course.name}（${course.area}）`;
+  const sub=document.createElement("small");sub.textContent=course.coordinateStatus==="pending"?"GPS 待核實｜暫不可查詢":`${course.latitude.toFixed(5)}, ${course.longitude.toFixed(5)}｜座標待現地/官方圖資複核`;
+  const addr=document.createElement("small");addr.textContent=course.address;
+  info.append(title,sub,addr);label.append(checkbox,info);host.append(label);
+ }
+}
+function renderCourseWeather(data){
+ const host=$("course-weather-results");host.replaceChildren();
+ for(const item of data.courses){
+  const card=document.createElement("article");card.className="weather-card";
+  const h=document.createElement("h3");h.textContent=`${item.course.name}｜${item.course.area}`;card.append(h);
+  const meta=document.createElement("p");meta.className="weather-meta";meta.textContent=`GPS ${item.latitude.toFixed(5)}, ${item.longitude.toFixed(5)}｜${item.timezone}`;card.append(meta);
+  const rows=item.daily.time.map((date,i)=>[
+   fmt(date),cell(item.daily.precipitation_probability_max?.[i],"%"),cell(item.daily.precipitation_sum?.[i]," mm"),
+   `${cell(item.daily.temperature_2m_min?.[i],"°")} / ${cell(item.daily.temperature_2m_max?.[i],"°")}`,
+   cell(item.daily.wind_speed_10m_max?.[i]," m/s"),cell(item.daily.wind_gusts_10m_max?.[i]," m/s")
+  ]);
+  card.append(makeTable(["日期","降雨機率","雨量","低 / 高溫","最大風速","最大陣風"],rows));host.append(card);
+ }
+}
+renderCoursePicker();
+$("fetch-course-weather").addEventListener("click",async()=>{
+ const button=$("fetch-course-weather"),status=$("course-weather-status");
+ button.disabled=true;status.textContent="正在依所選球場 GPS 讀取預報…";
+ try{
+  latestCourseWeather=await fetchCourseForecast(selectedCourses);
+  renderCourseWeather(latestCourseWeather);
+  const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(latestCourseWeather.fetchedAt));
+  status.textContent=`成功｜${latestCourseWeather.courses.length} 個球場｜16天｜讀取時間（日本時間）：${stamp}`;
+ }catch(error){status.textContent=`讀取失敗：${error.message}`;}
+ finally{button.disabled=selectedCourses.length===0;}
+});
+
 $("tee-hour").addEventListener("change",()=>{if(latestWeather)renderHourly(latestWeather,$("hourly-date").value);});
