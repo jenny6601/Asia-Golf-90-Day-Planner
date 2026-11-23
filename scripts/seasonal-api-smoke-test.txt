@@ -20,7 +20,17 @@ function auditSeries(series, fields, label) {
     const aligned = Array.isArray(values) && values.length === series.time.length &&
       values.every(value => value === null || (typeof value === "number" && Number.isFinite(value)));
     const validCount = aligned ? values.filter(value => typeof value === "number" && Number.isFinite(value)).length : 0;
-    result.fields[field] = { aligned, validCount, usable: aligned && validCount > 0 };
+    const validDates = aligned ? series.time.filter((date, index) => typeof values[index] === "number" && Number.isFinite(values[index])) : [];
+    const gaps = [];
+    for (let i = 1; i < validDates.length; i++) {
+      const days = (Date.parse(validDates[i] + "T00:00:00Z") - Date.parse(validDates[i - 1] + "T00:00:00Z")) / 86400000;
+      if (days > 7) gaps.push({ after: validDates[i - 1], before: validDates[i], gapDays: days });
+    }
+    result.fields[field] = {
+      aligned, validCount, usable: aligned && validCount > 0,
+      validDateStart: validDates[0] ?? null, validDateEnd: validDates.at(-1) ?? null,
+      validDates, gaps
+    };
   }
   if (invalidDates.length) result.warning = label + " 日期格式錯誤";
   return result;
