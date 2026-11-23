@@ -9,7 +9,10 @@ const lead=(date,ref)=>(Date.parse(date+"T00:00:00Z")-Date.parse(ref+"T00:00:00Z
 function weeklyAt(series,date){
  const times=series?.time??[];let idx=-1;
  for(let i=0;i<times.length;i++)if(times[i]<=date)idx=i;
- return idx<0?null:{index:idx,date:times[idx]};
+ if(idx<0)return null;
+ // A weekly signal applies only to its own seven-day bucket; never carry it forward.
+ if(date>=addDays(times[idx],7))return null;
+ return {index:idx,date:times[idx]};
 }
 function classifyWeekly(series,date){
  const rec=weeklyAt(series,date);if(!rec)return null;
