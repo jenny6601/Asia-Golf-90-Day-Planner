@@ -1,0 +1,30 @@
+name: Okinawa Grid and Wind Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/audit-okinawa-grid-wind.mjs"
+      - ".github/workflows/okinawa-grid-wind-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Audit forecast grid cells and wind units
+        run: node scripts/audit-okinawa-grid-wind.mjs
+      - name: Upload diagnostic report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-grid-wind-audit
+          path: artifacts/
+          if-no-files-found: warn
