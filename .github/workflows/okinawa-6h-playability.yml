@@ -1,0 +1,35 @@
+name: Okinawa 6-hour Tee-time Multi-model Validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/evaluate-okinawa-6h-playability.mjs"
+      - "tests/6h-playability.test.js"
+      - ".github/workflows/okinawa-6h-playability.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Collect paired multi-model hourly hindcasts
+        run: node scripts/collect-okinawa-multimodel-hindcast.mjs
+      - name: Evaluate six-hour tee-time windows
+        run: node scripts/evaluate-okinawa-6h-playability.mjs
+      - name: Run project tests
+        run: npm test
+      - name: Upload six-hour evaluation and raw inputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-6h-playability-validation
+          path: artifacts/
+          if-no-files-found: warn
