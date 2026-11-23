@@ -84,3 +84,18 @@ test("field audit distinguishes partial availability from complete coverage",asy
  assert.equal(r.dataQuality.weeklyCoverageComplete,false);
  assert.equal(r.dataQuality.monthlyCoverageComplete,true);
 });
+
+test("duplicate returned grid cells are detected as one spatial sample",async()=>{
+ const mock=async url=>{
+  const u=new URL(url),isNorth=u.searchParams.get("latitude")==="26.5916";
+  return {ok:true,json:async()=>({
+   timezone:"Asia/Tokyo",latitude:isNorth?26.557377:26.276346,longitude:isNorth?127.95652:127.792206,
+   weekly:{time:["2026-12-01"],precipitation_efi:[0.2],precipitation_mean:[20],precipitation_anomaly:[1]},
+   monthly:{time:["2027-01-01"],precipitation_mean:[100],precipitation_anomaly:[5]}
+  })};
+ };
+ const r=await fetchOkinawaLongRange(mock);
+ assert.equal(r.dataQuality.uniqueGridCellCount,2);
+ assert.equal(r.dataQuality.spatiallyDistinct,false);
+ assert.ok(r.dataQuality.warnings.some(x=>x.includes("不能視為三份獨立區域證據")));
+});
