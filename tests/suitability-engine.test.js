@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {scoreGolfSuitabilityWindow} from "../assets/js/suitability-engine.js";
+import {scoreGolfSuitabilityWindow,summarizeGolfConditions} from "../assets/js/suitability-engine.js";
 function sample(overrides={}) {
  const time=Array.from({length:24},(_,h)=>`2026-11-24T${String(h).padStart(2,"0")}:00`);
  return {time,wind_speed_10m:Array(24).fill(3),wind_gusts_10m:Array(24).fill(5),
@@ -28,4 +28,28 @@ test("missing suitability fields are not treated as benign",()=>{
 test("missing forecast hour fails closed",()=>{
  const h=sample();h.time.splice(10,1);
  assert.equal(scoreGolfSuitabilityWindow(h,"2026-11-24",7).status,"insufficient-data");
+});
+
+test("combined advisory is cautious when rain risk is high despite good non-rain playability",()=>{
+ const suitability=scoreGolfSuitabilityWindow(sample(),"2026-11-24",7);
+ const overall=summarizeGolfConditions({status:"scored",rainRisk:75.8},suitability);
+ assert.equal(suitability.grade,"良好");
+ assert.equal(overall.label,"不建議");
+ assert.ok(overall.reasons.includes("降雨影響偏高"));
+});
+test("combined advisory escalates for severe non-rain conditions even with low rain risk",()=>{
+ const h=sample();h.wind_gusts_10m.fill(16);
+ const suitability=scoreGolfSuitabilityWindow(h,"2026-11-24",7);
+ const overall=summarizeGolfConditions({status:"scored",rainRisk:0},suitability);
+ assert.equal(overall.label,"不建議");
+});
+test("combined advisory fails closed when either input is incomplete",()=>{
+ const overall=summarizeGolfConditions({status:"scored",rainRisk:0},{status:"insufficient-data"});
+ assert.equal(overall.status,"insufficient-data");
+ assert.equal(overall.label,"資料不足");
+});
+test("combined advisory remains good only when both dimensions are low",()=>{
+ const suitability=scoreGolfSuitabilityWindow(sample(),"2026-11-24",7);
+ const overall=summarizeGolfConditions({status:"scored",rainRisk:0},suitability);
+ assert.equal(overall.label,"良好");
 });
