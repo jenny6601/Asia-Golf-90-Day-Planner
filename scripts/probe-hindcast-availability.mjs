@@ -21,7 +21,7 @@ async function probe(name, url) {
     const fields = Object.entries(hourly).filter(([k,v]) => k !== "time" && Array.isArray(v));
     const counts = Object.fromEntries(fields.map(([k,v]) => [k, v.filter(x => x !== null && x !== undefined).length]));
     const record = {
-      name, ok: response.ok && fields.length > 0, httpStatus: response.status,
+      name, ok: response.ok && Object.values(counts).some(n => n > 0), httpStatus: response.status,
       timezone: body.timezone ?? null, latitude: body.latitude ?? null, longitude: body.longitude ?? null,
       elevation: body.elevation ?? null, timeCount: hourly.time?.length ?? 0,
       nonNullCounts: counts, generationTimeMs: body.generationtime_ms ?? null,
@@ -41,7 +41,7 @@ for (const zone of zones) {
       latitude: String(zone.latitude), longitude: String(zone.longitude),
       start_date: window.start, end_date: window.end,
       hourly: vars.map(v => v + "_previous_day1").concat(["precipitation_previous_day3", "precipitation_previous_day7", "wind_speed_10m_previous_day3", "wind_speed_10m_previous_day7"]).join(","),
-      models: "ecmwf_ifs", timezone: "Asia/Tokyo", wind_speed_unit: "ms", precipitation_unit: "mm"
+      models: "ecmwf_ifs025", timezone: "Asia/Tokyo", wind_speed_unit: "ms", precipitation_unit: "mm"
     });
     await probe("previous-runs/" + zone.id + "/" + window.label,
       "https://previous-runs-api.open-meteo.com/v1/forecast?" + p);
@@ -59,7 +59,7 @@ for (const zone of zones) {
 const report = {
   generatedAt: new Date().toISOString(),
   scope: "Okinawa Main Island north/central/south representative proxy coordinates",
-  model: "ecmwf_ifs",
+  model: "ecmwf_ifs (Single Runs); ecmwf_ifs025 (Previous Runs probe)",
   note: "Availability probe only. Non-null counts do not prove forecast accuracy or observation verification.",
   results
 };
@@ -72,7 +72,7 @@ const md = [
   "",
   "| Probe | HTTP | Result | Hours | Non-null variable counts | Error |",
   "|---|---:|---|---:|---|---|",
-  ...results.map(r => "| " + r.name + " | " + (r.httpStatus ?? "—") + " | " + (r.ok ? "data" : "unavailable") + " | " + (r.timeCount ?? 0) + " | " + Object.entries(r.nonNullCounts ?? {}).map(([k,v]) => k + ": " + v).join(", ") + " | " + (r.error ?? "") + " |"),
+  ...results.map(r => "| " + r.name + " | " + (r.httpStatus ?? "—") + " | " + (r.ok ? "non-null data" : (r.httpStatus === 200 ? "HTTP 200 / all-null" : "unavailable")) + " | " + (r.timeCount ?? 0) + " | " + Object.entries(r.nonNullCounts ?? {}).map(([k,v]) => k + ": " + v).join(", ") + " | " + (r.error ?? "") + " |"),
   "",
   "This report checks endpoint/data availability only; it is not a skill score."
 ].join("\n");
