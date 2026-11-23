@@ -76,5 +76,7 @@ export function recommendLongRangeWindows({referenceDate,points,limit=3,minStart
    selected.push(item);if(selected.length===limit)break;
   }
  }
- const missingCount=all.length-scored.length;\n const coverageRate=all.length?Number((scored.length/all.length).toFixed(3)):0;\n return {candidateCount:all.length,scoredCount:scored.length,missingCount,coverageRate,recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1})),all};
+ const missingCount=all.length-scored.length;
+ const coverageRate=all.length?Number((scored.length/all.length).toFixed(3)):0;
+ return {candidateCount:all.length,scoredCount:scored.length,missingCount,coverageRate,recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1})),all};
 }
