@@ -72,3 +72,24 @@ Previous Runs API documents fixed lead offsets from 1 to 7 days. For 8–16 day 
 
 ## Implementation status
 V1 adds pure metric functions and tests only. It does not yet call external archive APIs, download historical samples, or produce empirical accuracy claims. Next: probe API availability for representative north/central/south coordinates and two seasons, then build a reproducible sample collector with cached raw responses and provenance.
+
+## Live API availability probe — 2026-11-23
+
+A GitHub Actions probe queried north / central / south representative proxy coordinates against the Open-Meteo archive endpoints. The tested model selectors were ECMWF IFS for Single Runs and ECMWF IFS 0.25 for Previous Runs.
+
+| Endpoint / sample | Result | Available fields |
+|---|---|---|
+| Previous Runs, 2025-08-01 to 2025-08-07, all 3 zones | HTTP 200; 168 hourly timestamps per zone | temperature, apparent temperature, precipitation and 10 m wind speed are non-null for day 1; precipitation and wind speed are non-null for day 3 and day 7 |
+| Previous Runs, 2025-01-15 to 2025-01-21, all 3 zones | HTTP 200; 168 hourly timestamps per zone | Same tested fields are non-null for day 1, day 3 and day 7 |
+| Single Runs, ECMWF IFS, 2025-08-01 00 UTC, all 3 zones | HTTP 200; 360 hourly timestamps per zone | temperature, apparent temperature and wind speed: 360 non-null; precipitation and gusts: 359 non-null |
+| Single Runs, ECMWF IFS, 2026-05-01 00 UTC, all 3 zones | HTTP 200; 360 hourly timestamps per zone | Same counts as above |
+
+Interpretation:
+- The Previous Runs API is technically usable for a first 1–7 day skill dataset for the tested ECMWF IFS 0.25 selector and both tested seasonal windows.
+- wind_gusts_10m_previous_day variables returned all-null values in this probe. Do not include archived gust verification until a supported model/variable combination is found.
+- Single Runs is available for the tested 2025 and 2026 IFS run dates and returns a 15-day hourly horizon (360 timestamps). This provides a route to evaluate lead times through day 15, not a verified day-16 forecast.
+- The one null precipitation/gust value per 360-hour response must be handled as missing data; do not impute it.
+- These are representative regional proxy coordinates, not the six golf-course points. The current course catalog still has provisional GPS points and PGM pending.
+- HTTP 200 alone is insufficient: the probe now checks non-null value counts and classifies HTTP 200 / all-null as unavailable.
+
+Probe workflow: .github/workflows/hindcast-api-probe.yml. Raw JSON and Markdown reports are uploaded as the okinawa-hindcast-api-probe workflow artifact. This probe verifies endpoint coverage only; it does not calculate forecast skill or compare forecasts with observations.
