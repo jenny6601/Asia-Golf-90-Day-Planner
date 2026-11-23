@@ -6,7 +6,7 @@ const zones = [
 ];
 const weeklyFields = ["precipitation_mean", "precipitation_anomaly", "precipitation_efi"];
 const monthlyFields = ["precipitation_mean", "precipitation_anomaly"];
-const isDate = value => typeof value === "string" && /^\\d{4}-\\d{2}-\\d{2}$/.test(value);
+const isDate = value => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
 
 function auditSeries(series, fields, label) {
   if (!series || !Array.isArray(series.time) || !series.time.length) {
