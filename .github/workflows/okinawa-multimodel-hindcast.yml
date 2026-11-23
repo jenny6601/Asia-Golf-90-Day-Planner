@@ -1,0 +1,30 @@
+name: Okinawa Multi-model Hindcast Comparison
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/collect-okinawa-multimodel-hindcast.mjs"
+      - ".github/workflows/okinawa-multimodel-hindcast.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Collect paired multi-model hindcasts
+        run: node scripts/collect-okinawa-multimodel-hindcast.mjs
+      - name: Upload dataset and raw model responses
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-multimodel-hindcast
+          path: artifacts/
+          if-no-files-found: warn
