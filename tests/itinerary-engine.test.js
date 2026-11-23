@@ -60,3 +60,46 @@ test("date recommender does not create recommendations when no complete golf-day
  const result=recommendFiveDayWindows({courses:[c,c,c]});
  assert.equal(result.recommendations.length,0);
 });
+
+
+test("itinerary score uses 70% mean round risk and 30% worst round risk",()=>{
+ const r=scoreFiveDayItinerary({tripStart:"2026-11-23",courses:[
+  course("a","A",5,0),course("b","B",90,2),course("c","C",20,0)
+ ]});
+ const expected=Math.round((0.7*r.averageRoundRisk+0.3*r.worstRoundRisk)*10)/10;
+ assert.equal(r.itineraryRisk,expected);
+ assert.equal(r.worstRound.courseId,"b");
+});
+
+test("round dates remain attached to the selected course order",()=>{
+ const r=scoreFiveDayItinerary({tripStart:"2026-11-23",courses:[
+  course("south","Southern Links"),course("north","Kise"),course("central","Atta Terrace")
+ ]});
+ assert.deepEqual(r.rounds.map(x=>[x.courseId,x.date]),[
+  ["south","2026-11-24"],["north","2026-11-25"],["central","2026-11-26"]
+ ]);
+});
+
+test("rain itinerary remains scoreable when separate playability fields are missing",()=>{
+ const r=scoreFiveDayItinerary({tripStart:"2026-11-23",courses:[
+  course("a","A"),course("b","B"),course("c","C")
+ ]});
+ assert.equal(r.status,"scored");
+ assert.equal(r.scoredRounds,3);
+ assert.ok(r.rounds.every(x=>x.suitability.status==="insufficient-data"));
+});
+
+test("date recommendations begin with the lowest rain-impact itinerary",()=>{
+ const makeCourse=(id,wetDates=[])=>{
+  const time=Array.from({length:24*16},(_,i)=>new Date(Date.UTC(2026,10,23)+i*3600000).toISOString().slice(0,16));
+  const wet=time.map(t=>wetDates.includes(t.slice(0,10)));
+  return {course:{id,name:id,area:"test"},hourly:{
+   time,precipitation_probability:wet.map(v=>v?95:5),precipitation:wet.map(v=>v?2:0)
+  }};
+ };
+ const courses=[makeCourse("A",["2026-11-26","2026-11-27"]),makeCourse("B"),makeCourse("C")];
+ const result=recommendFiveDayWindows({courses,teeHour:7,limit:3,minStartGap:5});
+ assert.ok(result.scoredCount>0);
+ assert.equal(result.recommendations[0].itineraryRisk,result.all.filter(x=>x.status==="scored").sort((a,b)=>a.itineraryRisk-b.itineraryRisk||a.tripStart.localeCompare(b.tripStart))[0].itineraryRisk);
+ assert.ok(result.recommendations.every(x=>x.rounds.length===3&&x.scoredRounds===3));
+});

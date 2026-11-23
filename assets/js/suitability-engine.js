@@ -37,3 +37,40 @@ export function scoreGolfSuitabilityWindow(hourly,date,teeHour,durationHours=6){
   thunderstormSignal:thunderstorm,reasons:reasons.length?reasons:["未偵測到強風、極端體感或雷雨訊號"],
   windowHours:durationHours};
 }
+
+
+/**
+ * Combine the independently calculated rain-impact index and non-rain playability
+ * overlay into a plain-language advisory. This is a conservative rule set, not
+ * a calibrated cancellation probability or a substitute for official warnings.
+ */
+export function summarizeGolfConditions(rain, suitability) {
+ if (rain?.status !== "scored" || suitability?.status !== "scored" ||
+     !valid(rain.rainRisk) || !Number.isInteger(suitability.severity)) {
+  return {status:"insufficient-data",label:"資料不足",reasons:["降雨或非降雨因素資料不完整，暫不提供綜合建議"]};
+ }
+ const reasons=[];
+ const rainRisk=rain.rainRisk;
+ const severity=suitability.severity;
+ let level=0;
+ if (rainRisk>=60 || severity>=3) level=3;
+ else if (rainRisk>=35 || severity>=2) level=2;
+ else if (rainRisk>=15 || severity>=1) level=1;
+ if (rainRisk>=60) reasons.push("降雨影響偏高");
+ else if (rainRisk>=35) reasons.push("降雨影響達中等");
+ else if (rainRisk>=15) reasons.push("仍有一定降雨影響");
+ if (severity>=3) reasons.push("風勢、雷雨或體感達不建議門檻");
+ else if (severity===2) reasons.push("風勢或體感需特別留意");
+ else if (severity===1) reasons.push("風勢或體感略有影響");
+ if (!reasons.length) reasons.push("降雨與非降雨因素均未達注意門檻");
+ return {
+  status:"scored",
+  level,
+  label:["良好","尚可","需留意","不建議"][level],
+  rainRisk,
+  playabilityGrade:suitability.grade,
+  reasons,
+  calibration:"operational-rule-unvalidated",
+  note:"綜合建議同時考量降雨影響與非降雨因素；不是取消球賽機率。"
+ };
+}
