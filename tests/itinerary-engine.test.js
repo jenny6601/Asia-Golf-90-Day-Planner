@@ -34,3 +34,29 @@ test("exactly three courses and valid tee hour are required",()=>{
  assert.throws(()=>scoreFiveDayItinerary({tripStart:"2026-11-23",courses:[course("a","A")]}),/Exactly three/);
  assert.throws(()=>scoreFiveDayItinerary({tripStart:"2026-11-23",courses:[course("a","A"),course("b","B"),course("c","C")],teeHour:15}),/teeHour/);
 });
+
+import {recommendFiveDayWindows} from "../assets/js/itinerary-engine.js";
+
+test("date recommender ranks only complete real forecast windows and separates recommendations",()=>{
+ const makeCourse=(id,wetDates=[])=>{
+  const time=Array.from({length:24*16},(_,i)=>new Date(Date.UTC(2026,10,23)+i*3600000).toISOString().slice(0,16));
+  const probability=time.map(t=>wetDates.includes(t.slice(0,10))?90:5);
+  const precipitation=time.map(t=>wetDates.includes(t.slice(0,10))?2:0);
+  return {course:{id,name:id,area:"test"},hourly:{time,precipitation_probability:probability,precipitation}};
+ };
+ const courses=[makeCourse("A",["2026-11-26"]),makeCourse("B"),makeCourse("C")];
+ const result=recommendFiveDayWindows({courses,teeHour:7});
+ assert.ok(result.candidateCount>0);
+ assert.ok(result.recommendations.length>0);
+ assert.ok(result.recommendations.length<=3);
+ assert.ok(result.recommendations.every(x=>x.status==="scored"&&x.confidence==="medium"));
+ for(let i=1;i<result.recommendations.length;i++){
+  const gap=(Date.parse(result.recommendations[i].tripStart+"T00:00:00Z")-Date.parse(result.recommendations[i-1].tripStart+"T00:00:00Z"))/86400000;
+  assert.ok(gap>=5);
+ }
+});
+test("date recommender does not create recommendations when no complete golf-day windows exist",()=>{
+ const c={course:{id:"A",name:"A"},hourly:{time:["2026-11-23T07:00"],precipitation_probability:[0],precipitation:[0]}};
+ const result=recommendFiveDayWindows({courses:[c,c,c]});
+ assert.equal(result.recommendations.length,0);
+});
