@@ -91,7 +91,7 @@ function renderCoursePicker(){
   });
   const info=document.createElement("span");
   const title=document.createElement("strong");title.textContent=`${course.name}（${course.area}）`;
-  const sub=document.createElement("small");sub.textContent=course.coordinateStatus==="pending"?"GPS 待核實｜暫不可查詢":`${course.latitude.toFixed(5)}, ${course.longitude.toFixed(5)}｜座標待現地/官方圖資複核`;
+  const sub=document.createElement("small");sub.textContent=course.coordinateStatus==="pending"?"GPS 待核實｜暫不可查詢":`${course.latitude.toFixed(5)}, ${course.longitude.toFixed(5)}｜第三方地圖暫定，待官方圖資複核`;
   const addr=document.createElement("small");addr.textContent=course.address;
   info.append(title,sub,addr);label.append(checkbox,info);host.append(label);
  }
@@ -101,7 +101,14 @@ function renderCourseWeather(data){
  for(const item of data.courses){
   const card=document.createElement("article");card.className="weather-card";
   const h=document.createElement("h3");h.textContent=`${item.course.name}｜${item.course.area}`;card.append(h);
-  const meta=document.createElement("p");meta.className="weather-meta";meta.textContent=`GPS ${item.latitude.toFixed(5)}, ${item.longitude.toFixed(5)}｜${item.timezone}`;card.append(meta);
+  const meta=document.createElement("p");meta.className="weather-meta";
+  const audit=item.coordinateAudit;
+  meta.textContent="輸入球場座標 "+audit.requested.latitude.toFixed(5)+", "+audit.requested.longitude.toFixed(5)+"｜預報網格座標 "+audit.providerGrid.latitude.toFixed(5)+", "+audit.providerGrid.longitude.toFixed(5)+"｜網格偏移 "+(audit.gridOffsetKm===null?"—":audit.gridOffsetKm+" km")+"｜海拔 "+(item.elevation??"—")+" m｜"+item.timezone;
+  card.append(meta);
+  const quality=document.createElement("p");quality.className="data-note";
+  quality.textContent="座標來源："+audit.source+"｜狀態："+(audit.coordinateStatus==="provisional"?"第三方地圖暫定，尚未官方界線核實":audit.coordinateStatus)+"。網格偏移只反映氣象模式格點與輸入座標的距離，不代表球場 GPS 正確性。";
+  card.append(quality);
+  if(audit.sourceUrl){const link=document.createElement("a");link.href=audit.sourceUrl;link.target="_blank";link.rel="noopener";link.textContent="查看座標來源";card.append(link);}
   const rows=item.daily.time.map((date,i)=>[
    fmt(date),cell(item.daily.precipitation_probability_max?.[i],"%"),cell(item.daily.precipitation_sum?.[i]," mm"),
    `${cell(item.daily.temperature_2m_min?.[i],"°")} / ${cell(item.daily.temperature_2m_max?.[i],"°")}`,
