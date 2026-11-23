@@ -7,7 +7,9 @@ const points=(weeklyEfi=0.1,monthlyAnomaly=0)=>[
  {point:{id:"south",label:"南部"},weekly:{time:["2026-12-10","2027-01-10"],precipitation_efi:[weeklyEfi,weeklyEfi]},monthly:{time:["2027-01-01","2027-02-01","2027-03-01"],precipitation_mean:[100,100,100],precipitation_anomaly:[monthlyAnomaly,monthlyAnomaly,monthlyAnomaly]}}
 ];
 test("17-46 day windows use weekly EFI as a qualitative signal",()=>{
- const r=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:points(.7,0)});
+ const p=points(.7,0);
+ p.forEach(x=>{x.weekly.time=["2026-12-10","2026-12-17"];x.weekly.precipitation_efi=[.7,.7];});
+ const r=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:p});
  assert.equal(r.status,"scored");
  assert.equal(r.tendencyRank,2);
  assert.match(r.interpretation,/不是逐日降雨預報/);
@@ -19,7 +21,7 @@ test("47-90 day windows use monthly anomaly ratios, not daily rain probability",
  assert.equal(r.rounds[0].rounds,undefined);
 });
 test("worst regional wet signal is retained instead of averaged away",()=>{
- const p=points(-.1,0);p[0].weekly.precipitation_efi=[.9,.9];
+ const p=points(-.1,0);p.forEach(x=>{x.weekly.time=["2026-12-10","2026-12-17"];x.weekly.precipitation_efi=[-.1,-.1];});p[0].weekly.precipitation_efi=[.9,.9];
  const r=evaluateLongRangeTripWindow({tripStart:"2026-12-15",referenceDate:"2026-11-23",points:p});
  assert.equal(r.rounds[0].worstZone,"north");
  assert.equal(r.rounds[0].rank,3);
