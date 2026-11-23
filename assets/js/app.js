@@ -5,6 +5,7 @@ import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
 import {scoreFiveDayItinerary} from "./itinerary-engine.js";
 import {fetchOkinawaLongRange,interpretPrecipitationEfi} from "./long-range-api.js";
 import {classifyForecastConfidence} from "./confidence-engine.js";
+import {recommendLongRangeWindows} from "./long-range-engine.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -242,11 +243,29 @@ function renderLongRange(data){
   host.append(card);
  }
 }
+
+function renderLongRangeRecommendations(data){
+ const host=$("long-range-recommendations"),status=$("long-range-recommendation-status");host.replaceChildren();
+ const referenceDate=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"});
+ const result=recommendLongRangeWindows({referenceDate,points:data.points,limit:3,minStartGap:5});
+ status.textContent=result.recommendations.length
+  ? `已評估 ${result.candidateCount} 個五天窗口｜取得完整趨勢資料 ${result.scoredCount} 組｜候選推薦 ${result.recommendations.length} 組`
+  : "目前沒有足夠的週／月尺度資料可評估完整五天窗口。";
+ for(const item of result.recommendations){
+  const card=document.createElement("article");card.className="weather-card";
+  const h=document.createElement("h3");h.textContent=`長期候選 #${item.recommendationRank}｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
+  const p=document.createElement("p");p.className="risk-summary";p.textContent=`區域趨勢：${item.tendency}｜分級 ${item.tendencyRank}/3`;card.append(p);
+  const details=item.rounds.map(x=>`Day ${x.date}：${x.worstZoneLabel}最需留意（${x.worstSignal.label}）`).join("；");
+  const d=document.createElement("p");d.textContent=details;card.append(d);
+  const note=document.createElement("p");note.className="weather-meta";note.textContent=`可信度：${item.confidence}｜EC46週展望／SEAS5月展望｜${item.interpretation}。同一趨勢分級內的日期不代表可精確排序。`;card.append(note);
+  host.append(card);
+ }
+}
 $("fetch-long-range").addEventListener("click",async()=>{
  const button=$("fetch-long-range"),status=$("long-range-status");
  button.disabled=true;status.textContent="正在讀取 ECMWF EC46 + SEAS5 長期展望…";
  try{
-  const data=await fetchOkinawaLongRange();renderLongRange(data);
+  const data=await fetchOkinawaLongRange();window.__latestLongRangeData=data;renderLongRange(data);renderLongRangeRecommendations(data);
   const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(data.fetchedAt));
   status.textContent=`讀取成功｜${data.provider}｜三區均有回傳｜日本時間：${stamp}`;
  }catch(error){status.textContent=`讀取失敗：${error.message}。沒有以合成資料代替。`;}
