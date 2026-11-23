@@ -1,3 +1,5 @@
+import {auditForecastPoint} from "./coordinate-audit.js";
+
 export const OKINAWA_ZONES = Object.freeze([
   { id: "north", label: "北部", place: "名護市", latitude: 26.5916, longitude: 127.9774 },
   { id: "central", label: "中部", place: "沖繩市", latitude: 26.3344, longitude: 127.8056 },
@@ -74,7 +76,7 @@ export async function fetchCourseForecast(courses, fetchImpl = fetch) {
     if(!response.ok) throw new Error(`${course.name} API HTTP ${response.status}`);
     const payload=await response.json();
     if(!payload.daily?.time?.length || !payload.hourly?.time?.length) throw new Error(`${course.name} 回傳欄位不完整`);
-    return {course,fetchedAt:new Date().toISOString(),timezone:payload.timezone,latitude:payload.latitude,longitude:payload.longitude,daily:payload.daily,hourly:payload.hourly};
+    return {course,fetchedAt:new Date().toISOString(),timezone:payload.timezone,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,coordinateAudit:auditForecastPoint(course,payload),daily:payload.daily,hourly:payload.hourly};
   }));
   return {provider:"Open-Meteo Forecast API",forecastDays:16,timezone:"Asia/Tokyo",fetchedAt:new Date().toISOString(),courses:results};
 }
