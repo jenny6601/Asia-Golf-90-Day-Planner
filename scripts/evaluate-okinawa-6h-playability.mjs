@@ -19,11 +19,9 @@ export function buildSixHourWindows(samples, teeHours=TEE_HOURS) {
   const byTime=new Map(rows.map(r=>[r.validTime,r]));
   const [modelId,pointId,leadHours,date]=seriesKey.split("|");
   for(const teeHour of teeHours){
-   const start=new Date(date+"T"+String(teeHour).padStart(2,"0")+":00:00+09:00");
    const selected=[];
    for(let h=0;h<6;h++){
-    const d=new Date(start.getTime()+h*3600000);
-    const stamp=d.toISOString().slice(0,16);
+    const stamp=date+"T"+String(teeHour+h).padStart(2,"0")+":00";
     const row=byTime.get(stamp);
     if(!row){selected.length=0;break;}
     selected.push(row);
@@ -88,7 +86,7 @@ export function buildReport(samples){
    "Only the sampled 15th–21st windows of each month in 2025 are included; this is not a complete annual hindcast.",
    "Windows with any missing hour or required precipitation/wind value are rejected, never interpolated.",
    "Different forecast model grids and ERA5 native grid snapping remain a spatial representativeness limitation.",
-   "No production model, rain-risk threshold, wind threshold or golf suitability grade is changed."]);
+   "No production model, rain-risk threshold, wind threshold or golf suitability grade is changed."]};
 }
 
 const input=JSON.parse(await fs.readFile("artifacts/okinawa-multimodel-hindcast.json","utf8"));
