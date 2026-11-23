@@ -6,6 +6,7 @@ import {scoreFiveDayItinerary} from "./itinerary-engine.js";
 import {fetchOkinawaLongRange,interpretPrecipitationEfi} from "./long-range-api.js";
 import {classifyForecastConfidence} from "./confidence-engine.js";
 import {recommendLongRangeWindows} from "./long-range-engine.js";
+import {combineHorizonRecommendations} from "./horizon-integration.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -214,6 +215,37 @@ $("compare-tee-hour").addEventListener("change",()=>{if(latestCourseWeather)runC
 $("compare-date").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
 
 
+
+function renderUnifiedRecommendations(){
+ const host=$("unified-recommendations"),status=$("unified-recommendation-status");host.replaceChildren();
+ if(!latestCourseWeather?.courses||selectedCourses.length!==3||!latestLongRangeData){
+  status.textContent="請先選擇三個球場，分別完成球場16天預報及沖繩17–90天長期展望讀取。";return;
+ }
+ const referenceDate=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"});
+ const shortRange=recommendFiveDayWindows({courses:latestCourseWeather.courses,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5});
+ const longRange=recommendLongRangeWindows({referenceDate,points:latestLongRangeData.points,limit:3,minStartGap:5});
+ const combined=combineHorizonRecommendations({shortRange,longRange,shortFetchedAt:latestCourseWeather.fetchedAt,longFetchedAt:latestLongRangeData.fetchedAt});
+ status.textContent=`整合完成｜短期可評估 ${shortRange.scoredCount} 組，長期可評估 ${longRange.scoredCount} 組。短期與長期分開排序。`;
+ for(const group of [combined.shortRange,combined.longRange]){
+  const section=document.createElement("section");section.className="weather-card";
+  const heading=document.createElement("h3");heading.textContent=group===combined.shortRange?"1–16天｜真實球場逐時預報推薦":"17–90天｜ECMWF季節趨勢候選";section.append(heading);
+  const meaning=document.createElement("p");meaning.className="weather-meta";meaning.textContent=group.meaning;section.append(meaning);
+  if(!group.items.length){const empty=document.createElement("p");empty.textContent="目前沒有完整資料支持的候選日期。";section.append(empty);}
+  for(const item of group.items){
+   const card=document.createElement("article");card.className="weather-card";
+   const h=document.createElement("h4");h.textContent=`第 ${item.rank} 順位｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
+   const score=document.createElement("p");score.className="risk-summary";
+   score.textContent=item.kind==="short-range"?`降雨影響指數 ${item.value}/100（${item.label}）`:`區域濕潤趨勢：${item.label}（分級 ${item.value}/3）`;
+   card.append(score);
+   const rounds=document.createElement("p");rounds.textContent=item.rounds.map(r=>item.kind==="short-range"?`${r.date} ${r.courseName}：${r.value}/100`:`${r.date} ${r.zone}最需留意：${r.label}`).join("；");card.append(rounds);
+   const note=document.createElement("p");note.className="weather-meta";note.textContent=`可信度：${item.confidence}｜資料：${item.source}`;card.append(note);section.append(card);
+  }
+  host.append(section);
+ }
+ const note=document.createElement("p");note.className="data-note";note.textContent=combined.note;host.append(note);
+}
+$("run-unified-recommendations").addEventListener("click",renderUnifiedRecommendations);
+
 function renderLongRange(data){
  const host=$("long-range-results");host.replaceChildren();
  for(const item of data.points){
@@ -267,7 +299,7 @@ $("fetch-long-range").addEventListener("click",async()=>{
  const button=$("fetch-long-range"),status=$("long-range-status");
  button.disabled=true;status.textContent="正在讀取 ECMWF EC46 + SEAS5 長期展望…";
  try{
-  const data=await fetchOkinawaLongRange();latestLongRangeData=data;renderLongRange(data);$("recommend-long-range").disabled=false;renderLongRangeRecommendations(data);
+  const data=await fetchOkinawaLongRange();latestLongRangeData=data;renderLongRange(data);$("recommend-long-range").disabled=false;$("run-unified-recommendations").disabled=!(latestCourseWeather?.courses?.length&&selectedCourses.length===3);renderLongRangeRecommendations(data);
   const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(data.fetchedAt));
   status.textContent=`讀取成功｜${data.provider}｜三區均有回傳｜日本時間：${stamp}`;
  }catch(error){status.textContent=`讀取失敗：${error.message}。沒有以合成資料代替。`;}
@@ -280,6 +312,7 @@ $("fetch-course-weather").addEventListener("click",async()=>{
  button.disabled=true;status.textContent="正在依所選球場 GPS 讀取預報…";
  try{
   latestCourseWeather=await fetchCourseForecast(selectedCourses);
+  $("run-unified-recommendations").disabled=!latestLongRangeData;
   renderCourseWeather(latestCourseWeather);
   const commonDates=latestCourseWeather.courses.map(x=>new Set(x.hourly.time.map(t=>t.slice(0,10))));
   const available=[...commonDates[0]].filter(d=>commonDates.every(set=>set.has(d))).sort();
