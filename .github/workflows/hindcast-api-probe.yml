@@ -1,0 +1,34 @@
+name: Okinawa Hindcast API Probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/probe-hindcast-availability.mjs"
+      - ".github/workflows/hindcast-api-probe.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "17 2 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Probe archived forecast endpoints
+        run: node scripts/probe-hindcast-availability.mjs
+      - name: Upload probe report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-hindcast-api-probe
+          path: artifacts/
+          if-no-files-found: warn
