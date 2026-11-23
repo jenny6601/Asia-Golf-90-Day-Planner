@@ -26,6 +26,6 @@ test("missing suitability fields are not treated as benign",()=>{
  assert.equal(scoreGolfSuitabilityWindow(h,"2026-11-24",7).status,"insufficient-data");
 });
 test("missing forecast hour fails closed",()=>{
- const h=sample();h.time.pop();
+ const h=sample();h.time.splice(10,1);
  assert.equal(scoreGolfSuitabilityWindow(h,"2026-11-24",7).status,"insufficient-data");
 });
