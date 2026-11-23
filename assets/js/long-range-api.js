@@ -27,7 +27,8 @@ function validateSeries(series,requiredFields,zoneLabel,seriesLabel){
  for(const key of requiredFields){
   const values=series[key];
   const valid=Array.isArray(values)&&values.length===series.time.length&&values.every(v=>v===null||(typeof v==="number"&&Number.isFinite(v)));
-  fields[key]={available:valid,validCount:valid?values.filter(v=>typeof v==="number"&&Number.isFinite(v)).length:0};
+  const validCount=valid?values.filter(v=>typeof v==="number"&&Number.isFinite(v)).length:0;
+  fields[key]={available:valid&&validCount>0,validCount};
  }
  return {count:series.time.length,start:series.time[0],end:series.time.at(-1),fields};
 }
