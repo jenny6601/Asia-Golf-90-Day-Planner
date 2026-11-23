@@ -150,3 +150,18 @@ The candidate south points are diagnostic only. No candidate is adopted as the f
 Wind-speed bias must not be corrected by adding an offset or changing suitability thresholds. First confirm unit metadata, returned grid alignment, sample pairing, and raw values. ERA5 remains a reanalysis reference proxy, not direct on-course truth.
 
 After this gate, expand the paired hindcast sample across all 12 months of 2025, stratify by month and lead, and retain missingness and unique-grid counts in every report. The existing production risk and playability thresholds remain frozen until a larger, appropriately verified dataset supports recalibration.
+
+## Grid and wind audit results — 2026-11-23
+
+The dedicated diagnostic workflow completed successfully (GitHub Actions run 45105525786; artifact `okinawa-grid-wind-audit`).
+
+- Four southern candidate points were tested, along with central and north reference points, in January and July 2025.
+- All four southern candidates returned the same ECMWF forecast grid cell: 26.25, 127.75. They therefore do not provide an independent southern grid cell at this model resolution.
+- Central also returned 26.25, 127.75. North returned 26.50, 128.00. The tested points therefore resolve to two unique forecast grid cells, not three.
+- Forecast and ERA5 hourly wind units both explicitly report m/s. A simple unit mismatch is not supported by this diagnostic.
+- Wind bias remains negative in both seasons and across the two grid areas: roughly -3.2 to -3.4 m/s in January and -2.3 to -2.5 m/s in July. The bias is not isolated to the southern proxy.
+- For the southern candidates, the Previous Runs forecast grid latitude was 26.25 while the ERA5 grid latitude was 26.00. This spatial grid mismatch is an additional pairing limitation. The central and northern tested grid coordinates aligned between the two endpoints.
+
+Interpretation: the audit rules out a basic m/s versus km/h mismatch but does not establish the cause of the wind bias. Differences in model representation, grid sampling, model version, or other processing remain possible. Do not apply a constant wind correction or change production playability thresholds based on this result.
+
+The paired-data collector has now been expanded from four seasonal weeks to one seven-day mid-month window in each of the 12 months of 2025. This improves month coverage but is still a sampled hindcast, not a complete annual record. The report now records unique forecast grid count and forecast/ERA5 grid coordinates per zone-window.
