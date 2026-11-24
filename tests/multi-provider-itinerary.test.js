@@ -45,7 +45,7 @@ test("does not treat a single provider as a multi-provider consensus",()=>{
 
 test("excludes a five-day window when any round has a severe thunderstorm signal",()=>{
  const courses=[course("a"),course("b"),course("c")];
- const targetDate="2026-11-24";
+ const targetDate="2026-11-25";
  const index=courses[1].hourly.time.findIndex(t=>t===targetDate+"T09:00");
  courses[1].hourly.weather_code[index]=95;
  const result=recommendMultiProviderFiveDayWindows({courses,independentProviders:courses.map(independent)});
