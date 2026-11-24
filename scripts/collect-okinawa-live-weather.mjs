@@ -1,0 +1,155 @@
+import fs from "node:fs/promises";
+import {OKINAWA_COURSES} from "../assets/js/okinawa-courses.js";
+import {fetchIndependentProviderForecasts} from "./lib/provider-fetchers.mjs";
+
+const GENERATED_AT = new Date().toISOString();
+const OUT = "artifacts/okinawa-live-weather";
+const REQUIRED_HOURS = Array.from({length:13},(_,i)=>String(i+6).padStart(2,"0")+":00");
+const finite = value => typeof value === "number" && Number.isFinite(value) ? value : null;
+
+async function getJson(url, provider) {
+  const response = await fetch(url, {headers:{"user-agent":"Asia-Golf-90-Day-Planner-live-validation/1.0"}});
+  if (!response.ok) throw new Error(provider+" HTTP "+response.status);
+  return response.json();
+}
+
+async function fetchOpenMeteo(course) {
+  const url = new URL("https://api.open-meteo.com/v1/forecast");
+  url.search = new URLSearchParams({
+    latitude:String(course.latitude), longitude:String(course.longitude),
+    timezone:course.timezone, forecast_days:"7",
+    temperature_unit:"celsius", wind_speed_unit:"ms", precipitation_unit:"mm",
+    hourly:[
+      "temperature_2m","apparent_temperature","relative_humidity_2m",
+      "precipitation_probability","precipitation","wind_speed_10m",
+      "wind_gusts_10m","wind_direction_10m","weather_code"
+    ].join(",")
+  }).toString();
+  const payload = await getJson(url,"Open-Meteo");
+  if (!Array.isArray(payload.hourly?.time) || !payload.hourly.time.length) {
+    throw new Error("Open-Meteo response has no hourly timeline");
+  }
+  const hourly = payload.hourly.time.map((time,i)=>({
+    time,
+    temperatureC:finite(payload.hourly.temperature_2m?.[i]),
+    feelsLikeC:finite(payload.hourly.apparent_temperature?.[i]),
+    relativeHumidityPct:finite(payload.hourly.relative_humidity_2m?.[i]),
+    precipitationProbabilityPct:finite(payload.hourly.precipitation_probability?.[i]),
+    precipitationMm:finite(payload.hourly.precipitation?.[i]),
+    precipitationAccumulationPeriodHours:1,
+    windSpeedMs:finite(payload.hourly.wind_speed_10m?.[i]),
+    windGustMs:finite(payload.hourly.wind_gusts_10m?.[i]),
+    windDirectionDeg:finite(payload.hourly.wind_direction_10m?.[i]),
+    weatherCode:payload.hourly.weather_code?.[i] ?? null
+  }));
+  return {
+    provider:"Open-Meteo", product:"Forecast API", fetchedAt:GENERATED_AT,
+    course:{id:course.id,name:course.name,latitude:course.latitude,longitude:course.longitude,timezone:course.timezone},
+    timezone:payload.timezone, temporalResolution:"hourly",
+    returnedCoordinates:{latitude:payload.latitude,longitude:payload.longitude},
+    elevationM:finite(payload.elevation), hourly
+  };
+}
+
+async function safeProvider(name, task) {
+  try { return {status:"available",data:await task()}; }
+  catch(error) { return {status:"unavailable",error:String(error?.message??error)}; }
+}
+
+await fs.mkdir(OUT,{recursive:true});
+const courses = [];
+for (const course of OKINAWA_COURSES) {
+  const base = {
+    id:course.id,name:course.name,area:course.area,city:course.city,
+    latitude:course.latitude,longitude:course.longitude,timezone:"Asia/Tokyo",
+    coordinateStatus:course.coordinateStatus,
+    coordinateSource:course.coordinateSource??null,
+    coordinateSourceUrl:course.coordinateSourceUrl??null
+  };
+  if (!Number.isFinite(course.latitude) || !Number.isFinite(course.longitude)) {
+    courses.push({...base,collectionStatus:"skipped-coordinate-pending",providers:{
+      openMeteo:{status:"skipped",reason:"Course GPS is pending; no city or proxy coordinate substitution."},
+      visualCrossing:{status:"skipped",reason:"Course GPS is pending; no city or proxy coordinate substitution."},
+      foreca:{status:"skipped",reason:"Course GPS is pending; no city or proxy coordinate substitution."}
+    }});
+    continue;
+  }
+  const courseInput = {...base,countryCode:"JP"};
+  const [openMeteo,independent] = await Promise.all([
+    safeProvider("Open-Meteo",()=>fetchOpenMeteo(courseInput)),
+    fetchIndependentProviderForecasts(courseInput,{
+      visualCrossingApiKey:process.env.VISUAL_CROSSING_API_KEY,
+      forecaApiKey:process.env.FORECA_API_KEY
+    }).catch(error=>({course:courseInput,providers:{
+      visualCrossing:{status:"unavailable",error:String(error?.message??error)},
+      foreca:{status:"unavailable",error:String(error?.message??error)}
+    }}))
+  ]);
+  const providers = {
+    openMeteo,
+    visualCrossing:independent.providers.visualCrossing,
+    foreca:independent.providers.foreca,
+    jmaMsm:{status:"not-configured",reason:"No verified operational MSM point-data retrieval adapter is configured. JMA GSM or JMA Seamless will not be substituted."}
+  };
+  const rows = Object.values(providers).filter(x=>x.status==="available");
+  const hourCoverage = {};
+  for (const provider of ["openMeteo","visualCrossing","foreca"]) {
+    const data=providers[provider].data;
+    const hours=data?.hourly??data?.days?.flatMap(day=>day.hours??[])??data?.forecast??[];
+    const times=new Set(hours.map(h=>(h.time??"").slice(11,16)));
+    hourCoverage[provider]={
+      returnedRows:hours.length,
+      requiredLocalHours:REQUIRED_HOURS.length,
+      requiredHourLabelsPresent:REQUIRED_HOURS.filter(t=>times.has(t)).length
+    };
+  }
+  courses.push({...base,collectionStatus:rows.length?"collected":"no-provider-data",providers,hourCoverage});
+}
+const report = {
+  schemaVersion:"1.0.0",generatedAt:GENERATED_AT,timezone:"Asia/Tokyo",
+  requestedWindow:{display:"06:00–18:00",teeTime:"10:00",playability:"10:00–16:00"},
+  courseCount:OKINAWA_COURSES.length,
+  providerPolicy:"independent-no-fallback; missing values remain null; no city proxy substitution",
+  summary:{},
+  courses,
+  limitations:[
+    "This is a live API connectivity and coverage smoke test, not forecast-accuracy verification.",
+    "Four named sources are tracked: Open-Meteo, Visual Crossing, Foreca and JMA MSM. JMA MSM remains not configured until a verified MSM data adapter is available.",
+    "PGM Golf Resort Okinawa is skipped because its course-point GPS remains pending.",
+    "Four provisional course coordinates are used only for prototype connectivity checks, not operational trip ranking.",
+    "Provider forecast issue times and native model metadata are retained only where returned by the existing normalizers; compare forecast values only after confirming timestamp and accumulation semantics.",
+    "Visual Crossing and Foreca require repository Actions secrets VISUAL_CROSSING_API_KEY and FORECA_API_KEY."
+  ]
+};
+for (const provider of ["openMeteo","visualCrossing","foreca","jmaMsm"]) {
+  report.summary[provider] = {
+    available:courses.filter(c=>c.providers?.[provider]?.status==="available").length,
+    unavailable:courses.filter(c=>c.providers?.[provider]?.status==="unavailable").length,
+    skipped:courses.filter(c=>c.providers?.[provider]?.status==="skipped").length,
+    notConfigured:courses.filter(c=>c.providers?.[provider]?.status==="not-configured").length
+  };
+}
+await fs.writeFile(OUT+"/coverage-report.json",JSON.stringify(report,null,2));
+const lines=[
+"# Okinawa six-course live weather coverage",
+"",
+"Generated: "+GENERATED_AT+" (UTC)",
+"Timezone: Asia/Tokyo",
+"",
+"| Course | GPS status | Open-Meteo | Visual Crossing | Foreca | JMA MSM |",
+"|---|---|---|---|---|---|",
+...courses.map(c=>"| "+c.name+" | "+c.coordinateStatus+" | "+(c.providers?.openMeteo?.status??"—")+" | "+(c.providers?.visualCrossing?.status??"—")+" | "+(c.providers?.foreca?.status??"—")+" | "+(c.providers?.jmaMsm?.status??"—")+" |"),
+"",
+"## Provider coverage",
+"",
+"| Provider | Available courses | Unavailable | Skipped | Not configured |",
+"|---|---:|---:|---:|---:|",
+...Object.entries(report.summary).map(([k,v])=>"| "+k+" | "+v.available+" | "+v.unavailable+" | "+v.skipped+" | "+v.notConfigured+" |"),
+"",
+"## Limitations",...report.limitations.map(x=>"- "+x),
+"",
+"Raw provider credentials are never written to artifacts."
+];
+await fs.writeFile(OUT+"/coverage-report.md",lines.join("\n"));
+console.log(lines.join("\n"));
+if(!courses.some(c=>c.providers?.openMeteo?.status==="available")) process.exitCode=1;
