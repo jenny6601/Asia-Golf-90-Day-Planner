@@ -46,3 +46,12 @@ The comparison aligns provider records by the Asia/Tokyo local wall-clock hour. 
 The 10:00–16:00 inclusive window is compared only where all three providers have a matching hour. Pairwise differences are provider disagreement metrics, not forecast accuracy. Forecast accuracy requires time-matched observations.
 
 Apparent/feels-like temperature is not assumed to be methodologically identical across providers. Open-Meteo describes apparent temperature as combining temperature, relative humidity, wind and solar radiation. Visual Crossing describes feels-like as heat-index or wind-chill adjusted. Foreca publishes its own `feelsLikeTemp` field. Therefore, a provider value equal to air temperature is not automatically a missing-data error; report equality frequency and differences without substituting a locally calculated value.
+
+## Phase 11.5 raw-field diagnostics
+The collector requests selected raw fields from Visual Crossing and Foreca while keeping credentials out of artifacts and avoiding full-payload retention. The diagnostic output includes raw air temperature, raw feels-like temperature, relative humidity, wind speed/gust, precipitation and precipitation probability, plus normalized values and a preservation check.
+
+Artifacts:
+- `raw-field-diagnostics.json`
+- `raw-field-diagnostics.md`
+
+The raw equality rate is descriptive only. Equal air/feels-like values do not alone establish an API defect. The preservation check determines whether the normalizer passed the source feels-like value through unchanged. Humidity and wind context are retained for follow-up review.
