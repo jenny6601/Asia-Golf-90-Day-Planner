@@ -9,8 +9,28 @@ function course(id){
 function independent(c){
  const time=c.hourly.time;
  const forecast=time.map(t=>({time:t,prob:10,rain:0,temp:24,feels:24,wind:3,gust:4,period:1}));
- return {course:c.course,providers:{visualCrossing:{status:"available",data:{provider:"Visual Crossing",days:[...new Set(time.map(t=>t.slice(0,10)))].map(date=>({date,hours:forecast.filter(h=>h.time.startsWith(date)).map(h=>({time:h.time,precipitationProbabilityPct:h.prob,precipitationMm:h.rain,temperatureC:h.temp,feelsLikeC:h.feels,windSpeedMs:h.wind,windGustMs:h.gust,precipitationAccumulationPeriodHours:1}))}))},foreca:{status:"unavailable",error:"not configured"}}};
+ const days=[...new Set(time.map(t=>t.slice(0,10)))].map(date=>({
+  date,
+  hours:forecast.filter(h=>h.time.startsWith(date)).map(h=>({
+   time:h.time,
+   precipitationProbabilityPct:h.prob,
+   precipitationMm:h.rain,
+   temperatureC:h.temp,
+   feelsLikeC:h.feels,
+   windSpeedMs:h.wind,
+   windGustMs:h.gust,
+   precipitationAccumulationPeriodHours:h.period
+  }))
+ }));
+ return {
+  course:c.course,
+  providers:{
+   visualCrossing:{status:"available",data:{provider:"Visual Crossing",days}},
+   foreca:{status:"unavailable",error:"not configured"}
+  }
+ };
 }
+
 test("ranks only complete 5-day windows with at least two providers per golf day",()=>{
  const courses=[course("a"),course("b"),course("c")];
  const providers=courses.map(independent);
