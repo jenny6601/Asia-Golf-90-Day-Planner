@@ -1,3 +1,4 @@
+import {buildProviderConsistencyReport} from "./lib/provider-consistency.mjs";
 import fs from "node:fs/promises";
 import {OKINAWA_COURSES} from "../assets/js/okinawa-courses.js";
 import {fetchIndependentProviderForecasts} from "./lib/provider-fetchers.mjs";
@@ -137,6 +138,47 @@ for (const provider of ["openMeteo","visualCrossing","foreca","jmaMsm"]) {
     notConfigured:courses.filter(c=>c.providers?.[provider]?.status==="not-configured").length
   };
 }
+report.consistencyAnalysis = buildProviderConsistencyReport(courses.filter(c=>c.collectionStatus==="collected"), {
+  startHour:10,
+  endHour:16
+});
+await fs.writeFile(OUT+"/consistency-report.json",JSON.stringify(report.consistencyAnalysis,null,2));
+const consistencyLines = [
+  "# Okinawa provider consistency analysis",
+  "",
+  "Timezone: Asia/Tokyo",
+  "Window: 10:00–16:00 inclusive",
+  "",
+  "This report measures provider disagreement, not forecast accuracy. Accuracy requires observations.",
+  "",
+  ...report.consistencyAnalysis.courses.flatMap(course => [
+    "## "+course.courseName+" ("+course.coordinateStatus+")",
+    "",
+    "| Date | Shared hours | OM–VC feels-like MAE | OM–Foreca feels-like MAE | VC–Foreca feels-like MAE |",
+    "|---|---:|---:|---:|---:|",
+    ...course.days.map(day => {
+      const p=day.pairwise;
+      return "| "+day.date+" | "+day.matchedCommonHours+" | "+(p.openMeteo__visualCrossing.feelsLikeC.meanAbsoluteDifference??"—")+" | "+(p.openMeteo__foreca.feelsLikeC.meanAbsoluteDifference??"—")+" | "+(p.visualCrossing__foreca.feelsLikeC.meanAbsoluteDifference??"—")+" |";
+    }),
+    "",
+    "| Provider | Feels-like samples | Equal to air temp | Mean feels-like minus air temp (°C) |",
+    "|---|---:|---:|---:|",
+    ...["openMeteo","visualCrossing","foreca"].map(provider => {
+      const values=course.days.map(day=>day.providers[provider].feelsLikeVsAirTemperature);
+      const n=values.reduce((s,x)=>s+x.sampleCount,0);
+      const eq=values.reduce((s,x)=>s+x.equalCount,0);
+      const weighted=values.filter(x=>x.meanDeltaC!==null).reduce((s,x)=>s+x.meanDeltaC*x.sampleCount,0);
+      return "| "+provider+" | "+n+" | "+eq+" | "+(n?Number((weighted/n).toFixed(2)):"—")+" |";
+    }),
+    ""
+  ]),
+  "## Interpretation",
+  "",
+  "- Apparent/feels-like values are provider-defined; equality with air temperature is not automatically an error.",
+  "- Pairwise differences measure provider disagreement, not forecast accuracy.",
+  "- Foreca timestamps retain their +09:00 offset; comparison uses the same Japan local wall-clock hour."
+];
+await fs.writeFile(OUT+"/consistency-report.md",consistencyLines.join("\\n"));
 await fs.writeFile(OUT+"/coverage-report.json",JSON.stringify(report,null,2));
 const lines=[
 "# Okinawa six-course live weather coverage",
