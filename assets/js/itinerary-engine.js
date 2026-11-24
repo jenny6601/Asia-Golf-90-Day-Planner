@@ -38,6 +38,14 @@ export function scoreFiveDayItinerary({tripStart, courses, teeHour=7}) {
       message:"至少一場球缺少完整六小時逐時資料；不產生整趟行程分數。"
     };
   }
+  const safetyOverrides=valid.filter(x=>x.suitability.severity>=3);
+  if(safetyOverrides.length){
+    return {status:"excluded-severe-weather",tripStart,tripEnd,tripDays:5,nights:4,teeHour,
+      travelDays:[{date:tripStart,day:1},{date:tripEnd,day:5}],rounds,scoredRounds:3,missingRounds:0,
+      itineraryRisk:null,averageRoundRisk:null,worstRoundRisk:null,
+      safetyOverrides:safetyOverrides.map(x=>({date:x.date,courseName:x.courseName,reasons:x.suitability.reasons})),
+      message:"此行程包含雷雨、極端風勢或極端體感訊號，已從日期推薦排除。"};
+  }
   const risks=valid.map(x=>x.score.rainRisk);
   const averageRoundRisk=mean(risks);
   const worstRoundRisk=Math.max(...risks);
@@ -71,11 +79,12 @@ export function recommendFiveDayWindows({courses,teeHour=7,limit=3,minStartGap=5
  const starts=common.filter(start=>[1,2,3].every(offset=>dates.every(s=>s.has(addDays(start,offset)))));
  const all=starts.map(tripStart=>scoreFiveDayItinerary({tripStart,courses,teeHour}));
  const scored=all.filter(x=>x.status==="scored").sort((a,b)=>a.itineraryRisk-b.itineraryRisk||a.tripStart.localeCompare(b.tripStart));
+ const excludedSevereCount=all.filter(x=>x.status==="excluded-severe-weather").length;
  const selected=[];
  for(const item of scored){
   const gapOk=selected.every(x=>Math.abs((Date.parse(item.tripStart+"T00:00:00Z")-Date.parse(x.tripStart+"T00:00:00Z"))/DAY_MS)>=minStartGap);
   if(gapOk){selected.push(item);if(selected.length===limit)break;}
  }
  const ranked=selected.map((x,i)=>({...x,recommendationRank:i+1,confidence:"medium",confidenceLabel:"中等（未校準）",confidenceNote:"使用16天逐時預報；沖繩歷史回測尚未完成"}));
- return {candidateCount:starts.length,scoredCount:scored.length,missingCount:all.length-scored.length,recommendations:ranked,all};
+ return {candidateCount:starts.length,scoredCount:scored.length,missingCount:all.filter(x=>x.status==="insufficient-data").length,excludedSevereCount,recommendations:ranked,all};
 }
