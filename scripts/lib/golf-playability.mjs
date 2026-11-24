@@ -26,7 +26,8 @@ function collectWindow(providerMap,date,startHour,endHour){
 function evaluateWindow(providerRows,date,startHour,endHour){
  const map=new Map(providerRows.map(r=>[key(r.time),r]).filter(([k])=>k));
  const expected=endHour-startHour+1;
- const selected=collectWindow(map,date,startHour,endHour);
+ const keys=Array.from({length:endHour-startHour+1},(_,i)=>date+"T"+String(startHour+i).padStart(2,"0"));
+ const selected=keys.map(k=>map.get(k)??null);
  const present=selected.filter(Boolean);
  const values=field=>present.map(r=>r[field]);
  const rain=values("precipitationMm");
