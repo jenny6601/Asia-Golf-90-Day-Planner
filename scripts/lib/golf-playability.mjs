@@ -63,35 +63,33 @@ function evaluateWindow(providerRows,date,startHour,endHour){
  };
 }
 
-export function buildGolfPlayabilityReport(courses,{teeTime="10:00",durationHours=6}={}){
+export function buildGolfPlayabilityReport(courses,{teeTime="10:00",durationHours=6,minimumProviders=2}={}){
+ if(!Number.isInteger(minimumProviders)||minimumProviders<1||minimumProviders>PROVIDERS.length)throw new RangeError("minimumProviders must be between 1 and 3");
  const startHour=Number(teeTime.slice(0,2));
  const endHour=startHour+durationHours;
  const courseReports=courses.map(course=>{
   const maps={};
   for(const p of PROVIDERS)maps[p]=new Map(rows(p,course.providers?.[p]?.data).map(r=>[key(r.time),r]).filter(([k])=>k));
-  const commonKeys=[...maps.openMeteo.keys()].filter(k=>maps.visualCrossing.has(k)&&maps.foreca.has(k)).sort();
-  const dates=[...new Set(commonKeys.map(localDate))].filter(date=>{
-   for(let h=startHour;h<=endHour;h++){
-    const k=date+"T"+String(h).padStart(2,"0");
-    if(!PROVIDERS.every(p=>maps[p].has(k)))return false;
-   }
-   return true;
-  });
-  const daily=dates.map(date=>{
+  const candidateKeys=[...new Set(PROVIDERS.flatMap(p=>[...maps[p].keys()]))].sort();
+  const candidateDates=[...new Set(candidateKeys.map(localDate))];
+  const daily=candidateDates.map(date=>{
    const byProvider={};
    for(const p of PROVIDERS)byProvider[p]=evaluateWindow(rows(p,course.providers?.[p]?.data),date,startHour,endHour);
-   return {date,providers:byProvider};
-  });
+   const completeProviders=PROVIDERS.filter(p=>byProvider[p].complete);
+   return {date,completeProviderCount:completeProviders.length,completeProviders,providers:byProvider};
+  }).filter(day=>day.completeProviderCount>=minimumProviders);
+  const threeProviderCompleteDays=daily.filter(day=>day.completeProviderCount===PROVIDERS.length).length;
   return {
    courseId:course.id,courseName:course.name,coordinateStatus:course.coordinateStatus,
    operationalRankingEligible:course.coordinateStatus==="verified"||course.coordinateStatus==="provisional",
    rankingStatus:course.coordinateStatus==="pending"?"blocked-missing-course-coordinate":"descriptive-only-no-calibrated-score",
-   commonCompleteDays:dates.length,daily
+   commonCompleteDays:threeProviderCompleteDays,threeProviderCompleteDays,eligibleDaysAtLeastTwoProviders:daily.length,daily
   };
  });
  return {
   timezone:"Asia/Tokyo",teeTime,durationHours,window:{startLocalTime:teeTime,endLocalTime:String(endHour).padStart(2,"0")+":00",elapsedHours:durationHours,requiredHourlyEndpoints:durationHours+1},
-  commonPeriodPolicy:"Only dates with all required hourly endpoints present from all three providers are included. The endpoint at 16:00 closes the six-hour 10:00–16:00 window; hourly samples include both endpoints.",
+  commonPeriodPolicy:"Daily playability screening includes dates with complete required hourly endpoints from at least minimumProviders providers. Three-provider common comparison remains separately identified by commonCompleteDays. The endpoint at the end hour closes the six-hour window; hourly samples include both endpoints.",
+  minimumProviders,
   metricsPolicy:"Keep rain probability, reported hourly precipitation, wind, gust, Humidex, solar radiation and UV separate. Do not combine into a weighted score before thresholds and observed outcomes are validated.",
   rankingPolicy:"Numeric verified and provisional course-vicinity coordinates are eligible for preliminary weather screening and date selection. Coordinate confidence remains separate. No overall course ranking is generated until score weights are validated against observations.",
   courses:courseReports
