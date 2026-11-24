@@ -28,7 +28,7 @@ test("invalid coordinates, timezone, country and partial GPS are rejected",()=>{
 test("Japan catalogue includes Okinawa and mainland candidates without inventing GPS",()=>{
  const records=getCourseRecords("JP");
  assert.equal(records.length,19);
- assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,7);
+ assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,6);
  assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,11);
  const narita=records.find(x=>x.id==="jp-chiba-narita-golf-club");
  const hokkaidoClassic=records.find(x=>x.id==="jp-hokkaido-classic-golf-club");
@@ -77,7 +77,7 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  const regionCounts=new Map();for(const course of records)regionCounts.set(course.region,(regionCounts.get(course.region)||0)+1);
  for(const [region,count] of regionCounts)assert.ok(count>=3,region+" must have at least 3 courses");
  assert.equal(getCoursesForCountry("JP").length,19);
- assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:1,provisional:7,pending:11});
+ assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:2,provisional:6,pending:11});
  for(const code of ["KR","CN","VN","TH","MY","SG","ID"])assert.equal(getCourseRecords(code).length,0);
  assert.equal(getDestination("US"),null);
 });
@@ -87,4 +87,15 @@ test("active pilot course scope contains Okinawa Main Island only",()=>{
  assert.equal(pilot.length,6);
  assert.ok(pilot.every(course=>course.countryCode==="JP"&&course.area==="沖繩本島"));
  assert.deepEqual(pilot.map(course=>course.id),["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"]);
+});
+
+test("Southern Links GPS is verified from the official embedded access map",()=>{
+ const course=getOkinawaPilotCourses().find(x=>x.id==="southern-links");
+ assert.equal(course.coordinateStatus,"verified");
+ assert.equal(course.latitude,26.114086000297586);
+ assert.equal(course.longitude,127.73689211539313);
+ assert.equal(course.coordinateVerifiedAt,"2026-11-24");
+ assert.match(course.coordinateSource,/Official Accordia Golf access page/);
+ assert.match(course.coordinateSourceUrl,/accordia\.golf/);
+ assert.equal(isForecastReady(course),true);
 });
