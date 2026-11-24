@@ -1,33 +1,38 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=phase7-oneclick-v1"></head>
 <body><main class="shell"><header><p class="eyebrow">ASIA GOLF TRAVEL PLANNER</p><h1>90天高爾夫日期規劃</h1><p class="subtitle">先選目的地，再比較5天4夜、三場球的適打日期。</p></header>
+
+<section class="panel destination-panel"><h2>選擇旅遊目的地</h2><p class="trip-rule">先選國家，再選城市與球場。球場資料尚未完成座標與時區核實的目的地，不會產生虛構的天氣推薦。</p><div id="destination-grid" class="destination-grid" aria-label="亞洲目的地"></div><p id="destination-status" class="counts" aria-live="polite">目前試點：日本沖繩。</p><div id="destination-empty" class="destination-empty" hidden></div></section>
+
 <section class="notice"><strong>日期推薦資料分層</strong><p>1–16天使用所選球場 GPS 的真實逐時預報；17–90天使用 ECMWF 週／月尺度區域趨勢作粗略篩選。兩種結果不混成同一風險分數，缺值不以合成資料補足。</p></section>
 
-<section class="panel"><h2>沖繩三區｜真實天氣資料測試</h2><p class="trip-rule">北部：名護市｜中部：沖繩市｜南部：糸滿市。三個代表位置對應三個不同氣象預報網格，並非特定球場座標。</p><button id="fetch-weather" type="button">讀取 Open-Meteo 16 天預報</button><p id="weather-status" class="counts" aria-live="polite">尚未讀取即時資料。</p><div id="weather-results" class="weather-grid" aria-live="polite"></div>
+<section class="panel" data-country-scope="JP"><h2>沖繩區域｜天氣資料測試</h2><p class="trip-rule">北部：名護市｜中部：沖繩市｜南部：糸滿市。三個代表位置對應三個不同氣象預報網格，並非特定球場座標。</p><button id="fetch-weather" type="button">讀取 Open-Meteo 16 天預報</button><p id="weather-status" class="counts" aria-live="polite">尚未讀取即時資料。</p><div id="weather-results" class="weather-grid" aria-live="polite"></div>
 <div id="hourly-panel" hidden><h3>選擇日期｜逐時球場天氣（06:00–18:00）</h3><div class="controls"><label>預報日期<input id="hourly-date" type="date"></label><label>預計開球時間<select id="tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label></div><p class="data-note">新增：依選定開球時間計算連續6小時降雨影響指數。此為未經歷史回測校準的原型，不代表取消球賽機率，也不會影響90天日期推薦。</p><div id="hourly-results" class="weather-grid"></div></div>
 <p class="data-note">資料來源：Open-Meteo Forecast API。每日摘要與逐時資料分開呈現。</p></section>
 
-<section class="panel"><h2>沖繩本島｜實際球場 GPS 天氣</h2>
-<p class="trip-rule">從已建立的六個球場中選擇最多三個，依球場座標讀取16天預報。座標尚未核實的球場會暫時鎖定。讀取後會顯示輸入座標、氣象預報網格座標、網格偏移與海拔；網格偏移不等於球場界線驗證。</p>
+<section class="panel" data-country-scope="JP"><h2>沖繩本島｜球場 GPS 天氣驗證</h2>
+<p class="trip-rule">僅從沖繩本島試點球場清單中選擇，其他地區暫不納入，依球場座標讀取16天預報。球場依地區分組；座標尚未核實的球場會暫時鎖定。讀取後會顯示輸入座標、氣象預報網格座標、網格偏移與海拔；網格偏移不等於球場界線驗證。</p>
 <div id="course-picker" class="course-grid"></div>
 <p id="course-selection-status" class="counts" aria-live="polite">已選擇 0 / 3 個球場</p>
 <button id="fetch-course-weather" type="button" disabled>讀取所選球場 16 天預報</button>
 <p id="course-weather-status" class="counts" aria-live="polite">尚未讀取球場天氣。</p>
+<p id="provider-integration-status" class="data-note" aria-live="polite">Open-Meteo 可直接讀取；Visual Crossing 與 Foreca 需伺服器端 API 服務。</p>
 <div id="course-weather-results" class="weather-grid" aria-live="polite"></div>
 </section>
-<section class="panel"><h2>1–90天｜一鍵日期推薦</h2><p class="trip-rule">先讀取所選三個球場的16天逐時預報，再讀取沖繩名護、沖繩市、糸滿三個獨立網格的17–90天ECMWF長期展望，即可產生分層推薦。不同預報尺度不混成單一總分。</p><button id="run-unified-recommendations" type="button" disabled>一鍵分析未來90天</button><p id="unified-recommendation-status" class="counts" aria-live="polite">請先在上方選擇三座球場。</p><div id="unified-recommendations" class="weather-grid" aria-live="polite"></div></section><section class="panel"><h2>三球場同日比較｜六小時降雨風險</h2>
+<section class="panel" data-country-scope="JP"><h2>90天逐日天氣｜日期選取</h2><p class="trip-rule">逐日列出未來90天，方便先選行程出發日。第1–16天顯示三座所選球場的逐日預報；第17–46天顯示EC46週趨勢；第47–90天顯示SEAS5月展望。後兩段是涵蓋該日期的趨勢訊號，不是當日天氣預報、降雨機率或雨量。</p><button id="show-90day-daily" type="button">產生90天逐日清單</button><p id="daily-90day-status" class="counts" aria-live="polite">請先讀取三座球場16天預報及ECMWF長期展望。</p><p id="daily-90day-selection" class="data-note" aria-live="polite">尚未選取行程日期。</p><div id="daily-90day-results" class="daily-90day-list" aria-live="polite"></div></section>
+<section class="panel" data-country-scope="JP"><h2>1–90天｜一鍵日期推薦</h2><p class="trip-rule">先讀取所選三個球場的16天逐時預報，再讀取沖繩名護、沖繩市、糸滿三個獨立網格的17–90天ECMWF長期展望，即可產生分層推薦。不同預報尺度不混成單一總分。</p><button id="run-unified-recommendations" type="button" disabled>一鍵分析未來90天</button><p id="unified-recommendation-status" class="counts" aria-live="polite">請先在上方選擇三座球場。</p><div id="unified-recommendations" class="weather-grid" aria-live="polite"></div></section><section class="panel" data-country-scope="JP"><h2>三球場同日比較｜六小時降雨風險</h2>
 <p class="trip-rule">先讀取所選球場預報，再指定同一個日期及開球時間，比較各球場接下來六小時的降雨影響指數。只比較有完整逐時資料的球場。</p>
 <div class="controls"><label>比較日期<input id="compare-date" type="date" disabled></label><label>開球時間<select id="compare-tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label><button id="compare-courses" type="button" disabled>比較三球場降雨風險</button></div>
 <p id="comparison-status" class="counts" aria-live="polite">請先選擇球場並成功讀取預報。</p><div id="comparison-results" class="weather-grid" aria-live="polite"></div>
 <p class="data-note">比較指數為未經歷史回測校準的降雨影響原型；不是降雨事件機率或取消球賽機率。各球場座標仍需官方圖資核實。此比較僅適用已取得的16天逐時預報。</p></section>
-<section class="panel"><h2>五天四夜｜三場球整體行程評分</h2>
+<section class="panel" data-country-scope="JP"><h2>五天四夜｜三場球整體行程評分</h2>
 <p class="trip-rule">先選定三個球場並成功讀取逐時預報。系統依選取順序安排 Day 2、Day 3、Day 4，從真實資料中搜尋完整五天行程，並額外標示風勢、陣風、體感溫度與雷雨適打性。推薦窗口至少相隔五天，避免三個推薦高度重疊。</p>
 <button id="recommend-live-dates" type="button">依真實預報推薦最佳出發日期</button>
 <p id="live-date-status" class="counts" aria-live="polite">尚未進行真實日期推薦。</p><div id="live-date-recommendations" class="weather-grid" aria-live="polite"></div>
-<div class="controls"><label>行程出發日<select id="itinerary-start" disabled><option value="">先讀取球場預報</option></select></label><label>每日開球時間<select id="itinerary-tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label><button id="score-itinerary" type="button" disabled>評估五天四夜行程</button></div>
+<p class="trip-rule">選定出發日期後自動展開三個打球日的球場天氣報告：06:00–18:00逐時天氣、降雨機率與雨量、氣溫及體感、風速與陣風，以及開球後六小時降雨風險與適打性分析；更改日期或開球時間會同步更新。</p><div class="controls"><label>行程出發日<select id="itinerary-start" disabled><option value="">先讀取球場預報</option></select></label><label>每日開球時間<select id="itinerary-tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label><button id="score-itinerary" type="button" disabled>重新產生天氣報告</button></div>
 <p id="itinerary-status" class="counts" aria-live="polite">請先選擇三個球場並讀取預報。</p><div id="itinerary-results" class="weather-grid" aria-live="polite"></div>
 <p class="data-note">行程風險 = 三場平均降雨影響指數 70% + 最差一場 30%。這是未校準的相對風險指標，不是取消機率。只有三場均有完整六小時資料才計分；交通日暫不計分。</p></section>
-<section class="panel"><h2>沖繩本島｜17–90天長期天氣展望</h2>
+<section class="panel" data-country-scope="JP"><h2>沖繩本島｜17–90天長期天氣展望</h2>
 <p class="trip-rule">資料來源：Open-Meteo Seasonal Forecast API，ECMWF EC46 + SEAS5。顯示每週／每月降雨、溫度與風速異常訊號；不提供逐日雨量或逐日降雨機率，不用長期展望假裝精確預報。</p>
 <button id="fetch-long-range" type="button">讀取 ECMWF 17–90 天展望</button>
 <button id="recommend-long-range" type="button" disabled>評估 17–90 天長期候選日期</button>

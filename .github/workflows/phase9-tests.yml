@@ -1,0 +1,19 @@
+name: Phase 9 destination catalogue tests
+on:
+  push:
+    branches:
+      - phase-9-multicountry-destination-ui
+  pull_request:
+    branches:
+      - phase-8-multicountry-provider-integration
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm test

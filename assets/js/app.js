@@ -1,19 +1,26 @@
 import {recommendFiveDayWindows} from "./itinerary-engine.js";
 import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
-import {OKINAWA_COURSES} from "./okinawa-courses.js";
+import {getDestinations,getDestination,getOkinawaPilotCourses,getCourseCoverage} from "./destination-catalog.js";
 import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
 import {scoreFiveDayItinerary} from "./itinerary-engine.js";
 import {fetchOkinawaLongRange,interpretPrecipitationEfi} from "./long-range-api.js";
 import {classifyForecastConfidence} from "./confidence-engine.js";
 import {recommendLongRangeWindows} from "./long-range-engine.js";
 import {combineHorizonRecommendations} from "./horizon-integration.js";
+import {build90DayDailyView} from "./daily-90day-view.js";
+import {compareProviderGolfWindow} from "./provider-comparison.js";
+import {scoreMultiProviderGolfWindow} from "./weighted-weather-score.js";
+import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
+import {recommendMultiProviderFiveDayWindows} from "./multi-provider-itinerary.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
+let activeCountry="JP";
 let latestWeather=null;
 let selectedCourses=[];
 let latestCourseWeather=null;
 let latestLongRangeData=null;
+let latestIndependentProviders=[];
 function cell(value,suffix=""){return value===null||value===undefined?"—":`${value}${suffix}`;}
 function makeTable(headers,rows,cls="weather-table"){
  const table=document.createElement("div");table.className=cls;
@@ -74,26 +81,78 @@ $("fetch-weather").addEventListener("click",async()=>{
 });
 $("hourly-date").addEventListener("change",()=>{if(latestWeather)renderHourly(latestWeather,$("hourly-date").value);});
 
+
+function renderDestinations(){
+ const host=$("destination-grid");host.replaceChildren();
+ for(const item of getDestinations()){
+  const button=document.createElement("button");button.type="button";
+  button.className="destination-card"+(item.code===activeCountry?" is-active":"");
+  button.setAttribute("aria-pressed",String(item.code===activeCountry));
+  const flag=document.createElement("span");flag.className="destination-flag";flag.textContent=item.flag;
+  const name=document.createElement("strong");name.textContent=item.name;
+  const state=document.createElement("small");state.textContent=item.label;
+  button.append(flag,name,state);
+  button.addEventListener("click",()=>selectDestination(item.code));
+  host.append(button);
+ }
+}
+function selectDestination(countryCode){
+ const destination=getDestination(countryCode);if(!destination)return;
+ activeCountry=countryCode;
+ selectedCourses=[];latestCourseWeather=null;latestLongRangeData=null;
+ document.querySelectorAll("[data-country-scope]").forEach(node=>{node.hidden=countryCode!=="JP";});
+ $("destination-status").textContent=destination.code==="JP"
+  ?"日本｜沖繩為第一個可操作試點；其他日本地區待逐步加入。"
+  :`${destination.flag} ${destination.name}｜目前尚無完成 GPS 與時區核實的球場資料，暫不開放預報及日期評分。`;
+ const empty=$("destination-empty");empty.hidden=destination.code==="JP";
+ empty.textContent=destination.code==="JP"?"":`${destination.name}目的地模組已建立入口。下一步將加入城市／區域、官方球場資料、座標來源與 IANA 時區；在資料完成前不顯示假預報或假推薦。`;
+ $("course-selection-status").textContent="已選擇 0 / 3 個球場";
+ $("fetch-course-weather").disabled=true;
+ $("run-unified-recommendations").disabled=true;
+ $("course-weather-status").textContent="尚未讀取球場天氣。";
+ $("course-weather-results").replaceChildren();
+ $("live-date-recommendations").replaceChildren();
+ $("live-date-status").textContent="尚未進行真實日期推薦。";
+ $("unified-recommendations").replaceChildren();
+ $("unified-recommendation-status").textContent="請先選擇三座球場。";
+ renderDestinations();renderCoursePicker();
+}
+
 function renderCoursePicker(){
  const host=$("course-picker");host.replaceChildren();
- for(const course of OKINAWA_COURSES){
-  const label=document.createElement("label");label.className="course-option";
-  const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.value=course.id;
-  checkbox.checked=selectedCourses.some(x=>x.id===course.id);
-  checkbox.disabled=course.coordinateStatus==="pending" || (!checkbox.checked && selectedCourses.length>=3);
-  checkbox.addEventListener("change",()=>{
-   if(checkbox.checked){selectedCourses.push(course);}else{selectedCourses=selectedCourses.filter(x=>x.id!==course.id);}
-   latestCourseWeather=null;$("run-unified-recommendations").disabled=selectedCourses.length!==3;
-   $("course-weather-status").textContent="球場選擇已變更，請重新讀取逐時預報。";
-   $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
-   $("fetch-course-weather").disabled=selectedCourses.length===0;
-   renderCoursePicker();
-  });
-  const info=document.createElement("span");
-  const title=document.createElement("strong");title.textContent=`${course.name}（${course.area}）`;
-  const sub=document.createElement("small");sub.textContent=course.coordinateStatus==="pending"?"GPS 待核實｜暫不可查詢":`${course.latitude.toFixed(5)}, ${course.longitude.toFixed(5)}｜第三方地圖暫定，待官方圖資複核`;
-  const addr=document.createElement("small");addr.textContent=course.address;
-  info.append(title,sub,addr);label.append(checkbox,info);host.append(label);
+ const courses=activeCountry==="JP"?getOkinawaPilotCourses():[];
+ if(!courses.length){const empty=document.createElement("p");empty.className="destination-empty";empty.textContent=`${getDestination(activeCountry)?.name??"此目的地"}的球場清單尚在建置。完成球場名稱、官方地址、GPS 座標與 IANA 時區核實後，才會開放天氣查詢。`;host.append(empty);return;}
+ const groups=new Map();
+ for(const course of courses){
+  const area=course.area||course.region||"其他地區";
+  if(!groups.has(area))groups.set(area,[]);
+  groups.get(area).push(course);
+ }
+ for(const [area,items] of groups){
+  const section=document.createElement("section");section.className="course-area-group";
+  const heading=document.createElement("h3");heading.className="course-area-heading";
+  heading.textContent=`${area}｜${items.length} 座球場`;section.append(heading);
+  const grid=document.createElement("div");grid.className="course-area-courses";
+  for(const course of items){
+   const label=document.createElement("label");label.className="course-option";
+   const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.value=course.id;
+   checkbox.checked=selectedCourses.some(x=>x.id===course.id);
+   checkbox.disabled=course.coordinateStatus==="pending" || (!checkbox.checked && selectedCourses.length>=3);
+   checkbox.addEventListener("change",()=>{
+    if(checkbox.checked){selectedCourses.push(course);}else{selectedCourses=selectedCourses.filter(x=>x.id!==course.id);}
+    latestCourseWeather=null;$("run-unified-recommendations").disabled=selectedCourses.length!==3;
+    $("course-weather-status").textContent="球場選擇已變更，請重新讀取逐時預報。";
+    $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
+    $("fetch-course-weather").disabled=selectedCourses.length===0;
+    renderCoursePicker();
+   });
+   const info=document.createElement("span");
+   const title=document.createElement("strong");title.textContent=course.name;
+   const sub=document.createElement("small");sub.textContent=course.coordinateStatus==="pending"?"GPS 待核實｜暫不可查詢":`${course.latitude.toFixed(5)}, ${course.longitude.toFixed(5)}｜第三方地圖暫定，待官方圖資複核`;
+   const addr=document.createElement("small");addr.textContent=course.address||"地址待補";
+   info.append(title,sub,addr);label.append(checkbox,info);grid.append(label);
+  }
+  section.append(grid);host.append(section);
  }
 }
 function renderCourseWeather(data){
@@ -140,52 +199,104 @@ function populateItineraryStartDates(){
  valid.forEach(start=>select.add(new Option(`${fmt(start)} 出發｜${fmt(new Date(Date.parse(start+"T00:00:00Z")+4*86400000).toISOString().slice(0,10))} 返回`,start)));
  select.value=valid[0];select.disabled=false;$("score-itinerary").disabled=false;
 }
+function weatherDescription(code){
+ if([95,96,99].includes(code))return ["⛈️","雷雨"];
+ if([71,73,75,77,85,86].includes(code))return ["🌨️","降雪"];
+ if([51,53,55,56,57].includes(code))return ["🌦️","毛毛雨"];
+ if([61,63,65,66,67,80,81,82].includes(code))return ["🌧️","降雨"];
+ if(code===0)return ["☀️","晴朗"];
+ if(code===1)return ["🌤️","大致晴朗"];
+ if(code===2)return ["⛅","多雲時晴"];
+ if(code===3)return ["☁️","陰天"];
+ if([45,48].includes(code))return ["🌫️","有霧"];
+ return ["—","資料不足"];
+}
+function metricTone(value,type){
+ if(!Number.isFinite(value))return "";
+ if(type==="rain")return value>=5?"metric-bad":value>=1?"metric-warn":"metric-good";
+ if(type==="temp")return value<15?"metric-cool":value<=27?"metric-good":value<=30?"metric-warn":"metric-bad";
+ if(type==="wind")return value>=10?"metric-bad":value>=8?"metric-warn":"metric-good";
+ return "";
+}
 function renderItinerary(){
  const status=$("itinerary-status"),host=$("itinerary-results");host.replaceChildren();
- if(!latestCourseWeather || selectedCourses.length!==3){
-  status.textContent="請先選擇三個球場並成功讀取預報。";return;
+ if(!latestCourseWeather?.courses?.length||selectedCourses.length!==3){status.textContent="請先選擇三個球場並成功讀取預報。";return;}
+ const tripStart=$("itinerary-start").value,teeHour=Number($("itinerary-tee-hour").value);
+ if(!tripStart){status.textContent="請先選擇有效的行程出發日期。";return;}
+ const result=scoreFiveDayItinerary({tripStart,teeHour,courses:latestCourseWeather.courses});
+ if(result.status!=="scored"){status.textContent=result.message??"所選日期缺少完整逐時資料，無法完成分析。";return;}
+ const intro=document.createElement("article");intro.className="weather-card";
+ const heading=document.createElement("h3");heading.textContent=`五天四夜天氣報告｜${fmt(result.tripStart)} – ${fmt(result.tripEnd)}`;intro.append(heading);
+ const summary=document.createElement("p");summary.className="risk-summary";summary.textContent=`三場球整體降雨影響指數：${result.itineraryRisk}/100（${result.label}）｜平均風險 ${result.averageRoundRisk}｜最差一場 ${result.worstRoundRisk}`;intro.append(summary);
+ const travel=document.createElement("p");travel.className="weather-meta";travel.textContent=`Day 1 ${fmt(result.travelDays[0].date)} 交通日｜Day 5 ${fmt(result.travelDays[1].date)} 交通日｜打球日均為 ${String(teeHour).padStart(2,"0")}:00 開球，分析開球後六小時`;intro.append(travel);
+ host.append(intro);
+ for(const round of result.rounds){
+  const item=latestCourseWeather.courses[round.round-1];
+  const h=item.hourly,date=round.date;
+  const risk=scoreGolfRainWindow(h,date,teeHour,6);
+  const play=scoreGolfSuitabilityWindow(h,date,teeHour,6);
+  const independent=latestIndependentProviders.find(x=>x.course?.id===item.course.id);
+  const providers=compareProviderGolfWindow({openMeteo:item,independentProviders:independent,date,teeHour,timeZone:item.course.timezone??"Asia/Tokyo"});
+  const weighted=scoreMultiProviderGolfWindow(providers);
+  const card=document.createElement("article");card.className="weather-card golf-day-report";
+  const title=document.createElement("h3");title.textContent=`Day ${round.round+1}｜${fmt(date)}｜${item.course.name}`;card.append(title);
+  const top=document.createElement("div");top.className="golf-report-summary";
+  const conditionHours=h.time.map((t,i)=>({t,i})).filter(x=>x.t.startsWith(date)&&Number(x.t.slice(11,13))>=teeHour&&Number(x.t.slice(11,13))<teeHour+6);
+  const codes=conditionHours.map(x=>h.weather_code?.[x.i]).filter(Number.isFinite);
+  const mainCode=codes.length?codes[Math.floor(codes.length/2)]:null;
+  const [emoji,condition]=weatherDescription(mainCode);
+  const weather=document.createElement("div");weather.className="golf-weather-main";weather.textContent=`${emoji} ${condition}`;top.append(weather);
+  const suitability=document.createElement("div");suitability.className="golf-suitability "+(play.status==="scored"?(play.severity>=3?"metric-bad":play.severity===2?"metric-warn":"metric-good"):"metric-missing");
+  suitability.textContent=play.status==="scored"?`適打性：${play.grade}`:"適打性：資料不足";top.append(suitability);card.append(top);
+  const metrics=document.createElement("div");metrics.className="golf-metrics";
+  const sixHours=conditionHours;
+  const vals=(key)=>sixHours.map(x=>h[key]?.[x.i]).filter(Number.isFinite);
+  const minmax=key=>{const v=vals(key);return v.length===6?`${Math.min(...v)}–${Math.max(...v)}`:"資料不足";};
+  const maxval=key=>{const v=vals(key);return v.length===6?String(Math.max(...v)):"資料不足";};
+  const metricItems=[
+   ["降雨機率",risk.status==="scored"?`${risk.averageHourlyRainProbability}% 平均`:"資料不足", "rain",risk.status==="scored"?risk.averageHourlyRainProbability:null],
+   ["六小時雨量",risk.status==="scored"?`${risk.expectedRainAmountMm} mm`:"資料不足","rain",risk.status==="scored"?risk.expectedRainAmountMm:null],
+   ["氣溫",minmax("temperature_2m")+ (sixHours.length===6?" °C":""),"temp",null],
+   ["體感溫度",minmax("apparent_temperature")+(sixHours.length===6?" °C":""),"temp",null],
+   ["最大風速",maxval("wind_speed_10m")+(sixHours.length===6?" m/s":""),"wind",sixHours.length===6?Math.max(...vals("wind_speed_10m")):null],
+   ["最大陣風",maxval("wind_gusts_10m")+(sixHours.length===6?" m/s":""),"wind",sixHours.length===6?Math.max(...vals("wind_gusts_10m")):null]
+  ];
+  for(const [label,value,type,n] of metricItems){const box=document.createElement("div");box.className="golf-metric "+metricTone(n,type);const small=document.createElement("small");small.textContent=label;const strong=document.createElement("strong");strong.textContent=value;box.append(small,strong);metrics.append(box);}
+  card.append(metrics);
+  const detail=document.createElement("p");detail.className="risk-summary";
+  detail.textContent=risk.status==="scored"?`開球後六小時降雨影響：${risk.label}｜指數 ${risk.rainRisk}/100｜最高單時雨量 ${risk.peakHourlyRainMm} mm｜有雨時數 ${risk.wetHours}/6`:"開球後六小時降雨資料不足，無法計算降雨影響指數。";card.append(detail);
+  const reasons=document.createElement("p");reasons.className="weather-meta";
+  reasons.textContent=play.status==="scored"?`適打性判斷：${play.reasons.join("、")}｜最高風速 ${play.peakWindMs} m/s｜最大陣風 ${play.peakGustMs} m/s｜體感 ${play.feelsLikeMinC}–${play.feelsLikeMaxC}°C`:"適打性判斷資料不足；不將缺值視為良好天氣。";card.append(reasons);
+  const source=document.createElement("p");source.className="weather-meta";
+  source.textContent=weighted.status==="scored"?`三來源加權風險 ${weighted.weightedRisk}/100｜降雨65%：${weighted.rainfallRisk}｜風15%：${weighted.windRisk}｜溫度20%：${weighted.temperatureRisk}｜來源 ${weighted.providerCount}/3｜來源差異 ${weighted.providerSpread}`:`三來源加權評分暫不可用：完整來源 ${weighted.providerCount}/3（至少需要2個）。Open-Meteo逐時報告仍獨立顯示。`;card.append(source);
+  const tableTitle=document.createElement("h4");tableTitle.textContent="逐時天氣報告｜06:00–18:00";card.append(tableTitle);
+  const hours=h.time.map((t,i)=>({t,i})).filter(x=>x.t.startsWith(date)&&Number(x.t.slice(11,13))>=6&&Number(x.t.slice(11,13))<=18);
+  const rows=hours.map(({t,i})=>{
+   const [icon,label]=weatherDescription(h.weather_code?.[i]);
+   return [t.slice(11,16),icon+" "+label,cell(h.precipitation_probability?.[i],"%"),cell(h.precipitation?.[i]," mm"),cell(h.temperature_2m?.[i],"°C"),cell(h.apparent_temperature?.[i],"°C"),cell(h.wind_speed_10m?.[i]," m/s"),cell(h.wind_gusts_10m?.[i]," m/s"),cell(h.relative_humidity_2m?.[i],"%")];
+  });
+  card.append(makeTable(["時間","天氣狀況","降雨機率","雨量","氣溫","體感","風速","陣風","濕度"],rows,"weather-table hourly-table"));
+  const note=document.createElement("p");note.className="weather-meta";note.textContent=`預報資料：Open-Meteo逐時資料；三來源分數需VC與Foreca伺服器資料可用。適打性門檻尚未經歷史回測校準。球場座標狀態：${item.course.coordinateStatus??"未標示"}。`;card.append(note);
+  host.append(card);
  }
- const result=scoreFiveDayItinerary({
-  tripStart:$("itinerary-start").value,
-  teeHour:Number($("itinerary-tee-hour").value),
-  courses:latestCourseWeather.courses
- });
- if(result.status!=="scored"){
-  status.textContent=result.message;return;
- }
- const card=document.createElement("article");card.className="weather-card";
- const heading=document.createElement("h3");heading.textContent=`五天四夜｜${fmt(result.tripStart)} – ${fmt(result.tripEnd)}`;card.append(heading);
- const score=document.createElement("p");score.className="risk-summary";score.textContent=`整趟三場球降雨影響：${result.label}｜${result.itineraryRisk}/100`;card.append(score);
- const summary=document.createElement("p");summary.textContent=`三場平均風險 ${result.averageRoundRisk}｜最差一場 ${result.worstRoundRisk}｜每日開球 ${String(result.teeHour).padStart(2,"0")}:00`;card.append(summary);
- const rows=result.rounds.map(x=>[
-  `Day ${x.round+1}｜${fmt(x.date)}`,
-  x.courseName,
-  x.score.label,
-  `${x.score.rainRisk}/100`,
-  `${x.score.averageHourlyRainProbability}%`,
-  `${x.score.expectedRainAmountMm} mm`,
-  x.suitability?.status==="scored"?x.suitability.grade:"適打資料不足"
- ]);
- card.append(makeTable(["日期","球場","降雨風險","指數","平均逐時機率","六小時雨量","適打性"],rows));
- const travel=document.createElement("p");travel.className="weather-meta";travel.textContent=`Day 1 ${fmt(result.travelDays[0].date)}：交通日（未納入風險分數）｜Day 5 ${fmt(result.travelDays[1].date)}：交通日（未納入風險分數）`;card.append(travel);
- const conditions=document.createElement("p");conditions.textContent="適打性觀察："+result.rounds.map(x=>x.suitability?.status==="scored"?`${x.courseName}：${x.suitability.grade}（${x.suitability.reasons.join("、")}）`:`${x.courseName}：風勢／體感／雷雨資料不足`).join("；");card.append(conditions);
- const worst=document.createElement("p");worst.textContent=`最需留意：Day ${result.worstRound.round+1}｜${result.worstRound.courseName}（${result.worstRound.risk}/100）`;card.append(worst);
- host.append(card);
- status.textContent="評估完成｜使用三個球場各自 GPS 的真實逐時預報｜僅評估打球日；交通日未計分。";
+ status.textContent="完成｜已依選定日期自動產生三個打球日報告；逐時資料缺漏會明確標示，不以零值補足。";
 }
 $("score-itinerary").addEventListener("click",renderItinerary);
-
+$("itinerary-start").addEventListener("change",renderItinerary);
+$("itinerary-tee-hour").addEventListener("change",()=>{populateItineraryStartDates();if($("itinerary-start").value)renderItinerary();});
 function renderLiveDateRecommendations(){
  const host=$("live-date-recommendations"),status=$("live-date-status");host.replaceChildren();
  if(!latestCourseWeather?.courses||selectedCourses.length!==3){status.textContent="請先選擇三個球場並成功讀取球場逐時預報。";return;}
- const result=recommendFiveDayWindows({courses:latestCourseWeather.courses,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5});
- status.textContent=result.recommendations.length?`真實預報評估 ${result.candidateCount} 個候選出發日｜完整評分 ${result.scoredCount} 組｜推薦 ${result.recommendations.length} 組`:"目前資料範圍內沒有三場均具完整六小時資料的五天行程；不以合成資料補足。";
+ const result=recommendMultiProviderFiveDayWindows({courses:latestCourseWeather.courses,independentProviders:latestIndependentProviders,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5,minimumProviders:2});
+ status.textContent=result.recommendations.length
+  ? `多來源推薦完成｜候選出發日 ${result.candidateCount} 組｜三場均有至少兩個完整來源 ${result.scoredCount} 組｜推薦 ${result.recommendations.length} 組｜權重：降雨65%、風15%、溫度20%。`
+  : `目前沒有足夠的多來源資料支持五天四夜推薦｜候選 ${result.candidateCount} 組｜完整可評分 ${result.scoredCount} 組。每個打球日均須有至少兩個完整來源；請確認 Cloudflare Pages Functions 與兩組 API Secrets。未退回單一來源假裝多來源推薦。`;
  for(const item of result.recommendations){
   const card=document.createElement("article");card.className="weather-card";
   const h=document.createElement("h3");h.textContent=`推薦 #${item.recommendationRank}｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
-  const score=document.createElement("p");score.className="risk-summary";score.textContent=`三場球降雨影響指數：${item.itineraryRisk}/100（${item.label}）`;card.append(score);
-  const p=document.createElement("p");p.textContent=`Day 2–4：${item.rounds.map(x=>fmt(x.date)+" "+x.courseName+"（降雨 "+x.score.rainRisk+"/100；適打 "+(x.suitability?.status==="scored"?x.suitability.grade:"資料不足")+"）").join("；")}`;card.append(p);
-  const c=document.createElement("p");c.className="weather-meta";c.textContent="可信度：中等（未校準）｜16天逐時預報｜尚未完成沖繩歷史回測；此指數不是取消球賽機率。";card.append(c);host.append(card);
+  const score=document.createElement("p");score.className="risk-summary";score.textContent=`五天四夜加權天氣風險：${item.itineraryRisk}/100（${item.label}）`;card.append(score);
+  const p=document.createElement("p");p.textContent=`Day 2–4：${item.rounds.map(x=>fmt(x.date)+" "+x.courseName+"（綜合 "+x.score.weightedRisk+"/100；雨 "+x.score.rainfallRisk+"；風 "+x.score.windRisk+"；溫度 "+x.score.temperatureRisk+"；來源 "+x.score.providerCount+"/3）").join("；")}`;card.append(p);
+  const c=document.createElement("p");c.className="weather-meta";c.textContent="排序方法：三場球各自的多來源中位數加權分數；行程分數＝平均風險70%＋最差一場30%。目前為暫定模型，尚未完成沖繩歷史回測校準，不代表取消球賽機率。";card.append(c);host.append(card);
  }
 }
 $("recommend-live-dates").addEventListener("click",renderLiveDateRecommendations);
@@ -202,6 +313,27 @@ function runCourseComparison(){
  const summary=summarizeCourseRainRisks(results);
  const valid=results.filter(x=>x.score.status==="scored");
  const host=$("comparison-results");host.replaceChildren();
+ const providerHeading=document.createElement("h3");providerHeading.textContent="三來源同時段交叉比較（六小時）";host.append(providerHeading);
+ for(const item of latestCourseWeather.courses){
+  const independent=latestIndependentProviders.find(x=>x.course?.id===item.course.id);
+  const compared=compareProviderGolfWindow({openMeteo:item,independentProviders:independent,date,teeHour,timeZone:item.course.timezone??"Asia/Tokyo"});
+  const card=document.createElement("article");card.className="weather-card";
+  const title=document.createElement("h4");title.textContent=item.course.name+"｜"+fmt(date)+"｜"+String(teeHour).padStart(2,"0")+":00 起";card.append(title);
+  const weighted=scoreMultiProviderGolfWindow(compared);
+  const scoreLine=document.createElement("p");scoreLine.className="risk-summary";
+  scoreLine.textContent=weighted.status==="scored"
+   ? `多來源加權適打風險：${weighted.weightedRisk}/100｜降雨 ${weighted.rainfallRisk}（65%）｜風 ${weighted.windRisk}（15%）｜溫度 ${weighted.temperatureRisk}（20%）｜來源 ${weighted.providerCount}/3｜來源差異 ${weighted.providerSpread}`
+   : `多來源加權分數暫不產生：完整且可比較來源 ${weighted.providerCount}/3，至少需要2個來源。`;
+  card.append(scoreLine);
+  const rows=Object.entries({OpenMeteo:compared.openMeteo,"Visual Crossing":compared.visualCrossing,Foreca:compared.foreca}).map(([name,x])=>[
+   name,x.status==="available"?"完整六小時":x.status==="incomplete"?"資料不足":x.status==="unavailable"?"未取得":"時段不相容",
+   x.status==="available"?cell(x.precipProbabilityAvgPct,"%"):"—",x.status==="available"?cell(x.rainTotalMm," mm"):"—",
+   x.status==="available"?cell(x.tempMinC,"°")+"–"+cell(x.tempMaxC,"°"):"—",
+   x.status==="available"?cell(x.windMaxMs," m/s"):"—"
+  ]);
+  card.append(makeTable(["來源","資料狀態","平均降雨機率","六小時雨量","氣溫範圍","最大風速"],rows));
+  const note=document.createElement("p");note.className="weather-meta";note.textContent="只比較相同當地六小時時段；缺值不補、三小時累積量不轉成逐時量。";card.append(note);host.append(card);
+ }
  const sorted=[...valid].sort((a,b)=>a.score.rainRisk-b.score.rainRisk);
  for(const item of sorted){
   const card=document.createElement("article");card.className="weather-card";
@@ -226,6 +358,51 @@ $("compare-tee-hour").addEventListener("change",()=>{if(latestCourseWeather)runC
 $("compare-date").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
 
 
+
+
+function render90DayDailyRows(){
+ const host=$("daily-90day-results"),status=$("daily-90day-status");
+ host.replaceChildren();
+ if(!latestCourseWeather?.courses||selectedCourses.length!==3||!latestLongRangeData?.points){
+  status.textContent="請先選擇三座球場，並完成短期預報及長期展望讀取。";return;
+ }
+ const referenceDate=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Tokyo"});
+ const rows=build90DayDailyView({referenceDate,courses:latestCourseWeather.courses,points:latestLongRangeData.points});
+ const table=document.createElement("div");table.className="daily-90day-list";
+ const header=document.createElement("div");header.className="daily-90day-row daily-90day-head";
+ ["日期／預報天數","資料層級","天氣／趨勢摘要","選取行程出發日"].forEach(x=>{const s=document.createElement("span");s.textContent=x;header.append(s);});table.append(header);
+ for(const item of rows){
+  const row=document.createElement("div");row.className="daily-90day-row";
+  const date=document.createElement("span");date.textContent=item.endDate?fmt(item.date)+"–"+fmt(item.endDate)+"｜第 "+item.leadDays+"–"+item.leadEndDays+" 天":fmt(item.date)+"｜第 "+item.leadDays+" 天";row.append(date);
+  const horizon=document.createElement("span");horizon.textContent=item.label;row.append(horizon);
+  const detail=document.createElement("span");
+  if(item.horizon==="forecast"&&item.weather){
+   const w=item.weather;
+   detail.textContent=w.courseCount===3
+    ? "三球場最高降雨機率 "+cell(w.precipitationProbabilityMax,"%")+"｜最高日雨量 "+cell(w.precipitationSumMaxMm," mm")+"｜氣溫 "+cell(w.temperatureMinC,"°")+"–"+cell(w.temperatureMaxC,"°")+"｜最大風速 "+cell(w.windSpeedMaxMs," m/s")
+    : "逐日資料不完整（"+w.courseCount+"/3 球場），不補值";
+  }else{
+   detail.textContent=item.signals.map(x=>x.region+"："+(x.signal?.label??"資料不足")).join("；");
+  }
+  row.append(detail);
+  const action=document.createElement("span");const button=document.createElement("button");button.type="button";button.textContent=item.horizon==="weekly-seasonal"?"選取此週":item.leadDays>16?"選取趨勢日期":"選此日";
+  button.disabled=item.status!=="available";
+  button.addEventListener("click",()=>{
+   const select=$("itinerary-start");
+   if(item.leadDays<=16){
+    const option=[...select.options].find(x=>x.value===item.date);
+    if(option){select.value=item.date;}else{select.add(new Option(fmt(item.date)+" 出發",item.date));select.value=item.date;}
+    select.disabled=false;
+   }
+   const period=item.endDate?fmt(item.date)+" 至 "+fmt(item.endDate):fmt(item.date);
+   $("daily-90day-selection").textContent="已選取 "+period+"（"+item.label+"）。此選取僅作日期／週區間參考。";
+   $("itinerary-status").textContent=item.leadDays<=16?"已選擇短期出發日期，可進一步計算五天四夜逐時風險。":"已選擇中長期日期／週區間；僅依週或月尺度趨勢評估，不會產生逐時風險分數。";
+  });
+  action.append(button);row.append(action);table.append(row);
+ }
+ host.append(table);
+ status.textContent="已建立90天瀏覽表｜1–16天逐日預報，17–46天逐日標示週趨勢，47–90天改為7天一列的週展望（依SEAS5月尺度訊號）。";
+}
 
 function renderUnifiedRecommendations(){
  const host=$("unified-recommendations"),status=$("unified-recommendation-status");host.replaceChildren();
@@ -347,12 +524,24 @@ $("fetch-long-range").addEventListener("click",async()=>{
  finally{button.disabled=false;}
 });
 
+$("show-90day-daily").addEventListener("click",render90DayDailyRows);
+renderDestinations();
 renderCoursePicker();
 $("fetch-course-weather").addEventListener("click",async()=>{
  const button=$("fetch-course-weather"),status=$("course-weather-status");
  button.disabled=true;status.textContent="正在依所選球場 GPS 讀取預報…";
  try{
   latestCourseWeather=await fetchCourseForecast(selectedCourses);
+  latestIndependentProviders=[];
+  try{
+   const response=await fetch("/api/course-weather",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({courses:selectedCourses})});
+   if(!response.ok)throw new Error("伺服器端 VC／Foreca API HTTP "+response.status);
+   const payload=await response.json();
+   latestIndependentProviders=payload.courses??[];
+   $("provider-integration-status").textContent="Visual Crossing 與 Foreca 已由伺服器端獨立讀取；各來源狀態分開呈現。";
+  }catch(error){
+   $("provider-integration-status").textContent="目前無法取得伺服器端 Visual Crossing／Foreca 資料（"+error.message+"）。Open-Meteo 仍獨立可用；不以其他來源代填。若使用 GitHub Pages 靜態預覽，需部署 Cloudflare Pages Functions 並設定伺服器端 Secrets。";
+  }
   $("run-unified-recommendations").disabled=selectedCourses.length!==3;
   renderCourseWeather(latestCourseWeather);
   const commonDates=latestCourseWeather.courses.map(x=>new Set(x.hourly.time.map(t=>t.slice(0,10))));
