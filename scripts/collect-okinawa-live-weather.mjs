@@ -213,7 +213,7 @@ const thermalLines = [
   "",
   "Per-hour JSON retains wind speed, gust, and Open-Meteo shortwave solar radiation and UV index where available. These are shown separately and are not combined into an unvalidated composite score.",
   "",
-  "Humidex categories follow Environment and Climate Change Canada: 20–29 little discomfort; 30–39 some discomfort; 40–45 great discomfort/avoid exertion; 46+ dangerous/heat stroke possible."
+  "Humidex categories follow Environment and Climate Change Canada: 20–29 little discomfort; 30–39 some discomfort; 40–45 great discomfort/avoid exertion; >45 dangerous/heat stroke possible."
 ];
 await fs.writeFile(OUT+"/outdoor-thermal-screening.md",thermalLines.join("\n"));
 report.rawFieldDiagnostics = buildRawFieldDiagnostics(courses.filter(c=>c.collectionStatus==="collected"));
