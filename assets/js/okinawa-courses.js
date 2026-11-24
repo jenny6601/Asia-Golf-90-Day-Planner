@@ -25,7 +25,7 @@ export const OKINAWA_COURSES = Object.freeze([
   {
     id:"atta-terrace",name:"The Atta Terrace Golf Resort",nameJa:"ジ・アッタテラス ゴルフリゾート",
     area:"北部",city:"恩納村",address:"1079 Afuso, Onna-son, Kunigami-gun, Okinawa 904-0402, Japan",
-    latitude:26.499693,longitude:127.896228,coordinateSource:"Where2Golf map listing",coordinateSourceUrl:"https://www.where2golf.com/japan/the-atta-terrace-golf-resort/",
+    latitude:26.499755859375,longitude:127.89598083496094,coordinateSource:"Nomae Golf Google Maps course-location pin; provisional pending official course map confirmation",coordinateSourceUrl:"https://golf.nomaejapan.com/en/course/the-atta-terrace-golf-resort",
     coordinateStatus:"provisional",officialUrl:"https://www.terrace.co.jp/en/atta/"
   },
   {
