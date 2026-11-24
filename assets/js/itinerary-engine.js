@@ -28,7 +28,7 @@ export function scoreFiveDayItinerary({tripStart, courses, teeHour=7}) {
     const suitability=scoreGolfSuitabilityWindow(course.hourly,date,teeHour,6);
     return {round:index+1,date,courseId:course.course.id,courseName:course.course.name,area:course.course.area,score,suitability};
   });
-  const valid=rounds.filter(x=>x.score.status==="scored");
+  const valid=rounds.filter(x=>x.score.status==="scored"&&x.suitability?.status==="scored");
   if (valid.length !== 3) {
     return {
       status:"insufficient-data",tripStart,tripEnd,tripDays:5,nights:4,teeHour,
