@@ -81,8 +81,10 @@ export function scorePwaStylePlayability(hourly,date,teeHour,durationHours=6) {
   if(totalRain!==null&&totalRain>=5)alerts.push("六小時累積雨量達5 mm以上，留意球道濕滑及球場公告。");
   if(avgWind!==null&&avgWind*3.6>=25)alerts.push("平均風速達25 km/h，球路及擊球距離可能受影響。");
   if(peakGust!==null&&peakGust*3.6>=40)alerts.push("最大陣風達40 km/h，注意擊球穩定與現場安全。");
+  if(codes.some(v=>[45,48].includes(v)))alerts.push("預報出現霧況，清晨能見度可能受影響，開球前請確認球場視線及安全狀況。");
   if(max(probabilities)!==null&&max(probabilities)>=30)alerts.push("至少一小時降雨機率達30%，建議攜帶雨具。");
-  if(mean(feels)!==null&&mean(feels)<=15)alerts.push("平均體感溫度不高於15°C，建議分層保暖並充分暖身。");
+  if(mean(feels)!==null&&mean(feels)<=10)alerts.push("平均體感溫度達10°C以下，屬極低溫，建議評估延後開球並加強保暖。");
+  else if(mean(feels)!==null&&mean(feels)<=15)alerts.push("平均體感溫度達15°C以下，屬低溫，建議分層穿著並充分暖身。");
   if(mean(feels)!==null&&max(feels)>30)alerts.push("部分時段體感超過30°C，注意補水與防曬。");
   if(!alerts.length)alerts.push("目前逐時資料未顯示明顯降雨、強風或雷雨警訊；出發前仍請確認最新預報。");
   return {status:"scored",model:"taiwan-pwa-v32-playability-baseline",calibration:"not-hindcast-calibrated",score,grade:finalGrade,label:safety?.label||labels[finalGrade],safety,weightCoverage:weight,parts,alerts,windowHours:durationHours,weather:{precipitationProbabilityMin:probabilities.length?Math.min(...probabilities):null,precipitationProbabilityMax:max(probabilities),rainfallMm:totalRain,feelsLikeMinC:feels.length?Math.min(...feels):null,feelsLikeMaxC:max(feels),averageWindKmh:avgWind===null?null:avgWind*3.6,peakGustKmh:peakGust===null?null:peakGust*3.6,thunderstormSignal:thunder}};
