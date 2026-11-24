@@ -126,7 +126,7 @@ async function renderRegionClimate(){
  status.textContent="完成｜"+month+"｜取得 "+success+" 個分區的季節趨勢。數值為月尺度模式展望，不是每日降雨預報。";
 }
 function renderRegionTopWeeks(group,records){
- const out=$("region-report"),title=node("h3","③ "+group.region+"｜最佳適打週次 TOP 3");
+ const out=$("region-report");out.querySelectorAll(".week-recommendations,.selected-week-report").forEach(x=>x.remove());const title=node("h3","③ "+group.region+"｜最佳適打週次 TOP 3");
  const panel=node("section",undefined,"week-recommendations");panel.append(title,node("p","以下依分區內已建檔球場的週／月尺度季節訊號排序。17–90 天不是逐日天氣預報；推薦僅代表相對乾濕趨勢，不代表實際降雨機率。","long-range-note"));
  const ref=today(),first=add(ref,16),last=add(ref,83),candidates=[];
  for(let start=first;start<=last;start=add(start,7)){
@@ -157,7 +157,7 @@ function renderRegionTopWeeks(group,records){
 
 
 function renderSelectedWeekReport(group,week,records){
- const host=$("region-report"),report=node("section",undefined,"selected-week-report");
+ const host=$("region-report");host.querySelectorAll(".selected-week-report").forEach(x=>x.remove());const report=node("section",undefined,"selected-week-report");
  report.append(node("h3","④ "+group.region+"｜7 天天氣報告"),node("h4",week.start+" ～ "+week.end));
  const dayStrip=node("div",undefined,"seven-day-strip");
  for(let i=0;i<7;i++){const date=add(week.start,i),tile=node("div",undefined,"seven-day-item");tile.append(node("strong",date.slice(5)),node("span",["日","一","二","三","四","五","六"][new Date(date+"T12:00:00Z").getUTCDay()]));dayStrip.append(tile)}
