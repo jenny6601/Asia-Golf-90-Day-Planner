@@ -2,7 +2,7 @@ import {OKINAWA_COURSES} from "./okinawa-courses.js";
 import {validateCourseRecord,isForecastReady} from "./course-schema.js";
 
 export const DESTINATIONS=Object.freeze([
- {code:"JP",name:"日本",flag:"🇯🇵",status:"pilot",label:"沖繩試點已建立"},
+ {code:"JP",name:"日本",flag:"🇯🇵",status:"pilot",label:"沖繩試點及日本本島資料建置中"},
  {code:"KR",name:"韓國",flag:"🇰🇷",status:"catalog-pending",label:"球場資料待建置"},
  {code:"CN",name:"中國",flag:"🇨🇳",status:"catalog-pending",label:"球場資料待建置"},
  {code:"VN",name:"越南",flag:"🇻🇳",status:"catalog-pending",label:"球場資料待建置"},
@@ -12,19 +12,28 @@ export const DESTINATIONS=Object.freeze([
  {code:"ID",name:"印尼",flag:"🇮🇩",status:"catalog-pending",label:"球場資料待建置"}
 ]);
 
-const OKINAWA_RECORDS=OKINAWA_COURSES.map(course=>validateCourseRecord({\n ...course,
- id:course.id,countryCode:"JP",region:"沖繩縣",area:course.area,name:course.name,city:course.city,courseName:course.name,localName:course.nameJa??null,
- address:course.address,latitude:course.latitude,longitude:course.longitude,timezone:"Asia/Tokyo",
- coordinateSource:course.coordinateSource??null,coordinateVerifiedAt:null,coordinateStatus:course.coordinateStatus,
- officialUrl:course.officialUrl??null,coordinateSourceUrl:course.coordinateSourceUrl??null,
- providerAvailability:{openMeteo:course.coordinateStatus!=="pending",visualCrossing:"pending",foreca:"pending"},
+const OKINAWA_RECORDS=OKINAWA_COURSES.map(course=>validateCourseRecord({
+ ...course,
+ id:course.id,countryCode:"JP",region:"沖繩縣",area:course.area,name:course.name,city:course.city,courseName:course.name,
+ localName:course.nameJa??null,address:course.address,latitude:course.latitude,longitude:course.longitude,
+ timezone:"Asia/Tokyo",coordinateSource:course.coordinateSource??null,coordinateVerifiedAt:null,
+ coordinateStatus:course.coordinateStatus,officialUrl:course.officialUrl??null,
+ coordinateSourceUrl:course.coordinateSourceUrl??null,
+ providerAvailability:{openMeteo:course.coordinateStatus!=="pending"?"candidate":"pending",visualCrossing:"pending",foreca:"pending"},
  dataStatus:course.coordinateStatus==="verified"?"ready":course.coordinateStatus==="provisional"?"needs-verification":"pending"
 }));
-const RECORDS_BY_COUNTRY=Object.freeze({JP:OKINAWA_RECORDS});
+
+// Official identity and address are recorded; GPS remains null until independently verified.
+const JAPAN_MAINLAND_CANDIDATES=[
+ {id:"jp-chiba-narita-golf-club",countryCode:"JP",region:"千葉縣",area:"關東・千葉",city:"成田市",name:"Narita Golf Club",courseName:"Narita Golf Club",localName:"成田ゴルフ倶楽部",address:"127 Omuro, Narita-shi, Chiba 286-0821, Japan",latitude:null,longitude:null,timezone:"Asia/Tokyo",coordinateSource:null,coordinateVerifiedAt:null,coordinateStatus:"pending",officialUrl:"https://www.accordiagolf.com/en/grand/narita/information.php",coordinateSourceUrl:"https://reserve.accordiagolf.com/en/global/golfcourse/chiba/narita/access/",providerAvailability:{openMeteo:"pending",visualCrossing:"pending",foreca:"pending"},dataStatus:"pending"},
+ {id:"jp-hokkaido-classic-golf-club",countryCode:"JP",region:"北海道",area:"北海道・安平町",city:"安平町",name:"Hokkaido Classic Golf Club",courseName:"Hokkaido Classic Golf Club",localName:"北海道クラシックゴルフクラブ",address:"406 Tomioka, Hayakita, Abira-cho, Yufutsu-gun, Hokkaido 059-1434, Japan",latitude:null,longitude:null,timezone:"Asia/Tokyo",coordinateSource:null,coordinateVerifiedAt:null,coordinateStatus:"pending",officialUrl:"https://www.hcgc.jp/en/contents/about/index.html",coordinateSourceUrl:"https://www.hcgc.jp/en/contents/about/index.html",providerAvailability:{openMeteo:"pending",visualCrossing:"pending",foreca:"pending"},dataStatus:"pending"}
+].map(validateCourseRecord);
+
+const RECORDS_BY_COUNTRY=Object.freeze({JP:Object.freeze([...OKINAWA_RECORDS,...JAPAN_MAINLAND_CANDIDATES])});
 export function getDestinations(){return DESTINATIONS;}
 export function getDestination(countryCode){return DESTINATIONS.find(x=>x.code===countryCode)??null;}
 export function getCourseRecords(countryCode){return RECORDS_BY_COUNTRY[countryCode]??[];}
-export function getCoursesForCountry(countryCode){return getCourseRecords(countryCode).filter(x=>x.coordinateStatus!=="pending");}
+export function getCoursesForCountry(countryCode){return getCourseRecords(countryCode);}
 export function getCourseCoverage(countryCode){
  const records=getCourseRecords(countryCode);
  return {countryCode,total:records.length,forecastReady:records.filter(isForecastReady).length,provisional:records.filter(x=>x.coordinateStatus==="provisional").length,pending:records.filter(x=>x.coordinateStatus==="pending").length};
