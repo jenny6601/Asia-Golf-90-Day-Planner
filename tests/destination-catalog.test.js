@@ -15,8 +15,9 @@ test("course schema accepts verified records and exposes country name",()=>{
  assert.equal(result.countryName,"越南");
  assert.equal(isForecastReady(result),true);
 });
-test("provisional or pending coordinates cannot be forecast-ready",()=>{
- assert.throws(()=>validateCourseRecord({...valid,coordinateStatus:"provisional",coordinateVerifiedAt:null},{requireForecastReady:true}),/not forecast-ready/);
+test("provisional vicinity coordinates are forecast-ready while pending coordinates are not",()=>{
+ const provisional=validateCourseRecord({...valid,coordinateStatus:"provisional",coordinateVerifiedAt:null},{requireForecastReady:true});
+ assert.equal(isForecastReady(provisional),true);
  assert.throws(()=>validateCourseRecord({...valid,latitude:null,longitude:null,coordinateStatus:"pending",coordinateSource:null,coordinateVerifiedAt:null},{requireForecastReady:true}),/not forecast-ready/);
 });
 test("invalid coordinates, timezone, country and partial GPS are rejected",()=>{
@@ -77,7 +78,7 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  const regionCounts=new Map();for(const course of records)regionCounts.set(course.region,(regionCounts.get(course.region)||0)+1);
  for(const [region,count] of regionCounts)assert.ok(count>=3,region+" must have at least 3 courses");
  assert.equal(getCoursesForCountry("JP").length,19);
- assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:2,provisional:6,pending:11});
+ assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:9,provisional:5,pending:10});
  for(const code of ["KR","CN","VN","TH","MY","SG","ID"])assert.equal(getCourseRecords(code).length,0);
  assert.equal(getDestination("US"),null);
 });
