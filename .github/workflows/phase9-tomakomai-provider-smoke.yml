@@ -1,0 +1,103 @@
+name: Phase 9 Tomakomai provider smoke test
+
+on:
+  push:
+    branches:
+      - phase-9-multicountry-destination-ui
+    paths:
+      - ".github/workflows/phase9-tomakomai-provider-smoke.yml"
+      - "scripts/lib/provider-fetchers.mjs"
+      - "assets/js/provider-normalizers.js"
+      - "assets/js/destination-catalog.js"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tomakomai-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout Phase 9 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-9-multicountry-destination-ui
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Probe independent providers for Tomakomai courses
+        env:
+          VISUAL_CROSSING_API_KEY: ${{ secrets.VISUAL_CROSSING_API_KEY }}
+          FORECA_API_KEY: ${{ secrets.FORECA_API_KEY }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { writeFile } from "node:fs/promises";
+          import { fetchIndependentProviderForecasts } from "./scripts/lib/provider-fetchers.mjs";
+
+          const courses = [
+            {id:"jp-hokkaido-nidom-classic-course",name:"Nidom Classic Course",countryCode:"JP",timezone:"Asia/Tokyo",latitude:42.717879,longitude:141.654109,coordinateStatus:"provisional"},
+            {id:"jp-hokkaido-katsura-golf-club",name:"Katsura Golf Club",countryCode:"JP",timezone:"Asia/Tokyo",latitude:42.749008,longitude:141.644209,coordinateStatus:"provisional"},
+            {id:"jp-hokkaido-brooks-country-club",name:"Hokkaido Brooks Country Club",countryCode:"JP",timezone:"Asia/Tokyo",latitude:42.7222222,longitude:141.6694445,coordinateStatus:"verified"}
+          ];
+
+          const missing = [];
+          if (!process.env.VISUAL_CROSSING_API_KEY) missing.push("VISUAL_CROSSING_API_KEY");
+          if (!process.env.FORECA_API_KEY) missing.push("FORECA_API_KEY");
+          if (missing.length) {
+            console.error("Required repository secrets are unavailable: " + missing.join(", "));
+            process.exit(2);
+          }
+
+          const results = [];
+          for (const course of courses) {
+            const result = await fetchIndependentProviderForecasts(course, {
+              visualCrossingApiKey: process.env.VISUAL_CROSSING_API_KEY,
+              forecaApiKey: process.env.FORECA_API_KEY
+            });
+            const vc = result.providers.visualCrossing;
+            const fo = result.providers.foreca;
+            results.push({
+              course: {id:course.id,name:course.name,coordinateStatus:course.coordinateStatus,latitude:course.latitude,longitude:course.longitude},
+              testedAt: result.fetchedAt,
+              visualCrossing: vc.status === "available" ? {
+                status:"available",
+                dayCount:vc.data.days.length,
+                hourlyCount:vc.data.days.reduce((n,day)=>n+day.hours.length,0),
+                firstLocalTime:vc.data.days[0]?.hours[0]?.time ?? null,
+                timezone:vc.data.timezone
+              } : {status:"unavailable",error:vc.error},
+              foreca: fo.status === "available" ? {
+                status:"available",
+                hourlyCount:fo.data.hourly.forecast.length,
+                threeHourlyCount:fo.data.threeHourly.forecast.length,
+                firstHourlyTime:fo.data.hourly.forecast[0]?.time ?? null,
+                timezone:fo.data.timezone
+              } : {status:"unavailable",error:fo.error}
+            });
+          }
+
+          const summary = {
+            scope:"Read-only provider connectivity and response-shape smoke test; no forecast cache writes.",
+            coordinatePolicy:"Nidom and Katsura use provisional coordinates and are not eligible for operational scoring. Brooks uses verified coordinates.",
+            results
+          };
+          await writeFile("phase9-tomakomai-provider-smoke.json",JSON.stringify(summary,null,2));
+          console.log(JSON.stringify(summary,null,2));
+          if (results.some(x=>x.visualCrossing.status!=="available" || x.foreca.status!=="available")) {
+            console.error("At least one course/provider request did not pass.");
+            process.exit(1);
+          }
+          NODE
+
+      - name: Upload sanitized smoke-test summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase9-tomakomai-provider-smoke
+          path: phase9-tomakomai-provider-smoke.json
+          if-no-files-found: ignore
+          retention-days: 14
