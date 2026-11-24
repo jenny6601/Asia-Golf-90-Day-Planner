@@ -1,6 +1,7 @@
 import {buildProviderConsistencyReport} from "./lib/provider-consistency.mjs";
 import {buildRawFieldDiagnostics} from "./lib/raw-field-diagnostics.mjs";
 import {buildOutdoorThermalScreening} from "./lib/outdoor-thermal-screening.mjs";
+import {buildGolfPlayabilityReport} from "./lib/golf-playability.mjs";
 import fs from "node:fs/promises";
 import {OKINAWA_COURSES} from "../assets/js/okinawa-courses.js";
 import {fetchIndependentProviderForecasts} from "./lib/provider-fetchers.mjs";
@@ -148,6 +149,44 @@ report.consistencyAnalysis = buildProviderConsistencyReport(courses.filter(c=>c.
   startHour:10,
   endHour:16
 });
+report.golfPlayability = buildGolfPlayabilityReport(courses.filter(c=>c.collectionStatus==="collected"), {
+  teeTime:"10:00",
+  durationHours:6
+});
+await fs.writeFile(OUT+"/golf-playability-6h.json",JSON.stringify(report.golfPlayability,null,2));
+const playabilityLines = [
+  "# Okinawa six-hour golf playability comparison",
+  "",
+  "Timezone: Asia/Tokyo",
+  "Tee time: 10:00",
+  "Window: 10:00–16:00 (six elapsed hours; seven hourly endpoints including 16:00)",
+  "",
+  "Only dates with all seven hourly endpoints present from all three providers are included.",
+  "This is a descriptive comparison, not a validated overall suitability score or forecast-accuracy ranking.",
+  "",
+  "| Course | GPS status | Common complete days | Operational ranking |",
+  "|---|---|---:|---|",
+  ...report.golfPlayability.courses.map(c=>"| "+c.courseName+" | "+c.coordinateStatus+" | "+c.commonCompleteDays+" | "+c.rankingStatus+" |"),
+  "",
+  ...report.golfPlayability.courses.flatMap(course=>[
+    "## "+course.courseName+" — "+course.coordinateStatus,
+    "",
+    "| Date | Provider | Complete points | Temp min–max °C | Humidex max | Rain chance max | Rain total mm | Gust max m/s | Solar max W/m² | UV max |",
+    "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+    ...course.daily.flatMap(day=>["openMeteo","visualCrossing","foreca"].map(provider=>{
+      const w=day.providers[provider];
+      return "| "+day.date+" | "+provider+" | "+w.availableHourlyPoints+"/"+w.expectedHourlyPoints+" | "+(w.temperatureC.min??"—")+"–"+(w.temperatureC.max??"—")+" | "+(w.humidexC.max??"—")+" | "+(w.precipitationProbabilityPct.max??"—")+"% | "+(w.totalReportedPrecipitationMm??"—")+" | "+(w.maxWindGustMs??"—")+" | "+(w.openMeteoSolarRadiationWm2.max??"—")+" | "+(w.openMeteoUvIndex.max??"—")+" |";
+    })),
+    ""
+  ]),
+  "## Interpretation rules",
+  "",
+  "- Rain probability, precipitation amount, wind, gust, Humidex, solar radiation and UV remain separate indicators.",
+  "- Rainfall totals sum the provider's reported hourly precipitation values only; verify each source's accumulation semantics before comparing totals.",
+  "- Provisional GPS points are connectivity-only and are not eligible for operational trip ranking.",
+  "- No composite score or recommended course ranking is produced in this phase."
+];
+await fs.writeFile(OUT+"/golf-playability-6h.md",playabilityLines.join("\n"));
 report.outdoorThermalScreening = buildOutdoorThermalScreening(courses.filter(c=>c.collectionStatus==="collected"), {
   startHour:6,
   endHour:18
