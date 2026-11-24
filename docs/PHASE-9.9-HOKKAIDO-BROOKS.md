@@ -13,13 +13,13 @@ Added Hokkaido Brooks Country Club (北海道ブルックスカントリーク�
 - Course format: 18 holes, par 72 (JNTO course listing)
 
 ## GPS and forecast readiness
-Coordinates remain null and coordinateStatus remains `pending`. Public map listings provide candidate coordinates, but this catalogue addition does not promote them to verified GPS. The course must remain excluded from forecast requests until the course location is checked against a sufficiently authoritative source and provenance is recorded.
+Official club access page links directly to its Google Maps pin at 42.7222222, 141.6694445. The catalogue records these coordinates as `verified`, with the official access page as provenance and verification date 2026-11-24. Provider availability remains pending; coordinate verification does not itself mean forecast providers have been activated.
 
 ## Regional catalogue impact
-Hokkaido group increases from 3 to 4 courses. Japan catalogue increases from 18 to 19 courses. The minimum of 3 courses per regional group remains satisfied.
+Hokkaido group now contains 5 courses after unifying Katsura with the Hokkaido area. Japan catalogue increases from 18 to 19 courses. The minimum of 3 courses per regional group remains satisfied.
 
 ## Sources
-- Official club access page: https://www.brooks-c.com/en/access/
+- Official club access page and Google Maps pin: https://www.brooks-c.com/en/access/ (42.7222222, 141.6694445)
 - Official club homepage: https://www.brooks-c.com/en/
 - Japan National Tourism Organization: https://www.japan.travel/en/sports/golf/courses/hokkaido-brooks-country-club/
 - Tomakomai City MICE facility listing: https://tomako-mice.jp/en/facilities/
