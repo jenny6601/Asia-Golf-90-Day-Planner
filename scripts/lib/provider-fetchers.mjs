@@ -46,7 +46,8 @@ async function fetchForecaJson(url, options, {
     const response = await scheduledForecaFetch(fetchImpl, url, options, {sleepImpl, minRequestIntervalMs});
     if (response?.status === 429 && attempt < maxRetries) {
       const exponential = Math.min(maxRetryDelayMs, retryBaseDelayMs * (2 ** attempt));
-      const delay = Math.min(maxRetryDelayMs, Math.max(retryAfterMs(response) ?? 0, exponential));
+      const serverDelay = retryAfterMs(response);
+      const delay = serverDelay === null ? exponential : serverDelay;
       await sleepImpl(delay);
       continue;
     }
