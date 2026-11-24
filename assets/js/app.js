@@ -387,6 +387,7 @@ $("fetch-long-range").addEventListener("click",async()=>{
  finally{button.disabled=false;}
 });
 
+renderDestinations();
 renderCoursePicker();
 $("fetch-course-weather").addEventListener("click",async()=>{
  const button=$("fetch-course-weather"),status=$("course-weather-status");
