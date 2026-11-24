@@ -24,6 +24,32 @@ jobs:
         run: npm test
       - name: Collect live Okinawa provider coverage
         run: node scripts/collect-okinawa-live-weather.mjs
+      - name: Publish provider coverage summary
+        if: always()
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs/promises";
+          const base = "artifacts/okinawa-live-weather/";
+          const summary = JSON.parse(await fs.readFile(base + "provider-coverage-summary.json", "utf8"));
+          const lines = [
+            "# Phase 13 Okinawa provider validation",
+            "",
+            "## Provider availability",
+            "",
+            "| Provider | Available courses | Unavailable | Skipped |",
+            "|---|---:|---:|---:|",
+            ...Object.entries(summary.providerAvailability).map(([name, value]) => "| " + name + " | " + value.available + " | " + value.unavailable + " | " + value.skipped + " |"),
+            "",
+            "## Six-hour playability coverage",
+            "",
+            "| Course | GPS | Eligible days (2+ providers) | Three-provider complete days |",
+            "|---|---|---:|---:|",
+            ...summary.courses.map(course => "| " + course.courseName + " | " + course.coordinateStatus + " | " + course.eligibleDaysAtLeastTwoProviders + " | " + course.threeProviderCompleteDays + " |"),
+            "",
+            "Two-provider preliminary screening and strict three-provider comparison are reported separately. This smoke test is not forecast-accuracy validation."
+          ];
+          await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, lines.join("\n") + "\n");
+          NODE
       - name: Upload Phase 13 validation reports
         if: always()
         uses: actions/upload-artifact@v4
