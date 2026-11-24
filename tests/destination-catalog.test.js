@@ -52,7 +52,8 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  assert.ok(chibaGroup.every(x=>x.latitude===null&&x.longitude===null&&x.coordinateStatus==="pending"));
  const okinawaGroup=records.filter(x=>x.area==="沖繩本島");
  assert.equal(okinawaGroup.length,6);
- for(const [area,items] of Object.entries(Object.groupBy(records,x=>x.area)))assert.ok(items.length>=3,`${area} must have at least 3 courses`);
+ const areaCounts=new Map();for(const course of records)areaCounts.set(course.area,(areaCounts.get(course.area)||0)+1);
+ for(const [area,count] of areaCounts)assert.ok(count>=3,`${area} must have at least 3 courses`);
  assert.equal(getCoursesForCountry("JP").length,18);
  assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:18,forecastReady:0,provisional:5,pending:13});
  for(const code of ["KR","CN","VN","TH","MY","SG","ID"])assert.equal(getCourseRecords(code).length,0);
