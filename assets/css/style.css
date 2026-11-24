@@ -42,3 +42,14 @@
 
 /* Guided selection flow */
 #country,#region,#course,#departure,#tee{min-height:46px}#region:disabled,#course:disabled{background:#f1f4f2;color:#829087}.controls label{line-height:1.35}#course-note{min-height:1.4em}@media(max-width:560px){.controls{gap:12px}.controls label{font-size:.94rem}.controls select,.controls input{font-size:1rem;padding:12px}}
+
+#climate-explorer h2{font-size:1.15rem;margin:8px 0 12px;color:#173f35}
+.overview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:14px 0}
+.overview-tile{display:grid;gap:5px;padding:12px;border:1px solid #dce7e1;border-radius:10px;background:#f8fbf9;min-width:0}
+.overview-tile strong{font-size:.92rem}.overview-tile span{font-size:.78rem;color:#718078}
+.region-table-wrap{width:100%;overflow-x:auto;margin-top:12px}
+.region-table{width:100%;border-collapse:collapse;min-width:680px;font-size:.85rem}
+.region-table th,.region-table td{padding:11px 9px;text-align:left;border-bottom:1px solid #e2ebe5;white-space:nowrap}
+.region-table th{background:#edf4ef;color:#244638}
+.region-select{padding:8px 12px!important;font-size:.82rem!important}
+@media(max-width:620px){.overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#climate-explorer{padding:14px}}
