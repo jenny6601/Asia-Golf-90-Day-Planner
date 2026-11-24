@@ -43,7 +43,7 @@ export function scorePwaStylePlayability(hourly,date,teeHour,durationHours=6) {
   }
   const values=field=>indexes.map(i=>hourly[field]?.[i]).filter(valid);
   const probabilities=values("precipitation_probability"),amounts=values("precipitation");
-  const winds=values("wind_speed_10m"),gusts=values("wind_gusts_10m"),feels=values("apparent_temperature"),codes=values("weather_code");
+  const winds=values("wind_speed_10m"),gusts=values("wind_gusts_10m"),feels=values("apparent_temperature"),codes=values("weather_code").filter(v=>v!==45&&v!==48);
   const rain=rainScore(probabilities,amounts);
   const avgWind=mean(winds),peakGust=max(gusts);
   const windParts=[];
