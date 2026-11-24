@@ -91,5 +91,40 @@ function showReport(){
  const note=node("p",lead<=15?"前16天依逐時預報產生報告；評分尚未經亞洲球場歷史回測校準。":"17–90天長期趨勢可信度較低，只作初步參考。","note");host.append(note);
 }
 async function run(){const b=$("run");b.disabled=true;$("report").replaceChildren();setStatus("正在讀取球場天氣…");try{S.course=S.directory.courses.find(c=>c.id===$("course").value);const days=(Date.parse($("departure").value+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000;if(days>=0&&days<=15){S.forecast=await fetchCourseForecast([S.course]);S.seasonal=null}else{S.seasonal=await fetchCourseSeasonalForecast(S.course);S.forecast=null}showReport();setStatus("完成｜已產生天氣及適打報告。")}catch(e){setStatus("讀取失敗："+e.message)}finally{b.disabled=!S.course}}
-async function init(){try{S.directory=await fetchAsiaGolfDirectory();fillCountries();const t=today();$("departure").min=t;$("departure").max=add(t,89);$("departure").value=t;$("country").addEventListener("change",fillRegions);$("region").addEventListener("change",fillCourses);$("course").addEventListener("change",()=>{S.course=S.directory.courses.find(c=>c.id===$("course").value);$("run").disabled=!S.course});$("run").addEventListener("click",run);setStatus("請選擇出發日期及球場。")}catch(e){setStatus("球場清單讀取失敗："+e.message)}}
+
+function monthOptions(){const base=today().slice(0,7)+"-01",out=[];for(let i=0;i<3;i++){const d=new Date(base+"T12:00:00Z");d.setUTCMonth(d.getUTCMonth()+i);out.push(d.toISOString().slice(0,7))}return out}
+function initClimateExplorer(){
+ const overview=$("asia-overview"),cc=$("climate-country"),mm=$("climate-month");
+ for(const c of S.directory.countries){const count=S.directory.courses.filter(x=>x.countryCode===c.code&&x.enabled&&Number.isFinite(x.latitude)&&Number.isFinite(x.longitude)).length;const tile=node("article",undefined,"overview-tile");tile.append(node("strong",c.nameZh),node("span",count?count+" 個已建檔球場":"球場資料建置中"));overview.append(tile);cc.add(new Option(c.nameZh,c.code));}
+ for(const m of monthOptions())mm.add(new Option(m,m));
+ cc.value="JP";
+ cc.addEventListener("change",renderRegionClimate);
+ mm.addEventListener("change",renderRegionClimate);
+ renderRegionClimate();
+}
+async function renderRegionClimate(){
+ const country=$("climate-country").value,month=$("climate-month").value,out=$("region-report"),status=$("climate-status");
+ out.replaceChildren();const courses=S.directory.courses.filter(c=>c.countryCode===country&&c.enabled&&Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
+ const regions=[...new Set(S.directory.courses.filter(c=>c.countryCode===country&&c.enabled).map(c=>c.region).filter(Boolean))];
+ if(!courses.length){status.textContent="此國家尚無具有效座標的球場資料，暫無法製作分區氣候比較。";return}
+ status.textContent="正在讀取 "+month+" 各分區季節趨勢…";
+ const groups=regions.map(region=>({region,courses:courses.filter(c=>c.region===region)}));
+ const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table");
+ const thead=node("thead"),hr=node("tr");["分區","代表球場數","月平均降雨量","降雨異常","平均氣溫","氣溫異常","選擇"].forEach(t=>hr.append(node("th",t)));thead.append(hr);tbl.append(thead);
+ const body=node("tbody");let success=0;
+ for(const group of groups){
+  if(!group.courses.length){const tr=node("tr");[group.region,"0","尚無有效座標","—","—","—","資料建置中"].forEach(v=>tr.append(node("td",v)));body.append(tr);continue}
+  const records=await Promise.allSettled(group.courses.map(c=>fetchCourseSeasonalForecast(c)));
+  const rows=records.filter(x=>x.status==="fulfilled").map(x=>x.value),idx=rows[0]?.monthly?.time?.findIndex(t=>t.slice(0,7)===month)??-1;
+  if(idx<0){const tr=node("tr");[group.region,String(group.courses.length),"季節資料不足","—","—","—","暫不可選"].forEach(v=>tr.append(node("td",v)));body.append(tr);continue}
+  const avg=key=>{const v=rows.map(r=>r.monthly?.[key]?.[idx]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
+  const rain=avg("precipitation_mean"),ra=avg("precipitation_anomaly"),temp=avg("temperature_2m_mean"),ta=avg("temperature_2m_anomaly");
+  const tr=node("tr");[group.region,String(rows.length),rain==null?"—":rain.toFixed(1)+" mm",ra==null?"—":(ra>0?"+":"")+ra.toFixed(1)+" mm",temp==null?"—":temp.toFixed(1)+" °C",ta==null?"—":(ta>0?"+":"")+ta.toFixed(1)+" °C"].forEach(v=>tr.append(node("td",v)));
+  const td=node("td"),btn=node("button","選擇分區","region-select");btn.type="button";btn.addEventListener("click",()=>{const mainCountry=$("country");mainCountry.value=country;fillRegions();$("region").value=group.region;fillCourses();$("course").value="";S.course=null;$("run").disabled=true;$("course-note").textContent="已選擇分區，請選擇具有效座標的球場。";$("climate-status").textContent="已選擇 "+group.region+"；下一步請選擇該分區球場。"});td.append(btn);tr.append(td);body.append(tr);success++;
+ }
+ tbl.append(body);table.append(tbl);out.append(table);
+ status.textContent="完成｜"+month+"｜取得 "+success+" 個分區的季節趨勢。數值為月尺度模式展望，不是每日降雨預報。";
+}
+
+async function init(){try{S.directory=await fetchAsiaGolfDirectory();fillCountries();initClimateExplorer();const t=today();$("departure").min=t;$("departure").max=add(t,89);$("departure").value=t;$("country").addEventListener("change",fillRegions);$("region").addEventListener("change",fillCourses);$("course").addEventListener("change",()=>{S.course=S.directory.courses.find(c=>c.id===$("course").value);$("run").disabled=!S.course});$("run").addEventListener("click",run);setStatus("請選擇出發日期及球場。")}catch(e){setStatus("球場清單讀取失敗："+e.message)}}
 init();
