@@ -307,21 +307,23 @@ function render90DayDailyRows(){
    detail.textContent=item.signals.map(x=>x.region+"："+(x.signal?.label??"資料不足")).join("；");
   }
   row.append(detail);
-  const action=document.createElement("span");const button=document.createElement("button");button.type="button";button.textContent="選此日";
+  const action=document.createElement("span");const button=document.createElement("button");button.type="button";button.textContent=item.horizon==="weekly-seasonal"?"選取此週":item.leadDays>16?"選取趨勢日期":"選此日";
   button.disabled=item.status!=="available";
   button.addEventListener("click",()=>{
    const select=$("itinerary-start");
-   const option=[...select.options].find(x=>x.value===item.date);
-   if(option){select.value=item.date;}
-   else{select.add(new Option(fmt(item.date)+" 出發｜長期候選",item.date));select.value=item.date;}
-   select.disabled=false;
-   $("daily-90day-selection").textContent="已選擇 "+fmt(item.date)+" 為行程出發日。請依資料層級查看相應推薦，不代表已取得訂房或球場開球時間。";
-   $("itinerary-status").textContent="已選擇出發日期；若超過16天，需使用長期趨勢評估，不會產生逐時風險分數。";
+   if(item.leadDays<=16){
+    const option=[...select.options].find(x=>x.value===item.date);
+    if(option){select.value=item.date;}else{select.add(new Option(fmt(item.date)+" 出發",item.date));select.value=item.date;}
+    select.disabled=false;
+   }
+   const period=item.endDate?fmt(item.date)+" 至 "+fmt(item.endDate):fmt(item.date);
+   $("daily-90day-selection").textContent="已選取 "+period+"（"+item.label+"）。此選取僅作日期／週區間參考。";
+   $("itinerary-status").textContent=item.leadDays<=16?"已選擇短期出發日期，可進一步計算五天四夜逐時風險。":"已選擇中長期日期／週區間；僅依週或月尺度趨勢評估，不會產生逐時風險分數。";
   });
   action.append(button);row.append(action);table.append(row);
  }
  host.append(table);
- status.textContent="已建立90天逐日索引｜1–16天逐日預報，17–46天週趨勢，47–90天月展望。長期日期只顯示趨勢訊號，不代表逐日天氣。";
+ status.textContent="已建立90天瀏覽表｜1–16天逐日預報，17–46天逐日標示週趨勢，47–90天改為7天一列的週展望（依SEAS5月尺度訊號）。";
 }
 
 function renderUnifiedRecommendations(){
