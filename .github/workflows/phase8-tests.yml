@@ -1,0 +1,25 @@
+name: Phase 8 provider normalization tests
+
+on:
+  push:
+    branches:
+      - phase-8-multicountry-provider-integration
+  pull_request:
+    branches:
+      - phase-7-one-click-90day
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run all project tests
+        run: npm test
