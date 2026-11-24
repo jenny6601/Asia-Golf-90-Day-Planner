@@ -4,7 +4,7 @@ import {recommendMultiProviderFiveDayWindows} from "../assets/js/multi-provider-
 function course(id){
  const time=Array.from({length:24*16},(_,i)=>new Date(Date.UTC(2026,10,23)+i*3600000).toISOString().slice(0,16));
  const n=time.length;
- return {course:{id,name:id,timezone:"Asia/Tokyo"},hourly:{time,precipitation_probability:Array(n).fill(10),precipitation:Array(n).fill(0),temperature_2m:Array(n).fill(24),apparent_temperature:Array(n).fill(24),wind_speed_10m:Array(n).fill(3),wind_gusts_10m:Array(n).fill(4)}};
+ return {course:{id,name:id,timezone:"Asia/Tokyo"},hourly:{time,precipitation_probability:Array(n).fill(10),precipitation:Array(n).fill(0),temperature_2m:Array(n).fill(24),apparent_temperature:Array(n).fill(24),wind_speed_10m:Array(n).fill(3),wind_gusts_10m:Array(n).fill(4),weather_code:Array(n).fill(0)}};
 }
 function independent(c){
  const time=c.hourly.time;
@@ -41,4 +41,15 @@ test("does not treat a single provider as a multi-provider consensus",()=>{
  const courses=[course("a"),course("b"),course("c")];
  const result=recommendMultiProviderFiveDayWindows({courses,independentProviders:[]});
  assert.equal(result.recommendations.length,0);assert.equal(result.missingCount,result.candidateCount);
+});
+
+test("excludes a five-day window when any round has a severe thunderstorm signal",()=>{
+ const courses=[course("a"),course("b"),course("c")];
+ const targetDate="2026-11-24";
+ const index=courses[1].hourly.time.findIndex(t=>t===targetDate+"T09:00");
+ courses[1].hourly.weather_code[index]=95;
+ const result=recommendMultiProviderFiveDayWindows({courses,independentProviders:courses.map(independent)});
+ assert.equal(result.recommendations.some(x=>x.tripStart==="2026-11-23"),false);
+ assert.ok(result.excludedSevereCount>0);
+ assert.ok(result.all.some(x=>x.status==="excluded-severe-weather"));
 });
