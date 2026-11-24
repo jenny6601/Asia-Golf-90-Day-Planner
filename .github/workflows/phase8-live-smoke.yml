@@ -1,0 +1,98 @@
+name: Phase 8 Okinawa live provider smoke test
+
+on:
+  push:
+    branches:
+      - phase-8-multicountry-provider-integration
+    paths:
+      - ".github/workflows/phase8-live-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout Phase 8 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-8-multicountry-provider-integration
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Call both providers for Okinawa pilot course
+        env:
+          VISUAL_CROSSING_API_KEY: ${{ secrets.VISUAL_CROSSING_API_KEY }}
+          FORECA_API_KEY: ${{ secrets.FORECA_API_KEY }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { writeFile } from "node:fs/promises";
+          import { fetchIndependentProviderForecasts } from "./scripts/lib/provider-fetchers.mjs";
+
+          const course = {
+            id: "southern-links",
+            name: "The Southern Links Golf Club",
+            countryCode: "JP",
+            timezone: "Asia/Tokyo",
+            latitude: 26.118019,
+            longitude: 127.738385
+          };
+
+          const missing = [];
+          if (!process.env.VISUAL_CROSSING_API_KEY) missing.push("VISUAL_CROSSING_API_KEY");
+          if (!process.env.FORECA_API_KEY) missing.push("FORECA_API_KEY");
+          if (missing.length) {
+            console.error("Required repository secrets are unavailable: " + missing.join(", "));
+            process.exit(2);
+          }
+
+          const result = await fetchIndependentProviderForecasts(course, {
+            visualCrossingApiKey: process.env.VISUAL_CROSSING_API_KEY,
+            forecaApiKey: process.env.FORECA_API_KEY
+          });
+
+          const vc = result.providers.visualCrossing;
+          const fo = result.providers.foreca;
+          const summary = {
+            testedAt: result.fetchedAt,
+            course: { id: course.id, name: course.name, countryCode: course.countryCode, timezone: course.timezone },
+            coordinateNote: "Pilot coordinate is provisional; validate against official course mapping before operational scoring.",
+            visualCrossing: vc.status === "available" ? {
+              status: "available",
+              dayCount: vc.data.days.length,
+              hourlyCount: vc.data.days.reduce((n, day) => n + day.hours.length, 0),
+              firstLocalTime: vc.data.days[0]?.hours[0]?.time ?? null,
+              timezone: vc.data.timezone
+            } : { status: "unavailable", error: "Provider request or response validation failed" },
+            foreca: fo.status === "available" ? {
+              status: "available",
+              hourlyCount: fo.data.hourly.forecast.length,
+              threeHourlyCount: fo.data.threeHourly.forecast.length,
+              firstHourlyTime: fo.data.hourly.forecast[0]?.time ?? null,
+              timezone: fo.data.timezone
+            } : { status: "unavailable", error: "Provider request or response validation failed" }
+          };
+
+          await writeFile("phase8-live-smoke-summary.json", JSON.stringify(summary, null, 2));
+          console.log(JSON.stringify(summary, null, 2));
+
+          if (vc.status !== "available" || fo.status !== "available") {
+            console.error("At least one provider did not pass the live smoke test.");
+            process.exit(1);
+          }
+          NODE
+
+      - name: Upload sanitized test summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase8-okinawa-live-smoke-summary
+          path: phase8-live-smoke-summary.json
+          if-no-files-found: ignore
+          retention-days: 14
