@@ -20,6 +20,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Check Phase 13 script syntax
+        run: |
+          node --check scripts/collect-okinawa-live-weather.mjs
+          node --check scripts/lib/provider-fetchers.mjs
+          node --check scripts/lib/golf-playability.mjs
       - name: Run Phase 13 unit tests
         run: npm test
       - name: Collect live Okinawa provider coverage
