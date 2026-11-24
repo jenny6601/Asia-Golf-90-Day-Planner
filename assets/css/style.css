@@ -63,3 +63,12 @@
 .week-card strong{display:inline-block;padding:5px 8px;border-radius:7px;background:#edf5ef;color:#245b40;font-size:.82rem}
 .week-card p{font-size:.8rem;line-height:1.55;color:#64756c;margin:8px 0 0;overflow-wrap:anywhere}
 @media(max-width:620px){.week-grid{grid-template-columns:1fr}.week-card{padding:14px}}
+
+.week-open,.week-back{width:100%;margin-top:12px;padding:10px 12px!important;font-weight:800}
+.selected-week-report{margin-top:18px;padding:15px;border:1px solid #dce7e1;border-radius:12px;background:#fff}
+.selected-week-report h3{margin:0 0 8px;color:#173f35}
+.selected-week-report h4{margin:0 0 12px;color:#426354}
+.seven-day-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:12px 0 16px}
+.seven-day-item{display:grid;gap:5px;justify-items:center;padding:9px 2px;border-radius:8px;background:#edf4ef;color:#315342}
+.seven-day-item strong{font-size:.78rem}.seven-day-item span{font-size:.72rem;color:#718078}
+@media(max-width:560px){.selected-week-report{padding:12px}.seven-day-strip{gap:3px}.seven-day-item{padding:8px 1px}}
