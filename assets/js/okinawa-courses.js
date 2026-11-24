@@ -7,8 +7,8 @@ export const OKINAWA_COURSES = Object.freeze([
   {
     id:"southern-links",name:"The Southern Links Golf Club",nameJa:"ザ・サザンリンクスゴルフクラブ",
     area:"南部",city:"八重瀬町",address:"697 Hanashiro, Yaese, Shimajiri District, Okinawa 901-0513, Japan",
-    latitude:26.118019,longitude:127.738385,coordinateSource:"FullGolf / OpenStreetMap",coordinateSourceUrl:null,
-    coordinateStatus:"provisional",officialUrl:"https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/southernlinks"
+    latitude:26.114086000297586,longitude:127.73689211539313,coordinateSource:"Official Accordia Golf access page embedded Google Maps location pin",coordinateSourceUrl:"https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/southernlinks/access",
+    coordinateVerifiedAt:"2026-11-24",coordinateStatus:"verified",officialUrl:"https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/southernlinks"
   },
   {
     id:"pgm-okinawa",name:"PGM Golf Resort Okinawa",nameJa:"ＰＧＭゴルフリゾート沖縄",
