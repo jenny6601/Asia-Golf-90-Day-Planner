@@ -59,13 +59,13 @@ export function scorePwaStylePlayability(hourly,date,teeHour,durationHours=6) {
     stability=clamp(100-(transitions/Math.max(1,codes.length-1))*35-(rainy/codes.length)*20-(severe/codes.length)*70);
   }
   const parts=[
-    {key:"rain",label:"降雨風險",weight:50,value:rain,detail:"最高降雨機率 "+(max(probabilities)===null?"—":Math.round(max(probabilities))+"%")+"｜累積雨量 "+(sum(amounts)===null?"—":sum(amounts).toFixed(1)+" mm")},
+    {key:"rain",label:"降雨風險",weight:60,value:rain,detail:"最高降雨機率 "+(max(probabilities)===null?"—":Math.round(max(probabilities))+"%")+"｜累積雨量 "+(sum(amounts)===null?"—":sum(amounts).toFixed(1)+" mm")},
     {key:"wind",label:"風速與陣風",weight:15,value:wind,detail:"平均風速 "+(avgWind===null?"—":(avgWind*3.6).toFixed(1)+" km/h")+"｜最大陣風 "+(peakGust===null?"—":(peakGust*3.6).toFixed(1)+" km/h")},
     {key:"temperature",label:"氣溫與體感",weight:15,value:temp,detail:"平均體感 "+(mean(feels)===null?"—":mean(feels).toFixed(1)+"°C")},
     {key:"stability",label:"天氣穩定度",weight:10,value:stability,detail:codes.length?"依逐時天氣現象變化評估":"天氣現象資料不足"}
   ];
   const available=parts.filter(p=>p.value!==null),weight=available.reduce((s,p)=>s+p.weight,0);
-  const applicableWeight=90;
+  const applicableWeight=100;
   const score=weight?Math.round(available.reduce((s,p)=>s+p.value*p.weight,0)/weight):null;
   const weightCoverage=applicableWeight?Math.round(weight/applicableWeight*100):0;
   const totalRain=sum(amounts),thunder=codes.some(v=>[95,96,99].includes(v));
