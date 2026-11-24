@@ -7,6 +7,7 @@ import {fetchOkinawaLongRange,interpretPrecipitationEfi} from "./long-range-api.
 import {classifyForecastConfidence} from "./confidence-engine.js";
 import {recommendLongRangeWindows} from "./long-range-engine.js";
 import {combineHorizonRecommendations} from "./horizon-integration.js";
+import {build90DayDailyView} from "./daily-90day-view.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -279,6 +280,49 @@ $("compare-tee-hour").addEventListener("change",()=>{if(latestCourseWeather)runC
 $("compare-date").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
 
 
+
+
+function render90DayDailyRows(){
+ const host=$("daily-90day-results"),status=$("daily-90day-status");
+ host.replaceChildren();
+ if(!latestCourseWeather?.courses||selectedCourses.length!==3||!latestLongRangeData?.points){
+  status.textContent="請先選擇三座球場，並完成短期預報及長期展望讀取。";return;
+ }
+ const referenceDate=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Tokyo"});
+ const rows=build90DayDailyView({referenceDate,courses:latestCourseWeather.courses,points:latestLongRangeData.points});
+ const table=document.createElement("div");table.className="daily-90day-list";
+ const header=document.createElement("div");header.className="daily-90day-row daily-90day-head";
+ ["日期／預報天數","資料層級","天氣／趨勢摘要","選取行程出發日"].forEach(x=>{const s=document.createElement("span");s.textContent=x;header.append(s);});table.append(header);
+ for(const item of rows){
+  const row=document.createElement("div");row.className="daily-90day-row";
+  const date=document.createElement("span");date.textContent=fmt(item.date)+"｜第 "+item.leadDays+" 天";row.append(date);
+  const horizon=document.createElement("span");horizon.textContent=item.label;row.append(horizon);
+  const detail=document.createElement("span");
+  if(item.horizon==="forecast"&&item.weather){
+   const w=item.weather;
+   detail.textContent=w.courseCount===3
+    ? "三球場最高降雨機率 "+cell(w.precipitationProbabilityMax,"%")+"｜最高日雨量 "+cell(w.precipitationSumMaxMm," mm")+"｜氣溫 "+cell(w.temperatureMinC,"°")+"–"+cell(w.temperatureMaxC,"°")+"｜最大風速 "+cell(w.windSpeedMaxMs," m/s")
+    : "逐日資料不完整（"+w.courseCount+"/3 球場），不補值";
+  }else{
+   detail.textContent=item.signals.map(x=>x.region+"："+(x.signal?.label??"資料不足")).join("；");
+  }
+  row.append(detail);
+  const action=document.createElement("span");const button=document.createElement("button");button.type="button";button.textContent="選此日";
+  button.disabled=item.leadDays>16&&item.status!=="available";
+  button.addEventListener("click",()=>{
+   const select=$("itinerary-start");
+   const option=[...select.options].find(x=>x.value===item.date);
+   if(option){select.value=item.date;}
+   else{select.add(new Option(fmt(item.date)+" 出發｜長期候選",item.date));select.value=item.date;}
+   select.disabled=false;
+   $("daily-90day-selection").textContent="已選擇 "+fmt(item.date)+" 為行程出發日。請依資料層級查看相應推薦，不代表已取得訂房或球場開球時間。";
+   $("itinerary-status").textContent="已選擇出發日期；若超過16天，需使用長期趨勢評估，不會產生逐時風險分數。";
+  });
+  action.append(button);row.append(action);table.append(row);
+ }
+ host.append(table);
+ status.textContent="已建立90天逐日索引｜1–16天逐日預報，17–46天週趨勢，47–90天月展望。長期日期只顯示趨勢訊號，不代表逐日天氣。";
+}
 
 function renderUnifiedRecommendations(){
  const host=$("unified-recommendations"),status=$("unified-recommendation-status");host.replaceChildren();
