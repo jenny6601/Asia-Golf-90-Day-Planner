@@ -14,7 +14,8 @@ test("humidex categories use published Environment Canada ranges",()=>{
  assert.equal(humidexCategory(25),"little-discomfort");
  assert.equal(humidexCategory(35),"some-discomfort");
  assert.equal(humidexCategory(42),"great-discomfort");
- assert.equal(humidexCategory(46),"dangerous");
+ assert.equal(humidexCategory(45.01),"dangerous");
+ assert.equal(humidexCategory(45),"great-discomfort");
  assert.equal(humidexCategory(null),"unavailable");
 });
 
