@@ -11,3 +11,12 @@
 #compare-courses{white-space:nowrap}.comparison-rank{font-size:.78rem;color:#64786d;font-weight:750;letter-spacing:.03em}.comparison-results{display:grid;gap:10px}.course-option{cursor:pointer}.course-option input:disabled{cursor:not-allowed}
 
 #long-range-results h4{margin:16px 0 8px;color:#315b49}#long-range-results .weather-table{margin-bottom:14px}.long-range-note{font-size:.82rem;color:#65766d;line-height:1.6}
+
+.destination-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.destination-card{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:9px;row-gap:4px;text-align:left;border:1px solid #d7e3dc;border-radius:12px;background:#fbfdfb;padding:12px;min-width:0;color:#17312a;font:inherit;cursor:pointer}
+.destination-card strong{font-size:.98rem}.destination-card small{grid-column:2;color:#718078;font-size:.72rem;line-height:1.35}
+.destination-flag{grid-row:span 2;font-size:1.55rem}
+.destination-card.is-active{border:2px solid #247956;background:#eff7f1;box-shadow:0 0 0 2px #24795618}
+.destination-empty{padding:14px;border:1px dashed #cbd9d1;border-radius:10px;background:#f8faf8;color:#63756d;line-height:1.6}
+[hidden]{display:none!important}
+@media(max-width:650px){.destination-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.destination-card{padding:10px}}
