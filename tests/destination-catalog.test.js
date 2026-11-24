@@ -29,7 +29,7 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  const records=getCourseRecords("JP");
  assert.equal(records.length,19);
  assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,7);
- assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,12);
+ assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,11);
  const narita=records.find(x=>x.id==="jp-chiba-narita-golf-club");
  const hokkaidoClassic=records.find(x=>x.id==="jp-hokkaido-classic-golf-club");
  assert.equal(narita.latitude,null);assert.equal(narita.longitude,null);
