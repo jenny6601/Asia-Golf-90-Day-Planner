@@ -183,7 +183,7 @@ const playabilityLines = [
   "",
   "- Rain probability, precipitation amount, wind, gust, Humidex, solar radiation and UV remain separate indicators.",
   "- Rainfall totals sum the provider's reported hourly precipitation values only; verify each source's accumulation semantics before comparing totals.",
-  "- Provisional GPS points are connectivity-only and are not eligible for operational trip ranking.",
+  "- Verified and provisional course-vicinity coordinates are eligible for preliminary weather screening and trip-date selection; coordinate confidence remains separate.",
   "- No composite score or recommended course ranking is produced in this phase."
 ];
 await fs.writeFile(OUT+"/golf-playability-6h.md",playabilityLines.join("\n"));
