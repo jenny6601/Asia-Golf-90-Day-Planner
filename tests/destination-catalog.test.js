@@ -44,6 +44,12 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  assert.equal(abiko.coordinateStatus,"pending");
  assert.equal(abiko.latitude,null);assert.equal(abiko.longitude,null);
  assert.ok(abiko.officialUrl.includes("abikogc.com"));
+ const brooks=records.find(x=>x.id==="jp-hokkaido-brooks-country-club");
+ assert.equal(brooks.localName,"北海道ブルックスカントリークラブ");
+ assert.equal(brooks.city,"苫小牧市");
+ assert.equal(brooks.coordinateStatus,"pending");
+ assert.equal(brooks.latitude,null);assert.equal(brooks.longitude,null);
+ assert.equal(brooks.officialUrl,"https://www.brooks-c.com/en/");
  const hokkaidoGroup=records.filter(x=>x.area==="北海道");
  assert.equal(hokkaidoGroup.length,4);
  assert.ok(hokkaidoGroup.every(x=>x.latitude===null&&x.longitude===null&&x.coordinateStatus==="pending"));
