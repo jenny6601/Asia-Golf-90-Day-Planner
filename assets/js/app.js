@@ -1,6 +1,6 @@
 import {recommendFiveDayWindows} from "./itinerary-engine.js";
 import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
-import {OKINAWA_COURSES} from "./okinawa-courses.js";
+import {getDestinations,getDestination,getCoursesForCountry,getCourseCoverage} from "./destination-catalog.js";
 import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
 import {scoreFiveDayItinerary} from "./itinerary-engine.js";
 import {fetchOkinawaLongRange,interpretPrecipitationEfi} from "./long-range-api.js";
@@ -10,6 +10,7 @@ import {combineHorizonRecommendations} from "./horizon-integration.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
+let activeCountry="JP";
 let latestWeather=null;
 let selectedCourses=[];
 let latestCourseWeather=null;
@@ -74,9 +75,48 @@ $("fetch-weather").addEventListener("click",async()=>{
 });
 $("hourly-date").addEventListener("change",()=>{if(latestWeather)renderHourly(latestWeather,$("hourly-date").value);});
 
+
+function renderDestinations(){
+ const host=$("destination-grid");host.replaceChildren();
+ for(const item of getDestinations()){
+  const button=document.createElement("button");button.type="button";
+  button.className="destination-card"+(item.code===activeCountry?" is-active":"");
+  button.setAttribute("aria-pressed",String(item.code===activeCountry));
+  const flag=document.createElement("span");flag.className="destination-flag";flag.textContent=item.flag;
+  const name=document.createElement("strong");name.textContent=item.name;
+  const state=document.createElement("small");state.textContent=item.label;
+  button.append(flag,name,state);
+  button.addEventListener("click",()=>selectDestination(item.code));
+  host.append(button);
+ }
+}
+function selectDestination(countryCode){
+ const destination=getDestination(countryCode);if(!destination)return;
+ activeCountry=countryCode;
+ selectedCourses=[];latestCourseWeather=null;latestLongRangeData=null;
+ document.querySelectorAll("[data-country-scope]").forEach(node=>{node.hidden=countryCode!=="JP";});
+ $("destination-status").textContent=destination.code==="JP"
+  ?"日本｜沖繩為第一個可操作試點；其他日本地區待逐步加入。"
+  :`${destination.flag} ${destination.name}｜目前尚無完成 GPS 與時區核實的球場資料，暫不開放預報及日期評分。`;
+ const empty=$("destination-empty");empty.hidden=destination.code==="JP";
+ empty.textContent=destination.code==="JP"?"":`${destination.name}目的地模組已建立入口。下一步將加入城市／區域、官方球場資料、座標來源與 IANA 時區；在資料完成前不顯示假預報或假推薦。`;
+ $("course-selection-status").textContent="已選擇 0 / 3 個球場";
+ $("fetch-course-weather").disabled=true;
+ $("run-unified-recommendations").disabled=true;
+ $("course-weather-status").textContent="尚未讀取球場天氣。";
+ $("course-weather-results").replaceChildren();
+ $("live-date-recommendations").replaceChildren();
+ $("live-date-status").textContent="尚未進行真實日期推薦。";
+ $("unified-recommendations").replaceChildren();
+ $("unified-recommendation-status").textContent="請先選擇三座球場。";
+ renderDestinations();renderCoursePicker();
+}
+
 function renderCoursePicker(){
  const host=$("course-picker");host.replaceChildren();
- for(const course of OKINAWA_COURSES){
+ const courses=getCoursesForCountry(activeCountry);
+ if(!courses.length){const empty=document.createElement("p");empty.className="destination-empty";empty.textContent=`${getDestination(activeCountry)?.name??"此目的地"}的球場清單尚在建置。完成球場名稱、官方地址、GPS 座標與 IANA 時區核實後，才會開放天氣查詢。`;host.append(empty);return;}
+ for(const course of getCoursesForCountry(activeCountry)){
   const label=document.createElement("label");label.className="course-option";
   const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.value=course.id;
   checkbox.checked=selectedCourses.some(x=>x.id===course.id);
