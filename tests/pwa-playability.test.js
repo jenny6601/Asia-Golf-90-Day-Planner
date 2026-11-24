@@ -18,7 +18,7 @@ test("heavy rainfall safety override caps grade at D",()=>{
  assert.equal(result.grade,"D");
 });
 test("missing factor data is not treated as zero",()=>{
- const result=scorePwaStylePlayability(fixture({wind_speed_10m:[null,null,null,null,null,null]}),"2027-01-10",7);
+ const result=scorePwaStylePlayability(fixture({wind_speed_10m:[null,null,null,null,null,null],wind_gusts_10m:[null,null,null,null,null,null]}),"2027-01-10",7);
  assert.equal(result.parts.find(x=>x.key==="wind").value,null);assert.equal(result.weightCoverage,85);
 });
 test("incomplete six-hour window is not scored",()=>{
