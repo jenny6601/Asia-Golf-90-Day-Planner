@@ -149,10 +149,41 @@ function renderRegionTopWeeks(group,records){
  if(!picked.length){panel.append(node("p","目前沒有足夠週／月尺度資料可產生推薦。","risk-summary"))}
  else{
   const grid=node("div",undefined,"week-grid");
-  picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");card.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start+" ～ "+x.end),node("strong",["偏乾趨勢","接近基準","偏濕趨勢","顯著偏濕趨勢"][x.rank]),node("p","分區氣候訊號："+(x.signal>0?"+":"")+x.signal.toFixed(2)+"｜資料覆蓋 "+x.coverage+"/"+records.length+" 個球場"),node("p",x.rank===0?"模式顯示相對偏乾，可優先列入考慮。":x.rank===1?"降雨訊號接近模式氣候基準，仍需觀察後續預報。":"模式顯示偏濕訊號，安排時需保留彈性。"));grid.append(card)});
+  picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");card.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start+" ～ "+x.end),node("strong",["偏乾趨勢","接近基準","偏濕趨勢","顯著偏濕趨勢"][x.rank]),node("p","分區氣候訊號："+(x.signal>0?"+":"")+x.signal.toFixed(2)+"｜資料覆蓋 "+x.coverage+"/"+records.length+" 個球場"),node("p",x.rank===0?"模式顯示相對偏乾，可優先列入考慮。":x.rank===1?"降雨訊號接近模式氣候基準，仍需觀察後續預報。":"模式顯示偏濕訊號，安排時需保留彈性。"));const choose=node("button","查看此週 7 天報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records));card.append(choose);grid.append(card)});
   panel.append(grid);
  }
  out.append(panel);
+}
+
+
+function renderSelectedWeekReport(group,week,records){
+ const host=$("region-report"),report=node("section",undefined,"selected-week-report");
+ report.append(node("h3","④ "+group.region+"｜7 天天氣報告"),node("h4",week.start+" ～ "+week.end));
+ const dayStrip=node("div",undefined,"seven-day-strip");
+ for(let i=0;i<7;i++){const date=add(week.start,i),tile=node("div",undefined,"seven-day-item");tile.append(node("strong",date.slice(5)),node("span",["日","一","二","三","四","五","六"][new Date(date+"T12:00:00Z").getUTCDay()]));dayStrip.append(tile)}
+ report.append(dayStrip);
+ const weeklyRows=[];
+ for(const rec of records){const w=rec.weekly;if(!w?.time)continue;
+  w.time.forEach((t,i)=>{if(t>=week.start&&t<=week.end)weeklyRows.push({date:t,rain:w.precipitation_mean?.[i],rainAnomaly:w.precipitation_anomaly?.[i],efi:w.precipitation_efi?.[i],temp:w.temperature_2m_mean?.[i],tempAnomaly:w.temperature_2m_anomaly?.[i],wind:w.wind_speed_10m_mean?.[i]})});
+ }
+ const avg=key=>{const values=weeklyRows.map(x=>x[key]).filter(Number.isFinite);return values.length?values.reduce((a,b)=>a+b,0)/values.length:null};
+ const monthlyRows=records.map(rec=>{const m=rec.monthly,idx=(m?.time||[]).findIndex(t=>t.slice(0,7)===week.start.slice(0,7));return idx<0?null:{rain:m.precipitation_mean?.[idx],rainAnomaly:m.precipitation_anomaly?.[idx],temp:m.temperature_2m_mean?.[idx],tempAnomaly:m.temperature_2m_anomaly?.[idx]}}).filter(Boolean);
+ const fallback=key=>{const v=monthlyRows.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
+ const rain=avg("rain")??fallback("rain"),temp=avg("temp")??fallback("temp"),efi=avg("efi"),wind=avg("wind"),rainAnomaly=avg("rainAnomaly")??fallback("rainAnomaly"),tempAnomaly=avg("tempAnomaly")??fallback("tempAnomaly");
+ report.append(node("p",weeklyRows.length?"資料層級：週尺度季節展望。":"資料層級：月尺度季節展望。此週沒有可用的逐週數值。","long-range-note"));
+ metricGrid(report,[["平均降雨量（模式週／月尺度）",val(rain," mm")],["降雨異常",val(rainAnomaly," mm")],["平均氣溫",val(temp," °C")],["氣溫異常",val(tempAnomaly," °C")],["降雨 EFI",efi==null?"未提供":efi.toFixed(2)],["平均風速",val(wind," m/s")]]);
+ const narrative=efi!=null?interpretPrecipitationEfi(efi).label:rainAnomaly!=null&&rain!=null?(rainAnomaly>0?"月尺度降雨高於模式氣候基準":"月尺度降雨低於或接近模式氣候基準"):"目前沒有足夠資料判讀";
+ report.append(node("p","整週判讀："+narrative+"。這是季節模式相對氣候基準的訊號，不是每日降雨機率，也不能推算每天的雨量。","risk-summary"));
+ if(weeklyRows.length){
+  const dates=weeklyRows.map(x=>x.date),rainValues=weeklyRows.map(x=>x.rain??null),tempValues=weeklyRows.map(x=>x.temp??null);
+  svgChart(report,"可取得的週尺度降雨量",[{label:"週降雨量",values:rainValues}],"mm");
+  svgChart(report,"可取得的週尺度平均氣溫",[{label:"週平均氣溫",values:tempValues}],"°C");
+  report.append(node("p","圖表只繪出 API 實際回傳的週資料點；不將週值拆分或複製成七個每日數值。","data-note"));
+ }else{
+  report.append(node("p","此期間只有月尺度展望，無法製作可信的逐日或逐週變化曲線；因此不以虛構數值繪圖。","data-note"));
+ }
+ const back=node("button","返回 TOP 3 推薦週次","week-back");back.type="button";back.addEventListener("click",()=>renderRegionTopWeeks(group,records));report.append(back);
+ host.append(report);report.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 
