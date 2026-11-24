@@ -13,3 +13,21 @@
 #long-range-results h4{margin:16px 0 8px;color:#315b49}#long-range-results .weather-table{margin-bottom:14px}.long-range-note{font-size:.82rem;color:#65766d;line-height:1.6}
 
 .panel{padding:20px}.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));align-items:end;margin:14px 0}.controls input,.controls select{width:100%;min-width:0}.controls label{display:grid;gap:7px;font-weight:700}.panel button{border:0;border-radius:10px;background:#176c4b;color:#fff;padding:13px 20px;font:inherit;font-weight:750;cursor:pointer}.panel button:disabled{opacity:.5;cursor:not-allowed}.report-summary{background:#edf5ef;border-left:4px solid #247956;padding:12px;border-radius:8px;font-weight:700;line-height:1.65}.note{font-size:.84rem;line-height:1.6;color:#718078}#report:empty{display:none}#report h2{font-size:1.25rem}
+
+/* Taiwan PWA-style report layout */
+.weather-card{margin:14px 0;padding:15px;border:1px solid #dce7e1;border-radius:13px;background:#fff;overflow:hidden}
+.weather-card>h3{margin:0 0 12px;padding:10px 12px;border-radius:9px;background:#176c4b;color:#fff;font-size:1.05rem;font-weight:850}
+.weather-card .results{margin:10px 0}
+.weather-card .result-card{padding:12px;margin:0;border:1px solid #e0e9e4;background:#fbfdfb;box-shadow:none;min-width:0}
+.weather-card .result-card p{margin:0 0 5px;font-size:.8rem;color:#64756c}
+.weather-card .result-card strong{display:block;font-size:1.12rem;color:#173f35;overflow-wrap:anywhere}
+.playability-overview{padding:14px;border-radius:12px;background:#edf5ef;border:1px solid #cfe2d5;margin-bottom:12px}
+.playability-overview .score{font-size:2.1rem}
+.playability-overview h3{margin:6px 0;color:#176c4b}
+.playability-overview p{margin:6px 0}
+.weather-card ul{padding-left:22px;line-height:1.7;color:#43584c}
+.weather-table.hourly-table .weather-row{grid-template-columns:58px repeat(11,minmax(68px,1fr));min-width:850px}
+.weather-table .weather-row span{font-size:.78rem}
+.weather-table .weather-head{background:#eaf1ed}
+.weather-card .risk-summary{margin:10px 0}
+.long-range-note{line-height:1.7;color:#596c61}
