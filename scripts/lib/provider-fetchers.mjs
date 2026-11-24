@@ -33,7 +33,8 @@ function requireCredential(value, name) {
 export async function fetchVisualCrossingCourseForecast(course, {
   apiKey,
   fetchImpl = fetch,
-  fetchedAt = new Date().toISOString()
+  fetchedAt = new Date().toISOString(),
+  includeRawDiagnostics = false
 } = {}) {
   const location = validateMulticountryCourse(course);
   const key = requireCredential(apiKey, "VISUAL_CROSSING_API_KEY");
@@ -52,13 +53,29 @@ export async function fetchVisualCrossingCourseForecast(course, {
     body: body.toString()
   });
   const payload = await readJson(response, "Visual Crossing");
-  return normalizeVisualCrossing(payload, location, fetchedAt);
+  const normalized = normalizeVisualCrossing(payload, location, fetchedAt);
+  if (includeRawDiagnostics) {
+    normalized.rawFieldDiagnostics = (payload.days ?? []).flatMap(day =>
+      (day.hours ?? []).map(hour => ({
+        time: hour.datetime ? `${day.datetime}T${hour.datetime}` : null,
+        temperatureRaw: hour.temp ?? null,
+        feelsLikeRaw: hour.feelslike ?? null,
+        humidityRaw: hour.humidity ?? null,
+        windSpeedRawKmh: hour.windspeed ?? null,
+        windGustRawKmh: hour.windgust ?? null,
+        precipitationRawMm: hour.precip ?? null,
+        precipitationProbabilityRawPct: hour.precipprob ?? null
+      }))
+    );
+  }
+  return normalized;
 }
 
 async function fetchForecaResolution(course, token, {
   fetchImpl,
   fetchedAt,
-  temporalResolution
+  temporalResolution,
+  includeRawDiagnostics = false
 }) {
   const location = validateMulticountryCourse(course);
   const endpoint = temporalResolution === "hourly" ? "hourly" : "3hourly";
@@ -76,7 +93,20 @@ async function fetchForecaResolution(course, token, {
     headers: {Authorization: `Bearer ${token}`}
   });
   const payload = await readJson(response, "Foreca");
-  return normalizeForeca(payload, location, {fetchedAt, temporalResolution});
+  const normalized = normalizeForeca(payload, location, {fetchedAt, temporalResolution});
+  if (includeRawDiagnostics) {
+    normalized.rawFieldDiagnostics = (payload.forecast ?? []).map(item => ({
+      time: item.time ?? null,
+      temperatureRaw: item.temperature ?? null,
+      feelsLikeRaw: item.feelsLikeTemp ?? null,
+      humidityRaw: item.relHumidity ?? null,
+      windSpeedRawMs: item.windSpeed ?? null,
+      windGustRawMs: item.windGust ?? null,
+      precipitationRawMm: item.precipAccum ?? null,
+      precipitationProbabilityRawPct: item.precipProb ?? null
+    }));
+  }
+  return normalized;
 }
 
 /**
@@ -86,13 +116,14 @@ async function fetchForecaResolution(course, token, {
 export async function fetchForecaCourseForecast(course, {
   apiKey,
   fetchImpl = fetch,
-  fetchedAt = new Date().toISOString()
+  fetchedAt = new Date().toISOString(),
+  includeRawDiagnostics = false
 } = {}) {
   const token = requireCredential(apiKey, "FORECA_API_KEY");
   const location = validateMulticountryCourse(course);
   const [hourly, threeHourly] = await Promise.all([
-    fetchForecaResolution(location, token, {fetchImpl, fetchedAt, temporalResolution: "hourly"}),
-    fetchForecaResolution(location, token, {fetchImpl, fetchedAt, temporalResolution: "three-hourly"})
+    fetchForecaResolution(location, token, {fetchImpl, fetchedAt, temporalResolution: "hourly", includeRawDiagnostics}),
+    fetchForecaResolution(location, token, {fetchImpl, fetchedAt, temporalResolution: "three-hourly", includeRawDiagnostics})
   ]);
   return {provider: "Foreca", course: location, fetchedAt, hourly, threeHourly};
 }
@@ -105,15 +136,16 @@ export async function fetchIndependentProviderForecasts(course, {
   visualCrossingApiKey,
   forecaApiKey,
   fetchImpl = fetch,
-  fetchedAt = new Date().toISOString()
+  fetchedAt = new Date().toISOString(),
+  includeRawDiagnostics = false
 } = {}) {
   const location = validateMulticountryCourse(course);
   const [visualCrossing, foreca] = await Promise.allSettled([
     fetchVisualCrossingCourseForecast(location, {
-      apiKey: visualCrossingApiKey, fetchImpl, fetchedAt
+      apiKey: visualCrossingApiKey, fetchImpl, fetchedAt, includeRawDiagnostics
     }),
     fetchForecaCourseForecast(location, {
-      apiKey: forecaApiKey, fetchImpl, fetchedAt
+      apiKey: forecaApiKey, fetchImpl, fetchedAt, includeRawDiagnostics
     })
   ]);
   return {
