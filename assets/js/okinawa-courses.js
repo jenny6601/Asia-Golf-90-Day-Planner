@@ -31,8 +31,8 @@ export const OKINAWA_COURSES = Object.freeze([
   {
     id:"palm-hills",name:"Palm Hills Golf Resort Club",nameJa:"パームヒルズゴルフリゾートクラブ",
     area:"南部",city:"糸滿市",address:"762 Arakaki, Itoman, Okinawa 901-0323, Japan",
-    latitude:26.11934,longitude:127.701172,coordinateSource:"FullGolf / OpenStreetMap",coordinateSourceUrl:"https://www.fullgolf.com/en/golf-club/japan/okinawa/itoman/palm-hills-golf-resort",
-    coordinateStatus:"provisional",officialUrl:"https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/palmhills/"
+    latitude:26.12195689996961,longitude:127.70566981539325,coordinateSource:"Official Accordia Golf Palm Hills access-page Google Maps embed",coordinateSourceUrl:"https://reserve.accordiagolf.com/en/global/golfcourse/okinawa/palmhills/access/",
+    coordinateVerifiedAt:"2026-11-25",coordinateStatus:"verified",officialUrl:"https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/palmhills/"
   },
   {
     id:"chura-orchard",name:"Chura Orchard Golf Club",nameJa:"美らオーチャードゴルフ倶楽部",
