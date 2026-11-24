@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=coordinate-audit-v1"></head>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="亞洲高爾夫90天旅遊日期規劃"><title>Asia Golf 90-Day Planner</title><link rel="stylesheet" href="./assets/css/style.css?v=phase7-oneclick-v1"></head>
 <body><main class="shell"><header><p class="eyebrow">ASIA GOLF TRAVEL PLANNER</p><h1>90天高爾夫日期規劃</h1><p class="subtitle">先選目的地，再比較5天4夜、三場球的適打日期。</p></header>
 <section class="notice"><strong>日期推薦資料分層</strong><p>1–16天使用所選球場 GPS 的真實逐時預報；17–90天使用 ECMWF 週／月尺度區域趨勢作粗略篩選。兩種結果不混成同一風險分數，缺值不以合成資料補足。</p></section>
-<section class="panel"><h2>1–90天｜統一日期決策摘要</h2><p class="trip-rule">先讀取所選三個球場的16天逐時預報，再讀取沖繩名護、沖繩市、糸滿三個獨立網格的17–90天ECMWF長期展望，即可產生分層推薦。不同預報尺度不混成單一總分。</p><button id="run-unified-recommendations" type="button" disabled>整合短期與長期推薦</button><p id="unified-recommendation-status" class="counts" aria-live="polite">請先完成兩種資料讀取。</p><div id="unified-recommendations" class="weather-grid" aria-live="polite"></div></section>
+
 <section class="panel"><h2>沖繩三區｜真實天氣資料測試</h2><p class="trip-rule">北部：名護市｜中部：沖繩市｜南部：糸滿市。三個代表位置對應三個不同氣象預報網格，並非特定球場座標。</p><button id="fetch-weather" type="button">讀取 Open-Meteo 16 天預報</button><p id="weather-status" class="counts" aria-live="polite">尚未讀取即時資料。</p><div id="weather-results" class="weather-grid" aria-live="polite"></div>
 <div id="hourly-panel" hidden><h3>選擇日期｜逐時球場天氣（06:00–18:00）</h3><div class="controls"><label>預報日期<input id="hourly-date" type="date"></label><label>預計開球時間<select id="tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label></div><p class="data-note">新增：依選定開球時間計算連續6小時降雨影響指數。此為未經歷史回測校準的原型，不代表取消球賽機率，也不會影響90天日期推薦。</p><div id="hourly-results" class="weather-grid"></div></div>
 <p class="data-note">資料來源：Open-Meteo Forecast API。每日摘要與逐時資料分開呈現。</p></section>
@@ -15,7 +15,7 @@
 <p id="course-weather-status" class="counts" aria-live="polite">尚未讀取球場天氣。</p>
 <div id="course-weather-results" class="weather-grid" aria-live="polite"></div>
 </section>
-<section class="panel"><h2>三球場同日比較｜六小時降雨風險</h2>
+<section class="panel"><h2>1–90天｜一鍵日期推薦</h2><p class="trip-rule">先讀取所選三個球場的16天逐時預報，再讀取沖繩名護、沖繩市、糸滿三個獨立網格的17–90天ECMWF長期展望，即可產生分層推薦。不同預報尺度不混成單一總分。</p><button id="run-unified-recommendations" type="button" disabled>一鍵分析未來90天</button><p id="unified-recommendation-status" class="counts" aria-live="polite">請先在上方選擇三座球場。</p><div id="unified-recommendations" class="weather-grid" aria-live="polite"></div></section><section class="panel"><h2>三球場同日比較｜六小時降雨風險</h2>
 <p class="trip-rule">先讀取所選球場預報，再指定同一個日期及開球時間，比較各球場接下來六小時的降雨影響指數。只比較有完整逐時資料的球場。</p>
 <div class="controls"><label>比較日期<input id="compare-date" type="date" disabled></label><label>開球時間<select id="compare-tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label><button id="compare-courses" type="button" disabled>比較三球場降雨風險</button></div>
 <p id="comparison-status" class="counts" aria-live="polite">請先選擇球場並成功讀取預報。</p><div id="comparison-results" class="weather-grid" aria-live="polite"></div>
@@ -34,4 +34,4 @@
 <p id="long-range-recommendation-status" class="counts" aria-live="polite">請先讀取長期展望資料。</p><div id="long-range-recommendations" class="weather-grid" aria-live="polite"></div>
 <p id="long-range-status" class="counts" aria-live="polite">尚未讀取長期展望。</p><div id="long-range-results" class="weather-grid" aria-live="polite"></div>
 <p class="data-note">EC46 約涵蓋46天，之後由 SEAS5 接續。模型空間解析度約36 km、51個集合成員；資料未做偏差校正，應視為區域尺度趨勢。EFI 是相對模式氣候基準的極端指標，不是降雨機率。<a href="https://open-meteo.com/en/docs/seasonal-forecast-api" target="_blank" rel="noopener">查看 API 說明</a></p></section>
-<footer>Asia-Golf-90-Day-Planner · Live Forecast Date Ranking V1 · build 2026-11-23</footer></main><script type="module" src="./assets/js/app.js?v=coordinate-audit-v1"></script></body></html>
+<footer>Asia-Golf-90-Day-Planner · 90-Day One-Click Recommendation V1 · build 2026-11-24</footer></main><script type="module" src="./assets/js/app.js?v=phase7-oneclick-v1"></script></body></html>
