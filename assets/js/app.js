@@ -295,7 +295,7 @@ function render90DayDailyRows(){
  ["日期／預報天數","資料層級","天氣／趨勢摘要","選取行程出發日"].forEach(x=>{const s=document.createElement("span");s.textContent=x;header.append(s);});table.append(header);
  for(const item of rows){
   const row=document.createElement("div");row.className="daily-90day-row";
-  const date=document.createElement("span");date.textContent=fmt(item.date)+"｜第 "+item.leadDays+" 天";row.append(date);
+  const date=document.createElement("span");date.textContent=item.endDate?fmt(item.date)+"–"+fmt(item.endDate)+"｜第 "+item.leadDays+"–"+item.leadEndDays+" 天":fmt(item.date)+"｜第 "+item.leadDays+" 天";row.append(date);
   const horizon=document.createElement("span");horizon.textContent=item.label;row.append(horizon);
   const detail=document.createElement("span");
   if(item.horizon==="forecast"&&item.weather){
@@ -308,7 +308,7 @@ function render90DayDailyRows(){
   }
   row.append(detail);
   const action=document.createElement("span");const button=document.createElement("button");button.type="button";button.textContent="選此日";
-  button.disabled=item.leadDays>16&&item.status!=="available";
+  button.disabled=item.status!=="available";
   button.addEventListener("click",()=>{
    const select=$("itinerary-start");
    const option=[...select.options].find(x=>x.value===item.date);
