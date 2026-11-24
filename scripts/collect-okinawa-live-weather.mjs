@@ -202,7 +202,7 @@ const rawDiagnosticLines = [
   "- Humidity and wind fields are included per sample in the JSON for contextual review.",
   "- Pairwise forecast differences are not accuracy scores; observations are required for accuracy."
 ];
-await fs.writeFile(OUT+"/raw-field-diagnostics.md",rawDiagnosticLines.join("\\n"));
+await fs.writeFile(OUT+"/raw-field-diagnostics.md",rawDiagnosticLines.join("\n"));
 await fs.writeFile(OUT+"/consistency-report.json",JSON.stringify(report.consistencyAnalysis,null,2));
 const consistencyLines = [
   "# Okinawa provider consistency analysis",
