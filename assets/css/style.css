@@ -39,3 +39,6 @@
 .chart-legend{display:flex;flex-wrap:wrap;gap:14px;padding:8px 4px;font-size:.8rem;font-weight:750}
 .chart-legend span{white-space:nowrap}
 .weather-card svg{display:block;max-width:100%;margin:4px auto}
+
+/* Guided selection flow */
+#country,#region,#course,#departure,#tee{min-height:46px}#region:disabled,#course:disabled{background:#f1f4f2;color:#829087}.controls label{line-height:1.35}#course-note{min-height:1.4em}@media(max-width:560px){.controls{gap:12px}.controls label{font-size:.94rem}.controls select,.controls input{font-size:1rem;padding:12px}}
