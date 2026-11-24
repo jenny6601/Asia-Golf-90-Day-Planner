@@ -10,6 +10,11 @@ function validateCourse(course) {
   if (!course.countryCode || !course.timezone) {
     throw new TypeError("course countryCode and IANA timezone are required");
   }
+  try {
+    new Intl.DateTimeFormat("en-US", {timeZone: course.timezone}).format(new Date(0));
+  } catch {
+    throw new TypeError("course timezone must be a valid IANA timezone");
+  }
   return {
     id: course.id,
     name: course.name,
@@ -81,8 +86,8 @@ export function normalizeVisualCrossing(payload, course, fetchedAt = new Date().
         precipitationMm: finiteOrNull(day.precip),
         minTemperatureC: finiteOrNull(day.mint),
         maxTemperatureC: finiteOrNull(day.maxt),
-        maxWindSpeedMs: finiteOrNull(day.windspeed),
-        maxWindGustMs: finiteOrNull(day.windgust)
+        maxWindSpeedMs: kmhToMs(day.windspeed),
+        maxWindGustMs: kmhToMs(day.windgust)
       },
       hours
     };
