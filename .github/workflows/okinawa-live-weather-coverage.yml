@@ -1,0 +1,31 @@
+name: Okinawa Six-Course Live Weather Coverage
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Collect independent live provider forecasts
+        env:
+          VISUAL_CROSSING_API_KEY: ${{ secrets.VISUAL_CROSSING_API_KEY }}
+          FORECA_API_KEY: ${{ secrets.FORECA_API_KEY }}
+        run: node scripts/collect-okinawa-live-weather.mjs
+      - name: Run project tests
+        run: npm test
+      - name: Upload live coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-six-course-live-weather-coverage
+          path: artifacts/okinawa-live-weather/
+          if-no-files-found: warn
