@@ -7,6 +7,53 @@ import {
 const VC_ENDPOINT = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
 const FORECA_ENDPOINT = "https://weatherapi.foreca.net/api/v1/forecast";
 
+let forecaRequestQueue = Promise.resolve();
+let lastForecaRequestAt = 0;
+const defaultSleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+function retryAfterMs(response) {
+  const value = response?.headers?.get?.("retry-after");
+  if (!value) return null;
+  const seconds = Number(value);
+  if (Number.isFinite(seconds) && seconds >= 0) return seconds * 1000;
+  const date = Date.parse(value);
+  return Number.isFinite(date) ? Math.max(0, date - Date.now()) : null;
+}
+
+async function scheduledForecaFetch(fetchImpl, url, options, {
+  sleepImpl = defaultSleep,
+  minRequestIntervalMs = 1000
+} = {}) {
+  const request = forecaRequestQueue.then(async () => {
+    const wait = Math.max(0, minRequestIntervalMs - (Date.now() - lastForecaRequestAt));
+    if (wait > 0) await sleepImpl(wait);
+    lastForecaRequestAt = Date.now();
+    return fetchImpl(url, options);
+  });
+  forecaRequestQueue = request.then(() => undefined, () => undefined);
+  return request;
+}
+
+async function fetchForecaJson(url, options, {
+  fetchImpl,
+  sleepImpl = defaultSleep,
+  minRequestIntervalMs = 1000,
+  maxRetries = 3,
+  retryBaseDelayMs = 1500,
+  maxRetryDelayMs = 12000
+}) {
+  for (let attempt = 0; ; attempt++) {
+    const response = await scheduledForecaFetch(fetchImpl, url, options, {sleepImpl, minRequestIntervalMs});
+    if (response?.status === 429 && attempt < maxRetries) {
+      const exponential = Math.min(maxRetryDelayMs, retryBaseDelayMs * (2 ** attempt));
+      const delay = Math.min(maxRetryDelayMs, Math.max(retryAfterMs(response) ?? 0, exponential));
+      await sleepImpl(delay);
+      continue;
+    }
+    return readJson(response, "Foreca");
+  }
+}
+
 async function readJson(response, provider) {
   if (!response?.ok) {
     const status = response?.status ?? "unknown";
@@ -75,7 +122,12 @@ async function fetchForecaResolution(course, token, {
   fetchImpl,
   fetchedAt,
   temporalResolution,
-  includeRawDiagnostics = false
+  includeRawDiagnostics = false,
+  sleepImpl = defaultSleep,
+  minRequestIntervalMs = 1000,
+  maxRetries = 3,
+  retryBaseDelayMs = 1500,
+  maxRetryDelayMs = 12000
 }) {
   const location = validateMulticountryCourse(course);
   const endpoint = temporalResolution === "hourly" ? "hourly" : "3hourly";
@@ -88,11 +140,10 @@ async function fetchForecaResolution(course, token, {
   url.searchParams.set("tz", location.timezone);
   url.searchParams.set("dataset", "full");
   url.searchParams.set("rounding", "0");
-  const response = await fetchImpl(url, {
+  const payload = await fetchForecaJson(url, {
     method: "GET",
     headers: {Authorization: `Bearer ${token}`}
-  });
-  const payload = await readJson(response, "Foreca");
+  }, {fetchImpl, sleepImpl, minRequestIntervalMs, maxRetries, retryBaseDelayMs, maxRetryDelayMs});
   const normalized = normalizeForeca(payload, location, {fetchedAt, temporalResolution});
   if (includeRawDiagnostics) {
     normalized.rawFieldDiagnostics = (payload.forecast ?? []).map(item => ({
@@ -117,13 +168,18 @@ export async function fetchForecaCourseForecast(course, {
   apiKey,
   fetchImpl = fetch,
   fetchedAt = new Date().toISOString(),
-  includeRawDiagnostics = false
+  includeRawDiagnostics = false,
+  sleepImpl = defaultSleep,
+  minRequestIntervalMs = 1000,
+  maxRetries = 3,
+  retryBaseDelayMs = 1500,
+  maxRetryDelayMs = 12000
 } = {}) {
   const token = requireCredential(apiKey, "FORECA_API_KEY");
   const location = validateMulticountryCourse(course);
   const [hourly, threeHourly] = await Promise.all([
-    fetchForecaResolution(location, token, {fetchImpl, fetchedAt, temporalResolution: "hourly", includeRawDiagnostics}),
-    fetchForecaResolution(location, token, {fetchImpl, fetchedAt, temporalResolution: "three-hourly", includeRawDiagnostics})
+    fetchForecaResolution(location, token, {fetchImpl, fetchedAt, temporalResolution: "hourly", includeRawDiagnostics, sleepImpl, minRequestIntervalMs, maxRetries, retryBaseDelayMs, maxRetryDelayMs}),
+    fetchForecaResolution(location, token, {fetchImpl, fetchedAt, temporalResolution: "three-hourly", includeRawDiagnostics, sleepImpl, minRequestIntervalMs, maxRetries, retryBaseDelayMs, maxRetryDelayMs})
   ]);
   return {provider: "Foreca", course: location, fetchedAt, hourly, threeHourly};
 }
