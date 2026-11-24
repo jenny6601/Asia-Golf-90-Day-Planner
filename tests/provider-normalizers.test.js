@@ -44,7 +44,7 @@ test("Visual Crossing normalization retains local date/time and metric values", 
   assert.equal(result.timezone, "Asia/Tokyo");
   assert.equal(result.days[0].hours[0].time, "2026-12-15T07:00:00");
   assert.equal(result.days[0].hours[0].precipitationMm, 0.4);
-  assert.equal(result.days[0].hours[0].windSpeedMs, 4);
+  assert.equal(result.days[0].hours[0].windSpeedMs, 4 / 3.6);
 });
 
 test("Visual Crossing missing values remain null and timezone mismatch fails closed", () => {
