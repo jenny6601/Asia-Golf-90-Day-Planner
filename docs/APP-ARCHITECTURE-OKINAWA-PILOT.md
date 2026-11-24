@@ -51,7 +51,7 @@ Validate that the application can reliably produce three distinct 5-day / 4-nigh
 ## Course readiness gate
 A course may be used for operational forecast scoring only when its course-point GPS is verified with traceable evidence and its timezone is explicit. Provisional or pending coordinates may be shown as catalogue metadata but must not enter production date recommendations.
 
-Current Okinawa catalogue status (as of this architecture review): six records; five provisional coordinates and one pending; zero verified records. Therefore, live API connectivity tests may validate adapter behavior, but cannot yet validate course-specific forecast accuracy or booking recommendations.
+Current Okinawa catalogue status (as of this architecture review): six records; one verified coordinate (The Southern Links), four provisional coordinates and one pending. The Southern Links pin is sourced from the official Accordia Golf access page embedded Google Maps map. This establishes an official course-location pin, not a surveyed course polygon or tee-by-tee coordinate set. Therefore, live API connectivity tests may validate adapter behavior, but cannot yet validate course-specific forecast accuracy or booking recommendations.
 
 ## Core data contracts
 
