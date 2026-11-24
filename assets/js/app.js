@@ -116,24 +116,37 @@ function renderCoursePicker(){
  const host=$("course-picker");host.replaceChildren();
  const courses=getCoursesForCountry(activeCountry);
  if(!courses.length){const empty=document.createElement("p");empty.className="destination-empty";empty.textContent=`${getDestination(activeCountry)?.name??"此目的地"}的球場清單尚在建置。完成球場名稱、官方地址、GPS 座標與 IANA 時區核實後，才會開放天氣查詢。`;host.append(empty);return;}
- for(const course of getCoursesForCountry(activeCountry)){
-  const label=document.createElement("label");label.className="course-option";
-  const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.value=course.id;
-  checkbox.checked=selectedCourses.some(x=>x.id===course.id);
-  checkbox.disabled=course.coordinateStatus==="pending" || (!checkbox.checked && selectedCourses.length>=3);
-  checkbox.addEventListener("change",()=>{
-   if(checkbox.checked){selectedCourses.push(course);}else{selectedCourses=selectedCourses.filter(x=>x.id!==course.id);}
-   latestCourseWeather=null;$("run-unified-recommendations").disabled=selectedCourses.length!==3;
-   $("course-weather-status").textContent="球場選擇已變更，請重新讀取逐時預報。";
-   $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
-   $("fetch-course-weather").disabled=selectedCourses.length===0;
-   renderCoursePicker();
-  });
-  const info=document.createElement("span");
-  const title=document.createElement("strong");title.textContent=`${course.name}（${course.area}）`;
-  const sub=document.createElement("small");sub.textContent=course.coordinateStatus==="pending"?"GPS 待核實｜暫不可查詢":`${course.latitude.toFixed(5)}, ${course.longitude.toFixed(5)}｜第三方地圖暫定，待官方圖資複核`;
-  const addr=document.createElement("small");addr.textContent=course.address;
-  info.append(title,sub,addr);label.append(checkbox,info);host.append(label);
+ const groups=new Map();
+ for(const course of courses){
+  const area=course.area||course.region||"其他地區";
+  if(!groups.has(area))groups.set(area,[]);
+  groups.get(area).push(course);
+ }
+ for(const [area,items] of groups){
+  const section=document.createElement("section");section.className="course-area-group";
+  const heading=document.createElement("h3");heading.className="course-area-heading";
+  heading.textContent=`${area}｜${items.length} 座球場`;section.append(heading);
+  const grid=document.createElement("div");grid.className="course-area-courses";
+  for(const course of items){
+   const label=document.createElement("label");label.className="course-option";
+   const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.value=course.id;
+   checkbox.checked=selectedCourses.some(x=>x.id===course.id);
+   checkbox.disabled=course.coordinateStatus==="pending" || (!checkbox.checked && selectedCourses.length>=3);
+   checkbox.addEventListener("change",()=>{
+    if(checkbox.checked){selectedCourses.push(course);}else{selectedCourses=selectedCourses.filter(x=>x.id!==course.id);}
+    latestCourseWeather=null;$("run-unified-recommendations").disabled=selectedCourses.length!==3;
+    $("course-weather-status").textContent="球場選擇已變更，請重新讀取逐時預報。";
+    $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
+    $("fetch-course-weather").disabled=selectedCourses.length===0;
+    renderCoursePicker();
+   });
+   const info=document.createElement("span");
+   const title=document.createElement("strong");title.textContent=course.name;
+   const sub=document.createElement("small");sub.textContent=course.coordinateStatus==="pending"?"GPS 待核實｜暫不可查詢":`${course.latitude.toFixed(5)}, ${course.longitude.toFixed(5)}｜第三方地圖暫定，待官方圖資複核`;
+   const addr=document.createElement("small");addr.textContent=course.address||"地址待補";
+   info.append(title,sub,addr);label.append(checkbox,info);grid.append(label);
+  }
+  section.append(grid);host.append(section);
  }
 }
 function renderCourseWeather(data){
