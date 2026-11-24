@@ -1,0 +1,36 @@
+name: Deploy Asia Golf Climate Preview
+
+on:
+  push:
+    branches:
+      - asia-eight-country-shared-engine
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: asia-golf-climate-preview
+  cancel-in-progress: true
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout development branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run tests
+        run: npm test
+
+      - name: Deploy independent Cloudflare Pages preview
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy . --project-name=asia-golf-climate --branch=asia-eight-country-shared-engine
