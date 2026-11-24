@@ -1,0 +1,36 @@
+name: Global Golf Weather Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "config/global/**"
+      - "scripts/validate-global-catalog.mjs"
+      - "tests/global-catalog.test.js"
+      - ".github/workflows/global-golf-weather-validation.yml"
+      - "package.json"
+  pull_request:
+    branches: [main]
+    paths:
+      - "config/global/**"
+      - "scripts/validate-global-catalog.mjs"
+      - "tests/global-catalog.test.js"
+      - ".github/workflows/global-golf-weather-validation.yml"
+      - "package.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate global catalog schema and data
+        run: node scripts/validate-global-catalog.mjs
+      - name: Run complete project tests
+        run: npm test
