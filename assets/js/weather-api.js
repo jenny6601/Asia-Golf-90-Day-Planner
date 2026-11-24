@@ -79,5 +79,5 @@ export async function fetchCourseForecast(courses, fetchImpl = fetch) {
     if(!payload.daily?.time?.length || !payload.hourly?.time?.length) throw new Error(`${course.name} 回傳欄位不完整`);
     return {course,fetchedAt:new Date().toISOString(),timezone:payload.timezone||timezone,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,coordinateAudit:auditForecastPoint(course,payload),daily:payload.daily,hourly:payload.hourly};
   }));
-  return {provider:"Open-Meteo Forecast API",forecastDays:16,fetchedAt:new Date().toISOString(),courses:results};
+  return {provider:"Open-Meteo Forecast API",forecastDays:16,fetchedAt:new Date().toISOString(),timezone:results.length===1?results[0].timezone:null,courses:results};
 }
