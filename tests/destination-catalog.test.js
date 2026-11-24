@@ -27,9 +27,9 @@ test("invalid coordinates, timezone, country and partial GPS are rejected",()=>{
 });
 test("Japan catalogue includes Okinawa and mainland candidates without inventing GPS",()=>{
  const records=getCourseRecords("JP");
- assert.equal(records.length,18);
+ assert.equal(records.length,19);
  assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,5);
- assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,13);
+ assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,14);
  const narita=records.find(x=>x.id==="jp-chiba-narita-golf-club");
  const hokkaidoClassic=records.find(x=>x.id==="jp-hokkaido-classic-golf-club");
  assert.equal(narita.latitude,null);assert.equal(narita.longitude,null);
@@ -45,7 +45,7 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  assert.equal(abiko.latitude,null);assert.equal(abiko.longitude,null);
  assert.ok(abiko.officialUrl.includes("abikogc.com"));
  const hokkaidoGroup=records.filter(x=>x.area==="北海道");
- assert.equal(hokkaidoGroup.length,3);
+ assert.equal(hokkaidoGroup.length,4);
  assert.ok(hokkaidoGroup.every(x=>x.latitude===null&&x.longitude===null&&x.coordinateStatus==="pending"));
  const chibaGroup=records.filter(x=>x.area==="千葉縣");
  assert.equal(chibaGroup.length,3);
@@ -54,8 +54,8 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  assert.equal(okinawaGroup.length,6);
  const areaCounts=new Map();for(const course of records)areaCounts.set(course.area,(areaCounts.get(course.area)||0)+1);
  for(const [area,count] of areaCounts)assert.ok(count>=3,`${area} must have at least 3 courses`);
- assert.equal(getCoursesForCountry("JP").length,18);
- assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:18,forecastReady:0,provisional:5,pending:13});
+ assert.equal(getCoursesForCountry("JP").length,19);
+ assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:0,provisional:5,pending:14});
  for(const code of ["KR","CN","VN","TH","MY","SG","ID"])assert.equal(getCourseRecords(code).length,0);
  assert.equal(getDestination("US"),null);
 });
