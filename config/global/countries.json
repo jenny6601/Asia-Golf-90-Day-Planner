@@ -1,0 +1,10 @@
+[
+  {"code":"JP","name":"Japan","nameZh":"日本","enabled":true,"timezonePolicy":"per-course"},
+  {"code":"KR","name":"South Korea","nameZh":"韓國","enabled":false,"timezonePolicy":"per-course"},
+  {"code":"CN","name":"China","nameZh":"中國","enabled":false,"timezonePolicy":"per-course"},
+  {"code":"VN","name":"Vietnam","nameZh":"越南","enabled":false,"timezonePolicy":"per-course"},
+  {"code":"TH","name":"Thailand","nameZh":"泰國","enabled":false,"timezonePolicy":"per-course"},
+  {"code":"MY","name":"Malaysia","nameZh":"馬來西亞","enabled":false,"timezonePolicy":"per-course"},
+  {"code":"SG","name":"Singapore","nameZh":"新加坡","enabled":false,"timezonePolicy":"per-course"},
+  {"code":"ID","name":"Indonesia","nameZh":"印尼","enabled":false,"timezonePolicy":"per-course"}
+]
