@@ -4,7 +4,7 @@ import {calculateHumidexC,humidexCategory,buildOutdoorThermalScreening} from "..
 
 test("humidex derives from air temperature and relative humidity",()=>{
  const value=calculateHumidexC(30,70);
- assert.ok(value>35&&value<40);
+ assert.ok(value>40&&value<43);
  assert.equal(calculateHumidexC(25,null),null);
  assert.equal(calculateHumidexC(25,0),null);
  assert.equal(calculateHumidexC(25,101),null);
@@ -38,7 +38,7 @@ test("screening keeps source feels-like separate and retains solar and wind expo
  assert.equal(result.providers.openMeteo.hours[0].uvIndex,7);
  assert.equal(result.providers.visualCrossing.hours[0].derivedHumidexC,result.providers.foreca.hours[0].derivedHumidexC);
  assert.equal(result.providers.visualCrossing.hours[0].temperatureC,30);
- assert.equal(result.providers.visualCrossing.hours[0].humidexCategory,"some-discomfort");
+ assert.equal(result.providers.visualCrossing.hours[0].humidexCategory,"great-discomfort");
 });
 
 test("unavailable provider remains unavailable without synthetic hours",()=>{
