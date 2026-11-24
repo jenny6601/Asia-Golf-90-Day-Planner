@@ -28,8 +28,8 @@ test("invalid coordinates, timezone, country and partial GPS are rejected",()=>{
 test("Japan catalogue includes Okinawa and mainland candidates without inventing GPS",()=>{
  const records=getCourseRecords("JP");
  assert.equal(records.length,19);
- assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,5);
- assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,14);
+ assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,7);
+ assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,12);
  const narita=records.find(x=>x.id==="jp-chiba-narita-golf-club");
  const hokkaidoClassic=records.find(x=>x.id==="jp-hokkaido-classic-golf-club");
  assert.equal(narita.latitude,null);assert.equal(narita.longitude,null);
@@ -55,7 +55,15 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  assert.equal(tomakomaiGroup.length,3);
  assert.ok(tomakomaiGroup.every(x=>x.city==="苫小牧市"));
  assert.equal(tomakomaiGroup.filter(x=>x.coordinateStatus==="verified").length,1);
- assert.equal(tomakomaiGroup.filter(x=>x.coordinateStatus==="pending").length,2);
+ assert.equal(tomakomaiGroup.filter(x=>x.coordinateStatus==="provisional").length,2);
+ const nidom=records.find(x=>x.id==="jp-hokkaido-nidom-classic-course");
+ const katsura=records.find(x=>x.id==="jp-hokkaido-katsura-golf-club");
+ assert.deepEqual([nidom.latitude,nidom.longitude],[42.717879,141.654109]);
+ assert.deepEqual([katsura.latitude,katsura.longitude],[42.749008,141.644209]);
+ assert.equal(nidom.coordinateStatus,"provisional");
+ assert.equal(katsura.coordinateStatus,"provisional");
+ assert.ok(nidom.coordinateSource.includes("NAVITIME"));
+ assert.ok(katsura.coordinateSource.includes("FullGolf"));
  const abiraGroup=records.filter(x=>x.area==="安平");
  assert.equal(abiraGroup.length,1);
  assert.equal(abiraGroup[0].city,"安平町");
@@ -69,7 +77,7 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  const regionCounts=new Map();for(const course of records)regionCounts.set(course.region,(regionCounts.get(course.region)||0)+1);
  for(const [region,count] of regionCounts)assert.ok(count>=3,region+" must have at least 3 courses");
  assert.equal(getCoursesForCountry("JP").length,19);
- assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:1,provisional:5,pending:13});
+ assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:1,provisional:7,pending:11});
  for(const code of ["KR","CN","VN","TH","MY","SG","ID"])assert.equal(getCourseRecords(code).length,0);
  assert.equal(getDestination("US"),null);
 });
