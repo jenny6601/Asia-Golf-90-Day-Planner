@@ -12,8 +12,8 @@ export const DESTINATIONS=Object.freeze([
  {code:"ID",name:"印尼",flag:"🇮🇩",status:"catalog-pending",label:"球場資料待建置"}
 ]);
 
-const OKINAWA_RECORDS=OKINAWA_COURSES.map(course=>validateCourseRecord({
- id:course.id,countryCode:"JP",region:"沖繩縣",city:course.city,courseName:course.name,localName:course.nameJa??null,
+const OKINAWA_RECORDS=OKINAWA_COURSES.map(course=>validateCourseRecord({\n ...course,
+ id:course.id,countryCode:"JP",region:"沖繩縣",area:course.area,name:course.name,city:course.city,courseName:course.name,localName:course.nameJa??null,
  address:course.address,latitude:course.latitude,longitude:course.longitude,timezone:"Asia/Tokyo",
  coordinateSource:course.coordinateSource??null,coordinateVerifiedAt:null,coordinateStatus:course.coordinateStatus,
  officialUrl:course.officialUrl??null,coordinateSourceUrl:course.coordinateSourceUrl??null,
