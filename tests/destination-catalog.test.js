@@ -10,30 +10,34 @@ test("destination catalogue contains exactly the original eight countries",()=>{
  assert.deepEqual(codes,["JP","KR","CN","VN","TH","MY","SG","ID"]);
  assert.equal(new Set(codes).size,8);
 });
-
 test("course schema accepts verified records and exposes country name",()=>{
  const result=validateCourseRecord(valid,{requireForecastReady:true});
  assert.equal(result.countryName,"越南");
  assert.equal(isForecastReady(result),true);
 });
-
 test("provisional or pending coordinates cannot be forecast-ready",()=>{
  assert.throws(()=>validateCourseRecord({...valid,coordinateStatus:"provisional",coordinateVerifiedAt:null},{requireForecastReady:true}),/not forecast-ready/);
  assert.throws(()=>validateCourseRecord({...valid,latitude:null,longitude:null,coordinateStatus:"pending",coordinateSource:null,coordinateVerifiedAt:null},{requireForecastReady:true}),/not forecast-ready/);
 });
-
 test("invalid coordinates, timezone, country and partial GPS are rejected",()=>{
  assert.throws(()=>validateCourseRecord({...valid,latitude:100}),/latitude and longitude/);
  assert.throws(()=>validateCourseRecord({...valid,timezone:"Mars/Olympus"}),/IANA timezone/);
  assert.throws(()=>validateCourseRecord({...valid,countryCode:"US"}),/unsupported country/);
  assert.throws(()=>validateCourseRecord({...valid,longitude:null}),/latitude and longitude/);
 });
-
-test("catalogue keeps provisional records visible but excludes pending GPS from forecast selection",()=>{
- assert.equal(getCourseRecords("JP").length,6);
- assert.equal(getCoursesForCountry("JP").length,5);
- assert.equal(getCourseCoverage("JP").provisional,5);
- assert.equal(getCourseCoverage("JP").pending,1);
+test("Japan catalogue includes Okinawa and mainland candidates without inventing GPS",()=>{
+ const records=getCourseRecords("JP");
+ assert.equal(records.length,8);
+ assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,5);
+ assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,3);
+ const narita=records.find(x=>x.id==="jp-chiba-narita-golf-club");
+ const hokkaido=records.find(x=>x.id==="jp-hokkaido-classic-golf-club");
+ assert.equal(narita.latitude,null);assert.equal(narita.longitude,null);
+ assert.equal(hokkaido.latitude,null);assert.equal(hokkaido.longitude,null);
+ assert.ok(narita.officialUrl.startsWith("https://"));
+ assert.ok(hokkaido.officialUrl.startsWith("https://"));
+ assert.equal(getCoursesForCountry("JP").length,8);
+ assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:8,forecastReady:0,provisional:5,pending:3});
  for(const code of ["KR","CN","VN","TH","MY","SG","ID"])assert.equal(getCourseRecords(code).length,0);
  assert.equal(getDestination("US"),null);
 });
