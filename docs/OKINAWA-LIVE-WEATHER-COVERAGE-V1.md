@@ -35,3 +35,14 @@ If a secret is absent, that provider is reported unavailable; the workflow still
 
 ## Limitations
 This is a live connectivity/coverage smoke test, not forecast-accuracy validation. Provisional course points must not be used for trip ranking. JMA MSM remains unavailable until a verified MSM point-data ingestion route and parser are implemented.
+
+## Provider consistency analysis
+The collector also writes:
+- `consistency-report.json`
+- `consistency-report.md`
+
+The comparison aligns provider records by the Asia/Tokyo local wall-clock hour. Foreca's ISO timestamp offset is preserved in the source data; the comparison key uses its local date/hour prefix and does not shift it to UTC.
+
+The 10:00–16:00 inclusive window is compared only where all three providers have a matching hour. Pairwise differences are provider disagreement metrics, not forecast accuracy. Forecast accuracy requires time-matched observations.
+
+Apparent/feels-like temperature is not assumed to be methodologically identical across providers. Open-Meteo describes apparent temperature as combining temperature, relative humidity, wind and solar radiation. Visual Crossing describes feels-like as heat-index or wind-chill adjusted. Foreca publishes its own `feelsLikeTemp` field. Therefore, a provider value equal to air temperature is not automatically a missing-data error; report equality frequency and differences without substituting a locally calculated value.
