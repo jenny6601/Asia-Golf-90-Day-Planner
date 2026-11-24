@@ -44,7 +44,8 @@ test("Visual Crossing normalization retains local date/time and metric values", 
   assert.equal(result.timezone, "Asia/Tokyo");
   assert.equal(result.days[0].hours[0].time, "2026-12-15T07:00:00");
   assert.equal(result.days[0].hours[0].precipitationMm, 0.4);
-  assert.equal(result.days[0].hours[0].windSpeedMs, 4 / 3.6);
+  assert.ok(Math.abs(result.days[0].hours[0].windSpeedMs - (4 / 3.6)) < 0.0001);
+  assert.ok(Math.abs(result.days[0].daily.maxWindSpeedMs - (5 / 3.6)) < 0.0001);
 });
 
 test("Visual Crossing missing values remain null and timezone mismatch fails closed", () => {
@@ -90,5 +91,6 @@ test("multicountry course validation accepts only the original eight country cod
 
 test("course records without timezone or coordinates are rejected", () => {
   assert.throws(() => validateMulticountryCourse({...course,timezone:""}), /IANA timezone/);
+  assert.throws(() => validateMulticountryCourse({...course,timezone:"Mars/Olympus"}), /valid IANA timezone/);
   assert.throws(() => validateMulticountryCourse({...course,latitude:null}), /verified numeric coordinates/);
 });
