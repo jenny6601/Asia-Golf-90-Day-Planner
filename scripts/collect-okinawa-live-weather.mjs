@@ -1,4 +1,5 @@
 import {buildProviderConsistencyReport} from "./lib/provider-consistency.mjs";
+import {buildRawFieldDiagnostics} from "./lib/raw-field-diagnostics.mjs";
 import fs from "node:fs/promises";
 import {OKINAWA_COURSES} from "../assets/js/okinawa-courses.js";
 import {fetchIndependentProviderForecasts} from "./lib/provider-fetchers.mjs";
@@ -80,7 +81,8 @@ for (const course of OKINAWA_COURSES) {
     safeProvider("Open-Meteo",()=>fetchOpenMeteo(courseInput)),
     fetchIndependentProviderForecasts(courseInput,{
       visualCrossingApiKey:process.env.VISUAL_CROSSING_API_KEY,
-      forecaApiKey:process.env.FORECA_API_KEY
+      forecaApiKey:process.env.FORECA_API_KEY,
+      includeRawDiagnostics:true
     }).catch(error=>({course:courseInput,providers:{
       visualCrossing:{status:"unavailable",error:String(error?.message??error)},
       foreca:{status:"unavailable",error:String(error?.message??error)}
@@ -142,6 +144,32 @@ report.consistencyAnalysis = buildProviderConsistencyReport(courses.filter(c=>c.
   startHour:10,
   endHour:16
 });
+report.rawFieldDiagnostics = buildRawFieldDiagnostics(courses.filter(c=>c.collectionStatus==="collected"));
+await fs.writeFile(OUT+"/raw-field-diagnostics.json",JSON.stringify(report.rawFieldDiagnostics,null,2));
+const rawDiagnosticLines = [
+  "# Raw provider field diagnostics",
+  "",
+  "Only selected raw fields are retained; credentials and complete provider payloads are excluded.",
+  "",
+  ...report.rawFieldDiagnostics.courses.flatMap(course => [
+    "## "+course.courseName+" ("+course.coordinateStatus+")",
+    "",
+    "| Provider | Samples | Valid temp/feels pairs | Raw equal count | Equal % | Missing feels-like | Mean feels-like − temp °C | Normalization preserved |",
+    "|---|---:|---:|---:|---:|---:|---:|---|",
+    ...["visualCrossing","foreca"].map(provider => {
+      const d=course[provider];
+      return "| "+provider+" | "+(d.rawSampleCount??0)+" | "+(d.validTemperatureFeelsLikePairs??0)+" | "+(d.rawFeelsLikeEqualToTemperatureCount??0)+" | "+(d.rawFeelsLikeEqualToTemperaturePct??"—")+" | "+(d.rawFeelsLikeMissingCount??"—")+" | "+(d.rawFeelsLikeMinusTemperatureMeanC??"—")+" | "+(d.normalizationPreservedAllFeelsLikeValues===true?"yes":d.normalizationPreservedAllFeelsLikeValues===false?"no":"—")+" |";
+    }),
+    ""
+  ]),
+  "## Interpretation",
+  "",
+  "- Raw values equal to air temperature are reported as received; this alone does not establish an API defect.",
+  "- The preservation check compares raw feels-like values against the normalized output.",
+  "- Humidity and wind fields are included per sample in the JSON for contextual review.",
+  "- Pairwise forecast differences are not accuracy scores; observations are required for accuracy."
+];
+await fs.writeFile(OUT+"/raw-field-diagnostics.md",rawDiagnosticLines.join("\\n"));
 await fs.writeFile(OUT+"/consistency-report.json",JSON.stringify(report.consistencyAnalysis,null,2));
 const consistencyLines = [
   "# Okinawa provider consistency analysis",
