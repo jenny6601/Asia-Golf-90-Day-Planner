@@ -16,7 +16,7 @@ export function calculateHumidexC(temperatureC, relativeHumidityPct) {
 
 export function humidexCategory(value) {
   if (!finite(value)) return "unavailable";
-  if (value >= 46) return "dangerous";
+  if (value > 45) return "dangerous";
   if (value >= 40) return "great-discomfort";
   if (value >= 30) return "some-discomfort";
   if (value >= 20) return "little-discomfort";
