@@ -9,6 +9,7 @@ import {recommendLongRangeWindows} from "./long-range-engine.js";
 import {combineHorizonRecommendations} from "./horizon-integration.js";
 import {build90DayDailyView} from "./daily-90day-view.js";
 import {compareProviderGolfWindow} from "./provider-comparison.js";
+import {scoreMultiProviderGolfWindow} from "./weighted-weather-score.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -264,6 +265,12 @@ function runCourseComparison(){
   const compared=compareProviderGolfWindow({openMeteo:item,independentProviders:independent,date,teeHour,timeZone:item.course.timezone??"Asia/Tokyo"});
   const card=document.createElement("article");card.className="weather-card";
   const title=document.createElement("h4");title.textContent=item.course.name+"｜"+fmt(date)+"｜"+String(teeHour).padStart(2,"0")+":00 起";card.append(title);
+  const weighted=scoreMultiProviderGolfWindow(compared);
+  const scoreLine=document.createElement("p");scoreLine.className="risk-summary";
+  scoreLine.textContent=weighted.status==="scored"
+   ? `多來源加權適打風險：${weighted.weightedRisk}/100｜降雨 ${weighted.rainfallRisk}（65%）｜風 ${weighted.windRisk}（15%）｜溫度 ${weighted.temperatureRisk}（20%）｜來源 ${weighted.providerCount}/3｜來源差異 ${weighted.providerSpread}`
+   : `多來源加權分數暫不產生：完整且可比較來源 ${weighted.providerCount}/3，至少需要2個來源。`;
+  card.append(scoreLine);
   const rows=Object.entries({OpenMeteo:compared.openMeteo,"Visual Crossing":compared.visualCrossing,Foreca:compared.foreca}).map(([name,x])=>[
    name,x.status==="available"?"完整六小時":x.status==="incomplete"?"資料不足":x.status==="unavailable"?"未取得":"時段不相容",
    x.status==="available"?cell(x.precipProbabilityAvgPct,"%"):"—",x.status==="available"?cell(x.rainTotalMm," mm"):"—",
