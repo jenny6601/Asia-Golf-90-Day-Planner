@@ -2,40 +2,55 @@
 
 Asia Golf 90-Day Travel Weather Forecast and Date Recommendation System.
 
-## Project status
+## Current pilot
 
-Phase 1: destination-first 90-day trip-date planning. Initial pilot: Okinawa Main Island, Japan.
+- Destination: Okinawa Main Island, Japan.
+- Course catalogue: six courses.
+- Trip format: 5 days / 4 nights.
+- Golf rounds: trip days 2, 3 and 4; days 1 and 5 are travel days.
+- Primary objective: minimize rainfall risk and return up to three distinct candidate windows.
 
-## Confirmed planning rules
-- 90-day planning horizon.
-- 5 days / 4 nights per trip.
-- Golf on trip days 2, 3, and 4; travel on days 1 and 5.
-- Primary date-selection objective: minimize rainfall risk.
-- Return three distinct candidate windows.
-- Keep weather risk separate from forecast/data confidence.
-- Do not represent seasonal outlooks as deterministic daily forecasts.
+## Forecast horizons
 
-## Current implementation
-The initial date engine is a deterministic planning component. It creates rolling trip windows and ranks them using supplied daily risk inputs. It does not fetch live weather. Demonstration inputs are synthetic and must not be used for booking decisions.
+- **Days 1–16:** daily and hourly course-location forecasts, subject to each provider's actual coverage.
+- **Days 17–46:** ECMWF extended-range weekly precipitation signals and anomalies. These are weekly trends, not deterministic daily rain forecasts.
+- **Days 47–90:** seasonal/monthly precipitation and climate anomalies. These are broad regional tendencies, not daily rain probabilities or exact rainfall amounts.
 
-## Forecast horizon policy
-- Days 1-16: daily/hourly forecast data, subject to provider coverage.
-- Days 17-46: extended-range weekly trends and anomalies; not deterministic daily rainfall forecasts.
-- Days 47-90: seasonal probabilities and climatology only; no fabricated daily rain probability.
+Never merge these forecast horizons into one artificial numeric score. Short-range risk indices and long-range tendency tiers are ranked separately.
 
-## Development principles
-- Keep this repository independent from Taiwan Golf Weather and World Golf Weather projects.
-- Missing weather data must remain missing; never silently convert it to zero rainfall.
-- Record provider, model, issue time, valid time, and lead time for forecast verification.
-- Calibrate scoring thresholds against historical hindcasts before operational booking advice.
+## Date-selection method
 
-## Local test
-Run `npm test` with Node.js 20 or newer. Open `index.html` in a modern browser for the synthetic-data demo.
+For each golf day, compare the same local six-hour tee-time window across available providers. Require at least two complete, comparable providers for a multi-provider score. Use the provider-wise median of:
 
-## Preview deployment
+- Rainfall risk: 65% (rain probability, accumulated amount and peak hourly amount).
+- Wind risk: 15% (wind and gust).
+- Temperature comfort risk: 20% (temperature and feels-like temperature).
 
-A GitHub Actions workflow is included at `.github/workflows/deploy-pages.yml`.
-In repository Settings → Pages, set the build and deployment source to **GitHub Actions**.
-After that one-time repository setting, pushes to `main` publish the static preview automatically.
+The five-day itinerary risk is 70% of the mean of the three golf-day risks plus 30% of the worst golf-day risk. Return up to three candidate windows separated by at least five days.
 
-The preview currently uses synthetic demonstration data only. It is not a live forecast or booking recommendation.
+A separate severe-weather override excludes a candidate if any round has a severe thunderstorm signal, extreme wind/gust, or extreme apparent-temperature signal. This is a conservative prototype rule, not a calibrated cancellation probability.
+
+## Coordinate policy
+
+- **Verified:** supported by an official course location/map.
+- **Provisional:** reasonable numeric coordinate near the golf course; allowed for preliminary weather forecasts and date selection. Coordinate confidence remains visible and separate from forecast confidence.
+- **Pending:** no usable numeric course-vicinity coordinate; excluded until a location is supplied.
+
+A coordinate is a forecast point, not a surveyed course boundary or fairway coordinate.
+
+## Data integrity and limitations
+
+- Missing weather data remains missing; never replace it with zero.
+- Do not fill one provider's missing values with another provider's values.
+- Keep provider, model, issue time, valid time, timezone and lead time where supplied.
+- Forecast disagreement is not forecast accuracy. Accuracy requires observations and historical hindcast verification.
+- Current scoring weights and severe-weather thresholds are provisional and require Okinawa hindcast calibration before being treated as operational booking guidance.
+- Tee-time availability, course closures and local advisories must be confirmed with the golf course.
+
+## Provider integration
+
+Open-Meteo is called from the browser. Visual Crossing and Foreca are retrieved through the server-side `/api/course-weather` endpoint; configure `VISUAL_CROSSING_API_KEY` and `FORECA_API_KEY` as server-side secrets. Never expose provider credentials in browser code or generated artifacts.
+
+## Local tests
+
+Run `npm test` with Node.js 20 or newer.
