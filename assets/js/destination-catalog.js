@@ -16,7 +16,7 @@ const OKINAWA_RECORDS=OKINAWA_COURSES.map(course=>validateCourseRecord({
  ...course,
  id:course.id,countryCode:"JP",region:"沖繩縣",area:"沖繩本島",name:course.name,city:course.city,courseName:course.name,
  localName:course.nameJa??null,address:course.address,latitude:course.latitude,longitude:course.longitude,
- timezone:"Asia/Tokyo",coordinateSource:course.coordinateSource??null,coordinateVerifiedAt:null,
+ timezone:"Asia/Tokyo",coordinateSource:course.coordinateSource??null,coordinateVerifiedAt:course.coordinateVerifiedAt??null,
  coordinateStatus:course.coordinateStatus,officialUrl:course.officialUrl??null,
  coordinateSourceUrl:course.coordinateSourceUrl??null,
  providerAvailability:{openMeteo:course.coordinateStatus!=="pending"?"candidate":"pending",visualCrossing:"pending",foreca:"pending"},
