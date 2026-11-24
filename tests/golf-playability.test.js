@@ -35,13 +35,13 @@ test("a day missing any provider endpoint is excluded from common comparison",()
  assert.equal(report.courses[0].daily.length,0);
 });
 
-test("provisional GPS courses are not operationally rank eligible and no composite score is generated",()=>{
+test("provisional course-vicinity coordinates are eligible for preliminary screening without a calibrated composite score",()=>{
  const report=buildGolfPlayabilityReport([course({coordinateStatus:"provisional"})]);
  const item=report.courses[0];
- assert.equal(item.operationalRankingEligible,false);
- assert.equal(item.rankingStatus,"blocked-unverified-course-coordinate");
+ assert.equal(item.operationalRankingEligible,true);
+ assert.equal(item.rankingStatus,"descriptive-only-no-calibrated-score");
  assert.equal("score" in item,false);
- assert.equal(report.rankingPolicy.includes("No overall course ranking"),true);
+ assert.equal(report.rankingPolicy.includes("Coordinate confidence remains separate"),true);
 });
 
 test("precipitation and exposure indicators remain separate metrics",()=>{
