@@ -1,5 +1,6 @@
 import {buildProviderConsistencyReport} from "./lib/provider-consistency.mjs";
 import {buildRawFieldDiagnostics} from "./lib/raw-field-diagnostics.mjs";
+import {buildOutdoorThermalScreening} from "./lib/outdoor-thermal-screening.mjs";
 import fs from "node:fs/promises";
 import {OKINAWA_COURSES} from "../assets/js/okinawa-courses.js";
 import {fetchIndependentProviderForecasts} from "./lib/provider-fetchers.mjs";
@@ -24,7 +25,8 @@ async function fetchOpenMeteo(course) {
     hourly:[
       "temperature_2m","apparent_temperature","relative_humidity_2m",
       "precipitation_probability","precipitation","wind_speed_10m",
-      "wind_gusts_10m","wind_direction_10m","weather_code"
+      "wind_gusts_10m","wind_direction_10m","weather_code",
+      "shortwave_radiation","uv_index"
     ].join(",")
   }).toString();
   const payload = await getJson(url,"Open-Meteo");
@@ -42,7 +44,9 @@ async function fetchOpenMeteo(course) {
     windSpeedMs:finite(payload.hourly.wind_speed_10m?.[i]),
     windGustMs:finite(payload.hourly.wind_gusts_10m?.[i]),
     windDirectionDeg:finite(payload.hourly.wind_direction_10m?.[i]),
-    weatherCode:payload.hourly.weather_code?.[i] ?? null
+    weatherCode:payload.hourly.weather_code?.[i] ?? null,
+    shortwaveRadiationWm2:finite(payload.hourly.shortwave_radiation?.[i]),
+    uvIndex:finite(payload.hourly.uv_index?.[i])
   }));
   return {
     provider:"Open-Meteo", product:"Forecast API", fetchedAt:GENERATED_AT,
@@ -144,6 +148,35 @@ report.consistencyAnalysis = buildProviderConsistencyReport(courses.filter(c=>c.
   startHour:10,
   endHour:16
 });
+report.outdoorThermalScreening = buildOutdoorThermalScreening(courses.filter(c=>c.collectionStatus==="collected"), {
+  startHour:6,
+  endHour:18
+});
+await fs.writeFile(OUT+"/outdoor-thermal-screening.json",JSON.stringify(report.outdoorThermalScreening,null,2));
+const thermalLines = [
+  "# Outdoor thermal screening",
+  "",
+  "Timezone: Asia/Tokyo",
+  "Window: 06:00–18:00",
+  "",
+  "Humidex is derived independently from each provider's temperature and relative humidity. It is not WBGT, UTCI, a medical assessment or a validated golf-specific index.",
+  "",
+  "| Course | Provider | Hours | Humidex samples | Maximum Humidex | Peak category |",
+  "|---|---|---:|---:|---:|---|",
+  ...report.outdoorThermalScreening.courses.flatMap(course =>
+    ["openMeteo","visualCrossing","foreca"].map(provider => {
+      const d=course.providers[provider];
+      return "| "+course.courseName+" | "+provider+" | "+(d.sampleCount??0)+" | "+(d.humidexAvailableCount??0)+" | "+(d.maxHumidexC??"—")+" | "+(d.peakCategory??"—")+" |";
+    })
+  ),
+  "",
+  "## Exposure context",
+  "",
+  "Per-hour JSON retains wind speed, gust, and Open-Meteo shortwave solar radiation and UV index where available. These are shown separately and are not combined into an unvalidated composite score.",
+  "",
+  "Humidex categories follow Environment and Climate Change Canada: 20–29 little discomfort; 30–39 some discomfort; 40–45 great discomfort/avoid exertion; 46+ dangerous/heat stroke possible."
+];
+await fs.writeFile(OUT+"/outdoor-thermal-screening.md",thermalLines.join("\n"));
 report.rawFieldDiagnostics = buildRawFieldDiagnostics(courses.filter(c=>c.collectionStatus==="collected"));
 await fs.writeFile(OUT+"/raw-field-diagnostics.json",JSON.stringify(report.rawFieldDiagnostics,null,2));
 const rawDiagnosticLines = [
