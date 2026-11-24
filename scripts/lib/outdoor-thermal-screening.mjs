@@ -39,7 +39,7 @@ export function buildOutdoorThermalScreening(courses, {startHour=6,endHour=18}={
       "20-29":"little discomfort",
       "30-39":"some discomfort",
       "40-45":"great discomfort; avoid exertion",
-      "46+":"dangerous; heat stroke possible"
+      ">45":"dangerous; heat stroke possible"
     },
     courses:courses.map(course=>{
       const providers={};
