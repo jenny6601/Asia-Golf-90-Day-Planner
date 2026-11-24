@@ -7,7 +7,7 @@ function fixture(overrides={}) {
 }
 test("PWA-style score returns five weighted factors and a grade",()=>{
  const result=scorePwaStylePlayability(fixture(),"2027-01-10",7);
- assert.equal(result.status,"scored");assert.equal(result.score,100);assert.equal(result.grade,"A");assert.equal(result.weightCoverage,100);assert.equal(result.parts.length,5);
+ assert.equal(result.status,"scored");assert.equal(result.score,100);assert.equal(result.grade,"A");assert.equal(result.weightCoverage,100);assert.equal(result.parts.length,4);
 });
 test("thunderstorm safety override forces E",()=>{
  const result=scorePwaStylePlayability(fixture({weather_code:[1,1,95,1,1,1]}),"2027-01-10",7);
@@ -19,7 +19,7 @@ test("heavy rainfall safety override caps grade at D",()=>{
 });
 test("missing factor data is not treated as zero",()=>{
  const result=scorePwaStylePlayability(fixture({wind_speed_10m:[null,null,null,null,null,null],wind_gusts_10m:[null,null,null,null,null,null]}),"2027-01-10",7);
- assert.equal(result.parts.find(x=>x.key==="wind").value,null);assert.equal(result.weightCoverage,85);
+ assert.equal(result.parts.find(x=>x.key==="wind").value,null);assert.equal(result.weightCoverage,83);
 });
 test("incomplete six-hour window is not scored",()=>{
  const result=scorePwaStylePlayability(fixture(),"2027-01-10",8);
@@ -30,7 +30,10 @@ test("very low feels-like temperature adds a cold danger alert",()=>{
  const result=scorePwaStylePlayability(fixture({apparent_temperature:[8,9,9,10,10,10]}),"2027-01-10",7);
  assert.ok(result.alerts.some(x=>x.includes("極低溫")));
 });
-test("fog weather codes add a visibility alert",()=>{
- const result=scorePwaStylePlayability(fixture({weather_code:[45,45,1,1,1,1]}),"2027-01-10",7);
- assert.ok(result.alerts.some(x=>x.includes("霧況")));
+test("fog and visibility do not affect the playability score or alerts",()=>{
+ const clear=scorePwaStylePlayability(fixture(),"2027-01-10",7);
+ const fog=scorePwaStylePlayability(fixture({weather_code:[45,45,1,1,1,1]}),"2027-01-10",7);
+ assert.equal(fog.score,clear.score);
+ assert.equal(fog.parts.some(x=>x.key==="visibility"),false);
+ assert.equal(fog.alerts.some(x=>x.includes("能見度")||x.includes("霧")),false);
 });
