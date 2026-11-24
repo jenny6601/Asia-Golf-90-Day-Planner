@@ -6,7 +6,9 @@ function course(id,name,probability=0,amount=0){
  return {course:{id,name,area:"測試區"},hourly:{
   time:Array.from({length:24*10},(_,i)=>{const d=new Date(Date.UTC(2026,10,20)+i*3600000);return d.toISOString().slice(0,16)}),
   precipitation_probability:Array(24*10).fill(probability),
-  precipitation:Array(24*10).fill(amount)
+  precipitation:Array(24*10).fill(amount),
+  wind_speed_10m:Array(24*10).fill(3),wind_gusts_10m:Array(24*10).fill(4),
+  apparent_temperature:Array(24*10).fill(24),weather_code:Array(24*10).fill(0)
  }};
 }
 test("five-day itinerary assigns rounds to Day 2, 3 and 4 and travel to Day 1 and 5",()=>{
@@ -42,7 +44,7 @@ test("date recommender ranks only complete real forecast windows and separates r
   const time=Array.from({length:24*16},(_,i)=>new Date(Date.UTC(2026,10,23)+i*3600000).toISOString().slice(0,16));
   const probability=time.map(t=>wetDates.includes(t.slice(0,10))?90:5);
   const precipitation=time.map(t=>wetDates.includes(t.slice(0,10))?2:0);
-  return {course:{id,name:id,area:"test"},hourly:{time,precipitation_probability:probability,precipitation}};
+  return {course:{id,name:id,area:"test"},hourly:{time,precipitation_probability:probability,precipitation,wind_speed_10m:Array(time.length).fill(3),wind_gusts_10m:Array(time.length).fill(4),apparent_temperature:Array(time.length).fill(24),weather_code:Array(time.length).fill(0)}};
  };
  const courses=[makeCourse("A",["2026-11-26"]),makeCourse("B"),makeCourse("C")];
  const result=recommendFiveDayWindows({courses,teeHour:7});
@@ -59,4 +61,14 @@ test("date recommender does not create recommendations when no complete golf-day
  const c={course:{id:"A",name:"A"},hourly:{time:["2026-11-23T07:00"],precipitation_probability:[0],precipitation:[0]}};
  const result=recommendFiveDayWindows({courses:[c,c,c]});
  assert.equal(result.recommendations.length,0);
+});
+
+test("excludes a trip window when one of its golf days has a severe thunderstorm signal",()=>{
+ const a=course("a","A"),b=course("b","B"),c=course("c","C");
+ const idx=b.hourly.time.findIndex(t=>t==="2026-11-25T09:00");
+ b.hourly.weather_code[idx]=95;
+ const result=scoreFiveDayItinerary({tripStart:"2026-11-23",courses:[a,b,c]});
+ assert.equal(result.status,"excluded-severe-weather");
+ assert.equal(result.itineraryRisk,null);
+ assert.ok(result.safetyOverrides.length>0);
 });
