@@ -15,7 +15,7 @@ test("ranks only complete 5-day windows with at least two providers per golf day
  const courses=[course("a"),course("b"),course("c")];
  const providers=courses.map(independent);
  const result=recommendMultiProviderFiveDayWindows({courses,independentProviders:providers});
- assert.ok(result.candidateCount>0);assert.equal(result.scoredCount,0);assert.equal(result.recommendations.length,0);
+ assert.ok(result.candidateCount>0);assert.ok(result.scoredCount>0);assert.ok(result.recommendations.length>0);assert.equal(result.recommendations[0].rounds[0].score.providerCount,2);
 });
 test("does not treat a single provider as a multi-provider consensus",()=>{
  const courses=[course("a"),course("b"),course("c")];
