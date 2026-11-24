@@ -1,5 +1,6 @@
 import {compareProviderGolfWindow} from "./provider-comparison.js";
 import {scoreMultiProviderGolfWindow} from "./weighted-weather-score.js";
+import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 const DAY=86400000;
 const addDays=(date,n)=>new Date(Date.parse(date+"T00:00:00Z")+n*DAY).toISOString().slice(0,10);
 const mean=xs=>xs.reduce((a,b)=>a+b,0)/xs.length;
@@ -19,10 +20,13 @@ export function recommendMultiProviderFiveDayWindows({courses,independentProvide
    const date=addDays(tripStart,index+1);
    const comparison=compareProviderGolfWindow({openMeteo:course,independentProviders:providerByCourse.get(course.course.id),date,teeHour,timeZone:course.course.timezone??"Asia/Tokyo"});
    const score=scoreMultiProviderGolfWindow(comparison,{minimumProviders});
-   return {round:index+1,date,courseId:course.course.id,courseName:course.course.name,score};
+   const safety=scoreGolfSuitabilityWindow(course.hourly,date,teeHour,6);
+   return {round:index+1,date,courseId:course.course.id,courseName:course.course.name,score,safety};
   });
-  const complete=rounds.filter(x=>x.score.status==="scored");
+  const complete=rounds.filter(x=>x.score.status==="scored"&&x.safety.status==="scored");
   if(complete.length!==3)return {status:"insufficient-data",tripStart,tripEnd:addDays(tripStart,4),rounds,scoredRounds:complete.length,itineraryRisk:null};
+  const safetyOverrides=complete.filter(x=>x.safety.severity>=3);
+  if(safetyOverrides.length)return {status:"excluded-severe-weather",tripStart,tripEnd:addDays(tripStart,4),rounds,scoredRounds:3,itineraryRisk:null,safetyOverrides:safetyOverrides.map(x=>({date:x.date,courseName:x.courseName,reasons:x.safety.reasons}))};
   const values=complete.map(x=>x.score.weightedRisk),average=mean(values),worst=Math.max(...values);
   const itineraryRisk=Math.round((.7*average+.3*worst)*10)/10;
   return {status:"scored",tripStart,tripEnd:addDays(tripStart,4),rounds,scoredRounds:3,averageRisk:Math.round(average*10)/10,worstRisk:worst,itineraryRisk,
@@ -30,9 +34,10 @@ export function recommendMultiProviderFiveDayWindows({courses,independentProvide
    providersPerRound:rounds.map(x=>({date:x.date,count:x.score.providerCount,providers:x.score.providers}))};
  });
  const scored=all.filter(x=>x.status==="scored").sort((a,b)=>a.itineraryRisk-b.itineraryRisk||a.tripStart.localeCompare(b.tripStart));
+ const excludedSevereCount=all.filter(x=>x.status==="excluded-severe-weather").length;
  const selected=[];
  for(const item of scored){if(selected.every(x=>Math.abs((Date.parse(item.tripStart+"T00:00:00Z")-Date.parse(x.tripStart+"T00:00:00Z"))/DAY)>=minStartGap)){selected.push(item);if(selected.length===limit)break;}}
- return {candidateCount:starts.length,scoredCount:scored.length,missingCount:all.length-scored.length,recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1,confidence:"provisional",confidenceLabel:"暫定（多來源未回測校準）"})),all,
-  method:"rainfall 65%, wind 15%, temperature comfort 20%; provider-wise median; itinerary 70% average + 30% worst round",
+ return {candidateCount:starts.length,scoredCount:scored.length,missingCount:all.filter(x=>x.status==="insufficient-data").length,excludedSevereCount,recommendations:selected.map((x,i)=>({...x,recommendationRank:i+1,confidence:"provisional",confidenceLabel:"暫定（多來源未回測校準）"})),all,
+  method:"rainfall 65%, wind 15%, temperature comfort 20%; provider-wise median; itinerary 70% average + 30% worst round; exclude any round with a severe thunderstorm, extreme gust/wind, or extreme apparent-temperature signal from the existing playability overlay",
   minimumProviders};
 }
