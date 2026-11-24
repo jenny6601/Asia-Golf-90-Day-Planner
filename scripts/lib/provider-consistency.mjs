@@ -21,8 +21,10 @@ function providerRows(provider, data) {
 // Foreca's +09:00 suffix is deliberately stripped only after validating the
 // ISO local date/hour prefix; no UTC conversion is applied to local display time.
 export function localHourKey(value) {
-  if (typeof value !== "string" || !/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}/.test(value)) return null;
-  return value.slice(0, 13);
+  if (typeof value !== "string" || value.length < 16) return null;
+  const prefix = value.slice(0, 16);
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(prefix)) return null;
+  return prefix.slice(0, 13);
 }
 
 function summarizeDifferences(values) {
