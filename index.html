@@ -10,8 +10,8 @@
 <div id="hourly-panel" hidden><h3>選擇日期｜逐時球場天氣（06:00–18:00）</h3><div class="controls"><label>預報日期<input id="hourly-date" type="date"></label><label>預計開球時間<select id="tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label></div><p class="data-note">新增：依選定開球時間計算連續6小時降雨影響指數。此為未經歷史回測校準的原型，不代表取消球賽機率，也不會影響90天日期推薦。</p><div id="hourly-results" class="weather-grid"></div></div>
 <p class="data-note">資料來源：Open-Meteo Forecast API。每日摘要與逐時資料分開呈現。</p></section>
 
-<section class="panel" data-country-scope="JP"><h2>沖繩本島｜實際球場 GPS 天氣</h2>
-<p class="trip-rule">從已建立的六個球場中選擇最多三個，依球場座標讀取16天預報。座標尚未核實的球場會暫時鎖定。讀取後會顯示輸入座標、氣象預報網格座標、網格偏移與海拔；網格偏移不等於球場界線驗證。</p>
+<section class="panel" data-country-scope="JP"><h2>日本各地｜實際球場 GPS 天氣</h2>
+<p class="trip-rule">從日本各地球場清單中選擇最多三個，依球場座標讀取16天預報。球場依地區分組；座標尚未核實的球場會暫時鎖定。讀取後會顯示輸入座標、氣象預報網格座標、網格偏移與海拔；網格偏移不等於球場界線驗證。</p>
 <div id="course-picker" class="course-grid"></div>
 <p id="course-selection-status" class="counts" aria-live="polite">已選擇 0 / 3 個球場</p>
 <button id="fetch-course-weather" type="button" disabled>讀取所選球場 16 天預報</button>
