@@ -231,7 +231,7 @@ function renderItinerary(){
  const travel=document.createElement("p");travel.className="weather-meta";travel.textContent=`Day 1 ${fmt(result.travelDays[0].date)} 交通日｜Day 5 ${fmt(result.travelDays[1].date)} 交通日｜打球日均為 ${String(teeHour).padStart(2,"0")}:00 開球，分析開球後六小時`;intro.append(travel);
  host.append(intro);
  for(const round of result.rounds){
-  const item=latestCourseWeather.courses[round.round];
+  const item=latestCourseWeather.courses[round.round-1];
   const h=item.hourly,date=round.date;
   const risk=scoreGolfRainWindow(h,date,teeHour,6);
   const play=scoreGolfSuitabilityWindow(h,date,teeHour,6);
