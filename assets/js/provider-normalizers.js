@@ -20,6 +20,11 @@ function validateCourse(course) {
   };
 }
 
+function kmhToMs(value) {
+  const numeric = finiteOrNull(value);
+  return numeric === null ? null : Number((numeric / 3.6).toFixed(4));
+}
+
 function normalizeHour({time, temperature, feelsLike, humidity, precipProbability,
   precipitationMm, windSpeedMs, windGustMs, windDirectionDeg, weatherCode,
   accumulationPeriodHours = 1}) {
@@ -53,7 +58,7 @@ export function normalizeVisualCrossing(payload, course, fetchedAt = new Date().
     throw new Error(`Visual Crossing timezone mismatch for ${location.id}`);
   }
   const days = payload.days.map(day => {
-    if (typeof day.datetime !== "string" || !/^\\d{4}-\\d{2}-\\d{2}$/.test(day.datetime)) {
+    if (typeof day.datetime !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(day.datetime)) {
       throw new TypeError("Visual Crossing day has an invalid local date");
     }
     const hours = Array.isArray(day.hours) ? day.hours.map(hour => normalizeHour({
@@ -63,8 +68,8 @@ export function normalizeVisualCrossing(payload, course, fetchedAt = new Date().
       humidity: hour.humidity,
       precipProbability: hour.precipprob,
       precipitationMm: hour.precip,
-      windSpeedMs: hour.windspeed,
-      windGustMs: hour.windgust,
+      windSpeedMs: kmhToMs(hour.windspeed),
+      windGustMs: kmhToMs(hour.windgust),
       windDirectionDeg: hour.winddir,
       weatherCode: hour.icon ?? hour.conditions,
       accumulationPeriodHours: 1
@@ -112,7 +117,7 @@ export function normalizeForeca(payload, course, {
   }
   const periodHours = temporalResolution === "hourly" ? 1 : 3;
   const forecast = payload.forecast.map(item => {
-    if (typeof item.time !== "string" || !/^\\d{4}-\\d{2}-\\d{2}T/.test(item.time) ||
+    if (typeof item.time !== "string" || !/^\d{4}-\d{2}-\d{2}T/.test(item.time) ||
         !Number.isFinite(Date.parse(item.time))) {
       throw new TypeError("Foreca forecast has an invalid ISO timestamp");
     }
