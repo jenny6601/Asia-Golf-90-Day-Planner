@@ -84,8 +84,8 @@ export function buildGolfPlayabilityReport(courses,{teeTime="10:00",durationHour
   });
   return {
    courseId:course.id,courseName:course.name,coordinateStatus:course.coordinateStatus,
-   operationalRankingEligible:course.coordinateStatus==="verified",
-   rankingStatus:course.coordinateStatus==="verified"?"descriptive-only-no-calibrated-score":"blocked-unverified-course-coordinate",
+   operationalRankingEligible:course.coordinateStatus==="verified"||course.coordinateStatus==="provisional",
+   rankingStatus:course.coordinateStatus==="pending"?"blocked-missing-course-coordinate":"descriptive-only-no-calibrated-score",
    commonCompleteDays:dates.length,daily
   };
  });
@@ -93,7 +93,7 @@ export function buildGolfPlayabilityReport(courses,{teeTime="10:00",durationHour
   timezone:"Asia/Tokyo",teeTime,durationHours,window:{startLocalTime:teeTime,endLocalTime:String(endHour).padStart(2,"0")+":00",elapsedHours:durationHours,requiredHourlyEndpoints:durationHours+1},
   commonPeriodPolicy:"Only dates with all required hourly endpoints present from all three providers are included. The endpoint at 16:00 closes the six-hour 10:00–16:00 window; hourly samples include both endpoints.",
   metricsPolicy:"Keep rain probability, reported hourly precipitation, wind, gust, Humidex, solar radiation and UV separate. Do not combine into a weighted score before thresholds and observed outcomes are validated.",
-  rankingPolicy:"No overall course ranking is generated. Provisional GPS courses are excluded from operational ranking; even verified points receive descriptive metrics only until score weights are validated.",
+  rankingPolicy:"Numeric verified and provisional course-vicinity coordinates are eligible for preliminary weather screening and date selection. Coordinate confidence remains separate. No overall course ranking is generated until score weights are validated against observations.",
   courses:courseReports
  };
 }
