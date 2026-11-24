@@ -95,6 +95,7 @@ test("Southern Links GPS is verified from the official embedded access map",()=>
  assert.equal(course.latitude,26.114086000297586);
  assert.equal(course.longitude,127.73689211539313);
  assert.equal(course.coordinateVerifiedAt,"2026-11-24");
+ assert.equal(getCourseRecords("JP").find(x=>x.id==="southern-links").coordinateVerifiedAt,"2026-11-24");
  assert.match(course.coordinateSource,/Official Accordia Golf access page/);
  assert.match(course.coordinateSourceUrl,/accordia\.golf/);
  assert.equal(isForecastReady(course),true);
