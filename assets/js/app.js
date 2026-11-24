@@ -1,6 +1,6 @@
 import {recommendFiveDayWindows} from "./itinerary-engine.js";
 import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
-import {getDestinations,getDestination,getCoursesForCountry,getCourseCoverage} from "./destination-catalog.js";
+import {getDestinations,getDestination,getOkinawaPilotCourses,getCourseCoverage} from "./destination-catalog.js";
 import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
 import {scoreFiveDayItinerary} from "./itinerary-engine.js";
 import {fetchOkinawaLongRange,interpretPrecipitationEfi} from "./long-range-api.js";
@@ -114,7 +114,7 @@ function selectDestination(countryCode){
 
 function renderCoursePicker(){
  const host=$("course-picker");host.replaceChildren();
- const courses=getCoursesForCountry(activeCountry);
+ const courses=activeCountry==="JP"?getOkinawaPilotCourses():[];
  if(!courses.length){const empty=document.createElement("p");empty.className="destination-empty";empty.textContent=`${getDestination(activeCountry)?.name??"此目的地"}的球場清單尚在建置。完成球場名稱、官方地址、GPS 座標與 IANA 時區核實後，才會開放天氣查詢。`;host.append(empty);return;}
  const groups=new Map();
  for(const course of courses){
