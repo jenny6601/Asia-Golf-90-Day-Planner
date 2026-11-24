@@ -8,6 +8,7 @@ import {classifyForecastConfidence} from "./confidence-engine.js";
 import {recommendLongRangeWindows} from "./long-range-engine.js";
 import {combineHorizonRecommendations} from "./horizon-integration.js";
 import {build90DayDailyView} from "./daily-90day-view.js";
+import {compareProviderGolfWindow} from "./provider-comparison.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -16,6 +17,7 @@ let latestWeather=null;
 let selectedCourses=[];
 let latestCourseWeather=null;
 let latestLongRangeData=null;
+let latestIndependentProviders=[];
 function cell(value,suffix=""){return value===null||value===undefined?"—":`${value}${suffix}`;}
 function makeTable(headers,rows,cls="weather-table"){
  const table=document.createElement("div");table.className=cls;
@@ -256,6 +258,21 @@ function runCourseComparison(){
  const summary=summarizeCourseRainRisks(results);
  const valid=results.filter(x=>x.score.status==="scored");
  const host=$("comparison-results");host.replaceChildren();
+ const providerHeading=document.createElement("h3");providerHeading.textContent="三來源同時段交叉比較（六小時）";host.append(providerHeading);
+ for(const item of latestCourseWeather.courses){
+  const independent=latestIndependentProviders.find(x=>x.course?.id===item.course.id);
+  const compared=compareProviderGolfWindow({openMeteo:item,independentProviders:independent,date,teeHour,timeZone:item.course.timezone??"Asia/Tokyo"});
+  const card=document.createElement("article");card.className="weather-card";
+  const title=document.createElement("h4");title.textContent=item.course.name+"｜"+fmt(date)+"｜"+String(teeHour).padStart(2,"0")+":00 起";card.append(title);
+  const rows=Object.entries({OpenMeteo:compared.openMeteo,"Visual Crossing":compared.visualCrossing,Foreca:compared.foreca}).map(([name,x])=>[
+   name,x.status==="available"?"完整六小時":x.status==="incomplete"?"資料不足":x.status==="unavailable"?"未取得":"時段不相容",
+   x.status==="available"?cell(x.precipProbabilityAvgPct,"%"):"—",x.status==="available"?cell(x.rainTotalMm," mm"):"—",
+   x.status==="available"?cell(x.tempMinC,"°")+"–"+cell(x.tempMaxC,"°"):"—",
+   x.status==="available"?cell(x.windMaxMs," m/s"):"—"
+  ]);
+  card.append(makeTable(["來源","資料狀態","平均降雨機率","六小時雨量","氣溫範圍","最大風速"],rows));
+  const note=document.createElement("p");note.className="weather-meta";note.textContent="只比較相同當地六小時時段；缺值不補、三小時累積量不轉成逐時量。";card.append(note);host.append(card);
+ }
  const sorted=[...valid].sort((a,b)=>a.score.rainRisk-b.score.rainRisk);
  for(const item of sorted){
   const card=document.createElement("article");card.className="weather-card";
@@ -454,6 +471,16 @@ $("fetch-course-weather").addEventListener("click",async()=>{
  button.disabled=true;status.textContent="正在依所選球場 GPS 讀取預報…";
  try{
   latestCourseWeather=await fetchCourseForecast(selectedCourses);
+  latestIndependentProviders=[];
+  try{
+   const response=await fetch("/api/course-weather",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({courses:selectedCourses})});
+   if(!response.ok)throw new Error("伺服器端 VC／Foreca API HTTP "+response.status);
+   const payload=await response.json();
+   latestIndependentProviders=payload.courses??[];
+   $("provider-integration-status").textContent="Visual Crossing 與 Foreca 已由伺服器端獨立讀取；各來源狀態分開呈現。";
+  }catch(error){
+   $("provider-integration-status").textContent="目前無法取得伺服器端 Visual Crossing／Foreca 資料（"+error.message+"）。Open-Meteo 仍獨立可用；不以其他來源代填。若使用 GitHub Pages 靜態預覽，需部署 Cloudflare Pages Functions 並設定伺服器端 Secrets。";
+  }
   $("run-unified-recommendations").disabled=selectedCourses.length!==3;
   renderCourseWeather(latestCourseWeather);
   const commonDates=latestCourseWeather.courses.map(x=>new Set(x.hourly.time.map(t=>t.slice(0,10))));
