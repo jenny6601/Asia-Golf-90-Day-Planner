@@ -45,6 +45,8 @@ export function getDestinations(){return DESTINATIONS;}
 export function getDestination(countryCode){return DESTINATIONS.find(x=>x.code===countryCode)??null;}
 export function getCourseRecords(countryCode){return RECORDS_BY_COUNTRY[countryCode]??[];}
 export function getCoursesForCountry(countryCode){return getCourseRecords(countryCode);}
+// The active validation scope is deliberately restricted to Okinawa Main Island.
+export function getOkinawaPilotCourses(){return OKINAWA_RECORDS;}
 export function getCourseCoverage(countryCode){
  const records=getCourseRecords(countryCode);
  return {countryCode,total:records.length,forecastReady:records.filter(isForecastReady).length,provisional:records.filter(x=>x.coordinateStatus==="provisional").length,pending:records.filter(x=>x.coordinateStatus==="pending").length};
