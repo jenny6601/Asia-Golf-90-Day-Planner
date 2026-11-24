@@ -287,21 +287,38 @@ $("itinerary-tee-hour").addEventListener("change",()=>{populateItineraryStartDat
 function renderLiveDateRecommendations(){
  const host=$("live-date-recommendations"),status=$("live-date-status");host.replaceChildren();
  if(!latestCourseWeather?.courses||selectedCourses.length!==3){status.textContent="請先選擇三個球場並成功讀取球場逐時預報。";return;}
- const result=recommendMultiProviderFiveDayWindows({courses:latestCourseWeather.courses,independentProviders:latestIndependentProviders,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5,minimumProviders:2});
- status.textContent=result.recommendations.length
-  ? `多來源推薦完成｜候選出發日 ${result.candidateCount} 組｜三場均有至少兩個完整來源 ${result.scoredCount} 組｜推薦 ${result.recommendations.length} 組｜權重：降雨65%、風15%、溫度20%。`
-  : `目前沒有足夠的多來源資料支持五天四夜推薦｜候選 ${result.candidateCount} 組｜完整可評分 ${result.scoredCount} 組。每個打球日均須有至少兩個完整來源；請確認 Cloudflare Pages Functions 與兩組 API Secrets。未退回單一來源假裝多來源推薦。`;
+ const teeHour=Number($("itinerary-tee-hour").value);
+ const result=recommendMultiProviderFiveDayWindows({courses:latestCourseWeather.courses,independentProviders:latestIndependentProviders,teeHour,limit:3,minStartGap:5,minimumProviders:2});
+ status.textContent=`評估 ${result.candidateCount} 個五天四夜窗口｜完整可評分 ${result.scoredCount}｜嚴重天氣排除 ${result.excludedSevereCount??0}｜資料不足 ${result.missingCount}｜推薦 ${result.recommendations.length} 組｜開球 ${String(teeHour).padStart(2,"0")}:00｜權重：降雨65%、風15%、氣溫體感20%。`;
+ if(!result.recommendations.length){
+  const empty=document.createElement("article");empty.className="weather-card";
+  const title=document.createElement("h3");title.textContent="目前沒有可發布的推薦日期";empty.append(title);
+  const reasons=document.createElement("p");reasons.textContent=result.scoredCount===0
+   ?"目前所有候選窗口均缺少至少一個打球日的完整六小時資料，或每個打球日未達兩個可比較來源。請確認球場 API 回應與 Cloudflare Pages Functions Secrets。"
+   :"目前沒有符合日期間隔條件的候選窗口。";
+  empty.append(reasons);
+  const rule=document.createElement("p");rule.className="weather-meta";rule.textContent="系統不會以單一來源冒充多來源共識，也不會把缺值當作零風險。";empty.append(rule);host.append(empty);
+ }
  for(const item of result.recommendations){
   const card=document.createElement("article");card.className="weather-card";
   const h=document.createElement("h3");h.textContent=`推薦 #${item.recommendationRank}｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
-  const score=document.createElement("p");score.className="risk-summary";score.textContent=`五天四夜加權天氣風險：${item.itineraryRisk}/100（${item.label}）`;card.append(score);
-  const p=document.createElement("p");p.textContent=`Day 2–4：${item.rounds.map(x=>fmt(x.date)+" "+x.courseName+"（綜合 "+x.score.weightedRisk+"/100；雨 "+x.score.rainfallRisk+"；風 "+x.score.windRisk+"；溫度 "+x.score.temperatureRisk+"；來源 "+x.score.providerCount+"/3）").join("；")}`;card.append(p);
-  const c=document.createElement("p");c.className="weather-meta";c.textContent="排序方法：三場球各自的多來源中位數加權分數；行程分數＝平均風險70%＋最差一場30%。目前為暫定模型，尚未完成沖繩歷史回測校準，不代表取消球賽機率。";card.append(c);host.append(card);
+  const score=document.createElement("p");score.className="risk-summary";score.textContent=`五天四夜綜合天氣風險：${item.itineraryRisk}/100（${item.label}）｜三場平均 ${item.averageRisk}/100｜最差一場 ${item.worstRisk}/100`;card.append(score);
+  const schedule=document.createElement("div");schedule.className="recommendation-rounds";
+  for(const round of item.rounds){
+   const row=document.createElement("div");row.className="recommendation-round";
+   const name=document.createElement("strong");name.textContent=`Day ${round.round+1}｜${fmt(round.date)}｜${round.courseName}`;row.append(name);
+   const metrics=document.createElement("p");metrics.textContent=`風險 ${round.score.weightedRisk}/100｜降雨 ${round.score.rainfallRisk}｜風 ${round.score.windRisk}｜體感溫度 ${round.score.temperatureRisk}｜完整來源 ${round.score.providerCount}/3（${round.score.providers.join("、")}）｜來源差異 ${round.score.providerSpread}`;row.append(metrics);
+   const safety=document.createElement("p");safety.className=round.safety.severity>=2?"recommendation-warning":"weather-meta";
+   safety.textContent=`適打性：${round.safety.grade}｜${round.safety.reasons.join("、")}｜GPS ${round.courseId?((latestCourseWeather.courses.find(c=>c.course.id===round.courseId)?.course.coordinateStatus)==="provisional"?"暫定附近座標":"已核實座標"):"狀態未知"}`;row.append(safety);
+   schedule.append(row);
+  }
+  card.append(schedule);
+  const c=document.createElement("p");c.className="weather-meta";c.textContent="排序方法：三場球各自以至少兩個完整來源計算中位數風險；行程分數＝三場平均70%＋最差一場30%。嚴重雷雨、強風／強陣風或極端體感會排除整個窗口。風險指數及門檻尚未經沖繩歷史回測校準，不代表取消球賽機率。";card.append(c);host.append(card);
  }
 }
 $("recommend-live-dates").addEventListener("click",renderLiveDateRecommendations);
 
-$("itinerary-tee-hour").addEventListener("change",()=>{populateItineraryStartDates();});
+$("itinerary-tee-hour").addEventListener("change",()=>{populateItineraryStartDates();if(latestCourseWeather?.courses?.length===3)renderLiveDateRecommendations();});
 
 function runCourseComparison(){
  if(!latestCourseWeather?.courses?.length)return;
