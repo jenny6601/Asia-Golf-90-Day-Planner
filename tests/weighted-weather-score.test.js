@@ -13,7 +13,7 @@ test("does not score with fewer than two complete providers",()=>{
  assert.equal(result.status,"insufficient-provider-coverage");assert.equal(result.consensus,null);
 });
 test("missing component data is not replaced with zero risk",()=>{
- const bad=hours(10,0,3,24);bad[0].feels=null;
+ const bad=hours(10,0,3,24);bad[0].feels=null;bad[0].temp=null;
  const result=scoreMultiProviderGolfWindow({openMeteo:{status:"available",sourceHours:bad},visualCrossing:{status:"unavailable"}});
  assert.equal(result.status,"insufficient-provider-coverage");
 });
