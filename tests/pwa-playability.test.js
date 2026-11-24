@@ -25,3 +25,12 @@ test("incomplete six-hour window is not scored",()=>{
  const result=scorePwaStylePlayability(fixture(),"2027-01-10",8);
  assert.equal(result.status,"insufficient-data");
 });
+
+test("very low feels-like temperature adds a cold danger alert",()=>{
+ const result=scorePwaStylePlayability(fixture({apparent_temperature:[8,9,9,10,10,10]}),"2027-01-10",7);
+ assert.ok(result.alerts.some(x=>x.includes("極低溫")));
+});
+test("fog weather codes add a visibility alert",()=>{
+ const result=scorePwaStylePlayability(fixture({weather_code:[45,45,1,1,1,1]}),"2027-01-10",7);
+ assert.ok(result.alerts.some(x=>x.includes("霧況")));
+});
