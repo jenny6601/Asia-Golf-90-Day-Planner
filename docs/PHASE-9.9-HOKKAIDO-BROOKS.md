@@ -16,7 +16,7 @@ Added Hokkaido Brooks Country Club (北海道ブルックスカントリーク�
 Official club access page links directly to its Google Maps pin at 42.7222222, 141.6694445. The catalogue records these coordinates as `verified`, with the official access page as provenance and verification date 2026-11-24. Provider availability remains pending; coordinate verification does not itself mean forecast providers have been activated.
 
 ## Regional catalogue impact
-Hokkaido group now contains 5 courses after unifying Katsura with the Hokkaido area. Japan catalogue increases from 18 to 19 courses. The minimum of 3 courses per regional group remains satisfied.
+Tomakomai area now groups Nidom Classic Course, Katsura Golf Club, and Hokkaido Brooks Country Club (3 courses). Hokkaido Classic Golf Club remains separately listed in Abira. All four remain part of Hokkaido region. Japan catalogue increases from 18 to 19 courses. The minimum of 3 courses per regional group remains satisfied.
 
 ## Sources
 - Official club access page and Google Maps pin: https://www.brooks-c.com/en/access/ (42.7222222, 141.6694445)
