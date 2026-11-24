@@ -51,6 +51,14 @@ A coordinate is a forecast point, not a surveyed course boundary or fairway coor
 
 Open-Meteo is called from the browser. Visual Crossing and Foreca are retrieved through the server-side `/api/course-weather` endpoint; configure `VISUAL_CROSSING_API_KEY` and `FORECA_API_KEY` as server-side secrets. Never expose provider credentials in browser code or generated artifacts.
 
+## Phase 12: date-decision presentation
+
+- Displays candidate, complete, severe-weather-excluded and insufficient-data window counts.
+- Shows each recommended golf day separately: weighted risk, rainfall, wind, thermal comfort, complete provider count, provider spread, playability overlay and coordinate confidence.
+- Recalculates the date recommendations when the tee-off hour changes.
+- Explains why no recommendation is published when data coverage is insufficient.
+- Keeps the 65/15/20 weather-risk weights and the 70/30 itinerary aggregation visible. Scores remain provisional until hindcast calibration.
+
 ## Local tests
 
 Run `npm test` with Node.js 20 or newer.
