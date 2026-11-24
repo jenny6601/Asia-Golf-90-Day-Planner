@@ -66,3 +66,16 @@ Artifacts:
 - `outdoor-thermal-screening.md`
 
 This screening is not WBGT, UTCI, a medical assessment, or a validated golf-specific index. Solar radiation, UV, wind and gust are retained as separate context and are not combined into an unvalidated composite score. The derived Humidex is not substituted for the providers' apparent/feels-like fields. It is a reproducible cross-source humidity/temperature calculation, not a forecast-accuracy metric.
+
+## Phase 13 six-hour golf playability comparison
+The collector generates:
+- `golf-playability-6h.json`
+- `golf-playability-6h.md`
+
+The standard tee-time window is 10:00–16:00 Japan time. This is six elapsed hours represented by seven hourly endpoints (10:00, 11:00, ..., 16:00). A date is included only when all seven endpoints exist for all three providers (Open-Meteo, Visual Crossing and Foreca). Incomplete dates are excluded rather than silently interpolated.
+
+Daily summaries keep temperature, derived Humidex, precipitation probability, reported hourly precipitation total, wind speed, gust, solar radiation and UV separate. Rain totals are sums of provider-reported hourly amounts only; source accumulation semantics must be checked before interpreting cross-provider differences.
+
+No weighted composite score or overall course ranking is produced. Provisional GPS course points are explicitly ineligible for operational trip ranking. Even verified coordinates receive descriptive metrics only until thresholds and score weights have been validated against observed outcomes.
+
+The Humidex danger category in code is strictly greater than 45. This is a screening indicator, not WBGT or a validated golf-specific heat-stress model.
