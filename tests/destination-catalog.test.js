@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {getDestinations,getDestination,getCoursesForCountry,getCourseRecords,getCourseCoverage} from "../assets/js/destination-catalog.js";
+import {getDestinations,getDestination,getCoursesForCountry,getCourseRecords,getCourseCoverage,getOkinawaPilotCourses} from "../assets/js/destination-catalog.js";
 import {validateCourseRecord,isForecastReady} from "../assets/js/course-schema.js";
 
 const valid={id:"sample",countryCode:"VN",region:"北部",city:"河內",courseName:"Sample Club",timezone:"Asia/Ho_Chi_Minh",latitude:21.1,longitude:105.8,coordinateSource:"Official club map",coordinateVerifiedAt:"2026-11-24",coordinateStatus:"verified",officialUrl:"https://example.com"};
@@ -80,4 +80,11 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:1,provisional:7,pending:11});
  for(const code of ["KR","CN","VN","TH","MY","SG","ID"])assert.equal(getCourseRecords(code).length,0);
  assert.equal(getDestination("US"),null);
+});
+
+test("active pilot course scope contains Okinawa Main Island only",()=>{
+ const pilot=getOkinawaPilotCourses();
+ assert.equal(pilot.length,6);
+ assert.ok(pilot.every(course=>course.countryCode==="JP"&&course.area==="沖繩本島"));
+ assert.deepEqual(pilot.map(course=>course.id),["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"]);
 });
