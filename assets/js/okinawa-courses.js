@@ -13,8 +13,8 @@ export const OKINAWA_COURSES = Object.freeze([
   {
     id:"pgm-okinawa",name:"PGM Golf Resort Okinawa",nameJa:"ＰＧＭゴルフリゾート沖縄",
     area:"中部",city:"恩納村",address:"1043 Fuchaku, Onna-son, Kunigami-gun, Okinawa 904-0413, Japan",
-    latitude:null,longitude:null,coordinateSource:"Official PGM course address; independent course-point verification pending",coordinateSourceUrl:"https://www.pacificgolf.co.jp/okinawa/information.asp",
-    coordinateStatus:"pending",officialUrl:"https://www.pacificgolf.co.jp/okinawa/"
+    latitude:26.454853057861328,longitude:127.81919860839844,coordinateSource:"Nomae Golf Google Maps course-location pin; prototype coordinate only",coordinateSourceUrl:"https://golf.nomaejapan.com/en/course/pgm-golf-resort-okinawa",
+    coordinateStatus:"provisional",coordinateVerifiedAt:null,officialUrl:"https://www.pacificgolf.co.jp/okinawa/"
   },
   {
     id:"kise",name:"Kanehide Kise Country Club",nameJa:"かねひで喜瀬カントリークラブ",
