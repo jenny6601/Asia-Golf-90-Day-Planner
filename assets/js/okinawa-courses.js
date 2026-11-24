@@ -38,6 +38,6 @@ export const OKINAWA_COURSES = Object.freeze([
     id:"chura-orchard",name:"Chura Orchard Golf Club",nameJa:"美らオーチャードゴルフ倶楽部",
     area:"北部",city:"恩納村",address:"1577 Afuso, Onna-son, Kunigami-gun, Okinawa 904-0402, Japan",
     latitude:26.496499,longitude:127.891015,coordinateSource:"FullGolf / OpenStreetMap",coordinateSourceUrl:"https://www.fullgolf.com/en/golf-course/japan/okinawa/kunigami/chura-orchard",
-    coordinateStatus:"provisional",officialUrl:"http://www.churaorchard.co.jp/"
+    coordinateStatus:"provisional",officialUrl:null
   }
 ]);
