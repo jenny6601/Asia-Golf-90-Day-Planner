@@ -20,3 +20,9 @@
 .destination-empty{padding:14px;border:1px dashed #cbd9d1;border-radius:10px;background:#f8faf8;color:#63756d;line-height:1.6}
 [hidden]{display:none!important}
 @media(max-width:650px){.destination-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.destination-card{padding:10px}}
+
+/* Phase 9.7: regional grouping for the expanding Japan course catalogue */
+#course-picker .course-area-group{grid-column:1/-1;min-width:0}
+.course-area-heading{font-size:.98rem;margin:8px 0 10px;padding:9px 12px;border-left:4px solid #247956;border-radius:7px;background:#edf4ef;color:#244b39}
+.course-area-courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(max-width:650px){.course-area-courses{grid-template-columns:1fr}}
