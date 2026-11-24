@@ -53,3 +53,13 @@
 .region-table th{background:#edf4ef;color:#244638}
 .region-select{padding:8px 12px!important;font-size:.82rem!important}
 @media(max-width:620px){.overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#climate-explorer{padding:14px}}
+
+.week-recommendations{margin-top:18px;padding:14px;border:1px solid #dce7e1;border-radius:12px;background:#fbfdfb}
+.week-recommendations>h3{margin:0 0 8px;color:#173f35}
+.week-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.week-card{padding:13px;border:1px solid #dce7e1;border-radius:11px;background:white;min-width:0}
+.week-rank{font-size:.78rem;font-weight:850;color:#247956;letter-spacing:.08em}
+.week-card h4{margin:7px 0;font-size:.95rem;color:#173f35}
+.week-card strong{display:inline-block;padding:5px 8px;border-radius:7px;background:#edf5ef;color:#245b40;font-size:.82rem}
+.week-card p{font-size:.8rem;line-height:1.55;color:#64756c;margin:8px 0 0;overflow-wrap:anywhere}
+@media(max-width:620px){.week-grid{grid-template-columns:1fr}.week-card{padding:14px}}
