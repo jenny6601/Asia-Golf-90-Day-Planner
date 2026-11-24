@@ -53,3 +53,28 @@ test("precipitation and exposure indicators remain separate metrics",()=>{
  assert.equal(window.openMeteoSolarRadiationWm2.max,500);
  assert.equal(window.openMeteoUvIndex.max,5);
 });
+
+
+test("two complete providers qualify a date for preliminary playability while three-provider comparison stays separate",()=>{
+ const c=course({missingForecaHour:13});
+ c.providers.foreca.status="unavailable";
+ c.providers.foreca.data=null;
+ const report=buildGolfPlayabilityReport([c]);
+ const item=report.courses[0];
+ assert.equal(item.eligibleDaysAtLeastTwoProviders,1);
+ assert.equal(item.commonCompleteDays,0);
+ assert.equal(item.daily.length,1);
+ assert.deepEqual(item.daily[0].completeProviders,["openMeteo","visualCrossing"]);
+ assert.equal(item.daily[0].providers.foreca.complete,false);
+});
+
+test("one complete provider is insufficient for multi-provider playability",()=>{
+ const c=course();
+ c.providers.visualCrossing.status="unavailable";
+ c.providers.visualCrossing.data=null;
+ c.providers.foreca.status="unavailable";
+ c.providers.foreca.data=null;
+ const report=buildGolfPlayabilityReport([c]);
+ assert.equal(report.courses[0].eligibleDaysAtLeastTwoProviders,0);
+ assert.equal(report.courses[0].daily.length,0);
+});
