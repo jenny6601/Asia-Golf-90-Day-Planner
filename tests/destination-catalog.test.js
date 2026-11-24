@@ -29,8 +29,8 @@ test("invalid coordinates, timezone, country and partial GPS are rejected",()=>{
 test("Japan catalogue includes Okinawa and mainland candidates without inventing GPS",()=>{
  const records=getCourseRecords("JP");
  assert.equal(records.length,19);
- assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,6);
- assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,11);
+ assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,5);
+ assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,10);
  const narita=records.find(x=>x.id==="jp-chiba-narita-golf-club");
  const hokkaidoClassic=records.find(x=>x.id==="jp-hokkaido-classic-golf-club");
  assert.equal(narita.latitude,null);assert.equal(narita.longitude,null);
