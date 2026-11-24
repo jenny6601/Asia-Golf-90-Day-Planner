@@ -27,7 +27,7 @@ function dailyWeather(courses,date){
 }
 /** 1-16d daily deterministic; 17-46d daily rows with weekly EFI; 47-90d seven-day blocks using monthly seasonal outlook only. */
 export function build90DayDailyView({referenceDate,courses,points}){
- if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(referenceDate)||!Array.isArray(courses)||courses.length!==3||!Array.isArray(points)||points.length!==3)throw new TypeError("referenceDate, three course forecasts and three regional outlook points are required");
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(referenceDate)||!Array.isArray(courses)||courses.length!==3||!Array.isArray(points)||points.length!==3)throw new TypeError("referenceDate, three course forecasts and three regional outlook points are required");
  const rows=[];
  for(let day=1;day<=46;day++){
   const date=addDays(referenceDate,day-1);
