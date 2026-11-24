@@ -413,7 +413,7 @@ function renderUnifiedRecommendations(){
  const shortRange=recommendFiveDayWindows({courses:latestCourseWeather.courses,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5});
  const longRange=recommendLongRangeWindows({referenceDate,points:latestLongRangeData.points,limit:3,minStartGap:5});
  const combined=combineHorizonRecommendations({shortRange,longRange,shortFetchedAt:latestCourseWeather.fetchedAt,longFetchedAt:latestLongRangeData.fetchedAt});
- status.textContent=`整合完成｜短期可評估 ${shortRange.scoredCount} 組，長期可評估 ${longRange.scoredCount} 組。短期與長期分開排序。`;
+ status.textContent=`整合完成｜短期完整可評估 ${shortRange.scoredCount} 組（另排除嚴重天氣 ${shortRange.excludedSevereCount??0} 組），長期可評估 ${longRange.scoredCount} 組。短期與長期分開排序。`;
  for(const group of [combined.shortRange,combined.longRange]){
   const section=document.createElement("section");section.className="weather-card";
   const heading=document.createElement("h3");heading.textContent=group===combined.shortRange?"1–16天｜真實球場逐時預報推薦":"17–90天｜ECMWF季節趨勢候選";section.append(heading);
