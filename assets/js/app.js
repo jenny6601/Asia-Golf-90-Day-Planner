@@ -444,6 +444,7 @@ $("fetch-long-range").addEventListener("click",async()=>{
  finally{button.disabled=false;}
 });
 
+$("show-90day-daily").addEventListener("click",render90DayDailyRows);
 renderDestinations();
 renderCoursePicker();
 $("fetch-course-weather").addEventListener("click",async()=>{
