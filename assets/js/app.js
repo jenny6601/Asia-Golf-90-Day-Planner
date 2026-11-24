@@ -10,6 +10,7 @@ import {combineHorizonRecommendations} from "./horizon-integration.js";
 import {build90DayDailyView} from "./daily-90day-view.js";
 import {compareProviderGolfWindow} from "./provider-comparison.js";
 import {scoreMultiProviderGolfWindow} from "./weighted-weather-score.js";
+import {recommendMultiProviderFiveDayWindows} from "./multi-provider-itinerary.js";
 const $=id=>document.getElementById(id);
 const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
 const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
@@ -235,14 +236,16 @@ $("score-itinerary").addEventListener("click",renderItinerary);
 function renderLiveDateRecommendations(){
  const host=$("live-date-recommendations"),status=$("live-date-status");host.replaceChildren();
  if(!latestCourseWeather?.courses||selectedCourses.length!==3){status.textContent="請先選擇三個球場並成功讀取球場逐時預報。";return;}
- const result=recommendFiveDayWindows({courses:latestCourseWeather.courses,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5});
- status.textContent=result.recommendations.length?`真實預報評估 ${result.candidateCount} 個候選出發日｜完整評分 ${result.scoredCount} 組｜推薦 ${result.recommendations.length} 組`:"目前資料範圍內沒有三場均具完整六小時資料的五天行程；不以合成資料補足。";
+ const result=recommendMultiProviderFiveDayWindows({courses:latestCourseWeather.courses,independentProviders:latestIndependentProviders,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5,minimumProviders:2});
+ status.textContent=result.recommendations.length
+  ? `多來源推薦完成｜候選出發日 ${result.candidateCount} 組｜三場均有至少兩個完整來源 ${result.scoredCount} 組｜推薦 ${result.recommendations.length} 組｜權重：降雨65%、風15%、溫度20%。`
+  : `目前沒有足夠的多來源資料支持五天四夜推薦｜候選 ${result.candidateCount} 組｜完整可評分 ${result.scoredCount} 組。每個打球日均須有至少兩個完整來源；請確認 Cloudflare Pages Functions 與兩組 API Secrets。未退回單一來源假裝多來源推薦。`;
  for(const item of result.recommendations){
   const card=document.createElement("article");card.className="weather-card";
   const h=document.createElement("h3");h.textContent=`推薦 #${item.recommendationRank}｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
-  const score=document.createElement("p");score.className="risk-summary";score.textContent=`三場球降雨影響指數：${item.itineraryRisk}/100（${item.label}）`;card.append(score);
-  const p=document.createElement("p");p.textContent=`Day 2–4：${item.rounds.map(x=>fmt(x.date)+" "+x.courseName+"（降雨 "+x.score.rainRisk+"/100；適打 "+(x.suitability?.status==="scored"?x.suitability.grade:"資料不足")+"）").join("；")}`;card.append(p);
-  const c=document.createElement("p");c.className="weather-meta";c.textContent="可信度：中等（未校準）｜16天逐時預報｜尚未完成沖繩歷史回測；此指數不是取消球賽機率。";card.append(c);host.append(card);
+  const score=document.createElement("p");score.className="risk-summary";score.textContent=`五天四夜加權天氣風險：${item.itineraryRisk}/100（${item.label}）`;card.append(score);
+  const p=document.createElement("p");p.textContent=`Day 2–4：${item.rounds.map(x=>fmt(x.date)+" "+x.courseName+"（綜合 "+x.score.weightedRisk+"/100；雨 "+x.score.rainfallRisk+"；風 "+x.score.windRisk+"；溫度 "+x.score.temperatureRisk+"；來源 "+x.score.providerCount+"/3）").join("；")}`;card.append(p);
+  const c=document.createElement("p");c.className="weather-meta";c.textContent="排序方法：三場球各自的多來源中位數加權分數；行程分數＝平均風險70%＋最差一場30%。目前為暫定模型，尚未完成沖繩歷史回測校準，不代表取消球賽機率。";card.append(c);host.append(card);
  }
 }
 $("recommend-live-dates").addEventListener("click",renderLiveDateRecommendations);
