@@ -47,12 +47,14 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  const brooks=records.find(x=>x.id==="jp-hokkaido-brooks-country-club");
  assert.equal(brooks.localName,"北海道ブルックスカントリークラブ");
  assert.equal(brooks.city,"苫小牧市");
- assert.equal(brooks.coordinateStatus,"pending");
- assert.equal(brooks.latitude,null);assert.equal(brooks.longitude,null);
+ assert.equal(brooks.coordinateStatus,"verified");
+ assert.equal(brooks.latitude,42.7222222);assert.equal(brooks.longitude,141.6694445);
+ assert.ok(brooks.coordinateSource.includes("Official Hokkaido Brooks"));
  assert.equal(brooks.officialUrl,"https://www.brooks-c.com/en/");
  const hokkaidoGroup=records.filter(x=>x.area==="北海道");
- assert.equal(hokkaidoGroup.length,4);
- assert.ok(hokkaidoGroup.every(x=>x.latitude===null&&x.longitude===null&&x.coordinateStatus==="pending"));
+ assert.equal(hokkaidoGroup.length,5);
+ assert.equal(hokkaidoGroup.filter(x=>x.coordinateStatus==="verified").length,1);
+ assert.equal(hokkaidoGroup.filter(x=>x.coordinateStatus==="pending").length,4);
  const chibaGroup=records.filter(x=>x.area==="千葉縣");
  assert.equal(chibaGroup.length,3);
  assert.ok(chibaGroup.every(x=>x.latitude===null&&x.longitude===null&&x.coordinateStatus==="pending"));
@@ -61,7 +63,7 @@ test("Japan catalogue includes Okinawa and mainland candidates without inventing
  const areaCounts=new Map();for(const course of records)areaCounts.set(course.area,(areaCounts.get(course.area)||0)+1);
  for(const [area,count] of areaCounts)assert.ok(count>=3,`${area} must have at least 3 courses`);
  assert.equal(getCoursesForCountry("JP").length,19);
- assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:0,provisional:5,pending:14});
+ assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:19,forecastReady:1,provisional:5,pending:13});
  for(const code of ["KR","CN","VN","TH","MY","SG","ID"])assert.equal(getCourseRecords(code).length,0);
  assert.equal(getDestination("US"),null);
 });
