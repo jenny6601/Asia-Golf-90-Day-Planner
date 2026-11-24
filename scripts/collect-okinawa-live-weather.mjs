@@ -151,8 +151,28 @@ report.consistencyAnalysis = buildProviderConsistencyReport(courses.filter(c=>c.
 });
 report.golfPlayability = buildGolfPlayabilityReport(courses.filter(c=>c.collectionStatus==="collected"), {
   teeTime:"10:00",
-  durationHours:6
+  durationHours:6,
+  minimumProviders:2
 });
+report.playabilityCoverageSummary = {
+  coursesWithNumericCoordinates:courses.filter(c=>c.collectionStatus!=="skipped-coordinate-pending").length,
+  coursesEligibleAtLeastOneDayWithTwoProviders:report.golfPlayability.courses.filter(c=>c.eligibleDaysAtLeastTwoProviders>0).length,
+  coursesWithThreeProviderCompleteDays:report.golfPlayability.courses.filter(c=>c.threeProviderCompleteDays>0).length,
+  totalEligibleCourseDays:report.golfPlayability.courses.reduce((n,c)=>n+c.eligibleDaysAtLeastTwoProviders,0),
+  totalThreeProviderCompleteCourseDays:report.golfPlayability.courses.reduce((n,c)=>n+c.threeProviderCompleteDays,0),
+  minimumProvidersForPreliminaryScreening:2,
+  threeProviderComparisonRemainsSeparate:true
+};
+await fs.writeFile(OUT+"/provider-coverage-summary.json",JSON.stringify({
+  generatedAt:GENERATED_AT,
+  providerAvailability:report.summary,
+  playability:report.playabilityCoverageSummary,
+  courses:report.golfPlayability.courses.map(c=>({
+    courseId:c.courseId,courseName:c.courseName,coordinateStatus:c.coordinateStatus,
+    eligibleDaysAtLeastTwoProviders:c.eligibleDaysAtLeastTwoProviders,
+    threeProviderCompleteDays:c.threeProviderCompleteDays
+  }))
+},null,2));
 await fs.writeFile(OUT+"/golf-playability-6h.json",JSON.stringify(report.golfPlayability,null,2));
 const playabilityLines = [
   "# Okinawa six-hour golf playability comparison",
