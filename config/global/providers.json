@@ -1,0 +1,13 @@
+{
+  "providers":[
+    {"id":"openMeteo","displayName":"Open-Meteo","enabled":true,"credentialEnv":null},
+    {"id":"visualCrossing","displayName":"Visual Crossing","enabled":true,"credentialEnv":"VISUAL_CROSSING_API_KEY"},
+    {"id":"foreca","displayName":"Foreca","enabled":true,"credentialEnv":"FORECA_API_KEY"},
+    {"id":"jmaMsm","displayName":"JMA MSM","enabled":false,"credentialEnv":null}
+  ],
+  "preliminaryMinimumCompleteProviders":2,
+  "strictComparisonProviders":["openMeteo","visualCrossing","foreca"],
+  "defaultTeeTime":"10:00",
+  "playWindowHours":6,
+  "dateDecision":{"nights":4,"rounds":3,"primaryObjective":"minimum-rainfall"}
+}
