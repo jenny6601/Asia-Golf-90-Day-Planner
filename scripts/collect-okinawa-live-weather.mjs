@@ -95,7 +95,15 @@ for (const course of OKINAWA_COURSES) {
   const hourCoverage = {};
   for (const provider of ["openMeteo","visualCrossing","foreca"]) {
     const data=providers[provider].data;
-    const hours=data?.hourly??data?.days?.flatMap(day=>day.hours??[])??data?.forecast??[];
+    const hours = Array.isArray(data?.hourly)
+      ? data.hourly
+      : Array.isArray(data?.days)
+        ? data.days.flatMap(day => Array.isArray(day.hours) ? day.hours : [])
+        : Array.isArray(data?.hourly?.forecast)
+          ? data.hourly.forecast
+          : Array.isArray(data?.forecast)
+            ? data.forecast
+            : [];
     const times=new Set(hours.map(h=>(h.time??"").slice(11,16)));
     hourCoverage[provider]={
       returnedRows:hours.length,
