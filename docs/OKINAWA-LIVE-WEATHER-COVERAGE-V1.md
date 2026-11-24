@@ -55,3 +55,14 @@ Artifacts:
 - `raw-field-diagnostics.md`
 
 The raw equality rate is descriptive only. Equal air/feels-like values do not alone establish an API defect. The preservation check determines whether the normalizer passed the source feels-like value through unchanged. Humidity and wind context are retained for follow-up review.
+
+## Phase 12 outdoor thermal screening
+The collector adds Open-Meteo hourly `shortwave_radiation` and `uv_index` where available, while retaining wind speed and gust as separate exposure context.
+
+A derived Humidex is calculated independently for each provider from that provider's air temperature and relative humidity. Published Environment and Climate Change Canada categories are used: 20–29 little discomfort; 30–39 some discomfort; 40–45 great discomfort/avoid exertion; 46+ dangerous/heat-stroke possible. Values below 20 are labelled below the published discomfort ranges, not as a medical or universal comfort guarantee.
+
+Artifacts:
+- `outdoor-thermal-screening.json`
+- `outdoor-thermal-screening.md`
+
+This screening is not WBGT, UTCI, a medical assessment, or a validated golf-specific index. Solar radiation, UV, wind and gust are retained as separate context and are not combined into an unvalidated composite score. The derived Humidex is not substituted for the providers' apparent/feels-like fields. It is a reproducible cross-source humidity/temperature calculation, not a forecast-accuracy metric.
