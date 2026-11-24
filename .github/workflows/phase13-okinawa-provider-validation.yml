@@ -25,7 +25,7 @@ jobs:
       - name: Collect live Okinawa provider coverage
         run: node scripts/collect-okinawa-live-weather.mjs
       - name: Publish provider coverage summary
-        if: always()
+        if: success()
         run: |
           node --input-type=module <<'NODE'
           import fs from "node:fs/promises";
