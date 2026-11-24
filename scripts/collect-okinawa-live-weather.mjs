@@ -178,7 +178,7 @@ const consistencyLines = [
   "- Pairwise differences measure provider disagreement, not forecast accuracy.",
   "- Foreca timestamps retain their +09:00 offset; comparison uses the same Japan local wall-clock hour."
 ];
-await fs.writeFile(OUT+"/consistency-report.md",consistencyLines.join("\\n"));
+await fs.writeFile(OUT+"/consistency-report.md",consistencyLines.join("\n"));
 await fs.writeFile(OUT+"/coverage-report.json",JSON.stringify(report,null,2));
 const lines=[
 "# Okinawa six-course live weather coverage",
