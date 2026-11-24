@@ -131,8 +131,8 @@ const report = {
   limitations:[
     "This is a live API connectivity and coverage smoke test, not forecast-accuracy verification.",
     "Four named sources are tracked: Open-Meteo, Visual Crossing, Foreca and JMA MSM. JMA MSM remains not configured until a verified MSM data adapter is available.",
-    "PGM Golf Resort Okinawa is skipped because its course-point GPS remains pending.",
-    "Four provisional course coordinates are used only for prototype connectivity checks, not operational trip ranking.",
+    "Courses with numeric verified or provisional vicinity coordinates are collected; only records without numeric coordinates are skipped. Provisional coordinates may support preliminary weather screening and date selection with coordinate confidence kept separate.",
+    "Provisional course-vicinity coordinates are accepted for preliminary weather screening and trip-date selection; they are approximate locations, not surveyed course-centre points.",
     "Provider forecast issue times and native model metadata are retained only where returned by the existing normalizers; compare forecast values only after confirming timestamp and accumulation semantics.",
     "Visual Crossing and Foreca require repository Actions secrets VISUAL_CROSSING_API_KEY and FORECA_API_KEY."
   ]
