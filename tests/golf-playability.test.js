@@ -29,9 +29,20 @@ test("six-hour 10:00–16:00 window includes seven hourly endpoints and only com
  }
 });
 
-test("a day missing any provider endpoint is excluded from common comparison",()=>{
+test("a day missing one provider endpoint remains eligible with two complete providers",()=>{
  const report=buildGolfPlayabilityReport([course({missingForecaHour:13})]);
- assert.equal(report.courses[0].commonCompleteDays,0);
+ const item=report.courses[0];
+ assert.equal(item.commonCompleteDays,0);
+ assert.equal(item.threeProviderCompleteDays,0);
+ assert.equal(item.eligibleDaysAtLeastTwoProviders,1);
+ assert.equal(item.daily.length,1);
+ assert.deepEqual(item.daily[0].completeProviders,["openMeteo","visualCrossing"]);
+ assert.equal(item.daily[0].providers.foreca.complete,false);
+});
+
+test("strict three-provider mode excludes a day with only two complete providers",()=>{
+ const report=buildGolfPlayabilityReport([course({missingForecaHour:13})],{minimumProviders:3});
+ assert.equal(report.courses[0].eligibleDaysAtLeastTwoProviders,0);
  assert.equal(report.courses[0].daily.length,0);
 });
 
