@@ -83,7 +83,7 @@ function renderCoursePicker(){
   checkbox.disabled=course.coordinateStatus==="pending" || (!checkbox.checked && selectedCourses.length>=3);
   checkbox.addEventListener("change",()=>{
    if(checkbox.checked){selectedCourses.push(course);}else{selectedCourses=selectedCourses.filter(x=>x.id!==course.id);}
-   latestCourseWeather=null;$("run-unified-recommendations").disabled=true;
+   latestCourseWeather=null;$("run-unified-recommendations").disabled=selectedCourses.length!==3;
    $("course-weather-status").textContent="球場選擇已變更，請重新讀取逐時預報。";
    $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
    $("fetch-course-weather").disabled=selectedCourses.length===0;
@@ -255,7 +255,29 @@ function renderUnifiedRecommendations(){
  }
  const note=document.createElement("p");note.className="data-note";note.textContent=combined.note;host.append(note);
 }
-$("run-unified-recommendations").addEventListener("click",renderUnifiedRecommendations);
+async function runAllHorizonRecommendations(){
+ const button=$("run-unified-recommendations"),status=$("unified-recommendation-status");
+ if(selectedCourses.length!==3){status.textContent="請先選擇三座球場。";return;}
+ button.disabled=true;
+ status.textContent="正在同步讀取三座球場短期預報與 EC46／SEAS5 長期展望…";
+ try{
+  const [courseData,longData]=await Promise.all([
+   latestCourseWeather?.courses?.length?Promise.resolve(latestCourseWeather):fetchCourseForecast(selectedCourses),
+   latestLongRangeData?Promise.resolve(latestLongRangeData):fetchOkinawaLongRange()
+  ]);
+  latestCourseWeather=courseData;
+  latestLongRangeData=longData;
+  renderCourseWeather(latestCourseWeather);
+  renderLongRange(latestLongRangeData);
+  populateItineraryStartDates();
+  renderUnifiedRecommendations();
+ }catch(error){
+  status.textContent="讀取失敗："+error.message+"。沒有以合成資料代替。";
+ }finally{
+  button.disabled=selectedCourses.length!==3;
+ }
+}
+$("run-unified-recommendations").addEventListener("click",runAllHorizonRecommendations);
 
 function renderLongRange(data){
  const host=$("long-range-results");host.replaceChildren();
@@ -317,7 +339,7 @@ $("fetch-long-range").addEventListener("click",async()=>{
  const button=$("fetch-long-range"),status=$("long-range-status");
  button.disabled=true;status.textContent="正在讀取 ECMWF EC46 + SEAS5 長期展望…";
  try{
-  const data=await fetchOkinawaLongRange();latestLongRangeData=data;renderLongRange(data);$("recommend-long-range").disabled=false;$("run-unified-recommendations").disabled=!(latestCourseWeather?.courses?.length&&selectedCourses.length===3);renderLongRangeRecommendations(data);
+  const data=await fetchOkinawaLongRange();latestLongRangeData=data;renderLongRange(data);$("recommend-long-range").disabled=false;$("run-unified-recommendations").disabled=selectedCourses.length!==3;renderLongRangeRecommendations(data);
   const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(data.fetchedAt));
   const quality=data.dataQuality;
   status.textContent=`讀取完成｜${data.provider}｜三區回傳 ${quality.zoneCount}/3｜週 EFI ${quality.readyForWeeklyScoring?"有資料":"無資料"}（全筆完整 ${quality.weeklyCoverageComplete?"是":"否"}）｜月雨量 ${quality.readyForMonthlyScoring?"有資料":"無資料"}（全筆完整 ${quality.monthlyCoverageComplete?"是":"否"}）｜日本時間：${stamp}${quality.warnings.length?"｜有資料警示，請查看各區檢核":"｜資料欄位檢核通過"}`;
@@ -331,7 +353,7 @@ $("fetch-course-weather").addEventListener("click",async()=>{
  button.disabled=true;status.textContent="正在依所選球場 GPS 讀取預報…";
  try{
   latestCourseWeather=await fetchCourseForecast(selectedCourses);
-  $("run-unified-recommendations").disabled=!latestLongRangeData;
+  $("run-unified-recommendations").disabled=selectedCourses.length!==3;
   renderCourseWeather(latestCourseWeather);
   const commonDates=latestCourseWeather.courses.map(x=>new Set(x.hourly.time.map(t=>t.slice(0,10))));
   const available=[...commonDates[0]].filter(d=>commonDates.every(set=>set.has(d))).sort();
