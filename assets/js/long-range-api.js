@@ -47,3 +47,12 @@ export function interpretPrecipitationEfi(value){
  if(value<=-0.5)return {label:"偏乾訊號",tone:"dry"};
  return {label:"接近模式氣候基準／訊號不明顯",tone:"neutral"};
 }
+
+export async function fetchCourseSeasonalForecast(course,fetchImpl=fetch){
+ if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足，無法讀取長期趨勢");
+ const timezone=course.timezone||"Asia/Tokyo";
+ const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),weekly:WEEKLY,monthly:MONTHLY,forecast_days:"90",timezone,wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius",models:"ecmwf_seasonal_seamless"});
+ const response=await fetchImpl(ENDPOINT+"?"+params);if(!response.ok)throw new Error("長期趨勢 API HTTP "+response.status);
+ const payload=await response.json();if(!payload.weekly?.time?.length&&!payload.monthly?.time?.length)throw new Error("未回傳長期趨勢資料");
+ return {course,provider:"Open-Meteo Seasonal Forecast API",model:payload.model??"ECMWF seasonal seamless",timezone:payload.timezone||timezone,fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null};
+}
