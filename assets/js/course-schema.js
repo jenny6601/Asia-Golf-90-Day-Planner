@@ -16,7 +16,9 @@ export function validateCourseRecord(record,{requireForecastReady=false}={}){
  const hasLat=Number.isFinite(record.latitude)&&record.latitude>=-90&&record.latitude<=90;
  const hasLon=Number.isFinite(record.longitude)&&record.longitude>=-180&&record.longitude<=180;
  if(hasLat!==hasLon)throw new TypeError("latitude and longitude must both be present or both be null");
- if(record.coordinateStatus==="pending"&&(hasLat||hasLon))throw new TypeError("pending coordinates must not contain unverified numeric coordinates");\n if(record.coordinateStatus==="provisional"&&(!hasLat||!record.coordinateSource))throw new TypeError("provisional coordinates require numeric coordinates and coordinateSource");\n if(record.coordinateStatus==="verified"&&(!hasLat||!record.coordinateSource||!record.coordinateVerifiedAt))throw new TypeError("verified coordinates require numeric coordinates, coordinateSource and coordinateVerifiedAt");
+ if(record.coordinateStatus==="pending"&&(hasLat||hasLon))throw new TypeError("pending coordinates must not contain unverified numeric coordinates");
+ if(record.coordinateStatus==="provisional"&&(!hasLat||!record.coordinateSource))throw new TypeError("provisional coordinates require numeric coordinates and coordinateSource");
+ if(record.coordinateStatus==="verified"&&(!hasLat||!record.coordinateSource||!record.coordinateVerifiedAt))throw new TypeError("verified coordinates require numeric coordinates, coordinateSource and coordinateVerifiedAt");
  if(requireForecastReady&&(record.coordinateStatus!=="verified"||!hasLat||!record.coordinateSource||!record.coordinateVerifiedAt))throw new Error("course is not forecast-ready: verified GPS coordinates and provenance are required");
  if(record.officialUrl!==null&&record.officialUrl!==undefined&&!/^https:\/\//.test(record.officialUrl))throw new TypeError("officialUrl must use HTTPS");
  return Object.freeze({...record,countryName:COUNTRY_NAMES[record.countryCode],latitude:hasLat?record.latitude:null,longitude:hasLon?record.longitude:null});
