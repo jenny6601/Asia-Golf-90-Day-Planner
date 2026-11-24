@@ -105,3 +105,44 @@ test("missing API credentials fail before any network request", async () => {
   );
   assert.equal(calls, 0);
 });
+
+
+test("Foreca retries HTTP 429 with backoff and succeeds without exposing credentials", async () => {
+  let calls = 0;
+  const delays = [];
+  const result = await fetchForecaCourseForecast(course, {
+    apiKey: "foreca-test-token",
+    fetchedAt: "2026-12-14T00:00:00.000Z",
+    minRequestIntervalMs: 0,
+    retryBaseDelayMs: 10,
+    maxRetryDelayMs: 100,
+    sleepImpl: async ms => { delays.push(ms); },
+    fetchImpl: async () => {
+      calls++;
+      if (calls === 1) return {ok:false,status:429,headers:{get:()=>null}};
+      return {ok:true,json:async()=>forecaPayload};
+    }
+  });
+  assert.equal(calls, 3);
+  assert.deepEqual(delays, [10]);
+  assert.equal(result.hourly.forecast[0].time, "2026-12-15T07:00+09:00");
+});
+
+test("Foreca honors Retry-After for HTTP 429 responses", async () => {
+  const delays = [];
+  let calls = 0;
+  await fetchForecaCourseForecast(course, {
+    apiKey: "foreca-test-token",
+    minRequestIntervalMs: 0,
+    maxRetries: 1,
+    retryBaseDelayMs: 5,
+    sleepImpl: async ms => { delays.push(ms); },
+    fetchImpl: async () => {
+      calls++;
+      if (calls === 1) return {ok:false,status:429,headers:{get:name=>name==="retry-after"?"2":null}};
+      return {ok:true,json:async()=>forecaPayload};
+    }
+  });
+  assert.equal(calls, 3);
+  assert.equal(delays[0], 2000);
+});
