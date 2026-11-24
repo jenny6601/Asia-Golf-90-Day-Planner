@@ -70,9 +70,9 @@ test("Foreca fetch requests hourly and 3-hourly horizons with IANA timezone", as
     }
   });
   assert.equal(requests.length, 2);
-  assert.deepEqual(requests.map(x=>x.url.pathname.split("/").at(-1)).sort(), ["3hourly","hourly"]);
-  const hourly = requests.find(x=>x.url.pathname.endsWith("/hourly"));
-  const threeHourly = requests.find(x=>x.url.pathname.endsWith("/3hourly"));
+  assert.deepEqual(requests.map(x=>x.url.pathname.includes("/3hourly/") ? "3hourly" : "hourly").sort(), ["3hourly","hourly"]);
+  const hourly = requests.find(x=>x.url.pathname.includes("/hourly/"));
+  const threeHourly = requests.find(x=>x.url.pathname.includes("/3hourly/"));
   assert.equal(hourly.url.searchParams.get("periods"), "169");
   assert.equal(threeHourly.url.searchParams.get("periods"), "113");
   assert.equal(hourly.url.searchParams.get("tz"), "Asia/Tokyo");
