@@ -161,21 +161,22 @@ const playabilityLines = [
   "Tee time: 10:00",
   "Window: 10:00–16:00 (six elapsed hours; seven hourly endpoints including 16:00)",
   "",
-  "Only dates with all seven hourly endpoints present from all three providers are included.",
+  "Dates with all required hourly endpoints from at least two providers are included for preliminary screening.",
+  "Three-provider common-comparison coverage is reported separately; missing provider data is never imputed.",
   "This is a descriptive comparison, not a validated overall suitability score or forecast-accuracy ranking.",
   "",
-  "| Course | GPS status | Common complete days | Operational ranking |",
-  "|---|---|---:|---|",
-  ...report.golfPlayability.courses.map(c=>"| "+c.courseName+" | "+c.coordinateStatus+" | "+c.commonCompleteDays+" | "+c.rankingStatus+" |"),
+  "| Course | GPS status | Eligible days (2+ providers) | Three-provider complete days | Operational ranking |",
+  "|---|---|---:|---:|---|",
+  ...report.golfPlayability.courses.map(c=>"| "+c.courseName+" | "+c.coordinateStatus+" | "+c.eligibleDaysAtLeastTwoProviders+" | "+c.threeProviderCompleteDays+" | "+c.rankingStatus+" |"),
   "",
   ...report.golfPlayability.courses.flatMap(course=>[
     "## "+course.courseName+" — "+course.coordinateStatus,
     "",
-    "| Date | Provider | Complete points | Temp min–max °C | Humidex max | Rain chance max | Rain total mm | Gust max m/s | Solar max W/m² | UV max |",
-    "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+    "| Date | Complete providers | Provider | Complete points | Temp min–max °C | Humidex max | Rain chance max | Rain total mm | Gust max m/s | Solar max W/m² | UV max |",
+    "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ...course.daily.flatMap(day=>["openMeteo","visualCrossing","foreca"].map(provider=>{
       const w=day.providers[provider];
-      return "| "+day.date+" | "+provider+" | "+w.availableHourlyPoints+"/"+w.expectedHourlyPoints+" | "+(w.temperatureC.min??"—")+"–"+(w.temperatureC.max??"—")+" | "+(w.humidexC.max??"—")+" | "+(w.precipitationProbabilityPct.max??"—")+"% | "+(w.totalReportedPrecipitationMm??"—")+" | "+(w.maxWindGustMs??"—")+" | "+(w.openMeteoSolarRadiationWm2.max??"—")+" | "+(w.openMeteoUvIndex.max??"—")+" |";
+      return "| "+day.date+" | "+day.completeProviderCount+"/3 ("+day.completeProviders.join(", ")+") | "+provider+" | "+w.availableHourlyPoints+"/"+w.expectedHourlyPoints+" | "+(w.temperatureC.min??"—")+"–"+(w.temperatureC.max??"—")+" | "+(w.humidexC.max??"—")+" | "+(w.precipitationProbabilityPct.max??"—")+"% | "+(w.totalReportedPrecipitationMm??"—")+" | "+(w.maxWindGustMs??"—")+" | "+(w.openMeteoSolarRadiationWm2.max??"—")+" | "+(w.openMeteoUvIndex.max??"—")+" |";
     })),
     ""
   ]),
