@@ -1,0 +1,24 @@
+name: Phase 10 90-day daily and weekly view tests
+on:
+  push:
+    branches:
+      - phase-9-multicountry-destination-ui
+    paths:
+      - "assets/js/daily-90day-view.js"
+      - "assets/js/app.js"
+      - "tests/daily-90day-view.test.js"
+      - ".github/workflows/phase10-90day-view-tests.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-9-multicountry-destination-ui
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm test
