@@ -19,7 +19,7 @@ export function validateCourseRecord(record,{requireForecastReady=false}={}){
  if(record.coordinateStatus==="pending"&&(hasLat||hasLon))throw new TypeError("pending coordinates must not contain unverified numeric coordinates");
  if(record.coordinateStatus==="provisional"&&(!hasLat||!record.coordinateSource))throw new TypeError("provisional coordinates require numeric coordinates and coordinateSource");
  if(record.coordinateStatus==="verified"&&(!hasLat||!record.coordinateSource||!record.coordinateVerifiedAt))throw new TypeError("verified coordinates require numeric coordinates, coordinateSource and coordinateVerifiedAt");
- if(requireForecastReady&&(record.coordinateStatus!=="verified"||!hasLat||!record.coordinateSource||!record.coordinateVerifiedAt))throw new Error("course is not forecast-ready: verified GPS coordinates and provenance are required");
+ if(requireForecastReady&&(!["verified","provisional"].includes(record.coordinateStatus)||!hasLat||!record.coordinateSource||(record.coordinateStatus==="verified"&&!record.coordinateVerifiedAt)))throw new Error("course is not forecast-ready: numeric course-vicinity coordinates and provenance are required");
  if(record.officialUrl!==null&&record.officialUrl!==undefined&&!/^https:\/\//.test(record.officialUrl))throw new TypeError("officialUrl must use HTTPS");
  return Object.freeze({...record,countryName:COUNTRY_NAMES[record.countryCode],latitude:hasLat?record.latitude:null,longitude:hasLon?record.longitude:null});
 }
