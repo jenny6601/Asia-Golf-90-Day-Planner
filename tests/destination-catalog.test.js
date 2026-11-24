@@ -27,17 +27,20 @@ test("invalid coordinates, timezone, country and partial GPS are rejected",()=>{
 });
 test("Japan catalogue includes Okinawa and mainland candidates without inventing GPS",()=>{
  const records=getCourseRecords("JP");
- assert.equal(records.length,8);
+ assert.equal(records.length,14);
  assert.equal(records.filter(x=>x.coordinateStatus==="provisional").length,5);
- assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,3);
+ assert.equal(records.filter(x=>x.coordinateStatus==="pending").length,9);
  const narita=records.find(x=>x.id==="jp-chiba-narita-golf-club");
  const hokkaido=records.find(x=>x.id==="jp-hokkaido-classic-golf-club");
  assert.equal(narita.latitude,null);assert.equal(narita.longitude,null);
  assert.equal(hokkaido.latitude,null);assert.equal(hokkaido.longitude,null);
  assert.ok(narita.officialUrl.startsWith("https://"));
  assert.ok(hokkaido.officialUrl.startsWith("https://"));
- assert.equal(getCoursesForCountry("JP").length,8);
- assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:8,forecastReady:0,provisional:5,pending:3});
+ const fujiArea=records.filter(x=>x.area?.startsWith("富士五湖"));
+ assert.equal(fujiArea.length,6);
+ assert.ok(fujiArea.every(x=>x.latitude===null&&x.longitude===null&&x.coordinateStatus==="pending"));
+ assert.equal(getCoursesForCountry("JP").length,14);
+ assert.deepEqual(getCourseCoverage("JP"),{countryCode:"JP",total:14,forecastReady:0,provisional:5,pending:9});
  for(const code of ["KR","CN","VN","TH","MY","SG","ID"])assert.equal(getCourseRecords(code).length,0);
  assert.equal(getDestination("US"),null);
 });
