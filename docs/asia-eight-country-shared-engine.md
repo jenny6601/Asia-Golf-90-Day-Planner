@@ -1,39 +1,39 @@
-# Asia Eight-Country Shared Engine
+# Asia Golf Weather 90 — Simplified Product Scope
+
+## User flow
+
+1. Select a departure date within the next 90 days.
+2. Select a country and one golf course.
+3. Select a tee-off time.
+4. Generate one weather and golf-playability report for that course and date.
+
+The app is a weather decision aid, not a travel itinerary builder. Do not add hotel planning, multi-course routing, three-round scheduling, date ranking, or country-specific workflows unless explicitly requested.
+
+## Forecast horizons
+
+- Days 1–16: use the selected course's coordinates and IANA timezone to retrieve daily and hourly forecast data. For a selected play date, report daily precipitation probability and amount, temperature range, wind, and the six-hour tee-time rain/playability assessment.
+- Days 17–90: use weekly/monthly seasonal forecast signals for the selected course. Clearly label these as broad climate tendencies, not daily weather forecasts. Never invent daily rain probability, daily rainfall, or precise playability grades for this horizon.
+
+Only fetch the forecast horizon needed for the selected date. Missing data remains missing; do not synthesize values.
 
 ## Scope
 
-This project supports only eight Asian markets: Japan (JP), South Korea (KR), China (CN), Vietnam (VN), Thailand (TH), Malaysia (MY), Singapore (SG) and Indonesia (ID). Do not add other markets.
+Support only eight Asian markets: Japan (JP), South Korea (KR), China (CN), Vietnam (VN), Thailand (TH), Malaysia (MY), Singapore (SG), and Indonesia (ID).
 
-## Shared course directory
+The shared country and course data live in `config/global/countries.json` and `config/global/courses.json`. Each course carries an IANA timezone and coordinate provenance/status. Pending coordinates remain null and cannot be queried. Provisional course-vicinity coordinates may be used only when clearly labeled.
 
-- `config/global/countries.json` is the country registry.
-- `config/global/courses.json` is the single course catalog.
-- Every course carries its own IANA timezone, coordinates, coordinate provenance and coordinate confidence.
-- Pending coordinates stay null; provisional vicinity coordinates may be used when present and must remain labeled provisional.
-- Add courses as data records. Do not create country-specific course modules or workflows.
+## Implementation
 
-## Shared browser modules
+- `assets/js/course-catalog.js`: shared country/course list.
+- `assets/js/course-time.js`: course-local date formatting.
+- `assets/js/weather-api.js`: 1–16 day Open-Meteo forecast by selected course.
+- `assets/js/long-range-api.js`: 17–90 day weekly/monthly seasonal context by selected course.
+- `assets/js/rain-risk.js` and `assets/js/suitability-engine.js`: six-hour tee-time assessment for dates with hourly forecasts.
 
-- `assets/js/course-catalog.js` loads and validates the shared country and course directory.
-- `assets/js/course-time.js` formats dates and times using each course's IANA timezone.
-- `assets/js/weather-api.js` requests the course forecast using `course.timezone`; Japan is only a backward-compatible fallback for legacy Okinawa records.
+## Current data coverage
 
-## Forecast and decision policy
-
-- Existing forecast provider and date-decision engines remain shared; no country-specific scoring formula.
-- Preliminary multi-provider assessment requires at least two complete providers.
-- Strict three-provider comparison remains a separate quality measure.
-- Five days/four nights, three golf rounds, six-hour tee-time windows and rainfall as the primary objective remain the default trip design.
-- Do not claim forecast accuracy from API availability or unit tests. Hindcast validation remains a separate later task.
-
-## Rollout
-
-1. Complete shared country/course/timezone and provider adapters.
-2. Connect the existing PWA to the shared directory without changing its stable user experience.
-3. Register Vietnam's initial courses using sourced course-vicinity coordinates and local timezone.
-4. Only after the shared architecture is complete, run the combined Okinawa and Vietnam integration test.
-5. Add remaining Asian course records using the same schema.
+The course catalog currently contains Okinawa, Japan pilot courses. Other Asian country choices remain disabled until actual course records and usable coordinates are added. Do not fabricate course locations.
 
 ## Change discipline
 
-Work on a feature branch. Preserve the stable `main` branch until architecture review and one consolidated validation are complete. Avoid country-specific workflows and unnecessary architecture layers.
+Keep one simple PWA and one shared data model. Preserve `main` while the simplified experience is reviewed. Do not create country-specific modules or workflows. Integration testing is a separate step after the architecture is complete.
