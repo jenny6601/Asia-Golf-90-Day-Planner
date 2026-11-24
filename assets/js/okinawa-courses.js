@@ -19,8 +19,8 @@ export const OKINAWA_COURSES = Object.freeze([
   {
     id:"kise",name:"Kanehide Kise Country Club",nameJa:"かねひで喜瀬カントリークラブ",
     area:"北部",city:"名護市",address:"1107-1 Kise, Nago, Okinawa 905-0026, Japan",
-    latitude:26.524415,longitude:127.93946,coordinateSource:"Travelmyth map listing",coordinateSourceUrl:"https://www.travelmyth.co.uk/Nago/Hotels/Kanehide-Kise-Country-Club_tmid257562",
-    coordinateStatus:"provisional",officialUrl:"https://www.kise-cc.jp/en/"
+    latitude:26.5241373,longitude:127.9393349,coordinateSource:"Official Kanehide Kise Country Club Google Maps link (club website access section)",coordinateSourceUrl:"https://goo.gl/maps/45vLJ1gpfdR2",
+    coordinateVerifiedAt:"2026-11-25",coordinateStatus:"verified",officialUrl:"https://www.kise-cc.jp/en/"
   },
   {
     id:"atta-terrace",name:"The Atta Terrace Golf Resort",nameJa:"ジ・アッタテラス ゴルフリゾート",
