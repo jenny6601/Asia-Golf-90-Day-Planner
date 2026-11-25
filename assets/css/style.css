@@ -98,3 +98,9 @@
 .region-back{margin:0 0 12px}
 @media(max-width:620px){.region-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.region-choice{min-height:100px;padding:12px!important}}
 @media(max-width:380px){.region-choice-grid{grid-template-columns:1fr}}
+
+#flow-nav{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0 16px}
+#flow-nav .flow-title{margin:0;font-size:1.15rem;color:#173f35}
+#flow-nav .flow-back{padding:9px 13px!important;background:#edf4ef!important;color:#245b40!important;border:1px solid #dce7e1!important}
+#climate-explorer [hidden],.panel[hidden]{display:none!important}
+#region-report[hidden]{display:none!important}
