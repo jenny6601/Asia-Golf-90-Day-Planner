@@ -1,7 +1,7 @@
 import {fetchAsiaGolfDirectory} from "./course-catalog.js";
 import {formatCourseDate} from "./course-time.js";
 import {fetchCourseForecast} from "./weather-api.js";
-import {fetchCourseSeasonalForecast,fetchCourseHistoricalMonthlyClimate,interpretPrecipitationEfi} from "./long-range-api.js";
+import {fetchCourseSeasonalForecast,fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals,interpretPrecipitationEfi} from "./long-range-api.js";
 import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
@@ -559,13 +559,48 @@ async function renderSelectedWeekReport(group,week,records,month){
   if(!hourCount)hourlyCard.append(node("p","所選七天期間沒有可用逐時資料。","data-note"));
   report.append();
  }else{
-  const seasonal=node("section",undefined,"week-recommendations");
-  seasonal.append(node("h3","季節趨勢參考（非逐日預報）"),node("p","所選週次超出目前可用的 16 天逐日／逐時預報範圍，或尚無可用球場座標。此處不製作虛構的七天逐日數字。","long-range-note"));
-  const weeklyRows=records.flatMap(rec=>(rec.weekly?.time||[]).map((d,i)=>({date:d,rain:rec.weekly.precipitation_mean?.[i],efi:rec.weekly.precipitation_efi?.[i],temp:rec.weekly.temperature_2m_mean?.[i]})).filter(x=>x.date>=week.start&&x.date<=week.end));
-  const monthlyRows=records.map(rec=>{const i=(rec.monthly?.time||[]).findIndex(d=>d.slice(0,7)===month);return i<0?null:{rain:rec.monthly.precipitation_mean?.[i],temp:rec.monthly.temperature_2m_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i]}}).filter(Boolean);
-  const mean=key=>{const a=weeklyRows.map(x=>x[key]).filter(Number.isFinite);if(a.length)return a.reduce((p,c)=>p+c,0)/a.length;const b=monthlyRows.map(x=>x[key]).filter(Number.isFinite);return b.length?b.reduce((p,c)=>p+c,0)/b.length:null};
-  metricGrid(seasonal,[["模式週／月降雨量",val(mean("rain")," mm")],["平均氣溫",val(mean("temp"),"°C")],["降雨 EFI",weeklyRows.length?val(mean("efi")):"未提供"]]);
-  seasonal.append(node("p","此階段僅能顯示週／月氣候背景；降雨機率、每日雨量、逐日溫度及逐時天氣均未提供。","data-note"));report.append(seasonal);
+  const historical=section(host,"歷史同期七天天氣分析｜非未來預報");
+  historical.append(node("p","所選週次超出 16 天逐日預報範圍，以下依過去十年相同月日的 ERA5 歷史資料整理。降雨頻率是歷史發生比例，不是未來降雨機率；氣溫與雨量是歷史統計，不代表該週實際天氣。","long-range-note"));
+  let normals=[];
+  try{
+   const results=await Promise.allSettled(courses.map(c=>fetchCourseHistoricalWeekNormals(c,dates)));
+   normals=results.filter(x=>x.status==="fulfilled").map(x=>x.value);
+  }catch(e){historical.append(node("p","歷史逐日資料暫時無法取得："+e.message,"risk-summary"))}
+  const median=values=>{const a=values.filter(Number.isFinite).sort((x,y)=>x-y);if(!a.length)return null;const m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2};
+  const rows=dates.map((date,i)=>{
+   const samples=normals.map(n=>n.days[i]).filter(Boolean);
+   const get=k=>median(samples.map(x=>x[k]));
+   return {date,high:get("highMean"),low:get("lowMean"),rainFrequency:get("rainFrequency"),rainMean:get("rainMean"),rainMin:samples.length?Math.min(...samples.map(x=>x.rainMin).filter(Number.isFinite)):null,rainMax:samples.length?Math.max(...samples.map(x=>x.rainMax).filter(Number.isFinite)):null,highMax:samples.length?Math.max(...samples.map(x=>x.highMax).filter(Number.isFinite)):null,lowMin:samples.length?Math.min(...samples.map(x=>x.lowMin).filter(Number.isFinite)):null,years:Math.max(0,...samples.map(x=>x.sampleYears||0))};
+  });
+  if(normals.length){
+   const strip=node("div",undefined,"taiwan-style-seven-day historical-seven-day");
+   const dateRow=node("div",undefined,"taiwan-seven-row taiwan-seven-dates");
+   const weatherRow=node("div",undefined,"taiwan-seven-row taiwan-seven-weather");
+   const rainRow=node("div",undefined,"taiwan-seven-row taiwan-seven-rain");
+   for(const row of rows){
+    const dateCell=node("div",undefined,"taiwan-seven-cell");dateCell.append(node("strong",row.date.slice(5).replace("-","/")),node("small",["日","一","二","三","四","五","六"][new Date(row.date+"T12:00:00Z").getUTCDay()]));dateRow.append(dateCell);
+    const freq=row.rainFrequency,icon=!Number.isFinite(freq)?"—":freq>=60?"🌧️":freq>=30?"🌦️":"🌤️",label=!Number.isFinite(freq)?"資料不足":freq>=60?"歷史常有雨":freq>=30?"歷史偶有雨":"歷史較少雨";
+    const weatherCell=node("div",undefined,"taiwan-seven-cell");weatherCell.append(node("div",icon,"taiwan-seven-icon"),node("strong",label));weatherRow.append(weatherCell);
+    const rainCell=node("div",undefined,"taiwan-seven-cell");rainCell.append(node("small","歷史降雨頻率"),node("strong",val(Number.isFinite(freq)?freq.toFixed(0):null,"%"),"taiwan-rain-prob"),node("small","歷史日均雨量"),node("strong",val(Number.isFinite(row.rainMean)?row.rainMean.toFixed(1):null," mm"),"taiwan-rain-mm"));rainRow.append(rainCell);
+   }
+   strip.append(dateRow);
+   const curve=section(strip,"七天歷史氣溫曲線");
+   svgChart(curve,"歷史每日平均最高／最低氣溫",[{label:"歷史平均最高溫",values:rows.map(x=>x.high)},{label:"歷史平均最低溫",values:rows.map(x=>x.low)}],"°C");
+   strip.append(weatherRow,rainRow);historical.append(strip);
+   const rainValues=rows.map(x=>x.rainMean).filter(Number.isFinite),freqs=rows.map(x=>x.rainFrequency).filter(Number.isFinite),highs=rows.map(x=>x.high).filter(Number.isFinite),lows=rows.map(x=>x.low).filter(Number.isFinite);
+   const details=section(host,"歷史降雨及氣溫統計｜七天");
+   metricGrid(details,[["歷史平均降雨頻率",freqs.length?(freqs.reduce((a,b)=>a+b,0)/freqs.length).toFixed(0)+"%":"資料不足"],["歷史日均雨量",rainValues.length?(rainValues.reduce((a,b)=>a+b,0)/rainValues.length).toFixed(1)+" mm":"資料不足"],["歷史單日最高雨量",rows.some(x=>Number.isFinite(x.rainMax))?Math.max(...rows.map(x=>x.rainMax).filter(Number.isFinite)).toFixed(1)+" mm":"資料不足"],["歷史最高氣溫均值",highs.length?Math.max(...highs).toFixed(1)+"°C":"資料不足"],["歷史最低氣溫均值",lows.length?Math.min(...lows).toFixed(1)+"°C":"資料不足"]]);
+   svgChart(host,"七天歷史日均雨量",[{label:"歷史日均雨量",values:rows.map(x=>x.rainMean)}],"mm");
+   svgChart(host,"七天歷史降雨頻率",[{label:"歷史降雨頻率",values:rows.map(x=>x.rainFrequency)}],"%");
+   historical.append(node("p","歷史降雨頻率定義：過去十年相同月日中，日雨量達 1 mm 的年份比例。各數值依可用球場座標的歷史資料彙整；樣本年份數會受閏日及資料完整度影響。","data-note"));
+  }else{
+   const weeklyRows=records.flatMap(rec=>(rec.weekly?.time||[]).map((d,i)=>({date:d,rain:rec.weekly.precipitation_mean?.[i],efi:rec.weekly.precipitation_efi?.[i],temp:rec.weekly.temperature_2m_mean?.[i]})).filter(x=>x.date>=week.start&&x.date<=week.end));
+   const monthlyRows=records.map(rec=>{const i=(rec.monthly?.time||[]).findIndex(d=>d.slice(0,7)===month);return i<0?null:{rain:rec.monthly.precipitation_mean?.[i],temp:rec.monthly.temperature_2m_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i]}}).filter(Boolean);
+   const mean=key=>{const a=weeklyRows.map(x=>x[key]).filter(Number.isFinite);if(a.length)return a.reduce((p,c)=>p+c,0)/a.length;const b=monthlyRows.map(x=>x[key]).filter(Number.isFinite);return b.length?b.reduce((p,c)=>p+c,0)/b.length:null};
+   metricGrid(historical,[["模式週／月降雨量",val(mean("rain")," mm")],["平均氣溫",val(mean("temp"),"°C")],["降雨 EFI",weeklyRows.length?val(mean("efi")):"未提供"]]);
+   historical.append(node("p","歷史逐日資料亦暫時無法取得；以上僅保留季節模式週／月氣候背景，不提供虛構的每日降雨機率或逐時天氣。","data-note"));
+  }
+
  }
  const choose=node("button","選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>showDepartureForm(week.start));host.append(choose);host.scrollIntoView({behavior:"smooth",block:"start"});
 }
