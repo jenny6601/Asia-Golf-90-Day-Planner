@@ -460,3 +460,18 @@
 .seven-day-legend{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-weight:800;padding:4px 0;color:#28475b}
 .seven-day-legend .legend-high{color:#ef6b54}.seven-day-legend .legend-low{color:#3198dc}.seven-day-legend .legend-feel{color:#b98517}
 @media(max-width:620px){.unified-seven-day{padding:8px 5px}.unified-seven-day .seven-day-inline-graph{padding-top:5px}}
+
+/* Seven-day report: illustrated weather icons and weekend emphasis */
+.taiwan-seven-weather .taiwan-seven-cell svg{
+ width:clamp(46px,7vw,64px);height:clamp(46px,7vw,64px);display:block;flex:0 0 auto;
+}
+.taiwan-seven-dates .taiwan-seven-cell.weekend strong,
+.taiwan-seven-dates .taiwan-seven-cell.weekend small{color:#d92d2d!important;font-weight:900!important}
+.taiwan-seven-weather .taiwan-seven-cell.weekend strong,
+.taiwan-seven-rain .taiwan-seven-cell.weekend .taiwan-rain-prob{color:#b42318}
+.taiwan-seven-cell.weekend{background:#fff1f0!important}
+@media(max-width:620px){
+ .taiwan-seven-weather .taiwan-seven-cell svg{width:48px;height:48px}
+ .taiwan-seven-dates .taiwan-seven-cell strong{font-size:1rem}
+ .taiwan-seven-dates .taiwan-seven-cell small{font-size:.88rem}
+}
