@@ -197,7 +197,7 @@ async function run(){
  try{
   const selectedDate=$("departure").value;
   S.course=S.directory?.courses?.find(c=>c.id===$("course").value)||null;
-  if(!selectedDate||!/^\\d{4}-\\d{2}-\\d{2}$/.test(selectedDate))throw new Error("請先選擇有效的出發日期。");
+  if(!selectedDate||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(selectedDate))throw new Error("請先選擇有效的出發日期。");
   if(!S.course)throw new Error("請先選擇已完成座標核實的球場。");
   setStatus("正在產生七天天氣及適打報告…");
   const leadDays=Math.floor((Date.parse(selectedDate+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
