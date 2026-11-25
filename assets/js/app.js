@@ -6,73 +6,33 @@ import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 const $=id=>document.getElementById(id),S={};
-let climateBackAction=null,exitConfirmed=false;
-const BACK_DIAG_KEY="asiaGolfBackDiagV44";
-const backDiagEnabled=new URLSearchParams(location.search).get("backdiag")==="1";
-let backDiagPanel=null,backDiagLog=[];
-function backDiagSnapshot(event,detail=""){
- if(!backDiagEnabled)return;
- const row={time:new Date().toLocaleTimeString("zh-TW",{hour12:false}),event,detail,historyLength:history.length,state:JSON.stringify(history.state)};
- backDiagLog.push(row);backDiagLog=backDiagLog.slice(-35);
- try{localStorage.setItem(BACK_DIAG_KEY,JSON.stringify(backDiagLog))}catch(e){}
- renderBackDiag();
-}
-function renderBackDiag(){
- if(!backDiagPanel)return;
- const summary=node("div",`事件紀錄 ${backDiagLog.length} 筆｜History length: ${history.length}`);
- summary.style.cssText="font-weight:800;margin-bottom:5px";
- const latest=backDiagLog.slice(-8).reverse().map(x=>`${x.time}  ${x.event}  ${x.detail}  [len=${x.historyLength}, state=${x.state}]`).join("\\n");
- const pre=node("pre",latest||"尚無返回事件；請依序按手機返回鍵測試");
- pre.style.cssText="white-space:pre-wrap;word-break:break-word;font:11px/1.45 monospace;margin:4px 0;max-height:180px;overflow:auto";
- backDiagPanel.replaceChildren(summary,pre);
-}
-function initBackDiagnostics(){
- if(!backDiagEnabled)return;
- try{backDiagLog=JSON.parse(localStorage.getItem(BACK_DIAG_KEY)||"[]")}catch(e){backDiagLog=[]}
- backDiagPanel=node("aside",undefined,"back-diag-panel");
- backDiagPanel.style.cssText="position:fixed;left:8px;right:8px;bottom:8px;z-index:100000;max-height:42vh;overflow:auto;background:#fff;color:#17251f;border:2px solid #b45309;border-radius:12px;padding:10px;box-shadow:0 4px 24px #0005";
- const heading=node("div","V44 返回鍵診斷｜測試完成後請截圖");
- heading.style.cssText="font-weight:900;color:#92400e;margin-bottom:6px";
- const clear=node("button","清除紀錄","back-diag-clear");clear.type="button";clear.style.cssText="float:right;font-size:12px;padding:3px 8px";
- clear.addEventListener("click",()=>{backDiagLog=[];try{localStorage.removeItem(BACK_DIAG_KEY)}catch(e){}renderBackDiag()});
- backDiagPanel.append(heading,clear);document.body.append(backDiagPanel);renderBackDiag();
- ["pageshow","pagehide","beforeunload","visibilitychange"].forEach(name=>window.addEventListener(name,()=>backDiagSnapshot(name,name==="visibilitychange"?document.visibilityState:"")));
- backDiagSnapshot("diagnostic-open");
-}
-function ensureHomeExitGuard(depth=3){
- // Preserve V43 navigation behavior; V44 adds observation only.
- for(let i=0;i<depth;i++)history.pushState({homeExitGuard:true,guardIndex:i},"",location.href);
- backDiagSnapshot("guard-refilled",`depth=${depth}`);
+let climateBackAction=null,exitConfirmed=false,exitDialogOpen=false;
+function ensureHomeExitGuard(){
+ // Maintain one same-document entry. This is a browser-history guard, not a way to prevent Chrome itself from closing.
+ if(history.state?.asiaGolfHomeGuard!==true)history.pushState({asiaGolfHomeGuard:true},"",location.href);
 }
 function showExitDialog(){
- let modal=document.getElementById("exit-dialog");if(modal){modal.hidden=false;return}
+ let modal=document.getElementById("exit-dialog");
+ if(modal){modal.hidden=false;exitDialogOpen=true;return}
  modal=node("div",undefined,"exit-dialog");modal.id="exit-dialog";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");
  const box=node("div",undefined,"exit-dialog-box");box.append(node("p","確定要退出亞洲高爾夫天氣 App 嗎？","exit-dialog-message"));
  const actions=node("div",undefined,"exit-dialog-actions");
- const cancel=node("button","取消","exit-cancel");cancel.type="button";cancel.addEventListener("click",()=>{modal.hidden=true;ensureHomeExitGuard()});
- const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{
-  modal.hidden=true;exitConfirmed=true;exitBackConsumed=false;
- });
- actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);
+ const cancel=node("button","取消","exit-cancel");cancel.type="button";cancel.addEventListener("click",()=>{modal.hidden=true;exitDialogOpen=false;ensureHomeExitGuard()});
+ const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{modal.hidden=true;exitDialogOpen=false;exitConfirmed=true});
+ actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);exitDialogOpen=true;
+}
+function handleAppBack(source="system"){
+ if(climateBackAction){
+  const action=climateBackAction;climateBackAction=null;action();return;
+ }
+ if($("climate-explorer")?.classList.contains("is-subpage")){showCountryOverview();return}
+ showExitDialog();
 }
 window.addEventListener("popstate",()=>{
- backDiagSnapshot("popstate-before",`exitConfirmed=${exitConfirmed}`);
- // The user explicitly confirmed exit; allow the next back press to leave.
- if(exitConfirmed){backDiagSnapshot("popstate-allowed-exit");return}
- // Refill the history reserve; view navigation remains independent.
- ensureHomeExitGuard(3);
- backDiagSnapshot("popstate-handled",`subpage=${$("climate-explorer").classList.contains("is-subpage")}`);
- if(climateBackAction){
-  const action=climateBackAction;
-  climateBackAction=null;
-  action();
-  return;
- }
- if($("climate-explorer").classList.contains("is-subpage")){
-  showCountryOverview();
-  return;
- }
- showExitDialog();
+ if(exitConfirmed)return;
+ // Re-arm a single same-document entry before changing the visible screen.
+ ensureHomeExitGuard();
+ handleAppBack("popstate");
 });
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
 const add=(s,n)=>{const d=new Date(s+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
@@ -300,7 +260,7 @@ function showClimateScreen(title,backAction){
  nav.replaceChildren();
  const h=node("h2",title,"flow-title");nav.append(h);
  const actions=node("div",undefined,"flow-actions");
- if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",()=>history.back());actions.append(back)}
+ if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",()=>{const action=climateBackAction;climateBackAction=null;if(action)action()});actions.append(back)}
  const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{climateBackAction=null;showCountryOverview()});actions.append(home);
  nav.append(actions);
  out.hidden=false;status.hidden=false;
