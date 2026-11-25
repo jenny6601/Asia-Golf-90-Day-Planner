@@ -453,7 +453,6 @@ function renderSubregionMenu(country,region){
  out.append(grid);
 }
 function initClimateExplorer(){
- initBackDiagnostics();
  const overview=$("asia-overview"),cc=$("climate-country");
  for(const c of S.directory.countries){
   const count=S.directory.courses.filter(x=>x.countryCode===c.code&&x.enabled&&Number.isFinite(x.latitude)&&Number.isFinite(x.longitude)).length;
