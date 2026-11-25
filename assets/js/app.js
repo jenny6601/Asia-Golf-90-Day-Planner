@@ -298,12 +298,12 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
  const monthData=months.map(month=>{const values=records.map(rec=>{const i=(rec.monthly?.time||[]).findIndex(t=>t.slice(0,7)===month);return i<0?null:{rain:rec.monthly.precipitation_mean?.[i],temp:rec.monthly.temperature_2m_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i]}}).filter(Boolean);const avg=key=>{const v=values.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};return {month,rain:avg("rain"),temp:avg("temp"),anomaly:avg("anomaly"),status:values.length?"季節資料可用":valid.length?"天氣資料暫缺":"待建置"}});
  for(const metric of metrics){const tr=node("tr");tr.append(node("th",metric.label));for(const item of monthData){const v=item[metric.key];tr.append(node("td",Number.isFinite(v)?metric.fmt(v)+metric.unit:"—"))}body.append(tr)}
  const statusRow=node("tr");statusRow.append(node("th","資料狀態"));for(const item of monthData)statusRow.append(node("td",item.status));body.append(statusRow);
- const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),btn=node("button","查看週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{const group={region:scopeName,courses:valid};if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,scopeName,item.month)}});td.append(btn);actionRow.append(td)}body.append(actionRow);
+ const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),btn=node("button","查看週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{const group={region:scopeName,rootRegion:region,subregion,country,courses:valid,months};if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,scopeName,item.month,()=>renderRegionMonths(country,region,months,valid,subregion))}});td.append(btn);actionRow.append(td)}body.append(actionRow);
  tbl.append(body);table.append(tbl);out.append(table);
  status.textContent=valid.length?"已選擇 "+scopeName+"｜球場 "+valid.length+" 個，成功取得季節資料 "+records.length+" 組。":"已選擇 "+scopeName+"。此次分區尚無球場／天氣資料，但月份及週分析操作仍可使用。";
 }
-function renderEmptyWeekAnalysis(country,region,month){
- const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+region+"｜"+month+"｜週次預覽",()=>renderRegionMonths(country,region,monthOptions(),[]));
+function renderEmptyWeekAnalysis(country,region,month,backAction){
+ const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+region+"｜"+month+"｜週次預覽",backAction||(()=>showCountryOverview()));
  const panel=node("section",undefined,"week-recommendations");
  panel.append(node("h3","③ "+region+"｜"+month+" 週天氣分析"),node("p","此分區目前尚無球場座標或天氣資料。以下提供週次版面預覽；資料建置完成後會自動以該區實際季節資料取代。","long-range-note"));
  const grid=node("div",undefined,"week-grid");
@@ -320,7 +320,7 @@ function renderEmptySevenDay(country,region,start){
 }
 
 function renderRegionTopWeeks(group,records,month){
- const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜選擇週次",()=>renderRegionMonths($("climate-country").value,group.region,monthOptions(),group.courses));const title=node("h3","③ "+group.region+"｜"+month+" 週天氣分析 TOP 3");
+ const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜選擇週次",()=>renderRegionMonths(group.country||$("climate-country").value,group.rootRegion||group.region,group.months||monthOptions(),group.courses,group.subregion||""));const title=node("h3","③ "+group.region+"｜"+month+" 週天氣分析 TOP 3");
  const panel=node("section",undefined,"week-recommendations");panel.append(title,);
  const monthStart=month+"-01",monthEnd=new Date(Date.parse(monthStart+"T12:00:00Z"));monthEnd.setUTCMonth(monthEnd.getUTCMonth()+1);monthEnd.setUTCDate(0);const last=monthEnd.toISOString().slice(0,10),todayDate=today(),first=monthStart>todayDate?monthStart:todayDate,candidates=[];
  for(let start=first;start<=last;start=add(start,7)){
