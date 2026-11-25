@@ -104,8 +104,7 @@ function renderSevenDayVisual(host,rows,historical=false){
   graph.append(svg);const legend=node("div",undefined,"seven-day-legend");legend.append(node("span",historical?"● 歷史平均最高溫":"● 最高溫","legend-high"),node("span",historical?"● 歷史平均最低溫":"● 最低溫","legend-low"));if(!historical)legend.append(node("span","● 體感溫度","legend-feel"));graph.append(legend);strip.append(graph);
   pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),weekend=[0,6].includes(wd);const w=node("div",undefined,"taiwan-seven-cell"+(weekend?" weekend":""));const code=Number.isFinite(r.code)?r.code:null;const label=historical?(!Number.isFinite(r.prob)?"歷史資料不足":r.prob>=60?"歷史常有雨":r.prob>=30?"歷史偶有雨":"歷史較少雨"):(r.label||"資料不足");w.append(createWeatherIcon(code,historical,r.prob),node("strong",label));weather.append(w);const rr=node("div",undefined,"taiwan-seven-cell"+(weekend?" weekend":""));rr.append(node("small",historical?"歷史降雨頻率":"降雨機率"),node("strong",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","taiwan-rain-prob"),node("small",historical?"歷史日均雨量":"累積雨量"),node("strong",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","taiwan-rain-mm"));rain.append(rr)});
   strip.append(weather,rain);const sectionPage=node("section",undefined,"selected-week-five-page");sectionPage.append(node("h4","第 "+(pageIndex+1)+" 頁｜"+pageRows[0].date+" ～ "+pageRows[pageRows.length-1].date,"selected-week-page-title"),strip);
-  const hint=node("div",pageIndex===0?"1 / 2　← 左右滑動查看第 6～7 天":"2 / 2　左右滑動返回第 1～5 天 →","selected-week-swipe-hint");
-  sectionPage.append(hint);pages.append(sectionPage);
+  pages.append(sectionPage);
  };
  let touchStartX=0,touchStartY=0;
  pages.addEventListener("touchstart",e=>{const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY},{passive:true});
