@@ -439,3 +439,12 @@
 .cluster-course-select{display:block;width:100%;min-height:52px;padding:10px 13px;border:2px solid #829d90;border-radius:11px;background:#fff;color:#183c30;font-size:1rem;font-weight:700}
 .cluster-course-use{display:block;width:100%;min-height:50px;margin-top:10px;padding:10px 16px;border:2px solid #174f80;border-radius:11px;background:#246eaa;color:#fff;font-size:1rem;font-weight:850}
 .cluster-course-use:disabled{opacity:.55}
+
+/* Seven-day actual forecast report: Taiwan Golf Weather V32.3 visual hierarchy */
+.taiwan-style-seven-day{border:1px solid #d8e2e8;border-radius:14px;background:#fff;padding:12px 10px;margin-top:12px}
+.taiwan-style-seven-day>.chart-card{border:1px solid #d9e3e8;border-radius:14px;background:#fff}
+.taiwan-style-seven-day>.chart-card h3{background:#194f76;color:#fff;border-radius:10px;padding:12px 14px;font-size:1.12rem;font-weight:900}
+.taiwan-seven-weather .taiwan-seven-icon{font-size:2rem}
+.taiwan-seven-weather strong{font-size:1rem;color:#17394f}
+.taiwan-seven-rain .taiwan-rain-prob{font-size:1.25rem;font-weight:900;color:#bd8610}
+.taiwan-seven-rain .taiwan-rain-mm{font-size:1.2rem;font-weight:900;color:#2382bd}
