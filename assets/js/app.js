@@ -26,21 +26,20 @@ window.addEventListener("popstate",()=>{
   if(!exitBackConsumed){exitBackConsumed=true;history.back();}
   return;
  }
- // In every in-app subpage, Android/browser Back returns to that page's parent.
+ // Re-arm a sentinel immediately on EVERY in-app back event. This is
+ // essential because parent-page renderers may push a new history entry.
+ // Without it, a second Android back can escape the WebView.
+ history.pushState({homeExitGuard:true},"",location.href);
  if(climateBackAction){
   const action=climateBackAction;
   climateBackAction=null;
   action();
   return;
  }
- // Defensive fallback: a subpage without a registered parent must return home,
- // never show the app-exit confirmation.
  if($("climate-explorer").classList.contains("is-subpage")){
   showCountryOverview();
   return;
  }
- // Only the top-level home screen uses the two-step exit confirmation.
- ensureHomeExitGuard();
  showExitDialog();
 });
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
