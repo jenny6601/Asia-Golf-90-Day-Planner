@@ -26,13 +26,20 @@ window.addEventListener("popstate",()=>{
   if(!exitBackConsumed){exitBackConsumed=true;history.back();}
   return;
  }
+ // In every in-app subpage, Android/browser Back returns to that page's parent.
  if(climateBackAction){
-  const action=climateBackAction;action();
-  if(!climateBackAction)ensureHomeExitGuard();
+  const action=climateBackAction;
+  climateBackAction=null;
+  action();
   return;
  }
- // Re-arm the exit guard after every unhandled back event so the next
- // Android/browser back press cannot bypass the confirmation dialog.
+ // Defensive fallback: a subpage without a registered parent must return home,
+ // never show the app-exit confirmation.
+ if($("climate-explorer").classList.contains("is-subpage")){
+  showCountryOverview();
+  return;
+ }
+ // Only the top-level home screen uses the two-step exit confirmation.
  ensureHomeExitGuard();
  showExitDialog();
 });
