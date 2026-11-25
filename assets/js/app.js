@@ -110,29 +110,35 @@ async function renderCourseSevenDayReport(host,course,startDate){
   try{const result=await fetchCourseHistoricalWeekNormals(course,dates);historical=result.days||[]}
   catch(e){report.append(node("p","部分日期歷史資料暫時無法取得："+e.message,"risk-summary"))}
  }
+ const wxLabel=c=>!Number.isFinite(c)?"歷史氣候參考":c===0?"晴朗":c<=2?"晴時多雲":c===3?"陰天":c>=51&&c<=57?"毛毛雨":c>=61&&c<=67?"降雨":c>=80&&c<=82?"陣雨":c>=95?"雷雨":"多雲";
  const rows=dates.map(date=>{
   const i=(daily?.time||[]).indexOf(date),h=historical.find(x=>x.date===date),actual=leadFor(date)>=0&&leadFor(date)<=15&&i>=0;
   const code=actual?daily.weather_code?.[i]:null;
-  const wxLabel=c=>!Number.isFinite(c)?"歷史氣候參考":c===0?"晴朗":c<=2?"晴時多雲":c===3?"陰天":c>=51&&c<=57?"毛毛雨":c>=61&&c<=67?"降雨":c>=80&&c<=82?"陣雨":c>=95?"雷雨":"多雲";
   return {date,actual,code,high:actual?daily.temperature_2m_max?.[i]:h?.highMean,low:actual?daily.temperature_2m_min?.[i]:h?.lowMean,feel:actual?daily.apparent_temperature_max?.[i]:null,prob:actual?daily.precipitation_probability_max?.[i]:h?.rainFrequency,rain:actual?daily.precipitation_sum?.[i]:h?.rainMean,label:actual?wxLabel(code):!Number.isFinite(h?.rainFrequency)?"歷史資料不足":h.rainFrequency>=60?"歷史常有雨":h.rainFrequency>=30?"歷史偶有雨":"歷史較少雨"};
  });
- const strip=node("div",undefined,"departure-seven-strip");
- rows.forEach(r=>{
-  const day=node("button",undefined,"departure-seven-day"+(r.date===startDate?" is-departure":""));day.type="button";
-  const weekday=["日","一","二","三","四","五","六"][new Date(r.date+"T12:00:00Z").getUTCDay()];
-  day.append(node("strong",r.date.slice(5).replace("-","/")+"（"+weekday+"）","departure-date"+([0,6].includes(new Date(r.date+"T12:00:00Z").getUTCDay())?" weekend-red":"")));
-  day.append(createWeatherIcon(r.code,!r.actual,r.prob),node("b",r.label));
-  day.append(node("span",Number.isFinite(r.high)&&Number.isFinite(r.low)?r.high.toFixed(1)+"° / "+r.low.toFixed(1)+"°C":"溫度資料不足"));
-  day.append(node("small",r.actual?"降雨機率":"歷史降雨頻率"));
-  day.append(node("strong",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"));
-  day.append(node("small",r.actual?"累積雨量":"歷史日均雨量"));
-  day.append(node("strong",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));
-  day.append(node("small",r.actual?"點選查看逐時明細":"點選查看歷史資料"));
-  day.addEventListener("click",()=>renderDepartureDayPage(host,course,r));
-  strip.append(day);
- });
- report.append(strip);
- report.append(node("p","左右滑動查看七天；前 16 天使用逐日預報，超出範圍的日期以歷史同期資料補充。","long-range-note"));
+ const pages=node("div",undefined,"departure-week-pages");let pageIndex=0;
+ const renderPage=()=>{
+  pages.replaceChildren();const pageRows=rows.slice(pageIndex*5,pageIndex*5+5);
+  const page=node("section",undefined,"departure-five-day-page");
+  page.append(node("h4","第 "+(pageIndex+1)+" 頁｜"+pageRows[0].date+" ～ "+pageRows[pageRows.length-1].date));
+  const datesRow=node("div",undefined,"departure-five-dates");
+  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),d=node("div",undefined,"departure-five-date"+([0,6].includes(wd)?" weekend-red":""));d.append(node("strong",r.date.slice(5).replace("-","/")),node("small","週"+["日","一","二","三","四","五","六"][wd]));datesRow.append(d)});
+  page.append(datesRow);
+  const chartWrap=node("div",undefined,"departure-five-chart");
+  const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("viewBox","0 0 700 190");svg.setAttribute("role","img");svg.setAttribute("aria-label","每日最高溫、最低溫及最高體感溫度曲線");svg.style.width="100%";svg.style.display="block";
+  const values=pageRows.flatMap(r=>[r.high,r.low,r.feel].filter(Number.isFinite));
+  if(values.length){const lo=Math.min(...values)-2,hi=Math.max(...values)+2,x=i=>70+i*560/Math.max(1,pageRows.length-1),y=v=>155-(v-lo)/(hi-lo||1)*115;
+   [25,85,145].forEach(yy=>{const l=document.createElementNS(svg.namespaceURI,"line");l.setAttribute("x1",35);l.setAttribute("x2",680);l.setAttribute("y1",yy);l.setAttribute("y2",yy);l.setAttribute("stroke","#dce5e9");svg.append(l)});
+   [{key:"high",color:"#ef6b54"},{key:"low",color:"#3198dc"},{key:"feel",color:"#d49b22"}].filter(s=>pageRows.some(r=>Number.isFinite(r[s.key]))).forEach(s=>{const pts=pageRows.map((r,i)=>Number.isFinite(r[s.key])?[x(i),y(r[s.key])]:null).filter(Boolean);if(pts.length>1){const p=document.createElementNS(svg.namespaceURI,"polyline");p.setAttribute("points",pts.map(p=>p.join(",")).join(" "));p.setAttribute("fill","none");p.setAttribute("stroke",s.color);p.setAttribute("stroke-width","4");p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");svg.append(p)}pts.forEach((p,i)=>{const dot=document.createElementNS(svg.namespaceURI,"circle");dot.setAttribute("cx",p[0]);dot.setAttribute("cy",p[1]);dot.setAttribute("r","4");dot.setAttribute("fill",s.color);svg.append(dot);const tx=document.createElementNS(svg.namespaceURI,"text");tx.setAttribute("x",p[0]);tx.setAttribute("y",p[1]+(s.key==="high"?-10:s.key==="low"?17:2));tx.setAttribute("text-anchor","middle");tx.setAttribute("font-size","15");tx.setAttribute("font-weight","800");tx.setAttribute("fill",s.color);tx.textContent=pageRows[i][s.key].toFixed(0)+"°";svg.append(tx)})});
+  }
+  chartWrap.append(svg);const legend=node("div",undefined,"departure-five-legend");legend.append(node("span","● 最高溫","legend-high"),node("span","● 最低溫","legend-low"),node("span","● 體感溫度","legend-feel"));chartWrap.append(legend);page.append(chartWrap);
+  const cards=node("div",undefined,"departure-five-cards");
+  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),day=node("button",undefined,"departure-five-card"+(r.date===startDate?" is-departure":""));day.type="button";day.append(createWeatherIcon(r.code,!r.actual,r.prob),node("strong",r.label));day.append(node("span",Number.isFinite(r.high)&&Number.isFinite(r.low)?r.high.toFixed(1)+"° / "+r.low.toFixed(1)+"°C":"溫度資料不足"));day.append(node("small",r.actual?"降雨機率":"歷史降雨頻率"),node("b",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"),node("small",r.actual?"累積雨量":"歷史日均雨量"),node("b",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));if([0,6].includes(wd))day.classList.add("weekend");day.addEventListener("click",()=>renderDepartureDayPage(host,course,r));cards.append(day)});
+  page.append(cards);
+  const nav=node("div",undefined,"departure-page-nav");const prev=node("button","上一頁");prev.disabled=pageIndex===0;prev.addEventListener("click",()=>{pageIndex--;renderPage()});const label=node("span",(pageIndex+1)+" / "+Math.ceil(rows.length/5));const next=node("button","下一頁");next.disabled=(pageIndex+1)*5>=rows.length;next.addEventListener("click",()=>{pageIndex++;renderPage()});nav.append(prev,label,next);page.append(nav);pages.append(page);
+ };
+ report.append(pages);
+ report.append(node("p","每頁最多顯示 5 天；點選任一天即可展開逐時預報或歷史資料。前 16 天使用逐日預報，超出範圍以歷史同期資料補充。","long-range-note"));
 }
 async function renderDepartureDayPage(host,course,row){
  host.replaceChildren();
