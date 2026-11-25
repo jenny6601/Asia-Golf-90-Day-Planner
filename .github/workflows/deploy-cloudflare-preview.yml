@@ -1,0 +1,40 @@
+name: Deploy Asia Golf Climate Preview
+
+on:
+  push:
+    branches:
+      - asia-eight-country-shared-engine
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: asia-golf-climate-preview
+  cancel-in-progress: true
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout development branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run tests
+        run: npm test
+
+      - name: Create project if missing and deploy preview
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          PROJECTS="$(npx --yes wrangler@3.90.0 pages project list)"
+          if ! printf '%s' "$PROJECTS" | grep -q "asia-golf-climate"; then
+            npx --yes wrangler@3.90.0 pages project create asia-golf-climate --production-branch=main
+          fi
+          npx --yes wrangler@3.90.0 pages deploy . --project-name=asia-golf-climate --branch=asia-eight-country-shared-engine
