@@ -235,3 +235,37 @@
  .seven-day-hour-row{grid-template-columns:48px repeat(7,minmax(66px,1fr));min-width:520px;font-size:.82rem}
  .selected-week-report details{overflow-x:auto}
 }
+
+/* Hide the explanatory copy highlighted in the mobile review screenshots */
+#climate-status{display:none!important}
+#climate-explorer .region-choice span,
+#climate-explorer .region-choice small{display:none!important}
+.week-recommendations>p,
+.week-card p{display:none!important}
+
+/* Seven-day forecast aligned like Taiwan Golf Weather PWA V32.3 */
+.taiwan-style-seven-day{width:100%;overflow-x:auto;overscroll-behavior-x:contain;padding:4px 0 12px}
+.taiwan-seven-row{display:grid;grid-template-columns:repeat(7,minmax(94px,1fr));min-width:658px;gap:0}
+.taiwan-seven-cell{min-height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 5px;text-align:center;border-right:1px solid #dce5e9;background:#f4f7f9}
+.taiwan-seven-cell:nth-child(even){background:#e8eff4}
+.taiwan-seven-dates .taiwan-seven-cell{min-height:62px;background:#edf3f6}
+.taiwan-seven-dates strong{font-size:1rem;color:#174b39}
+.taiwan-seven-dates small{font-size:.8rem;color:#64748b}
+.taiwan-seven-icon{font-size:1.7rem;line-height:1.3}
+.taiwan-seven-weather strong{font-size:.9rem}
+.taiwan-seven-rain .taiwan-seven-cell{min-height:104px}
+.taiwan-seven-rain small{font-size:.78rem;color:#64748b}
+.taiwan-seven-rain strong{font-size:1rem}
+.taiwan-rain-prob{color:#1769aa}
+.taiwan-rain-mm{color:#174b39}
+.taiwan-style-seven-day .chart-card,
+.taiwan-style-seven-day .chart-container{min-width:658px}
+.taiwan-style-seven-day .chart-card{margin:10px 0;padding:10px 8px}
+.taiwan-style-seven-day .chart-card h3,
+.taiwan-style-seven-day h3{font-size:1rem;margin:8px 4px}
+@media(max-width:620px){
+ .taiwan-seven-row{grid-template-columns:repeat(7,minmax(94px,1fr));min-width:658px}
+ .taiwan-seven-cell{padding:9px 4px}
+ .taiwan-seven-dates strong{font-size:.98rem}
+ .taiwan-seven-icon{font-size:1.65rem}
+}
