@@ -134,7 +134,7 @@ async function run(){const b=$("run");b.disabled=true;$("report").replaceChildre
 function monthOptions(){const base=today().slice(0,7)+"-01",out=[];for(let i=0;i<3;i++){const d=new Date(base+"T12:00:00Z");d.setUTCMonth(d.getUTCMonth()+i);out.push(d.toISOString().slice(0,7))}return out}
 function showClimateScreen(title,backAction){
  const overview=$("asia-overview"),out=$("region-report"),status=$("climate-status");
- overview.hidden=true;
+ overview.hidden=true;status.hidden=true;
  let nav=$("flow-nav");if(!nav){nav=node("div",undefined,"flow-nav");nav.id="flow-nav";$("climate-explorer").insertBefore(nav,out)}
  nav.replaceChildren();
  if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",backAction);nav.append(back)}
@@ -144,7 +144,7 @@ function showClimateScreen(title,backAction){
 function showCountryOverview(){
  $("asia-overview").hidden=false;$("region-report").replaceChildren();$("region-report").hidden=true;
  const nav=$("flow-nav");if(nav)nav.replaceChildren();
- $("climate-status").textContent="請選擇國家，進入該國地理分區。";
+ $("climate-status").hidden=false;$("climate-status").textContent="請選擇國家，進入該國地理分區。";
 }
 const REGION_CATALOG={
  JP:["北海道","東北","關東","中部","關西","中國地方","四國","九州","沖繩"],
@@ -173,8 +173,7 @@ async function renderRegionClimate(){
  showClimateScreen((S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜選擇地理分區",showCountryOverview);
  const available=all.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
  const selectedCountry=S.directory.countries.find(c=>c.code===country);
- const heading=node("h3",(selectedCountry?.nameZh||country)+"｜地理分區");
- const intro=node("p","請選擇地理分區。尚無球場或座標的分區仍可進入月份與週次畫面，方便檢視版面；資料會明確標示待建置，不會以其他城市代替。","long-range-note");
+
  const grid=node("div",undefined,"region-choice-grid");
  for(const region of defined){
   const courses=all.filter(c=>normalizeRegion(c.region)===region);
@@ -184,7 +183,7 @@ async function renderRegionClimate(){
   card.addEventListener("click",()=>renderRegionMonths(country,region,months,courses));
   grid.append(card);
  }
- out.append(heading,intro,grid);
+ out.append(grid);
  status.textContent=(selectedCountry?.nameZh||country)+"｜"+defined.length+" 個地理分區。點選分區即可查看三個月總表。"+(available.length?" 已有 "+available.length+" 個具有效座標的球場。":" 目前尚無有效球場座標。");
 }
 async function renderRegionMonths(country,region,months,courses){
