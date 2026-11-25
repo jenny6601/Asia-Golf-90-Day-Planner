@@ -448,3 +448,15 @@
 .taiwan-seven-weather strong{font-size:1rem;color:#17394f}
 .taiwan-seven-rain .taiwan-rain-prob{font-size:1.25rem;font-weight:900;color:#bd8610}
 .taiwan-seven-rain .taiwan-rain-mm{font-size:1.2rem;font-weight:900;color:#2382bd}
+
+
+/* Unified seven-day report: one compact Taiwan-style horizontal strip */
+.unified-seven-day{border:1px solid #dce5e9;border-radius:16px;padding:10px 8px;background:#fff}
+.unified-seven-day .seven-day-inline-graph{min-width:658px;padding:8px 0 12px;background:linear-gradient(90deg,#f4f7f9 0 14.285%,#e8eff4 14.285% 28.57%,#f4f7f9 28.57% 42.855%,#e8eff4 42.855% 57.14%,#f4f7f9 57.14% 71.425%,#e8eff4 71.425% 85.71%,#f4f7f9 85.71% 100%)}
+.unified-seven-day .taiwan-seven-weather .taiwan-seven-cell{min-height:110px}
+.unified-seven-day .taiwan-seven-rain .taiwan-seven-cell{min-height:112px}
+.unified-seven-day .taiwan-seven-rain small{font-size:.78rem}
+.unified-seven-day .taiwan-seven-rain strong{font-size:1.05rem}
+.seven-day-legend{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-weight:800;padding:4px 0;color:#28475b}
+.seven-day-legend .legend-high{color:#ef6b54}.seven-day-legend .legend-low{color:#3198dc}.seven-day-legend .legend-feel{color:#b98517}
+@media(max-width:620px){.unified-seven-day{padding:8px 5px}.unified-seven-day .seven-day-inline-graph{padding-top:5px}}
