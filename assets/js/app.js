@@ -1,7 +1,7 @@
 import {fetchAsiaGolfDirectory} from "./course-catalog.js";
 import {formatCourseDate} from "./course-time.js";
 import {fetchCourseForecast} from "./weather-api.js";
-import {fetchCourseSeasonalForecast,interpretPrecipitationEfi} from "./long-range-api.js";
+import {fetchCourseSeasonalForecast,fetchCourseHistoricalMonthlyClimate,interpretPrecipitationEfi} from "./long-range-api.js";
 import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
@@ -384,39 +384,41 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
  const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table region-matrix"),thead=node("thead"),hr=node("tr");
  ["天氣指標",...months.map(m=>m)].forEach(t=>hr.append(node("th",t)));thead.append(hr);tbl.append(thead);
  const body=node("tbody");
+ const historicalResults=(await Promise.allSettled(valid.map(c=>fetchCourseHistoricalMonthlyClimate(c)))).filter(x=>x.status==="fulfilled").map(x=>x.value);
  const monthData=months.map(month=>{
-  const values=records.map(rec=>{
+  const season=records.map(rec=>{
    const i=(rec.monthly?.time||[]).findIndex(t=>t.slice(0,7)===month);
-   if(i<0)return null;
-   return {rain:rec.monthly.precipitation_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i],
-    low:rec.monthly.temperature_min24h_2m_mean?.[i],high:rec.monthly.temperature_max24h_2m_mean?.[i]};
+   return i<0?null:{rain:rec.monthly.precipitation_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i]};
   }).filter(Boolean);
-  const avg=key=>{const v=values.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
-  const rain=avg("rain"),anomaly=avg("anomaly"),low=avg("low"),high=avg("high");
-  const baseline=Number.isFinite(rain)&&Number.isFinite(anomaly)?rain-anomaly:null;
-  let outlook="資料不足";
-  if(Number.isFinite(rain)&&Number.isFinite(anomaly)&&Number.isFinite(baseline)&&baseline>0){
-   const ratio=rain/baseline;
-   outlook=ratio>=1.2?"偏濕趨勢":ratio<=0.8?"偏乾趨勢":"接近常態";
+  const hist=historicalResults.map(rec=>rec.monthly?.find(x=>x.month===Number(month.slice(5,7)))).filter(Boolean);
+  const avg=(arr,key)=>{const v=arr.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
+  const seasonRain=avg(season,"rain"),seasonAnomaly=avg(season,"anomaly");
+  const historicalRain=avg(hist,"rain"),rain=Number.isFinite(seasonRain)?seasonRain:historicalRain;
+  const rainDays=avg(hist,"rainDays"),low=avg(hist,"low"),high=avg(hist,"high");
+  const avgDaily=avg(hist,"avgDailyRain"),maxDaily=hist.length?Math.max(...hist.map(x=>x.maxDailyRain).filter(Number.isFinite)):null;
+  let outlook="歷史同期參考";
+  if(Number.isFinite(seasonRain)&&Number.isFinite(seasonAnomaly)){
+   const baseline=seasonRain-seasonAnomaly;
+   outlook=baseline>0?(seasonRain/baseline>=1.2?"季節預測偏濕":seasonRain/baseline<=.8?"季節預測偏乾":"季節預測接近常態"):"季節預測可用";
   }
   const days=new Date(Date.UTC(Number(month.slice(0,4)),Number(month.slice(5,7)),0)).getUTCDate();
-  return {month,rain,anomaly,low,high,avgDaily:Number.isFinite(rain)?rain/days:null,
-   outlook,status:values.length?"季節資料可用":valid.length?"天氣資料暫缺":"待建置"};
+  return {month,outlook,rain,low,high,rainDays,avgDaily:Number.isFinite(avgDaily)?avgDaily:(Number.isFinite(rain)?rain/days:null),maxDaily,
+   status:season.length&&hist.length?"季節預測＋歷史統計":season.length?"季節預測可用":hist.length?"歷史氣候參考":valid.length?"天氣資料暫缺":"待建置"};
  });
  const metrics=[
   {label:"月天氣總況",key:"outlook",text:true},
-  {label:"月低溫（每日低溫均值）",key:"low",unit:" °C"},
-  {label:"月高溫（每日高溫均值）",key:"high",unit:" °C"},
+  {label:"歷史月低溫",key:"low",unit:" °C"},
+  {label:"歷史月高溫",key:"high",unit:" °C"},
   {label:"月降雨量",key:"rain",unit:" mm"},
-  {label:"月平均日雨量",key:"avgDaily",unit:" mm／日"},
-  {label:"月降雨天數",key:"rainDays",text:true,missing:"資料未提供"},
-  {label:"月最高日雨量",key:"maxDailyRain",text:true,missing:"資料未提供"}
+  {label:"歷史月降雨日數（≥1 mm）",key:"rainDays",unit:" 日"},
+  {label:"歷史月平均日雨量",key:"avgDaily",unit:" mm／日"},
+  {label:"歷史月最高日雨量",key:"maxDaily",unit:" mm"}
  ];
  for(const metric of metrics){
   const tr=node("tr");tr.append(node("th",metric.label));
   for(const item of monthData){
    const v=item[metric.key];
-   const display=metric.text?(v??metric.missing??"—"):(Number.isFinite(v)?v.toFixed(1)+metric.unit:"—");
+   const display=metric.text?(v??"—"):(Number.isFinite(v)?(metric.key==="rainDays"?v.toFixed(1):v.toFixed(1))+metric.unit:"—");
    tr.append(node("td",display));
   }
   body.append(tr);
