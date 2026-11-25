@@ -150,9 +150,11 @@ function showClimateScreen(title,backAction){
  history.pushState({climateFlow:true},"",location.href);
  let nav=$("flow-nav");if(!nav){nav=node("div",undefined,"flow-nav");nav.id="flow-nav";$("climate-explorer").insertBefore(nav,out)}
  nav.replaceChildren();
- if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",()=>history.back());nav.append(back)}
- const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{history.pushState({climateHome:true},"",location.href);showCountryOverview()});nav.append(home);
  const h=node("h2",title,"flow-title");nav.append(h);
+ const actions=node("div",undefined,"flow-actions");
+ if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",()=>history.back());actions.append(back)}
+ const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{history.pushState({climateHome:true},"",location.href);showCountryOverview()});actions.append(home);
+ nav.append(actions);
  out.hidden=false;status.hidden=false;
 }
 function showCountryOverview(){
