@@ -180,7 +180,8 @@ async function renderRegionClimate(){
  out.replaceChildren();const months=monthOptions(),all=S.directory.courses.filter(c=>c.countryCode===country&&c.enabled),catalog=REGION_CATALOG[country]||[];
  const normalizeRegion=r=>(country==="JP"&&["Okinawa","沖繩"].includes(r)?"沖繩":r);
  const defined=[...new Set([...catalog,...all.map(c=>c.region).filter(Boolean)].map(normalizeRegion))];
- showClimateScreen((S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜選擇地理分區",showCountryOverview);
+ const countryFlags={JP:"🇯🇵",KR:"🇰🇷",CN:"🇨🇳",VN:"🇻🇳",TH:"🇹🇭",MY:"🇲🇾",SG:"🇸🇬",ID:"🇮🇩"};
+ showClimateScreen((S.directory.countries.find(c=>c.code===country)?.nameZh||country)+" "+(countryFlags[country]||"🌏")+"｜選擇地理分區",showCountryOverview);
  const available=all.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
  const selectedCountry=S.directory.countries.find(c=>c.code===country);
 
