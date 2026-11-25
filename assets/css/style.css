@@ -431,3 +431,11 @@
  #flow-nav .flow-actions{gap:7px!important}
  #flow-nav .flow-actions>.flow-back,#flow-nav .flow-actions>.flow-home{height:40px!important;min-height:40px!important;padding:0 11px!important;font-size:13px!important}
 }
+
+/* Built-course picker below regional climate summary */
+.cluster-course-panel{margin-top:22px;padding:18px;border:2px solid #b9cec3;border-radius:16px;background:#f5faf7}
+.cluster-course-panel h3{margin:0 0 10px;color:#174d3c;font-size:1.25rem;font-weight:900}
+.cluster-course-note{margin:0 0 12px;color:#52665d;font-size:1rem;line-height:1.55}
+.cluster-course-select{display:block;width:100%;min-height:52px;padding:10px 13px;border:2px solid #829d90;border-radius:11px;background:#fff;color:#183c30;font-size:1rem;font-weight:700}
+.cluster-course-use{display:block;width:100%;min-height:50px;margin-top:10px;padding:10px 16px;border:2px solid #174f80;border-radius:11px;background:#246eaa;color:#fff;font-size:1rem;font-weight:850}
+.cluster-course-use:disabled{opacity:.55}
