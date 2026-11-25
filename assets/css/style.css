@@ -374,3 +374,12 @@
  #climate-explorer.is-subpage .subregion-choice{min-height:76px!important;height:76px}
  #climate-explorer.is-subpage .subregion-choice strong{font-size:1rem!important}
 }
+
+/* Navigation: back and home controls */
+.flow-nav{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+.flow-nav .flow-title{flex-basis:100%;margin-top:2px}
+.flow-nav .flow-back,.flow-nav .flow-home{
+ min-height:48px;padding:10px 20px;border-radius:14px;font-size:1rem;font-weight:850;
+ border:2px solid #789889;box-shadow:0 2px 5px #173d2d12
+}
+.flow-nav .flow-home{background:#eaf2ed;color:#185f49;border-color:#6f9b87}
