@@ -35,15 +35,41 @@ function renderSixteenDayStrip(host,daily,selectedDate){
 }
 function metricGrid(host,items){const grid=node("div",undefined,"results");for(const [label,value] of items){const card=node("article",undefined,"result-card");card.append(node("p",label),node("strong",value));grid.append(card)}host.append(grid)}
 
+function createWeatherIcon(code, historical=false, probability=null){
+ const ns="http://www.w3.org/2000/svg",svg=document.createElementNS(ns,"svg");
+ svg.setAttribute("viewBox","0 0 64 64");svg.setAttribute("role","img");
+ const rain=historical?Number.isFinite(probability)&&probability>=30:
+  Number.isFinite(code)&&((code>=51&&code<=67)||(code>=80&&code<=82)||code>=95);
+ const thunder=!historical&&Number.isFinite(code)&&code>=95;
+ const sunny=!historical&&Number.isFinite(code)&&code===0;
+ const partly=!historical&&Number.isFinite(code)&&(code===1||code===2);
+ const cloud=!historical&&Number.isFinite(code)&&code===3;
+ const add=(tag,attrs)=>{const e=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,String(v)));svg.append(e);return e};
+ const bg=add("rect",{x:2,y:2,width:60,height:60,rx:13,fill:"#159ce5"});
+ if(sunny||partly){
+  add("circle",{cx:31,cy:27,r:11,fill:"#ffd22e",stroke:"#f4a900","stroke-width":2});
+  if(sunny)for(let i=0;i<8;i++){const a=i*Math.PI/4,x1=31+15*Math.cos(a),y1=27+15*Math.sin(a),x2=31+20*Math.cos(a),y2=27+20*Math.sin(a);add("line",{x1,y1,x2,y2,stroke:"#ffd22e","stroke-width":3,"stroke-linecap":"round"})}
+ }
+ if(!sunny){
+  add("path",{d:partly?"M12 42 C7 42 6 35 11 32 C12 26 20 23 26 27 C31 18 45 22 46 32 C55 32 58 42 51 45 L15 45 Z":"M10 43 C5 42 6 34 12 32 C13 24 23 21 29 26 C34 16 49 21 50 31 C59 31 60 42 53 45 Z",fill:"#f7fbff",stroke:"#829bb1","stroke-width":2.4,"stroke-linejoin":"round"});
+ }
+ if(rain){
+  for(const [x,y] of [[21,51],[32,53],[43,51]])add("path",{d:`M${x} ${y-4} Q${x-5} ${y+2} ${x} ${y+5} Q${x+5} ${y+2} ${x} ${y-4} Z`,fill:"#49c8ff",stroke:"#1689d0","stroke-width":1});
+ }
+ if(thunder)add("path",{d:"M34 39 L25 52 L33 51 L29 61 L43 45 L35 46 Z",fill:"#ffd22e",stroke:"#e89b00","stroke-width":1});
+ if(!sunny&&!partly&&!cloud&&!rain&&!thunder)add("path",{d:"M10 43 C5 42 6 34 12 32 C13 24 23 21 29 26 C34 16 49 21 50 31 C59 31 60 42 53 45 Z",fill:"#f7fbff",stroke:"#829bb1","stroke-width":2.4});
+ return svg;
+}
 function renderSevenDayVisual(host,rows,historical=false){
  const strip=node("div",undefined,"taiwan-style-seven-day unified-seven-day");
  const makeRow=cls=>node("div",undefined,"taiwan-seven-row "+cls);
  const dates=makeRow("taiwan-seven-dates"),temps=makeRow("taiwan-seven-temps"),weather=makeRow("taiwan-seven-weather"),rain=makeRow("taiwan-seven-rain");
  rows.forEach(r=>{
-  const d=node("div",undefined,"taiwan-seven-cell");d.append(node("strong",r.date.slice(5).replace("-","/")),node("small",["日","一","二","三","四","五","六"][new Date(r.date+"T12:00:00Z").getUTCDay()]));dates.append(d);
+  const dayIndex=new Date(r.date+"T12:00:00Z").getUTCDay(),weekend=dayIndex===0||dayIndex===6;
+  const d=node("div",undefined,"taiwan-seven-cell"+(weekend?" weekend":""));d.append(node("strong",r.date.slice(5).replace("-","/")),node("small",["日","一","二","三","四","五","六"][dayIndex]));dates.append(d);
   const t=node("div",undefined,"taiwan-seven-cell temp-labels");t.append(node("strong",Number.isFinite(r.high)?r.high.toFixed(0)+"°":"—","temp-high"),node("strong",Number.isFinite(r.low)?r.low.toFixed(0)+"°":"—","temp-low"));temps.append(t);
-  const w=node("div",undefined,"taiwan-seven-cell");const icon=historical?(!Number.isFinite(r.prob)?"—":r.prob>=60?"🌧️":r.prob>=30?"🌦️":"🌤️"):r.icon||"—";const label=historical?(!Number.isFinite(r.prob)?"歷史資料不足":r.prob>=60?"歷史常有雨":r.prob>=30?"歷史偶有雨":"歷史較少雨"):(r.label||"資料不足");w.append(node("div",icon,"taiwan-seven-icon"),node("strong",label));weather.append(w);
-  const rr=node("div",undefined,"taiwan-seven-cell");rr.append(node("small",historical?"歷史降雨頻率":"降雨機率"),node("strong",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","taiwan-rain-prob"),node("small",historical?"歷史日均雨量":"累積雨量"),node("strong",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","taiwan-rain-mm"));rain.append(rr);
+  const w=node("div",undefined,"taiwan-seven-cell"+(weekend?" weekend":""));const code=Number.isFinite(r.code)?r.code:null;const label=historical?(!Number.isFinite(r.prob)?"歷史資料不足":r.prob>=60?"歷史常有雨":r.prob>=30?"歷史偶有雨":"歷史較少雨"):(r.label||"資料不足");w.append(createWeatherIcon(code,historical,r.prob),node("strong",label));weather.append(w);
+  const rr=node("div",undefined,"taiwan-seven-cell"+(weekend?" weekend":""));rr.append(node("small",historical?"歷史降雨頻率":"降雨機率"),node("strong",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","taiwan-rain-prob"),node("small",historical?"歷史日均雨量":"累積雨量"),node("strong",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","taiwan-rain-mm"));rain.append(rr);
  });
  strip.append(dates);
  const graph=node("div",undefined,"seven-day-inline-graph");
