@@ -330,3 +330,31 @@
  .country-tile strong{font-size:1.05rem!important}
  #asia-overview{gap:7px}
 }
+
+/* Region selection page: remove repeated overview banner and compact region tiles */
+#climate-explorer.is-subpage>h2:first-child{display:none!important}
+#climate-explorer.is-subpage{padding-top:14px}
+#climate-explorer.is-subpage #flow-nav{margin:0 0 10px;gap:8px}
+#climate-explorer.is-subpage #flow-nav .flow-back{padding:10px 15px;min-height:44px}
+#climate-explorer.is-subpage #flow-nav .flow-title{padding:12px 15px;font-size:1.2rem}
+#climate-explorer.is-subpage .region-choice-grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px
+}
+#climate-explorer.is-subpage .region-choice{
+ min-height:84px!important;height:84px;padding:9px 8px!important;
+ border:2px solid #789889!important;border-radius:12px!important;
+ background:#f7faf8!important;box-shadow:inset 0 0 0 1px #d5e2db,0 2px 5px #173d2d10!important;
+ display:flex!important;align-items:center;justify-content:center;text-align:center;
+}
+#climate-explorer.is-subpage .region-choice strong{
+ font-size:1.12rem!important;font-weight:900!important;line-height:1.25;color:#173f35
+}
+#climate-explorer.is-subpage .region-choice span,
+#climate-explorer.is-subpage .region-choice small{display:none!important}
+#climate-explorer.is-subpage .region-choice:focus-visible{outline:4px solid #1769aa;outline-offset:2px}
+@media(max-width:560px){
+ #climate-explorer.is-subpage{padding:14px 14px 18px}
+ #climate-explorer.is-subpage #flow-nav .flow-title{font-size:1.12rem;padding:11px 12px}
+ #climate-explorer.is-subpage .region-choice{height:78px;min-height:78px!important;padding:7px 5px!important}
+ #climate-explorer.is-subpage .region-choice strong{font-size:1.05rem!important}
+}
