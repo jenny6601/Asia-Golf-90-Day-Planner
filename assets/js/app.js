@@ -7,7 +7,7 @@ import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 const $=id=>document.getElementById(id),S={};
 let climateBackAction=null,climateHistoryReady=false;
-window.addEventListener("popstate",()=>{if(climateBackAction){const action=climateBackAction;action();}else showCountryOverview();});
+window.addEventListener("popstate",()=>{if(climateBackAction){const action=climateBackAction;action();return;}const leave=window.confirm("確定要退出亞洲高爾夫天氣 App 嗎？");if(!leave){history.pushState({homeExitGuard:true},"",location.href);showCountryOverview();}else{history.back();}});
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
 const add=(s,n)=>{const d=new Date(s+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
 const val=(x,u="")=>x==null?"—":x+u;
@@ -152,8 +152,7 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
  ["時間","天氣","機率 %","雨量 mm","氣溫 °C","體感 °C","風速 m/s"].forEach(x=>header.append(node("span",x)));table.append(header);
  const label=c=>!Number.isFinite(c)?"—":c===0?"晴朗":c<=2?"晴時多雲":c===3?"陰／多雲":c<=48?"多雲":c<=57?"毛毛雨":c<=67?"降雨":c<=82?"陣雨":c>=95?"雷雨":"多雲";
  for(const r of records){const line=node("div",undefined,"departure-hour-row");line.append(node("span",r.time),node("span",label(r.code)),node("span",Number.isFinite(r.prob)?r.prob+"%":"—"),node("span",Number.isFinite(r.rain)?r.rain.toFixed(1):"—"),node("span",Number.isFinite(r.temp)?r.temp.toFixed(1):"—"),node("span",Number.isFinite(r.feel)?r.feel.toFixed(1):"—"),node("span",Number.isFinite(r.wind)?r.wind.toFixed(1):"—"));table.append(line)}
- card.append(section(card,"逐時天氣明細｜06:00–18:00"));
- card.append(table);
+ card.append(node("h4","逐時天氣明細｜06:00–18:00","departure-hourly-title"),table);
  svgChart(card,"每小時降雨機率圖（%）",[{label:"降雨機率",values:records.map(r=>r.prob)}],"%");
  svgChart(card,"每小時預報雨量圖（mm）",[{label:"降雨量",values:records.map(r=>r.rain)}],"mm");
  svgChart(card,"逐小時氣溫與體感溫度（°C）",[{label:"氣溫",values:records.map(r=>r.temp)},{label:"體感溫度",values:records.map(r=>r.feel)}],"°C");
@@ -182,7 +181,7 @@ function showClimateScreen(title,backAction){
  const h=node("h2",title,"flow-title");nav.append(h);
  const actions=node("div",undefined,"flow-actions");
  if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",()=>history.back());actions.append(back)}
- const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{history.pushState({climateHome:true},"",location.href);showCountryOverview()});actions.append(home);
+ const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{climateBackAction=null;showCountryOverview();history.pushState({homeExitGuard:true},"",location.href)});actions.append(home);
  nav.append(actions);
  out.hidden=false;status.hidden=false;
 }
