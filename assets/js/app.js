@@ -229,6 +229,68 @@ const SUBREGION_CATALOG={
   "巴布亞":["查亞普拉"]
  }
 };
+const JP_PREFECTURES={
+"北海道":["北海道"],"東北":["青森縣","岩手縣","宮城縣","秋田縣","山形縣","福島縣"],
+"關東":["東京都","神奈川縣","千葉縣","埼玉縣","茨城縣","栃木縣","群馬縣"],
+"中部":["新潟縣","富山縣","石川縣","福井縣","山梨縣","長野縣","岐阜縣","靜岡縣","愛知縣"],
+"關西":["三重縣","滋賀縣","京都府","大阪府","兵庫縣","奈良縣","和歌山縣"],
+"中國地方":["鳥取縣","島根縣","岡山縣","廣島縣","山口縣"],
+"四國":["德島縣","香川縣","愛媛縣","高知縣"],
+"九州":["福岡縣","佐賀縣","長崎縣","熊本縣","大分縣","宮崎縣","鹿兒島縣"],
+"沖繩":["沖繩縣"]
+};
+const JP_PREFECTURE_CLUSTERS={
+"北海道":["札幌・北廣島","苫小牧・千歲","二世谷・俱知安","旭川・富良野","帶廣・十勝","釧路・根室","函館・道南","網走・知床"],
+"青森縣":["青森・弘前","八戶・三澤"],"岩手縣":["盛岡・雫石","花卷・北上","一關・平泉"],
+"宮城縣":["仙台・松島","大崎・鳴子","石卷・三陸"],"秋田縣":["秋田・男鹿","大館・能代","橫手・湯澤"],
+"山形縣":["山形・天童","米澤・置賜","酒田・鶴岡"],"福島縣":["福島・二本松","郡山・磐梯","會津・白河"],
+"東京都":["多摩・八王子","東京灣岸"],"神奈川縣":["橫濱・川崎","湘南・鎌倉","箱根・相模湖"],
+"千葉縣":["成田・佐倉","千葉・市原","房總・木更津","茂原・九十九里"],"埼玉縣":["埼玉南部","熊谷・深谷","秩父・飯能"],
+"茨城縣":["水戶・笠間","筑波・土浦","鹿島・鉾田","常陸太田・大子"],"栃木縣":["宇都宮・鹿沼","那須・塩原","日光・鬼怒川","小山・栃木市"],
+"群馬縣":["前橋・高崎","太田・桐生","草津・沼田"],"新潟縣":["新潟・阿賀野","長岡・燕三條","上越・妙高"],
+"富山縣":["富山・立山","高岡・氷見"],"石川縣":["金澤・白山","能登"],"福井縣":["福井・坂井","敦賀・若狹"],
+"山梨縣":["甲府・笛吹","富士五湖・河口湖"],"長野縣":["長野・須坂","輕井澤・佐久","松本・安曇野","諏訪・蓼科","伊那・木曾"],
+"岐阜縣":["岐阜・各務原","多治見・可兒","郡上・飛驒"],"靜岡縣":["靜岡・清水","濱松・濱名湖","御殿場・富士","伊豆・熱海"],
+"愛知縣":["名古屋・尾張","豐田・三河","知多半島"],"三重縣":["四日市・鈴鹿","津・松阪","伊勢・志摩"],
+"滋賀縣":["大津・草津","近江八幡・彦根"],"京都府":["京都市區","龜岡・丹波","舞鶴・丹後"],
+"大阪府":["大阪北部","大阪東部","大阪南部"],"兵庫縣":["神戶・六甲","三田・篠山","姬路・播磨","淡路島"],
+"奈良縣":["奈良・生駒","吉野・五條"],"和歌山縣":["和歌山市・紀北","田邊・白濱"],
+"鳥取縣":["鳥取・岩美","米子・大山"],"島根縣":["松江・出雲","濱田・益田"],
+"岡山縣":["岡山・倉敷","津山・美作"],"廣島縣":["廣島・東廣島","福山・尾道"],"山口縣":["山口・防府","下關・宇部"],
+"德島縣":["德島・鳴門","阿南・祖谷"],"香川縣":["高松・坂出","丸龜・琴平"],"愛媛縣":["松山・今治","新居濱・西條","宇和島"],"高知縣":["高知・南國","四萬十・足摺"],
+"福岡縣":["福岡・糸島","北九州・筑豐","久留米・筑後"],"佐賀縣":["佐賀・鳥栖","唐津・伊万里"],
+"長崎縣":["長崎・諫早","佐世保・平戶"],"熊本縣":["熊本・菊池","阿蘇・山鹿","八代・天草"],
+"大分縣":["大分・別府","由布・九重","日田・中津"],"宮崎縣":["宮崎・日南","都城・霧島"],"鹿兒島縣":["鹿兒島・指宿","霧島・姶良","奄美"],
+"沖繩縣":["那霸・南部","恩納・中部","名護・北部","宮古島","石垣島"]
+};
+function renderJapanPrefectureMenu(region){
+ const out=$("region-report");out.replaceChildren();
+ showClimateScreen("日本 🇯🇵｜"+region+"｜選擇都道府縣",()=>renderRegionClimate());
+ const grid=node("div",undefined,"region-choice-grid subregion-choice-grid");
+ for(const prefecture of JP_PREFECTURES[region]||[]){
+  const card=node("button",undefined,"region-choice subregion-choice");card.type="button";
+  card.append(node("strong",prefecture));
+  card.addEventListener("click",()=>renderJapanClusterMenu(region,prefecture));
+  grid.append(card);
+ }
+ out.append(grid);
+}
+function renderJapanClusterMenu(region,prefecture){
+ const out=$("region-report");out.replaceChildren();
+ showClimateScreen("日本 🇯🇵｜"+prefecture+"｜選擇球場群聚區",()=>renderJapanPrefectureMenu(region));
+ const clusters=JP_PREFECTURE_CLUSTERS[prefecture]||[prefecture.replace("縣","").replace("府","")];
+ const grid=node("div",undefined,"region-choice-grid subregion-choice-grid");
+ for(const cluster of clusters){
+  const card=node("button",undefined,"region-choice subregion-choice");card.type="button";card.append(node("strong",cluster));
+  card.addEventListener("click",()=>{
+   const regionCourses=S.directory.courses.filter(c=>c.countryCode==="JP"&&c.enabled&&((region==="沖繩"&&["Okinawa","沖繩"].includes(c.region))||c.region===region));
+   const selected=regionCourses.filter(c=>(c.prefecture||"")===prefecture || (prefecture==="沖繩縣"&&c.region==="Okinawa"));
+   renderRegionMonths("JP",region,monthOptions(),selected,cluster);
+  });
+  grid.append(card);
+ }
+ out.append(grid);
+}
 function coursesForSubregion(courses,subregion){
  const tokens=subregion.split(/[・／]/).map(x=>x.trim()).filter(Boolean);
  return courses.filter(course=>{
@@ -239,6 +301,7 @@ function coursesForSubregion(courses,subregion){
 function renderSubregionMenu(country,region){
  const out=$("region-report");out.replaceChildren();
  const countryName=S.directory.countries.find(c=>c.code===country)?.nameZh||country;
+ if(country==="JP"){renderJapanPrefectureMenu(region);return}
  const all=S.directory.courses.filter(c=>c.countryCode===country&&c.enabled);
  const regionCourses=all.filter(c=>(country==="JP"&&["Okinawa","沖繩"].includes(c.region)?"沖繩":c.region)===region);
  const subregions=SUBREGION_CATALOG[country]?.[region]||[];
