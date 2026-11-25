@@ -2,7 +2,7 @@ name: Deploy Preview to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [asia-eight-country-shared-engine]
   workflow_dispatch:
 
 permissions:
