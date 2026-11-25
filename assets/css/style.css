@@ -425,7 +425,7 @@
  color:#fff!important;font-size:15px!important;line-height:1!important;font-weight:850!important;
  white-space:nowrap!important;box-sizing:border-box!important;box-shadow:0 2px 5px #183b2d22!important
 }
-#flow-nav .flow-actions>.flow-back{background:#176c4b!important;border:2px solid #0e5238!important}
+#flow-nav .flow-actions>.flow-back{background:#70508f!important;border:2px solid #52366f!important}
 #flow-nav .flow-actions>.flow-home{background:#246eaa!important;border:2px solid #174f80!important}
 @media(max-width:360px){
  #flow-nav .flow-actions{gap:7px!important}
