@@ -6,17 +6,17 @@ import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 const $=id=>document.getElementById(id),S={};
-let climateBackAction=null,climateHistoryReady=false;
+let climateBackAction=null,climateHistoryReady=false,exitConfirmed=false;
 function showExitDialog(){
  let modal=document.getElementById("exit-dialog");if(modal){modal.hidden=false;return}
  modal=node("div",undefined,"exit-dialog");modal.id="exit-dialog";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");
  const box=node("div",undefined,"exit-dialog-box");box.append(node("p","確定要退出亞洲高爾夫天氣 App 嗎？","exit-dialog-message"));
  const actions=node("div",undefined,"exit-dialog-actions");
  const cancel=node("button","取消","exit-cancel");cancel.type="button";cancel.addEventListener("click",()=>{modal.hidden=true;history.pushState({homeExitGuard:true},"",location.href);showCountryOverview()});
- const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{modal.hidden=true;try{window.close()}catch(e){};history.back();setTimeout(()=>{if(!document.hidden){setStatus("已送出離開指令；若瀏覽器未自動關閉，請使用 Android 系統返回鍵離開。")}},350)});
+ const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{modal.hidden=true;exitConfirmed=true;try{window.close()}catch(e){};history.back();setTimeout(()=>{if(!document.hidden){setStatus("已送出離開指令；若瀏覽器未自動關閉，請使用 Android 系統返回鍵離開。")}},350)});
  actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);
 }
-window.addEventListener("popstate",()=>{if(climateBackAction){const action=climateBackAction;action();return;}showExitDialog()});
+window.addEventListener("popstate",()=>{if(exitConfirmed)return;if(climateBackAction){const action=climateBackAction;action();return;}showExitDialog()});
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
 const add=(s,n)=>{const d=new Date(s+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
 const val=(x,u="")=>x==null?"—":x+u;
