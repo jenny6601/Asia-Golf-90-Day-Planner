@@ -253,7 +253,7 @@ function showClimateScreen(title,backAction){
  const h=node("h2",title,"flow-title");nav.append(h);
  const actions=node("div",undefined,"flow-actions");
  if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",()=>history.back());actions.append(back)}
- const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{climateBackAction=null;showCountryOverview();history.pushState({homeExitGuard:true},"",location.href)});actions.append(home);
+ const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{climateBackAction=null;showCountryOverview()});actions.append(home);
  nav.append(actions);
  out.hidden=false;status.hidden=false;
 }
