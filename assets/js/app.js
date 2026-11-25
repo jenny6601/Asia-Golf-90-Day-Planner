@@ -407,8 +407,8 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
  });
  const metrics=[
   {label:"月天氣總況",key:"outlook",text:true},
-  {label:"歷史月低溫",key:"low",unit:" °C"},
-  {label:"歷史月高溫",key:"high",unit:" °C"},
+  {label:"歷史月平均低溫",key:"low",unit:" °C"},
+  {label:"歷史月平均高溫",key:"high",unit:" °C"},
   {label:"月降雨量",key:"rain",unit:" mm"},
   {label:"歷史月降雨日數（≥1 mm）",key:"rainDays",unit:" 日"},
   {label:"歷史月平均日雨量",key:"avgDaily",unit:" mm／日"},
