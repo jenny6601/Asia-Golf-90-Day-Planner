@@ -581,7 +581,7 @@ function renderRegionTopWeeks(group,records,month){
  if(!picked.length){panel.append(node("p","目前沒有足夠週／月尺度資料可產生推薦。","risk-summary"))}
  else{
   const grid=node("div",undefined,"week-grid top-week-grid");
-  picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");card.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")),node("strong",["偏乾趨勢","接近基準","偏濕趨勢","顯著偏濕趨勢"][x.rank]),node("p","分區氣候訊號："+(x.signal>0?"+":"")+x.signal.toFixed(2)+"｜"+(x.source==="weekly"?"週尺度資料":"月尺度參考")+"｜資料覆蓋 "+x.coverage+"/"+records.length+" 個球場"),node("p",x.source==="monthly"?"此週採用整月氣候訊號，無法區分同月內哪一週實際較乾。":x.rank===0?"模式顯示相對偏乾，可優先列入考慮。":x.rank===1?"降雨訊號接近模式氣候基準，仍需觀察後續預報。":"模式顯示偏濕訊號，安排時需保留彈性。"));const choose=node("button","查看此週 7 天報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month));card.append(choose);grid.append(card)});
+  picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");const heading=node("div",undefined,"week-card-heading");heading.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")));const summary=node("div",undefined,"week-card-summary");summary.append(node("span","降雨趨勢："+["偏乾","接近基準","偏濕","顯著偏濕"][x.rank],"week-rain-summary"),node("span","資料可信度："+(x.source==="weekly"?"週尺度":"月尺度參考")+"｜覆蓋 "+x.coverage+"/"+records.length,"week-confidence"));card.append(heading,summary);const choose=node("button","查看此週 7 天報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month));card.append(choose);grid.append(card)});
   panel.append(grid);
  }
  out.append(panel);
