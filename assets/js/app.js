@@ -6,6 +6,8 @@ import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 const $=id=>document.getElementById(id),S={};
+let climateBackAction=null,climateHistoryReady=false;
+window.addEventListener("popstate",()=>{if(climateBackAction){const action=climateBackAction;action();}else showCountryOverview();});
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
 const add=(s,n)=>{const d=new Date(s+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
 const val=(x,u="")=>x==null?"—":x+u;
@@ -143,13 +145,18 @@ function showClimateScreen(title,backAction){
  const overview=$("asia-overview"),out=$("region-report"),status=$("climate-status");
  $("climate-explorer").classList.add("is-subpage");
  overview.hidden=true;status.hidden=true;
+ climateBackAction=backAction||null;
+ if(!climateHistoryReady){history.replaceState({climateHome:true},"",location.href);climateHistoryReady=true;}
+ history.pushState({climateFlow:true},"",location.href);
  let nav=$("flow-nav");if(!nav){nav=node("div",undefined,"flow-nav");nav.id="flow-nav";$("climate-explorer").insertBefore(nav,out)}
  nav.replaceChildren();
- if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",backAction);nav.append(back)}
+ if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",()=>history.back());nav.append(back)}
+ const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{history.pushState({climateHome:true},"",location.href);showCountryOverview()});nav.append(home);
  const h=node("h2",title,"flow-title");nav.append(h);
  out.hidden=false;status.hidden=false;
 }
 function showCountryOverview(){
+ climateBackAction=null;
  $("climate-explorer").classList.remove("is-subpage");
  $("asia-overview").hidden=false;$("region-report").replaceChildren();$("region-report").hidden=true;
  const nav=$("flow-nav");if(nav)nav.replaceChildren();
@@ -312,7 +319,11 @@ function coursesForSubregion(courses,subregion){
 function renderSubregionMenu(country,region){
  const out=$("region-report");out.replaceChildren();
  const countryName=S.directory.countries.find(c=>c.code===country)?.nameZh||country;
- if(country==="JP"){renderJapanPrefectureMenu(region);return}
+ if(country==="JP"){
+  if(region==="北海道"){renderJapanClusterMenu(region,"北海道");return}
+  if(region==="沖繩"){renderJapanClusterMenu(region,"沖繩縣");return}
+  renderJapanPrefectureMenu(region);return
+ }
  const all=S.directory.courses.filter(c=>c.countryCode===country&&c.enabled);
  const regionCourses=all.filter(c=>(country==="JP"&&["Okinawa","沖繩"].includes(c.region)?"沖繩":c.region)===region);
  const subregions=SUBREGION_CATALOG[country]?.[region]||[];
