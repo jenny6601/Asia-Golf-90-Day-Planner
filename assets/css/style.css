@@ -655,3 +655,16 @@
  .top-week-grid .week-card h4{font-size:.84rem}
  .top-week-grid .week-card p{font-size:.68rem}
 }
+
+
+/* TOP 3 cards: fixed three-row information hierarchy */
+@media(max-width:620px){
+ .top-week-grid .week-card{display:flex;flex-direction:column;gap:8px}
+ .top-week-grid .week-card-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+ .top-week-grid .week-card-heading .week-rank{flex:0 0 auto}
+ .top-week-grid .week-card-heading h4{margin:0;text-align:right;font-size:.9rem;white-space:nowrap}
+ .top-week-grid .week-card-summary{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:.72rem;line-height:1.35;color:#53685e}
+ .top-week-grid .week-rain-summary{font-weight:750;color:#245b40}
+ .top-week-grid .week-confidence{font-size:.68rem;color:#64756c}
+ .top-week-grid .week-open{align-self:stretch;width:100%;margin-top:0}
+}
