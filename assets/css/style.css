@@ -632,7 +632,7 @@
 /* Monthly TOP 3: three compact vertical cards without an outer frame */
 @media(max-width:620px){
  .top-week-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-top:8px}
- .top-week-grid .week-card{display:block;padding:10px 12px;border:1px solid #dce7e1;border-radius:10px;background:#fff;min-width:0}
+ .top-week-grid .week-card{display:block;padding:10px 12px;border:2px solid #8aa99a;border-radius:11px;background:#fff;min-width:0;box-shadow:0 1px 4px #17392b12}
  .top-week-grid .week-rank{font-size:.72rem;letter-spacing:.04em}
  .top-week-grid .week-card h4{font-size:.9rem;line-height:1.25;margin:4px 0 6px;overflow-wrap:anywhere}
  .top-week-grid .week-card strong{font-size:.75rem;padding:3px 7px}
