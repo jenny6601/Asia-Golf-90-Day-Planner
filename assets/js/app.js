@@ -165,6 +165,94 @@ const REGION_CATALOG={
  SG:["新加坡全島"],
  ID:["蘇門答臘","爪哇","峇里及努沙登加拉","加里曼丹","蘇拉威西","馬魯古","巴布亞"]
 };
+const SUBREGION_CATALOG={
+ JP:{
+  "北海道":["札幌・北廣島","苫小牧・千歲","二世谷・俱知安","富良野・旭川","帶廣・釧路"],
+  "東北":["青森・弘前","秋田","盛岡","仙台・松島","山形","福島・郡山"],
+  "關東":["東京・多摩","橫濱・湘南","千葉・房總","埼玉","栃木・茨城","群馬"],
+  "中部":["新潟","長野・輕井澤","山梨・富士五湖","靜岡","愛知・名古屋","岐阜・三重北部"],
+  "關西":["大阪・神戶","京都","滋賀","奈良","和歌山"],
+  "中國地方":["岡山","廣島","山口","島根","鳥取"],
+  "四國":["德島","香川","愛媛","高知"],
+  "九州":["福岡","佐賀・長崎","熊本","大分","宮崎","鹿兒島"],
+  "沖繩":["那霸・南部","恩納・中部","名護・北部","宮古島","石垣島"]
+ },
+ KR:{
+  "首都圈":["首爾","仁川","京畿道南部","京畿道北部"],
+  "江原道":["春川","原州","平昌・旌善","江陵・束草"],
+  "忠清道":["大田","天安・牙山","清州","忠州"],
+  "全羅道":["全州","群山・益山","光州","麗水・順天"],
+  "慶尚道":["釜山","大邱","蔚山","慶州・浦項","昌原・巨濟"],
+  "濟州島":["濟州市","西歸浦"]
+ },
+ CN:{
+  "華北":["北京","天津","石家莊","太原・呼和浩特"],
+  "東北":["瀋陽","大連","長春","哈爾濱"],
+  "華東":["上海","蘇州・無錫","杭州・寧波","南京","青島・濟南"],
+  "華中":["武漢","長沙","鄭州"],
+  "華南":["廣州・佛山","深圳・東莞","珠海・中山","廈門・泉州","海口・三亞"],
+  "西南":["成都","重慶","昆明","貴陽"],
+  "西北":["西安","蘭州","銀川・西寧","烏魯木齊"]
+ },
+ VN:{
+  "北部":["河內","海防・下龍","寧平","沙壩"],
+  "中北部":["清化","榮市・乂安","順化"],
+  "中部沿海":["峴港","會安","廣南・廣義","歸仁","芽莊・金蘭"],
+  "西原":["大叻","邦美蜀","波來古"],
+  "東南部":["胡志明市","平陽・同奈","頭頓"],
+  "湄公河三角洲":["芹苴","富國島","美拖・迪石"]
+ },
+ TH:{
+  "北部":["清邁","清萊","南邦"],
+  "東北部":["呵叻","孔敬","烏隆他尼"],
+  "中部":["曼谷","華欣・七岩","北碧"],
+  "東部":["芭達雅","羅勇","尖竹汶"],
+  "西部":["佛統","叻丕"],
+  "南部":["普吉","攀牙","蘇梅島","合艾"]
+ },
+ MY:{
+  "北馬":["檳城","吉打・浮羅交怡","霹靂"],
+  "中馬":["吉隆坡","雪蘭莪","布城"],
+  "南馬":["柔佛新山","馬六甲","森美蘭"],
+  "東海岸":["關丹","登嘉樓","哥打峇魯"],
+  "沙巴":["亞庇","山打根"],
+  "砂拉越":["古晉","美里","詩巫"]
+ },
+ SG:{"新加坡全島":["市中心","西部","北部","東部"]},
+ ID:{
+  "蘇門答臘":["棉蘭","巨港","巴淡島"],
+  "爪哇":["雅加達","萬隆","日惹","三寶瓏","泗水"],
+  "峇里及努沙登加拉":["峇里島","龍目島"],
+  "加里曼丹":["巴里巴板","坤甸"],
+  "蘇拉威西":["望加錫","美娜多"],
+  "馬魯古":["安汶"],
+  "巴布亞":["查亞普拉"]
+ }
+};
+function coursesForSubregion(courses,subregion){
+ const tokens=subregion.split(/[・／]/).map(x=>x.trim()).filter(Boolean);
+ return courses.filter(course=>{
+  const hay=[course.city,course.area,course.name,course.nameLocal,course.address].filter(Boolean).join(" ");
+  return tokens.some(token=>hay.toLowerCase().includes(token.toLowerCase()));
+ });
+}
+function renderSubregionMenu(country,region){
+ const out=$("region-report");out.replaceChildren();
+ const countryName=S.directory.countries.find(c=>c.code===country)?.nameZh||country;
+ const all=S.directory.courses.filter(c=>c.countryCode===country&&c.enabled);
+ const regionCourses=all.filter(c=>(country==="JP"&&["Okinawa","沖繩"].includes(c.region)?"沖繩":c.region)===region);
+ const subregions=SUBREGION_CATALOG[country]?.[region]||[];
+ showClimateScreen(countryName+"｜"+region+"｜選擇次分區",()=>renderRegionClimate());
+ const grid=node("div",undefined,"region-choice-grid subregion-choice-grid");
+ for(const subregion of subregions){
+  const matches=coursesForSubregion(regionCourses,subregion);
+  const card=node("button",undefined,"region-choice subregion-choice");card.type="button";
+  card.append(node("strong",subregion));
+  card.addEventListener("click",()=>renderRegionMonths(country,region,monthOptions(),matches,subregion));
+  grid.append(card);
+ }
+ out.append(grid);
+}
 function initClimateExplorer(){
  const overview=$("asia-overview"),cc=$("climate-country");
  for(const c of S.directory.countries){
@@ -191,15 +279,16 @@ async function renderRegionClimate(){
   const valid=courses.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
   const card=node("button",undefined,"region-choice");card.type="button";
   card.append(node("strong",region),node("span",courses.length?courses.length+" 個球場資料／"+valid.length+" 個有效座標":"球場資料待建置"),node("small","查看三個月天氣分區表"));
-  card.addEventListener("click",()=>renderRegionMonths(country,region,months,courses));
+  card.addEventListener("click",()=>renderSubregionMenu(country,region));
   grid.append(card);
  }
  out.append(grid);
  status.textContent=(selectedCountry?.nameZh||country)+"｜"+defined.length+" 個地理分區。點選分區即可查看三個月總表。"+(available.length?" 已有 "+available.length+" 個具有效座標的球場。":" 目前尚無有效球場座標。");
 }
-async function renderRegionMonths(country,region,months,courses){
+async function renderRegionMonths(country,region,months,courses,subregion=""){
  const out=$("region-report"),status=$("climate-status");out.replaceChildren();
- showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+region+"｜三個月天氣總表",()=>renderRegionClimate());
+ const scopeName=region+(subregion?"｜"+subregion:"");
+ showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+scopeName+"｜三個月天氣總表",()=>renderSubregionMenu(country,region));
  const valid=courses.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
  const records=(await Promise.allSettled(valid.map(c=>fetchCourseSeasonalForecast(c)))).filter(x=>x.status==="fulfilled").map(x=>x.value);
  const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table region-matrix"),thead=node("thead"),hr=node("tr");
@@ -209,9 +298,9 @@ async function renderRegionMonths(country,region,months,courses){
  const monthData=months.map(month=>{const values=records.map(rec=>{const i=(rec.monthly?.time||[]).findIndex(t=>t.slice(0,7)===month);return i<0?null:{rain:rec.monthly.precipitation_mean?.[i],temp:rec.monthly.temperature_2m_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i]}}).filter(Boolean);const avg=key=>{const v=values.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};return {month,rain:avg("rain"),temp:avg("temp"),anomaly:avg("anomaly"),status:values.length?"季節資料可用":valid.length?"天氣資料暫缺":"待建置"}});
  for(const metric of metrics){const tr=node("tr");tr.append(node("th",metric.label));for(const item of monthData){const v=item[metric.key];tr.append(node("td",Number.isFinite(v)?metric.fmt(v)+metric.unit:"—"))}body.append(tr)}
  const statusRow=node("tr");statusRow.append(node("th","資料狀態"));for(const item of monthData)statusRow.append(node("td",item.status));body.append(statusRow);
- const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),btn=node("button","查看週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{const group={region,courses:valid};if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,region,item.month)}});td.append(btn);actionRow.append(td)}body.append(actionRow);
+ const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),btn=node("button","查看週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{const group={region:scopeName,courses:valid};if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,scopeName,item.month)}});td.append(btn);actionRow.append(td)}body.append(actionRow);
  tbl.append(body);table.append(tbl);out.append(table);
- status.textContent=valid.length?"已選擇 "+region+"｜球場 "+valid.length+" 個，成功取得季節資料 "+records.length+" 組。月份已改為橫向、天氣指標縱向，方便手機閱讀。":"已選擇 "+region+"。此區尚無球場／天氣資料，但月份及週分析操作仍可使用。";
+ status.textContent=valid.length?"已選擇 "+scopeName+"｜球場 "+valid.length+" 個，成功取得季節資料 "+records.length+" 組。":"已選擇 "+scopeName+"。此次分區尚無球場／天氣資料，但月份及週分析操作仍可使用。";
 }
 function renderEmptyWeekAnalysis(country,region,month){
  const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+region+"｜"+month+"｜週次預覽",()=>renderRegionMonths(country,region,monthOptions(),[]));
