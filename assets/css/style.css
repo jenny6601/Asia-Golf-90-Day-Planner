@@ -375,11 +375,15 @@
  #climate-explorer.is-subpage .subregion-choice strong{font-size:1rem!important}
 }
 
-/* Navigation: back and home controls */
-.flow-nav{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+/* Compact, side-by-side navigation controls */
+.flow-nav{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:16px}
 .flow-nav .flow-title{flex-basis:100%;margin-top:2px}
 .flow-nav .flow-back,.flow-nav .flow-home{
- min-height:48px;padding:10px 20px;border-radius:14px;font-size:1rem;font-weight:850;
- border:2px solid #789889;box-shadow:0 2px 5px #173d2d12
+ display:inline-flex;align-items:center;justify-content:center;
+ width:auto;min-height:42px;padding:7px 14px;border-radius:12px;
+ font-size:.92rem;line-height:1.25;font-weight:800;white-space:nowrap;
+ box-shadow:0 2px 4px #173d2d12
 }
-.flow-nav .flow-home{background:#eaf2ed;color:#185f49;border-color:#6f9b87}
+.flow-nav .flow-back{background:#edf4ef;color:#205f49;border:2px solid #6c9881}
+.flow-nav .flow-home{background:#eaf2fb;color:#205b91;border:2px solid #4d83b4}
+@media(max-width:360px){.flow-nav{gap:6px}.flow-nav .flow-back,.flow-nav .flow-home{padding:7px 10px;font-size:.86rem}}
