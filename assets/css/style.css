@@ -118,3 +118,62 @@
  .region-table.region-matrix thead th:first-child,.region-table.region-matrix tbody th{width:32%}
  .region-table.region-matrix .region-select{font-size:.68rem!important}
 }
+
+/* Readability pass: mobile-first typography and touch targets */
+#climate-explorer{padding:22px}
+#climate-explorer h2{font-size:1.42rem;line-height:1.4}
+#climate-status{font-size:1.02rem;line-height:1.65}
+#flow-nav .flow-title{font-size:1.35rem;line-height:1.4}
+#flow-nav .flow-back{font-size:1rem;min-height:48px}
+.region-choice{min-height:120px;padding:16px!important}
+.region-choice strong{font-size:1.12rem}
+.region-choice span{font-size:.96rem;line-height:1.45}
+.region-choice small{font-size:.88rem;line-height:1.4}
+.region-table.region-matrix{font-size:.96rem}
+.region-table.region-matrix th,.region-table.region-matrix td{padding:14px 9px;line-height:1.5}
+.region-table.region-matrix thead th{font-size:.9rem}
+.region-table.region-matrix thead th:first-child,.region-table.region-matrix tbody th{width:31%;font-size:.96rem}
+.region-table.region-matrix thead th:not(:first-child),.region-table.region-matrix td{width:23%}
+.region-table.region-matrix .region-select{min-height:44px;padding:10px 6px!important;font-size:.88rem!important;font-weight:800;line-height:1.35}
+.week-recommendations{padding:18px}
+.week-recommendations>h3{font-size:1.3rem;line-height:1.4}
+.week-card{padding:17px}
+.week-rank{font-size:.9rem}
+.week-card h4{font-size:1.08rem;line-height:1.45}
+.week-card strong{font-size:.96rem}
+.week-card p,.long-range-note,.data-note{font-size:.96rem;line-height:1.7}
+.week-open,.week-back{min-height:48px;font-size:1rem!important}
+.selected-week-report{padding:18px}
+.selected-week-report h3{font-size:1.3rem;line-height:1.4}
+.selected-week-report h4{font-size:1.05rem}
+.seven-day-item{padding:12px 3px}
+.seven-day-item strong{font-size:.9rem}
+.seven-day-item span{font-size:.84rem}
+.notice{font-size:1rem;line-height:1.7}
+.notice strong{font-size:1.2rem}
+.notice p{font-size:1rem;line-height:1.75}
+.note{font-size:.96rem;line-height:1.7}
+@media(max-width:620px){
+ #climate-explorer{padding:18px 14px}
+ #climate-explorer h2{font-size:1.32rem}
+ #climate-status{font-size:1rem}
+ .region-choice-grid{gap:12px}
+ .region-choice{min-height:116px;padding:14px!important}
+ .region-choice strong{font-size:1.08rem}
+ .region-choice span{font-size:.92rem}
+ .region-choice small{font-size:.84rem}
+ .region-table.region-matrix{font-size:.9rem}
+ .region-table.region-matrix th,.region-table.region-matrix td{padding:12px 6px}
+ .region-table.region-matrix thead th{font-size:.84rem}
+ .region-table.region-matrix thead th:first-child,.region-table.region-matrix tbody th{width:32%;font-size:.9rem}
+ .region-table.region-matrix thead th:not(:first-child),.region-table.region-matrix td{width:22.66%}
+ .region-table.region-matrix .region-select{font-size:.82rem!important;min-height:46px}
+ .week-card p,.long-range-note,.data-note,.note{font-size:.94rem}
+}
+@media(max-width:380px){
+ .region-table.region-matrix{font-size:.84rem}
+ .region-table.region-matrix th,.region-table.region-matrix td{padding:10px 4px}
+ .region-table.region-matrix thead th:first-child,.region-table.region-matrix tbody th{width:34%}
+ .region-table.region-matrix thead th:not(:first-child),.region-table.region-matrix td{width:22%}
+ .region-table.region-matrix .region-select{font-size:.76rem!important}
+}
