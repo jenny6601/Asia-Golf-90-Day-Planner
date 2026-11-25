@@ -6,7 +6,7 @@ import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 const $=id=>document.getElementById(id),S={};
-let climateBackAction=null,climateHistoryReady=false,exitConfirmed=false;
+let climateBackAction=null,climateHistoryReady=false,exitConfirmed=false,exitBackConsumed=false;
 function ensureHomeExitGuard(){
  if(!history.state||history.state.homeExitGuard!==true)history.pushState({homeExitGuard:true},"",location.href);
 }
@@ -17,12 +17,15 @@ function showExitDialog(){
  const actions=node("div",undefined,"exit-dialog-actions");
  const cancel=node("button","取消","exit-cancel");cancel.type="button";cancel.addEventListener("click",()=>{modal.hidden=true;ensureHomeExitGuard()});
  const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{
-  modal.hidden=true;exitConfirmed=true;
+  modal.hidden=true;exitConfirmed=true;exitBackConsumed=false;
  });
  actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);
 }
 window.addEventListener("popstate",()=>{
- if(exitConfirmed)return;
+ if(exitConfirmed){
+  if(!exitBackConsumed){exitBackConsumed=true;history.back();}
+  return;
+ }
  if(climateBackAction){
   const action=climateBackAction;action();
   if(!climateBackAction)ensureHomeExitGuard();
