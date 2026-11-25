@@ -269,3 +269,20 @@
  .taiwan-seven-dates strong{font-size:.98rem}
  .taiwan-seven-icon{font-size:1.65rem}
 }
+
+/* Homepage main title: centered blue banner with large white type */
+.hero h1,.page-hero h1,.site-header h1,#hero h1{
+ display:block;
+ width:100%;
+ box-sizing:border-box;
+ background:#1769aa;
+ color:#fff;
+ text-align:center;
+ font-size:clamp(2.1rem,7vw,3rem);
+ font-weight:900;
+ line-height:1.35;
+ padding:18px 12px;
+ border-radius:14px;
+ margin:14px 0 22px;
+ letter-spacing:.02em;
+}
