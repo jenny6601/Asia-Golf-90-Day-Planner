@@ -117,41 +117,29 @@ function showReport(){
  const note=node("p",lead<=15?"前16天依逐時預報產生報告；評分尚未經亞洲球場歷史回測校準。":"17–90天長期趨勢可信度較低，只作初步參考。","note");host.append(note);
 }
 
-function renderCourseSevenDayReport(host,course,startDate){
+async function renderCourseSevenDayReport(host,course,startDate){
  const report=section(host,"⑤ 球場專屬｜出發日起 7 天天氣報告");
- const endDate=add(startDate,6);
- report.append(node("p",course.name+"｜"+startDate+" ～ "+endDate+"｜座標 "+course.latitude.toFixed(4)+", "+course.longitude.toFixed(4),"data-note"));
+ const dates=Array.from({length:7},(_,i)=>add(startDate,i)),endDate=dates[6];
+ const lead=(Date.parse(startDate+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000;
+ report.append(node("p",course.name+"｜"+startDate+" ～ "+endDate,"data-note"));
  const daily=S.forecast?.courses?.find(x=>x.course.id===course.id)?.daily;
- const monthly=S.seasonal?.monthly,weekly=S.seasonal?.weekly;
- const rows=[];
- for(let offset=0;offset<7;offset++){
-  const date=add(startDate,offset),idx=daily?.time?.indexOf(date)??-1;
-  if(idx>=0){
-   rows.push({date,level:"逐日預報",rain:daily.precipitation_sum?.[idx],prob:daily.precipitation_probability_max?.[idx],low:daily.temperature_2m_min?.[idx],high:daily.temperature_2m_max?.[idx],wind:daily.wind_speed_10m_max?.[idx]});
-  }else{
-   let wi=-1;(weekly?.time||[]).forEach((t,i)=>{if(t<=date)wi=i});
-   const mi=(monthly?.time||[]).findIndex(t=>t.slice(0,7)===date.slice(0,7));
-   rows.push({date,level:wi>=0&&Number.isFinite(weekly.precipitation_efi?.[wi])?"週尺度趨勢":mi>=0?"月尺度趨勢":"資料不足",efi:wi>=0?weekly.precipitation_efi?.[wi]:null,rain:mi>=0?monthly.precipitation_mean?.[mi]:null,rainAnomaly:mi>=0?monthly.precipitation_anomaly?.[mi]:null,temp:mi>=0?monthly.temperature_2m_mean?.[mi]:null});
-  }
+ const actual=dates.some(date=>(daily?.time?.indexOf(date)??-1)>=0);
+ const median=values=>{const a=values.filter(Number.isFinite).sort((x,y)=>x-y);if(!a.length)return null;const m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2};
+ const wxLabel=code=>{if(!Number.isFinite(code))return "資料不足";if(code===0)return "晴朗";if(code<=2)return "晴時多雲";if(code===3)return "陰天";if(code>=51&&code<=57)return "毛毛雨";if(code>=61&&code<=67)return "降雨";if(code>=80&&code<=82)return "陣雨";if(code>=95)return "雷雨";return "多雲"};
+ const wxIcon=code=>!Number.isFinite(code)?"—":code===0?"☀️":code<=2?"🌤️":code===3?"☁️":code>=51&&code<=67?"🌧️":code>=80&&code<=82?"🌦️":code>=95?"⛈️":"☁️";
+ let rows=[];
+ if(lead>=0&&lead+6<16&&daily){
+  rows=dates.map(date=>{const i=daily.time.indexOf(date);return i<0?{date}:{date,high:daily.temperature_2m_max?.[i],low:daily.temperature_2m_min?.[i],feel:daily.apparent_temperature_max?.[i],prob:daily.precipitation_probability_max?.[i],rain:daily.precipitation_sum?.[i],icon:wxIcon(daily.weather_code?.[i]),label:wxLabel(daily.weather_code?.[i])}});
  }
- const table=node("div",undefined,"weather-table course-seven-table"),head=node("div",undefined,"weather-row weather-head");
- ["日期","資料層級","降雨量／趨勢","降雨機率","溫度","最大風速"].forEach(x=>head.append(node("span",x)));table.append(head);
- for(const row of rows){const line=node("div",undefined,"weather-row");let rainText="—",probText="—",tempText="—",windText="—";
-  if(row.level==="逐日預報"){rainText=val(row.rain," mm");probText=val(row.prob,"%");tempText=val(row.low,"°")+" / "+val(row.high,"°");windText=val(row.wind," m/s")}
-  else if(row.level==="週尺度趨勢"){rainText=interpretPrecipitationEfi(row.efi).label;tempText="非逐日資料"}
-  else if(row.level==="月尺度趨勢"){rainText=val(row.rain," mm／月");tempText=val(row.temp,"°C／月")}
-  [row.date,row.level,rainText,probText,tempText,windText].forEach(x=>line.append(node("span",x)));table.append(line)
+ if(!rows.length||!rows.some(r=>Number.isFinite(r.high)||Number.isFinite(r.prob))){
+  try{
+   const result=await fetchCourseHistoricalWeekNormals(course,dates);
+   rows=result.days.map(x=>({date:x.date,high:x.highMean,low:x.lowMean,prob:x.rainFrequency,rain:x.rainMean,icon:!Number.isFinite(x.rainFrequency)?"—":x.rainFrequency>=60?"🌧️":x.rainFrequency>=30?"🌦️":"🌤️",label:!Number.isFinite(x.rainFrequency)?"資料不足":x.rainFrequency>=60?"歷史常有雨":x.rainFrequency>=30?"歷史偶有雨":"歷史較少雨"}));
+   report.append(node("p","超出 16 天逐日預報範圍，以下為過去十年相同月日 ERA5 歷史統計；降雨頻率不是未來降雨機率，歷史氣溫及雨量不代表該週實際天氣。","long-range-note"));
+  }catch(e){report.append(node("p","無法取得逐日預報或歷史同期資料："+e.message,"risk-summary"))}
  }
- report.append(table);
- const actual=rows.filter(x=>x.level==="逐日預報");
- if(actual.length){
-  svgChart(report,"球場逐日累積雨量（僅顯示有效預報日）",[{label:"每日雨量",values:rows.map(x=>x.level==="逐日預報"&&Number.isFinite(x.rain)?x.rain:null)}],"mm");
-  report.append(node("p","逐日資料覆蓋 "+actual.length+"/7 天。超出逐日預報範圍的日期只顯示可取得的週／月尺度趨勢，不推算每日雨量、降雨機率或溫度。","data-note"));
- }else{
-  const signals=rows.map(x=>x.efi).filter(Number.isFinite);
-  report.append(node("p",signals.length?"此七天期間沒有逐日預報；目前只取得週尺度降雨趨勢，EFI="+(signals.reduce((a,b)=>a+b,0)/signals.length).toFixed(2)+"。":"此七天期間沒有逐日預報，僅有可用的月尺度氣候背景。","long-range-note"));
-  report.append(node("p","資料可信度：季節趨勢參考。不可解讀為每日降雨機率或每日雨量，也不產生 A–E 適打等級。","data-note"));
- }
+ renderSevenDayVisual(report,rows,!actual||!rows.some(r=>Number.isFinite(r.high)||Number.isFinite(r.prob)));
+ if(actual&&rows.some(r=>Number.isFinite(r.high)||Number.isFinite(r.prob)))report.append(node("p","資料來源：球場座標逐日天氣預報。","data-note"));
 }
 
 async function run(){const b=$("run");b.disabled=true;$("report").replaceChildren();setStatus("正在讀取球場天氣…");try{S.course=S.directory.courses.find(c=>c.id===$("course").value);const days=(Date.parse($("departure").value+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000;if(days>=0&&days<=15){S.forecast=await fetchCourseForecast([S.course]);S.seasonal=null}else{S.seasonal=await fetchCourseSeasonalForecast(S.course);S.forecast=null}showReport();setStatus("完成｜已產生天氣及適打報告。")}catch(e){setStatus("讀取失敗："+e.message)}finally{b.disabled=!S.course}}
