@@ -15,7 +15,7 @@ const WEEKLY=[
 ].join(",");
 const MONTHLY=[
  "precipitation_mean","precipitation_anomaly","wind_speed_10m_mean","wind_speed_10m_anomaly",
- "temperature_2m_mean","temperature_2m_anomaly","cloud_cover_mean","cloud_cover_anomaly",
+ "temperature_2m_mean","temperature_2m_anomaly","temperature_min24h_2m_mean","temperature_max24h_2m_mean","cloud_cover_mean","cloud_cover_anomaly",
  "sunshine_duration_mean","sunshine_duration_anomaly"
 ].join(",");
 export async function fetchOkinawaLongRange(fetchImpl=fetch){
