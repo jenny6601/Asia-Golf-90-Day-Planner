@@ -16,7 +16,11 @@ function showExitDialog(){
  const box=node("div",undefined,"exit-dialog-box");box.append(node("p","確定要退出亞洲高爾夫天氣 App 嗎？","exit-dialog-message"));
  const actions=node("div",undefined,"exit-dialog-actions");
  const cancel=node("button","取消","exit-cancel");cancel.type="button";cancel.addEventListener("click",()=>{modal.hidden=true;ensureHomeExitGuard()});
- const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{modal.hidden=true;exitConfirmed=true;history.back()});
+ const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{
+  modal.hidden=true;exitConfirmed=true;
+  if(history.length>1){history.back();}
+  else{window.alert("已確認退出。請再按一次手機的返回鍵，完成離開 App。");}
+ });
  actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);
 }
 window.addEventListener("popstate",()=>{
@@ -26,7 +30,6 @@ window.addEventListener("popstate",()=>{
   if(!climateBackAction)ensureHomeExitGuard();
   return;
  }
- ensureHomeExitGuard();
  showExitDialog();
 });
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
