@@ -26,7 +26,8 @@ function showExitDialog(){
 }
 window.addEventListener("popstate",()=>{
  if(exitConfirmed){
-  // User explicitly confirmed exit; allow the WebView to leave on this press.
+  // User explicitly confirmed exit; drain the safety entries so this press exits.
+  history.back();
   return;
  }
  // Rebuild a multi-entry safety buffer before running page navigation.
