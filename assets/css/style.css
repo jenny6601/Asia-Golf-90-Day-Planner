@@ -88,3 +88,13 @@
 .month-cell small{font-size:.72rem;color:#247956}
 .month-cell:active,.month-cell:focus-visible{outline:2px solid #247956;outline-offset:2px}
 #climate-status{font-weight:700}
+
+.region-choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.region-choice{display:grid;gap:7px;align-content:center;min-height:112px;padding:14px!important;text-align:left;background:#f8fbf9!important;color:#17312a!important;border:1px solid #dce7e1!important;box-shadow:none!important}
+.region-choice strong{font-size:1rem;color:#173f35}
+.region-choice span{font-size:.8rem;color:#64756c;font-weight:650}
+.region-choice small{font-size:.73rem;color:#247956}
+.region-choice:focus-visible,.region-choice:active{outline:2px solid #247956;outline-offset:2px}
+.region-back{margin:0 0 12px}
+@media(max-width:620px){.region-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.region-choice{min-height:100px;padding:12px!important}}
+@media(max-width:380px){.region-choice-grid{grid-template-columns:1fr}}
