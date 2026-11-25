@@ -137,6 +137,7 @@ async function renderCourseSevenDayReport(host,course,startDate){
   page.append(cards);
   const nav=node("div",undefined,"departure-page-nav");const prev=node("button","上一頁");prev.disabled=pageIndex===0;prev.addEventListener("click",()=>{pageIndex--;renderPage()});const label=node("span",(pageIndex+1)+" / "+Math.ceil(rows.length/5));const next=node("button","下一頁");next.disabled=(pageIndex+1)*5>=rows.length;next.addEventListener("click",()=>{pageIndex++;renderPage()});nav.append(prev,label,next);page.append(nav);pages.append(page);
  };
+ renderPage();
  report.append(pages);
  report.append(node("p","每頁最多顯示 5 天；點選任一天即可展開逐時預報或歷史資料。前 16 天使用逐日預報，超出範圍以歷史同期資料補充。","long-range-note"));
 }
