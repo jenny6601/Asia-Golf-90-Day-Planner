@@ -689,3 +689,8 @@
 .selected-week-page-nav{display:flex;align-items:center;justify-content:center;gap:22px;padding:10px 0 2px}
 .selected-week-page-nav button{min-width:88px;padding:8px 12px;border-radius:9px}
 .selected-week-page-nav button:disabled{opacity:.4}
+
+
+/* Swipe navigation for TOP 3 seven-day report */
+.selected-week-five-pages{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.selected-week-swipe-hint{display:flex;justify-content:center;align-items:center;min-height:38px;margin-top:8px;color:#176c4b;font-size:.88rem;font-weight:800;letter-spacing:.02em;text-align:center}
