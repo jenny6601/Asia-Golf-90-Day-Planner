@@ -7,8 +7,11 @@ import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 const $=id=>document.getElementById(id),S={};
 let climateBackAction=null,climateHistoryReady=false,exitConfirmed=false,exitBackConsumed=false;
-function ensureHomeExitGuard(){
- if(!history.state||history.state.homeExitGuard!==true)history.pushState({homeExitGuard:true},"",location.href);
+function ensureHomeExitGuard(depth=4){
+ // Keep several same-document history sentinels ahead of the WebView's
+ // initial entry. Some Android WebViews deliver rapid/repeated back presses;
+ // a single sentinel can be consumed before the next popstate is handled.
+ for(let i=0;i<depth;i++)history.pushState({homeExitGuard:true,guardIndex:i},"",location.href);
 }
 function showExitDialog(){
  let modal=document.getElementById("exit-dialog");if(modal){modal.hidden=false;return}
@@ -23,13 +26,12 @@ function showExitDialog(){
 }
 window.addEventListener("popstate",()=>{
  if(exitConfirmed){
-  if(!exitBackConsumed){exitBackConsumed=true;history.back();}
+  // User explicitly confirmed exit; allow the WebView to leave on this press.
   return;
  }
- // Re-arm a sentinel immediately on EVERY in-app back event. This is
- // essential because parent-page renderers may push a new history entry.
- // Without it, a second Android back can escape the WebView.
- history.pushState({homeExitGuard:true},"",location.href);
+ // Rebuild a multi-entry safety buffer before running page navigation.
+ // This prevents Android WebView from closing the app on a repeated press.
+ ensureHomeExitGuard(4);
  if(climateBackAction){
   const action=climateBackAction;
   climateBackAction=null;
@@ -40,6 +42,7 @@ window.addEventListener("popstate",()=>{
   showCountryOverview();
   return;
  }
+ // Exit confirmation is only reachable from the top-level home screen.
  showExitDialog();
 });
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
