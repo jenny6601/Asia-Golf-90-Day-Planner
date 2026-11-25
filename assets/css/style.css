@@ -561,3 +561,42 @@
  .departure-seven-day .departure-rain-mm{font-size:.88rem}
 }
 @media(max-width:380px){.departure-seven-strip{grid-auto-columns:calc((100% - 24px)/4)}}
+
+/* Five-day pages and Taiwan V32.3 aligned forecast components */
+.week-recommendations>h3{display:none!important}
+.taiwan-style-seven-day{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding-bottom:8px}
+.taiwan-seven-row{display:grid;grid-template-columns:repeat(7,minmax(132px,1fr));min-width:924px}
+.taiwan-seven-cell{min-height:74px;padding:9px 6px;border-right:1px solid #d5e0e7;text-align:center;background:#f2f6f9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.taiwan-seven-cell:nth-child(even){background:#dce8f1}
+.taiwan-seven-cell.weekend,.taiwan-seven-cell.weekend strong,.taiwan-seven-cell.weekend small{color:#df3434!important}
+.taiwan-seven-dates .taiwan-seven-cell{min-height:65px}
+.taiwan-seven-temps .taiwan-seven-cell{min-height:185px}
+.taiwan-seven-weather .taiwan-seven-cell{min-height:160px}
+.taiwan-seven-rain .taiwan-seven-cell{min-height:110px}
+.seven-day-inline-graph{overflow-x:auto}
+.departure-seven-strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(132px,1fr);grid-template-rows:1fr;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 2px 14px}
+.departure-seven-day{scroll-snap-align:start;min-width:132px}
+.departure-date.weekend-red,.weekend-red{color:#d93030!important;font-weight:850}
+.departure-hourly-table{overflow-x:auto}
+.departure-hour-row{grid-template-columns:56px 92px 62px 72px 100px 68px 68px;min-width:590px;align-items:center}
+.hour-weather-cell{display:flex;flex-direction:column;align-items:center;gap:2px}
+.hour-weather-cell svg{width:42px;height:42px}
+.hour-weather-cell small{font-size:10px;white-space:normal;text-align:center}
+.hourly-weather-icon-line{display:flex;gap:5px;overflow-x:auto;padding:8px 0}
+.hourly-weather-icon-line svg{width:34px;height:34px;flex:0 0 34px}
+.calendar-overlay{position:fixed;inset:0;z-index:9999;background:#0006;display:grid;place-items:center;padding:18px}
+.calendar-dialog{width:min(100%,430px);background:#fff;border-radius:22px;padding:18px;box-shadow:0 18px 60px #0004}
+.calendar-top{display:grid;grid-template-columns:1fr 42px 42px;align-items:center;gap:6px;margin-bottom:14px}
+.calendar-top strong{font-size:1.2rem;color:#173f35}
+.calendar-top button,.calendar-actions button{border:0;border-radius:10px;padding:10px;background:#edf4ef;color:#174b39;font-size:1.15rem}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;text-align:center}
+.calendar-weekday{padding:8px 0;font-weight:850;color:#334b41}
+.calendar-weekday.weekend-red{color:#d93030}
+.calendar-day{aspect-ratio:1;border:0;border-radius:50%;background:#f2f6f3;color:#243d32;font-size:1rem}
+.calendar-day.weekend-red{color:#d93030}
+.calendar-day.selected{background:#28618b;color:white!important}
+.calendar-day:disabled{opacity:.25}
+.calendar-empty{aspect-ratio:1}
+.calendar-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:18px}
+.calendar-actions button:last-child{background:#176b4d;color:#fff;font-weight:800}
+@media(max-width:650px){.taiwan-seven-row{grid-template-columns:repeat(7,minmax(112px,1fr));min-width:784px}.departure-seven-strip{grid-auto-columns:132px}.departure-seven-day{min-width:132px}}
