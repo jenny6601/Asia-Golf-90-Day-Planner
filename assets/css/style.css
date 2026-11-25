@@ -311,3 +311,22 @@
 .country-tile span:not(.country-flag){display:none!important}
 .country-tile:focus-visible{outline:4px solid #1769aa!important;outline-offset:3px}
 @media(max-width:560px){.country-tile{min-height:138px!important}.country-tile .country-flag{font-size:2.5rem!important}.country-tile strong{font-size:1.25rem!important}}
+
+/* Fit all eight country choices on one mobile screen */
+.shell{padding-top:12px}
+.shell>header{padding-top:8px;padding-bottom:6px}
+.shell>header h1{margin:8px 0 10px;padding:15px 10px}
+#asia-overview{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.country-tile{min-height:clamp(104px,18vh,132px)!important;padding:10px 8px!important;gap:7px!important;border-width:2px!important}
+.country-tile .country-flag{font-size:2.25rem!important}
+.country-tile strong{font-size:1.15rem!important;line-height:1.25}
+#asia-overview-title,.overview-title{margin-top:4px!important;margin-bottom:10px!important}
+@media(max-height:850px) and (max-width:600px){
+ .shell{padding-top:8px;padding-bottom:22px}
+ .shell>header{padding-top:4px;padding-bottom:2px}
+ .shell>header h1{font-size:2.05rem;padding:12px 8px;margin:5px 0 7px}
+ .country-tile{min-height:96px!important;padding:7px 6px!important;gap:5px!important}
+ .country-tile .country-flag{font-size:1.9rem!important}
+ .country-tile strong{font-size:1.05rem!important}
+ #asia-overview{gap:7px}
+}
