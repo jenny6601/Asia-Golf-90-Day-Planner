@@ -192,7 +192,33 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
  const note=node("p","逐時資料來源：Open-Meteo 球場座標預報。圖表與表格以所選日期當地時間呈現。","data-note");card.append(note);
 }
 
-async function run(){const b=$("run");b.disabled=true;$("report").replaceChildren();setStatus("正在讀取球場天氣…");try{S.course=S.directory.courses.find(c=>c.id===$("course").value);const days=(Date.parse($("departure").value+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000;S.forecast=days<=15?await fetchCourseForecast([S.course]):null;S.seasonal=days>15?await fetchCourseSeasonalForecast(S.course):null;await showReport();setStatus("完成｜已產生出發日起七天摘要。")}catch(e){setStatus("讀取失敗："+e.message)}finally{b.disabled=!S.course}}
+async function run(){
+ const button=$("run");button.disabled=true;$("report").replaceChildren();
+ try{
+  const selectedDate=$("departure").value;
+  S.course=S.directory?.courses?.find(c=>c.id===$("course").value)||null;
+  if(!selectedDate||!/^\\d{4}-\\d{2}-\\d{2}$/.test(selectedDate))throw new Error("請先選擇有效的出發日期。");
+  if(!S.course)throw new Error("請先選擇已完成座標核實的球場。");
+  setStatus("正在產生七天天氣及適打報告…");
+  const leadDays=Math.floor((Date.parse(selectedDate+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
+  S.forecast=null;S.seasonal=null;
+  let forecastWarning="";
+  if(leadDays<=15&&leadDays>=0){
+   try{S.forecast=await fetchCourseForecast([S.course]);}
+   catch(error){forecastWarning="逐日預報暫時無法連線，將改以歷史同期資料補充。";}
+  }
+  await showReport();
+  const hasReport=$("report").children.length>1;
+  if(!hasReport)throw new Error("報告內容未能建立，請確認球場座標及日期。");
+  setStatus(forecastWarning||"完成｜已產生出發日起七天報告。");
+ }catch(error){
+  setStatus("產生報告失敗："+(error?.message||String(error)));
+  const report=$("report");report.replaceChildren();
+  const message=node("section",undefined,"weather-card");
+  message.append(node("h3","目前無法產生報告"),node("p",error?.message||String(error),"risk-summary"));
+  const retry=node("button","重新產生報告");retry.type="button";retry.addEventListener("click",run);message.append(retry);report.append(message);
+ }finally{button.disabled=!S.course}
+}
 
 function monthOptions(){
  const current=today(),base=current.slice(0,7)+"-01",monthEnd=new Date(Date.parse(base+"T12:00:00Z"));
