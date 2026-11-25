@@ -31,6 +31,9 @@ window.addEventListener("popstate",()=>{
   if(!climateBackAction)ensureHomeExitGuard();
   return;
  }
+ // Re-arm the exit guard after every unhandled back event so the next
+ // Android/browser back press cannot bypass the confirmation dialog.
+ ensureHomeExitGuard();
  showExitDialog();
 });
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
