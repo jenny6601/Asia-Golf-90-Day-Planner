@@ -7,10 +7,9 @@ import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 const $=id=>document.getElementById(id),S={};
 let climateBackAction=null,exitConfirmed=false;
-function ensureHomeExitGuard(){
- // Keep one sentinel at the current app view. Re-arm it after every popstate
- // so repeated Android WebView back presses remain inside the app.
- if(history.state?.homeExitGuard!==true)history.pushState({homeExitGuard:true},"",location.href);
+function ensureHomeExitGuard(depth=3){
+ // Reserve same-document entries to absorb repeated Chrome Android back presses.
+ for(let i=0;i<depth;i++)history.pushState({homeExitGuard:true,guardIndex:i},"",location.href);
 }
 function showExitDialog(){
  let modal=document.getElementById("exit-dialog");if(modal){modal.hidden=false;return}
@@ -24,11 +23,10 @@ function showExitDialog(){
  actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);
 }
 window.addEventListener("popstate",()=>{
- // The user explicitly confirmed exit; allow this back press to leave.
+ // The user explicitly confirmed exit; allow the next back press to leave.
  if(exitConfirmed)return;
- // Re-arm before changing the view. The app owns its page stack; browser
- // history is only a persistent guard against WebView closing on back.
- ensureHomeExitGuard();
+ // Refill the history reserve; view navigation remains independent.
+ ensureHomeExitGuard(3);
  if(climateBackAction){
   const action=climateBackAction;
   climateBackAction=null;
