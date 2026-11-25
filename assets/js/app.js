@@ -508,14 +508,14 @@ async function renderSelectedWeekReport(group,week,records,month){
  const lead=(Date.parse(week.start+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000;
  const courses=(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).slice(0,3);
  let forecasts=[];
- if(lead>=0&&lead<=9&&courses.length){
+ if(lead>=0&&lead+6<16&&courses.length){
   try{const result=await fetchCourseForecast(courses);forecasts=result.courses||[]}catch(e){report.append(node("p","逐日／逐時預報暫時無法取得："+e.message,"risk-summary"))}
  }
  const dates=Array.from({length:7},(_,i)=>add(week.start,i));
  const median=values=>{const a=values.filter(Number.isFinite).sort((x,y)=>x-y);if(!a.length)return null;const m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2};
  const dailyRows=dates.map(date=>{
   const entries=forecasts.map(f=>{const i=f.daily.time.indexOf(date);return i<0?null:{code:f.daily.weather_code?.[i],rain:f.daily.precipitation_sum?.[i],prob:f.daily.precipitation_probability_max?.[i],low:f.daily.temperature_2m_min?.[i],high:f.daily.temperature_2m_max?.[i],feelLow:f.daily.apparent_temperature_min?.[i],feelHigh:f.daily.apparent_temperature_max?.[i],wind:f.daily.wind_speed_10m_max?.[i]}}).filter(Boolean);
-  return {date,code:median(entries.map(x=>x.code)),rain:median(entries.map(x=>x.rain)),prob:median(entries.map(x=>x.prob)),low:median(entries.map(x=>x.low)),high:median(entries.map(x=>x.high)),feelLow:median(entries.map(x=>x.feelLow)),feelHigh:median(entries.map(x=>x.feelHigh)),wind:median(entries.map(x=>x.wind)),coverage:entries.length};
+  return {date,code:(()=>{const codes=entries.map(x=>x.code).filter(Number.isFinite);if(!codes.length)return null;const counts=new Map();for(const code of codes)counts.set(code,(counts.get(code)||0)+1);return [...counts.entries()].sort((a,b)=>b[1]-a[1])[0][0]})(),rain:median(entries.map(x=>x.rain)),prob:median(entries.map(x=>x.prob)),low:median(entries.map(x=>x.low)),high:median(entries.map(x=>x.high)),feelLow:median(entries.map(x=>x.feelLow)),feelHigh:median(entries.map(x=>x.feelHigh)),wind:median(entries.map(x=>x.wind)),coverage:entries.length};
  });
  const wxLabel=code=>{if(!Number.isFinite(code))return "資料不足";if(code===0)return "晴朗";if(code<=2)return "晴時多雲";if(code===3)return "陰天";if(code===45||code===48)return "霧";if(code>=51&&code<=57)return "毛毛雨";if(code>=61&&code<=67)return "降雨";if(code>=71&&code<=77)return "降雪";if(code>=80&&code<=82)return "陣雨";if(code>=95)return "雷雨";return "多雲"};
  const wxIcon=code=>{if(!Number.isFinite(code))return "—";if(code===0)return "☀️";if(code<=2)return "🌤️";if(code===3)return "☁️";if(code>=51&&code<=67)return "🌧️";if(code>=80&&code<=82)return "🌦️";if(code>=95)return "⛈️";return "☁️"};
