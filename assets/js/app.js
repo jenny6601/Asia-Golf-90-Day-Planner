@@ -384,15 +384,49 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
  const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table region-matrix"),thead=node("thead"),hr=node("tr");
  ["天氣指標",...months.map(m=>m)].forEach(t=>hr.append(node("th",t)));thead.append(hr);tbl.append(thead);
  const body=node("tbody");
- const metrics=[{label:"月平均降雨量",key:"rain",unit:" mm",fmt:v=>v.toFixed(1)},{label:"降雨異常",key:"anomaly",unit:" mm",fmt:v=>(v>0?"+":"")+v.toFixed(1)},{label:"月平均氣溫",key:"temp",unit:" °C",fmt:v=>v.toFixed(1)}];
- const monthData=months.map(month=>{const values=records.map(rec=>{const i=(rec.monthly?.time||[]).findIndex(t=>t.slice(0,7)===month);return i<0?null:{rain:rec.monthly.precipitation_mean?.[i],temp:rec.monthly.temperature_2m_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i]}}).filter(Boolean);const avg=key=>{const v=values.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};return {month,rain:avg("rain"),temp:avg("temp"),anomaly:avg("anomaly"),status:values.length?"季節資料可用":valid.length?"天氣資料暫缺":"待建置"}});
- for(const metric of metrics){const tr=node("tr");tr.append(node("th",metric.label));for(const item of monthData){const v=item[metric.key];tr.append(node("td",Number.isFinite(v)?metric.fmt(v)+metric.unit:"—"))}body.append(tr)}
+ const monthData=months.map(month=>{
+  const values=records.map(rec=>{
+   const i=(rec.monthly?.time||[]).findIndex(t=>t.slice(0,7)===month);
+   if(i<0)return null;
+   return {rain:rec.monthly.precipitation_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i],
+    low:rec.monthly.temperature_min24h_2m_mean?.[i],high:rec.monthly.temperature_max24h_2m_mean?.[i]};
+  }).filter(Boolean);
+  const avg=key=>{const v=values.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
+  const rain=avg("rain"),anomaly=avg("anomaly"),low=avg("low"),high=avg("high");
+  const baseline=Number.isFinite(rain)&&Number.isFinite(anomaly)?rain-anomaly:null;
+  let outlook="資料不足";
+  if(Number.isFinite(rain)&&Number.isFinite(anomaly)&&Number.isFinite(baseline)&&baseline>0){
+   const ratio=rain/baseline;
+   outlook=ratio>=1.2?"偏濕趨勢":ratio<=0.8?"偏乾趨勢":"接近常態";
+  }
+  const days=new Date(Date.UTC(Number(month.slice(0,4)),Number(month.slice(5,7)),0)).getUTCDate();
+  return {month,rain,anomaly,low,high,avgDaily:Number.isFinite(rain)?rain/days:null,
+   outlook,status:values.length?"季節資料可用":valid.length?"天氣資料暫缺":"待建置"};
+ });
+ const metrics=[
+  {label:"月天氣總況",key:"outlook",text:true},
+  {label:"月低溫（每日低溫均值）",key:"low",unit:" °C"},
+  {label:"月高溫（每日高溫均值）",key:"high",unit:" °C"},
+  {label:"月降雨量",key:"rain",unit:" mm"},
+  {label:"月平均日雨量",key:"avgDaily",unit:" mm／日"},
+  {label:"月降雨天數",key:"rainDays",text:true,missing:"資料未提供"},
+  {label:"月最高日雨量",key:"maxDailyRain",text:true,missing:"資料未提供"}
+ ];
+ for(const metric of metrics){
+  const tr=node("tr");tr.append(node("th",metric.label));
+  for(const item of monthData){
+   const v=item[metric.key];
+   const display=metric.text?(v??metric.missing??"—"):(Number.isFinite(v)?v.toFixed(1)+metric.unit:"—");
+   tr.append(node("td",display));
+  }
+  body.append(tr);
+ }
  const statusRow=node("tr");statusRow.append(node("th","資料狀態"));for(const item of monthData)statusRow.append(node("td",item.status));body.append(statusRow);
  const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),btn=node("button","查看週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{const group={region:scopeName,rootRegion:region,subregion,country,courses:valid,months};if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,scopeName,item.month,()=>renderRegionMonths(country,region,months,valid,subregion))}});td.append(btn);actionRow.append(td)}body.append(actionRow);
  tbl.append(body);table.append(tbl);out.append(table);
  const coursePanel=node("section",undefined,"cluster-course-panel");
  coursePanel.append(node("h3","已建置球場"));
- coursePanel.append(node("p",courses.length?"選擇此分區已建檔球場，可接續產生球場專屬天氣報告。":"此群聚區目前尚無已建檔球場；完成球場資料建置後，名稱會出現在此選單。","cluster-course-note"));
+
  const picker=node("select",undefined,"cluster-course-select");picker.setAttribute("aria-label","選擇已建置球場");
  picker.add(new Option(courses.length?"請選擇球場":"尚無已建置球場", ""));
  for(const course of courses){
