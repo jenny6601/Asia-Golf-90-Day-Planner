@@ -104,3 +104,35 @@ export async function fetchCourseHistoricalMonthlyClimate(course, fetchImpl=fetc
   maxDailyRain:b.years.size?b.dailyMax:null
  }))};
 }
+
+
+/**
+ * Historical same-calendar-day normals for a selected seven-day window.
+ * Rain frequency is the share of matching calendar dates with >=1 mm,
+ * not a forecast probability.
+ */
+export async function fetchCourseHistoricalWeekNormals(course, dates, fetchImpl=fetch, now=new Date()){
+ if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足");
+ const endYear=now.getUTCFullYear()-1,startYear=endYear-9,timezone=course.timezone||"Asia/Tokyo";
+ const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),
+  start_date:startYear+"-01-01",end_date:endYear+"-12-31",
+  daily:"temperature_2m_max,temperature_2m_min,precipitation_sum",
+  timezone,temperature_unit:"celsius",precipitation_unit:"mm",models:"era5"});
+ const response=await fetchImpl("https://archive-api.open-meteo.com/v1/archive?"+params);
+ if(!response.ok)throw new Error("歷史逐日資料 API HTTP "+response.status);
+ const data=await response.json(),daily=data.daily;
+ if(!daily?.time?.length)throw new Error("歷史逐日資料不足");
+ return {course,startYear,endYear,days:dates.map(date=>{
+  const md=date.slice(5),samples=[];
+  for(let i=0;i<daily.time.length;i++)if(daily.time[i].slice(5)===md){
+   const rain=daily.precipitation_sum?.[i],high=daily.temperature_2m_max?.[i],low=daily.temperature_2m_min?.[i];
+   if(Number.isFinite(rain)||Number.isFinite(high)||Number.isFinite(low))samples.push({rain,high,low});
+  }
+  const vals=key=>samples.map(x=>x[key]).filter(Number.isFinite);
+  const avg=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:null;
+  const rain=vals("rain"),high=vals("high"),low=vals("low");
+  return {date,sampleYears:samples.length,rainFrequency:rain.length?rain.filter(v=>v>=1).length/rain.length*100:null,
+   rainMean:avg(rain),rainMin:rain.length?Math.min(...rain):null,rainMax:rain.length?Math.max(...rain):null,
+   highMean:avg(high),lowMean:avg(low),highMax:high.length?Math.max(...high):null,lowMin:low.length?Math.min(...low):null};
+ })};
+}
