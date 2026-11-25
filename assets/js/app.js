@@ -7,7 +7,16 @@ import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 const $=id=>document.getElementById(id),S={};
 let climateBackAction=null,climateHistoryReady=false;
-window.addEventListener("popstate",()=>{if(climateBackAction){const action=climateBackAction;action();return;}const leave=window.confirm("確定要退出亞洲高爾夫天氣 App 嗎？");if(!leave){history.pushState({homeExitGuard:true},"",location.href);showCountryOverview();}else{history.back();}});
+function showExitDialog(){
+ let modal=document.getElementById("exit-dialog");if(modal){modal.hidden=false;return}
+ modal=node("div",undefined,"exit-dialog");modal.id="exit-dialog";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");
+ const box=node("div",undefined,"exit-dialog-box");box.append(node("p","確定要退出亞洲高爾夫天氣 App 嗎？","exit-dialog-message"));
+ const actions=node("div",undefined,"exit-dialog-actions");
+ const cancel=node("button","取消","exit-cancel");cancel.type="button";cancel.addEventListener("click",()=>{modal.hidden=true;history.pushState({homeExitGuard:true},"",location.href);showCountryOverview()});
+ const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{modal.hidden=true;try{window.close()}catch(e){};history.back();setTimeout(()=>{if(!document.hidden){setStatus("已送出離開指令；若瀏覽器未自動關閉，請使用 Android 系統返回鍵離開。")}},350)});
+ actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);
+}
+window.addEventListener("popstate",()=>{if(climateBackAction){const action=climateBackAction;action();return;}showExitDialog()});
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
 const add=(s,n)=>{const d=new Date(s+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
 const val=(x,u="")=>x==null?"—":x+u;
@@ -90,16 +99,16 @@ async function showReport(){
  await renderCourseSevenDayReport(host,course,date);
 }
 async function renderCourseSevenDayReport(host,course,startDate){
- const dates=Array.from({length:7},(_,i)=>add(startDate,i)),endDate=dates[6];
+ const dates=Array.from({length:7},(_,i)=>add(startDate,i));
  const leadFor=date=>Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
- const report=section(host,"出發日 7 天預報摘要");
- report.append(node("p",course.name+"｜"+startDate+" ～ "+endDate,"data-note"));
+ const report=section(host,"出發日 7 天摘要");
+ report.append(node("p",course.name+"｜"+dates[0]+" ～ "+dates[6],"data-note"));
  const daily=S.forecast?.courses?.find(x=>x.course.id===course.id)?.daily;
  let historical=[];
  const needsHistory=dates.some(date=>leadFor(date)>15||leadFor(date)<0||!(daily?.time||[]).includes(date));
  if(needsHistory){
   try{const result=await fetchCourseHistoricalWeekNormals(course,dates);historical=result.days||[]}
-  catch(e){report.append(node("p","部分日期的歷史同期資料暫時無法取得："+e.message,"risk-summary"))}
+  catch(e){report.append(node("p","部分日期歷史資料暫時無法取得："+e.message,"risk-summary"))}
  }
  const rows=dates.map(date=>{
   const i=(daily?.time||[]).indexOf(date),h=historical.find(x=>x.date===date),actual=leadFor(date)>=0&&leadFor(date)<=15&&i>=0;
@@ -107,29 +116,34 @@ async function renderCourseSevenDayReport(host,course,startDate){
   const wxLabel=c=>!Number.isFinite(c)?"歷史氣候參考":c===0?"晴朗":c<=2?"晴時多雲":c===3?"陰天":c>=51&&c<=57?"毛毛雨":c>=61&&c<=67?"降雨":c>=80&&c<=82?"陣雨":c>=95?"雷雨":"多雲";
   return {date,actual,code,high:actual?daily.temperature_2m_max?.[i]:h?.highMean,low:actual?daily.temperature_2m_min?.[i]:h?.lowMean,feel:actual?daily.apparent_temperature_max?.[i]:null,prob:actual?daily.precipitation_probability_max?.[i]:h?.rainFrequency,rain:actual?daily.precipitation_sum?.[i]:h?.rainMean,label:actual?wxLabel(code):!Number.isFinite(h?.rainFrequency)?"歷史資料不足":h.rainFrequency>=60?"歷史常有雨":h.rainFrequency>=30?"歷史偶有雨":"歷史較少雨"};
  });
- const actualCount=rows.filter(r=>r.actual).length;
- const historicalCount=rows.length-actualCount;
- const cards=node("div",undefined,"departure-seven-grid");
- rows.forEach((r,index)=>{
-  const card=node("button",undefined,"departure-seven-card"+(r.date===startDate?" departure-day-selected":""));card.type="button";
+ const strip=node("div",undefined,"departure-seven-strip");
+ rows.forEach(r=>{
+  const day=node("button",undefined,"departure-seven-day"+(r.date===startDate?" is-departure":""));day.type="button";
   const weekday=["日","一","二","三","四","五","六"][new Date(r.date+"T12:00:00Z").getUTCDay()];
-  const dateLine=node("strong",r.date.slice(5).replace("-","/")+"（"+weekday+"）");
-  if(weekday==="六"||weekday==="日")dateLine.classList.add("weekend-red");
-  card.append(dateLine,createWeatherIcon(r.code,!r.actual,r.prob),node("b",r.label));
-  card.append(node("span",Number.isFinite(r.high)&&Number.isFinite(r.low)?r.high.toFixed(1)+"° / "+r.low.toFixed(1)+"°C":"溫度資料不足","seven-temp-line"));
-  card.append(node("span",r.actual?"降雨機率 "+(Number.isFinite(r.prob)?r.prob+"%":"—"):"歷史降雨頻率 "+(Number.isFinite(r.prob)?r.prob+"%":"—")));
-  card.append(node("span",r.actual?"累積雨量 "+(Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—"):"歷史日均雨量 "+(Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—")));
-  card.append(node("small",r.actual?"逐日預報｜點選查看逐時資料":"歷史摘要｜點選查看歷史資料"));
-  card.addEventListener("click",()=>renderDepartureDayDetails(host,course,r,date));
-  cards.append(card);
+  day.append(node("strong",r.date.slice(5).replace("-","/")+"（"+weekday+"）","departure-date"+([0,6].includes(new Date(r.date+"T12:00:00Z").getUTCDay())?" weekend-red":"")));
+  day.append(createWeatherIcon(r.code,!r.actual,r.prob),node("b",r.label));
+  day.append(node("span",Number.isFinite(r.high)&&Number.isFinite(r.low)?r.high.toFixed(1)+"° / "+r.low.toFixed(1)+"°C":"溫度資料不足"));
+  day.append(node("small",r.actual?"降雨機率":"歷史降雨頻率"));
+  day.append(node("strong",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"));
+  day.append(node("small",r.actual?"累積雨量":"歷史日均雨量"));
+  day.append(node("strong",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));
+  day.append(node("small",r.actual?"點選查看逐時明細":"點選查看歷史資料"));
+  day.addEventListener("click",()=>renderDepartureDayPage(host,course,r));
+  strip.append(day);
  });
- report.append(cards);
- const note=node("p",actualCount===7?"七天均在 16 天預報範圍內，點選任一天可查看 06:00–18:00 逐時天氣。":historicalCount===7?"此七天均超出 16 天預報範圍，顯示歷史同期摘要；點選日期只呈現歷史資料，不會產生逐時預報。":"此七天混合逐日預報與歷史同期資料；超出 16 天的日期只顯示歷史資料。","long-range-note");
- report.append(note);
+ report.append(strip);
+ report.append(node("p","左右滑動查看七天；前 16 天使用逐日預報，超出範圍的日期以歷史同期資料補充。","long-range-note"));
 }
+async function renderDepartureDayPage(host,course,row){
+ host.replaceChildren();
+ const back=node("button","← 返回出發日 7 天摘要","departure-detail-back");back.type="button";
+ back.addEventListener("click",()=>showReport());
+ host.append(back);
+ await renderDepartureDayDetails(host,course,row,row.date);
+}
+
 async function renderDepartureDayDetails(host,course,row,departureDate){
- const old=host.querySelector(".departure-day-details");if(old)old.remove();
- const actual=row.actual,card=section(host,(actual?"逐時天氣資料｜":"歷史資料摘要｜")+row.date+"（"+course.name+"）");
+ const actual=row.actual,card=section(host,(actual?"逐時天氣資料｜":"歷史資料頁面｜")+row.date+"（"+course.name+"）");
  card.classList.add("departure-day-details");
  if(!actual){
   card.append(node("p","此日期已超出 16 天逐日預報範圍，以下僅提供歷史同期統計，不代表該日實際天氣，也不提供虛構的逐時降雨機率或雨量。","long-range-note"));
