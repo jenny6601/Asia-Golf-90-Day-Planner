@@ -104,3 +104,17 @@
 #flow-nav .flow-back{padding:9px 13px!important;background:#edf4ef!important;color:#245b40!important;border:1px solid #dce7e1!important}
 #climate-explorer [hidden],.panel[hidden]{display:none!important}
 #region-report[hidden]{display:none!important}
+
+/* Mobile-friendly transposed three-month climate matrix */
+.region-table.region-matrix{width:100%;min-width:0;table-layout:fixed;font-size:.82rem}
+.region-table.region-matrix th,.region-table.region-matrix td{padding:10px 7px;white-space:normal;overflow-wrap:anywhere;vertical-align:middle}
+.region-table.region-matrix thead th:first-child,.region-table.region-matrix tbody th{width:31%;font-weight:800}
+.region-table.region-matrix thead th:not(:first-child),.region-table.region-matrix td{width:23%}
+.region-table.region-matrix td{line-height:1.45}
+.region-table.region-matrix .region-select{width:100%;white-space:normal;padding:8px 5px!important;font-size:.75rem!important;line-height:1.25}
+@media(max-width:480px){
+ .region-table.region-matrix{font-size:.73rem}
+ .region-table.region-matrix th,.region-table.region-matrix td{padding:9px 4px}
+ .region-table.region-matrix thead th:first-child,.region-table.region-matrix tbody th{width:32%}
+ .region-table.region-matrix .region-select{font-size:.68rem!important}
+}
