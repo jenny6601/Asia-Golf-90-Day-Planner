@@ -141,6 +141,7 @@ function monthOptions(){
 }
 function showClimateScreen(title,backAction){
  const overview=$("asia-overview"),out=$("region-report"),status=$("climate-status");
+ $("climate-explorer").classList.add("is-subpage");
  overview.hidden=true;status.hidden=true;
  let nav=$("flow-nav");if(!nav){nav=node("div",undefined,"flow-nav");nav.id="flow-nav";$("climate-explorer").insertBefore(nav,out)}
  nav.replaceChildren();
@@ -149,6 +150,7 @@ function showClimateScreen(title,backAction){
  out.hidden=false;status.hidden=false;
 }
 function showCountryOverview(){
+ $("climate-explorer").classList.remove("is-subpage");
  $("asia-overview").hidden=false;$("region-report").replaceChildren();$("region-report").hidden=true;
  const nav=$("flow-nav");if(nav)nav.replaceChildren();
  $("climate-status").hidden=false;$("climate-status").textContent="請選擇國家，進入該國地理分區。";
