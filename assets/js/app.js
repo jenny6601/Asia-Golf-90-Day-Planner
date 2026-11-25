@@ -163,7 +163,7 @@ function initClimateExplorer(){
   const tile=node("button",undefined,"overview-tile country-tile");tile.type="button";tile.append(node("strong",c.nameZh),node("span",count?count+" 個已建檔球場":"球場資料建置中"));
   tile.addEventListener("click",()=>{cc.value=c.code;renderRegionClimate()});overview.append(tile);cc.add(new Option(c.nameZh,c.code));
  }
- cc.value="JP";cc.addEventListener("change",renderRegionClimate);renderRegionClimate();
+ cc.value="JP";cc.addEventListener("change",renderRegionClimate);$("region-report").hidden=true;$("climate-status").textContent="請選擇國家，進入該國地理分區。";
 }
 async function renderRegionClimate(){
  const country=$("climate-country").value,out=$("region-report"),status=$("climate-status");
