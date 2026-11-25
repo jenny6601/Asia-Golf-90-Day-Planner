@@ -294,7 +294,10 @@ function coursesForJapanCluster(courses,prefecture,cluster){
 }
 function renderJapanClusterMenu(region,prefecture){
  const out=$("region-report");out.replaceChildren();
- showClimateScreen("日本 🇯🇵｜"+prefecture+"｜選擇球場群聚區",()=>renderJapanPrefectureMenu(region));
+ showClimateScreen("日本 🇯🇵｜"+prefecture+"｜選擇球場群聚區",()=>{
+  if(prefecture==="北海道"||prefecture==="沖繩縣")renderRegionClimate();
+  else renderJapanPrefectureMenu(region);
+ });
  const clusters=JP_PREFECTURE_CLUSTERS[prefecture]||[prefecture.replace("縣","").replace("府","")];
  const grid=node("div",undefined,"region-choice-grid subregion-choice-grid");
  for(const cluster of clusters){
