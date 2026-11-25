@@ -387,3 +387,19 @@
 .flow-nav .flow-back{background:#edf4ef;color:#205f49;border:2px solid #6c9881}
 .flow-nav .flow-home{background:#eaf2fb;color:#205b91;border:2px solid #4d83b4}
 @media(max-width:360px){.flow-nav{gap:6px}.flow-nav .flow-back,.flow-nav .flow-home{padding:7px 10px;font-size:.86rem}}
+
+/* Force both navigation actions into a compact single row */
+#flow-nav{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;width:100%!important}
+#flow-nav>.flow-back,#flow-nav>.flow-home{
+ flex:0 0 auto!important;display:inline-flex!important;width:max-content!important;
+ max-width:none!important;min-width:0!important;height:42px!important;min-height:42px!important;
+ margin:0!important;padding:0 13px!important;line-height:1!important;
+ font-size:15px!important;font-weight:800!important;white-space:nowrap!important;
+ border-radius:11px!important;box-sizing:border-box!important
+}
+#flow-nav>.flow-back{background:#edf4ef!important;color:#205f49!important;border:2px solid #6c9881!important}
+#flow-nav>.flow-home{background:#e8f1fb!important;color:#205b91!important;border:2px solid #4d83b4!important}
+@media(max-width:360px){
+ #flow-nav{gap:6px!important}
+ #flow-nav>.flow-back,#flow-nav>.flow-home{height:38px!important;min-height:38px!important;padding:0 9px!important;font-size:13px!important}
+}
