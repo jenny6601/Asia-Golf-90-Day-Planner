@@ -295,3 +295,19 @@
  line-height:1.35;padding:20px 12px;border-radius:14px;
  margin:14px 0 22px;letter-spacing:.02em;
 }
+
+/* Country selector tiles: stronger outline, flag, no helper copy */
+.country-tile{
+ border:2px solid #7c9b8c!important;
+ box-shadow:inset 0 0 0 1px #d2e0d8,0 2px 7px #18392b0c!important;
+ min-height:150px!important;
+ display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;
+ gap:12px!important;text-align:center!important;
+ background:#f8fbf9!important;
+}
+.country-tile .country-flag{display:block;font-size:2.8rem!important;line-height:1.2}
+.country-tile strong{font-size:1.35rem!important;font-weight:900!important;color:#173f35!important}
+.country-tile span:not(.country-flag){display:none!important}
+.country-tile:focus-visible{outline:4px solid #1769aa!important;outline-offset:3px}
+@media(max-width:560px){.country-tile{min-height:138px!important}.country-tile .country-flag{font-size:2.5rem!important}.country-tile strong{font-size:1.25rem!important}}
