@@ -56,3 +56,51 @@ export async function fetchCourseSeasonalForecast(course,fetchImpl=fetch){
  const payload=await response.json();if(!payload.weekly?.time?.length&&!payload.monthly?.time?.length)throw new Error("未回傳長期趨勢資料");
  return {course,provider:"Open-Meteo Seasonal Forecast API",model:payload.model??"ECMWF seasonal seamless",timezone:payload.timezone||timezone,fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null};
 }
+
+/**
+ * Ten-complete-year same-month climate baseline from ERA5 reanalysis.
+ * Rain day threshold: daily precipitation >= 1.0 mm.
+ * Maximum daily rainfall: maximum single-day total across the baseline years.
+ */
+export async function fetchCourseHistoricalMonthlyClimate(course, fetchImpl=fetch, now=new Date()){
+ if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足，無法讀取歷史氣候");
+ const endYear=now.getUTCFullYear()-1;
+ const startYear=endYear-9;
+ const timezone=course.timezone||"Asia/Tokyo";
+ const params=new URLSearchParams({
+  latitude:String(course.latitude),longitude:String(course.longitude),
+  start_date:startYear+"-01-01",end_date:endYear+"-12-31",
+  daily:"temperature_2m_max,temperature_2m_min,precipitation_sum",
+  timezone,temperature_unit:"celsius",precipitation_unit:"mm",
+  models:"era5"
+ });
+ const response=await fetchImpl("https://archive-api.open-meteo.com/v1/archive?"+params);
+ if(!response.ok)throw new Error("歷史氣候 API HTTP "+response.status);
+ const payload=await response.json();
+ const daily=payload.daily;
+ if(!daily?.time?.length)throw new Error("歷史氣候 API 未回傳逐日資料");
+ const buckets=Array.from({length:12},()=>({years:new Set(),rainTotals:[],rainDays:[],dailyMax:0,low:[],high:[]}));
+ const annual=new Map();
+ for(let i=0;i<daily.time.length;i++){
+  const date=daily.time[i],month=Number(date.slice(5,7))-1,year=Number(date.slice(0,4));
+  const rain=daily.precipitation_sum?.[i],low=daily.temperature_2m_min?.[i],high=daily.temperature_2m_max?.[i];
+  const key=year+"-"+month;
+  if(!annual.has(key))annual.set(key,{month,rainTotal:0,rainDays:0,low:[],high:[],maxDaily:0,validRain:0});
+  const y=annual.get(key);
+  if(Number.isFinite(rain)){y.rainTotal+=rain;y.validRain++;if(rain>=1)y.rainDays++;y.maxDaily=Math.max(y.maxDaily,rain)}
+  if(Number.isFinite(low))y.low.push(low);
+  if(Number.isFinite(high))y.high.push(high);
+ }
+ for(const y of annual.values()){
+  const b=buckets[y.month];b.years.add(y);if(y.validRain)b.rainTotals.push(y.rainTotal);
+  b.rainDays.push(y.rainDays);if(y.validRain)b.dailyMax=Math.max(b.dailyMax,y.maxDaily);
+  if(y.low.length)b.low.push(y.low.reduce((a,v)=>a+v,0)/y.low.length);
+  if(y.high.length)b.high.push(y.high.reduce((a,v)=>a+v,0)/y.high.length);
+ }
+ const mean=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:null;
+ return {course,provider:"Open-Meteo Historical Weather API",model:"ERA5 reanalysis",startYear,endYear,rainDayThresholdMm:1,monthly:buckets.map((b,i)=>({
+  month:i+1,years:b.years.size,rain:mean(b.rainTotals),rainDays:mean(b.rainDays),
+  low:mean(b.low),high:mean(b.high),avgDailyRain:mean(b.rainTotals)/new Date(Date.UTC(2000,i+1,0)).getUTCDate(),
+  maxDailyRain:b.years.size?b.dailyMax:null
+ }))};
+}
