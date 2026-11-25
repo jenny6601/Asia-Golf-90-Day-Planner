@@ -18,7 +18,6 @@ function showExitDialog(){
  const cancel=node("button","取消","exit-cancel");cancel.type="button";cancel.addEventListener("click",()=>{modal.hidden=true;ensureHomeExitGuard()});
  const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{
   modal.hidden=true;exitConfirmed=true;
-  window.alert("已解除退出攔截。請再按一次手機的返回鍵，讓 Android 系統離開 App。");
  });
  actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);
 }
