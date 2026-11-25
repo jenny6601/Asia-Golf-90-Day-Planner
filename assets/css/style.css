@@ -694,3 +694,9 @@
 /* Swipe navigation for TOP 3 seven-day report */
 .selected-week-five-pages{touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .selected-week-swipe-hint{display:flex;justify-content:center;align-items:center;min-height:38px;margin-top:8px;color:#176c4b;font-size:.88rem;font-weight:800;letter-spacing:.02em;text-align:center}
+
+
+/* Align temperature chart to the same five daily columns */
+.selected-week-five-page .seven-day-inline-graph{background:linear-gradient(90deg,#f4f7f9 0 20%,#e8eff4 20% 40%,#f4f7f9 40% 60%,#e8eff4 60% 80%,#f4f7f9 80% 100%)}
+.selected-week-five-page .seven-day-inline-graph svg{overflow:visible}
+.selected-week-five-page .taiwan-seven-rain .taiwan-rain-prob{font-size:clamp(1rem,4vw,1.2rem)!important;font-weight:900!important;line-height:1.2}
