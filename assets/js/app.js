@@ -167,7 +167,8 @@ function initClimateExplorer(){
  const overview=$("asia-overview"),cc=$("climate-country");
  for(const c of S.directory.countries){
   const count=S.directory.courses.filter(x=>x.countryCode===c.code&&x.enabled&&Number.isFinite(x.latitude)&&Number.isFinite(x.longitude)).length;
-  const tile=node("button",undefined,"overview-tile country-tile");tile.type="button";tile.append(node("strong",c.nameZh),node("span",count?count+" 個已建檔球場":"球場資料建置中"));
+  const flags={JP:"🇯🇵",KR:"🇰🇷",CN:"🇨🇳",VN:"🇻🇳",TH:"🇹🇭",MY:"🇲🇾",SG:"🇸🇬",ID:"🇮🇩"};
+  const tile=node("button",undefined,"overview-tile country-tile");tile.type="button";tile.append(node("span",flags[c.code]||"🌏","country-flag"),node("strong",c.nameZh));
   tile.addEventListener("click",()=>{cc.value=c.code;renderRegionClimate()});overview.append(tile);cc.add(new Option(c.nameZh,c.code));
  }
  cc.value="JP";cc.addEventListener("change",renderRegionClimate);$("region-report").hidden=true;$("climate-status").textContent="請選擇國家，進入該國地理分區。";
