@@ -668,3 +668,24 @@
  .top-week-grid .week-confidence{font-size:.68rem;color:#64756c}
  .top-week-grid .week-open{align-self:stretch;width:100%;margin-top:0}
 }
+
+
+/* TOP 3 selected week: five equal-width days per screen */
+.selected-week-five-pages{width:100%;min-width:0}
+.selected-week-five-page{margin:12px 0;padding:10px;border:1px solid #d9e5df;border-radius:14px;background:#fff;overflow:hidden}
+.selected-week-page-title{margin:2px 0 10px;color:#176c4b;font-size:.95rem}
+.selected-week-five-page .taiwan-style-seven-day{width:100%;min-width:0;overflow:hidden;padding:4px 0 8px}
+.selected-week-five-page .taiwan-seven-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));min-width:0;width:100%;gap:0}
+.selected-week-five-page .taiwan-seven-cell{min-width:0;padding:8px 2px;overflow-wrap:anywhere}
+.selected-week-five-page .taiwan-seven-dates .taiwan-seven-cell{min-height:54px}
+.selected-week-five-page .seven-day-inline-graph{width:100%;min-width:0;overflow:hidden;padding:6px 0 8px}
+.selected-week-five-page .seven-day-inline-graph svg{width:100%;height:auto;min-width:0}
+.selected-week-five-page .taiwan-seven-weather .taiwan-seven-cell{min-height:106px}
+.selected-week-five-page .taiwan-seven-rain .taiwan-seven-cell{min-height:100px}
+.selected-week-five-page .taiwan-seven-weather .taiwan-seven-icon{font-size:clamp(1.3rem,5vw,2rem)}
+.selected-week-five-page .taiwan-seven-weather strong{font-size:clamp(.66rem,2.5vw,.9rem);line-height:1.2}
+.selected-week-five-page .taiwan-seven-rain small{font-size:clamp(.56rem,2vw,.74rem)}
+.selected-week-five-page .taiwan-seven-rain strong{font-size:clamp(.72rem,2.8vw,1rem)}
+.selected-week-page-nav{display:flex;align-items:center;justify-content:center;gap:22px;padding:10px 0 2px}
+.selected-week-page-nav button{min-width:88px;padding:8px 12px;border-radius:9px}
+.selected-week-page-nav button:disabled{opacity:.4}
