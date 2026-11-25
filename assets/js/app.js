@@ -145,7 +145,14 @@ async function renderDepartureDayPage(host,course,row){
  const back=node("button","← 返回出發日 7 天摘要","departure-detail-back");back.type="button";
  back.addEventListener("click",()=>showReport());
  host.append(back);
- await renderDepartureDayDetails(host,course,row,row.date);
+ const loading=node("p","正在讀取所選日期的天氣資料…","data-note");host.append(loading);
+ try{
+  await renderDepartureDayDetails(host,course,row,row.date);
+ }catch(error){
+  const card=node("section",undefined,"weather-card");
+  card.append(node("h3","天氣資料讀取失敗"),node("p","無法產生此日圖表："+(error?.message||String(error)),"risk-summary"));
+  const retry=node("button","重新讀取此日資料");retry.type="button";retry.addEventListener("click",()=>renderDepartureDayPage(host,course,row));card.append(retry);host.append(card);
+ }finally{loading.remove()}
 }
 
 async function renderDepartureDayDetails(host,course,row,departureDate){
@@ -161,12 +168,17 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
   }
   card.append(stats);return;
  }
- const forecast=S.forecast?.courses?.find(x=>x.course.id===course.id);
- if(!forecast){card.append(node("p","找不到此球場的逐時預報資料。","risk-summary"));return}
- const hourly=forecast.hourly,indices=hourly.time.map((t,i)=>t.startsWith(row.date+"T")&&Number(t.slice(11,13))>=6&&Number(t.slice(11,13))<=18?i:-1).filter(i=>i>=0);
+ let forecast=S.forecast?.courses?.find(x=>x.course.id===course.id);
+ if(!forecast){
+  const result=await fetchCourseForecast([course]);
+  S.forecast=result;
+  forecast=result.courses?.find(x=>x.course.id===course.id);
+ }
+ if(!forecast?.hourly?.time?.length){card.append(node("p","球場逐時預報資料尚未取得，請稍後重試。","risk-summary"));return}
+ const hourly=forecast.hourly,indices=hourly.time.map((t,i)=>String(t).slice(0,10)===row.date&&Number(String(t).slice(11,13))>=6&&Number(String(t).slice(11,13))<=18?i:-1).filter(i=>i>=0);
  if(!indices.length){card.append(node("p","此日期未取得 06:00–18:00 逐時預報。","risk-summary"));return}
  card.append(node("p","資料範圍：06:00–18:00｜逐時預報資料。","data-note"));
- const records=indices.map(i=>({time:hourly.time[i].slice(11,16),code:hourly.weather_code?.[i],prob:hourly.precipitation_probability?.[i],rain:hourly.precipitation?.[i],temp:hourly.temperature_2m?.[i],feel:hourly.apparent_temperature?.[i],wind:hourly.wind_speed_10m?.[i],humidity:hourly.relative_humidity_2m?.[i]}));
+ const records=indices.map(i=>({time:String(hourly.time[i]).slice(11,16),code:hourly.weather_code?.[i],prob:hourly.precipitation_probability?.[i],rain:hourly.precipitation?.[i]??hourly.rain?.[i],temp:hourly.temperature_2m?.[i],feel:hourly.apparent_temperature?.[i],wind:hourly.wind_speed_10m?.[i],humidity:hourly.relative_humidity_2m?.[i]}));
  const table=node("div",undefined,"departure-hourly-table");
  const header=node("div",undefined,"departure-hour-row is-head");
  ["時間","天氣","機率 %","雨量 mm","降雨判讀","氣溫 °C","體感 °C"].forEach(x=>header.append(node("span",x)));table.append(header);
