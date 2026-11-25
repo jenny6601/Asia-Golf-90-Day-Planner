@@ -296,7 +296,7 @@ function coursesForJapanCluster(courses,prefecture,cluster){
 }
 function renderJapanClusterMenu(region,prefecture){
  const out=$("region-report");out.replaceChildren();
- showClimateScreen("日本 🇯🇵｜"+prefecture+"｜選擇球場群聚區",()=>{
+ showClimateScreen("日本 🇯🇵｜"+prefecture,()=>{
   if(prefecture==="北海道"||prefecture==="沖繩縣")renderRegionClimate();
   else renderJapanPrefectureMenu(region);
  });
