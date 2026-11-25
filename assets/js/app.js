@@ -88,8 +88,47 @@ function showReport(){
   if(wi>=0)long.append(node("p","週降雨趨勢："+interpretPrecipitationEfi(w.precipitation_efi?.[wi]).label+"｜EFI "+val(w.precipitation_efi?.[wi])+"｜降雨異常 "+val(w.precipitation_anomaly?.[wi]," mm")));
   if(mi>=0)long.append(node("p","月份 "+date.slice(0,7)+"｜平均降雨 "+val(m.precipitation_mean?.[mi]," mm")+"｜降雨異常 "+val(m.precipitation_anomaly?.[mi]," mm")+"｜平均溫度 "+val(m.temperature_2m_mean?.[mi],"°C")));
  }
+ renderCourseSevenDayReport(host,c,date);
  const note=node("p",lead<=15?"前16天依逐時預報產生報告；評分尚未經亞洲球場歷史回測校準。":"17–90天長期趨勢可信度較低，只作初步參考。","note");host.append(note);
 }
+
+function renderCourseSevenDayReport(host,course,startDate){
+ const report=section(host,"⑤ 球場專屬｜出發日起 7 天天氣報告");
+ const endDate=add(startDate,6);
+ report.append(node("p",course.name+"｜"+startDate+" ～ "+endDate+"｜座標 "+course.latitude.toFixed(4)+", "+course.longitude.toFixed(4),"data-note"));
+ const daily=S.forecast?.courses?.find(x=>x.course.id===course.id)?.daily;
+ const monthly=S.seasonal?.monthly,weekly=S.seasonal?.weekly;
+ const rows=[];
+ for(let offset=0;offset<7;offset++){
+  const date=add(startDate,offset),idx=daily?.time?.indexOf(date)??-1;
+  if(idx>=0){
+   rows.push({date,level:"逐日預報",rain:daily.precipitation_sum?.[idx],prob:daily.precipitation_probability_max?.[idx],low:daily.temperature_2m_min?.[idx],high:daily.temperature_2m_max?.[idx],wind:daily.wind_speed_10m_max?.[idx]});
+  }else{
+   let wi=-1;(weekly?.time||[]).forEach((t,i)=>{if(t<=date)wi=i});
+   const mi=(monthly?.time||[]).findIndex(t=>t.slice(0,7)===date.slice(0,7));
+   rows.push({date,level:wi>=0&&Number.isFinite(weekly.precipitation_efi?.[wi])?"週尺度趨勢":mi>=0?"月尺度趨勢":"資料不足",efi:wi>=0?weekly.precipitation_efi?.[wi]:null,rain:mi>=0?monthly.precipitation_mean?.[mi]:null,rainAnomaly:mi>=0?monthly.precipitation_anomaly?.[mi]:null,temp:mi>=0?monthly.temperature_2m_mean?.[mi]:null});
+  }
+ }
+ const table=node("div",undefined,"weather-table course-seven-table"),head=node("div",undefined,"weather-row weather-head");
+ ["日期","資料層級","降雨量／趨勢","降雨機率","溫度","最大風速"].forEach(x=>head.append(node("span",x)));table.append(head);
+ for(const row of rows){const line=node("div",undefined,"weather-row");let rainText="—",probText="—",tempText="—",windText="—";
+  if(row.level==="逐日預報"){rainText=val(row.rain," mm");probText=val(row.prob,"%");tempText=val(row.low,"°")+" / "+val(row.high,"°");windText=val(row.wind," m/s")}
+  else if(row.level==="週尺度趨勢"){rainText=interpretPrecipitationEfi(row.efi).label;tempText="非逐日資料"}
+  else if(row.level==="月尺度趨勢"){rainText=val(row.rain," mm／月");tempText=val(row.temp,"°C／月")}
+  [row.date,row.level,rainText,probText,tempText,windText].forEach(x=>line.append(node("span",x)));table.append(line)
+ }
+ report.append(table);
+ const actual=rows.filter(x=>x.level==="逐日預報");
+ if(actual.length){
+  svgChart(report,"球場逐日累積雨量（僅顯示有效預報日）",[{label:"每日雨量",values:rows.map(x=>x.level==="逐日預報"&&Number.isFinite(x.rain)?x.rain:null)}],"mm");
+  report.append(node("p","逐日資料覆蓋 "+actual.length+"/7 天。超出逐日預報範圍的日期只顯示可取得的週／月尺度趨勢，不推算每日雨量、降雨機率或溫度。","data-note"));
+ }else{
+  const signals=rows.map(x=>x.efi).filter(Number.isFinite);
+  report.append(node("p",signals.length?"此七天期間沒有逐日預報；目前只取得週尺度降雨趨勢，EFI="+(signals.reduce((a,b)=>a+b,0)/signals.length).toFixed(2)+"。":"此七天期間沒有逐日預報，僅有可用的月尺度氣候背景。","long-range-note"));
+  report.append(node("p","資料可信度：季節趨勢參考。不可解讀為每日降雨機率或每日雨量，也不產生 A–E 適打等級。","data-note"));
+ }
+}
+
 async function run(){const b=$("run");b.disabled=true;$("report").replaceChildren();setStatus("正在讀取球場天氣…");try{S.course=S.directory.courses.find(c=>c.id===$("course").value);const days=(Date.parse($("departure").value+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000;if(days>=0&&days<=15){S.forecast=await fetchCourseForecast([S.course]);S.seasonal=null}else{S.seasonal=await fetchCourseSeasonalForecast(S.course);S.forecast=null}showReport();setStatus("完成｜已產生天氣及適打報告。")}catch(e){setStatus("讀取失敗："+e.message)}finally{b.disabled=!S.course}}
 
 function monthOptions(){const base=today().slice(0,7)+"-01",out=[];for(let i=0;i<3;i++){const d=new Date(base+"T12:00:00Z");d.setUTCMonth(d.getUTCMonth()+i);out.push(d.toISOString().slice(0,7))}return out}
