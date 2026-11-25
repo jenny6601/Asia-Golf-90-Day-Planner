@@ -6,12 +6,11 @@ import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 const $=id=>document.getElementById(id),S={};
-let climateBackAction=null,climateHistoryReady=false,exitConfirmed=false,exitBackConsumed=false;
-function ensureHomeExitGuard(depth=4){
- // Keep several same-document history sentinels ahead of the WebView's
- // initial entry. Some Android WebViews deliver rapid/repeated back presses;
- // a single sentinel can be consumed before the next popstate is handled.
- for(let i=0;i<depth;i++)history.pushState({homeExitGuard:true,guardIndex:i},"",location.href);
+let climateBackAction=null,exitConfirmed=false;
+function ensureHomeExitGuard(){
+ // Keep one sentinel at the current app view. Re-arm it after every popstate
+ // so repeated Android WebView back presses remain inside the app.
+ if(history.state?.homeExitGuard!==true)history.pushState({homeExitGuard:true},"",location.href);
 }
 function showExitDialog(){
  let modal=document.getElementById("exit-dialog");if(modal){modal.hidden=false;return}
@@ -25,14 +24,11 @@ function showExitDialog(){
  actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);
 }
 window.addEventListener("popstate",()=>{
- if(exitConfirmed){
-  // User explicitly confirmed exit; drain the safety entries so this press exits.
-  history.back();
-  return;
- }
- // Rebuild a multi-entry safety buffer before running page navigation.
- // This prevents Android WebView from closing the app on a repeated press.
- ensureHomeExitGuard(4);
+ // The user explicitly confirmed exit; allow this back press to leave.
+ if(exitConfirmed)return;
+ // Re-arm before changing the view. The app owns its page stack; browser
+ // history is only a persistent guard against WebView closing on back.
+ ensureHomeExitGuard();
  if(climateBackAction){
   const action=climateBackAction;
   climateBackAction=null;
@@ -43,7 +39,6 @@ window.addEventListener("popstate",()=>{
   showCountryOverview();
   return;
  }
- // Exit confirmation is only reachable from the top-level home screen.
  showExitDialog();
 });
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
@@ -267,8 +262,7 @@ function showClimateScreen(title,backAction){
  $("climate-explorer").classList.add("is-subpage");
  overview.hidden=true;status.hidden=true;
  climateBackAction=backAction||null;
- if(!climateHistoryReady){history.replaceState({climateHome:true},"",location.href);climateHistoryReady=true;}
- history.pushState({climateFlow:true},"",location.href);
+ // View navigation is managed by climateBackAction, not browser history.
  let nav=$("flow-nav");if(!nav){nav=node("div",undefined,"flow-nav");nav.id="flow-nav";$("climate-explorer").insertBefore(nav,out)}
  nav.replaceChildren();
  const h=node("h2",title,"flow-title");nav.append(h);
