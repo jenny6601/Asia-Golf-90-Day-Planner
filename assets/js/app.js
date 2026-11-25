@@ -168,7 +168,8 @@ function initClimateExplorer(){
 async function renderRegionClimate(){
  const country=$("climate-country").value,out=$("region-report"),status=$("climate-status");
  out.replaceChildren();const months=monthOptions(),all=S.directory.courses.filter(c=>c.countryCode===country&&c.enabled),catalog=REGION_CATALOG[country]||[];
- const defined=[...new Set([...catalog,...all.map(c=>c.region).filter(Boolean)])];
+ const normalizeRegion=r=>(country==="JP"&&["Okinawa","沖繩"].includes(r)?"沖繩":r);
+ const defined=[...new Set([...catalog,...all.map(c=>c.region).filter(Boolean)].map(normalizeRegion))];
  showClimateScreen((S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜選擇地理分區",showCountryOverview);
  const available=all.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
  const selectedCountry=S.directory.countries.find(c=>c.code===country);
@@ -176,7 +177,7 @@ async function renderRegionClimate(){
  const intro=node("p","請選擇地理分區。尚無球場或座標的分區仍可進入月份與週次畫面，方便檢視版面；資料會明確標示待建置，不會以其他城市代替。","long-range-note");
  const grid=node("div",undefined,"region-choice-grid");
  for(const region of defined){
-  const courses=all.filter(c=>c.region===region||((country==="JP"&&region==="沖繩")&&c.region==="Okinawa"));
+  const courses=all.filter(c=>normalizeRegion(c.region)===region);
   const valid=courses.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
   const card=node("button",undefined,"region-choice");card.type="button";
   card.append(node("strong",region),node("span",courses.length?courses.length+" 個球場資料／"+valid.length+" 個有效座標":"球場資料待建置"),node("small","查看三個月天氣分區表"));
@@ -188,25 +189,19 @@ async function renderRegionClimate(){
 }
 async function renderRegionMonths(country,region,months,courses){
  const out=$("region-report"),status=$("climate-status");out.replaceChildren();
- showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+region+"｜選擇月份",()=>renderRegionClimate());
- const heading=node("h3","② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+region+"｜三個月天氣總表");
- const back=node("button","返回地理分區","region-back");back.type="button";back.addEventListener("click",renderRegionClimate);
- out.append(heading,back);
+ showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+region+"｜三個月天氣總表",()=>renderRegionClimate());
  const valid=courses.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
  const records=(await Promise.allSettled(valid.map(c=>fetchCourseSeasonalForecast(c)))).filter(x=>x.status==="fulfilled").map(x=>x.value);
- const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table"),thead=node("thead"),hr=node("tr");
- ["月份","降雨量","降雨異常","平均氣溫","資料狀態","操作"].forEach(t=>hr.append(node("th",t)));thead.append(hr);tbl.append(thead);
+ const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table region-matrix"),thead=node("thead"),hr=node("tr");
+ ["天氣指標",...months.map(m=>m)].forEach(t=>hr.append(node("th",t)));thead.append(hr);tbl.append(thead);
  const body=node("tbody");
- for(const month of months){
-  const values=records.map(rec=>{const i=(rec.monthly?.time||[]).findIndex(t=>t.slice(0,7)===month);return i<0?null:{rain:rec.monthly.precipitation_mean?.[i],temp:rec.monthly.temperature_2m_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i]}}).filter(Boolean);
-  const avg=key=>{const v=values.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
-  const tr=node("tr");[month,val(avg("rain")?.toFixed(1)," mm"),val(avg("anomaly")?.toFixed(1)," mm"),val(avg("temp")?.toFixed(1)," °C"),values.length?"季節資料可用":valid.length?"天氣資料暫缺":"待建置"].forEach(v=>tr.append(node("td",v)));
-  const td=node("td"),btn=node("button","查看週分析","region-select");btn.type="button";
-  btn.addEventListener("click",()=>{const group={region,courses:valid};if(records.length){renderRegionTopWeeks(group,records,month)}else{renderEmptyWeekAnalysis(country,region,month)}});
-  td.append(btn);tr.append(td);body.append(tr);
- }
+ const metrics=[{label:"月平均降雨量",key:"rain",unit:" mm",fmt:v=>v.toFixed(1)},{label:"降雨異常",key:"anomaly",unit:" mm",fmt:v=>(v>0?"+":"")+v.toFixed(1)},{label:"月平均氣溫",key:"temp",unit:" °C",fmt:v=>v.toFixed(1)}];
+ const monthData=months.map(month=>{const values=records.map(rec=>{const i=(rec.monthly?.time||[]).findIndex(t=>t.slice(0,7)===month);return i<0?null:{rain:rec.monthly.precipitation_mean?.[i],temp:rec.monthly.temperature_2m_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i]}}).filter(Boolean);const avg=key=>{const v=values.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};return {month,rain:avg("rain"),temp:avg("temp"),anomaly:avg("anomaly"),status:values.length?"季節資料可用":valid.length?"天氣資料暫缺":"待建置"}});
+ for(const metric of metrics){const tr=node("tr");tr.append(node("th",metric.label));for(const item of monthData){const v=item[metric.key];tr.append(node("td",Number.isFinite(v)?metric.fmt(v)+metric.unit:"—"))}body.append(tr)}
+ const statusRow=node("tr");statusRow.append(node("th","資料狀態"));for(const item of monthData)statusRow.append(node("td",item.status));body.append(statusRow);
+ const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),btn=node("button","查看週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{const group={region,courses:valid};if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,region,item.month)}});td.append(btn);actionRow.append(td)}body.append(actionRow);
  tbl.append(body);table.append(tbl);out.append(table);
- status.textContent=valid.length?"已選擇 "+region+"｜球場 "+valid.length+" 個，成功取得季節資料 "+records.length+" 組。可點選任一月份進入週分析。":"已選擇 "+region+"。此區尚無球場／天氣資料，但月份操作仍可使用以預覽下一層版面。";
+ status.textContent=valid.length?"已選擇 "+region+"｜球場 "+valid.length+" 個，成功取得季節資料 "+records.length+" 組。月份已改為橫向、天氣指標縱向，方便手機閱讀。":"已選擇 "+region+"。此區尚無球場／天氣資料，但月份及週分析操作仍可使用。";
 }
 function renderEmptyWeekAnalysis(country,region,month){
  const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+region+"｜"+month+"｜週次預覽",()=>renderRegionMonths(country,region,monthOptions(),[]));
