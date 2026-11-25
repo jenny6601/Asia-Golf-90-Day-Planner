@@ -275,6 +275,16 @@ function renderJapanPrefectureMenu(region){
  }
  out.append(grid);
 }
+function coursesForJapanCluster(courses,prefecture,cluster){
+ if(prefecture==="沖繩縣"){
+  if(cluster.includes("南部"))return courses.filter(c=>c.area==="南部"||/那霸|糸滿|八重瀨/.test(c.city||""));
+  if(cluster.includes("中部"))return courses.filter(c=>c.area==="中部"||/恩納/.test(c.city||""));
+  if(cluster.includes("北部"))return courses.filter(c=>c.area==="北部"||/名護/.test(c.city||""));
+  return courses.filter(c=>/宮古|石垣/.test((c.city||"")+" "+(c.address||"")));
+ }
+ const terms=cluster.split(/[・／]/).map(x=>x.trim()).filter(x=>x.length>1);
+ return courses.filter(c=>terms.some(t=>[c.city,c.address,c.area].filter(Boolean).join(" ").includes(t)));
+}
 function renderJapanClusterMenu(region,prefecture){
  const out=$("region-report");out.replaceChildren();
  showClimateScreen("日本 🇯🇵｜"+prefecture+"｜選擇球場群聚區",()=>renderJapanPrefectureMenu(region));
@@ -284,7 +294,8 @@ function renderJapanClusterMenu(region,prefecture){
   const card=node("button",undefined,"region-choice subregion-choice");card.type="button";card.append(node("strong",cluster));
   card.addEventListener("click",()=>{
    const regionCourses=S.directory.courses.filter(c=>c.countryCode==="JP"&&c.enabled&&((region==="沖繩"&&["Okinawa","沖繩"].includes(c.region))||c.region===region));
-   const selected=regionCourses.filter(c=>(c.prefecture||"")===prefecture || (prefecture==="沖繩縣"&&c.region==="Okinawa"));
+   const prefectureCourses=regionCourses.filter(c=>(c.prefecture||"")===prefecture || (prefecture==="沖繩縣"&&c.region==="Okinawa"));
+   const selected=coursesForJapanCluster(prefectureCourses,prefecture,cluster);
    renderRegionMonths("JP",region,monthOptions(),selected,cluster);
   });
   grid.append(card);
