@@ -123,7 +123,7 @@ async function renderCourseSevenDayReport(host,course,startDate){
  const lead=(Date.parse(startDate+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000;
  report.append(node("p",course.name+"｜"+startDate+" ～ "+endDate,"data-note"));
  const daily=S.forecast?.courses?.find(x=>x.course.id===course.id)?.daily;
- const actual=dates.some(date=>(daily?.time?.indexOf(date)??-1)>=0);
+ const actual=lead>=0&&lead+6<16&&dates.every(date=>(daily?.time?.indexOf(date)??-1)>=0);
  const median=values=>{const a=values.filter(Number.isFinite).sort((x,y)=>x-y);if(!a.length)return null;const m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2};
  const wxLabel=code=>{if(!Number.isFinite(code))return "資料不足";if(code===0)return "晴朗";if(code<=2)return "晴時多雲";if(code===3)return "陰天";if(code>=51&&code<=57)return "毛毛雨";if(code>=61&&code<=67)return "降雨";if(code>=80&&code<=82)return "陣雨";if(code>=95)return "雷雨";return "多雲"};
  const wxIcon=code=>!Number.isFinite(code)?"—":code===0?"☀️":code<=2?"🌤️":code===3?"☁️":code>=51&&code<=67?"🌧️":code>=80&&code<=82?"🌦️":code>=95?"⛈️":"☁️";
