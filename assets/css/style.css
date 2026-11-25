@@ -475,3 +475,42 @@
  .taiwan-seven-dates .taiwan-seven-cell strong{font-size:1rem}
  .taiwan-seven-dates .taiwan-seven-cell small{font-size:.88rem}
 }
+
+/* Departure-date centered seven-day forecast and selectable daily details */
+.departure-seven-grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0;
+}
+.departure-seven-card{
+ display:grid!important;grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto auto auto;
+ align-items:center;justify-items:start;gap:5px 10px;width:100%;min-width:0;
+ padding:12px!important;border:1px solid #d7e3df!important;border-radius:13px!important;
+ background:#f4f8f6!important;color:#1d3b30!important;text-align:left!important;box-shadow:none!important;
+}
+.departure-seven-card>strong{grid-column:1/-1;font-size:1.05rem;color:#194e3b}
+.departure-seven-card>svg{grid-column:1;grid-row:2/5;width:58px;height:58px}
+.departure-seven-card>b,.departure-seven-card>span,.departure-seven-card>small{grid-column:2;line-height:1.4}
+.departure-seven-card>b{font-size:.94rem}
+.departure-seven-card>span{font-size:.83rem}
+.departure-seven-card>small{font-size:.72rem;color:#62766c}
+.departure-seven-card.departure-day-selected{border:3px solid #1687c7!important;background:#e9f5fb!important}
+.departure-seven-card .weekend-red{color:#d92d2d!important}
+.departure-day-details{margin-top:18px}
+.departure-day-details>h3,.departure-hourly-title{
+ background:#176c4b;color:#fff;padding:13px 15px;border-radius:11px;
+ font-size:1.08rem;font-weight:900;line-height:1.4
+}
+.departure-hourly-table{overflow-x:auto;width:100%;margin:12px 0}
+.departure-hour-row{display:grid;grid-template-columns:65px repeat(6,minmax(78px,1fr));gap:5px;align-items:center;
+ min-width:535px;padding:10px 6px;border-bottom:1px solid #dce6e1;text-align:center;font-size:.83rem}
+.departure-hour-row.is-head{background:#eaf2ee;color:#174b39;font-weight:900;border-radius:8px}
+.departure-hour-row span{white-space:nowrap}
+.departure-day-details .weather-card{margin-top:14px}
+@media(max-width:560px){
+ .departure-seven-grid{grid-template-columns:1fr;gap:9px}
+ .departure-seven-card{grid-template-columns:58px minmax(0,1fr);padding:12px!important}
+ .departure-seven-card>svg{width:52px;height:52px}
+ .departure-seven-card>strong{font-size:1.08rem}
+ .departure-seven-card>b{font-size:.95rem}
+ .departure-seven-card>span{font-size:.88rem}
+ .departure-seven-card>small{font-size:.78rem}
+}
