@@ -77,3 +77,14 @@
 .course-seven-table .weather-row{grid-template-columns:110px 120px minmax(145px,1fr) 100px 125px 110px;min-width:710px}
 .course-seven-table .weather-row span{white-space:nowrap}
 @media(max-width:560px){.course-seven-table .weather-row{font-size:.76rem}}
+
+.country-tile{width:100%;text-align:left;color:#17312a!important;background:#f8fbf9!important;border:1px solid #dce7e1!important;box-shadow:none!important;cursor:pointer;min-height:112px;justify-content:center}
+.country-tile strong{font-size:1.1rem;color:#173f35}
+.country-tile span{font-size:.9rem;color:#718078}
+.country-tile:active,.country-tile:focus-visible{outline:2px solid #247956;outline-offset:2px}
+.month-cell{display:grid;gap:5px;width:100%;min-width:150px;text-align:left;padding:11px!important;background:#f8fbf9!important;color:#244638!important;border:1px solid #dce7e1!important;box-shadow:none!important}
+.month-cell strong{font-size:.92rem;color:#176c4b}
+.month-cell span{font-size:.78rem;font-weight:600;color:#52675b}
+.month-cell small{font-size:.72rem;color:#247956}
+.month-cell:active,.month-cell:focus-visible{outline:2px solid #247956;outline-offset:2px}
+#climate-status{font-weight:700}
