@@ -228,7 +228,7 @@ function renderEmptySevenDay(country,region,start){
 
 function renderRegionTopWeeks(group,records,month){
  const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜選擇週次",()=>renderRegionMonths($("climate-country").value,group.region,monthOptions(),group.courses));const title=node("h3","③ "+group.region+"｜"+month+" 週天氣分析 TOP 3");
- const panel=node("section",undefined,"week-recommendations");panel.append(title,node("p","週次涵蓋所選月份剩餘日期；若週尺度資料尚未涵蓋，會以該月季節趨勢作為參考。17–90 天不是逐日天氣預報，不代表實際降雨機率。","long-range-note"));
+ const panel=node("section",undefined,"week-recommendations");panel.append(title,);
  const monthStart=month+"-01",monthEnd=new Date(Date.parse(monthStart+"T12:00:00Z"));monthEnd.setUTCMonth(monthEnd.getUTCMonth()+1);monthEnd.setUTCDate(0);const last=monthEnd.toISOString().slice(0,10),todayDate=today(),first=monthStart>todayDate?monthStart:todayDate,candidates=[];
  for(let start=first;start<=last;start=add(start,7)){
   const weekEnd=add(start,6);if(weekEnd>last)continue;
@@ -260,7 +260,7 @@ function renderRegionTopWeeks(group,records,month){
 async function renderSelectedWeekReport(group,week,records,month){
  const host=$("region-report");host.replaceChildren();showClimateScreen("④ "+group.region+"｜"+week.start+"｜七天天氣報告",()=>renderRegionTopWeeks(group,records,month));
  const report=section(host,"七天逐日天氣預報｜"+week.start+" ～ "+week.end);
- report.append(node("p","依 Taiwan Golf Weather PWA V32.3 的呈現架構：七天逐日天氣、降雨機率與雨量、氣溫／體感曲線，以及可展開的逐時資料。","data-note"));
+ 
  const lead=(Date.parse(week.start+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000;
  const courses=(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).slice(0,3);
  let forecasts=[];
@@ -275,9 +275,19 @@ async function renderSelectedWeekReport(group,week,records,month){
  });
  const wxLabel=code=>{if(!Number.isFinite(code))return "資料不足";if(code===0)return "晴朗";if(code<=2)return "晴時多雲";if(code===3)return "陰天";if(code===45||code===48)return "霧";if(code>=51&&code<=57)return "毛毛雨";if(code>=61&&code<=67)return "降雨";if(code>=71&&code<=77)return "降雪";if(code>=80&&code<=82)return "陣雨";if(code>=95)return "雷雨";return "多雲"};
  const wxIcon=code=>{if(!Number.isFinite(code))return "—";if(code===0)return "☀️";if(code<=2)return "🌤️";if(code===3)return "☁️";if(code>=51&&code<=67)return "🌧️";if(code>=80&&code<=82)return "🌦️";if(code>=95)return "⛈️";return "☁️"};
- const strip=node("div",undefined,"seven-day-forecast-grid");
- for(const row of dailyRows){const tile=node("article",undefined,"seven-day-forecast-card");tile.append(node("strong",row.date),node("div",wxIcon(row.code)+" "+wxLabel(row.code),"seven-day-condition"),node("b",row.low==null||row.high==null?"溫度 —":row.low.toFixed(1)+"° / "+row.high.toFixed(1)+"°C"),node("span","降雨機率 "+val(row.prob,"%")),node("span","累積雨量 "+val(row.rain," mm")),node("small","資料 "+row.coverage+"/"+Math.max(1,courses.length)+" 個球場"));strip.append(tile)}
- report.append(strip);
+ const strip=node("div",undefined,"taiwan-style-seven-day");
+ const dateRow=node("div",undefined,"taiwan-seven-row taiwan-seven-dates");
+ const weatherRow=node("div",undefined,"taiwan-seven-row taiwan-seven-weather");
+ const rainRow=node("div",undefined,"taiwan-seven-row taiwan-seven-rain");
+ for(const row of dailyRows){
+  const dateCell=node("div",undefined,"taiwan-seven-cell");dateCell.append(node("strong",row.date.slice(5).replace("-","/")),node("small",["日","一","二","三","四","五","六"][new Date(row.date+"T12:00:00Z").getUTCDay()]));dateRow.append(dateCell);
+  const weatherCell=node("div",undefined,"taiwan-seven-cell");weatherCell.append(node("div",wxIcon(row.code),"taiwan-seven-icon"),node("strong",wxLabel(row.code)));weatherRow.append(weatherCell);
+  const rainCell=node("div",undefined,"taiwan-seven-cell");rainCell.append(node("small","降雨機率"),node("strong",val(row.prob,"%"),"taiwan-rain-prob"),node("small","累積雨量"),node("strong",val(row.rain," mm"),"taiwan-rain-mm"));rainRow.append(rainCell);
+ }
+ strip.append(dateRow);
+ const curve=section(strip,"七天氣溫曲線");
+ svgChart(curve,"每日最高／最低氣溫及體感",[{label:"最高溫",values:dailyRows.map(x=>x.high)},{label:"最低溫",values:dailyRows.map(x=>x.low)},{label:"最高體感",values:dailyRows.map(x=>x.feelHigh)}],"°C");
+ strip.append(weatherRow,rainRow);report.append(strip);
  if(forecasts.length){
   const rainValues=dailyRows.map(x=>x.rain),tempValues=dailyRows.map(x=>x.high),feelValues=dailyRows.map(x=>x.feelHigh);
   const probs=dailyRows.map(x=>x.prob).filter(Number.isFinite),rainValid=rainValues.filter(Number.isFinite),lowVals=dailyRows.map(x=>x.low).filter(Number.isFinite),highVals=tempValues.filter(Number.isFinite);
@@ -303,7 +313,7 @@ async function renderSelectedWeekReport(group,week,records,month){
    if(rows.length){const head=document.createElement("div");head.className="seven-day-hour-row is-head";["時間","天氣","降雨機率","雨量","氣溫","體感","風速","濕度"].forEach(v=>{const span=document.createElement("span");span.textContent=v;head.append(span)});details.append(head,...rows);hourlyCard.append(details)}
   }
   if(!hourCount)hourlyCard.append(node("p","所選七天期間沒有可用逐時資料。","data-note"));
-  report.append(node("p","區域逐日／逐時值採最多三個已建檔且具有效座標球場的中位數；並非每個球場的獨立預報。","data-note"));
+  report.append();
  }else{
   const seasonal=node("section",undefined,"week-recommendations");
   seasonal.append(node("h3","季節趨勢參考（非逐日預報）"),node("p","所選週次超出目前可用的 16 天逐日／逐時預報範圍，或尚無可用球場座標。此處不製作虛構的七天逐日數字。","long-range-note"));
