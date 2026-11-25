@@ -72,3 +72,8 @@
 .seven-day-item{display:grid;gap:5px;justify-items:center;padding:9px 2px;border-radius:8px;background:#edf4ef;color:#315342}
 .seven-day-item strong{font-size:.78rem}.seven-day-item span{font-size:.72rem;color:#718078}
 @media(max-width:560px){.selected-week-report{padding:12px}.seven-day-strip{gap:3px}.seven-day-item{padding:8px 1px}}
+
+.course-seven-table{margin:12px 0;overflow-x:auto}
+.course-seven-table .weather-row{grid-template-columns:110px 120px minmax(145px,1fr) 100px 125px 110px;min-width:710px}
+.course-seven-table .weather-row span{white-space:nowrap}
+@media(max-width:560px){.course-seven-table .weather-row{font-size:.76rem}}
