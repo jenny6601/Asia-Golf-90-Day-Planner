@@ -88,9 +88,7 @@ function renderCoursePicker(){
    $("course-weather-status").textContent="球場選擇已變更，請重新讀取逐時預報。";
    $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
    $("fetch-course-weather").disabled=selectedCourses.length===0;
-   initPairedForecastFeed();
-
-renderCoursePicker();
+   renderCoursePicker();
   });
   const info=document.createElement("span");
   const title=document.createElement("strong");title.textContent=`${course.name}（${course.area}）`;
@@ -320,6 +318,7 @@ $("fetch-long-range").addEventListener("click",async()=>{
  finally{button.disabled=false;}
 });
 
+initPairedForecastFeed();
 renderCoursePicker();
 $("fetch-course-weather").addEventListener("click",async()=>{
  const button=$("fetch-course-weather"),status=$("course-weather-status");
