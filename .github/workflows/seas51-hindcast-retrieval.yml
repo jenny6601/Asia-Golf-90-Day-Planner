@@ -33,10 +33,12 @@ jobs:
         run: python scripts/retrieve-seas51-hindcast-pilot.py
       - name: Audit GRIB metadata
         run: python scripts/audit-seas51-grib.py
-      - name: Extract ensemble values at course-nearest grid points
-        run: python scripts/extract-seas51-course-points.py
+      # Run the precipitation diagnostic before spatial extraction so a
+      # parser failure cannot suppress the independent lead-availability probe.
       - name: Probe precipitation leads individually
         run: python scripts/probe-seas51-precipitation-leads.py
+      - name: Extract ensemble values at course-nearest grid points
+        run: python scripts/extract-seas51-course-points.py
       - name: Upload raw GRIB and machine-readable audit
         if: always()
         uses: actions/upload-artifact@v4
