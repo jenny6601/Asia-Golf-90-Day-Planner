@@ -660,7 +660,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const isForecast=lead>=0&&lead<16&&actualEntries.length>0,historicalEntries=historicalNormals.map(n=>n.days?.find(d=>d.date===date)).filter(Boolean);
   const card=node("article",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":"monthly-day-history"));
   const code=mode(actualEntries.map(x=>x.code)),highValue=isForecast?avg(actualEntries,"high"):avg(historicalEntries,"highMean"),lowValue=isForecast?avg(actualEntries,"low"):avg(historicalEntries,"lowMean"),rainProb=isForecast?avg(actualEntries,"prob"):avg(historicalEntries,"rainFrequency");
-  const icon=isForecast?createWeatherIcon(code):createWeatherIcon(null,true,rainProb);icon.classList.add("monthly-day-icon");
+  const icon=createWeatherIcon(code,!isForecast,rainProb);icon.classList.add("monthly-day-icon");
   card.append(node("strong",String(Number(date.slice(8,10))),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
   card.append(node("b",Number.isFinite(highValue)?highValue.toFixed(0)+"°":"—","monthly-day-high"),node("span",Number.isFinite(lowValue)?lowValue.toFixed(0)+"°":"—","monthly-day-low"));
   card.append(node("small",isForecast?"雨機率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):"歷史雨頻 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"),"monthly-day-rain"));
