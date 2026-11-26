@@ -245,8 +245,8 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
   forecast=result.courses?.find(x=>x.course.id===course.id);
  }
  if(!forecast?.hourly?.time?.length){card.append(node("p","球場逐時預報資料尚未取得，請稍後重試。","risk-summary"));return}
- const hourly=forecast.hourly,indices=hourly.time.map((t,i)=>String(t).slice(0,10)===row.date&&Number(String(t).slice(11,13))>=6&&Number(String(t).slice(11,13))<=18?i:-1).filter(i=>i>=0);
- if(!indices.length){card.append(node("p","此日期未取得 06:00–18:00 逐時預報。","risk-summary"));return}
+ const hourly=forecast.hourly,teeHour=Number($("tee").value||10),endHour=teeHour+6,indices=hourly.time.map((t,i)=>String(t).slice(0,10)===row.date&&Number(String(t).slice(11,13))>=teeHour&&Number(String(t).slice(11,13))<endHour?i:-1).filter(i=>i>=0);
+ if(!indices.length){card.append(node("p",`此日期未取得 ${String(teeHour).padStart(2,"0")}:00–${String(endHour).padStart(2,"0")}:00 逐時預報。`,"risk-summary"));return}
  const records=indices.map(i=>({
   time:String(hourly.time[i]).slice(11,16),
   code:hourly.weather_code?.[i]??null,
