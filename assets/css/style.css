@@ -885,3 +885,24 @@ button.monthly-calendar-day.monthly-day-forecast:active{transform:scale(.98);box
 .panel button.monthly-calendar-day.monthly-day-forecast.monthly-weekend:active{
  background:#fff4f1!important;
 }
+
+/* Match clickable forecast days to the exact content layout of history-day cards.
+   Override the generic .panel button's oversized horizontal padding. */
+.panel button.monthly-calendar-day.monthly-day-forecast{
+ padding:5px 1px!important;
+ min-width:0!important;
+ width:100%!important;
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:center!important;
+ gap:3px!important;
+ white-space:normal!important;
+ line-height:normal!important;
+ font-weight:400!important;
+}
+@media(max-width:700px){
+ .panel button.monthly-calendar-day.monthly-day-forecast{
+  padding:5px 1px!important;
+  gap:3px!important;
+ }
+}
