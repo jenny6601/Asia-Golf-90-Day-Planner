@@ -622,8 +622,8 @@ async function openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,hi
  if(!course){const note=node("p","此分區沒有可用座標的代表球場，無法開啟逐日七天天氣報告。","risk-summary");host.append(note);return}
  const back=()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords);
  host.replaceChildren();
- showClimateScreen("出發日 7 天天氣預報｜"+course.name+"｜"+date,back);
- const heading=node("h3",course.name+"｜"+date+" 起七天天氣","monthly-linked-report-title");
+ showClimateScreen("出發日 7 天摘要",back);
+ const heading=node("h3",course.name+"｜"+date+" ～ "+add(date,6),"monthly-linked-report-title");
  const note=node("p","本報告以此分區第一個已核實座標的代表球場「"+course.name+"」計算；點選報告中的逐日卡片，可繼續查看逐時天氣。","monthly-analysis-note");
  host.append(heading,note);
  const loading=node("p","正在讀取所選日期的七天天氣資料…","data-note");host.append(loading);
