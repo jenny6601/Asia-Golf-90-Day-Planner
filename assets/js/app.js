@@ -771,6 +771,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   loadNote.classList.add("risk-summary");
  }else if(loadNote.textContent==="正在整理全月逐日資料…")loadNote.remove();
  const calendar=node("div",undefined,"monthly-calendar-grid");["一","二","三","四","五","六","日"].forEach((d,i)=>calendar.append(node("div",d,"monthly-calendar-weekday"+(i>=5?" monthly-weekend":""))));
+ dailySection.append(calendar); // Mount before enriching dates so later rendering errors cannot hide the month.
  const offset=(new Date(dates[0]+"T12:00:00Z").getUTCDay()+6)%7;for(let i=0;i<offset;i++)calendar.append(node("div","","monthly-calendar-empty"));
  const weatherLabel=code=>!Number.isFinite(code)?"資料不足":code===0?"晴朗":code<=2?"晴時多雲":code===3?"陰天":code>=51&&code<=57?"毛毛雨":code>=61&&code<=67?"降雨":code>=80&&code<=82?"陣雨":code>=95?"雷雨":"多雲";
  const mode=values=>{const nums=values.filter(Number.isFinite);if(!nums.length)return null;const counts=new Map();nums.forEach(v=>counts.set(v,(counts.get(v)||0)+1));return [...counts.entries()].sort((a,b)=>b[1]-a[1])[0][0]};
@@ -814,7 +815,6 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  });
  const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（前16天）","monthly-legend-forecast"),node("span","● 歷史＋季節訊號估計（第19–90天）","monthly-legend-seasonal"));dailySection.append(legend);
  dailySection.append(node("p","資料分級：前16天為天氣服務提供的逐日預報；第17–18天若無季節估計則僅供歷史參考；第19–90天為歷史同期統計結合可取得季節訊號的趨勢估計。卡片中的信心等級反映歷史樣本與季節訊號覆蓋，不是預報命中率。雨日頻率不是當日降雨機率。","monthly-source-note"));
- dailySection.append(calendar);
  if(!sampleCourses.length)dailySection.append(node("p","此分區尚無具有效 GPS 座標的球場，無法產生逐日天氣簡表。","risk-summary"));
  host.scrollIntoView({behavior:"smooth",block:"start"});
 }
