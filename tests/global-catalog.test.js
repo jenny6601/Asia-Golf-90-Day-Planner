@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import {groupCoursesByWeatherRegion} from "../assets/js/regional-weather.js";
 import fs from "node:fs/promises";
 
 const root = new URL("../config/global/", import.meta.url);
@@ -28,4 +29,13 @@ test("global forecast policy uses two providers for preliminary screening and se
   assert.deepEqual(providerConfig.strictComparisonProviders, ["openMeteo","visualCrossing","foreca"]);
   assert.equal(providerConfig.dateDecision.nights, 4);
   assert.equal(providerConfig.dateDecision.rounds, 3);
+});
+
+test("all current Okinawa courses are assigned to shared regional weather groups", () => {
+  assert.ok(courses.every(course => typeof course.weatherRegionId === "string" && course.weatherRegionId.length > 0));
+  const groups = groupCoursesByWeatherRegion(courses);
+  assert.deepEqual(groups.map(x => x.weatherRegionId), ["JP-OKINAWA-CENTRAL","JP-OKINAWA-NORTH","JP-OKINAWA-SOUTH"]);
+  assert.equal(groups.reduce((sum, group) => sum + group.courseCount, 0), courses.length);
+  assert.equal(groups.find(x => x.weatherRegionId === "JP-OKINAWA-NORTH").courseCount, 3);
+  assert.equal(groups.find(x => x.weatherRegionId === "JP-OKINAWA-SOUTH").courseCount, 2);
 });
