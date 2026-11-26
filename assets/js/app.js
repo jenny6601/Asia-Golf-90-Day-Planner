@@ -525,10 +525,13 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
    }
    return parts.length?parts.join("、"):"歷史氣候資料不足";
   };
+  // Use the same descriptive climate wording in every month column.
+  // For the first two forecast months, retain the seasonal signal as a short qualifier.
   let outlook=historicalOutlook();
   if(Number.isFinite(seasonRain)&&Number.isFinite(seasonAnomaly)){
    const baseline=seasonRain-seasonAnomaly;
-   outlook=baseline>0?(seasonRain/baseline>=1.2?"季節預測偏濕":seasonRain/baseline<=.8?"季節預測偏乾":"季節預測接近常態"):"季節預測可用";
+   const forecastTrend=baseline>0?(seasonRain/baseline>=1.2?"季節預測偏濕":seasonRain/baseline<=.8?"季節預測偏乾":"季節預測接近常態"):"";
+   if(forecastTrend)outlook+="（"+forecastTrend+"）";
   }
   const days=new Date(Date.UTC(Number(month.slice(0,4)),Number(month.slice(5,7)),0)).getUTCDate();
   return {month,outlook,rain,low,high,rainDays,avgDaily:Number.isFinite(avgDaily)?avgDaily:(Number.isFinite(rain)?rain/days:null),maxDaily,
