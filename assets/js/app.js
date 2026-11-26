@@ -736,6 +736,18 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const dayOfWeek=new Date(date+"T12:00:00Z").getUTCDay(),isWeekend=dayOfWeek===0||dayOfWeek===6;
   const card=node("button",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":useSeasonal?"monthly-day-seasonal":"monthly-day-history")+(isWeekend?" monthly-weekend":""));
   card.type="button";
+  // Apply the non-forecast date fills directly to each card. This bypasses
+  // inherited .panel button theme rules that previously painted seasonal
+  // dates dark green on the deployed mobile calendar.
+  if(useSeasonal){
+   card.style.setProperty("background-color",isWeekend?"#fff2e8":"#fff8e9","important");
+   card.style.setProperty("border-color",isWeekend?"#d6a08a":"#d8b36b","important");
+   card.style.setProperty("color","#29483c","important");
+  }else if(!isForecast){
+   card.style.setProperty("background-color",isWeekend?"#f7eeeb":"#f1f4f6","important");
+   card.style.setProperty("border-color",isWeekend?"#ead9d4":"#d8e0e5","important");
+   card.style.setProperty("color","#29483c","important");
+  }
   card.setAttribute("aria-label",date+" 天氣摘要，點選查看出發日七天天氣摘要");
   card.title="點選查看 "+date+" 出發日七天天氣摘要";
   card.addEventListener("click",()=>openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,sampleCourses[0],date))
