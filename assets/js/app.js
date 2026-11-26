@@ -122,7 +122,7 @@ async function showReport(){
 async function renderCourseSevenDayReport(host,course,startDate){
  const dates=Array.from({length:7},(_,i)=>add(startDate,i));
  const leadFor=date=>Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
- const report=section(host,"出發日 7 天摘要");
+ const report=section(host,"出發日 7 天摘要");report.classList.add("departure-week-summary");
 
  const daily=S.forecast?.courses?.find(x=>x.course.id===course.id)?.daily;
  let historical=[];
