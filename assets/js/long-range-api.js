@@ -24,7 +24,7 @@ export async function fetchOkinawaLongRange(fetchImpl=fetch){
  const points=await Promise.all(OKINAWA_LONG_RANGE_POINTS.map(async point=>{
   const params=new URLSearchParams({
    latitude:String(point.latitude),longitude:String(point.longitude),
-   weekly:WEEKLY,monthly:MONTHLY,
+   weekly:WEEKLY,monthly:MONTHLY,daily:DAILY,hourly:HOURLY,
    forecast_days:"90",timezone:"Asia/Tokyo",
    wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius",
    models:"ecmwf_seasonal_seamless"
