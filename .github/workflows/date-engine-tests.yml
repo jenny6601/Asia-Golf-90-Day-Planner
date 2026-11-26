@@ -2,7 +2,7 @@ name: Date Engine Tests
 
 on:
   push:
-    branches: [main]
+    branches: [main, asia-eight-country-shared-engine]
   pull_request:
     branches: [main]
   workflow_dispatch:

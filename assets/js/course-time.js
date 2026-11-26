@@ -21,3 +21,10 @@ export function getCourseLocalDateTime(date, hour, timezone) {
   }).formatToParts(new Date(date + "T" + String(hour).padStart(2,"0") + ":00:00Z"));
   return Object.fromEntries(parts.filter(x=>x.type!=="literal").map(x=>[x.type,x.value]));
 }
+
+export function formatCourseDateTime(value, timezone, locale = "zh-TW") {
+  assertTimezone(timezone);
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) throw new TypeError("Invalid date-time value");
+  return new Intl.DateTimeFormat(locale,{year:"numeric",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hourCycle:"h23",timeZone:timezone}).format(date);
+}

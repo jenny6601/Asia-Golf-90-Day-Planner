@@ -63,20 +63,21 @@ export async function fetchCourseForecast(courses, fetchImpl = fetch) {
     throw new TypeError("請選擇1至3個球場");
   }
   const results = await Promise.all(courses.map(async course => {
+    const timezone = course.timezone || "Asia/Tokyo";
     if (!Number.isFinite(course.latitude) || !Number.isFinite(course.longitude)) {
       throw new Error(`${course.name} 尚未完成 GPS 座標核實，暫不可查詢球場預報`);
     }
     const params = new URLSearchParams({
       latitude:String(course.latitude), longitude:String(course.longitude),
-      hourly:"temperature_2m,apparent_temperature,relative_humidity_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_gusts_10m",
-      daily:"precipitation_sum,precipitation_probability_max,temperature_2m_min,temperature_2m_max,wind_speed_10m_max,wind_gusts_10m_max",
-      forecast_days:"16",timezone:"Asia/Tokyo",wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius"
+      hourly:"temperature_2m,apparent_temperature,relative_humidity_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,cloud_cover,uv_index",
+      daily:"weather_code,precipitation_sum,precipitation_probability_max,temperature_2m_min,temperature_2m_max,apparent_temperature_min,apparent_temperature_max,wind_speed_10m_max,wind_gusts_10m_max",
+      forecast_days:"16",timezone,wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius"
     });
     const response=await fetchImpl(`${ENDPOINT}?${params}`);
     if(!response.ok) throw new Error(`${course.name} API HTTP ${response.status}`);
     const payload=await response.json();
     if(!payload.daily?.time?.length || !payload.hourly?.time?.length) throw new Error(`${course.name} 回傳欄位不完整`);
-    return {course,fetchedAt:new Date().toISOString(),timezone:payload.timezone,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,coordinateAudit:auditForecastPoint(course,payload),daily:payload.daily,hourly:payload.hourly};
+    return {course,fetchedAt:new Date().toISOString(),timezone:payload.timezone||timezone,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,coordinateAudit:auditForecastPoint(course,payload),daily:payload.daily,hourly:payload.hourly};
   }));
-  return {provider:"Open-Meteo Forecast API",forecastDays:16,timezone:"Asia/Tokyo",fetchedAt:new Date().toISOString(),courses:results};
+  return {provider:"Open-Meteo Forecast API",forecastDays:16,fetchedAt:new Date().toISOString(),timezone:results.length===1?results[0].timezone:null,courses:results};
 }

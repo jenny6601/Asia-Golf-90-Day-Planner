@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {OKINAWA_ZONES,fetchOkinawa16DayForecast} from "../assets/js/weather-api.js";
+import {OKINAWA_ZONES,fetchOkinawa16DayForecast,fetchCourseForecast} from "../assets/js/weather-api.js";
 
 test("Okinawa adapter requests three distinct representative zones", async () => {
   const urls=[];
@@ -33,4 +33,19 @@ test("Okinawa adapter fails closed on provider HTTP errors", async () => {
     fetchOkinawa16DayForecast(async()=>({ok:false,status:503})),
     /API HTTP 503/
   );
+});
+
+test("course forecast requests daily weather condition and apparent temperature for seven-day display",async()=>{
+ let requested;
+ const course={id:"test",name:"Test Course",latitude:26.2,longitude:127.7,timezone:"Asia/Tokyo"};
+ const result=await fetchCourseForecast([course],async url=>{
+  requested=new URL(url);
+  return {ok:true,json:async()=>({timezone:"Asia/Tokyo",latitude:26.2,longitude:127.7,
+   daily:{time:["2026-12-01"],weather_code:[1],apparent_temperature_min:[16],apparent_temperature_max:[23]},
+   hourly:{time:["2026-12-01T06:00"],temperature_2m:[18],apparent_temperature:[17]}})};
+ });
+ assert.match(requested.searchParams.get("daily"),/weather_code/);
+ assert.match(requested.searchParams.get("daily"),/apparent_temperature_min/);
+ assert.match(requested.searchParams.get("daily"),/apparent_temperature_max/);
+ assert.equal(result.courses[0].daily.weather_code[0],1);
 });

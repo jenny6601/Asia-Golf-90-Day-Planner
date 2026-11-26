@@ -1,346 +1,885 @@
-import {recommendFiveDayWindows} from "./itinerary-engine.js";
-import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
-import {OKINAWA_COURSES} from "./okinawa-courses.js";
-import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
-import {scoreFiveDayItinerary} from "./itinerary-engine.js";
-import {fetchOkinawaLongRange,interpretPrecipitationEfi} from "./long-range-api.js";
-import {classifyForecastConfidence} from "./confidence-engine.js";
-import {recommendLongRangeWindows} from "./long-range-engine.js";
-import {combineHorizonRecommendations} from "./horizon-integration.js";
-const $=id=>document.getElementById(id);
-const fmt=s=>new Intl.DateTimeFormat("zh-TW",{dateStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(s+"T00:00:00+09:00"));
-const bands={excellent:"極佳",good:"良好",caution:"需留意","not-recommended":"不建議",avoid:"極端風險"};
-let latestWeather=null;
-let selectedCourses=[];
-let latestCourseWeather=null;
-let latestLongRangeData=null;
-function cell(value,suffix=""){return value===null||value===undefined?"—":`${value}${suffix}`;}
-function makeTable(headers,rows,cls="weather-table"){
- const table=document.createElement("div");table.className=cls;
- const head=document.createElement("div");head.className="weather-row weather-head";
- headers.forEach(t=>{const span=document.createElement("span");span.textContent=t;head.append(span);});table.append(head);
- rows.forEach(values=>{const row=document.createElement("div");row.className="weather-row";values.forEach(v=>{const span=document.createElement("span");span.textContent=v;row.append(span);});table.append(row);});
- return table;
+import {fetchAsiaGolfDirectory} from "./course-catalog.js";
+import {formatCourseDate} from "./course-time.js";
+import {fetchCourseForecast} from "./weather-api.js";
+import {fetchCourseSeasonalForecast,fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals,interpretPrecipitationEfi} from "./long-range-api.js";
+import {scoreGolfRainWindow} from "./rain-risk.js";
+import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
+import {scorePwaStylePlayability} from "./pwa-playability.js";
+import {renderTaiwanPwaHourly} from "./taiwan-hourly-renderer.js";
+const $=id=>document.getElementById(id),S={};
+let climateBackAction=null,departureFormReturnAction=null,exitConfirmed=false,exitDialogOpen=false;
+function ensureHomeExitGuard(){
+ // Maintain one same-document entry. This is a browser-history guard, not a way to prevent Chrome itself from closing.
+ if(history.state?.asiaGolfHomeGuard!==true)history.pushState({asiaGolfHomeGuard:true},"",location.href);
 }
-function renderWeather(data){
- const host=$("weather-results");host.replaceChildren();
- for(const item of data.zones){
-  const card=document.createElement("article");card.className="weather-card";
-  const heading=document.createElement("h3");heading.textContent=`${item.zone.label}｜${item.zone.place}`;card.append(heading);
-  const coords=document.createElement("p");coords.className="weather-meta";coords.textContent=`座標 ${item.latitude.toFixed(4)}, ${item.longitude.toFixed(4)}｜時區 ${item.timezone}`;card.append(coords);
-  const rows=item.daily.time.map((date,i)=>[
-   fmt(date),cell(item.daily.precipitation_probability_max?.[i],"%"),cell(item.daily.precipitation_sum?.[i]," mm"),
-   `${cell(item.daily.temperature_2m_min?.[i],"°")} / ${cell(item.daily.temperature_2m_max?.[i],"°")}`,
-   cell(item.daily.wind_speed_10m_max?.[i]," m/s"),cell(item.daily.wind_gusts_10m_max?.[i]," m/s")
-  ]);
-  card.append(makeTable(["日期","降雨機率","雨量","低 / 高溫","最大風速","最大陣風"],rows));host.append(card);
+function showExitDialog(){
+ let modal=document.getElementById("exit-dialog");
+ if(modal){modal.hidden=false;exitDialogOpen=true;return}
+ modal=node("div",undefined,"exit-dialog");modal.id="exit-dialog";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");
+ const box=node("div",undefined,"exit-dialog-box");box.append(node("p","確定要退出亞洲高爾夫天氣 App 嗎？","exit-dialog-message"));
+ const actions=node("div",undefined,"exit-dialog-actions");
+ const cancel=node("button","取消","exit-cancel");cancel.type="button";cancel.addEventListener("click",()=>{modal.hidden=true;exitDialogOpen=false;ensureHomeExitGuard()});
+ const confirm=node("button","確定","exit-confirm");confirm.type="button";confirm.addEventListener("click",()=>{modal.hidden=true;exitDialogOpen=false;exitConfirmed=true});
+ actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);exitDialogOpen=true;
+}
+function handleAppBack(source="system"){
+ if(returnFromDepartureForm())return;
+ if(climateBackAction){
+  const action=climateBackAction;climateBackAction=null;action();return;
  }
+ if($("climate-explorer")?.classList.contains("is-subpage")){showCountryOverview();return}
+ showExitDialog();
 }
-function renderHourly(data,date){
- const teeHour=Number($("tee-hour").value);
- const host=$("hourly-results");host.replaceChildren();
- for(const item of data.zones){
-  const card=document.createElement("article");card.className="weather-card";
-  const heading=document.createElement("h3");heading.textContent=`${item.zone.label}｜${item.zone.place}｜${fmt(date)}`;card.append(heading);
-  const h=item.hourly,indices=h.time.map((t,i)=>({t,i})).filter(x=>x.t.startsWith(date)&&Number(x.t.slice(11,13))>=6&&Number(x.t.slice(11,13))<=18);
-  const risk=scoreGolfRainWindow(h,date,teeHour,6);
-  const riskSummary=document.createElement("p");riskSummary.className="risk-summary";
-  riskSummary.textContent=risk.status==="scored"
-   ? `開球 ${String(teeHour).padStart(2,"0")}:00｜連續6小時降雨影響：${risk.label}（指數 ${risk.rainRisk}/100）｜平均逐時降雨機率 ${risk.averageHourlyRainProbability}%｜預報雨量合計 ${risk.expectedRainAmountMm} mm｜最高單時雨量 ${risk.peakHourlyRainMm} mm`
-   : "資料不足：無法計算這個6小時時段的降雨影響指數。";
-  card.append(riskSummary);
-  const rows=indices.map(({t,i})=>[
-   t.slice(11,16),cell(h.precipitation_probability?.[i],"%"),cell(h.precipitation?.[i]," mm"),
-   cell(h.temperature_2m?.[i],"°C"),cell(h.apparent_temperature?.[i],"°C"),
-   cell(h.wind_speed_10m?.[i]," m/s"),cell(h.wind_gusts_10m?.[i]," m/s"),
-   cell(h.relative_humidity_2m?.[i],"%")
-  ]);
-  card.append(makeTable(["時間","降雨機率","雨量","氣溫","體感","風速","陣風","濕度"],rows,"weather-table hourly-table"));host.append(card);
- }
-}
-$("fetch-weather").addEventListener("click",async()=>{
- const button=$("fetch-weather"),status=$("weather-status");
- button.disabled=true;status.textContent="正在向 Open-Meteo 讀取沖繩北、中、南三區資料…";
- try{
-  latestWeather=await fetchOkinawa16DayForecast();
-  renderWeather(latestWeather);
-  const dateInput=$("hourly-date"),available=latestWeather.zones[0].daily.time;
-  dateInput.min=available[0];dateInput.max=available.at(-1);dateInput.value=available[0];
-  $("hourly-panel").hidden=false;renderHourly(latestWeather,dateInput.value);
-  const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(latestWeather.fetchedAt));
-  status.textContent=`讀取成功｜${latestWeather.provider}｜${latestWeather.forecastDays}天｜讀取時間（日本時間）：${stamp}｜三區均有回傳`;
- }catch(error){status.textContent=`讀取失敗：${error.message}。沒有使用合成資料代替。`;}
- finally{button.disabled=false;}
+window.addEventListener("popstate",()=>{
+ if(exitConfirmed)return;
+ // Re-arm a single same-document entry before changing the visible screen.
+ ensureHomeExitGuard();
+ handleAppBack("popstate");
 });
-$("hourly-date").addEventListener("change",()=>{if(latestWeather)renderHourly(latestWeather,$("hourly-date").value);});
-
-function renderCoursePicker(){
- const host=$("course-picker");host.replaceChildren();
- for(const course of OKINAWA_COURSES){
-  const label=document.createElement("label");label.className="course-option";
-  const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.value=course.id;
-  checkbox.checked=selectedCourses.some(x=>x.id===course.id);
-  checkbox.disabled=course.coordinateStatus==="pending" || (!checkbox.checked && selectedCourses.length>=3);
-  checkbox.addEventListener("change",()=>{
-   if(checkbox.checked){selectedCourses.push(course);}else{selectedCourses=selectedCourses.filter(x=>x.id!==course.id);}
-   latestCourseWeather=null;$("run-unified-recommendations").disabled=true;
-   $("course-weather-status").textContent="球場選擇已變更，請重新讀取逐時預報。";
-   $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
-   $("fetch-course-weather").disabled=selectedCourses.length===0;
-   renderCoursePicker();
-  });
-  const info=document.createElement("span");
-  const title=document.createElement("strong");title.textContent=`${course.name}（${course.area}）`;
-  const sub=document.createElement("small");sub.textContent=course.coordinateStatus==="pending"?"GPS 待核實｜暫不可查詢":`${course.latitude.toFixed(5)}, ${course.longitude.toFixed(5)}｜第三方地圖暫定，待官方圖資複核`;
-  const addr=document.createElement("small");addr.textContent=course.address;
-  info.append(title,sub,addr);label.append(checkbox,info);host.append(label);
- }
+const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+const add=(s,n)=>{const d=new Date(s+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+const val=(x,u="")=>x==null?"—":x+u;
+function setStatus(x){$("status").textContent=x}
+function fillCourses(){const country=$("country").value,region=$("region").value,el=$("course");el.replaceChildren();const list=S.directory.courses.filter(c=>c.countryCode===country&&c.region===region&&c.enabled);for(const c of list){const o=new Option(c.name,c.id);o.disabled=c.coordinateStatus==="pending"||!Number.isFinite(c.latitude)||!Number.isFinite(c.longitude);el.add(o)}const usable=list.find(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));S.course=usable||null;if(usable)el.value=usable.id;el.disabled=!list.length;$("run").disabled=!S.course;$("course-note").textContent=usable?"座標："+usable.latitude.toFixed(4)+", "+usable.longitude.toFixed(4)+"｜"+usable.coordinateStatus+"｜"+usable.timezone:list.length?"此分區球場座標尚待核實，暫不能查詢逐點天氣。":"此分區尚無已建檔球場。"}
+function fillRegions(){const country=$("country").value,el=$("region");el.replaceChildren();const regions=[...new Set(S.directory.courses.filter(c=>c.countryCode===country&&c.enabled).map(c=>c.region).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"zh-Hant"));for(const region of regions)el.add(new Option(region==="Okinawa"?"沖繩（獨立分區）":region,region));el.disabled=!regions.length;if(regions.length)el.value=regions.includes("Okinawa")?"Okinawa":regions[0];fillCourses()}
+function fillCountries(){const el=$("country");el.replaceChildren();for(const c of S.directory.countries){const has=S.directory.courses.some(x=>x.countryCode===c.code&&x.enabled);const o=new Option(c.nameZh+(has?"":"（建置中）"),c.code);o.disabled=!has;el.add(o)}const first=S.directory.countries.find(c=>S.directory.courses.some(x=>x.countryCode===c.code&&x.enabled));if(first)el.value=first.code;fillRegions()}
+function node(tag,text,className){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el}
+function section(host,title){const card=node("section",undefined,"weather-card");card.append(node("h3",title));host.append(card);return card}
+function svgChart(host,title,series,unit){
+ const card=section(host,title),width=680,height=190,left=38,right=12,top=16,bottom=30;
+ const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("viewBox",`0 0 ${width} ${height}`);svg.setAttribute("role","img");svg.setAttribute("aria-label",title);svg.style.width="100%";svg.style.height="auto";svg.style.overflow="visible";
+ const all=series.flatMap(s=>s.values.filter(Number.isFinite));if(!all.length){card.append(node("p","目前沒有足夠資料繪圖","data-note"));return}
+ const lo=Math.min(0,...all),hi=Math.max(1,...all),x=i=>left+i*(width-left-right)/Math.max(1,series[0].values.length-1),y=v=>height-bottom-(v-lo)/(hi-lo)*(height-top-bottom);
+ for(let k=0;k<4;k++){const yy=top+k*(height-top-bottom)/3,line=document.createElementNS(svg.namespaceURI,"line");line.setAttribute("x1",left);line.setAttribute("x2",width-right);line.setAttribute("y1",yy);line.setAttribute("y2",yy);line.setAttribute("stroke","#dce7e1");svg.append(line)}
+ const palette=["#247956","#2470b5","#d28b22","#8757a6"];
+ series.forEach((s,j)=>{const pts=s.values.map((v,i)=>Number.isFinite(v)?x(i)+","+y(v):null).filter(Boolean).join(" ");if(!pts)return;const poly=document.createElementNS(svg.namespaceURI,"polyline");poly.setAttribute("points",pts);poly.setAttribute("fill","none");poly.setAttribute("stroke",palette[j%palette.length]);poly.setAttribute("stroke-width","3");poly.setAttribute("stroke-linecap","round");poly.setAttribute("stroke-linejoin","round");svg.append(poly);s.values.forEach((v,i)=>{if(!Number.isFinite(v))return;const dot=document.createElementNS(svg.namespaceURI,"circle");dot.setAttribute("cx",x(i));dot.setAttribute("cy",y(v));dot.setAttribute("r","3");dot.setAttribute("fill",palette[j%palette.length]);svg.append(dot)})});
+ const labels=node("div",undefined,"chart-legend");series.forEach((s,j)=>{const item=node("span",s.label+"（"+unit+"）");item.style.color=palette[j%palette.length];labels.append(item)});card.append(svg,labels);
 }
-function renderCourseWeather(data){
- const host=$("course-weather-results");host.replaceChildren();
- for(const item of data.courses){
-  const card=document.createElement("article");card.className="weather-card";
-  const h=document.createElement("h3");h.textContent=`${item.course.name}｜${item.course.area}`;card.append(h);
-  const meta=document.createElement("p");meta.className="weather-meta";
-  const audit=item.coordinateAudit;
-  meta.textContent="輸入球場座標 "+audit.requested.latitude.toFixed(5)+", "+audit.requested.longitude.toFixed(5)+"｜預報網格座標 "+audit.providerGrid.latitude.toFixed(5)+", "+audit.providerGrid.longitude.toFixed(5)+"｜網格偏移 "+(audit.gridOffsetKm===null?"—":audit.gridOffsetKm+" km")+"｜海拔 "+(item.elevation??"—")+" m｜"+item.timezone;
-  card.append(meta);
-  const quality=document.createElement("p");quality.className="data-note";
-  quality.textContent="座標來源："+audit.source+"｜狀態："+(audit.coordinateStatus==="provisional"?"第三方地圖暫定，尚未官方界線核實":audit.coordinateStatus)+"。網格偏移只反映氣象模式格點與輸入座標的距離，不代表球場 GPS 正確性。";
-  card.append(quality);
-  if(audit.sourceUrl){const link=document.createElement("a");link.href=audit.sourceUrl;link.target="_blank";link.rel="noopener";link.textContent="查看座標來源";card.append(link);}
-  const rows=item.daily.time.map((date,i)=>[
-   fmt(date),cell(item.daily.precipitation_probability_max?.[i],"%"),cell(item.daily.precipitation_sum?.[i]," mm"),
-   `${cell(item.daily.temperature_2m_min?.[i],"°")} / ${cell(item.daily.temperature_2m_max?.[i],"°")}`,
-   cell(item.daily.wind_speed_10m_max?.[i]," m/s"),cell(item.daily.wind_gusts_10m_max?.[i]," m/s")
-  ]);
-  card.append(makeTable(["日期","降雨機率","雨量","低 / 高溫","最大風速","最大陣風"],rows));host.append(card);
- }
+function renderSixteenDayStrip(host,daily,selectedDate){
+ const card=section(host,"① 16天白天逐日預報｜左右滑動檢視");
+ const strip=node("div",undefined,"daily-strip");
+ daily.time.forEach((date,i)=>{const day=node("button",undefined,"daily-tile"+(date===selectedDate?" selected":""));day.type="button";day.addEventListener("click",()=>{$("departure").value=date;showReport()});day.append(node("strong",date.slice(5).replace("-","/")),node("span",date===selectedDate?"所選日期":new Intl.DateTimeFormat("zh-TW",{weekday:"short",timeZone:"UTC"}).format(new Date(date+"T12:00:00Z"))),node("b",(daily.temperature_2m_max?.[i]??"—")+"° / "+(daily.temperature_2m_min?.[i]??"—")+"°"),node("small","雨 "+(daily.precipitation_probability_max?.[i]??"—")+"%"),node("small",(daily.precipitation_sum?.[i]??"—")+" mm"));strip.append(day)});
+ card.append(strip);
 }
+function metricGrid(host,items){const grid=node("div",undefined,"results");for(const [label,value] of items){const card=node("article",undefined,"result-card");card.append(node("p",label),node("strong",value));grid.append(card)}host.append(grid)}
 
-
-function populateItineraryStartDates(){
- const select=$("itinerary-start");select.replaceChildren();
- if(!latestCourseWeather?.courses || selectedCourses.length!==3){
-  select.disabled=true;select.add(new Option("請先選擇三個球場並讀取預報",""));return;
+function createWeatherIcon(code, historical=false, probability=null){
+ const ns="http://www.w3.org/2000/svg",svg=document.createElementNS(ns,"svg");
+ svg.setAttribute("viewBox","0 0 64 64");svg.setAttribute("role","img");
+ const rain=historical?Number.isFinite(probability)&&probability>=30:
+  Number.isFinite(code)&&((code>=51&&code<=67)||(code>=80&&code<=82)||code>=95);
+ const thunder=!historical&&Number.isFinite(code)&&code>=95;
+ const sunny=!historical&&Number.isFinite(code)&&code===0;
+ const partly=!historical&&Number.isFinite(code)&&(code===1||code===2);
+ const cloud=!historical&&Number.isFinite(code)&&code===3;
+ const add=(tag,attrs)=>{const e=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,String(v)));svg.append(e);return e};
+ const bg=add("rect",{x:2,y:2,width:60,height:60,rx:13,fill:"#159ce5"});
+ if(sunny||partly){
+  add("circle",{cx:31,cy:27,r:11,fill:"#ffd22e",stroke:"#f4a900","stroke-width":2});
+  if(sunny)for(let i=0;i<8;i++){const a=i*Math.PI/4,x1=31+15*Math.cos(a),y1=27+15*Math.sin(a),x2=31+20*Math.cos(a),y2=27+20*Math.sin(a);add("line",{x1,y1,x2,y2,stroke:"#ffd22e","stroke-width":3,"stroke-linecap":"round"})}
  }
- const startSet=new Set(latestCourseWeather.courses[0].hourly.time.map(t=>t.slice(0,10)));
- const lastDates=latestCourseWeather.courses.map(x=>new Set(x.hourly.time.map(t=>t.slice(0,10))));
- const candidates=[...startSet].sort().filter(start=>{
-  const golfDates=[1,2,3].map(n=>new Date(Date.parse(start+"T00:00:00Z")+n*86400000).toISOString().slice(0,10));
-  return lastDates.every(set=>golfDates.every(d=>set.has(d)));
+ if(!sunny){
+  add("path",{d:partly?"M12 42 C7 42 6 35 11 32 C12 26 20 23 26 27 C31 18 45 22 46 32 C55 32 58 42 51 45 L15 45 Z":"M10 43 C5 42 6 34 12 32 C13 24 23 21 29 26 C34 16 49 21 50 31 C59 31 60 42 53 45 Z",fill:"#f7fbff",stroke:"#829bb1","stroke-width":2.4,"stroke-linejoin":"round"});
+ }
+ if(rain){
+  for(const [x,y] of [[21,51],[32,53],[43,51]])add("path",{d:`M${x} ${y-4} Q${x-5} ${y+2} ${x} ${y+5} Q${x+5} ${y+2} ${x} ${y-4} Z`,fill:"#49c8ff",stroke:"#1689d0","stroke-width":1});
+ }
+ if(thunder)add("path",{d:"M34 39 L25 52 L33 51 L29 61 L43 45 L35 46 Z",fill:"#ffd22e",stroke:"#e89b00","stroke-width":1});
+ if(!sunny&&!partly&&!cloud&&!rain&&!thunder)add("path",{d:"M10 43 C5 42 6 34 12 32 C13 24 23 21 29 26 C34 16 49 21 50 31 C59 31 60 42 53 45 Z",fill:"#f7fbff",stroke:"#829bb1","stroke-width":2.4});
+ return svg;
+}
+function renderSevenDayVisual(host,rows,historical=false,onSelectDate=null){
+ const pages=node("div",undefined,"selected-week-five-pages");let pageIndex=0;
+ const renderPage=()=>{
+  pages.replaceChildren();const pageRows=rows.slice(pageIndex*5,pageIndex*5+5);
+  const strip=node("div",undefined,"taiwan-style-seven-day unified-seven-day");
+  const makeRow=cls=>node("div",undefined,"taiwan-seven-row "+cls);
+  const dates=makeRow("taiwan-seven-dates"),weather=makeRow("taiwan-seven-weather"),rain=makeRow("taiwan-seven-rain");
+  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),clickable=!!onSelectDate&&r.clickable===true;const d=node(clickable?"button":"div",undefined,"taiwan-seven-cell"+([0,6].includes(wd)?" weekend":"")+(clickable?" seven-day-date-button seven-day-hourly-cell":""));if(clickable){d.type="button";d.dataset.hourlyDate=r.date;d.setAttribute("aria-label",r.date+" 點選查看逐時天氣");d.title="點選此日期查看逐時天氣";d.style.width="100%";d.style.border="0";d.style.borderRadius="0";d.style.font="inherit";d.style.cursor="pointer";d.style.pointerEvents="auto";d.style.touchAction="manipulation"}d.append(node("strong",r.date.slice(5).replace("-","/")),node("small",["日","一","二","三","四","五","六"][wd]));if(clickable)d.addEventListener("click",()=>onSelectDate(r.date));dates.append(d)});
+  strip.append(dates);
+  const graph=node("div",undefined,"seven-day-inline-graph"),svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+  svg.setAttribute("viewBox","0 0 700 220");svg.setAttribute("role","img");svg.setAttribute("aria-label","每日最高最低氣溫及體感");svg.style.width="100%";svg.style.display="block";
+  const vals=pageRows.flatMap(r=>[r.high,r.low,r.feel].filter(Number.isFinite));
+  if(vals.length){const lo=Math.min(...vals)-2,hi=Math.max(...vals)+2,x=i=>70+i*140,y=v=>150-(v-lo)/(hi-lo||1)*80;
+   [20,82,144].forEach(yy=>{const l=document.createElementNS(svg.namespaceURI,"line");l.setAttribute("x1",35);l.setAttribute("x2",670);l.setAttribute("y1",yy);l.setAttribute("y2",yy);l.setAttribute("stroke","#dce5e9");svg.append(l)});
+   [{key:"high",color:"#ef6b54"},{key:"low",color:"#3198dc"},{key:"feel",color:"#d49b22"}].filter(s=>pageRows.some(r=>Number.isFinite(r[s.key]))).forEach(s=>{const pts=pageRows.map((r,i)=>Number.isFinite(r[s.key])?[x(i),y(r[s.key])]:null);const valid=pts.filter(Boolean);if(valid.length>1){const p=document.createElementNS(svg.namespaceURI,"polyline");p.setAttribute("points",valid.map(p=>p.join(",")).join(" "));p.setAttribute("fill","none");p.setAttribute("stroke",s.color);p.setAttribute("stroke-width","3.5");p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");svg.append(p)}pts.forEach((p,i)=>{if(!p)return;const dot=document.createElementNS(svg.namespaceURI,"circle");dot.setAttribute("cx",p[0]);dot.setAttribute("cy",p[1]);dot.setAttribute("r","4.5");dot.setAttribute("fill",s.color);svg.append(dot);const tx=document.createElementNS(svg.namespaceURI,"text");tx.setAttribute("x",p[0]);tx.setAttribute("y",p[1]+(s.key==="high"?-22:s.key==="low"?26:(Number.isFinite(pageRows[i].high)&&Number.isFinite(pageRows[i].low)&&pageRows[i].feel>=pageRows[i].high?-54:Number.isFinite(pageRows[i].low)&&pageRows[i].feel<pageRows[i].low?58:-12)));tx.setAttribute("text-anchor","middle");tx.setAttribute("font-size","30");tx.setAttribute("font-weight","800");tx.setAttribute("fill",s.color);tx.textContent=pageRows[i][s.key].toFixed(0)+"°";svg.append(tx)})});
+  }
+  graph.append(svg);const legend=node("div",undefined,"seven-day-legend");legend.append(node("span",historical?"● 歷史平均最高溫":"● 最高溫","legend-high"),node("span",historical?"● 歷史平均最低溫":"● 最低溫","legend-low"));if(!historical)legend.append(node("span","● 體感溫度","legend-feel"));graph.append(legend);strip.append(graph);
+  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),weekend=[0,6].includes(wd),clickable=!!onSelectDate&&r.clickable===true;const w=node("div",undefined,"taiwan-seven-cell"+(weekend?" weekend":"")+(clickable?" seven-day-hourly-cell":""));if(clickable){w.dataset.hourlyDate=r.date;w.setAttribute("role","button");w.tabIndex=0;w.setAttribute("aria-label",r.date+" 天氣狀況，點選查看逐時天氣");w.title="點選此天氣狀況查看逐時天氣"}const code=Number.isFinite(r.code)?r.code:null;const isHistorical=!r.actual;const label=isHistorical?(!Number.isFinite(r.prob)?"歷史資料不足":r.prob>=60?"歷史常有雨":r.prob>=30?"歷史偶有雨":"歷史較少雨"):(r.label||"資料不足");w.append(createWeatherIcon(code,isHistorical,r.prob),node("strong",label));if(clickable)w.addEventListener("click",()=>onSelectDate(r.date));weather.append(w);const rr=node("div",undefined,"taiwan-seven-cell"+(weekend?" weekend":"")+(clickable?" seven-day-hourly-cell":""));if(clickable){rr.dataset.hourlyDate=r.date;rr.setAttribute("role","button");rr.tabIndex=0;rr.setAttribute("aria-label",r.date+" 降雨資料，點選查看逐時天氣");rr.title="點選此日期資料查看逐時天氣"}rr.append(node("small",isHistorical?"歷史降雨頻率":"降雨機率"),node("strong",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","taiwan-rain-prob"),node("small",isHistorical?"歷史日均雨量":"累積雨量"),node("strong",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","taiwan-rain-mm"));if(clickable)rr.addEventListener("click",()=>onSelectDate(r.date));rain.append(rr)});
+  strip.append(weather,rain);const sectionPage=node("section",undefined,"selected-week-five-page");sectionPage.append(node("h4","第 "+(pageIndex+1)+" 頁｜"+pageRows[0].date+" ～ "+pageRows[pageRows.length-1].date,"selected-week-page-title"),strip);
+  pages.append(sectionPage);
+ };
+ const activateHourlyCell=target=>{if(!target||!pages.contains(target)||!target.dataset.hourlyDate)return;onSelectDate(target.dataset.hourlyDate)};
+  pages.addEventListener("click",e=>{const target=e.target.closest("[data-hourly-date]");if(!target||!pages.contains(target))return;e.preventDefault();e.stopPropagation();activateHourlyCell(target)},true);
+  pages.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches("[data-hourly-date]")){e.preventDefault();activateHourlyCell(e.target)}},true);
+ let touchStartX=0,touchStartY=0;
+ pages.addEventListener("touchstart",e=>{const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY},{passive:true});
+ pages.addEventListener("touchend",e=>{const t=e.changedTouches[0],dx=t.clientX-touchStartX,dy=t.clientY-touchStartY;if(Math.abs(dx)<45||Math.abs(dx)<Math.abs(dy)*1.25)return;const maxPage=Math.ceil(rows.length/5)-1;if(dx<0&&pageIndex<maxPage){pageIndex++;renderPage()}else if(dx>0&&pageIndex>0){pageIndex--;renderPage()}},{passive:true});
+ pages.addEventListener("keydown",e=>{if(e.key==="ArrowLeft"&&pageIndex>0){pageIndex--;renderPage()}else if(e.key==="ArrowRight"&&pageIndex<Math.ceil(rows.length/5)-1){pageIndex++;renderPage()}});
+ pages.tabIndex=0;renderPage();host.append(pages);
+}
+async function showReport(){
+ const host=$("report");host.replaceChildren();const course=S.course,date=$("departure").value;
+ if(!course||!date)return;
+ host.append(node("h2",course.name+"｜"+formatCourseDate(date,course.timezone)+" ～ "+formatCourseDate(add(date,6),course.timezone)));
+ await renderCourseSevenDayReport(host,course,date);
+}
+async function renderCourseSevenDayReport(host,course,startDate,onBack=null){
+ const dates=Array.from({length:7},(_,i)=>add(startDate,i));
+ const leadFor=date=>Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
+ const report=section(host,"出發日 7 天摘要");report.classList.add("departure-week-summary");
+
+ const daily=S.forecast?.courses?.find(x=>x.course.id===course.id)?.daily;
+ let historical=[];
+ const needsHistory=dates.some(date=>leadFor(date)>15||leadFor(date)<0||!(daily?.time||[]).includes(date));
+ if(needsHistory){
+  try{const result=await fetchCourseHistoricalWeekNormals(course,dates);historical=result.days||[]}
+  catch(e){report.append(node("p","部分日期歷史資料暫時無法取得："+e.message,"risk-summary"))}
+ }
+ const wxLabel=c=>!Number.isFinite(c)?"歷史氣候參考":c===0?"晴朗":c<=2?"晴時多雲":c===3?"陰天":c>=51&&c<=57?"毛毛雨":c>=61&&c<=67?"降雨":c>=80&&c<=82?"陣雨":c>=95?"雷雨":"多雲";
+ const rows=dates.map(date=>{
+  const i=(daily?.time||[]).indexOf(date),h=historical.find(x=>x.date===date),actual=leadFor(date)>=0&&leadFor(date)<=15&&i>=0;
+  const code=actual?daily.weather_code?.[i]:null;
+  return {date,actual,code,high:actual?daily.temperature_2m_max?.[i]:h?.highMean,low:actual?daily.temperature_2m_min?.[i]:h?.lowMean,feel:actual?daily.apparent_temperature_max?.[i]:null,prob:actual?daily.precipitation_probability_max?.[i]:h?.rainFrequency,rain:actual?daily.precipitation_sum?.[i]:h?.rainMean,label:actual?wxLabel(code):!Number.isFinite(h?.rainFrequency)?"歷史資料不足":h.rainFrequency>=60?"歷史常有雨":h.rainFrequency>=30?"歷史偶有雨":"歷史較少雨"};
  });
- const valid=candidates.filter(start=>scoreFiveDayItinerary({
-  tripStart:start,teeHour:Number($("itinerary-tee-hour").value),
-  courses:latestCourseWeather.courses
- }).status==="scored");
- if(!valid.length){
-  select.disabled=true;select.add(new Option("目前預報範圍內沒有完整五天行程",""));$("score-itinerary").disabled=true;return;
- }
- valid.forEach(start=>select.add(new Option(`${fmt(start)} 出發｜${fmt(new Date(Date.parse(start+"T00:00:00Z")+4*86400000).toISOString().slice(0,10))} 返回`,start)));
- select.value=valid[0];select.disabled=false;$("score-itinerary").disabled=false;
+ const pages=node("div",undefined,"departure-week-pages");let pageIndex=0;
+ const renderPage=()=>{
+  pages.replaceChildren();const pageRows=rows.slice(pageIndex*5,pageIndex*5+5);
+  const page=node("section",undefined,"departure-five-day-page");
+  page.append(node("h4","第 "+(pageIndex+1)+" 頁｜"+pageRows[0].date+" ～ "+pageRows[pageRows.length-1].date));
+  const datesRow=node("div",undefined,"departure-five-dates");
+  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),canOpen=!!r.actual,d=node(canOpen?"button":"div",undefined,"departure-five-date"+([0,6].includes(wd)?" weekend-red":"")+(canOpen?" departure-hourly-target":""));if(canOpen){d.type="button";d.dataset.hourlyDate=r.date;d.setAttribute("aria-label",r.date+" 點選查看逐時天氣");d.title="點選查看"+r.date+"逐時天氣";d.addEventListener("click",()=>renderDepartureDayPage(host,course,r,onBack))}d.append(node("strong",r.date.slice(5).replace("-","/")),node("small","週"+["日","一","二","三","四","五","六"][wd]));datesRow.append(d)});
+  page.append(datesRow);
+  const chartWrap=node("div",undefined,"departure-five-chart");
+  const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("viewBox","0 0 700 220");svg.setAttribute("role","img");svg.setAttribute("aria-label","每日最高溫、最低溫及最高體感溫度曲線");svg.style.width="100%";svg.style.display="block";
+  const values=pageRows.flatMap(r=>[r.high,r.low,r.feel].filter(Number.isFinite));
+  if(values.length){const lo=Math.min(...values)-2,hi=Math.max(...values)+2,x=i=>70+i*140,y=v=>150-(v-lo)/(hi-lo||1)*80;
+   [20,82,144].forEach(yy=>{const l=document.createElementNS(svg.namespaceURI,"line");l.setAttribute("x1",35);l.setAttribute("x2",670);l.setAttribute("y1",yy);l.setAttribute("y2",yy);l.setAttribute("stroke","#dce5e9");svg.append(l)});
+   [{key:"high",color:"#ef6b54"},{key:"low",color:"#3198dc"},{key:"feel",color:"#d49b22"}].filter(s=>pageRows.some(r=>Number.isFinite(r[s.key]))).forEach(s=>{const pts=pageRows.map((r,i)=>Number.isFinite(r[s.key])?{x:x(i),y:y(r[s.key]),index:i}:null).filter(Boolean);if(pts.length>1){const p=document.createElementNS(svg.namespaceURI,"polyline");p.setAttribute("points",pts.map(p=>p.x+","+p.y).join(" "));p.setAttribute("fill","none");p.setAttribute("stroke",s.color);p.setAttribute("stroke-width","4");p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");svg.append(p)}pts.forEach(p=>{const dot=document.createElementNS(svg.namespaceURI,"circle");dot.setAttribute("cx",p.x);dot.setAttribute("cy",p.y);dot.setAttribute("r","4.5");dot.setAttribute("fill",s.color);svg.append(dot);const tx=document.createElementNS(svg.namespaceURI,"text");tx.setAttribute("x",p.x);const labelOffset=s.key==="high"?-22:s.key==="low"?26:(Number.isFinite(pageRows[p.index].high)&&Number.isFinite(pageRows[p.index].low)&&pageRows[p.index].feel>=pageRows[p.index].high?-54:Number.isFinite(pageRows[p.index].low)&&pageRows[p.index].feel<pageRows[p.index].low?58:-12);tx.setAttribute("y",p.y+labelOffset);tx.setAttribute("text-anchor","middle");tx.setAttribute("font-size","30");tx.setAttribute("font-weight","900");tx.setAttribute("fill",s.color);tx.textContent=pageRows[p.index][s.key].toFixed(0)+"°";svg.append(tx)})});
+  }
+  chartWrap.append(svg);const legend=node("div",undefined,"departure-five-legend");legend.append(node("span","● 最高溫","legend-high"),node("span","● 最低溫","legend-low"),node("span","● 體感溫度","legend-feel"));chartWrap.append(legend);page.append(chartWrap);
+  const cards=node("div",undefined,"departure-five-cards");
+  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),day=node("button",undefined,"departure-five-card"+(r.date===startDate?" is-departure":"")+(r.actual?" departure-hourly-target":""));day.type="button";day.dataset.hourlyDate=r.date;day.setAttribute("aria-label",r.date+" 天氣狀況，點選查看逐時天氣");day.title=r.actual?"點選查看"+r.date+"逐時天氣":"點選查看"+r.date+"歷史氣候資料";day.append(createWeatherIcon(r.code,!r.actual,r.prob),node("strong",r.label));day.append(node("small",r.actual?"降雨機率":"歷史降雨頻率"),node("b",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"),node("small",r.actual?"累積雨量":"歷史日均雨量"),node("b",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));if([0,6].includes(wd))day.classList.add("weekend");day.addEventListener("click",()=>renderDepartureDayPage(host,course,r,onBack));cards.append(day)});
+  page.append(cards);
+  if(pageIndex===0){
+   const assessment=node("section",undefined,"departure-week-analysis");
+   assessment.append(node("h4","七天天氣總覽與適打分析"));
+   const actualDays=rows.filter(r=>r.actual),rainy=actualDays.filter(r=>(Number.isFinite(r.prob)&&r.prob>=40)||(Number.isFinite(r.rain)&&r.rain>=1)).length;
+   const temps=actualDays.map(r=>r.high).filter(Number.isFinite),rainMax=actualDays.map(r=>r.prob).filter(Number.isFinite);
+   const overview=actualDays.length
+    ? `本週可用逐日預報 ${actualDays.length} 天；${rainy} 天有較明顯降雨訊號。最高溫約 ${temps.length?Math.min(...temps).toFixed(0)+"–"+Math.max(...temps).toFixed(0)+"°C":"資料不足"}，降雨機率最高約 ${rainMax.length?Math.max(...rainMax).toFixed(0)+"%":"資料不足"}。安排球敘時，建議優先避開降雨機率及雨量較高的日期，並於出發前再次確認更新預報。`
+    : "本週資料以歷史同期統計為主，以下只能反映季節氣候傾向，不能視為實際七天天氣預報。";
+   assessment.append(node("p",overview));
+   const suitability=node("div",undefined,"departure-suitability-list");
+   const teeHour=Number($("tee").value||10);
+   const hourly=S.forecast?.courses?.find(x=>x.course.id===course.id)?.hourly;
+   rows.slice(1,4).forEach((r,idx)=>{
+    const historicalDay=!r.actual;
+    let status,reason;
+    if(historicalDay){
+     const freq=r.prob,rain=r.rain;
+     status=Number.isFinite(freq)&&freq>=60||Number.isFinite(rain)&&rain>=5?"歷史上較不利":Number.isFinite(freq)&&freq>=30||Number.isFinite(rain)&&rain>=2?"歷史上需留意降雨":"歷史上相對較有利";
+     reason=`歷史降雨頻率 ${Number.isFinite(freq)?freq.toFixed(0)+"%":"資料不足"}，日均雨量 ${Number.isFinite(rain)?rain.toFixed(1)+" mm":"資料不足"}；此為氣候統計，不能判定當日實際適打情況。`;
+    }else{
+     const indices=(hourly?.time||[]).map((t,i)=>String(t).slice(0,10)===r.date&&Number(String(t).slice(11,13))>=teeHour&&Number(String(t).slice(11,13))<teeHour+6?i:-1).filter(i=>i>=0);
+     const vals=key=>indices.map(i=>hourly?.[key]?.[i]).filter(v=>Number.isFinite(v));
+     const probs=vals("precipitation_probability"),rainValues=vals("precipitation"),temps=vals("temperature_2m"),codes=vals("weather_code");
+     const maxProb=probs.length?Math.max(...probs):null,totalRain=rainValues.length?rainValues.reduce((sum,v)=>sum+v,0):null;
+     const minTemp=temps.length?Math.min(...temps):null,maxTemp=temps.length?Math.max(...temps):null;
+     const thunder=codes.some(c=>c>=95),rainCode=codes.some(c=>c>=51&&c<=82);
+     const wet=thunder||(maxProb!==null&&maxProb>=60)||(totalRain!==null&&totalRain>=3);
+     const caution=(maxProb!==null&&maxProb>=30)||(totalRain!==null&&totalRain>=1)||rainCode;
+     status=wet?"較不適合":caution?"可打但需留意":"較適合打球";
+     const windowLabel=String(teeHour).padStart(2,"0")+":00–"+String(teeHour+6).padStart(2,"0")+":00";
+     reason=indices.length
+      ? `開球後六小時（${windowLabel}）：最高降雨機率 ${maxProb!==null?maxProb.toFixed(0)+"%":"資料不足"}，累積預報雨量 ${totalRain!==null?totalRain.toFixed(1)+" mm":"資料不足"}，氣溫 ${minTemp!==null&&maxTemp!==null?minTemp.toFixed(0)+"–"+maxTemp.toFixed(0)+"°C":"資料不足"}。`
+      : `開球後六小時（${windowLabel}）逐時資料不足，暫無法判斷適打性。`;
+    }
+    const item=node("article",undefined,"departure-suitability-item");
+    item.append(node("strong",`第 ${idx+2} 天｜${r.date}｜${status}`),node("p",reason));suitability.append(item);
+   });
+   assessment.append(suitability);
+   assessment.append(node("small","適打判斷依目前可取得的降雨機率、雨量、天氣現象及氣溫作初步評估；未納入球場即時積水、雷擊警報及當地風況，請於開球前再確認。","data-note"));
+   const reselect=node("button","重新選擇出發日","departure-reselect-button");reselect.type="button";reselect.addEventListener("click",()=>{const form=$("departure").closest(".panel");form.scrollIntoView({behavior:"smooth",block:"start"});$("departure").focus({preventScroll:true})});
+   assessment.append(reselect);
+   page.append(assessment);
+  }
+  pages.append(page);
+ };
+ let touchStartX=0,touchStartY=0;
+ pages.addEventListener("touchstart",e=>{const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY},{passive:true});
+ pages.addEventListener("touchend",e=>{const t=e.changedTouches[0],dx=t.clientX-touchStartX,dy=t.clientY-touchStartY;if(Math.abs(dx)<45||Math.abs(dx)<Math.abs(dy)*1.25)return;const maxPage=Math.ceil(rows.length/5)-1;if(dx<0&&pageIndex<maxPage){pageIndex++;renderPage()}else if(dx>0&&pageIndex>0){pageIndex--;renderPage()}},{passive:true});
+ pages.addEventListener("keydown",e=>{if(e.key==="ArrowLeft"&&pageIndex>0){pageIndex--;renderPage()}else if(e.key==="ArrowRight"&&pageIndex<Math.ceil(rows.length/5)-1){pageIndex++;renderPage()}});
+ pages.tabIndex=0;renderPage();
+ report.append(pages);
+ report.append(node("p","每頁最多顯示 5 天；左右滑動切換日期，點選任一天即可展開逐時預報或歷史資料。前 16 天使用逐日預報，超出範圍以歷史同期資料補充。","long-range-note"));
 }
-function renderItinerary(){
- const status=$("itinerary-status"),host=$("itinerary-results");host.replaceChildren();
- if(!latestCourseWeather || selectedCourses.length!==3){
-  status.textContent="請先選擇三個球場並成功讀取預報。";return;
- }
- const result=scoreFiveDayItinerary({
-  tripStart:$("itinerary-start").value,
-  teeHour:Number($("itinerary-tee-hour").value),
-  courses:latestCourseWeather.courses
- });
- if(result.status!=="scored"){
-  status.textContent=result.message;return;
- }
- const card=document.createElement("article");card.className="weather-card";
- const heading=document.createElement("h3");heading.textContent=`五天四夜｜${fmt(result.tripStart)} – ${fmt(result.tripEnd)}`;card.append(heading);
- const score=document.createElement("p");score.className="risk-summary";score.textContent=`整趟三場球降雨影響：${result.label}｜${result.itineraryRisk}/100`;card.append(score);
- const summary=document.createElement("p");summary.textContent=`三場平均風險 ${result.averageRoundRisk}｜最差一場 ${result.worstRoundRisk}｜每日開球 ${String(result.teeHour).padStart(2,"0")}:00`;card.append(summary);
- const rows=result.rounds.map(x=>[
-  `Day ${x.round+1}｜${fmt(x.date)}`,
-  x.courseName,
-  x.score.label,
-  `${x.score.rainRisk}/100`,
-  `${x.score.averageHourlyRainProbability}%`,
-  `${x.score.expectedRainAmountMm} mm`,
-  x.suitability?.status==="scored"?x.suitability.grade:"適打資料不足"
- ]);
- card.append(makeTable(["日期","球場","降雨風險","指數","平均逐時機率","六小時雨量","適打性"],rows));
- const travel=document.createElement("p");travel.className="weather-meta";travel.textContent=`Day 1 ${fmt(result.travelDays[0].date)}：交通日（未納入風險分數）｜Day 5 ${fmt(result.travelDays[1].date)}：交通日（未納入風險分數）`;card.append(travel);
- const conditions=document.createElement("p");conditions.textContent="適打性觀察："+result.rounds.map(x=>x.suitability?.status==="scored"?`${x.courseName}：${x.suitability.grade}（${x.suitability.reasons.join("、")}）`:`${x.courseName}：風勢／體感／雷雨資料不足`).join("；");card.append(conditions);
- const worst=document.createElement("p");worst.textContent=`最需留意：Day ${result.worstRound.round+1}｜${result.worstRound.courseName}（${result.worstRound.risk}/100）`;card.append(worst);
- host.append(card);
- status.textContent="評估完成｜使用三個球場各自 GPS 的真實逐時預報｜僅評估打球日；交通日未計分。";
+async function renderDepartureDayPage(host,course,row,onBack=null){
+ host.replaceChildren();
+ const back=node("button","← 返回出發日 7 天摘要","departure-detail-back");back.type="button";
+ back.addEventListener("click",()=>{if(onBack)onBack();else showReport()});
+ host.append(back);
+ const loading=node("p","正在讀取所選日期的天氣資料…","data-note");host.append(loading);
+ try{
+  await renderDepartureDayDetails(host,course,row,row.date);
+ }catch(error){
+  const card=node("section",undefined,"weather-card");
+  card.append(node("h3","天氣資料讀取失敗"),node("p","無法產生此日圖表："+(error?.message||String(error)),"risk-summary"));
+  const retry=node("button","重新讀取此日資料");retry.type="button";retry.addEventListener("click",()=>renderDepartureDayPage(host,course,row));card.append(retry);host.append(card);
+ }finally{loading.remove()}
 }
-$("score-itinerary").addEventListener("click",renderItinerary);
 
-function renderLiveDateRecommendations(){
- const host=$("live-date-recommendations"),status=$("live-date-status");host.replaceChildren();
- if(!latestCourseWeather?.courses||selectedCourses.length!==3){status.textContent="請先選擇三個球場並成功讀取球場逐時預報。";return;}
- const result=recommendFiveDayWindows({courses:latestCourseWeather.courses,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5});
- status.textContent=result.recommendations.length?`真實預報評估 ${result.candidateCount} 個候選出發日｜完整評分 ${result.scoredCount} 組｜推薦 ${result.recommendations.length} 組`:"目前資料範圍內沒有三場均具完整六小時資料的五天行程；不以合成資料補足。";
- for(const item of result.recommendations){
-  const card=document.createElement("article");card.className="weather-card";
-  const h=document.createElement("h3");h.textContent=`推薦 #${item.recommendationRank}｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
-  const score=document.createElement("p");score.className="risk-summary";score.textContent=`三場球降雨影響指數：${item.itineraryRisk}/100（${item.label}）`;card.append(score);
-  const p=document.createElement("p");p.textContent=`Day 2–4：${item.rounds.map(x=>fmt(x.date)+" "+x.courseName+"（降雨 "+x.score.rainRisk+"/100；適打 "+(x.suitability?.status==="scored"?x.suitability.grade:"資料不足")+"）").join("；")}`;card.append(p);
-  const c=document.createElement("p");c.className="weather-meta";c.textContent="可信度：中等（未校準）｜16天逐時預報｜尚未完成沖繩歷史回測；此指數不是取消球賽機率。";card.append(c);host.append(card);
+async function renderDepartureDayDetails(host,course,row,departureDate){
+ const actual=row.actual,card=section(host,(actual?"逐時天氣資料｜":"歷史資料頁面｜")+row.date+"（"+course.name+"）");
+ card.classList.add("departure-day-details");
+ if(!actual){
+  card.append(node("p","此日期已超出 16 天逐日預報範圍，以下僅提供歷史同期統計，不代表該日實際天氣，也不提供虛構的逐時降雨機率或雨量。","long-range-note"));
+  const result=await fetchCourseHistoricalWeekNormals(course,[row.date]);
+  const h=result.days?.[0];
+  const stats=node("div",undefined,"results");
+  for(const [label,value] of [["歷史平均最高溫",h?.highMean],["歷史平均最低溫",h?.lowMean],["歷史降雨頻率",h?.rainFrequency],["歷史日均雨量",h?.rainMean]]){
+   const item=node("article",undefined,"result-card");item.append(node("p",label),node("strong",Number.isFinite(value)?value.toFixed(1)+(label.includes("溫")?" °C":label.includes("頻率")?"%":" mm"):"資料不足"));stats.append(item);
+  }
+  card.append(stats);return;
  }
-}
-$("recommend-live-dates").addEventListener("click",renderLiveDateRecommendations);
-
-$("itinerary-tee-hour").addEventListener("change",()=>{populateItineraryStartDates();});
-
-function runCourseComparison(){
- if(!latestCourseWeather?.courses?.length)return;
- const date=$("compare-date").value,teeHour=Number($("compare-tee-hour").value);
- const results=latestCourseWeather.courses.map(item=>({
-  course:item.course,
-  score:scoreGolfRainWindow(item.hourly,date,teeHour,6)
+ let forecast=S.forecast?.courses?.find(x=>x.course.id===course.id);
+ if(!forecast){
+  const result=await fetchCourseForecast([course]);
+  S.forecast=result;
+  forecast=result.courses?.find(x=>x.course.id===course.id);
+ }
+ if(!forecast?.hourly?.time?.length){card.append(node("p","球場逐時預報資料尚未取得，請稍後重試。","risk-summary"));return}
+ const hourly=forecast.hourly,teeHour=Number($("tee").value||10),endHour=teeHour+6,indices=hourly.time.map((t,i)=>String(t).slice(0,10)===row.date&&Number(String(t).slice(11,13))>=teeHour&&Number(String(t).slice(11,13))<endHour?i:-1).filter(i=>i>=0);
+ if(!indices.length){card.append(node("p",`此日期未取得 ${String(teeHour).padStart(2,"0")}:00–${String(endHour).padStart(2,"0")}:00 逐時預報。`,"risk-summary"));return}
+ const records=indices.map(i=>({
+  time:String(hourly.time[i]).slice(11,16),
+  code:hourly.weather_code?.[i]??null,
+  rain:hourly.precipitation_probability?.[i]??null,
+  mm:hourly.precipitation?.[i]??hourly.rain?.[i]??null,
+  temp:hourly.temperature_2m?.[i]??null,
+  feel:hourly.apparent_temperature?.[i]??null,
+  wind:Number.isFinite(hourly.wind_speed_10m?.[i])?hourly.wind_speed_10m[i]*3.6:null,
+  gust:Number.isFinite(hourly.wind_gusts_10m?.[i])?hourly.wind_gusts_10m[i]*3.6:null,
+  dir:hourly.wind_direction_10m?.[i]??null,
+  rh:hourly.relative_humidity_2m?.[i]??null,
+  cloud:hourly.cloud_cover?.[i]??null,
+  uv:hourly.uv_index?.[i]??null
  }));
- const summary=summarizeCourseRainRisks(results);
- const valid=results.filter(x=>x.score.status==="scored");
- const host=$("comparison-results");host.replaceChildren();
- const sorted=[...valid].sort((a,b)=>a.score.rainRisk-b.score.rainRisk);
- for(const item of sorted){
-  const card=document.createElement("article");card.className="weather-card";
-  const h=document.createElement("h3");h.textContent=`${item.course.name}｜${item.course.area}`;card.append(h);
-  const risk=document.createElement("p");risk.className="risk-summary";
-  risk.textContent=`降雨影響：${item.score.label}｜${item.score.rainRisk}/100`;card.append(risk);
-  const detail=document.createElement("p");
-  detail.textContent=`平均逐時降雨機率 ${item.score.averageHourlyRainProbability}%｜六小時預報雨量 ${item.score.expectedRainAmountMm} mm｜最高單時雨量 ${item.score.peakHourlyRainMm} mm｜濕時數 ${item.score.wetHours}/6`;
-  card.append(detail);
-  const note=document.createElement("p");note.className="weather-meta";note.textContent=`預報日期 ${fmt(date)}｜開球 ${String(teeHour).padStart(2,"0")}:00｜資料可信度尚未獨立校準｜GPS ${item.course.coordinateStatus==="provisional"?"暫定":"待核實"}`;card.append(note);
-  host.append(card);
- }
- const avg=valid.length?valid.reduce((s,x)=>s+x.score.rainRisk,0)/valid.length:null;
- const worst=valid.length?Math.max(...valid.map(x=>x.score.rainRisk)):null;
- const best=sorted[0];
- $("comparison-status").textContent=summary.scoredCount===summary.requestedCount
-  ? `比較完成｜${summary.scoredCount} 個球場｜平均風險指數 ${summary.averageRisk}｜最差球場風險 ${summary.worstRisk}｜最低風險：${best.course.name}`
-  : `僅 ${summary.scoredCount}/${summary.requestedCount} 個球場有完整六小時資料；不以缺值當作零風險。`;
-}
-$("compare-courses").addEventListener("click",runCourseComparison);
-$("compare-tee-hour").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
-$("compare-date").addEventListener("change",()=>{if(latestCourseWeather)runCourseComparison();});
-
-
-
-function renderUnifiedRecommendations(){
- const host=$("unified-recommendations"),status=$("unified-recommendation-status");host.replaceChildren();
- if(!latestCourseWeather?.courses||selectedCourses.length!==3||!latestLongRangeData){
-  status.textContent="請先選擇三個球場，分別完成球場16天預報及沖繩17–90天長期展望讀取。";return;
- }
- const referenceDate=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"});
- const shortRange=recommendFiveDayWindows({courses:latestCourseWeather.courses,teeHour:Number($("itinerary-tee-hour").value),limit:3,minStartGap:5});
- const longRange=recommendLongRangeWindows({referenceDate,points:latestLongRangeData.points,limit:3,minStartGap:5});
- const combined=combineHorizonRecommendations({shortRange,longRange,shortFetchedAt:latestCourseWeather.fetchedAt,longFetchedAt:latestLongRangeData.fetchedAt});
- status.textContent=`整合完成｜短期可評估 ${shortRange.scoredCount} 組，長期可評估 ${longRange.scoredCount} 組。短期與長期分開排序。`;
- for(const group of [combined.shortRange,combined.longRange]){
-  const section=document.createElement("section");section.className="weather-card";
-  const heading=document.createElement("h3");heading.textContent=group===combined.shortRange?"1–16天｜真實球場逐時預報推薦":"17–90天｜ECMWF季節趨勢候選";section.append(heading);
-  const meaning=document.createElement("p");meaning.className="weather-meta";meaning.textContent=group.meaning;section.append(meaning);
-  if(!group.items.length){const empty=document.createElement("p");empty.textContent="目前沒有完整資料支持的候選日期。";section.append(empty);}
-  for(const item of group.items){
-   const card=document.createElement("article");card.className="weather-card";
-   const h=document.createElement("h4");h.textContent=`第 ${item.rank} 順位｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
-   const score=document.createElement("p");score.className="risk-summary";
-   score.textContent=item.kind==="short-range"?`降雨影響指數 ${item.value}/100（${item.label}）`:`區域濕潤趨勢：${item.label}（分級 ${item.value}/3）`;
-   card.append(score);
-   const rounds=document.createElement("p");rounds.textContent=item.rounds.map(r=>item.kind==="short-range"?`${r.date} ${r.courseName}：降雨 ${r.value}/100；適打 ${r.suitability?.status==="scored"?r.suitability.grade:"資料不足"}`:`${r.date} ${r.zone}最需留意：${r.label}`).join("；");card.append(rounds);
-   const note=document.createElement("p");note.className="weather-meta";note.textContent=`可信度：${item.confidence}｜資料：${item.source}`;card.append(note);section.append(card);
-  }
-  host.append(section);
- }
- const note=document.createElement("p");note.className="data-note";note.textContent=combined.note;host.append(note);
-}
-$("run-unified-recommendations").addEventListener("click",renderUnifiedRecommendations);
-
-function renderLongRange(data){
- const host=$("long-range-results");host.replaceChildren();
- for(const item of data.points){
-  const card=document.createElement("article");card.className="weather-card";
-  const heading=document.createElement("h3");heading.textContent=`${item.point.label}｜${item.point.place}`;card.append(heading);
-  const meta=document.createElement("p");meta.className="weather-meta";meta.textContent=`ECMWF Seasonal Seamless｜座標 ${item.latitude.toFixed(3)}, ${item.longitude.toFixed(3)}｜${item.timezone}`;card.append(meta);
-  const weekly=item.weekly;
-  if(weekly?.time?.length){
-   const title=document.createElement("h4");title.textContent="週趨勢（次季節展望）";card.append(title);
-   const rows=weekly.time.map((date,i)=>{
-    const efi=interpretPrecipitationEfi(weekly.precipitation_efi?.[i]);
-    const confidence=classifyForecastConfidence({validDate:date,referenceDate:new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"}),temporalResolution:"weekly"});
-    return [date,cell(weekly.precipitation_mean?.[i]," mm"),cell(weekly.precipitation_anomaly?.[i]," mm"),cell(weekly.precipitation_efi?.[i]),efi.label,confidence.label,cell(weekly.wind_speed_10m_mean?.[i]," m/s"),cell(weekly.temperature_2m_mean?.[i],"°C")];
-   });
-   card.append(makeTable(["週起始","平均雨量","雨量距平","降雨 EFI","濕潤訊號","可信度","平均風速","平均溫度"],rows));
-  }else{const p=document.createElement("p");p.textContent="沒有週展望資料。";card.append(p);}
-  const monthly=item.monthly;
-  if(monthly?.time?.length){
-   const title=document.createElement("h4");title.textContent="月趨勢（季節展望）";card.append(title);
-   const rows=monthly.time.map((date,i)=>{
-    const confidence=classifyForecastConfidence({validDate:date,referenceDate:new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"}),temporalResolution:"monthly"});
-    return [date,cell(monthly.precipitation_mean?.[i]," mm"),cell(monthly.precipitation_anomaly?.[i]," mm"),
-     cell(monthly.wind_speed_10m_mean?.[i]," m/s"),cell(monthly.wind_speed_10m_anomaly?.[i]," m/s"),
-     cell(monthly.temperature_2m_mean?.[i],"°C"),cell(monthly.temperature_2m_anomaly?.[i],"°C"),confidence.label];
-   });
-   card.append(makeTable(["月份","平均雨量","雨量距平","平均風速","風速距平","平均溫度","溫度距平","可信度"],rows));
-  }else{const p=document.createElement("p");p.textContent="沒有月展望資料。";card.append(p);}
-  host.append(card);
- }
+ renderTaiwanPwaHourly(card,course,row.date,records);
 }
 
-function renderLongRangeRecommendations(data){
- const host=$("long-range-recommendations"),status=$("long-range-recommendation-status");host.replaceChildren();
- const referenceDate=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"});
- const result=recommendLongRangeWindows({referenceDate,points:data.points,limit:3,minStartGap:5});
- status.textContent=result.recommendations.length
-  ? `已評估 ${result.candidateCount} 個五天窗口｜取得完整趨勢資料 ${result.scoredCount} 組｜候選推薦 ${result.recommendations.length} 組`
-  : "目前沒有足夠的週／月尺度資料可評估完整五天窗口。";
- for(const item of result.recommendations){
-  const card=document.createElement("article");card.className="weather-card";
-  const h=document.createElement("h3");h.textContent=`長期候選 #${item.recommendationRank}｜${fmt(item.tripStart)} – ${fmt(item.tripEnd)}`;card.append(h);
-  const p=document.createElement("p");p.className="risk-summary";p.textContent=`區域趨勢：${item.tendency}｜分級 ${item.tendencyRank}/3`;card.append(p);
-  const details=item.rounds.map(x=>`Day ${x.date}：${x.worstZoneLabel}最需留意（${x.worstSignal.label}）`).join("；");
-  const d=document.createElement("p");d.textContent=details;card.append(d);
-  const note=document.createElement("p");note.className="weather-meta";note.textContent=`可信度：${item.confidence}｜EC46週展望／SEAS5月展望｜${item.interpretation}。同一趨勢分級內的日期不代表可精確排序。`;card.append(note);
-  host.append(card);
- }
-}
-$("recommend-long-range").addEventListener("click",()=>{if(latestLongRangeData)renderLongRangeRecommendations(latestLongRangeData);});
-$("fetch-long-range").addEventListener("click",async()=>{
- const button=$("fetch-long-range"),status=$("long-range-status");
- button.disabled=true;status.textContent="正在讀取 ECMWF EC46 + SEAS5 長期展望…";
+async function run(){
+ const button=$("run"),reportHost=$("report");button.disabled=true;reportHost.replaceChildren();reportHost.hidden=false;
  try{
-  const data=await fetchOkinawaLongRange();latestLongRangeData=data;renderLongRange(data);$("recommend-long-range").disabled=false;$("run-unified-recommendations").disabled=!(latestCourseWeather?.courses?.length&&selectedCourses.length===3);renderLongRangeRecommendations(data);
-  const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(data.fetchedAt));
-  status.textContent=`讀取成功｜${data.provider}｜三區均有回傳｜日本時間：${stamp}`;
- }catch(error){status.textContent=`讀取失敗：${error.message}。沒有以合成資料代替。`;}
- finally{button.disabled=false;}
-});
-
-renderCoursePicker();
-$("fetch-course-weather").addEventListener("click",async()=>{
- const button=$("fetch-course-weather"),status=$("course-weather-status");
- button.disabled=true;status.textContent="正在依所選球場 GPS 讀取預報…";
- try{
-  latestCourseWeather=await fetchCourseForecast(selectedCourses);
-  $("run-unified-recommendations").disabled=!latestLongRangeData;
-  renderCourseWeather(latestCourseWeather);
-  const commonDates=latestCourseWeather.courses.map(x=>new Set(x.hourly.time.map(t=>t.slice(0,10))));
-  const available=[...commonDates[0]].filter(d=>commonDates.every(set=>set.has(d))).sort();
-  const dateInput=$("compare-date");
-  if(available.length){
-   dateInput.min=available[0];dateInput.max=available.at(-1);dateInput.value=available[0];dateInput.disabled=false;
-   $("compare-courses").disabled=false;
-   $("comparison-status").textContent=`可比較日期：${available[0]} 至 ${available.at(-1)}｜${available.length} 天共同資料`;
-  }else{
-   dateInput.disabled=true;$("compare-courses").disabled=true;
-   $("comparison-status").textContent="所選球場沒有共同逐時預報日期，暫時無法公平比較。";
+  const selectedDate=$("departure").value;
+  S.course=S.directory?.courses?.find(c=>c.id===$("course").value)||null;
+  if(!selectedDate||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(selectedDate))throw new Error("請先選擇有效的出發日期。");
+  if(!S.course)throw new Error("請先選擇已完成座標核實的球場。");
+  setStatus("正在產生七天天氣及適打報告…");
+  const leadDays=Math.floor((Date.parse(selectedDate+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
+  S.forecast=null;S.seasonal=null;
+  let forecastWarning="";
+  if(leadDays<=15&&leadDays>=0){
+   try{S.forecast=await fetchCourseForecast([S.course]);}
+   catch(error){forecastWarning="逐日預報暫時無法連線，將改以歷史同期資料補充。";}
   }
-  populateItineraryStartDates();
-  const stamp=new Intl.DateTimeFormat("zh-TW",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Tokyo"}).format(new Date(latestCourseWeather.fetchedAt));
-  status.textContent=`成功｜${latestCourseWeather.courses.length} 個球場｜16天｜讀取時間（日本時間）：${stamp}`;
- }catch(error){status.textContent=`讀取失敗：${error.message}`;}
- finally{button.disabled=selectedCourses.length===0;}
-});
+  await showReport();
+  const hasReport=$("report").children.length>1;
+  if(!hasReport)throw new Error("報告內容未能建立，請確認球場座標及日期。");
+  setStatus(forecastWarning||"完成｜已產生出發日起七天報告。");
+ }catch(error){
+  setStatus("產生報告失敗："+(error?.message||String(error)));
+  const report=$("report");report.replaceChildren();
+  const message=node("section",undefined,"weather-card");
+  message.append(node("h3","目前無法產生報告"),node("p",error?.message||String(error),"risk-summary"));
+  const retry=node("button","重新產生報告");retry.type="button";retry.addEventListener("click",run);message.append(retry);report.append(message);
+ }finally{button.disabled=!S.course}
+}
 
-$("tee-hour").addEventListener("change",()=>{if(latestWeather)renderHourly(latestWeather,$("hourly-date").value);});
+function monthOptions(){
+ const current=today(),base=current.slice(0,7)+"-01",monthEnd=new Date(Date.parse(base+"T12:00:00Z"));
+ monthEnd.setUTCMonth(monthEnd.getUTCMonth()+1);monthEnd.setUTCDate(0);
+ const remaining=Math.round((Date.parse(monthEnd.toISOString().slice(0,10)+"T12:00:00Z")-Date.parse(current+"T12:00:00Z"))/86400000)+1;
+ const offset=remaining<7?1:0,out=[];
+ for(let i=0;i<3;i++){const d=new Date(base+"T12:00:00Z");d.setUTCMonth(d.getUTCMonth()+offset+i);out.push(d.toISOString().slice(0,7))}
+ return out;
+}
+function showClimateScreen(title,backAction){
+ const overview=$("asia-overview"),out=$("region-report"),status=$("climate-status");
+ $("climate-explorer").classList.add("is-subpage");
+ overview.hidden=true;status.hidden=true;
+ climateBackAction=backAction||null;
+ // View navigation is managed by climateBackAction, not browser history.
+ let nav=$("flow-nav");if(!nav){nav=node("div",undefined,"flow-nav");nav.id="flow-nav";$("climate-explorer").insertBefore(nav,out)}
+ nav.replaceChildren();
+ const h=node("h2",title,"flow-title");nav.append(h);
+ const actions=node("div",undefined,"flow-actions");
+ if(backAction){const back=node("button","← 返回上一層","flow-back");back.type="button";back.addEventListener("click",()=>{const action=climateBackAction;climateBackAction=null;if(action)action()});actions.append(back)}
+ const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{climateBackAction=null;showCountryOverview()});actions.append(home);
+ nav.append(actions);
+ out.hidden=false;status.hidden=false;
+}
+function showCountryOverview(){
+ climateBackAction=null;
+ ensureHomeExitGuard();
+ $("climate-explorer").classList.remove("is-subpage");
+ $("asia-overview").hidden=false;$("region-report").replaceChildren();$("region-report").hidden=true;
+ const nav=$("flow-nav");if(nav)nav.replaceChildren();
+ $("climate-status").hidden=false;$("climate-status").textContent="請選擇國家，進入該國地理分區。";
+}
+const REGION_CATALOG={
+ JP:["北海道","東北","關東","中部","關西","中國地方","四國","九州","沖繩"],
+ KR:["首都圈","江原道","忠清道","全羅道","慶尚道","濟州島"],
+ CN:["華北","東北","華東","華中","華南","西南","西北"],
+ VN:["北部","中北部","中部沿海","西原","東南部","湄公河三角洲"],
+ TH:["北部","東北部","中部","東部","西部","南部"],
+ MY:["北馬","中馬","南馬","東海岸","沙巴","砂拉越"],
+ SG:["新加坡全島"],
+ ID:["蘇門答臘","爪哇","峇里及努沙登加拉","加里曼丹","蘇拉威西","馬魯古","巴布亞"]
+};
+const SUBREGION_CATALOG={
+ JP:{
+  "北海道":["札幌・北廣島","苫小牧・千歲","二世谷・俱知安","富良野・旭川","帶廣・釧路"],
+  "東北":["青森・弘前","秋田","盛岡","仙台・松島","山形","福島・郡山"],
+  "關東":["東京・多摩","橫濱・湘南","千葉・房總","埼玉","栃木・茨城","群馬"],
+  "中部":["新潟","長野・輕井澤","山梨・富士五湖","靜岡","愛知・名古屋","岐阜・三重北部"],
+  "關西":["大阪・神戶","京都","滋賀","奈良","和歌山"],
+  "中國地方":["岡山","廣島","山口","島根","鳥取"],
+  "四國":["德島","香川","愛媛","高知"],
+  "九州":["福岡","佐賀・長崎","熊本","大分","宮崎","鹿兒島"],
+  "沖繩":["那霸・南部","恩納・中部","名護・北部","宮古島","石垣島"]
+ },
+ KR:{
+  "首都圈":["首爾","仁川","京畿道南部","京畿道北部"],
+  "江原道":["春川","原州","平昌・旌善","江陵・束草"],
+  "忠清道":["大田","天安・牙山","清州","忠州"],
+  "全羅道":["全州","群山・益山","光州","麗水・順天"],
+  "慶尚道":["釜山","大邱","蔚山","慶州・浦項","昌原・巨濟"],
+  "濟州島":["濟州市","西歸浦"]
+ },
+ CN:{
+  "華北":["北京","天津","石家莊","太原・呼和浩特"],
+  "東北":["瀋陽","大連","長春","哈爾濱"],
+  "華東":["上海","蘇州・無錫","杭州・寧波","南京","青島・濟南"],
+  "華中":["武漢","長沙","鄭州"],
+  "華南":["廣州・佛山","深圳・東莞","珠海・中山","廈門・泉州","海口・三亞"],
+  "西南":["成都","重慶","昆明","貴陽"],
+  "西北":["西安","蘭州","銀川・西寧","烏魯木齊"]
+ },
+ VN:{
+  "北部":["河內","海防・下龍","寧平","沙壩"],
+  "中北部":["清化","榮市・乂安","順化"],
+  "中部沿海":["峴港","會安","廣南・廣義","歸仁","芽莊・金蘭"],
+  "西原":["大叻","邦美蜀","波來古"],
+  "東南部":["胡志明市","平陽・同奈","頭頓"],
+  "湄公河三角洲":["芹苴","富國島","美拖・迪石"]
+ },
+ TH:{
+  "北部":["清邁","清萊","南邦"],
+  "東北部":["呵叻","孔敬","烏隆他尼"],
+  "中部":["曼谷","華欣・七岩","北碧"],
+  "東部":["芭達雅","羅勇","尖竹汶"],
+  "西部":["佛統","叻丕"],
+  "南部":["普吉","攀牙","蘇梅島","合艾"]
+ },
+ MY:{
+  "北馬":["檳城","吉打・浮羅交怡","霹靂"],
+  "中馬":["吉隆坡","雪蘭莪","布城"],
+  "南馬":["柔佛新山","馬六甲","森美蘭"],
+  "東海岸":["關丹","登嘉樓","哥打峇魯"],
+  "沙巴":["亞庇","山打根"],
+  "砂拉越":["古晉","美里","詩巫"]
+ },
+ SG:{"新加坡全島":["市中心","西部","北部","東部"]},
+ ID:{
+  "蘇門答臘":["棉蘭","巨港","巴淡島"],
+  "爪哇":["雅加達","萬隆","日惹","三寶瓏","泗水"],
+  "峇里及努沙登加拉":["峇里島","龍目島"],
+  "加里曼丹":["巴里巴板","坤甸"],
+  "蘇拉威西":["望加錫","美娜多"],
+  "馬魯古":["安汶"],
+  "巴布亞":["查亞普拉"]
+ }
+};
+const JP_PREFECTURES={
+"北海道":["北海道"],"東北":["青森縣","岩手縣","宮城縣","秋田縣","山形縣","福島縣"],
+"關東":["東京都","神奈川縣","千葉縣","埼玉縣","茨城縣","栃木縣","群馬縣"],
+"中部":["新潟縣","富山縣","石川縣","福井縣","山梨縣","長野縣","岐阜縣","靜岡縣","愛知縣"],
+"關西":["三重縣","滋賀縣","京都府","大阪府","兵庫縣","奈良縣","和歌山縣"],
+"中國地方":["鳥取縣","島根縣","岡山縣","廣島縣","山口縣"],
+"四國":["德島縣","香川縣","愛媛縣","高知縣"],
+"九州":["福岡縣","佐賀縣","長崎縣","熊本縣","大分縣","宮崎縣","鹿兒島縣"],
+"沖繩":["沖繩縣"]
+};
+const JP_PREFECTURE_CLUSTERS={
+"北海道":["札幌・北廣島","苫小牧・千歲","二世谷・俱知安","旭川・富良野","帶廣・十勝","釧路・根室","函館・道南","網走・知床"],
+"青森縣":["青森・弘前","八戶・三澤"],"岩手縣":["盛岡・雫石","花卷・北上","一關・平泉"],
+"宮城縣":["仙台・松島","大崎・鳴子","石卷・三陸"],"秋田縣":["秋田・男鹿","大館・能代","橫手・湯澤"],
+"山形縣":["山形・天童","米澤・置賜","酒田・鶴岡"],"福島縣":["福島・二本松","郡山・磐梯","會津・白河"],
+"東京都":["多摩・八王子","東京灣岸"],"神奈川縣":["橫濱・川崎","湘南・鎌倉","箱根・相模湖"],
+"千葉縣":["成田・佐倉","千葉・市原","房總・木更津","茂原・九十九里"],"埼玉縣":["埼玉南部","熊谷・深谷","秩父・飯能"],
+"茨城縣":["水戶・笠間","筑波・土浦","鹿島・鉾田","常陸太田・大子"],"栃木縣":["宇都宮・鹿沼","那須・塩原","日光・鬼怒川","小山・栃木市"],
+"群馬縣":["前橋・高崎","太田・桐生","草津・沼田"],"新潟縣":["新潟・阿賀野","長岡・燕三條","上越・妙高"],
+"富山縣":["富山・立山","高岡・氷見"],"石川縣":["金澤・白山","能登"],"福井縣":["福井・坂井","敦賀・若狹"],
+"山梨縣":["甲府・笛吹","富士五湖・河口湖"],"長野縣":["長野・須坂","輕井澤・佐久","松本・安曇野","諏訪・蓼科","伊那・木曾"],
+"岐阜縣":["岐阜・各務原","多治見・可兒","郡上・飛驒"],"靜岡縣":["靜岡・清水","濱松・濱名湖","御殿場・富士","伊豆・熱海"],
+"愛知縣":["名古屋・尾張","豐田・三河","知多半島"],"三重縣":["四日市・鈴鹿","津・松阪","伊勢・志摩"],
+"滋賀縣":["大津・草津","近江八幡・彦根"],"京都府":["京都市區","龜岡・丹波","舞鶴・丹後"],
+"大阪府":["大阪北部","大阪東部","大阪南部"],"兵庫縣":["神戶・六甲","三田・篠山","姬路・播磨","淡路島"],
+"奈良縣":["奈良・生駒","吉野・五條"],"和歌山縣":["和歌山市・紀北","田邊・白濱"],
+"鳥取縣":["鳥取・岩美","米子・大山"],"島根縣":["松江・出雲","濱田・益田"],
+"岡山縣":["岡山・倉敷","津山・美作"],"廣島縣":["廣島・東廣島","福山・尾道"],"山口縣":["山口・防府","下關・宇部"],
+"德島縣":["德島・鳴門","阿南・祖谷"],"香川縣":["高松・坂出","丸龜・琴平"],"愛媛縣":["松山・今治","新居濱・西條","宇和島"],"高知縣":["高知・南國","四萬十・足摺"],
+"福岡縣":["福岡・糸島","北九州・筑豐","久留米・筑後"],"佐賀縣":["佐賀・鳥栖","唐津・伊万里"],
+"長崎縣":["長崎・諫早","佐世保・平戶"],"熊本縣":["熊本・菊池","阿蘇・山鹿","八代・天草"],
+"大分縣":["大分・別府","由布・九重","日田・中津"],"宮崎縣":["宮崎・日南","都城・霧島"],"鹿兒島縣":["鹿兒島・指宿","霧島・姶良","奄美"],
+"沖繩縣":["那霸・南部","恩納・中部","名護・北部","宮古島","石垣島"]
+};
+function renderJapanPrefectureMenu(region){
+ const out=$("region-report");out.replaceChildren();
+ showClimateScreen("日本 🇯🇵｜"+region+"｜選擇都道府縣",()=>renderRegionClimate());
+ const grid=node("div",undefined,"region-choice-grid subregion-choice-grid");
+ for(const prefecture of JP_PREFECTURES[region]||[]){
+  const card=node("button",undefined,"region-choice subregion-choice");card.type="button";
+  card.append(node("strong",prefecture));
+  card.addEventListener("click",()=>renderJapanClusterMenu(region,prefecture));
+  grid.append(card);
+ }
+ out.append(grid);
+}
+function coursesForJapanCluster(courses,prefecture,cluster){
+ if(prefecture==="沖繩縣"){
+  if(cluster.includes("南部"))return courses.filter(c=>c.area==="南部"||/那霸|糸滿|八重瀨/.test(c.city||""));
+  if(cluster.includes("中部"))return courses.filter(c=>c.area==="中部"||/恩納/.test(c.city||""));
+  if(cluster.includes("北部"))return courses.filter(c=>c.area==="北部"||/名護/.test(c.city||""));
+  return courses.filter(c=>/宮古|石垣/.test((c.city||"")+" "+(c.address||"")));
+ }
+ const terms=cluster.split(/[・／]/).map(x=>x.trim()).filter(x=>x.length>1);
+ return courses.filter(c=>terms.some(t=>[c.city,c.address,c.area].filter(Boolean).join(" ").includes(t)));
+}
+function renderJapanClusterMenu(region,prefecture){
+ const out=$("region-report");out.replaceChildren();
+ showClimateScreen("日本 🇯🇵｜"+prefecture,()=>{
+  if(prefecture==="北海道"||prefecture==="沖繩縣")renderRegionClimate();
+  else renderJapanPrefectureMenu(region);
+ });
+ const clusters=JP_PREFECTURE_CLUSTERS[prefecture]||[prefecture.replace("縣","").replace("府","")];
+ const grid=node("div",undefined,"region-choice-grid subregion-choice-grid");
+ for(const cluster of clusters){
+  const card=node("button",undefined,"region-choice subregion-choice");card.type="button";card.append(node("strong",cluster));
+  card.addEventListener("click",()=>{
+   const regionCourses=S.directory.courses.filter(c=>c.countryCode==="JP"&&c.enabled&&((region==="沖繩"&&["Okinawa","沖繩"].includes(c.region))||c.region===region));
+   const prefectureCourses=regionCourses.filter(c=>(c.prefecture||"")===prefecture || (prefecture==="沖繩縣"&&c.region==="Okinawa"));
+   const selected=coursesForJapanCluster(prefectureCourses,prefecture,cluster);
+   renderRegionMonths("JP",region,monthOptions(),selected,cluster);
+  });
+  grid.append(card);
+ }
+ out.append(grid);
+}
+function coursesForSubregion(courses,subregion){
+ const tokens=subregion.split(/[・／]/).map(x=>x.trim()).filter(Boolean);
+ return courses.filter(course=>{
+  const hay=[course.city,course.area,course.name,course.nameLocal,course.address].filter(Boolean).join(" ");
+  return tokens.some(token=>hay.toLowerCase().includes(token.toLowerCase()));
+ });
+}
+function renderSubregionMenu(country,region){
+ const out=$("region-report");out.replaceChildren();
+ const countryName=S.directory.countries.find(c=>c.code===country)?.nameZh||country;
+ if(country==="JP"){
+  if(region==="北海道"){renderJapanClusterMenu(region,"北海道");return}
+  if(region==="沖繩"){renderJapanClusterMenu(region,"沖繩縣");return}
+  renderJapanPrefectureMenu(region);return
+ }
+ const all=S.directory.courses.filter(c=>c.countryCode===country&&c.enabled);
+ const regionCourses=all.filter(c=>(country==="JP"&&["Okinawa","沖繩"].includes(c.region)?"沖繩":c.region)===region);
+ const subregions=SUBREGION_CATALOG[country]?.[region]||[];
+ showClimateScreen(countryName+"｜"+region+"｜選擇次分區",()=>renderRegionClimate());
+ const grid=node("div",undefined,"region-choice-grid subregion-choice-grid");
+ for(const subregion of subregions){
+  const matches=coursesForSubregion(regionCourses,subregion);
+  const card=node("button",undefined,"region-choice subregion-choice");card.type="button";
+  card.append(node("strong",subregion));
+  card.addEventListener("click",()=>renderRegionMonths(country,region,monthOptions(),matches,subregion));
+  grid.append(card);
+ }
+ out.append(grid);
+}
+function initClimateExplorer(){
+ const overview=$("asia-overview"),cc=$("climate-country");
+ for(const c of S.directory.countries){
+  const count=S.directory.courses.filter(x=>x.countryCode===c.code&&x.enabled&&Number.isFinite(x.latitude)&&Number.isFinite(x.longitude)).length;
+  const flags={JP:"🇯🇵",KR:"🇰🇷",CN:"🇨🇳",VN:"🇻🇳",TH:"🇹🇭",MY:"🇲🇾",SG:"🇸🇬",ID:"🇮🇩"};
+  const tile=node("button",undefined,"overview-tile country-tile");tile.type="button";tile.append(node("span",flags[c.code]||"🌏","country-flag"),node("strong",c.nameZh));
+  tile.addEventListener("click",()=>{cc.value=c.code;renderRegionClimate()});overview.append(tile);cc.add(new Option(c.nameZh,c.code));
+ }
+ cc.value="JP";cc.addEventListener("change",renderRegionClimate);$("region-report").hidden=true;$("climate-status").textContent="請選擇國家，進入該國地理分區。";ensureHomeExitGuard();
+}
+async function renderRegionClimate(){
+ const country=$("climate-country").value,out=$("region-report"),status=$("climate-status");
+ out.replaceChildren();const months=monthOptions(),all=S.directory.courses.filter(c=>c.countryCode===country&&c.enabled),catalog=REGION_CATALOG[country]||[];
+ const normalizeRegion=r=>(country==="JP"&&["Okinawa","沖繩"].includes(r)?"沖繩":r);
+ const defined=[...new Set([...catalog,...all.map(c=>c.region).filter(Boolean)].map(normalizeRegion))];
+ const countryFlags={JP:"🇯🇵",KR:"🇰🇷",CN:"🇨🇳",VN:"🇻🇳",TH:"🇹🇭",MY:"🇲🇾",SG:"🇸🇬",ID:"🇮🇩"};
+ showClimateScreen((S.directory.countries.find(c=>c.code===country)?.nameZh||country)+" "+(countryFlags[country]||"🌏")+"｜選擇地理分區",showCountryOverview);
+ const available=all.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
+ const selectedCountry=S.directory.countries.find(c=>c.code===country);
+
+ const grid=node("div",undefined,"region-choice-grid");
+ for(const region of defined){
+  const courses=all.filter(c=>normalizeRegion(c.region)===region);
+  const valid=courses.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
+  const card=node("button",undefined,"region-choice");card.type="button";
+  card.append(node("strong",region),node("span",courses.length?courses.length+" 個球場資料／"+valid.length+" 個有效座標":"球場資料待建置"),node("small","查看三個月天氣分區表"));
+  card.addEventListener("click",()=>renderSubregionMenu(country,region));
+  grid.append(card);
+ }
+ out.append(grid);
+ status.textContent=(selectedCountry?.nameZh||country)+"｜"+defined.length+" 個地理分區。點選分區即可查看三個月總表。"+(available.length?" 已有 "+available.length+" 個具有效座標的球場。":" 目前尚無有效球場座標。");
+}
+async function renderRegionMonths(country,region,months,courses,subregion=""){
+ const out=$("region-report"),status=$("climate-status");out.replaceChildren();
+ const scopeName=region+(subregion?"｜"+subregion:"");
+ showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+scopeName+"｜\n三個月天氣總表",()=>renderSubregionMenu(country,region));
+ const valid=courses.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
+ const records=(await Promise.allSettled(valid.map(c=>fetchCourseSeasonalForecast(c)))).filter(x=>x.status==="fulfilled").map(x=>x.value);
+ const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table region-matrix"),thead=node("thead"),hr=node("tr");
+ ["天氣指標",...months.map(m=>m)].forEach(t=>hr.append(node("th",t)));thead.append(hr);tbl.append(thead);
+ const body=node("tbody");
+ const historicalResults=(await Promise.allSettled(valid.map(c=>fetchCourseHistoricalMonthlyClimate(c)))).filter(x=>x.status==="fulfilled").map(x=>x.value);
+ const monthData=months.map(month=>{
+  const season=records.map(rec=>{
+   const i=(rec.monthly?.time||[]).findIndex(t=>t.slice(0,7)===month);
+   return i<0?null:{rain:rec.monthly.precipitation_mean?.[i],anomaly:rec.monthly.precipitation_anomaly?.[i]};
+  }).filter(Boolean);
+  const hist=historicalResults.map(rec=>rec.monthly?.find(x=>x.month===Number(month.slice(5,7)))).filter(Boolean);
+  const avg=(arr,key)=>{const v=arr.map(x=>x[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
+  const seasonRain=avg(season,"rain"),seasonAnomaly=avg(season,"anomaly");
+  const historicalRain=avg(hist,"rain"),rain=Number.isFinite(seasonRain)?seasonRain:historicalRain;
+  const rainDays=avg(hist,"rainDays"),low=avg(hist,"low"),high=avg(hist,"high");
+  const avgDaily=avg(hist,"avgDailyRain"),maxDaily=hist.length?Math.max(...hist.map(x=>x.maxDailyRain).filter(Number.isFinite)):null;
+  // Historical-month description is based on historical monthly rainfall,
+  // rainy-day frequency and mean temperatures, not a fabricated daily forecast.
+  const historicalOutlook=()=>{
+   const parts=[];
+   if(Number.isFinite(historicalRain)||Number.isFinite(rainDays)){
+    if((Number.isFinite(historicalRain)&&historicalRain>=250)||(Number.isFinite(rainDays)&&rainDays>=16))parts.push("雨季多雨");
+    else if((Number.isFinite(historicalRain)&&historicalRain>=150)||(Number.isFinite(rainDays)&&rainDays>=12))parts.push("偏濕");
+    else if((Number.isFinite(historicalRain)&&historicalRain<=60)&&(Number.isFinite(rainDays)&&rainDays<=8))parts.push("乾季偏乾");
+    else if((Number.isFinite(historicalRain)&&historicalRain<100)||(Number.isFinite(rainDays)&&rainDays<10))parts.push("降雨較少");
+    else parts.push("降雨接近常態");
+   }
+   if(Number.isFinite(low)&&Number.isFinite(high)){
+    const meanTemp=(low+high)/2;
+    if(meanTemp<=12)parts.push("寒冷");
+    else if(meanTemp<=18)parts.push("偏冷");
+    else if(meanTemp>=28)parts.push("炎熱");
+    else if(meanTemp>=24)parts.push("溫暖");
+   }
+   return parts.length?parts.join("、"):"歷史氣候資料不足";
+  };
+  // Use the same descriptive climate wording in every month column.
+  // For the first two forecast months, retain the seasonal signal as a short qualifier.
+  let outlook=historicalOutlook();
+  if(Number.isFinite(seasonRain)&&Number.isFinite(seasonAnomaly)){
+   const baseline=seasonRain-seasonAnomaly;
+   const forecastTrend=baseline>0?(seasonRain/baseline>=1.2?"季節預測偏濕":seasonRain/baseline<=.8?"季節預測偏乾":"季節預測接近常態"):"";
+   if(forecastTrend)outlook+="（"+forecastTrend+"）";
+  }
+  const days=new Date(Date.UTC(Number(month.slice(0,4)),Number(month.slice(5,7)),0)).getUTCDate();
+  return {month,outlook,rain,low,high,rainDays,avgDaily:Number.isFinite(avgDaily)?avgDaily:(Number.isFinite(rain)?rain/days:null),maxDaily,
+   status:season.length&&hist.length?"季節預測＋歷史統計":season.length?"季節預測可用":hist.length?"歷史氣候參考":valid.length?"天氣資料暫缺":"待建置"};
+ });
+ const metrics=[
+  {label:"月天氣總況",key:"outlook",text:true},
+  {label:"歷史月平均低溫",key:"low",unit:" °C"},
+  {label:"歷史月平均高溫",key:"high",unit:" °C"},
+  {label:"月降雨量",key:"rain",unit:" mm"},
+  {label:"歷史月降雨日數（≥1 mm）",key:"rainDays",unit:" 日"},
+  {label:"歷史月平均日雨量",key:"avgDaily",unit:" mm／日"},
+  {label:"歷史月最高日雨量",key:"maxDaily",unit:" mm"}
+ ];
+ for(const metric of metrics){
+  const tr=node("tr");tr.append(node("th",metric.label));
+  for(const item of monthData){
+   const v=item[metric.key];
+   const display=metric.text?(v??"—"):(Number.isFinite(v)?(metric.key==="rainDays"?v.toFixed(1):v.toFixed(1))+metric.unit:"—");
+   tr.append(node("td",display));
+  }
+  body.append(tr);
+ }
+ const statusRow=node("tr");statusRow.append(node("th","資料狀態"));for(const item of monthData)statusRow.append(node("td",item.status));body.append(statusRow);
+ const group={region:scopeName,rootRegion:region,subregion,country,courses:valid,months};
+ const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,scopeName,item.month,()=>renderRegionMonths(country,region,months,valid,subregion))}});td.append(btn);actionRow.append(td)}body.append(actionRow);
+ const monthlyAnalysisRow=node("tr");monthlyAnalysisRow.append(node("th","本月分析"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"分析","monthly-analysis-open");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults));td.append(btn);monthlyAnalysisRow.append(td)}body.append(monthlyAnalysisRow);
+ tbl.append(body);table.append(tbl);out.append(table);
+ status.textContent=valid.length?"已選擇 "+scopeName+"｜球場 "+courses.length+" 個，其中 "+valid.length+" 個具有效座標，成功取得季節資料 "+records.length+" 組。":"已選擇 "+scopeName+"。此次分區尚無球場／天氣資料，但月份及週分析操作仍可使用。";
+}
+
+
+async function openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,course,date){
+ if(!course){const note=node("p","此分區沒有可用座標的代表球場，無法開啟逐日七天天氣報告。","risk-summary");host.append(note);return}
+ const back=()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords);
+ host.replaceChildren();
+ showClimateScreen("出發日 7 天摘要",back);
+ const heading=node("h3",course.name+"｜"+date+" ～ "+add(date,6),"monthly-linked-report-title");
+ const note=node("p","本報告以此分區第一個已核實座標的代表球場「"+course.name+"」計算；點選報告中的逐日卡片，可繼續查看逐時天氣。","monthly-analysis-note");
+ host.append(heading,note);
+ const loading=node("p","正在讀取所選日期的七天天氣資料…","data-note");host.append(loading);
+ try{
+  S.course=course;
+  const lead=Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
+  S.forecast=lead>=0&&lead<16?await fetchCourseForecast([course]):null;
+  await renderCourseSevenDayReport(host,course,date,back);
+ }catch(error){host.append(node("p","七天天氣報告暫時無法產生："+(error?.message||String(error)),"risk-summary"))}
+ finally{loading.remove()}
+ host.scrollIntoView({behavior:"smooth",block:"start"});
+}
+async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords){
+ const host=$("region-report");host.replaceChildren();
+ const back=()=>renderRegionMonths(group.country,group.rootRegion,group.months||monthOptions(),group.courses,group.subregion||"");
+ showClimateScreen(month+"月 "+group.region+"天氣分析",back);
+ const title=section(host,"① "+month+"｜地區月氣象分析");title.classList.add("monthly-analysis-section");
+ const monthIndex=Number(month.slice(5,7)),season=[];
+ for(const rec of seasonalRecords||[]){const m=rec.monthly||{},i=(m.time||[]).findIndex(t=>String(t).slice(0,7)===month);if(i<0)continue;const get=k=>Number.isFinite(m[k]?.[i])?m[k][i]:null;season.push({rain:get("precipitation_mean"),rainAnomaly:get("precipitation_anomaly"),temp:get("temperature_2m_mean"),tempAnomaly:get("temperature_2m_anomaly"),wind:get("wind_speed_10m_mean"),cloud:get("cloud_cover_mean")})}
+ const hist=(historicalRecords||[]).map(r=>r.monthly?.find(x=>x.month===monthIndex)).filter(Boolean);
+ const avg=(arr,key)=>{const values=arr.map(x=>x?.[key]).filter(Number.isFinite);return values.length?values.reduce((a,b)=>a+b,0)/values.length:null};
+ const seasonRain=avg(season,"rain"),rainAnomaly=avg(season,"rainAnomaly"),seasonTemp=avg(season,"temp"),tempAnomaly=avg(season,"tempAnomaly"),wind=avg(season,"wind"),cloud=avg(season,"cloud");
+ const historicalRain=avg(hist,"rain"),rainDays=avg(hist,"rainDays"),low=avg(hist,"low"),high=avg(hist,"high"),dailyRain=avg(hist,"avgDailyRain"),maxRain=hist.length?Math.max(...hist.map(x=>x.maxDailyRain).filter(Number.isFinite)):null;
+ const stats=node("div",undefined,"monthly-analysis-stats"),statItems=[["季節模式月均降雨",seasonRain," mm"],["季節模式降雨距平",rainAnomaly," mm"],["季節模式月均氣溫",seasonTemp," °C"],["季節模式氣溫距平",tempAnomaly," °C"],["季節模式平均風速",wind," m/s"],["季節模式雲量",cloud," %"],["歷史月平均最高溫",high," °C"],["歷史月平均最低溫",low," °C"],["歷史月降雨量",historicalRain," mm"],["歷史月降雨日數（≥1 mm）",rainDays," 日"],["歷史月平均日雨量",dailyRain," mm／日"],["歷史月最高單日雨量",maxRain," mm"]];
+ for(const [label,value,unit] of statItems){const item=node("article",undefined,"monthly-analysis-stat");item.append(node("small",label),node("strong",Number.isFinite(value)?value.toFixed(1)+unit:"資料不足"));stats.append(item)}
+ title.append(stats);
+ const narrative=node("div",undefined,"monthly-analysis-narrative"),parts=[];
+ if(Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)){const baseline=seasonRain-rainAnomaly,trend=baseline>0?(seasonRain/baseline>=1.2?"季節模式呈偏濕訊號":seasonRain/baseline<=.8?"季節模式呈偏乾訊號":"季節模式接近氣候基準"):"季節降雨趨勢資料不足";parts.push("降雨："+trend+"；模式月均降雨約 "+seasonRain.toFixed(1)+" mm，距平 "+(rainAnomaly>=0?"+":"")+rainAnomaly.toFixed(1)+" mm。")}
+ else if(Number.isFinite(historicalRain))parts.push("降雨：目前缺少本月季節模式資料，歷史月平均降雨量約 "+historicalRain.toFixed(1)+" mm，平均降雨日數 "+(Number.isFinite(rainDays)?rainDays.toFixed(1):"—")+" 日。");
+ if(Number.isFinite(tempAnomaly))parts.push("氣溫：季節模式氣溫距平 "+(tempAnomaly>=0?"+":"")+tempAnomaly.toFixed(1)+" °C。");
+ if(Number.isFinite(high)&&Number.isFinite(low))parts.push("歷史同期平均高低溫約 "+high.toFixed(1)+" / "+low.toFixed(1)+" °C。");
+ if(Number.isFinite(wind))parts.push("模式平均風速約 "+wind.toFixed(1)+" m/s。");
+ if(Number.isFinite(rainDays))parts.push("歷史上每月平均約 "+rainDays.toFixed(1)+" 個降雨日（單日雨量 ≥1 mm），歷史最大單日雨量為 "+(Number.isFinite(maxRain)?maxRain.toFixed(1):"—")+" mm。");
+ if(!parts.length)parts.push("目前可用的季節預報及歷史氣候資料不足，暫時無法形成可靠的月分析。");
+ narrative.append(node("p",parts.join(" ")),node("p","高爾夫活動解讀：本分析反映分區季節趨勢與歷史氣候條件，不代表整個月份每天的實際天氣。安排球敘時，應優先參考可取得的逐日預報，並於開球前再次確認降雨、風勢及雷雨警示。","monthly-analysis-note"));
+ title.append(narrative,node("p","季節預報來源：Open-Meteo Seasonal Forecast API｜ECMWF seasonal seamless（EC46 + SEAS5）。歷史氣候來源：Open-Meteo Historical Weather API｜ERA5 reanalysis，使用最近十個完整年度。","monthly-source-note"));
+ const dailySection=section(host,"② "+month+"｜全月逐日天氣簡表");dailySection.classList.add("monthly-calendar-section");
+ const daysInMonth=new Date(Date.UTC(Number(month.slice(0,4)),monthIndex,0)).getUTCDate(),dates=Array.from({length:daysInMonth},(_,i)=>month+"-"+String(i+1).padStart(2,"0"));
+ const sampleCourses=(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).slice(0,3),startForecast=today(),endForecast=add(startForecast,15),overlaps=dates.some(d=>d>=startForecast&&d<=endForecast);
+ let forecastCourses=[],historicalNormals=[];
+ const loadNote=node("p","正在整理全月逐日資料…","data-note");dailySection.append(loadNote);
+ const tasks=[];
+ if(overlaps&&sampleCourses.length)tasks.push(fetchCourseForecast(sampleCourses).then(r=>{forecastCourses=r.courses||[]}).catch(e=>{loadNote.textContent="即時逐日預報暫時無法取得，將以歷史同期統計呈現："+(e?.message||String(e))}));
+ if(sampleCourses.length)tasks.push(Promise.allSettled(sampleCourses.map(c=>fetchCourseHistoricalWeekNormals(c,dates))).then(results=>{historicalNormals=results.filter(x=>x.status==="fulfilled").map(x=>x.value)}));
+ await Promise.all(tasks);loadNote.remove();
+ const calendar=node("div",undefined,"monthly-calendar-grid");["一","二","三","四","五","六","日"].forEach((d,i)=>calendar.append(node("div",d,"monthly-calendar-weekday"+(i>=5?" monthly-weekend":""))));
+ const offset=(new Date(dates[0]+"T12:00:00Z").getUTCDay()+6)%7;for(let i=0;i<offset;i++)calendar.append(node("div","","monthly-calendar-empty"));
+ const weatherLabel=code=>!Number.isFinite(code)?"資料不足":code===0?"晴朗":code<=2?"晴時多雲":code===3?"陰天":code>=51&&code<=57?"毛毛雨":code>=61&&code<=67?"降雨":code>=80&&code<=82?"陣雨":code>=95?"雷雨":"多雲";
+ const mode=values=>{const nums=values.filter(Number.isFinite);if(!nums.length)return null;const counts=new Map();nums.forEach(v=>counts.set(v,(counts.get(v)||0)+1));return [...counts.entries()].sort((a,b)=>b[1]-a[1])[0][0]};
+ dates.forEach(date=>{
+  const lead=Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
+  const actualEntries=forecastCourses.map(f=>{const i=(f.daily?.time||[]).indexOf(date);return i<0?null:{code:f.daily.weather_code?.[i],high:f.daily.temperature_2m_max?.[i],low:f.daily.temperature_2m_min?.[i],prob:f.daily.precipitation_probability_max?.[i]}}).filter(Boolean);
+  const isForecast=lead>=0&&lead<16&&actualEntries.length>0,historicalEntries=historicalNormals.map(n=>n.days?.find(d=>d.date===date)).filter(Boolean);
+  const dayOfWeek=new Date(date+"T12:00:00Z").getUTCDay(),isWeekend=dayOfWeek===0||dayOfWeek===6;
+  const card=node(isForecast?"button":"article",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":"monthly-day-history")+(isWeekend?" monthly-weekend":""));
+  if(isForecast){card.type="button";card.setAttribute("aria-label",date+" 逐日天氣，點選查看出發日七天天氣預報");card.title="點選查看 "+date+" 出發日七天天氣預報";card.addEventListener("click",()=>openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,sampleCourses[0],date))}
+  const code=mode(actualEntries.map(x=>x.code)),highValue=isForecast?avg(actualEntries,"high"):avg(historicalEntries,"highMean"),lowValue=isForecast?avg(actualEntries,"low"):avg(historicalEntries,"lowMean"),rainProb=isForecast?avg(actualEntries,"prob"):avg(historicalEntries,"rainFrequency");
+  const icon=createWeatherIcon(code,!isForecast,rainProb);icon.classList.add("monthly-day-icon");
+  card.append(node("strong",String(Number(date.slice(8,10))),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
+  card.append(node("b",Number.isFinite(highValue)?highValue.toFixed(0)+"°":"—","monthly-day-high"),node("span",Number.isFinite(lowValue)?lowValue.toFixed(0)+"°":"—","monthly-day-low"));
+  card.append(node("small",isForecast?"雨機率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):"歷史雨頻 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"),"monthly-day-rain"));
+  if(!isForecast)card.append(node("small","歷史同期","monthly-day-source"));
+  calendar.append(card);
+ });
+ dailySection.append(calendar);
+ const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（最多16天）","monthly-legend-forecast"),node("span","● 歷史同期統計（其餘日期）","monthly-legend-history"));dailySection.append(legend);
+ dailySection.append(node("p","逐日預報來源：Open-Meteo Forecast API，最多16天。超出16天及已過日期以 ERA5 最近十年相同月日歷史統計呈現；歷史同期圖示與溫度不是未來逐日預報，也不是即時觀測。區域逐日數值取最多三個已核實座標球場的平均參考。","monthly-source-note"));
+ if(!sampleCourses.length)dailySection.append(node("p","此分區尚無具有效 GPS 座標的球場，無法產生逐日天氣簡表。","risk-summary"));
+ host.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function renderEmptyWeekAnalysis(country,region,month,backAction){
+ const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+region+"｜"+month+"｜週次預覽",backAction||(()=>showCountryOverview()));
+ const panel=node("section",undefined,"week-recommendations");
+ panel.append(node("h3","③ "+region+"｜"+month+" 週天氣分析"),node("p","此分區目前尚無球場座標或天氣資料。以下提供週次版面預覽；資料建置完成後會自動以該區實際季節資料取代。","long-range-note"));
+ const grid=node("div",undefined,"week-grid");
+ const first=month+"-01";
+ for(let i=0;i<3;i++){const start=add(first,i*7),end=add(start,6),card=node("article",undefined,"week-card");card.append(node("div","週次 "+(i+1),"week-rank"),node("h4",start+" ～ "+end),node("strong","天氣資料待建置"),node("p","降雨、溫度及適打分析暫無資料。"),node("button","查看七天報告","week-open"));card.lastChild.type="button";card.lastChild.addEventListener("click",()=>renderEmptySevenDay(country,region,start));grid.append(card)}
+ panel.append(grid);out.append(panel);
+}
+function renderEmptySevenDay(country,region,start){
+ const out=$("region-report");out.replaceChildren();showClimateScreen("④ "+region+"｜七天天氣報告預覽",()=>renderEmptyWeekAnalysis(country,region,start.slice(0,7)));const panel=node("section",undefined,"selected-week-report");
+ panel.append(node("h3","④ "+region+"｜七天天氣報告"),node("h4",start+" ～ "+add(start,6)),node("p","此分區尚無球場／天氣資料。此畫面為版面預覽，並非實際天氣預報。","long-range-note"));
+ const strip=node("div",undefined,"seven-day-strip");
+ for(let i=0;i<7;i++){const date=add(start,i),tile=node("div",undefined,"seven-day-item");tile.append(node("strong",date.slice(5)),node("span","待建置"));strip.append(tile)}
+ panel.append(strip);const choose=node("button","前往選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>{$("departure").value=start;$("departure").scrollIntoView({behavior:"smooth",block:"center"})});panel.append(choose);out.append(panel);
+}
+
+function renderRegionTopWeeks(group,records,month){
+ const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜本月推薦週次",()=>renderRegionMonths(group.country||$("climate-country").value,group.rootRegion||group.region,group.months||monthOptions(),group.courses,group.subregion||""));const panel=node("section",undefined,"week-recommendations");
+ const monthStart=month+"-01",monthEnd=new Date(Date.parse(monthStart+"T12:00:00Z"));monthEnd.setUTCMonth(monthEnd.getUTCMonth()+1);monthEnd.setUTCDate(0);const last=monthEnd.toISOString().slice(0,10),todayDate=today(),first=monthStart>todayDate?monthStart:todayDate,candidates=[];
+ for(let start=first;start<=last;start=add(start,7)){
+  const weekEnd=add(start,6);if(weekEnd>last)continue;
+  const days=Array.from({length:7},(_,i)=>add(start,i)),signals=[];
+  for(const rec of records){
+   const w=rec.weekly,m=rec.monthly;
+   const efiValues=days.map(d=>{let idx=-1;(w?.time||[]).forEach((t,i)=>{if(t<=d)idx=i});return idx>=0?w.precipitation_efi?.[idx]:null}).filter(Number.isFinite);
+   const monthIdx=(m?.time||[]).findIndex(t=>t.slice(0,7)===month);
+   const anomaly=monthIdx>=0?m.precipitation_anomaly?.[monthIdx]:null,mean=monthIdx>=0?m.precipitation_mean?.[monthIdx]:null;
+   if(efiValues.length)signals.push({efi:efiValues.reduce((a,b)=>a+b,0)/efiValues.length,source:"weekly"});
+   else if(Number.isFinite(anomaly)&&Number.isFinite(mean)&&mean>0)signals.push({efi:anomaly/mean,source:"monthly"});
+  }
+  if(!signals.length)continue;
+  const mean=signals.reduce((s,x)=>s+x.efi,0)/signals.length,rank=mean<=-.2?0:mean<=.05?1:mean<=.2?2:3;
+  candidates.push({start,end:weekEnd,rank,signal:mean,coverage:signals.length,source:signals.every(x=>x.source==="weekly")?"weekly":"monthly"});
+ }
+ candidates.sort((a,b)=>a.rank-b.rank||a.signal-b.signal||a.start.localeCompare(b.start));
+ const picked=[];for(const item of candidates){if(picked.every(x=>Math.abs((Date.parse(item.start)-Date.parse(x.start))/86400000)>=7)){picked.push(item);if(picked.length===3)break}}
+ if(!picked.length){panel.append(node("p","目前沒有足夠週／月尺度資料可產生推薦。","risk-summary"))}
+ else{
+  const grid=node("div",undefined,"week-grid top-week-grid");
+  picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");const heading=node("div",undefined,"week-card-heading");heading.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")));const summary=node("div",undefined,"week-card-summary");summary.append(node("span","降雨趨勢："+["偏乾","接近基準","偏濕","顯著偏濕"][x.rank],"week-rain-summary"),node("span","資料可信度："+(x.source==="weekly"?"週尺度":"月尺度參考")+"｜覆蓋 "+x.coverage+"/"+records.length,"week-confidence"));card.append(heading,summary);const choose=node("button","查看此週 7 天報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month));card.append(choose);grid.append(card)});
+  panel.append(grid);
+ }
+ out.append(panel);
+ const coursePanel=node("section",undefined,"cluster-course-panel");
+ coursePanel.append(node("h3","選擇出發日期及球場"));
+ const choose=node("button","前往選擇出發日期及球場","cluster-course-use");
+ choose.type="button";
+ choose.addEventListener("click",()=>showDepartureForm($("departure").value||today(),()=>renderRegionTopWeeks(group,records,month)));
+ coursePanel.append(choose);out.append(coursePanel);
+}
+
+
+function makeSelectedWeekHourlyRecords(forecast,date,teeHour){
+ const hourly=forecast?.hourly;
+ if(!hourly?.time?.length)return [];
+ const indices=hourly.time.map((t,i)=>String(t).slice(0,10)===date&&Number(String(t).slice(11,13))>=teeHour&&Number(String(t).slice(11,13))<teeHour+6?i:-1).filter(i=>i>=0);
+ return indices.map(i=>({
+  time:String(hourly.time[i]).slice(11,16),
+  code:hourly.weather_code?.[i]??null,
+  rain:hourly.precipitation_probability?.[i]??null,
+  mm:hourly.precipitation?.[i]??null,
+  temp:hourly.temperature_2m?.[i]??null,
+  feel:hourly.apparent_temperature?.[i]??null,
+  wind:Number.isFinite(hourly.wind_speed_10m?.[i])?hourly.wind_speed_10m[i]*3.6:null,
+  gust:Number.isFinite(hourly.wind_gusts_10m?.[i])?hourly.wind_gusts_10m[i]*3.6:null,
+  dir:hourly.wind_direction_10m?.[i]??null,
+  rh:hourly.relative_humidity_2m?.[i]??null,
+  cloud:hourly.cloud_cover?.[i]??null,
+  uv:hourly.uv_index?.[i]??null
+ }));
+}
+async function renderSelectedWeekHourlyPage(host,group,week,records,month,date,cachedForecasts=[]){
+ const courses=(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).slice(0,3);
+ const back=()=>renderSelectedWeekReport(group,week,records,month,cachedForecasts);
+ showClimateScreen("⑤ "+group.region+"｜"+date+"｜逐時天氣",back);
+ host.replaceChildren();
+ const intro=node("p","已帶入所選日期及此分區球場資料。請選擇要查看的球場；逐時資料依球場 GPS 與當地時區讀取。","data-note");
+ host.append(intro);
+ let forecasts=Array.isArray(cachedForecasts)?cachedForecasts:[];
+ if(!forecasts.length){
+  const loading=node("p","正在讀取球場逐時預報…","data-note");host.append(loading);
+  try{const result=await fetchCourseForecast(courses);forecasts=result.courses||[]}
+  catch(error){loading.textContent="逐時預報讀取失敗："+(error?.message||String(error));return}
+  loading.remove();
+ }
+ const available=forecasts.filter(f=>(f.hourly?.time||[]).some(t=>String(t).slice(0,10)===date));
+ if(!available.length){host.append(node("p","所選日期目前沒有可用的逐時預報資料。","risk-summary"));return}
+ const selectorWrap=node("div",undefined,"controls");
+ const label=node("label","球場");const selector=node("select");selector.setAttribute("aria-label","選擇逐時天氣球場");
+ available.forEach(f=>selector.add(new Option(f.course.name,f.course.id)));
+ label.append(selector);selectorWrap.append(label);host.append(selectorWrap);
+ const detail=node("div");host.append(detail);
+ const renderCourse=()=>{
+  detail.replaceChildren();
+  const forecast=available.find(f=>f.course.id===selector.value)||available[0];
+  const teeHour=Number($("tee")?.value||10);
+  const hourlyRecords=makeSelectedWeekHourlyRecords(forecast,date,teeHour);
+  if(!hourlyRecords.length){detail.append(node("p","此球場在所選日期沒有 "+String(teeHour).padStart(2,"0")+":00 起六小時的逐時資料。","risk-summary"));return}
+  const note=node("p","已選日期："+date+"｜球場："+forecast.course.name+"｜開球時間："+String(teeHour).padStart(2,"0")+":00（顯示開球後六小時）","data-note");
+  detail.append(note);
+  renderTaiwanPwaHourly(detail,forecast.course,date,hourlyRecords);
+ };
+ selector.addEventListener("change",renderCourse);
+ renderCourse();
+ host.scrollIntoView({behavior:"smooth",block:"start"});
+}
+async function renderSelectedWeekReport(group,week,records,month,cachedForecasts=null){
+ const host=$("region-report");host.replaceChildren();showClimateScreen("④ "+group.region+"｜"+week.start+"｜七天天氣報告",()=>renderRegionTopWeeks(group,records,month));
+ const dates=Array.from({length:7},(_,i)=>add(week.start,i));
+ const leadFor=date=>Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
+ const courses=(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).slice(0,3);
+ const report=section(host,(dates.some(date=>leadFor(date)>=0&&leadFor(date)<16)?"七天逐日天氣預報｜":"歷史同期七天天氣參考｜")+week.start+" ～ "+week.end);
+ const median=values=>{const a=values.filter(Number.isFinite).sort((x,y)=>x-y);if(!a.length)return null;const m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2};
+ const wxLabel=code=>{if(!Number.isFinite(code))return "資料不足";if(code===0)return "晴朗";if(code<=2)return "晴時多雲";if(code===3)return "陰天";if(code>=51&&code<=57)return "毛毛雨";if(code>=61&&code<=67)return "降雨";if(code>=80&&code<=82)return "陣雨";if(code>=95)return "雷雨";return "多雲"};
+ const wxIcon=code=>!Number.isFinite(code)?"—":code===0?"☀️":code<=2?"🌤️":code===3?"☁️":code>=51&&code<=67?"🌧️":code>=80&&code<=82?"🌦️":code>=95?"⛈️":"☁️";
+ let forecasts=Array.isArray(cachedForecasts)?cachedForecasts:[];
+ const hasNearTermDate=dates.some(date=>leadFor(date)>=0&&leadFor(date)<16);
+ if(hasNearTermDate&&courses.length&&!forecasts.length){
+  try{const result=await fetchCourseForecast(courses);forecasts=result.courses||[]}
+  catch(e){report.append(node("p","逐日預報暫時無法取得："+e.message,"risk-summary"))}
+ }
+ let rows=dates.map(date=>{
+  const entries=forecasts.map(f=>{const i=(f.daily?.time||[]).indexOf(date);return i<0?null:{code:f.daily.weather_code?.[i],rain:f.daily.precipitation_sum?.[i],prob:f.daily.precipitation_probability_max?.[i],low:f.daily.temperature_2m_min?.[i],high:f.daily.temperature_2m_max?.[i],feel:f.daily.apparent_temperature_max?.[i]}}).filter(Boolean);
+  const codes=entries.map(x=>x.code).filter(Number.isFinite);
+  const code=codes.length?codes.sort((a,b)=>codes.filter(x=>x===b).length-codes.filter(x=>x===a).length)[0]:null;
+  const actual=entries.length>0;
+  return {date,actual,clickable:leadFor(date)>=0&&leadFor(date)<16,code,icon:wxIcon(code),label:actual?wxLabel(code):"歷史資料待補",rain:median(entries.map(x=>x.rain)),prob:median(entries.map(x=>x.prob)),low:median(entries.map(x=>x.low)),high:median(entries.map(x=>x.high)),feel:median(entries.map(x=>x.feel))};
+ });
+ const historicalDates=rows.filter(r=>!r.actual).map(r=>r.date);
+ if(historicalDates.length&&courses.length){
+  const results=await Promise.allSettled(courses.map(c=>fetchCourseHistoricalWeekNormals(c,historicalDates)));
+  const normals=results.filter(x=>x.status==="fulfilled").map(x=>x.value);
+  rows=rows.map(r=>{
+   if(r.actual)return r;
+   const samples=normals.map(n=>n.days?.find(d=>d.date===r.date)).filter(Boolean);
+   const get=k=>median(samples.map(x=>x[k]));
+   const prob=get("rainFrequency");
+   return {...r,high:get("highMean"),low:get("lowMean"),prob,rain:get("rainMean"),label:!Number.isFinite(prob)?"歷史資料不足":prob>=60?"歷史常有雨":prob>=30?"歷史偶有雨":"歷史較少雨"};
+  });
+ }
+ if(rows.some(r=>r.actual)&&historicalDates.length)report.append(node("p","本週逐日預報僅適用於未來16天範圍內的日期；其餘日期以過去十年歷史同期統計補充，不代表該日實際天氣。","long-range-note"));
+ if(!rows.some(r=>r.actual))report.append(node("p","以下為過去十年相同月日的 ERA5 歷史同期統計；降雨頻率不是未來降雨機率，氣溫與雨量不是該週預報。","long-range-note"));
+ report.append(node("p","點選未來16天內的日期，可查看該日逐時天氣。","data-note"));
+  renderSevenDayVisual(report,rows,!rows.some(r=>r.actual),date=>renderSelectedWeekHourlyPage(host,group,week,records,month,date,forecasts));
+ const choose=node("button","選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>showDepartureForm(week.start,()=>renderSelectedWeekReport(group,week,records,month,forecasts)));host.append(choose);host.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function returnFromDepartureForm(){
+ const form=$("departure")?.closest(".panel");
+ if(!form||form.hidden)return false;
+ form.hidden=true;
+ const report=$("report");report.replaceChildren();report.hidden=true;
+ $("climate-explorer").hidden=false;
+ const action=departureFormReturnAction;departureFormReturnAction=null;
+ if(action)action();
+ else{const fallback=climateBackAction;climateBackAction=null;if(fallback)fallback();else showCountryOverview()}
+ return true;
+}
+function showDepartureForm(startDate,returnAction=null){
+ departureFormReturnAction=returnAction;
+ const previousReport=$("report");previousReport.replaceChildren();previousReport.hidden=true;
+ $("departure").value=startDate;$("departure").min=today();$("departure").max=add(today(),89);
+ $("course-note").textContent="已帶入所選週次起始日；請選擇球場及開球時間。";
+ $("climate-explorer").hidden=true;
+ const form=$("departure").closest(".panel");form.hidden=false;
+ let nav=$("departure-form-nav");
+ if(!nav){nav=node("div",undefined,"departure-form-nav");nav.id="departure-form-nav";form.insertBefore(nav,form.firstChild)}
+ nav.replaceChildren();
+ const back=node("button","← 返回上一層","departure-form-back");back.type="button";
+ back.addEventListener("click",()=>returnFromDepartureForm());
+ const home=node("button","⌂ 返回首頁","departure-form-home");home.type="button";
+ home.addEventListener("click",()=>{
+  form.hidden=true;departureFormReturnAction=null;$("report").replaceChildren();$("report").hidden=true;$("climate-explorer").hidden=false;
+  climateBackAction=null;showCountryOverview();
+ });
+ nav.append(back,home);
+ form.scrollIntoView({behavior:"smooth",block:"start"});
+}
+async function initDepartureCalendar(){
+ const input=$("departure");input.type="text";input.readOnly=true;input.placeholder="選擇出發日期";input.setAttribute("aria-haspopup","dialog");
+ const open=()=>{let shown=input.value||today(),month=shown.slice(0,7)+"-01";const overlay=node("div",undefined,"calendar-overlay");overlay.setAttribute("role","presentation");const dialog=node("section",undefined,"calendar-dialog");dialog.setAttribute("role","dialog");dialog.setAttribute("aria-modal","true");const top=node("div",undefined,"calendar-top"),heading=node("strong","選取日期");const prev=node("button","‹","calendar-prev"),next=node("button","›","calendar-next");prev.type=next.type="button";top.append(heading,prev,next);const grid=node("div",undefined,"calendar-grid");dialog.append(top,grid);const actions=node("div",undefined,"calendar-actions"),cancel=node("button","取消"),confirm=node("button","確定");cancel.type=confirm.type="button";actions.append(cancel,confirm);dialog.append(actions);overlay.append(dialog);document.body.append(overlay);
+ const draw=()=>{const d=new Date(month+"T12:00:00Z");heading.textContent=d.getUTCFullYear()+"年"+(d.getUTCMonth()+1)+"月";grid.replaceChildren();["一","二","三","四","五","六","日"].forEach((w,i)=>{const el=node("span",w,"calendar-weekday"+(i>=5?" weekend-red":""));grid.append(el)});const offset=(d.getUTCDay()+6)%7;for(let i=0;i<offset;i++)grid.append(node("span","","calendar-empty"));const days=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0)).getUTCDate();for(let day=1;day<=days;day++){const date=month.slice(0,8)+String(day).padStart(2,"0"),dow=new Date(date+"T12:00:00Z").getUTCDay(),b=node("button",String(day),"calendar-day"+(dow===0||dow===6?" weekend-red":"")+(date===shown?" selected":""));b.type="button";b.disabled=date<today()||date>add(today(),89);b.addEventListener("click",()=>{shown=date;draw()});grid.append(b)}};
+ prev.addEventListener("click",()=>{const d=new Date(month+"T12:00:00Z");d.setUTCMonth(d.getUTCMonth()-1);month=d.toISOString().slice(0,7)+"-01";draw()});next.addEventListener("click",()=>{const d=new Date(month+"T12:00:00Z");d.setUTCMonth(d.getUTCMonth()+1);month=d.toISOString().slice(0,7)+"-01";draw()});cancel.addEventListener("click",()=>overlay.remove());confirm.addEventListener("click",()=>{input.value=shown;overlay.remove()});overlay.addEventListener("click",e=>{if(e.target===overlay)overlay.remove()});draw()};
+ input.addEventListener("click",open);
+}
+async function init(){try{S.directory=await fetchAsiaGolfDirectory();fillCountries();initClimateExplorer();const t=today();$("departure").min=t;$("departure").max=add(t,89);$("departure").value=t;initDepartureCalendar();$("country").addEventListener("change",fillRegions);$("region").addEventListener("change",fillCourses);$("course").addEventListener("change",()=>{S.course=S.directory.courses.find(c=>c.id===$("course").value);$("run").disabled=!S.course});$("run").addEventListener("click",run);setStatus("請選擇出發日期及球場。")}catch(e){setStatus("球場清單讀取失敗："+e.message)}}
+init();
