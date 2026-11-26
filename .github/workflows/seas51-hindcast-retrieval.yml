@@ -6,6 +6,7 @@ name: SEAS5.1 historical hindcast retrieval and GRIB audit
     paths:
       - "scripts/retrieve-seas51-hindcast-pilot.py"
       - "scripts/audit-seas51-grib.py"
+      - "scripts/probe-seas51-precipitation-leads.py"
       - ".github/workflows/seas51-hindcast-retrieval.yml"
 permissions:
   contents: read
@@ -31,6 +32,8 @@ jobs:
         run: python scripts/retrieve-seas51-hindcast-pilot.py
       - name: Audit GRIB metadata
         run: python scripts/audit-seas51-grib.py
+      - name: Probe precipitation leads individually
+        run: python scripts/probe-seas51-precipitation-leads.py
       - name: Upload raw GRIB and machine-readable audit
         if: always()
         uses: actions/upload-artifact@v4
