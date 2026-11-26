@@ -708,3 +708,7 @@
 .departure-form-nav{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px;align-items:center}
 .departure-form-nav button{padding:10px 16px!important;border:0!important;border-radius:10px!important;background:#176c4b!important;color:#fff!important;font-weight:800!important;font-size:1rem}
 .departure-form-nav .departure-form-back{background:#70508f!important}
+
+/* Swipeable five-day pages for selected-course seven-day summary */
+.departure-week-pages{touch-action:pan-y;outline:none}
+.departure-five-day-page{touch-action:pan-y}
