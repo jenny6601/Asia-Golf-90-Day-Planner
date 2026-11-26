@@ -26,7 +26,11 @@ def haversine(lat1,lon1,lat2,lon2):
     return 6371.0088*2*math.asin(math.sqrt(a))
 
 def nearest_grid(g,lat,lon):
-    lats,lons,values=codes_grib_get_data(g)
+    data=codes_grib_get_data(g)
+    # ecCodes Python bindings may append a status field after the three arrays.
+    if not isinstance(data,(tuple,list)) or len(data)<3:
+        raise RuntimeError(f\"Unexpected codes_grib_get_data result: {type(data).__name__}\")
+    lats,lons,values=data[:3]
     best=None
     for glat,glon,value in zip(lats,lons,values):
         d=haversine(lat,lon,float(glat),float(glon))
