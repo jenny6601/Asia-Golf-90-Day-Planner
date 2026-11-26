@@ -92,7 +92,7 @@ def standardize(input_csv, manifest_path, output_path, batch_id=None):
     init_times = sorted({record["initializationTime"] for record in accepted})
     if len(init_times) != 1:
         raise ValueError("Pilot batch must contain exactly one initialization time")
-    created = manifest.get("createdUtc") or datetime.now(timezone.utc).isoformat()
+    created = manifest.get("retrieved_utc") or manifest.get("createdUtc") or datetime.now(timezone.utc).isoformat()
     batch = {
         "schemaVersion": "1.0.0",
         "batchId": batch_id or "seas51-" + init_times[0][:10].replace("-", "") + "-system51-course-points-v1",
@@ -108,8 +108,9 @@ def standardize(input_csv, manifest_path, output_path, batch_id=None):
             "sourceManifest": str(manifest_path),
             "sourceCsv": str(input_csv),
         },
-        "rawArchive": manifest.get("input"),
-        "rawSha256": None,
+        "rawArchive": manifest.get("target") or manifest.get("input"),
+        "rawSha256": manifest.get("sha256"),
+        "rawArchiveSizeBytes": manifest.get("size_bytes"),
         "normalizedRecordCount": len(accepted),
         "rejectedRecordCount": len(rejected),
         "writePolicy": "append-only-no-overwrite",
