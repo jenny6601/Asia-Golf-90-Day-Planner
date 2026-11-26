@@ -29,7 +29,7 @@ def nearest_grid(g,lat,lon):
     data=codes_grib_get_data(g)
     # ecCodes Python bindings may append a status field after the three arrays.
     if not isinstance(data,(tuple,list)) or len(data)<3:
-        raise RuntimeError(f\"Unexpected codes_grib_get_data result: {type(data).__name__}\")
+        raise RuntimeError("Unexpected codes_grib_get_data result: " + type(data).__name__)
     lats,lons,values=data[:3]
     best=None
     for glat,glon,value in zip(lats,lons,values):
