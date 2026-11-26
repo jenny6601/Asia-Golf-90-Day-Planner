@@ -771,8 +771,18 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   return {date,valid:true,grade,playable:grade<=1&&(!Number.isFinite(highTemp)||highTemp<=33),chance,amount,source:isForecast?"逐日預報":seasonal.length?"歷史＋季節模式估計":"歷史氣候參考"};
  }).filter(x=>x.valid);
  const playable=dailyAssessment.filter(x=>x.playable),watch=dailyAssessment.filter(x=>x.grade===2),wet=dailyAssessment.filter(x=>x.grade===3);
- const seasonRatio=Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)&&seasonRain-rainAnomaly>0?seasonRain/(seasonRain-rainAnomaly):null;
- const seasonLabel=Number.isFinite(seasonRatio)?seasonRatio>=1.35?"雨季／明顯偏濕訊號":seasonRatio>=1.15?"偏濕季節":seasonRatio<=.75?"偏乾季節":"接近常年季節型態":Number.isFinite(historicalRain)?(historicalRain>=250||rainDays>=16?"歷史雨季":historicalRain>=150||rainDays>=12?"歷史偏濕季":historicalRain<=60&&rainDays<=8?"歷史乾季":"歷史降雨接近常態"):"季節型態資料不足";
+ const seasonBaseline=Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)?seasonRain-rainAnomaly:null;
+ const seasonRatio=Number.isFinite(seasonBaseline)&&seasonBaseline>0?seasonRain/seasonBaseline:null;
+ // Describe the selected month explicitly: model anomaly indicates this month's tendency;
+ // ERA5 climatology independently identifies whether the calendar month is normally wet/dry.
+ const historicalMonthType=Number.isFinite(historicalRain)?
+  ((historicalRain>=250||rainDays>=16)?"歷史同期屬雨季":(historicalRain<=60&&rainDays<=8)?"歷史同期屬乾季":(historicalRain>=150||rainDays>=12)?"歷史同期偏濕":"歷史同期接近常態"):
+  "歷史季節型態資料不足";
+ const seasonLabel=Number.isFinite(seasonRatio)?
+  (seasonRatio>=1.35?"明顯偏濕":seasonRatio>=1.15?"偏濕":seasonRatio<=.75?"偏乾":"接近常年"):
+  Number.isFinite(historicalRain)?
+   ((historicalRain>=250||rainDays>=16)?"雨季":(historicalRain<=60&&rainDays<=8)?"乾季":(historicalRain>=150||rainDays>=12)?"偏濕":"接近常態"):
+   "資料不足，無法判定";
  const best=[...dailyAssessment].sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.date.localeCompare(b.date)).slice(0,5);
  const datesText=best.length?best.map(x=>Number(x.date.slice(8,10))+"日").join("、"):"資料不足，暫無推薦日期";
  // Recommend a continuous five-day travel window only when all five dates have usable data.
@@ -786,10 +796,19 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  fiveDayWindows.sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.days[0].date.localeCompare(b.days[0].date));
  const preferredWindow=fiveDayWindows[0]||null;
  const dateRange=preferredWindow?Number(preferredWindow.days[0].date.slice(5,7))+"月"+Number(preferredWindow.days[0].date.slice(8,10))+"日 ～ "+Number(preferredWindow.days[4].date.slice(5,7))+"月"+Number(preferredWindow.days[4].date.slice(8,10))+"日":"資料不足，無法推薦連續5天";
- const seasonDescription=seasonLabel==="季節型態資料不足"?"目前沒有足夠季節資料判讀本月型態。":seasonLabel.includes("雨季")||seasonLabel.includes("偏濕")?"本月降雨訊號較明顯，安排球敘宜優先挑選降雨風險較低的日期。":seasonLabel.includes("乾季")||seasonLabel.includes("偏乾")?"本月整體降雨訊號較少，較有利於安排戶外球敘。":"本月降雨訊號接近歷史常態，仍需比較逐日差異安排球敘。";
+ const seasonDescription=(()=>{
+  if(seasonLabel==="資料不足，無法判定")return "目前缺少可用的月季節模式與歷史月雨量資料，暫時無法判定偏濕、偏乾、雨季或乾季。";
+  const historyText=Number.isFinite(historicalRain)?"歷史同期平均月雨量約 "+historicalRain.toFixed(1)+" mm、平均降雨日約 "+(Number.isFinite(rainDays)?rainDays.toFixed(1):"—")+" 日，"+historicalMonthType+"。":historicalMonthType+"。";
+  if(Number.isFinite(seasonRatio)){
+   const pct=Math.round((seasonRatio-1)*100),modelText="季節模式預估月雨量約 "+(Number.isFinite(seasonRain)?seasonRain.toFixed(1):"—")+" mm，較模式常態"+(pct>=0?"高":"低")+Math.abs(pct)+"%。";
+   const tendency=seasonLabel==="明顯偏濕"?"本月呈明顯偏濕訊號，降雨風險較常態高。":seasonLabel==="偏濕"?"本月呈偏濕訊號，降雨風險略高於常態。":seasonLabel==="偏乾"?"本月呈偏乾訊號，整體降雨傾向低於常態。":"本月降雨預估接近模式常態，仍須留意逐日差異。";
+   return modelText+tendency+historyText;
+  }
+  return "依歷史同期資料判定，本月型態為"+seasonLabel+"。"+historyText;
+ })();
  const summary=node("div",undefined,"monthly-playability-card");
  const seasonBanner=node("div",undefined,"monthly-playability-season");
- seasonBanner.append(node("div","🌦️ 季節型態","monthly-playability-kicker"),node("strong",seasonLabel,"monthly-playability-season-label"),node("p",seasonDescription));
+ seasonBanner.append(node("div","🌦️ 本月型態","monthly-playability-kicker"),node("strong",seasonLabel,"monthly-playability-season-label"),node("p",seasonDescription));
  summary.append(seasonBanner);
  const counts=node("div",undefined,"monthly-playability-counts");
  const countItems=[
