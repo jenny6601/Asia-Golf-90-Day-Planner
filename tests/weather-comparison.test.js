@@ -23,9 +23,20 @@ test("pairs same-zone same-time future forecasts and calculates absolute differe
   assert.equal(result.purpose, "provider_agreement_not_accuracy");
 });
 
-test("excludes past hours and rejects missing zones", () => {
+test("excludes past hours and rejects an unmatched region", () => {
   const weatherApi = { zones: [{ zone, forecastDays: [{ hours: [{ time: "2026-11-26 09:00", chanceOfRain: 10 }] }] }] };
-  const openMeteo = { zones: [{ zone, hourly: { time: ["2026-11-26T09:00"], precipitation_probability: [20] } }] };
-  assert.equal(compareHourlySnapshots(weatherApi, openMeteo, "2026-11-26 10:00").zones[0].comparedHours, 0);
-  assert.throws(() => compareHourlySnapshots(weatherApi, { zones: [] }, "2026-11-26 08:00"), /缺少區域/);
+  const openMeteoPast = { zones: [{ zone, hourly: { time: ["2026-11-26T09:00"], precipitation_probability: [20] } }] };
+  assert.equal(compareHourlySnapshots(weatherApi, openMeteoPast, "2026-11-26 10:00").zones[0].comparedHours, 0);
+
+  const otherZone = { id: "south", label: "南部", place: "那霸市" };
+  const openMeteoWrongZone = { zones: [{ zone: otherZone, hourly: { time: [], precipitation_probability: [] } }] };
+  assert.throws(() => compareHourlySnapshots(weatherApi, openMeteoWrongZone, "2026-11-26 08:00"), /缺少區域/);
+});
+
+test("rejects empty provider zone collections explicitly", () => {
+  const weatherApi = { zones: [{ zone, forecastDays: [] }] };
+  assert.throws(
+    () => compareHourlySnapshots(weatherApi, { zones: [] }, "2026-11-26 08:00"),
+    /兩個來源都必須有區域資料/
+  );
 });
