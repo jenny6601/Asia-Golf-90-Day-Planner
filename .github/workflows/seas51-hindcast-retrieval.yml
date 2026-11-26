@@ -8,21 +8,12 @@ name: SEAS5.1 historical hindcast retrieval and GRIB audit
       - "scripts/audit-seas51-grib.py"
       - "scripts/extract-seas51-course-points.py"
       - "scripts/probe-seas51-precipitation-leads.py"
-      - "scripts/standardize_seas51_archive.py"
-      - "scripts/build_cds_era5_pairs.py"
-      - "scripts/report_cds_era5_proxy_skill.py"
-      - "scripts/split_cds_temporal_holdout.py"
-      - "tests/test_split_cds_temporal_holdout.py"
-      - "docs/CDS-TEMPORAL-HOLDOUT.md"
-      - "tests/test_report_cds_era5_proxy_skill.py"
-      - "docs/ERA5-PROXY-METRIC-REPORT.md"
-      - "tests/test_build_cds_era5_pairs.py"
-      - "docs/CDS-ERA5-PAIRED-VERIFICATION.md"
-      - "tests/test_standardize_seas51_archive.py"
-      - "docs/SEAS51-ARCHIVE-NORMALIZATION.md"
       - ".github/workflows/seas51-hindcast-retrieval.yml"
 permissions:
   contents: read
+concurrency:
+  group: seas51-hindcast-retrieval-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   retrieve-audit:
     runs-on: ubuntu-latest
