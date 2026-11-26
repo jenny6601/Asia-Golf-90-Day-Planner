@@ -5,10 +5,10 @@ class ProxySkillReportTests(unittest.TestCase):
     def test_lead_bands(self):
         self.assertEqual(lead_band(17), "D17-D30")
         self.assertEqual(lead_band(30), "D17-D30")
-        self.assertEqual(lead_band(31), "D31-D46")
-        self.assertEqual(lead_band(46), "D31-D46")
-        self.assertEqual(lead_band(47), "D47-D60")
-        self.assertEqual(lead_band(60), "D47-D60")
+        self.assertEqual(lead_band(31), "D31-D45")
+        self.assertEqual(lead_band(45), "D31-D45")
+        self.assertEqual(lead_band(46), "D46-D60")
+        self.assertEqual(lead_band(60), "D46-D60")
         self.assertEqual(lead_band(61), "D61-D90")
         self.assertEqual(lead_band(90), "D61-D90")
 
