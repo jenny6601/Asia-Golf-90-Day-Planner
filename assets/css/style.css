@@ -1068,3 +1068,51 @@ button.monthly-calendar-day:active{transform:scale(.98);box-shadow:0 0 0 2px rgb
  .monthly-playability-note-row{grid-template-columns:83px minmax(0,1fr);gap:6px}
  .monthly-playability-note-row strong,.monthly-playability-note-row span{font-size:.72rem}
 }
+
+/* Monthly playability: use more of the available mobile width and improve legibility */
+.monthly-analysis-narrative:has(.monthly-playability-card){padding:0;border:0;background:transparent}
+.monthly-playability-card{width:100%;padding:17px;gap:14px}
+.monthly-playability-kicker{font-size:.92rem}
+.monthly-playability-season-label{font-size:1.48rem}
+.monthly-playability-season p{font-size:1rem}
+.monthly-playability-count strong{font-size:.96rem}
+.monthly-playability-count b{font-size:1.4rem}
+.monthly-playability-count small{font-size:.74rem}
+.monthly-playability-priority strong,.monthly-playability-week strong{font-size:.96rem}
+.monthly-playability-priority span,.monthly-playability-week span{font-size:1.14rem}
+.monthly-playability-note-row strong{font-size:.9rem}
+.monthly-playability-note-row span{font-size:.88rem}
+@media(max-width:700px){
+ .monthly-analysis-narrative:has(.monthly-playability-card){margin-left:-10px;margin-right:-10px}
+ .monthly-playability-card{padding:14px;gap:12px}
+ .monthly-playability-season{grid-template-columns:minmax(112px,.82fr) minmax(0,1.25fr);padding:12px;gap:9px}
+ .monthly-playability-kicker{font-size:.84rem}
+ .monthly-playability-season-label{font-size:1.32rem}
+ .monthly-playability-season p{font-size:.9rem;line-height:1.55}
+ .monthly-playability-counts{gap:7px}
+ .monthly-playability-count{padding:10px 7px}
+ .monthly-playability-count strong{font-size:.9rem}
+ .monthly-playability-count b{font-size:1.3rem}
+ .monthly-playability-count small{font-size:.7rem;line-height:1.4}
+ .monthly-playability-priority,.monthly-playability-week{grid-template-columns:105px minmax(0,1fr);padding:10px 12px}
+ .monthly-playability-priority strong,.monthly-playability-week strong{font-size:.9rem}
+ .monthly-playability-priority span,.monthly-playability-week span{font-size:1.06rem}
+ .monthly-playability-note-row{grid-template-columns:94px minmax(0,1fr);gap:8px;padding:9px 0}
+ .monthly-playability-note-row strong{font-size:.84rem}
+ .monthly-playability-note-row span{font-size:.84rem;line-height:1.6}
+}
+@media(max-width:420px){
+ .monthly-analysis-narrative:has(.monthly-playability-card){margin-left:-6px;margin-right:-6px}
+ .monthly-playability-card{padding:11px}
+ .monthly-playability-season{grid-template-columns:96px minmax(0,1fr);gap:7px;padding:10px}
+ .monthly-playability-season-label{font-size:1.2rem}
+ .monthly-playability-season p{font-size:.82rem}
+ .monthly-playability-counts{gap:5px}
+ .monthly-playability-count strong{font-size:.82rem}
+ .monthly-playability-count b{font-size:1.18rem}
+ .monthly-playability-count small{font-size:.65rem}
+ .monthly-playability-priority,.monthly-playability-week{grid-template-columns:90px minmax(0,1fr);gap:6px;padding:9px}
+ .monthly-playability-priority span,.monthly-playability-week span{font-size:.96rem}
+ .monthly-playability-note-row{grid-template-columns:82px minmax(0,1fr);gap:6px}
+ .monthly-playability-note-row strong,.monthly-playability-note-row span{font-size:.78rem}
+}
