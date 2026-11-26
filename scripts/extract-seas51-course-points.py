@@ -7,7 +7,7 @@ an accumulation and does not establish forecast skill.
 import csv, json, math
 from datetime import datetime, timezone
 from pathlib import Path
-from eccodes import codes_get, codes_grib_get_data, codes_grib_new_from_file, codes_release
+from eccodes import codes_get, codes_grib_find_nearest, codes_grib_new_from_file, codes_release
 
 GRIB=Path("artifacts/seas51-2016-01-01-lead408-426-okinawa.grib")
 COURSES=Path("config/global/courses.json")
@@ -26,16 +26,15 @@ def haversine(lat1,lon1,lat2,lon2):
     return 6371.0088*2*math.asin(math.sqrt(a))
 
 def nearest_grid(g,lat,lon):
-    data=codes_grib_get_data(g)
-    # ecCodes Python bindings may append a status field after the three arrays.
-    if not isinstance(data,(tuple,list)) or len(data)<3:
-        raise RuntimeError("Unexpected codes_grib_get_data result: " + type(data).__name__)
-    lats,lons,values=data[:3]
-    best=None
-    for glat,glon,value in zip(lats,lons,values):
-        d=haversine(lat,lon,float(glat),float(glon))
-        if best is None or d<best[0]: best=(d,float(glat),float(glon),float(value))
-    return best
+    # ecCodes native nearest-point API returns (lat, lon, value, distance_km, index).
+    nearest=codes_grib_find_nearest(g,lat,lon,is_lsm=False,npoints=1)
+    if not nearest:
+        raise RuntimeError("ecCodes returned no nearest grid point")
+    point=nearest[0] if isinstance(nearest[0],(tuple,list)) else nearest
+    if len(point)<5:
+        raise RuntimeError("Unexpected nearest-point result shape")
+    grid_lat,grid_lon,value,distance_km,_index=point[:5]
+    return float(distance_km),float(grid_lat),float(grid_lon),float(value)
 
 def main():
     if not GRIB.exists(): raise SystemExit(f"Missing GRIB: {GRIB}")
