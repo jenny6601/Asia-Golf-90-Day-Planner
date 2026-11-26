@@ -807,6 +807,11 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   return "依歷史同期資料判定，本月型態為"+seasonLabel+"。"+historyText;
  })();
  const summary=node("div",undefined,"monthly-playability-card");
+ const reportHeader=node("header",undefined,"monthly-playability-header");
+ const headerTitle=node("strong",month.slice(0,4)+"年"+monthIndex+"月適打評估");
+ const headerRegion=node("span",[group.country,group.region].filter(Boolean).join("・"));
+ reportHeader.append(headerTitle,headerRegion);
+ summary.append(reportHeader);
  const seasonBanner=node("div",undefined,"monthly-playability-season");
  seasonBanner.append(node("div","🌦️ 本月型態","monthly-playability-kicker"),node("strong",seasonLabel,"monthly-playability-season-label"),node("p",seasonDescription));
  summary.append(seasonBanner);
