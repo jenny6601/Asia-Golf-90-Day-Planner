@@ -30,6 +30,34 @@ function dailyWx(code){
 
 const COLD_JACKET_ICON_DATA = 'data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%2331bdff%22%2F%3E%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%230879df%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23063c91%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%22n%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23193d78%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23071b40%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%0A%3Cpath%20d%3D%22M22%2012Q22%203%2032%203t10%209l-3%208H25Z%22%20fill%3D%22url(%23b)%22%20stroke%3D%22%23063d82%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M26%2014q6-8%2012%200l-3%206h-6Z%22%20fill%3D%22url(%23n)%22%2F%3E%0A%3Cpath%20d%3D%22M22%2017%2015%2021%205%2047q-2%205%203%207l5%202q4%201%205-3l5-12v15q0%205%205%205h8q5%200%205-5V41l5%2012q1%204%205%203l5-2q5-2%203-7L49%2021l-7-4-10%205Z%22%20fill%3D%22url(%23b)%22%20stroke%3D%22%23063b80%22%20stroke-width%3D%222%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22m22%2017%2010%206%2010-6%205%204-7%208-8-3-8%203-7-8Z%22%20fill%3D%22url(%23n)%22%2F%3E%0A%3Cpath%20d%3D%22M27%2017q0-4%205-4t5%204v9H27Z%22%20fill%3D%22%230b2d62%22%20stroke%3D%22%230756aa%22%20stroke-width%3D%221.5%22%2F%3E%0A%3Cpath%20d%3D%22M32%2023v35%22%20stroke%3D%22%23eaf6ff%22%20stroke-width%3D%222.5%22%20stroke-dasharray%3D%222%202%22%2F%3E%3Crect%20x%3D%2230%22%20y%3D%2229%22%20width%3D%224%22%20height%3D%227%22%20rx%3D%221.5%22%20fill%3D%22%23ff9c12%22%2F%3E%0A%3Cpath%20d%3D%22m15%2032-5%2014%204%202%207-14M49%2032l5%2014-4%202-7-14%22%20fill%3D%22none%22%20stroke%3D%22%23082c62%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22m17%2034-3%209m33-9%203%209%22%20stroke%3D%22%23ff9a12%22%20stroke-width%3D%222.3%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22m37%2030%204-5%203%204%203-3%204%205Z%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.5%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M23%2055q9%203%2018%200v5q-9%203-18%200Z%22%20fill%3D%22%230753a4%22%20stroke%3D%22%23063b80%22%20stroke-width%3D%221.5%22%2F%3E%0A%3Cpath%20d%3D%22M7%2051l7%202-2%205-5-2q-2-1%200-5m43%202%207-2q2%204%200%205l-5%202Z%22%20fill%3D%22%23082b60%22%2F%3E%0A%3C%2Fsvg%3E';
 
+// Exact hourly weather-code helpers copied from Taiwan Golf Weather PWA.
+function wxIcon(code){
+ const n=Number(code);
+ if(!Number.isFinite(n))return '<span aria-label="無資料">—</span>';
+ let kind="cloud";
+ if(n===0)kind="sun";
+ else if(n<=2)kind="partly";
+ else if(n===3)kind="cloud";
+ else if(n===45||n===48)kind="fog";
+ else if([51,53,55,56,57].includes(n))kind="drizzle";
+ else if([61,63,65,66,67,80,81,82].includes(n))kind="rain";
+ else if([95,96,99].includes(n))kind="storm";
+ else if([71,73,75,77,85,86].includes(n))kind="cloud";
+ return dailyWeatherIcon(kind);
+}
+function wx(code){
+ const n=Number(code);
+ if(!Number.isFinite(n))return "無資料";
+ if([95,96,99].includes(n))return "雷雨";
+ if([80,81,82].includes(n))return "陣雨";
+ if([61,63,65,66,67].includes(n))return "降雨";
+ if([51,53,55,56,57].includes(n))return "毛毛雨／小雨";
+ if([45,48].includes(n))return "有霧";
+ if(n===0)return "晴朗";
+ if(n<=2)return "晴時多雲";
+ return "陰／多雲";
+}
+
 function score(rain,wind,gust,feel){let v=100-(rain||0)*0.55-Math.max(0,(wind||0)-12)*1.2-Math.max(0,(gust||0)-22)*0.8-Math.max(0,Math.abs((feel??24)-24)-7)*2;return Math.max(0,Math.min(100,Math.round(v)));}
 function cls(v){return v>=75?"good":v>=50?"mid":"bad";}
 function dir(v){if(v===null||v===undefined)return "—";return ["北","東北","東","東南","南","西南","西","西北"][Math.round(v/45)%8];}
