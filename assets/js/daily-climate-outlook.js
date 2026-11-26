@@ -97,13 +97,40 @@ function seasonalRainMultiplier(weekly, monthly) {
   if (!(baseline > 0)) return { value: 1, available: false };
   return { value: clamp(forecast / baseline, 0.45, 1.9), available: true };
 }
-function weatherType(rainChance, rainMm, cloudAnomaly) {
-  if (!finite(rainChance)) return { label: "歷史氣候參考", code: null };
-  if (rainChance >= 70 || (rainChance >= 55 && finite(rainMm) && rainMm >= 4)) return { label: "偏濕／降雨風險較高", code: 61 };
-  if (rainChance >= 45) return { label: "多雲，留意降雨", code: 3 };
-  if (rainChance >= 28) return { label: "晴時多雲／偶有雨", code: 2 };
-  if (finite(cloudAnomaly) && cloudAnomaly >= 10) return { label: "多雲偏乾", code: 3 };
-  return { label: "相對乾燥／晴時多雲", code: 1 };
+function weatherType(rainFrequency, dailyRainMm, wetDayRainMm, rainP90, cloudAnomaly) {
+  if (!finite(rainFrequency) || !finite(dailyRainMm)) {
+    return { label: "歷史氣候參考", code: null, frequencyBand: "unknown", amountBand: "unknown", consistency: "資料不足" };
+  }
+  const frequencyBand = rainFrequency >= 55 ? "high" : rainFrequency >= 28 ? "medium" : "low";
+  const amountBand = dailyRainMm >= 3 ? "high" : dailyRainMm >= 1 ? "medium" : "low";
+  const consistency = frequencyBand === "high" && amountBand === "low"
+    ? "雨日偏多，但平均日雨量偏少"
+    : frequencyBand === "low" && amountBand === "high"
+    ? "雨日較少，但平均日雨量偏高"
+    : frequencyBand === "high" && amountBand === "high"
+    ? "雨日與雨量均偏高"
+    : frequencyBand === "low" && amountBand === "low"
+    ? "雨日與雨量均偏低"
+    : "雨日頻率與雨量大致相稱";
+  if (rainFrequency >= 55 && dailyRainMm < 1) {
+    return { label: "多雲，雨日偏多但雨量較少", code: 3, frequencyBand, amountBand, consistency };
+  }
+  if (rainFrequency >= 55 && dailyRainMm >= 3) {
+    return { label: "多雲，降雨風險偏高", code: 61, frequencyBand, amountBand, consistency };
+  }
+  if (rainFrequency >= 45 && dailyRainMm >= 1) {
+    return { label: "多雲，較常有雨", code: dailyRainMm >= 2 ? 61 : 3, frequencyBand, amountBand, consistency };
+  }
+  if (rainFrequency < 30 && finite(rainP90) && rainP90 >= 10) {
+    return { label: "整體偏乾，仍須留意偶發較大雨量", code: 2, frequencyBand, amountBand, consistency };
+  }
+  if (rainFrequency >= 28) {
+    return { label: "晴時多雲，偶有雨", code: 2, frequencyBand, amountBand, consistency };
+  }
+  if (finite(cloudAnomaly) && cloudAnomaly >= 10) {
+    return { label: "多雲偏乾", code: 3, frequencyBand, amountBand, consistency };
+  }
+  return { label: "相對乾燥／晴時多雲", code: 1, frequencyBand, amountBand, consistency };
 }
 function confidence(sampleYears, seasonalEvidence, hasTemperature, hasRain) {
   const coverage = clamp(sampleYears / 10, 0, 1);
@@ -142,8 +169,12 @@ export function buildDailyClimateOutlook(seasonalPayload, historicalDays = [], t
     const rainChance = rainSignal?.value ?? null;
     const rainMean = finite(h.rainMean) ? h.rainMean : null;
     const rainEstimate = finite(rainMean) ? Math.max(0, rainMean * multiplier.value) : null;
+    const wetDayRainEstimate = finite(rainEstimate) && finite(rainChance) && rainChance > 0
+      ? rainEstimate / (rainChance / 100) : null;
+    const historicalRainP90 = finite(h.rainP90) ? h.rainP90 : null;
+    const adjustedRainP90 = finite(historicalRainP90) ? historicalRainP90 * multiplier.value : null;
     const windMean = finite(w?.windMean) ? w.windMean : finite(m?.windMean) ? m.windMean : null;
-    const weather = weatherType(rainChance, rainEstimate, m?.cloudAnomaly);
+    const weather = weatherType(rainChance, rainEstimate, wetDayRainEstimate, adjustedRainP90, m?.cloudAnomaly);
     const seasonalEvidence = (w ? Object.values(w).filter(finite).length : 0) + (m ? Object.values(m).filter(finite).length : 0);
     const quality = confidence(Math.min(rainSamples, tempSamples), rainSignal?.evidence || 0, finite(high) && finite(low), finite(rainChance) && finite(rainEstimate));
     const hasHistory = samples > 0 || rainSamples > 0 || tempSamples > 0;
@@ -173,6 +204,11 @@ export function buildDailyClimateOutlook(seasonalPayload, historicalDays = [], t
       rainEstimate: finite(rainEstimate) ? Math.round(rainEstimate * 10) / 10 : null,
       rainChanceEstimate: rainChance,
       rainChanceLabel: "歷史雨日頻率經季節訊號調整（非逐日降雨機率）",
+      rainAmountBand: weather.amountBand,
+      rainFrequencyBand: weather.frequencyBand,
+      wetDayRainEstimate: finite(wetDayRainEstimate) ? Math.round(wetDayRainEstimate * 10) / 10 : null,
+      rainP90Estimate: finite(adjustedRainP90) ? Math.round(adjustedRainP90 * 10) / 10 : null,
+      rainConsistency: weather.consistency,
       windMeanEstimate: windMean,
       weather: weather.label, code: weather.code,
       historical: {
