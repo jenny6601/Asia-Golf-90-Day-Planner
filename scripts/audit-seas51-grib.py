@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit GRIB provenance, leads, ensemble identifiers and accumulation semantics."""
+"""Audit GRIB provenance, actual lead step, ensemble members and accumulation semantics."""
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -9,6 +9,13 @@ keys=["dataDate","dataTime","validityDate","validityTime","shortName","name","pa
 def get(g,k):
     try:return codes_get(g,k)
     except Exception:return None
+def lead_key(row):
+    # For this dataset forecastTime is not populated; use endStep then stepRange.
+    value=row.get("endStep")
+    if value is None: value=row.get("stepRange")
+    if isinstance(value,str) and "-" in value: value=value.split("-")[-1]
+    try:return int(value)
+    except (TypeError,ValueError):return str(value)
 def main():
     if not source.exists(): raise SystemExit("GRIB file missing")
     rows=[]
@@ -18,24 +25,36 @@ def main():
             finally: codes_release(g)
     if not rows: raise SystemExit("No GRIB messages decoded")
     groups=defaultdict(list)
-    for r in rows: groups[(r["shortName"],r["forecastTime"])].append(r)
+    for r in rows: groups[(r["shortName"],lead_key(r))].append(r)
     summary=[]
     for (name,lead),items in sorted(groups.items(),key=lambda x:(str(x[0][0]),str(x[0][1]))):
-        summary.append({"shortName":name,"forecastTime":lead,"messages":len(items),
-            "ensembleNumbers":sorted({x["number"] for x in items if x["number"] is not None}),
-            "perturbationNumbers":sorted({x["perturbationNumber"] for x in items if x["perturbationNumber"] is not None}),
+        members=sorted({x["number"] for x in items if x["number"] is not None})
+        summary.append({"shortName":name,"leadHour":lead,"messages":len(items),
+            "ensembleNumbers":members,"ensembleMemberCount":len(members),
             "stepTypes":sorted({str(x["stepType"]) for x in items}),
             "stepRanges":sorted({str(x["stepRange"]) for x in items}),
             "startSteps":sorted({str(x["startStep"]) for x in items}),
             "endSteps":sorted({str(x["endStep"]) for x in items}),
             "units":sorted({str(x["units"]) for x in items})})
-    result={"messageCount":len(rows),"groups":summary,
-        "leadsHours":sorted({r["forecastTime"] for r in rows if r["forecastTime"] is not None}),
-        "guardrail":"Message count is not ensemble size. Six-hour lead spacing is not proof of six-hour precipitation accumulation; inspect stepType/stepRange/startStep/endStep."}
+    expected=[408,414,420,426]
+    variables=sorted({r["shortName"] for r in rows})
+    coverage={v:{str(lead):next((g["ensembleMemberCount"] for g in summary if g["shortName"]==v and g["leadHour"]==lead),0) for lead in expected} for v in variables}
+    result={"messageCount":len(rows),"variables":variables,"groups":summary,
+        "leadHours":sorted({lead_key(r) for r in rows},key=str),
+        "ensembleCoverageByVariableAndLead":coverage,
+        "qualityFindings":[
+            "forecastTime key is absent in this file; lead hours are recovered from endStep/stepRange.",
+            "Total precipitation is present only at lead 408 in this pilot; leads 414, 420 and 426 are missing.",
+            "Precipitation stepType is instant and stepRange is 408; do not interpret this as a six-hour accumulation.",
+            "This single initialization and sparse lead coverage cannot support D17-D90 skill scoring or calibration."
+        ]}
     Path("artifacts/seas51-grib-audit.json").write_text(json.dumps(result,indent=2,default=str)+"\n")
-    lines=["# SEAS5.1 GRIB audit","",f"Messages decoded: {len(rows)}","", "| Variable | Lead hour | Messages | Ensemble IDs | Step type | Step range | Units |","|---|---:|---:|---|---|---|---|"]
-    for x in summary: lines.append(f"| {x['shortName']} | {x['forecastTime']} | {x['messages']} | {x['ensembleNumbers']} | {x['stepTypes']} | {x['stepRanges']} | {x['units']} |")
-    lines += ["","## Interpretation limit","",result["guardrail"],""]
+    lines=["# SEAS5.1 GRIB audit","",f"Messages decoded: {len(rows)}","",
+        "| Variable | Lead hour | Messages | Ensemble members | Step type | Step range | Units |",
+        "|---|---:|---:|---:|---|---|---|"]
+    for x in summary: lines.append(f"| {x['shortName']} | {x['leadHour']} | {x['messages']} | {x['ensembleMemberCount']} | {x['stepTypes']} | {x['stepRanges']} | {x['units']} |")
+    lines += ["","## Variable/lead coverage","", "```json",json.dumps(coverage,indent=2),"```","",
+        "## Quality findings",""]+["- "+x for x in result["qualityFindings"]]+[""]
     Path("artifacts/seas51-grib-audit.md").write_text("\n".join(lines))
     print(json.dumps(result,indent=2,default=str))
 if __name__=="__main__": main()
