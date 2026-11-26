@@ -150,12 +150,42 @@ async function renderCourseSevenDayReport(host,course,startDate){
   const values=pageRows.flatMap(r=>[r.high,r.low,r.feel].filter(Number.isFinite));
   if(values.length){const lo=Math.min(...values)-2,hi=Math.max(...values)+2,x=i=>70+i*560/Math.max(1,pageRows.length-1),y=v=>155-(v-lo)/(hi-lo||1)*115;
    [25,85,145].forEach(yy=>{const l=document.createElementNS(svg.namespaceURI,"line");l.setAttribute("x1",35);l.setAttribute("x2",680);l.setAttribute("y1",yy);l.setAttribute("y2",yy);l.setAttribute("stroke","#dce5e9");svg.append(l)});
-   [{key:"high",color:"#ef6b54"},{key:"low",color:"#3198dc"},{key:"feel",color:"#d49b22"}].filter(s=>pageRows.some(r=>Number.isFinite(r[s.key]))).forEach(s=>{const pts=pageRows.map((r,i)=>Number.isFinite(r[s.key])?[x(i),y(r[s.key])]:null).filter(Boolean);if(pts.length>1){const p=document.createElementNS(svg.namespaceURI,"polyline");p.setAttribute("points",pts.map(p=>p.join(",")).join(" "));p.setAttribute("fill","none");p.setAttribute("stroke",s.color);p.setAttribute("stroke-width","4");p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");svg.append(p)}pts.forEach((p,i)=>{const dot=document.createElementNS(svg.namespaceURI,"circle");dot.setAttribute("cx",p[0]);dot.setAttribute("cy",p[1]);dot.setAttribute("r","4");dot.setAttribute("fill",s.color);svg.append(dot);const tx=document.createElementNS(svg.namespaceURI,"text");tx.setAttribute("x",p[0]);tx.setAttribute("y",p[1]+(s.key==="high"?-10:s.key==="low"?17:2));tx.setAttribute("text-anchor","middle");tx.setAttribute("font-size","15");tx.setAttribute("font-weight","800");tx.setAttribute("fill",s.color);tx.textContent=pageRows[i][s.key].toFixed(0)+"°";svg.append(tx)})});
+   [{key:"high",color:"#ef6b54"},{key:"low",color:"#3198dc"},{key:"feel",color:"#d49b22"}].filter(s=>pageRows.some(r=>Number.isFinite(r[s.key]))).forEach(s=>{const pts=pageRows.map((r,i)=>Number.isFinite(r[s.key])?{x:x(i),y:y(r[s.key]),index:i}:null).filter(Boolean);if(pts.length>1){const p=document.createElementNS(svg.namespaceURI,"polyline");p.setAttribute("points",pts.map(p=>p.x+","+p.y).join(" "));p.setAttribute("fill","none");p.setAttribute("stroke",s.color);p.setAttribute("stroke-width","4");p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");svg.append(p)}pts.forEach(p=>{const dot=document.createElementNS(svg.namespaceURI,"circle");dot.setAttribute("cx",p.x);dot.setAttribute("cy",p.y);dot.setAttribute("r","4.5");dot.setAttribute("fill",s.color);svg.append(dot);const tx=document.createElementNS(svg.namespaceURI,"text");const last=p.index===pageRows.length-1;tx.setAttribute("x",p.x+(last?-12:0));tx.setAttribute("y",p.y+(s.key==="high"?-12:s.key==="low"?19:s.key==="feel"?4:-4));tx.setAttribute("text-anchor",last?"end":"middle");tx.setAttribute("font-size","19");tx.setAttribute("font-weight","900");tx.setAttribute("fill",s.color);tx.textContent=pageRows[p.index][s.key].toFixed(0)+"°";svg.append(tx)})});
   }
   chartWrap.append(svg);const legend=node("div",undefined,"departure-five-legend");legend.append(node("span","● 最高溫","legend-high"),node("span","● 最低溫","legend-low"),node("span","● 體感溫度","legend-feel"));chartWrap.append(legend);page.append(chartWrap);
   const cards=node("div",undefined,"departure-five-cards");
   pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),day=node("button",undefined,"departure-five-card"+(r.date===startDate?" is-departure":""));day.type="button";day.append(createWeatherIcon(r.code,!r.actual,r.prob),node("strong",r.label));day.append(node("small",r.actual?"降雨機率":"歷史降雨頻率"),node("b",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"),node("small",r.actual?"累積雨量":"歷史日均雨量"),node("b",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));if([0,6].includes(wd))day.classList.add("weekend");day.addEventListener("click",()=>renderDepartureDayPage(host,course,r));cards.append(day)});
   page.append(cards);
+  if(pageIndex===0){
+   const assessment=node("section",undefined,"departure-week-analysis");
+   assessment.append(node("h4","七天天氣總覽與適打分析"));
+   const actualDays=rows.filter(r=>r.actual),rainy=actualDays.filter(r=>(Number.isFinite(r.prob)&&r.prob>=40)||(Number.isFinite(r.rain)&&r.rain>=1)).length;
+   const temps=actualDays.map(r=>r.high).filter(Number.isFinite),rainMax=actualDays.map(r=>r.prob).filter(Number.isFinite);
+   const overview=actualDays.length
+    ? `本週可用逐日預報 ${actualDays.length} 天；${rainy} 天有較明顯降雨訊號。最高溫約 ${temps.length?Math.min(...temps).toFixed(0)+"–"+Math.max(...temps).toFixed(0)+"°C":"資料不足"}，降雨機率最高約 ${rainMax.length?Math.max(...rainMax).toFixed(0)+"%":"資料不足"}。安排球敘時，建議優先避開降雨機率及雨量較高的日期，並於出發前再次確認更新預報。`
+    : "本週資料以歷史同期統計為主，以下只能反映季節氣候傾向，不能視為實際七天天氣預報。";
+   assessment.append(node("p",overview));
+   const suitability=node("div",undefined,"departure-suitability-list");
+   rows.slice(1,4).forEach((r,idx)=>{
+    const historicalDay=!r.actual;
+    let status,reason;
+    if(historicalDay){
+     const freq=r.prob,rain=r.rain;
+     status=Number.isFinite(freq)&&freq>=60||Number.isFinite(rain)&&rain>=5?"歷史上較不利":Number.isFinite(freq)&&freq>=30||Number.isFinite(rain)&&rain>=2?"歷史上需留意降雨":"歷史上相對較有利";
+     reason=`歷史降雨頻率 ${Number.isFinite(freq)?freq.toFixed(0)+"%":"資料不足"}，日均雨量 ${Number.isFinite(rain)?rain.toFixed(1)+" mm":"資料不足"}；此為氣候統計，不能判定當日實際適打情況。`;
+    }else{
+     const wet=Number.isFinite(r.prob)&&r.prob>=50||Number.isFinite(r.rain)&&r.rain>=3||Number.isFinite(r.code)&&r.code>=95;
+     const caution=Number.isFinite(r.prob)&&r.prob>=30||Number.isFinite(r.rain)&&r.rain>=1||Number.isFinite(r.code)&&((r.code>=51&&r.code<=82));
+     status=wet?"較不適合":caution?"可打但需留意":"較適合打球";
+     reason=`天氣：${r.label}；降雨機率 ${Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"資料不足"}，預報雨量 ${Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"資料不足"}，最高溫 ${Number.isFinite(r.high)?r.high.toFixed(0)+"°C":"資料不足"}。`;
+    }
+    const item=node("article",undefined,"departure-suitability-item");
+    item.append(node("strong",`第 ${idx+2} 天｜${r.date}｜${status}`),node("p",reason));suitability.append(item);
+   });
+   assessment.append(suitability);
+   assessment.append(node("small","適打判斷依目前可取得的降雨機率、雨量、天氣現象及氣溫作初步評估；未納入球場即時積水、雷擊警報及當地風況，請於開球前再確認。","data-note"));
+   page.append(assessment);
+  }
   pages.append(page);
  };
  let touchStartX=0,touchStartY=0;
