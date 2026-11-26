@@ -1,14 +1,18 @@
-# SEAS5.1 course spatial qualification gate
+# SEAS5.1 spatial representativeness for long-range guidance
 
 ## Purpose
 
-Before CDS hindcast records are paired with ERA5 or used in any course-level metric, this gate evaluates the representativeness of their nearest-grid locations and the status of course coordinates.
+SEAS5.1 D17-D90 products are used for regional climate signals and date-planning guidance, not deterministic daily weather at an individual fairway. A course coordinate that is reasonably nearby is generally sufficient to associate the course with its broad regional weather regime. Coordinates do not need survey-grade or green-level precision.
 
-## Acceptance rules
+## Policy
 
-A batch passes only when every record has a nearest-grid distance at or below 35 km, every course coordinate is marked verified, and the extraction manifest reports no out-of-area or missing-coordinate course.
-
-Records outside 35 km are retained for traceability but fail the spatial qualification gate. Provisional coordinates also fail. Courses outside the GRIB grid and courses omitted for missing coordinates are explicitly reported.
+- The 35 km distance is an advisory diagnostic, not a hard acceptance threshold.
+- Nearby grid cells and approximate course coordinates may be used as regional proxies; distance and coordinate provenance remain visible in the report.
+- Provisional coordinates are allowed for regional guidance but remain labeled provisional.
+- Out-of-area and missing-coordinate courses are still coverage gaps; the system must not fabricate records for them.
+- This regional proxy status does not establish course-level observation accuracy, forecast skill, or justify bias correction.
+- Keep forecast, hindcast, reanalysis and climatology semantics distinct.
+- Do not change the approved CDS request area or retrieval scope as part of this policy.
 
 ## Run
 
@@ -19,4 +23,4 @@ python -m unittest discover -s tests -p "test_assess_seas51_spatial_qualificatio
 
 ## Interpretation
 
-Passing this gate only means spatial inputs are sufficiently qualified for the next verification stage. It does not establish forecast skill. A nearest grid point is not a course-wide spatial average. The tool does not change the approved CDS request area or any retrieval parameters.
+A `regional-proxy-usable` status means there are records for the requested course set and no coordinate/distance advisory flags. `regional-proxy-usable-with-advisory-review` means records remain usable for regional D17-D90 context, while approximate coordinates or larger grid distances are disclosed. `regional-proxy-usable-with-coverage-gaps` means some requested courses could not be represented and must be shown as missing coverage. None of these statuses is a forecast-skill score.
