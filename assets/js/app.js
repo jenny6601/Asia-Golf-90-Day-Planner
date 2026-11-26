@@ -154,13 +154,17 @@ async function renderCourseSevenDayReport(host,course,startDate){
   }
   chartWrap.append(svg);const legend=node("div",undefined,"departure-five-legend");legend.append(node("span","● 最高溫","legend-high"),node("span","● 最低溫","legend-low"),node("span","● 體感溫度","legend-feel"));chartWrap.append(legend);page.append(chartWrap);
   const cards=node("div",undefined,"departure-five-cards");
-  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),day=node("button",undefined,"departure-five-card"+(r.date===startDate?" is-departure":""));day.type="button";day.append(createWeatherIcon(r.code,!r.actual,r.prob),node("strong",r.label));day.append(node("span",Number.isFinite(r.high)&&Number.isFinite(r.low)?r.high.toFixed(1)+"° / "+r.low.toFixed(1)+"°C":"溫度資料不足"));day.append(node("small",r.actual?"降雨機率":"歷史降雨頻率"),node("b",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"),node("small",r.actual?"累積雨量":"歷史日均雨量"),node("b",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));if([0,6].includes(wd))day.classList.add("weekend");day.addEventListener("click",()=>renderDepartureDayPage(host,course,r));cards.append(day)});
+  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),day=node("button",undefined,"departure-five-card"+(r.date===startDate?" is-departure":""));day.type="button";day.append(createWeatherIcon(r.code,!r.actual,r.prob),node("strong",r.label));day.append(node("small",r.actual?"降雨機率":"歷史降雨頻率"),node("b",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"),node("small",r.actual?"累積雨量":"歷史日均雨量"),node("b",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));if([0,6].includes(wd))day.classList.add("weekend");day.addEventListener("click",()=>renderDepartureDayPage(host,course,r));cards.append(day)});
   page.append(cards);
-  const nav=node("div",undefined,"departure-page-nav");const prev=node("button","上一頁");prev.disabled=pageIndex===0;prev.addEventListener("click",()=>{pageIndex--;renderPage()});const label=node("span",(pageIndex+1)+" / "+Math.ceil(rows.length/5));const next=node("button","下一頁");next.disabled=(pageIndex+1)*5>=rows.length;next.addEventListener("click",()=>{pageIndex++;renderPage()});nav.append(prev,label,next);page.append(nav);pages.append(page);
+  pages.append(page);
  };
- renderPage();
+ let touchStartX=0,touchStartY=0;
+ pages.addEventListener("touchstart",e=>{const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY},{passive:true});
+ pages.addEventListener("touchend",e=>{const t=e.changedTouches[0],dx=t.clientX-touchStartX,dy=t.clientY-touchStartY;if(Math.abs(dx)<45||Math.abs(dx)<Math.abs(dy)*1.25)return;const maxPage=Math.ceil(rows.length/5)-1;if(dx<0&&pageIndex<maxPage){pageIndex++;renderPage()}else if(dx>0&&pageIndex>0){pageIndex--;renderPage()}},{passive:true});
+ pages.addEventListener("keydown",e=>{if(e.key==="ArrowLeft"&&pageIndex>0){pageIndex--;renderPage()}else if(e.key==="ArrowRight"&&pageIndex<Math.ceil(rows.length/5)-1){pageIndex++;renderPage()}});
+ pages.tabIndex=0;renderPage();
  report.append(pages);
- report.append(node("p","每頁最多顯示 5 天；點選任一天即可展開逐時預報或歷史資料。前 16 天使用逐日預報，超出範圍以歷史同期資料補充。","long-range-note"));
+ report.append(node("p","每頁最多顯示 5 天；左右滑動切換日期，點選任一天即可展開逐時預報或歷史資料。前 16 天使用逐日預報，超出範圍以歷史同期資料補充。","long-range-note"));
 }
 async function renderDepartureDayPage(host,course,row){
  host.replaceChildren();
