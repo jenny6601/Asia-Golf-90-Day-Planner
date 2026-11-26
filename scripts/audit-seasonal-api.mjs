@@ -68,7 +68,7 @@ async function probe(model) {
   const url = new URL("https://seasonal-api.open-meteo.com/v1/seasonal");
   url.search = new URLSearchParams({
     latitude: String(point.latitude), longitude: String(point.longitude),
-    timezone: point.timezone, forecast_days: "90", models,
+    timezone: point.timezone, forecast_days: "90", models: model,
     daily: dailyVars.join(","), hourly: hourlyVars.join(","), cell_selection: "land"
   }).toString();
   const checkedAt = new Date().toISOString();
