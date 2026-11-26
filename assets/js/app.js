@@ -271,7 +271,11 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
    for(const [label,value,unit] of [["綜合估計最高溫",s.highEstimate," °C"],["綜合估計最低溫",s.lowEstimate," °C"],["季節模式估計日雨量",s.rainEstimate," mm"],["季節模式平均風速",s.windMean," m/s"],["歷史同期降雨頻率",s.historical.rainFrequency,"%"],["資料完整度",s.dataCompleteness*100,"%"]]){
     const item=node("article",undefined,"result-card");item.append(node("p",label),node("strong",Number.isFinite(value)?value.toFixed(1)+unit:"資料不足"));stats.append(item);
    }
-   card.append(stats,node("p","適打趨勢："+s.playability+"｜信心："+s.confidence+"｜模式："+s.band+"。"+s.confidenceNote,"data-note"));
+   card.append(stats);
+   const provenance=node("div",undefined,"monthly-source-note");
+   provenance.append(node("p","資料來源："+(s.sourceLabel||"長期氣候估計")+"。歷史樣本："+(Number.isFinite(s.historicalSampleYears)?s.historicalSampleYears+" 年":"未取得")+"；季節訊號指標："+(Number.isFinite(s.seasonalEvidenceCount)?s.seasonalEvidenceCount:"0")+" 項。"));
+   provenance.append(node("p","欄位來源：氣溫 "+(s.fieldQuality?.temperature||"未標示")+"；雨日頻率 "+(s.fieldQuality?.rainfallFrequency||"未標示")+"；雨量 "+(s.fieldQuality?.rainfallAmount||"未標示")+"；風速 "+(s.fieldQuality?.wind||"未標示")+"。"));
+   card.append(provenance,node("p","適打趨勢："+s.playability+"｜資料信心："+s.confidence+"｜模式："+s.band+"。"+s.confidenceNote,"data-note"));
    return;
   }
   card.append(node("p","此日期超出短期預報範圍，以下提供歷史同期統計，不代表該日實際天氣，也不提供虛構逐時資料。","long-range-note"));
@@ -706,6 +710,8 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  ];
  for(const [label,value,unit] of statItems){const item=node("article",undefined,"monthly-analysis-stat");const shown=Number.isFinite(value)?value.toFixed(1)+unit:(label.includes("距平")?"無歷史距平可替代":"此資料來源未提供");item.append(node("small",label),node("strong",shown));stats.append(item)}
  title.append(stats);
+ const coverage=node("p","資料覆蓋：季節模式月資料 "+season.length+"/"+(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).length+" 個球場；ERA5 歷史月統計 "+hist.length+"/"+(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).length+" 個球場。季節模式缺值時以歷史統計作參考，不代表季節預報。","monthly-source-note");
+ title.append(coverage);
  const narrative=node("div",undefined,"monthly-analysis-narrative"),parts=[];
  if(Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)){const baseline=seasonRain-rainAnomaly,trend=baseline>0?(seasonRain/baseline>=1.2?"季節模式呈偏濕訊號":seasonRain/baseline<=.8?"季節模式呈偏乾訊號":"季節模式接近氣候基準"):"季節降雨趨勢資料不足";parts.push("降雨："+trend+"；模式月均降雨約 "+seasonRain.toFixed(1)+" mm，距平 "+(rainAnomaly>=0?"+":"")+rainAnomaly.toFixed(1)+" mm。")}
  else if(Number.isFinite(historicalRain))parts.push("降雨：本月季節模式月資料未回傳，改以 ERA5 最近十個完整年度歷史統計作參考；歷史月平均降雨量約 "+historicalRain.toFixed(1)+" mm，平均降雨日數 "+(Number.isFinite(rainDays)?rainDays.toFixed(1):"—")+" 日。");
@@ -795,11 +801,16 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   card.append(node("strong",String(Number(date.slice(8,10))),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):useSeasonal?seasonalEntries[0].weather:(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
   card.append(node("b",Number.isFinite(highValue)?highValue.toFixed(0)+"°":"—","monthly-day-high"),node("span",Number.isFinite(lowValue)?lowValue.toFixed(0)+"°":"—","monthly-day-low"));
   card.append(node("small",isForecast?"雨機率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):useSeasonal?"雨日頻率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):"歷史雨頻 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"),"monthly-day-rain"));
-  if(useSeasonal)card.append(node("small","雨量 "+(Number.isFinite(rainValue)?rainValue.toFixed(1)+" mm":"—"),"monthly-day-rain"));
+  if(useSeasonal){
+   card.append(node("small","雨量 "+(Number.isFinite(rainValue)?rainValue.toFixed(1)+" mm":"—"),"monthly-day-rain"));
+   const sampleYears=seasonalEntries.map(x=>x.historicalSampleYears).filter(Number.isFinite);
+   const meanYears=sampleYears.length?avg(sampleYears.map(x=>({v:x})),"v"):null;
+   card.append(node("small","信心 "+(confidenceLabel||"資料不足")+(Number.isFinite(meanYears)?"｜歷史"+meanYears.toFixed(0)+"年":""),"monthly-day-rain"));
+  }
   calendar.append(card);
  });
- const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（前16天）","monthly-legend-forecast"),node("span","● 長期氣候參考（第17天起）","monthly-legend-seasonal"));dailySection.append(legend);
- dailySection.append(node("p","說明：前16天為逐日天氣預報；第17天起為歷史氣候參考，較遠日期再結合季節趨勢調整。雨日頻率是歷史相似日期的參考比例，不代表當日降雨機率。","monthly-source-note"));
+ const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（前16天）","monthly-legend-forecast"),node("span","● 歷史＋季節訊號估計（第19–90天）","monthly-legend-seasonal"));dailySection.append(legend);
+ dailySection.append(node("p","資料分級：前16天為天氣服務提供的逐日預報；第17–18天若無季節估計則僅供歷史參考；第19–90天為歷史同期統計結合可取得季節訊號的趨勢估計。卡片中的信心等級反映歷史樣本與季節訊號覆蓋，不是預報命中率。雨日頻率不是當日降雨機率。","monthly-source-note"));
  dailySection.append(calendar);
  if(!sampleCourses.length)dailySection.append(node("p","此分區尚無具有效 GPS 座標的球場，無法產生逐日天氣簡表。","risk-summary"));
  host.scrollIntoView({behavior:"smooth",block:"start"});
