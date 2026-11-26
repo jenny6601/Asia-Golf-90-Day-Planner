@@ -1,12 +1,20 @@
-# SEAS5.1 GRIB native grid geometry audit
+# SEAS5.1 GRIB grid metadata — informational audit
 
 ## Purpose
-Capture the actual grid definition encoded in each GRIB message before interpreting course-to-grid distances. The report records grid type, dimensions, number of points, first/last coordinates, i/j increments and scanning flags. It counts distinct geometry signatures to detect inconsistent grids within one retrieved file.
 
-## Why this is required
-The current Okinawa pilot retained 1,300 records but all nearest-grid distances exceeded the 35 km review threshold. Before attributing this to course-coordinate error or requesting another dataset, inspect the native GRIB grid spacing and bounds. Course coordinate corrections cannot make a coarse grid become high resolution.
+The audit records native GRIB grid metadata for provenance and interpretation. It is a diagnostic record, not a project acceptance gate.
 
-## Run
-python scripts/audit-seas51-grib.py
+## Product interpretation
 
-The machine-readable output adds gridGeometry and gridGeometrySignatureCount. The audit is read-only and does not change the approved CDS request area, variables, initialization date or lead hours.
+D17-D90 golf-travel planning needs weather guidance representative of the area around a selected course. A nearby grid point is acceptable for this purpose. Do not pursue exact course coordinates, alter course catalog entries, or reject a useful regional signal solely because a grid point is more than 35 km away.
+
+## Retained metadata
+
+The audit may retain grid type, dimensions, number of points, first/last coordinates, increments and scanning flags. These fields help explain the source data but should not become a new workstream or block the five-stage plan.
+
+## Constraints
+
+- Do not change the approved CDS request area, variables, initialization date or lead hours as part of this informational audit.
+- Do not infer course-level precision from a regional grid.
+- Do not claim forecast skill from grid metadata.
+- Return project effort to historical data coverage, temporal pairing and evaluation for D17-D90.
