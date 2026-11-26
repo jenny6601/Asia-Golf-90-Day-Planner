@@ -1,0 +1,33 @@
+name: Seasonal Daily Data Availability Probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - asia-eight-country-shared-engine
+    paths:
+      - "scripts/probe-seasonal-daily.mjs"
+      - ".github/workflows/seasonal-daily-probe.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout development branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Probe daily and 6-hourly seasonal fields
+        run: node scripts/probe-seasonal-daily.mjs > seasonal-daily-probe.json
+      - name: Upload diagnostic report
+        uses: actions/upload-artifact@v4
+        with:
+          name: seasonal-daily-data-probe
+          path: seasonal-daily-probe.json
+          if-no-files-found: error
+          retention-days: 30
