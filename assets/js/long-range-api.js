@@ -132,9 +132,14 @@ export async function fetchCourseHistoricalWeekNormals(course, dates, fetchImpl=
   }
   const vals=key=>samples.map(x=>x[key]).filter(Number.isFinite);
   const avg=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:null;
+  const std=a=>{if(a.length<2)return null;const m=avg(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-1))};
+  const quantile=(a,q)=>{if(!a.length)return null;const sorted=[...a].sort((x,y)=>x-y),p=(sorted.length-1)*q,lo=Math.floor(p),hi=Math.ceil(p);return sorted[lo]+(sorted[hi]-sorted[lo])*(p-lo)};
   const rain=vals("rain"),high=vals("high"),low=vals("low");
-  return {date,sampleYears:samples.length,rainFrequency:rain.length?rain.filter(v=>v>=1).length/rain.length*100:null,
+  return {date,sampleYears:samples.length,rainSampleYears:rain.length,temperatureSampleYears:Math.min(high.length,low.length),
+   rainFrequency:rain.length?rain.filter(v=>v>=1).length/rain.length*100:null,
    rainMean:avg(rain),rainMin:rain.length?Math.min(...rain):null,rainMax:rain.length?Math.max(...rain):null,
-   highMean:avg(high),lowMean:avg(low),highMax:high.length?Math.max(...high):null,lowMin:low.length?Math.min(...low):null};
+   rainP10:quantile(rain,.1),rainP50:quantile(rain,.5),rainP90:quantile(rain,.9),
+   rainStd:std(rain),highMean:avg(high),lowMean:avg(low),highStd:std(high),lowStd:std(low),
+   highMax:high.length?Math.max(...high):null,lowMin:low.length?Math.min(...low):null};
  })};
 }
