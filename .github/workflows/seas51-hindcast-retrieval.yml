@@ -1,0 +1,41 @@
+name: SEAS5.1 historical hindcast retrieval and GRIB audit
+'on':
+  workflow_dispatch:
+  push:
+    branches: [feature/90day-accuracy-five-stage]
+    paths:
+      - "scripts/retrieve-seas51-hindcast-pilot.py"
+      - "scripts/audit-seas51-grib.py"
+      - ".github/workflows/seas51-hindcast-retrieval.yml"
+permissions:
+  contents: read
+jobs:
+  retrieve-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install CDS client and ecCodes
+        run: python -m pip install --upgrade "cdsapi>=0.7.7" eccodes
+      - name: Configure CDS credentials
+        env:
+          CDSAPI_KEY: ${{ secrets.CDS_API_KEY }}
+        run: |
+          test -n "$CDSAPI_KEY" || { echo "CDS_API_KEY repository secret is unavailable"; exit 1; }
+          umask 077
+          printf '%s\n' 'url: https://cds.climate.copernicus.eu/api' "key: $CDSAPI_KEY" > "$HOME/.cdsapirc"
+      - name: Retrieve historical pilot
+        run: python scripts/retrieve-seas51-hindcast-pilot.py
+      - name: Audit GRIB metadata
+        run: python scripts/audit-seas51-grib.py
+      - name: Upload raw GRIB and machine-readable audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seas51-hindcast-pilot-and-audit
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 30
