@@ -5,6 +5,7 @@ import {fetchCourseSeasonalForecast,fetchCourseHistoricalMonthlyClimate,fetchCou
 import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
+import {renderTaiwanPwaHourly} from "./taiwan-hourly-renderer.js";
 const $=id=>document.getElementById(id),S={};
 let climateBackAction=null,exitConfirmed=false,exitDialogOpen=false;
 function ensureHomeExitGuard(){
@@ -235,19 +236,21 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
  if(!forecast?.hourly?.time?.length){card.append(node("p","球場逐時預報資料尚未取得，請稍後重試。","risk-summary"));return}
  const hourly=forecast.hourly,indices=hourly.time.map((t,i)=>String(t).slice(0,10)===row.date&&Number(String(t).slice(11,13))>=6&&Number(String(t).slice(11,13))<=18?i:-1).filter(i=>i>=0);
  if(!indices.length){card.append(node("p","此日期未取得 06:00–18:00 逐時預報。","risk-summary"));return}
- card.append(node("p","資料範圍：06:00–18:00｜逐時預報資料。","data-note"));
- const records=indices.map(i=>({time:String(hourly.time[i]).slice(11,16),code:hourly.weather_code?.[i],prob:hourly.precipitation_probability?.[i],rain:hourly.precipitation?.[i]??hourly.rain?.[i],temp:hourly.temperature_2m?.[i],feel:hourly.apparent_temperature?.[i],wind:hourly.wind_speed_10m?.[i],humidity:hourly.relative_humidity_2m?.[i]}));
- const table=node("div",undefined,"departure-hourly-table");
- const header=node("div",undefined,"departure-hour-row is-head");
- ["時間","天氣","機率 %","雨量 mm","降雨判讀","氣溫 °C","體感 °C"].forEach(x=>header.append(node("span",x)));table.append(header);
- const label=c=>!Number.isFinite(c)?"—":c===0?"晴朗":c<=2?"晴時多雲":c===3?"陰／多雲":c<=48?"多雲":c<=57?"毛毛雨":c<=67?"降雨":c<=82?"陣雨":c>=95?"雷雨":"多雲";
- for(const r of records){const line=node("div",undefined,"departure-hour-row");const wx=node("span",undefined,"hour-weather-cell");wx.append(createWeatherIcon(r.code,false,r.prob),node("small",label(r.code)));const rainRisk=!Number.isFinite(r.prob)?"—":r.prob>=50?"較高降雨風險":r.prob>=20?"留意零星降雨":"低降雨風險";line.append(node("span",r.time),wx,node("span",Number.isFinite(r.prob)?r.prob+"%":"—"),node("span",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—"),node("span",rainRisk),node("span",Number.isFinite(r.temp)?r.temp.toFixed(1):"—"),node("span",Number.isFinite(r.feel)?r.feel.toFixed(1):"—"));table.append(line)}
- card.append(node("h4","逐時天氣明細｜06:00–18:00","departure-hourly-title"),table);
- const iconLine=node("div",undefined,"hourly-weather-icon-line");records.forEach(r=>iconLine.append(createWeatherIcon(r.code,false,r.prob)));card.append(iconLine);
- svgChart(card,"每小時降雨機率圖（%）",[{label:"降雨機率",values:records.map(r=>r.prob)}],"%");
- svgChart(card,"每小時預報雨量圖（mm）",[{label:"降雨量",values:records.map(r=>r.rain)}],"mm");
- svgChart(card,"逐小時氣溫與體感溫度（°C）",[{label:"氣溫",values:records.map(r=>r.temp)},{label:"體感溫度",values:records.map(r=>r.feel)}],"°C");
- const note=node("p","逐時資料來源：Open-Meteo 球場座標預報。圖表與表格以所選日期當地時間呈現。","data-note");card.append(note);
+ const records=indices.map(i=>({
+  time:String(hourly.time[i]).slice(11,16),
+  code:hourly.weather_code?.[i]??null,
+  rain:hourly.precipitation_probability?.[i]??null,
+  mm:hourly.precipitation?.[i]??hourly.rain?.[i]??null,
+  temp:hourly.temperature_2m?.[i]??null,
+  feel:hourly.apparent_temperature?.[i]??null,
+  wind:Number.isFinite(hourly.wind_speed_10m?.[i])?hourly.wind_speed_10m[i]*3.6:null,
+  gust:Number.isFinite(hourly.wind_gusts_10m?.[i])?hourly.wind_gusts_10m[i]*3.6:null,
+  dir:hourly.wind_direction_10m?.[i]??null,
+  rh:hourly.relative_humidity_2m?.[i]??null,
+  cloud:hourly.cloud_cover?.[i]??null,
+  uv:hourly.uv_index?.[i]??null
+ }));
+ renderTaiwanPwaHourly(card,course,row.date,records);
 }
 
 async function run(){
