@@ -744,8 +744,8 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   if(useSeasonal)card.append(node("small","雨量 "+(Number.isFinite(rainValue)?rainValue.toFixed(1)+" mm":"—"),"monthly-day-rain"));
   calendar.append(card);
  });
- const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（前16天）","monthly-legend-forecast"),node("span","● 季節＋歷史氣候估計（第17天起）","monthly-legend-seasonal"));dailySection.append(legend);
- dailySection.append(node("p","說明：前16天為逐日天氣預報；第17天起為歷史氣候與季節趨勢估計。雨日頻率代表歷史相似日期的參考比例，不是當日降雨機率。","monthly-source-note"));
+ const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（前16天）","monthly-legend-forecast"),node("span","● 長期氣候參考（第17天起）","monthly-legend-seasonal"));dailySection.append(legend);
+ dailySection.append(node("p","說明：前16天為逐日天氣預報；第17天起為歷史氣候參考，較遠日期再結合季節趨勢調整。雨日頻率是歷史相似日期的參考比例，不代表當日降雨機率。","monthly-source-note"));
  dailySection.append(calendar);
  if(!sampleCourses.length)dailySection.append(node("p","此分區尚無具有效 GPS 座標的球場，無法產生逐日天氣簡表。","risk-summary"));
  host.scrollIntoView({behavior:"smooth",block:"start"});
