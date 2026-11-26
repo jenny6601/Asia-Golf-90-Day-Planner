@@ -1,0 +1,86 @@
+[
+  {
+    "id": "JP-OKINAWA-NORTH",
+    "countryCode": "JP",
+    "countryName": "Japan",
+    "label": "沖繩北部區域",
+    "destination": "Okinawa",
+    "planningCity": "Nago",
+    "timezone": "Asia/Tokyo",
+    "status": "active",
+    "weatherUnit": "regional",
+    "notes": "供名護及沖繩北部球場共用的旅遊規劃氣象區域"
+  },
+  {
+    "id": "JP-OKINAWA-CENTRAL",
+    "countryCode": "JP",
+    "countryName": "Japan",
+    "label": "沖繩中部區域",
+    "destination": "Okinawa",
+    "planningCity": "Okinawa City",
+    "timezone": "Asia/Tokyo",
+    "status": "active",
+    "weatherUnit": "regional",
+    "notes": "供沖繩中部球場共用的旅遊規劃氣象區域"
+  },
+  {
+    "id": "JP-OKINAWA-SOUTH",
+    "countryCode": "JP",
+    "countryName": "Japan",
+    "label": "沖繩南部區域",
+    "destination": "Okinawa",
+    "planningCity": "Naha",
+    "timezone": "Asia/Tokyo",
+    "status": "active",
+    "weatherUnit": "regional",
+    "notes": "供那霸及沖繩南部球場共用的旅遊規劃氣象區域"
+  },
+  {
+    "id": "JP-HOKKAIDO-TOMAKOMAI-CHITOSE",
+    "countryCode": "JP",
+    "countryName": "Japan",
+    "label": "北海道苫小牧・千歲旅遊區域",
+    "destination": "Hokkaido",
+    "planningCity": "Tomakomai–Chitose",
+    "timezone": "Asia/Tokyo",
+    "status": "planned",
+    "weatherUnit": "regional",
+    "notes": "預留區域規劃；尚未連結球場目錄或氣象資料"
+  },
+  {
+    "id": "VN-HANOI",
+    "countryCode": "VN",
+    "countryName": "Vietnam",
+    "label": "河內旅遊區域",
+    "destination": "Northern Vietnam",
+    "planningCity": "Hanoi",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "status": "planned",
+    "weatherUnit": "regional",
+    "notes": "越南高爾夫旅遊日期決策區域；球場清單與氣象資料尚待建置"
+  },
+  {
+    "id": "VN-HO-CHI-MINH-CITY",
+    "countryCode": "VN",
+    "countryName": "Vietnam",
+    "label": "胡志明市旅遊區域",
+    "destination": "Southern Vietnam",
+    "planningCity": "Ho Chi Minh City",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "status": "planned",
+    "weatherUnit": "regional",
+    "notes": "越南高爾夫旅遊日期決策區域；球場清單與氣象資料尚待建置"
+  },
+  {
+    "id": "VN-DA-NANG",
+    "countryCode": "VN",
+    "countryName": "Vietnam",
+    "label": "峴港旅遊區域",
+    "destination": "Central Vietnam",
+    "planningCity": "Da Nang",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "status": "planned",
+    "weatherUnit": "regional",
+    "notes": "越南高爾夫旅遊日期決策區域；球場清單與氣象資料尚待建置"
+  }
+]
