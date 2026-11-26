@@ -239,7 +239,17 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
  const actual=row.actual,card=section(host,(actual?"逐時天氣資料｜":"歷史資料頁面｜")+row.date+"（"+course.name+"）");
  card.classList.add("departure-day-details");
  if(!actual){
-  card.append(node("p","此日期已超出 16 天逐日預報範圍，以下僅提供歷史同期統計，不代表該日實際天氣，也不提供虛構的逐時降雨機率或雨量。","long-range-note"));
+  if(row.seasonal&&row.seasonalData){
+   const s=row.seasonalData;
+   card.append(node("p","第 19–90 日綜合估計：季節模式與歷史同期每日資料融合，屬於旅遊決策參考，不是確定性天氣預報；不提供虛構逐時資料或降雨機率。","long-range-note"));
+   const stats=node("div",undefined,"results");
+   for(const [label,value,unit] of [["綜合估計最高溫",s.highEstimate," °C"],["綜合估計最低溫",s.lowEstimate," °C"],["季節模式估計日雨量",s.rainEstimate," mm"],["季節模式平均風速",s.windMean," m/s"],["歷史同期降雨頻率",s.historical.rainFrequency,"%"],["資料完整度",s.dataCompleteness*100,"%"]]){
+    const item=node("article",undefined,"result-card");item.append(node("p",label),node("strong",Number.isFinite(value)?value.toFixed(1)+unit:"資料不足"));stats.append(item);
+   }
+   card.append(stats,node("p","適打趨勢："+s.playability+"｜信心："+s.confidence+"｜模式："+s.band+"。"+s.confidenceNote,"data-note"));
+   return;
+  }
+  card.append(node("p","此日期超出短期預報範圍，以下提供歷史同期統計，不代表該日實際天氣，也不提供虛構逐時資料。","long-range-note"));
   const result=await fetchCourseHistoricalWeekNormals(course,[row.date]);
   const h=result.days?.[0];
   const stats=node("div",undefined,"results");
