@@ -848,7 +848,7 @@ function renderRegionTopWeeks(group,records,month){
    const monthIdx=(m?.time||[]).findIndex(t=>t.slice(0,7)===month);
    const anomaly=monthIdx>=0?m.precipitation_anomaly?.[monthIdx]:null,mean=monthIdx>=0?m.precipitation_mean?.[monthIdx]:null;
    if(efiValues.length)signals.push({efi:efiValues.reduce((a,b)=>a+b,0)/efiValues.length,source:"weekly"});
-   else if(Number.isFinite(anomaly)&&Number.isFinite(mean)&&mean>0)signals.push({efi:anomaly/mean,source:"monthly"});
+   else if(Number.isFinite(mean))signals.push({efi:Number.isFinite(anomaly)&&mean>0?anomaly/mean:0,source:"monthly"});
   }
   if(!signals.length)continue;
   const mean=signals.reduce((s,x)=>s+x.efi,0)/signals.length,rank=mean<=-.2?0:mean<=.05?1:mean<=.2?2:3;
