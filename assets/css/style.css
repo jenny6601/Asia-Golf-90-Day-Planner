@@ -906,3 +906,23 @@ button.monthly-calendar-day.monthly-day-forecast:active{transform:scale(.98);box
   gap:3px!important;
  }
 }
+
+
+/* 90-day daily climate outlook: visually distinct from deterministic D1-D16 forecast */
+.monthly-calendar-day.monthly-day-seasonal{
+ background:#fff8e9;
+ border:2px solid #d8b36b;
+ box-shadow:0 1px 3px rgba(145,103,30,.12);
+}
+.monthly-calendar-day.monthly-day-seasonal.monthly-weekend{
+ background:#fff2e8;
+ border-color:#d6a08a;
+}
+.monthly-calendar-day.monthly-day-seasonal .monthly-day-source{
+ color:#875c19;
+ font-weight:850;
+}
+.monthly-calendar-day.monthly-day-seasonal .monthly-day-rain{
+ color:#77551d;
+}
+.monthly-legend-seasonal{color:#a56d17}
