@@ -785,3 +785,9 @@
 .selected-week-five-page .seven-day-hourly-cell{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:rgba(22,108,75,.16)}
 .selected-week-five-page .seven-day-hourly-cell:active{background:#d8eee4!important;box-shadow:inset 0 0 0 2px #16845f}
 .selected-week-five-page .seven-day-hourly-cell:focus-visible{outline:3px solid #16845f;outline-offset:-3px;position:relative;z-index:2}
+
+/* V58 unified daily tap targets in both weekly report layouts */
+.selected-week-five-page .seven-day-hourly-cell,.departure-five-page .departure-hourly-target{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:rgba(22,108,75,.18)}
+.selected-week-five-page .seven-day-hourly-cell:active,.departure-five-page .departure-hourly-target:active{background:#d8eee4!important;box-shadow:inset 0 0 0 2px #16845f}
+.departure-five-date.departure-hourly-target{appearance:none;-webkit-appearance:none;font:inherit;color:inherit;background:#e3f2ec;border:0;border-radius:4px;min-height:64px;cursor:pointer;touch-action:manipulation;box-shadow:inset 0 -3px 0 #16845f}
+.departure-five-date.departure-hourly-target:active{background:#c8e8da}
