@@ -20,7 +20,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install CDS API client
-        run: python -m pip install --upgrade "cdsapi>=0.7.7"
+        run: python -m pip install --upgrade "cdsapi>=0.7.7" eccodes
 
       - name: Configure CDS API credentials
         env:
@@ -37,7 +37,7 @@ jobs:
       - name: Retrieve the CDS-generated System 51 pilot request
         run: python scripts/retrieve-seas51-hindcast-pilot.py
 
-      - name: Upload GRIB and retrieval manifest
+      - name: Automatically audit GRIB metadata with ecCodes\n        run: python scripts/audit-seas51-grib.py\n\n      - name: Upload GRIB, manifest, and automatic audit\n
         uses: actions/upload-artifact@v4
         with:
           name: seas51-system51-hindcast-pilot-2016-01-01
