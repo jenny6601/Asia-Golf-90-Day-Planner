@@ -6,7 +6,7 @@ import json
 from collections import Counter, defaultdict
 from pathlib import Path
 
-BANDS = (("D17-D30", 17, 30), ("D31-D46", 31, 46), ("D47-D60", 47, 60), ("D61-D90", 61, 90))
+BANDS = (("D17-D30", 17, 30), ("D31-D45", 31, 45), ("D46-D60", 46, 60), ("D61-D90", 61, 90))
 
 def lead_band(hours):
     try:
