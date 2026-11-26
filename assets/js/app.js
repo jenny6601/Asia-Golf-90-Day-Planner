@@ -7,7 +7,7 @@ import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 import {renderTaiwanPwaHourly} from "./taiwan-hourly-renderer.js";
 const $=id=>document.getElementById(id),S={};
-let climateBackAction=null,exitConfirmed=false,exitDialogOpen=false;
+let climateBackAction=null,departureFormReturnAction=null,exitConfirmed=false,exitDialogOpen=false;
 function ensureHomeExitGuard(){
  // Maintain one same-document entry. This is a browser-history guard, not a way to prevent Chrome itself from closing.
  if(history.state?.asiaGolfHomeGuard!==true)history.pushState({asiaGolfHomeGuard:true},"",location.href);
@@ -23,6 +23,7 @@ function showExitDialog(){
  actions.append(cancel,confirm);box.append(actions);modal.append(box);document.body.append(modal);exitDialogOpen=true;
 }
 function handleAppBack(source="system"){
+ if(returnFromDepartureForm())return;
  if(climateBackAction){
   const action=climateBackAction;climateBackAction=null;action();return;
  }
@@ -661,7 +662,7 @@ function renderRegionTopWeeks(group,records,month){
  coursePanel.append(node("h3","選擇出發日期及球場"));
  const choose=node("button","前往選擇出發日期及球場","cluster-course-use");
  choose.type="button";
- choose.addEventListener("click",()=>showDepartureForm($("departure").value||today()));
+ choose.addEventListener("click",()=>showDepartureForm($("departure").value||today(),()=>renderRegionTopWeeks(group,records,month)));
  coursePanel.append(choose);out.append(coursePanel);
 }
 
@@ -758,10 +759,23 @@ async function renderSelectedWeekReport(group,week,records,month,cachedForecasts
  if(!rows.some(r=>r.actual))report.append(node("p","以下為過去十年相同月日的 ERA5 歷史同期統計；降雨頻率不是未來降雨機率，氣溫與雨量不是該週預報。","long-range-note"));
  report.append(node("p","點選未來16天內的日期，可查看該日逐時天氣。","data-note"));
   renderSevenDayVisual(report,rows,!rows.some(r=>r.actual),date=>renderSelectedWeekHourlyPage(host,group,week,records,month,date,forecasts));
- const choose=node("button","選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>showDepartureForm(week.start));host.append(choose);host.scrollIntoView({behavior:"smooth",block:"start"});
+ const choose=node("button","選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>showDepartureForm(week.start,()=>renderSelectedWeekReport(group,week,records,month,forecasts)));host.append(choose);host.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-function showDepartureForm(startDate){
+function returnFromDepartureForm(){
+ const form=$("departure")?.closest(".panel");
+ if(!form||form.hidden)return false;
+ form.hidden=true;
+ const report=$("report");report.replaceChildren();report.hidden=true;
+ $("climate-explorer").hidden=false;
+ const action=departureFormReturnAction;departureFormReturnAction=null;
+ if(action)action();
+ else{const fallback=climateBackAction;climateBackAction=null;if(fallback)fallback();else showCountryOverview()}
+ return true;
+}
+function showDepartureForm(startDate,returnAction=null){
+ departureFormReturnAction=returnAction;
+ const previousReport=$("report");previousReport.replaceChildren();previousReport.hidden=true;
  $("departure").value=startDate;$("departure").min=today();$("departure").max=add(today(),89);
  $("course-note").textContent="已帶入所選週次起始日；請選擇球場及開球時間。";
  $("climate-explorer").hidden=true;
@@ -770,14 +784,10 @@ function showDepartureForm(startDate){
  if(!nav){nav=node("div",undefined,"departure-form-nav");nav.id="departure-form-nav";form.insertBefore(nav,form.firstChild)}
  nav.replaceChildren();
  const back=node("button","← 返回上一層","departure-form-back");back.type="button";
- back.addEventListener("click",()=>{
-  form.hidden=true;$("climate-explorer").hidden=false;
-  const action=climateBackAction;climateBackAction=null;
-  if(action)action();else showCountryOverview();
- });
+ back.addEventListener("click",()=>returnFromDepartureForm());
  const home=node("button","⌂ 返回首頁","departure-form-home");home.type="button";
  home.addEventListener("click",()=>{
-  form.hidden=true;$("report").replaceChildren();$("climate-explorer").hidden=false;
+  form.hidden=true;departureFormReturnAction=null;$("report").replaceChildren();$("report").hidden=true;$("climate-explorer").hidden=false;
   climateBackAction=null;showCountryOverview();
  });
  nav.append(back,home);
