@@ -20,8 +20,8 @@ def batch(batch_id, init, member=0, lead=408, distance=42):
 class ArchiveInventoryTests(unittest.TestCase):
     def test_lead_buckets(self):
         self.assertEqual(lead_band(408), "D17-D30")
-        self.assertEqual(lead_band(720), "D31-D45")
         self.assertEqual(lead_band(744), "D31-D45")
+        self.assertEqual(lead_band(1080), "D31-D45")
         self.assertEqual(lead_band(1104), "D46-D60")
         self.assertEqual(lead_band(1464), "D61-D90")
 
