@@ -862,6 +862,49 @@
 .monthly-calendar-day.monthly-day-forecast{border:2px solid #398d68;box-shadow:0 1px 3px rgba(26,91,63,.13)}
 .monthly-calendar-day.monthly-day-forecast.monthly-weekend{border-color:#d98b8b;box-shadow:0 1px 3px rgba(150,55,55,.12)}
 button.monthly-calendar-day{appearance:none;-webkit-appearance:none;width:100%;font:inherit;color:inherit;cursor:pointer;text-align:center;transition:border-color .15s,box-shadow .15s,transform .15s}
+/* All monthly date cards are buttons now. Keep the original compact 7-column
+   calendar geometry for forecast, historical and seasonal dates alike. */
+.panel button.monthly-calendar-day{
+ appearance:none!important;
+ -webkit-appearance:none!important;
+ box-sizing:border-box!important;
+ width:100%!important;
+ min-width:0!important;
+ min-height:121px!important;
+ padding:5px 1px!important;
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:center!important;
+ justify-content:flex-start!important;
+ gap:3px!important;
+ white-space:normal!important;
+ overflow:hidden!important;
+ text-align:center!important;
+ font:inherit!important;
+ font-weight:400!important;
+ line-height:normal!important;
+ color:inherit!important;
+}
+.panel button.monthly-calendar-day .monthly-day-icon{
+ display:block!important;
+ width:48px!important;
+ height:48px!important;
+ min-width:48px!important;
+ min-height:48px!important;
+ max-width:48px!important;
+ max-height:48px!important;
+ flex:0 0 48px!important;
+ margin:2px auto!important;
+ visibility:visible!important;
+}
+.panel button.monthly-calendar-day .monthly-day-condition{
+ width:100%!important;
+ min-height:2.2em!important;
+ font-size:.61rem!important;
+ line-height:1.2!important;
+ writing-mode:horizontal-tb!important;
+ overflow-wrap:anywhere!important;
+}
 button.monthly-calendar-day:focus-visible{outline:3px solid #176caa;outline-offset:2px}
 button.monthly-calendar-day:active{transform:scale(.98);box-shadow:0 0 0 2px rgba(23,108,75,.18)}
 .monthly-linked-report-title{margin:12px 0 6px;color:#176c4b;font-size:1.15rem;font-weight:900}
