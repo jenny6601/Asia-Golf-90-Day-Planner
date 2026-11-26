@@ -775,3 +775,8 @@
  .pwa-hourly-compatible .pwa-hourly-chart-card canvas{height:220px}
  .pwa-hourly-compatible .rain-level-description-heading,.pwa-hourly-compatible .rain-level-description-row{grid-template-columns:32px 1fr 1.3fr;font-size:12px}
 }
+
+/* V58 hourly date navigation: make forecast dates visibly and reliably tappable on mobile */
+.selected-week-five-page .taiwan-seven-dates .seven-day-date-button{appearance:none;-webkit-appearance:none;position:relative;z-index:2;display:flex;min-height:54px;padding:8px 2px;background:#e3f2ec;color:#145b43;font:inherit;font-weight:800;box-shadow:inset 0 -3px 0 #16845f;cursor:pointer;pointer-events:auto;touch-action:manipulation}
+.selected-week-five-page .taiwan-seven-dates .seven-day-date-button:active{background:#c8e8da;transform:scale(.98)}
+.selected-week-five-page .taiwan-seven-dates .seven-day-date-button::after{content:"逐時";font-size:.68rem;font-weight:800;color:#176c4b}
