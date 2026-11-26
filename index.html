@@ -7,6 +7,7 @@
 <div id="hourly-panel" hidden><h3>選擇日期｜逐時球場天氣（06:00–18:00）</h3><div class="controls"><label>預報日期<input id="hourly-date" type="date"></label><label>預計開球時間<select id="tee-hour"><option value="6">06:00</option><option value="7" selected>07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option></select></label></div><p class="data-note">新增：依選定開球時間計算連續6小時降雨影響指數。此為未經歷史回測校準的原型，不代表取消球賽機率，也不會影響90天日期推薦。</p><div id="hourly-results" class="weather-grid"></div></div>
 <p class="data-note">資料來源：Open-Meteo Forecast API。每日摘要與逐時資料分開呈現。</p></section>
 
+<section class="panel"><h2>多來源配對預報｜正式發布資料</h2><p class="trip-rule">讀取 GitHub forecast-data 分支的最新快照。Open-Meteo 顯示 16 天，WeatherAPI 顯示免費方案目前可取得的 3 天；共同時段比較用於觀察來源差異，不代表哪個來源較準確。</p><button id="fetch-paired-forecast" type="button">讀取多來源配對預報</button><p id="paired-forecast-status" class="counts" aria-live="polite">尚未讀取已發布的配對資料。</p><div id="paired-forecast-results" class="weather-grid" aria-live="polite"></div><p class="data-note">資料由 GitHub Actions 定時擷取及發布；瀏覽器不接觸 WeatherAPI Key。資料過期或格式錯誤時不會以合成資料替代。</p></section>
 <section class="panel"><h2>沖繩本島｜實際球場 GPS 天氣</h2>
 <p class="trip-rule">從已建立的六個球場中選擇最多三個，依球場座標讀取16天預報。座標尚未核實的球場會暫時鎖定。讀取後會顯示輸入座標、氣象預報網格座標、網格偏移與海拔；網格偏移不等於球場界線驗證。</p>
 <div id="course-picker" class="course-grid"></div>

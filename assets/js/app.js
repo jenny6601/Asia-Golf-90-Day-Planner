@@ -1,4 +1,5 @@
 import {recommendFiveDayWindows} from "./itinerary-engine.js";
+import {initPairedForecastFeed} from "./paired-forecast-feed.js";
 import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
 import {OKINAWA_COURSES} from "./okinawa-courses.js";
 import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
@@ -317,6 +318,7 @@ $("fetch-long-range").addEventListener("click",async()=>{
  finally{button.disabled=false;}
 });
 
+initPairedForecastFeed();
 renderCoursePicker();
 $("fetch-course-weather").addEventListener("click",async()=>{
  const button=$("fetch-course-weather"),status=$("course-weather-status");
