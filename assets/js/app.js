@@ -540,7 +540,7 @@ async function renderRegionClimate(){
 async function renderRegionMonths(country,region,months,courses,subregion=""){
  const out=$("region-report"),status=$("climate-status");out.replaceChildren();
  const scopeName=region+(subregion?"｜"+subregion:"");
- showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+scopeName+"｜三個月天氣總表",()=>renderSubregionMenu(country,region));
+ showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+scopeName+"｜\\n三個月天氣總表",()=>renderSubregionMenu(country,region));
  const valid=courses.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
  const records=(await Promise.allSettled(valid.map(c=>fetchCourseSeasonalForecast(c)))).filter(x=>x.status==="fulfilled").map(x=>x.value);
  const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table region-matrix"),thead=node("thead"),hr=node("tr");
@@ -611,15 +611,6 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
  const statusRow=node("tr");statusRow.append(node("th","資料狀態"));for(const item of monthData)statusRow.append(node("td",item.status));body.append(statusRow);
  const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),btn=node("button","查看週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{const group={region:scopeName,rootRegion:region,subregion,country,courses:valid,months};if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,scopeName,item.month,()=>renderRegionMonths(country,region,months,valid,subregion))}});td.append(btn);actionRow.append(td)}body.append(actionRow);
  tbl.append(body);table.append(tbl);out.append(table);
- const coursePanel=node("section",undefined,"cluster-course-panel");
- coursePanel.append(node("h3","選擇出發日期及球場"));
- const choose=node("button","前往選擇出發日期及球場","cluster-course-use");
- choose.type="button";
- choose.addEventListener("click",()=>{
-  const currentDate=$("departure").value||today();
-  showDepartureForm(currentDate);
- });
- coursePanel.append(choose);out.append(coursePanel);
  status.textContent=valid.length?"已選擇 "+scopeName+"｜球場 "+courses.length+" 個，其中 "+valid.length+" 個具有效座標，成功取得季節資料 "+records.length+" 組。":"已選擇 "+scopeName+"。此次分區尚無球場／天氣資料，但月份及週分析操作仍可使用。";
 }
 function renderEmptyWeekAnalysis(country,region,month,backAction){
@@ -666,6 +657,12 @@ function renderRegionTopWeeks(group,records,month){
   panel.append(grid);
  }
  out.append(panel);
+ const coursePanel=node("section",undefined,"cluster-course-panel");
+ coursePanel.append(node("h3","選擇出發日期及球場"));
+ const choose=node("button","前往選擇出發日期及球場","cluster-course-use");
+ choose.type="button";
+ choose.addEventListener("click",()=>showDepartureForm($("departure").value||today()));
+ coursePanel.append(choose);out.append(coursePanel);
 }
 
 
