@@ -1,5 +1,5 @@
 /**
- * Daily climate outlook engine for lead days 19–90.
+ * Daily climate outlook engine for forecast days D19–D90 (day 1 is today).
  *
  * Combines ERA5 same-calendar-day normals with weekly/monthly seasonal anomalies.
  * It deliberately does not claim deterministic daily weather or calibrated rain
@@ -114,7 +114,7 @@ function confidence(sampleYears, seasonalEvidence, hasTemperature, hasRain) {
 }
 
 /**
- * Returns one record for each requested date in D19–D90.
+ * Returns one record for each requested date in D19–D90, counting today as D1.
  * Historical input is expected to come from fetchCourseHistoricalWeekNormals().
  */
 export function buildDailyClimateOutlook(seasonalPayload, historicalDays = [], today, days = 90) {
@@ -124,7 +124,8 @@ export function buildDailyClimateOutlook(seasonalPayload, historicalDays = [], t
   const weekly = seasonalPayload?.weekly || null;
   const monthly = seasonalPayload?.monthly || null;
   const output = [];
-  for (let lead = 19; lead <= Math.min(days, 90); lead++) {
+  for (let day = 19; day <= Math.min(days, 90); day++) {
+    const lead = day - 1;
     const date = addDays(today, lead);
     const h = history.get(date) || {};
     const w = weeklySignal(weekly, date);
@@ -147,7 +148,7 @@ export function buildDailyClimateOutlook(seasonalPayload, historicalDays = [], t
     const quality = confidence(Math.min(rainSamples, tempSamples), rainSignal?.evidence || 0, finite(high) && finite(low), finite(rainChance) && finite(rainEstimate));
     const hasHistory = samples > 0 || rainSamples > 0 || tempSamples > 0;
     output.push({
-      date, lead, band: lead <= 46 ? "D19–D46" : lead <= 60 ? "D47–D60" : "D61–D90",
+      date, lead: day, band: day <= 46 ? "D19–D46" : day <= 60 ? "D47–D60" : "D61–D90",
       highEstimate: finite(high) ? Math.round(high * 10) / 10 : null,
       lowEstimate: finite(low) ? Math.round(low * 10) / 10 : null,
       rainEstimate: finite(rainEstimate) ? Math.round(rainEstimate * 10) / 10 : null,
