@@ -116,14 +116,14 @@ function renderSevenDayVisual(host,rows,historical=false){
 async function showReport(){
  const host=$("report");host.replaceChildren();const course=S.course,date=$("departure").value;
  if(!course||!date)return;
- host.append(node("h2",course.name+"｜"+formatCourseDate(date,course.timezone)));
+ host.append(node("h2",course.name+"｜"+formatCourseDate(date,course.timezone)+" ～ "+formatCourseDate(add(date,6),course.timezone)));
  await renderCourseSevenDayReport(host,course,date);
 }
 async function renderCourseSevenDayReport(host,course,startDate){
  const dates=Array.from({length:7},(_,i)=>add(startDate,i));
  const leadFor=date=>Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
  const report=section(host,"出發日 7 天摘要");
- report.append(node("p",course.name+"｜"+dates[0]+" ～ "+dates[6],"data-note"));
+
  const daily=S.forecast?.courses?.find(x=>x.course.id===course.id)?.daily;
  let historical=[];
  const needsHistory=dates.some(date=>leadFor(date)>15||leadFor(date)<0||!(daily?.time||[]).includes(date));
