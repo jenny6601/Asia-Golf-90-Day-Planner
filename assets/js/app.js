@@ -268,13 +268,14 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
    const s=row.seasonalData;
    card.append(node("p","第 19–90 日綜合估計：季節模式與歷史同期每日資料融合，屬於旅遊決策參考，不是確定性天氣預報；不提供虛構逐時資料或降雨機率。","long-range-note"));
    const stats=node("div",undefined,"results");
-   for(const [label,value,unit] of [["綜合估計最高溫",s.highEstimate," °C"],["綜合估計最低溫",s.lowEstimate," °C"],["季節模式估計日雨量",s.rainEstimate," mm"],["季節模式平均風速",s.windMean," m/s"],["歷史同期降雨頻率",s.historical.rainFrequency,"%"],["資料完整度",s.dataCompleteness*100,"%"]]){
+   for(const [label,value,unit] of [["綜合估計最高溫",s.highEstimate," °C"],["綜合估計最低溫",s.lowEstimate," °C"],["估計日均雨量（含無雨日）",s.rainEstimate," mm"],["估計有雨日平均雨量",s.wetDayRainEstimate," mm／有雨日"],["歷史同期雨日頻率（季節調整）",s.rainChanceEstimate,"%"],["歷史同期第90百分位日雨量",s.rainP90Estimate," mm"],["季節模式平均風速",s.windMean," m/s"],["資料完整度",s.dataCompleteness*100,"%"]]){
     const item=node("article",undefined,"result-card");item.append(node("p",label),node("strong",Number.isFinite(value)?value.toFixed(1)+unit:"資料不足"));stats.append(item);
    }
    card.append(stats);
    const provenance=node("div",undefined,"monthly-source-note");
    provenance.append(node("p","資料來源："+(s.sourceLabel||"長期氣候估計")+"。歷史樣本："+(Number.isFinite(s.historicalSampleYears)?s.historicalSampleYears+" 年":"未取得")+"；季節訊號指標："+(Number.isFinite(s.seasonalEvidenceCount)?s.seasonalEvidenceCount:"0")+" 項。"));
    provenance.append(node("p","欄位來源：氣溫 "+(s.fieldQuality?.temperature||"未標示")+"；雨日頻率 "+(s.fieldQuality?.rainfallFrequency||"未標示")+"；雨量 "+(s.fieldQuality?.rainfallAmount||"未標示")+"；風速 "+(s.fieldQuality?.wind||"未標示")+"。"));
+   provenance.append(node("p","降雨一致性檢查："+(s.rainConsistency||"尚未計算")+"；有雨日平均雨量為估計日均雨量除以雨日頻率，僅作量級解讀，不是單次降雨預報。"));
    card.append(provenance,node("p","適打趨勢："+s.playability+"｜資料信心："+s.confidence+"｜模式："+s.band+"。"+s.confidenceNote,"data-note"));
    return;
   }
