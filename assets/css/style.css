@@ -1116,3 +1116,14 @@ button.monthly-calendar-day:active{transform:scale(.98);box-shadow:0 0 0 2px rgb
  .monthly-playability-note-row{grid-template-columns:82px minmax(0,1fr);gap:6px}
  .monthly-playability-note-row strong,.monthly-playability-note-row span{font-size:.78rem}
 }
+
+/* Dynamic month + region heading for the monthly playability assessment */
+.monthly-playability-card{width:100%;max-width:none}
+.monthly-playability-header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:-3px -3px 2px;padding:13px 17px;border-radius:12px;background:linear-gradient(110deg,#075b3d,#0c754e);color:#fff}
+.monthly-playability-header strong{font-size:clamp(1.18rem,3.5vw,1.85rem);font-weight:950;line-height:1.2;letter-spacing:.01em}
+.monthly-playability-header span{flex:0 0 auto;font-size:clamp(.9rem,2.6vw,1.2rem);font-weight:850;text-align:right;line-height:1.35}
+@media(max-width:520px){
+ .monthly-playability-header{gap:8px;padding:12px 13px}
+ .monthly-playability-header strong{font-size:clamp(1.12rem,4.3vw,1.55rem)}
+ .monthly-playability-header span{font-size:clamp(.82rem,3vw,1.05rem)}
+}
