@@ -10,6 +10,9 @@ name: SEAS5.1 historical hindcast retrieval and GRIB audit
       - "scripts/probe-seas51-precipitation-leads.py"
       - "scripts/inventory_cds_archive_batches.py"
       - "scripts/assess_seas51_spatial_qualification.py"
+      - "scripts/audit-seas51-grib.py"
+      - "tests/test_seas51_grid_geometry_audit.py"
+      - "docs/SEAS51-GRID-GEOMETRY-AUDIT.md"
       - "tests/test_assess_seas51_spatial_qualification.py"
       - "docs/SEAS51-SPATIAL-QUALIFICATION.md"
       - "tests/test_inventory_cds_archive_batches.py"
@@ -32,7 +35,7 @@ jobs:
       - name: Install CDS client and ecCodes
         run: python -m pip install --upgrade "cdsapi>=0.7.7" eccodes
       - name: Test archive normalization and ERA5 pairing
-        run: python -m unittest discover -s tests -p "test_*seas51*.py" -v && python -m unittest discover -s tests -p "test_build_cds_era5_pairs.py" -v && python -m unittest discover -s tests -p "test_report_cds_era5_proxy_skill.py" -v && python -m unittest discover -s tests -p "test_split_cds_temporal_holdout.py" -v && python -m unittest discover -s tests -p "test_inventory_cds_archive_batches.py" -v && python -m unittest discover -s tests -p "test_assess_seas51_spatial_qualification.py" -v
+        run: python -m unittest discover -s tests -p "test_*seas51*.py" -v && python -m unittest discover -s tests -p "test_build_cds_era5_pairs.py" -v && python -m unittest discover -s tests -p "test_report_cds_era5_proxy_skill.py" -v && python -m unittest discover -s tests -p "test_split_cds_temporal_holdout.py" -v && python -m unittest discover -s tests -p "test_inventory_cds_archive_batches.py" -v && python -m unittest discover -s tests -p "test_assess_seas51_spatial_qualification.py" -v && python -m unittest discover -s tests -p "test_seas51_grid_geometry_audit.py" -v
       - name: Configure CDS credentials
         env:
           CDSAPI_KEY: ${{ secrets.CDS_API_KEY }}
