@@ -1023,3 +1023,48 @@ button.monthly-calendar-day:active{transform:scale(.98);box-shadow:0 0 0 2px rgb
 .panel button.monthly-calendar-day.monthly-day-history.monthly-weekend:active{
  background:#f7eeeb!important;
 }
+
+
+/* Monthly golf playability assessment: compact mobile-first infographic */
+.monthly-playability-card{display:flex;flex-direction:column;gap:12px;padding:14px;border:1px solid #c9dfd2;border-radius:16px;background:linear-gradient(180deg,#fbfefc 0%,#f4faf6 100%);color:#173f32}
+.monthly-playability-season{display:grid;grid-template-columns:minmax(118px,.8fr) minmax(0,1.5fr);align-items:center;gap:10px;padding:13px 15px;border-radius:13px;background:#e5f4e7;border:1px solid #d2ead7}
+.monthly-playability-kicker{font-size:.84rem;font-weight:900;color:#234b3b}
+.monthly-playability-season-label{grid-column:1;font-size:1.35rem;font-weight:950;color:#1762a3;line-height:1.25;overflow-wrap:anywhere}
+.monthly-playability-season p{grid-column:2;grid-row:1 / span 2;margin:0;padding-left:12px;border-left:2px solid #b7cfc1;font-size:.9rem;line-height:1.6;font-weight:750;color:#29483c}
+.monthly-playability-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.monthly-playability-count{display:grid;grid-template-columns:34px 1fr;align-items:center;column-gap:5px;row-gap:3px;min-width:0;padding:10px 8px;border-radius:12px;text-align:center}
+.monthly-playability-count.good{background:#e1f4e3;border:1px solid #c8e8ce}
+.monthly-playability-count.watch{background:#fff3cf;border:1px solid #f4e2a8}
+.monthly-playability-count.poor{background:#fbe2e5;border:1px solid #f1cbd0}
+.monthly-playability-icon{grid-row:1 / span 2;font-size:1.7rem}
+.monthly-playability-count strong{font-size:.88rem;font-weight:950}
+.monthly-playability-count b{font-size:1.28rem;line-height:1.2}
+.monthly-playability-count small{grid-column:1 / -1;font-size:.68rem;line-height:1.35;color:#435a50}
+.monthly-playability-priority,.monthly-playability-week{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:center;gap:9px;min-height:54px;padding:9px 12px;border-radius:12px}
+.monthly-playability-priority{background:#e7f5e9;border:1px solid #d0e9d5}
+.monthly-playability-week{background:#fff3cf;border:1px solid #f0df9f}
+.monthly-playability-priority strong,.monthly-playability-week strong{font-size:.88rem;font-weight:950;color:#174b35}
+.monthly-playability-priority span,.monthly-playability-week span{font-size:1.05rem;font-weight:950;text-align:center;color:#174b35;overflow-wrap:anywhere}
+.monthly-playability-notes{padding:8px 12px;border:1px solid #d6e5dc;border-radius:12px;background:#fff}
+.monthly-playability-note-row{display:grid;grid-template-columns:102px minmax(0,1fr);gap:9px;padding:8px 0;border-bottom:1px solid #e0e9e4}
+.monthly-playability-note-row:last-child{border-bottom:0}
+.monthly-playability-note-row strong{font-size:.82rem;font-weight:900;color:#17563d}
+.monthly-playability-note-row span{font-size:.8rem;line-height:1.55;color:#354e43}
+@media(max-width:520px){
+ .monthly-playability-card{padding:10px;gap:9px}
+ .monthly-playability-season{grid-template-columns:100px minmax(0,1fr);gap:7px;padding:10px}
+ .monthly-playability-kicker{font-size:.72rem}
+ .monthly-playability-season-label{font-size:1.1rem}
+ .monthly-playability-season p{font-size:.76rem;padding-left:8px}
+ .monthly-playability-counts{gap:5px}
+ .monthly-playability-count{grid-template-columns:1fr;gap:2px;padding:8px 4px}
+ .monthly-playability-icon{grid-row:auto;font-size:1.35rem}
+ .monthly-playability-count strong{font-size:.78rem}
+ .monthly-playability-count b{font-size:1.1rem}
+ .monthly-playability-count small{font-size:.61rem}
+ .monthly-playability-priority,.monthly-playability-week{grid-template-columns:92px minmax(0,1fr);gap:5px;padding:8px}
+ .monthly-playability-priority strong,.monthly-playability-week strong{font-size:.78rem}
+ .monthly-playability-priority span,.monthly-playability-week span{font-size:.91rem}
+ .monthly-playability-note-row{grid-template-columns:83px minmax(0,1fr);gap:6px}
+ .monthly-playability-note-row strong,.monthly-playability-note-row span{font-size:.72rem}
+}
