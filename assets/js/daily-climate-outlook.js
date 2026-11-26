@@ -147,6 +147,25 @@ export function buildDailyClimateOutlook(seasonalPayload, historicalDays = [], t
     const seasonalEvidence = (w ? Object.values(w).filter(finite).length : 0) + (m ? Object.values(m).filter(finite).length : 0);
     const quality = confidence(Math.min(rainSamples, tempSamples), rainSignal?.evidence || 0, finite(high) && finite(low), finite(rainChance) && finite(rainEstimate));
     const hasHistory = samples > 0 || rainSamples > 0 || tempSamples > 0;
+    const hasSeasonalSignal = seasonalEvidence > 0;
+    const sourceType = hasHistory && hasSeasonalSignal
+      ? "seasonal-plus-historical-estimate"
+      : hasHistory ? "historical-climate-reference"
+      : hasSeasonalSignal ? "seasonal-signal-without-daily-baseline"
+      : "insufficient-data";
+    const sourceLabel = sourceType === "seasonal-plus-historical-estimate"
+      ? "歷史同期統計＋季節模式訊號估計"
+      : sourceType === "historical-climate-reference"
+      ? "僅有歷史同期統計（未取得有效季節訊號）"
+      : sourceType === "seasonal-signal-without-daily-baseline"
+      ? "僅有季節模式訊號（缺歷史逐日基準）"
+      : "資料不足";
+    const fieldQuality = {
+      temperature: finite(high) && finite(low) ? (hasHistory ? "historical-plus-seasonal-adjustment" : "seasonal-signal-only") : "missing",
+      rainfallFrequency: finite(rainChance) ? (hasHistory && hasSeasonalSignal ? "historical-adjusted-by-seasonal-signal" : hasHistory ? "historical-frequency-only" : "missing") : "missing",
+      rainfallAmount: finite(rainEstimate) ? (finite(rainMean) && multiplier.available ? "historical-amount-adjusted-by-seasonal-signal" : finite(rainMean) ? "historical-average-only" : "missing") : "missing",
+      wind: finite(windMean) ? "seasonal-model" : "missing"
+    };
     output.push({
       date, lead: day, band: day <= 46 ? "D19–D46" : day <= 60 ? "D47–D60" : "D61–D90",
       highEstimate: finite(high) ? Math.round(high * 10) / 10 : null,
@@ -172,8 +191,18 @@ export function buildDailyClimateOutlook(seasonalPayload, historicalDays = [], t
         evidenceCount: seasonalEvidence
       },
       confidence: quality.label, confidenceScore: quality.score,
-      confidenceNote: hasHistory ? "歷史同期統計＋週／月季節訊號；屬長期趨勢估計" : "缺少足夠歷史樣本，不能形成可靠逐日估計",
-      sourceType: hasHistory ? "seasonal-climate-estimate" : "insufficient-data",
+      confidenceNote: sourceType === "seasonal-plus-historical-estimate"
+        ? "使用 ERA5 歷史同期樣本與可用週／月季節訊號調整；屬長期趨勢估計，不是逐日確定性預報"
+        : sourceType === "historical-climate-reference"
+        ? "僅使用 ERA5 歷史同期樣本；未取得可用季節訊號，不應解讀為未來天氣預報"
+        : sourceType === "seasonal-signal-without-daily-baseline"
+        ? "只有季節模式訊號，缺少歷史逐日基準；不產生具體逐日氣象數值"
+        : "缺少足夠歷史樣本與季節訊號，不能形成可靠逐日估計",
+      sourceType, sourceLabel, fieldQuality,
+      seasonalEvidenceCount: seasonalEvidence,
+      historicalSampleYears: samples,
+      historicalRainSampleYears: rainSamples,
+      historicalTemperatureSampleYears: tempSamples,
       rainProbability: null
     });
   }
