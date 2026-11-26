@@ -9,6 +9,9 @@ name: SEAS5.1 historical hindcast retrieval and GRIB audit
       - "scripts/extract-seas51-course-points.py"
       - "scripts/probe-seas51-precipitation-leads.py"
       - "scripts/standardize_seas51_archive.py"
+      - "scripts/build_cds_era5_pairs.py"
+      - "tests/test_build_cds_era5_pairs.py"
+      - "docs/CDS-ERA5-PAIRED-VERIFICATION.md"
       - "tests/test_standardize_seas51_archive.py"
       - "docs/SEAS51-ARCHIVE-NORMALIZATION.md"
       - ".github/workflows/seas51-hindcast-retrieval.yml"
@@ -25,8 +28,8 @@ jobs:
           python-version: "3.12"
       - name: Install CDS client and ecCodes
         run: python -m pip install --upgrade "cdsapi>=0.7.7" eccodes
-      - name: Test archive normalizer
-        run: python -m unittest discover -s tests -p "test_standardize_seas51_archive.py" -v
+      - name: Test archive normalization and ERA5 pairing
+        run: python -m unittest discover -s tests -p "test_*seas51*.py" -v && python -m unittest discover -s tests -p "test_build_cds_era5_pairs.py" -v
       - name: Configure CDS credentials
         env:
           CDSAPI_KEY: ${{ secrets.CDS_API_KEY }}
