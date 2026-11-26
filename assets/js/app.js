@@ -150,6 +150,7 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
  const wxLabel=c=>!Number.isFinite(c)?"歷史氣候參考":c===0?"晴朗":c<=2?"晴時多雲":c===3?"陰天":c>=51&&c<=57?"毛毛雨":c>=61&&c<=67?"降雨":c>=80&&c<=82?"陣雨":c>=95?"雷雨":"多雲";
  const mean=(values)=>{const v=values.filter(Number.isFinite);return v.length?v.reduce((x,y)=>x+y,0)/v.length:null};
  const mode=(values)=>{const v=values.filter(Number.isFinite);if(!v.length)return null;const counts=new Map();v.forEach(x=>counts.set(x,(counts.get(x)||0)+1));return [...counts.entries()].sort((x,y)=>y[1]-x[1])[0][0]};
+ const modeText=(values)=>{const v=values.filter(x=>typeof x==="string"&&x.length);if(!v.length)return null;const counts=new Map();v.forEach(x=>counts.set(x,(counts.get(x)||0)+1));return [...counts.entries()].sort((x,y)=>y[1]-x[1])[0][0]};
  const rows=dates.map(date=>{
   const lead=leadFor(date),dailyEntries=monthlyContext?.forecastCourses
    ?monthlyContext.forecastCourses.map(f=>{const i=(f.daily?.time||[]).indexOf(date);return i<0?null:{code:f.daily.weather_code?.[i],high:f.daily.temperature_2m_max?.[i],low:f.daily.temperature_2m_min?.[i],feel:f.daily.apparent_temperature_max?.[i],prob:f.daily.precipitation_probability_max?.[i],rain:f.daily.precipitation_sum?.[i]}}).filter(Boolean)
@@ -164,7 +165,7 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
   }
   if(sd){
    const code=mode(seasonalEntries.map(x=>x.code));
-   return {date,actual:false,seasonal:true,seasonalData:sd,code,high:mean(seasonalEntries.map(x=>x.highEstimate)),low:mean(seasonalEntries.map(x=>x.lowEstimate)),feel:null,prob:mean(seasonalEntries.map(x=>x.rainChanceEstimate)),rain:mean(seasonalEntries.map(x=>x.rainEstimate)),rainKind:"seasonal-frequency",label:sd.weather};
+   return {date,actual:false,seasonal:true,seasonalData:sd,code,high:mean(seasonalEntries.map(x=>x.highEstimate)),low:mean(seasonalEntries.map(x=>x.lowEstimate)),feel:null,prob:mean(seasonalEntries.map(x=>x.rainChanceEstimate)),rain:mean(seasonalEntries.map(x=>x.rainEstimate)),wetDayRain:mean(seasonalEntries.map(x=>x.wetDayRainEstimate)),rainConsistency:modeText(seasonalEntries.map(x=>x.rainConsistency)),rainKind:"seasonal-frequency",label:modeText(seasonalEntries.map(x=>x.weather))||sd.weather};
   }
   const histRows=monthlyContext?hRows:(h?[h]:[]);
   const rainFrequency=monthlyContext?mean(histRows.map(x=>x.rainFrequency)):h?.rainFrequency;
@@ -799,7 +800,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   card.addEventListener("click",()=>openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,sampleCourses[0],date,{forecastCourses,historicalNormals,seasonalDailyRows}))
   const code=mode(isForecast?actualEntries.map(x=>x.code):useSeasonal?seasonalEntries.map(x=>x.code):[]),highValue=isForecast?avg(actualEntries,"high"):useSeasonal?avg(seasonalEntries,"highEstimate"):avg(historicalEntries,"highMean"),lowValue=isForecast?avg(actualEntries,"low"):useSeasonal?avg(seasonalEntries,"lowEstimate"):avg(historicalEntries,"lowMean"),rainProb=isForecast?avg(actualEntries,"prob"):useSeasonal?avg(seasonalEntries,"rainChanceEstimate"):avg(historicalEntries,"rainFrequency"),rainValue=useSeasonal?avg(seasonalEntries,"rainEstimate"):null,confidenceLabel=useSeasonal?seasonalEntries.map(x=>x.confidence).filter(Boolean).sort((a,b)=>({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[b]??4)-({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[a]??4))[0]:null;
   const icon=createWeatherIcon(code,!isForecast&&!useSeasonal,rainProb);icon.classList.add("monthly-day-icon");
-  card.append(node("strong",String(Number(date.slice(8,10))),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):useSeasonal?seasonalEntries[0].weather:(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
+  card.append(node("strong",String(Number(date.slice(8,10))),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):useSeasonal?(modeText(seasonalEntries.map(x=>x.weather))||"長期氣候估計"):(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
   card.append(node("b",Number.isFinite(highValue)?highValue.toFixed(0)+"°":"—","monthly-day-high"),node("span",Number.isFinite(lowValue)?lowValue.toFixed(0)+"°":"—","monthly-day-low"));
   card.append(node("small",isForecast?"雨機率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):useSeasonal?"雨日頻率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):"歷史雨頻 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"),"monthly-day-rain"));
   if(useSeasonal){
