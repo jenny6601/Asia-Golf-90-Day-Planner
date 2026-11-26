@@ -30,15 +30,20 @@ def nearest_grid(g,lat,lon):
     nearest=codes_grib_find_nearest(g,lat,lon,is_lsm=False,npoints=1)
     if not nearest:
         raise RuntimeError("ecCodes returned no nearest grid point")
-    # ecCodes Python returns a flat 5-item tuple for npoints=1;
-    # some bindings may wrap each point as a nested tuple.
-    if len(nearest)>=5 and not isinstance(nearest[0],(tuple,list)):
-        point=nearest[:5]
-    elif len(nearest)>0 and isinstance(nearest[0],(tuple,list)) and len(nearest[0])>=5:
-        point=nearest[0][:5]
+    # ecCodes Python versions expose one nearest point in three forms:
+    # a flat 5-tuple, a tuple/list of point tuples, or a tuple containing
+    # a dict with lat/lon/value/distance/index keys.
+    first=nearest[0] if isinstance(nearest,(tuple,list)) and len(nearest)>0 else None
+    if isinstance(first,dict):
+        point=first
+        grid_lat=point["lat"]; grid_lon=point["lon"]
+        value=point["value"]; distance_km=point["distance"]
+    elif len(nearest)>=5 and not isinstance(first,(tuple,list,dict)):
+        grid_lat,grid_lon,value,distance_km,_index=nearest[:5]
+    elif isinstance(first,(tuple,list)) and len(first)>=5:
+        grid_lat,grid_lon,value,distance_km,_index=first[:5]
     else:
         raise RuntimeError("Unexpected nearest-point result shape: " + repr(nearest)[:300])
-    grid_lat,grid_lon,value,distance_km,_index=point
     return float(distance_km),float(grid_lat),float(grid_lon),float(value)
 
 def main():
