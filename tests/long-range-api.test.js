@@ -23,6 +23,10 @@ test("long-range adapter requests weekly and monthly ECMWF seasonal diagnostics 
   assert.match(u.searchParams.get("weekly"),/precipitation_efi/);
   assert.match(u.searchParams.get("weekly"),/precipitation_anomaly_gt0/);
   assert.match(u.searchParams.get("monthly"),/precipitation_anomaly/);
+  assert.match(u.searchParams.get("daily"),/temperature_2m_max/);
+  assert.match(u.searchParams.get("daily"),/sunshine_duration/);
+  assert.match(u.searchParams.get("hourly"),/precipitation/);
+  assert.match(u.searchParams.get("hourly"),/relative_humidity_2m/);
  }
 });
 test("long-range adapter fails closed on provider errors",async()=>{
