@@ -785,7 +785,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  }
  fiveDayWindows.sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.days[0].date.localeCompare(b.days[0].date));
  const preferredWindow=fiveDayWindows[0]||null;
- const dateRange=preferredWindow?Number(preferredWindow.days[0].date.slice(8,10))+"月"+Number(preferredWindow.days[0].date.slice(8,10))+"日 ～ "+Number(preferredWindow.days[4].date.slice(5,7))+"月"+Number(preferredWindow.days[4].date.slice(8,10))+"日":"資料不足，無法推薦連續5天";
+ const dateRange=preferredWindow?Number(preferredWindow.days[0].date.slice(5,7))+"月"+Number(preferredWindow.days[0].date.slice(8,10))+"日 ～ "+Number(preferredWindow.days[4].date.slice(5,7))+"月"+Number(preferredWindow.days[4].date.slice(8,10))+"日":"資料不足，無法推薦連續5天";
  const seasonDescription=seasonLabel==="季節型態資料不足"?"目前沒有足夠季節資料判讀本月型態。":seasonLabel.includes("雨季")||seasonLabel.includes("偏濕")?"本月降雨訊號較明顯，安排球敘宜優先挑選降雨風險較低的日期。":seasonLabel.includes("乾季")||seasonLabel.includes("偏乾")?"本月整體降雨訊號較少，較有利於安排戶外球敘。":"本月降雨訊號接近歷史常態，仍需比較逐日差異安排球敘。";
  const summary=node("div",undefined,"monthly-playability-card");
  const seasonBanner=node("div",undefined,"monthly-playability-season");
