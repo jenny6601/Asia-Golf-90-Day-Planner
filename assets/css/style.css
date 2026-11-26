@@ -862,8 +862,8 @@
 .monthly-calendar-day.monthly-day-forecast{border:2px solid #398d68;box-shadow:0 1px 3px rgba(26,91,63,.13)}
 .monthly-calendar-day.monthly-day-forecast.monthly-weekend{border-color:#d98b8b;box-shadow:0 1px 3px rgba(150,55,55,.12)}
 button.monthly-calendar-day{appearance:none;-webkit-appearance:none;width:100%;font:inherit;color:inherit;cursor:pointer;text-align:center;transition:border-color .15s,box-shadow .15s,transform .15s}
-button.monthly-calendar-day.monthly-day-forecast:focus-visible{outline:3px solid #176caa;outline-offset:2px}
-button.monthly-calendar-day.monthly-day-forecast:active{transform:scale(.98);box-shadow:0 0 0 2px rgba(23,108,75,.18)}
+button.monthly-calendar-day:focus-visible{outline:3px solid #176caa;outline-offset:2px}
+button.monthly-calendar-day:active{transform:scale(.98);box-shadow:0 0 0 2px rgba(23,108,75,.18)}
 .monthly-linked-report-title{margin:12px 0 6px;color:#176c4b;font-size:1.15rem;font-weight:900}
 
 /* Preserve the original monthly calendar fills on clickable forecast buttons.
