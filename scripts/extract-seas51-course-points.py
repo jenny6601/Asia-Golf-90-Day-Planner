@@ -51,7 +51,7 @@ def main():
     courses=json.loads(COURSES.read_text(encoding="utf-8"))
     targets=[c for c in courses if c.get("countryCode")=="JP" and
       isinstance(c.get("latitude"),(int,float)) and isinstance(c.get("longitude"),(int,float))]
-    rows=[]; counts={}
+    rows=[]; counts={}; spatial_failures={}; distance_flags={"within_35km":0,"over_35km":0}
     with GRIB.open("rb") as stream:
         while (gid:=codes_grib_new_from_file(stream)) is not None:
             try:
@@ -67,9 +67,17 @@ def main():
                 unit=get(gid,"units"); step_type=get(gid,"stepType")
                 step_range=get(gid,"stepRange")
                 for course in targets:
-                    nearest=nearest_grid(gid,course["latitude"],course["longitude"])
+                    try:
+                        nearest=nearest_grid(gid,course["latitude"],course["longitude"])
+                    except Exception as exc:
+                        key=course["id"]
+                        failure=spatial_failures.setdefault(key,{"count":0,"errorTypes":{}})
+                        failure["count"]+=1
+                        error_type=type(exc).__name__
+                        failure["errorTypes"][error_type]=failure["errorTypes"].get(error_type,0)+1
+                        continue
                     distance,grid_lat,grid_lon,raw=nearest
-                    if distance>MAX_DISTANCE_KM: continue
+                    distance_flags["within_35km" if distance<=MAX_DISTANCE_KM else "over_35km"]+=1
                     value=raw; output_unit=unit
                     if variable=="2t" and unit=="K":
                         value=raw-273.15; output_unit="degC"
@@ -80,6 +88,7 @@ def main():
                       "courseLatitude":course["latitude"],"courseLongitude":course["longitude"],
                       "gridLatitude":grid_lat,"gridLongitude":grid_lon,
                       "nearestGridDistanceKm":round(distance,3),
+                      "spatialDistanceFlag":"within-35km" if distance<=MAX_DISTANCE_KM else "over-35km-review",
                       "initializationDate":init_date,"initializationTime":init_time,
                       "validDate":valid_date,"validTime":valid_time,"leadHour":lead,
                       "ensembleMember":member,"variable":variable,
@@ -99,13 +108,17 @@ def main():
       "courseCountWithCoordinates":len(targets),
       "coursesUsed":[{"id":c["id"],"coordinateStatus":c.get("coordinateStatus")} for c in targets],
       "coursesSkippedMissingCoordinates":[c["id"] for c in courses if c.get("countryCode")=="JP" and (c.get("latitude") is None or c.get("longitude") is None)],
-      "maxNearestGridDistanceKm":MAX_DISTANCE_KM,
+      "distanceReviewThresholdKm":MAX_DISTANCE_KM,
+      "distanceFlags":distance_flags,
+      "spatialFailuresByCourse":spatial_failures,
       "outputRows":len(rows),
       "rowCountsByVariableAndLead":{f"{k[0]}_{k[1]}":v for k,v in sorted(counts.items())},
       "limitations":[
         "Five course coordinates are provisional; extracted values inherit that location uncertainty.",
         "PGM Okinawa is omitted because its course coordinates are not verified.",
         "Nearest grid point is a grid-cell proxy, not a course-wide spatial average.",
+        "All returned nearest points are retained regardless of distance; distances over 35 km are flagged for review, not silently discarded.",
+        "Courses outside the GRIB grid are reported as spatial failures and are not assigned fabricated values.",
         "tp is retained only as the GRIB instantaneous field; it is not converted to rainfall accumulation.",
         "One initialization cannot support forecast-skill verification or bias calibration."
       ]
