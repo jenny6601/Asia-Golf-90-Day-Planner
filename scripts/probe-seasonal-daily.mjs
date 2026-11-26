@@ -26,8 +26,10 @@ const finiteCount = values => Array.isArray(values)
   : 0;
 const sample = (times, values, start, end) => {
   if (!Array.isArray(times) || !Array.isArray(values)) return { expected: 0, valid: 0 };
+  const startDate = typeof start === "string" ? start.slice(0, 10) : start;
+  const endDate = typeof end === "string" ? end.slice(0, 10) : end;
   const indexes = times.map((time, i) => ({ time, i }))
-    .filter(x => x.time.slice(0, 10) >= start && x.time.slice(0, 10) <= end)
+    .filter(x => x.time.slice(0, 10) >= startDate && x.time.slice(0, 10) <= endDate)
     .map(x => x.i);
   return { expected: indexes.length, valid: indexes.filter(i => Number.isFinite(values[i])).length };
 };
