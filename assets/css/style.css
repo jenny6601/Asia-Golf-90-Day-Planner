@@ -865,3 +865,23 @@ button.monthly-calendar-day{appearance:none;-webkit-appearance:none;width:100%;f
 button.monthly-calendar-day.monthly-day-forecast:focus-visible{outline:3px solid #176caa;outline-offset:2px}
 button.monthly-calendar-day.monthly-day-forecast:active{transform:scale(.98);box-shadow:0 0 0 2px rgba(23,108,75,.18)}
 .monthly-linked-report-title{margin:12px 0 6px;color:#176c4b;font-size:1.15rem;font-weight:900}
+
+/* Preserve the original monthly calendar fills on clickable forecast buttons.
+   The shared .panel button theme must not recolor daily weather cards. */
+.panel button.monthly-calendar-day.monthly-day-forecast{
+ background:#edf7f1!important;
+ color:inherit!important;
+ border:2px solid #398d68!important;
+ box-shadow:0 1px 3px rgba(26,91,63,.13)!important;
+}
+.panel button.monthly-calendar-day.monthly-day-forecast.monthly-weekend{
+ background:#fff4f1!important;
+ border-color:#d98b8b!important;
+ box-shadow:0 1px 3px rgba(150,55,55,.12)!important;
+}
+.panel button.monthly-calendar-day.monthly-day-forecast:active{
+ background:#edf7f1!important;
+}
+.panel button.monthly-calendar-day.monthly-day-forecast.monthly-weekend:active{
+ background:#fff4f1!important;
+}
