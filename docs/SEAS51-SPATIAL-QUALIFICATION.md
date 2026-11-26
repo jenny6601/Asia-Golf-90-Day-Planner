@@ -1,26 +1,18 @@
-# SEAS5.1 spatial representativeness for long-range guidance
+# Regional location handling for D17-D90 golf-weather guidance
 
-## Purpose
+## Product rule
 
-SEAS5.1 D17-D90 products are used for regional climate signals and date-planning guidance, not deterministic daily weather at an individual fairway. A course coordinate that is reasonably nearby is generally sufficient to associate the course with its broad regional weather regime. Coordinates do not need survey-grade or green-level precision.
+For forecasts beyond 16 days, the system only needs weather guidance representative of the area around the selected golf course. Nearby course coordinates or a nearby source grid point are acceptable. Exact fairway/green coordinates and survey-grade accuracy are not required.
 
-## Policy
+## Implementation
 
-- The 35 km distance is an advisory diagnostic, not a hard acceptance threshold.
-- Nearby grid cells and approximate course coordinates may be used as regional proxies; distance and coordinate provenance remain visible in the report.
-- Provisional coordinates are allowed for regional guidance but remain labeled provisional.
-- Out-of-area and missing-coordinate courses are still coverage gaps; the system must not fabricate records for them.
-- This regional proxy status does not establish course-level observation accuracy, forecast skill, or justify bias correction.
-- Keep forecast, hindcast, reanalysis and climatology semantics distinct.
-- Do not change the approved CDS request area or retrieval scope as part of this policy.
-
-## Run
-
-```bash
-python scripts/assess_seas51_spatial_qualification.py --batch artifacts/seas51-normalized-archive-batch.json --extract-manifest artifacts/seas51-course-point-extract-manifest.json --output artifacts/seas51-spatial-qualification.json
-python -m unittest discover -s tests -p "test_assess_seas51_spatial_qualification.py" -v
-```
+- Use the existing course location or a nearby available grid point to associate the course with regional guidance.
+- Keep the selected grid location and distance as traceable metadata where available.
+- Treat the 35 km value as a diagnostic only, never as a hard rejection rule for D17-D90 regional guidance.
+- Approximate/provisional coordinates may be used; do not delay the project to refine them.
+- If a course is genuinely outside source coverage, show that coverage limitation. Never fabricate a forecast value.
+- Do not spend further work cycles on coordinate research unless it directly blocks data retrieval or produces a materially different regional weather signal.
 
 ## Interpretation
 
-A `regional-proxy-usable` status means there are records for the requested course set and no coordinate/distance advisory flags. `regional-proxy-usable-with-advisory-review` means records remain usable for regional D17-D90 context, while approximate coordinates or larger grid distances are disclosed. `regional-proxy-usable-with-coverage-gaps` means some requested courses could not be represented and must be shown as missing coverage. None of these statuses is a forecast-skill score.
+This association is intended for date-planning and regional weather tendencies, not exact on-course observations or deterministic daily forecasts. Spatial metadata does not establish forecast skill. Forecast, hindcast, reanalysis and climatology must remain clearly distinguished.
