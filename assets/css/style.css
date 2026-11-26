@@ -842,3 +842,11 @@
  .monthly-day-source{font-size:.54rem}
  .monthly-calendar-weekday{font-size:.72rem;padding:6px 0}
 }
+
+/* Keep each month action as a distinct, readable touch target */
+.region-table.region-matrix tbody tr:last-child td{padding:8px 5px!important}
+.region-table.region-matrix .monthly-analysis-open{width:calc(100% - 8px);min-width:0;margin:3px 4px;display:block;white-space:normal;overflow-wrap:anywhere;box-shadow:0 0 0 2px #fff;border-radius:10px!important;padding:10px 3px!important;font-size:.78rem!important;line-height:1.25!important}
+.region-table.region-matrix .region-select{min-width:0;overflow-wrap:anywhere}
+@media(max-width:480px){
+ .region-table.region-matrix .monthly-analysis-open{font-size:.7rem!important;padding:9px 2px!important;margin:3px 2px;width:calc(100% - 4px)}
+}
