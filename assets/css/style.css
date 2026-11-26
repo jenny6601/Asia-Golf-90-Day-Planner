@@ -817,7 +817,7 @@
 .monthly-day-forecast{background:#edf7f1;border-color:#bcdccc}
 .monthly-day-history{background:#f1f4f6;border-color:#d8e0e5}
 .monthly-day-date{align-self:flex-start;padding-left:3px;color:#29483c;font-size:.82rem;font-weight:900}
-.monthly-day-icon{display:block;width:37px;height:37px;max-width:100%;flex:0 0 auto}
+.monthly-day-icon{display:block;width:clamp(46px,7vw,64px);height:clamp(46px,7vw,64px);max-width:100%;flex:0 0 auto}
 .monthly-day-condition{min-height:2.2em;color:#39594c;font-size:.68rem;font-weight:800;line-height:1.2;overflow-wrap:anywhere}
 .monthly-day-high{color:#d76552;font-size:1.02rem;font-weight:900;line-height:1.15}
 .monthly-day-low{color:#287eae;font-size:.9rem;font-weight:850;line-height:1.15}
@@ -834,7 +834,7 @@
  .monthly-calendar-grid{gap:3px}
  .monthly-calendar-day{min-height:121px;padding:5px 1px;gap:3px;border-radius:6px}
  .monthly-day-date{font-size:.76rem;padding-left:2px}
- .monthly-day-icon{width:32px;height:32px}
+ .monthly-day-icon{width:48px;height:48px}
  .monthly-day-condition{font-size:.61rem}
  .monthly-day-high{font-size:.92rem}
  .monthly-day-low{font-size:.82rem}
