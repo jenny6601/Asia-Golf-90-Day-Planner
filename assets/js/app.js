@@ -167,6 +167,8 @@ async function renderCourseSevenDayReport(host,course,startDate){
     : "本週資料以歷史同期統計為主，以下只能反映季節氣候傾向，不能視為實際七天天氣預報。";
    assessment.append(node("p",overview));
    const suitability=node("div",undefined,"departure-suitability-list");
+   const teeHour=Number($("tee").value||10);
+   const hourly=S.forecast?.courses?.find(x=>x.course.id===course.id)?.hourly;
    rows.slice(1,4).forEach((r,idx)=>{
     const historicalDay=!r.actual;
     let status,reason;
@@ -175,10 +177,19 @@ async function renderCourseSevenDayReport(host,course,startDate){
      status=Number.isFinite(freq)&&freq>=60||Number.isFinite(rain)&&rain>=5?"歷史上較不利":Number.isFinite(freq)&&freq>=30||Number.isFinite(rain)&&rain>=2?"歷史上需留意降雨":"歷史上相對較有利";
      reason=`歷史降雨頻率 ${Number.isFinite(freq)?freq.toFixed(0)+"%":"資料不足"}，日均雨量 ${Number.isFinite(rain)?rain.toFixed(1)+" mm":"資料不足"}；此為氣候統計，不能判定當日實際適打情況。`;
     }else{
-     const wet=Number.isFinite(r.prob)&&r.prob>=50||Number.isFinite(r.rain)&&r.rain>=3||Number.isFinite(r.code)&&r.code>=95;
-     const caution=Number.isFinite(r.prob)&&r.prob>=30||Number.isFinite(r.rain)&&r.rain>=1||Number.isFinite(r.code)&&((r.code>=51&&r.code<=82));
+     const indices=(hourly?.time||[]).map((t,i)=>String(t).slice(0,10)===r.date&&Number(String(t).slice(11,13))>=teeHour&&Number(String(t).slice(11,13))<teeHour+6?i:-1).filter(i=>i>=0);
+     const vals=key=>indices.map(i=>hourly?.[key]?.[i]).filter(v=>Number.isFinite(v));
+     const probs=vals("precipitation_probability"),rainValues=vals("precipitation"),temps=vals("temperature_2m"),codes=vals("weather_code");
+     const maxProb=probs.length?Math.max(...probs):null,totalRain=rainValues.length?rainValues.reduce((sum,v)=>sum+v,0):null;
+     const minTemp=temps.length?Math.min(...temps):null,maxTemp=temps.length?Math.max(...temps):null;
+     const thunder=codes.some(c=>c>=95),rainCode=codes.some(c=>c>=51&&c<=82);
+     const wet=thunder||(maxProb!==null&&maxProb>=60)||(totalRain!==null&&totalRain>=3);
+     const caution=(maxProb!==null&&maxProb>=30)||(totalRain!==null&&totalRain>=1)||rainCode;
      status=wet?"較不適合":caution?"可打但需留意":"較適合打球";
-     reason=`天氣：${r.label}；降雨機率 ${Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"資料不足"}，預報雨量 ${Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"資料不足"}，最高溫 ${Number.isFinite(r.high)?r.high.toFixed(0)+"°C":"資料不足"}。`;
+     const windowLabel=String(teeHour).padStart(2,"0")+":00–"+String(teeHour+6).padStart(2,"0")+":00";
+     reason=indices.length
+      ? `開球後六小時（${windowLabel}）：最高降雨機率 ${maxProb!==null?maxProb.toFixed(0)+"%":"資料不足"}，累積預報雨量 ${totalRain!==null?totalRain.toFixed(1)+" mm":"資料不足"}，氣溫 ${minTemp!==null&&maxTemp!==null?minTemp.toFixed(0)+"–"+maxTemp.toFixed(0)+"°C":"資料不足"}。`
+      : `開球後六小時（${windowLabel}）逐時資料不足，暫無法判斷適打性。`;
     }
     const item=node("article",undefined,"departure-suitability-item");
     item.append(node("strong",`第 ${idx+2} 天｜${r.date}｜${status}`),node("p",reason));suitability.append(item);
