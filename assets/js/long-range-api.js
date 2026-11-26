@@ -59,6 +59,34 @@ export async function fetchCourseSeasonalForecast(course,fetchImpl=fetch){
  return {course,provider:"Open-Meteo Seasonal Forecast API",model:payload.model??"ECMWF seasonal seamless",timezone:payload.timezone||timezone,fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null,daily:payload.daily??null,hourly:payload.hourly??null};
 }
 
+// Share one ERA5 daily archive request between monthly and calendar-day climatology.
+// The two views use the same coordinates, date range, timezone and variables; fetching
+// them independently needlessly doubles traffic and can trigger upstream throttling.
+const historicalArchiveCache=new WeakMap();
+async function loadHistoricalDailyArchive(course,fetchImpl,now){
+ if(typeof fetchImpl!=="function")throw new TypeError("fetchImpl must be a function");
+ let cache=historicalArchiveCache.get(fetchImpl);
+ if(!cache){cache=new Map();historicalArchiveCache.set(fetchImpl,cache)}
+ const endYear=now.getUTCFullYear()-1,startYear=endYear-9,timezone=course.timezone||"Asia/Tokyo";
+ const key=[course.latitude,course.longitude,startYear,endYear,timezone].join("|");
+ if(!cache.has(key)){
+  const request=(async()=>{
+   const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),
+    start_date:startYear+"-01-01",end_date:endYear+"-12-31",
+    daily:"temperature_2m_max,temperature_2m_min,precipitation_sum",
+    timezone,temperature_unit:"celsius",precipitation_unit:"mm",models:"era5"});
+   const response=await fetchImpl("https://archive-api.open-meteo.com/v1/archive?"+params);
+   if(!response.ok)throw new Error("歷史逐日資料 API HTTP "+response.status);
+   const payload=await response.json(),daily=payload.daily;
+   if(!daily?.time?.length)throw new Error("歷史逐日資料 API 未回傳有效逐日樣本");
+   return {daily,startYear,endYear};
+  })();
+  cache.set(key,request);
+  request.catch(()=>{if(cache.get(key)===request)cache.delete(key)});
+ }
+ return cache.get(key);
+}
+
 /**
  * Ten-complete-year same-month climate baseline from ERA5 reanalysis.
  * Rain day threshold: daily precipitation >= 1.0 mm.
@@ -66,21 +94,7 @@ export async function fetchCourseSeasonalForecast(course,fetchImpl=fetch){
  */
 export async function fetchCourseHistoricalMonthlyClimate(course, fetchImpl=fetch, now=new Date()){
  if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足，無法讀取歷史氣候");
- const endYear=now.getUTCFullYear()-1;
- const startYear=endYear-9;
- const timezone=course.timezone||"Asia/Tokyo";
- const params=new URLSearchParams({
-  latitude:String(course.latitude),longitude:String(course.longitude),
-  start_date:startYear+"-01-01",end_date:endYear+"-12-31",
-  daily:"temperature_2m_max,temperature_2m_min,precipitation_sum",
-  timezone,temperature_unit:"celsius",precipitation_unit:"mm",
-  models:"era5"
- });
- const response=await fetchImpl("https://archive-api.open-meteo.com/v1/archive?"+params);
- if(!response.ok)throw new Error("歷史氣候 API HTTP "+response.status);
- const payload=await response.json();
- const daily=payload.daily;
- if(!daily?.time?.length)throw new Error("歷史氣候 API 未回傳逐日資料");
+ const {daily,startYear,endYear}=await loadHistoricalDailyArchive(course,fetchImpl,now);
  const buckets=Array.from({length:12},()=>({years:new Set(),rainTotals:[],rainDays:[],dailyMax:0,low:[],high:[]}));
  const annual=new Map();
  for(let i=0;i<daily.time.length;i++){
@@ -115,15 +129,7 @@ export async function fetchCourseHistoricalMonthlyClimate(course, fetchImpl=fetc
  */
 export async function fetchCourseHistoricalWeekNormals(course, dates, fetchImpl=fetch, now=new Date()){
  if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足");
- const endYear=now.getUTCFullYear()-1,startYear=endYear-9,timezone=course.timezone||"Asia/Tokyo";
- const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),
-  start_date:startYear+"-01-01",end_date:endYear+"-12-31",
-  daily:"temperature_2m_max,temperature_2m_min,precipitation_sum",
-  timezone,temperature_unit:"celsius",precipitation_unit:"mm",models:"era5"});
- const response=await fetchImpl("https://archive-api.open-meteo.com/v1/archive?"+params);
- if(!response.ok)throw new Error("歷史逐日資料 API HTTP "+response.status);
- const data=await response.json(),daily=data.daily;
- if(!daily?.time?.length)throw new Error("歷史逐日資料不足");
+ const {daily,startYear,endYear}=await loadHistoricalDailyArchive(course,fetchImpl,now);
  return {course,startYear,endYear,days:dates.map(date=>{
   const md=date.slice(5),samples=[];
   for(let i=0;i<daily.time.length;i++)if(daily.time[i].slice(5)===md){
