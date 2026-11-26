@@ -1,0 +1,30 @@
+name: Okinawa Multi-model Availability Probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/probe-okinawa-multimodel-availability.mjs"
+      - ".github/workflows/okinawa-multimodel-probe.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Probe model and lead-time coverage
+        run: node scripts/probe-okinawa-multimodel-availability.mjs
+      - name: Upload availability report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-multimodel-availability
+          path: artifacts/
+          if-no-files-found: warn
