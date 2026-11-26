@@ -94,7 +94,7 @@ function renderSevenDayVisual(host,rows,historical=false,onSelectDate=null){
   const strip=node("div",undefined,"taiwan-style-seven-day unified-seven-day");
   const makeRow=cls=>node("div",undefined,"taiwan-seven-row "+cls);
   const dates=makeRow("taiwan-seven-dates"),weather=makeRow("taiwan-seven-weather"),rain=makeRow("taiwan-seven-rain");
-  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),clickable=!!onSelectDate&&r.actual===true;const d=node(clickable?"button":"div",undefined,"taiwan-seven-cell"+([0,6].includes(wd)?" weekend":"")+(clickable?" seven-day-date-button":""));if(clickable){d.type="button";d.title="點選查看當日逐時天氣";d.style.width="100%";d.style.border="0";d.style.borderRadius="0";d.style.font="inherit";d.style.cursor="pointer";d.addEventListener("click",()=>onSelectDate(r.date))}d.append(node("strong",r.date.slice(5).replace("-","/")),node("small",["日","一","二","三","四","五","六"][wd]));dates.append(d)});
+  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),clickable=!!onSelectDate&&r.clickable===true;const d=node(clickable?"button":"div",undefined,"taiwan-seven-cell"+([0,6].includes(wd)?" weekend":"")+(clickable?" seven-day-date-button":""));if(clickable){d.type="button";d.dataset.hourlyDate=r.date;d.setAttribute("aria-label",r.date+" 點選查看逐時天氣");d.title="點選查看當日逐時天氣";d.style.width="100%";d.style.border="0";d.style.borderRadius="0";d.style.font="inherit";d.style.cursor="pointer";d.style.pointerEvents="auto";d.style.touchAction="manipulation"}d.append(node("strong",r.date.slice(5).replace("-","/")),node("small",["日","一","二","三","四","五","六"][wd]));dates.append(d)});
   strip.append(dates);
   const graph=node("div",undefined,"seven-day-inline-graph"),svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
   svg.setAttribute("viewBox","0 0 700 220");svg.setAttribute("role","img");svg.setAttribute("aria-label","每日最高最低氣溫及體感");svg.style.width="100%";svg.style.display="block";
@@ -108,6 +108,7 @@ function renderSevenDayVisual(host,rows,historical=false,onSelectDate=null){
   strip.append(weather,rain);const sectionPage=node("section",undefined,"selected-week-five-page");sectionPage.append(node("h4","第 "+(pageIndex+1)+" 頁｜"+pageRows[0].date+" ～ "+pageRows[pageRows.length-1].date,"selected-week-page-title"),strip);
   pages.append(sectionPage);
  };
+ pages.addEventListener("click",e=>{const target=e.target.closest("button[data-hourly-date]");if(!target||!pages.contains(target))return;e.preventDefault();e.stopPropagation();onSelectDate(target.dataset.hourlyDate)},true);
  let touchStartX=0,touchStartY=0;
  pages.addEventListener("touchstart",e=>{const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY},{passive:true});
  pages.addEventListener("touchend",e=>{const t=e.changedTouches[0],dx=t.clientX-touchStartX,dy=t.clientY-touchStartY;if(Math.abs(dx)<45||Math.abs(dx)<Math.abs(dy)*1.25)return;const maxPage=Math.ceil(rows.length/5)-1;if(dx<0&&pageIndex<maxPage){pageIndex++;renderPage()}else if(dx>0&&pageIndex>0){pageIndex--;renderPage()}},{passive:true});
@@ -740,7 +741,7 @@ async function renderSelectedWeekReport(group,week,records,month,cachedForecasts
   const codes=entries.map(x=>x.code).filter(Number.isFinite);
   const code=codes.length?codes.sort((a,b)=>codes.filter(x=>x===b).length-codes.filter(x=>x===a).length)[0]:null;
   const actual=entries.length>0;
-  return {date,actual,code,icon:wxIcon(code),label:actual?wxLabel(code):"歷史資料待補",rain:median(entries.map(x=>x.rain)),prob:median(entries.map(x=>x.prob)),low:median(entries.map(x=>x.low)),high:median(entries.map(x=>x.high)),feel:median(entries.map(x=>x.feel))};
+  return {date,actual,clickable:leadFor(date)>=0&&leadFor(date)<16,code,icon:wxIcon(code),label:actual?wxLabel(code):"歷史資料待補",rain:median(entries.map(x=>x.rain)),prob:median(entries.map(x=>x.prob)),low:median(entries.map(x=>x.low)),high:median(entries.map(x=>x.high)),feel:median(entries.map(x=>x.feel))};
  });
  const historicalDates=rows.filter(r=>!r.actual).map(r=>r.date);
  if(historicalDates.length&&courses.length){
@@ -756,7 +757,8 @@ async function renderSelectedWeekReport(group,week,records,month,cachedForecasts
  }
  if(rows.some(r=>r.actual)&&historicalDates.length)report.append(node("p","本週逐日預報僅適用於未來16天範圍內的日期；其餘日期以過去十年歷史同期統計補充，不代表該日實際天氣。","long-range-note"));
  if(!rows.some(r=>r.actual))report.append(node("p","以下為過去十年相同月日的 ERA5 歷史同期統計；降雨頻率不是未來降雨機率，氣溫與雨量不是該週預報。","long-range-note"));
- renderSevenDayVisual(report,rows,!rows.some(r=>r.actual),date=>renderSelectedWeekHourlyPage(host,group,week,records,month,date,forecasts));
+ report.append(node("p","點選未來16天內的日期，可查看該日逐時天氣。","data-note"));
+  renderSevenDayVisual(report,rows,!rows.some(r=>r.actual),date=>renderSelectedWeekHourlyPage(host,group,week,records,month,date,forecasts));
  const choose=node("button","選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>showDepartureForm(week.start));host.append(choose);host.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
