@@ -24,11 +24,11 @@ jobs:
 
       - name: Configure CDS API credentials
         env:
-          CDSAPI_KEY: ${{ secrets.CDSAPI_KEY }}
+          CDSAPI_KEY: ${{ secrets.CDS_API_KEY }}
         shell: bash
         run: |
           if [ -z "$CDSAPI_KEY" ]; then
-            echo "Missing repository secret CDSAPI_KEY."
+            echo "Missing repository secret CDS_API_KEY."
             exit 1
           fi
           umask 077
