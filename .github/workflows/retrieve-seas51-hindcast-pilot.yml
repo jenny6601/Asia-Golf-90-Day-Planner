@@ -1,6 +1,6 @@
 name: Retrieve SEAS5.1 System 51 hindcast pilot
 
-on:
+'on':
   workflow_dispatch:
 
 permissions:
@@ -11,28 +11,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout pilot branch
+        uses: actions/checkout@v4
         with:
           ref: feature/ec46-seas5-api-audit-v1
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install CDS API client and ecCodes
-        run: python -m pip install --upgrade "cdsapi>=0.7.7" eccodes
+        run: |
+          python -m pip install --upgrade "cdsapi>=0.7.7" eccodes
 
       - name: Configure CDS API credentials
+        shell: bash
         env:
           CDSAPI_KEY: ${{ secrets.CDS_API_KEY }}
-        shell: bash
         run: |
-          if [ -z "$CDSAPI_KEY" ]; then
-            echo "Missing repository secret CDS_API_KEY."
-            exit 1
-          fi
+          test -n "$CDSAPI_KEY" || { echo "Missing repository secret CDS_API_KEY."; exit 1; }
           umask 077
-          printf 'url: https://cds.climate.copernicus.eu/api\nkey: %s\n' "$CDSAPI_KEY" > "$HOME/.cdsapirc"
+          {
+            printf '%s\n' 'url: https://cds.climate.copernicus.eu/api'
+            printf 'key: %s\n' "$CDSAPI_KEY"
+          } > "$HOME/.cdsapirc"
 
       - name: Retrieve the CDS-generated System 51 pilot request
         run: python scripts/retrieve-seas51-hindcast-pilot.py
