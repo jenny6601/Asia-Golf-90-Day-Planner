@@ -1,4 +1,5 @@
 import {recommendFiveDayWindows} from "./itinerary-engine.js";
+import {initPairedForecastFeed} from "./paired-forecast-feed.js";
 import {fetchOkinawa16DayForecast,fetchCourseForecast} from "./weather-api.js";
 import {OKINAWA_COURSES} from "./okinawa-courses.js";
 import {scoreGolfRainWindow,summarizeCourseRainRisks} from "./rain-risk.js";
@@ -87,7 +88,9 @@ function renderCoursePicker(){
    $("course-weather-status").textContent="球場選擇已變更，請重新讀取逐時預報。";
    $("course-selection-status").textContent=`已選擇 ${selectedCourses.length} / 3 個球場`;
    $("fetch-course-weather").disabled=selectedCourses.length===0;
-   renderCoursePicker();
+   initPairedForecastFeed();
+
+renderCoursePicker();
   });
   const info=document.createElement("span");
   const title=document.createElement("strong");title.textContent=`${course.name}（${course.area}）`;
