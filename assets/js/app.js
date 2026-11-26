@@ -1,7 +1,7 @@
 import {fetchAsiaGolfDirectory} from "./course-catalog.js";
 import {formatCourseDate} from "./course-time.js";
 import {fetchCourseForecast} from "./weather-api.js";
-import {fetchCourseSeasonalForecast,fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals,interpretPrecipitationEfi} from "./long-range-api.js";
+import {fetchCourseSeasonalForecast,fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals,interpretPrecipitationEfi} from "./long-range-api.js?v=era5-shared-cache-v1";
 import {normalizeSeasonalDaily,blendSeasonalWithHistory} from "./seasonal-daily-engine.js";
 import {buildDailyClimateOutlook} from "./daily-climate-outlook.js";
 import {scoreGolfRainWindow} from "./rain-risk.js";
@@ -715,7 +715,14 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   })());
  }
  await Promise.all(tasks);
- if(loadNote.textContent==="正在整理全月逐日資料…")loadNote.remove();
+ const expectedClimateDates=dates.filter(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=19&&lead<=90});
+ const producedDates=new Set(seasonalDailyRows.map(x=>x.date));
+ const missingClimateDates=expectedClimateDates.filter(d=>!producedDates.has(d));
+ if(missingClimateDates.length){
+  const summary="逐日估計資料覆蓋 "+(expectedClimateDates.length-missingClimateDates.length)+"/"+expectedClimateDates.length+" 天；缺少 "+missingClimateDates.length+" 天。請查看資料來源狀態，未取得的日期不會以虛構數值補齊。";
+  loadNote.textContent=loadNote.textContent==="正在整理全月逐日資料…"?summary:loadNote.textContent+" "+summary;
+  loadNote.classList.add("risk-summary");
+ }else if(loadNote.textContent==="正在整理全月逐日資料…")loadNote.remove();
  const calendar=node("div",undefined,"monthly-calendar-grid");["一","二","三","四","五","六","日"].forEach((d,i)=>calendar.append(node("div",d,"monthly-calendar-weekday"+(i>=5?" monthly-weekend":""))));
  const offset=(new Date(dates[0]+"T12:00:00Z").getUTCDay()+6)%7;for(let i=0;i<offset;i++)calendar.append(node("div","","monthly-calendar-empty"));
  const weatherLabel=code=>!Number.isFinite(code)?"資料不足":code===0?"晴朗":code<=2?"晴時多雲":code===3?"陰天":code>=51&&code<=57?"毛毛雨":code>=61&&code<=67?"降雨":code>=80&&code<=82?"陣雨":code>=95?"雷雨":"多雲";
