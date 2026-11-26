@@ -773,16 +773,47 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const playable=dailyAssessment.filter(x=>x.playable),watch=dailyAssessment.filter(x=>x.grade===2),wet=dailyAssessment.filter(x=>x.grade===3);
  const seasonRatio=Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)&&seasonRain-rainAnomaly>0?seasonRain/(seasonRain-rainAnomaly):null;
  const seasonLabel=Number.isFinite(seasonRatio)?seasonRatio>=1.35?"雨季／明顯偏濕訊號":seasonRatio>=1.15?"偏濕季節":seasonRatio<=.75?"偏乾季節":"接近常年季節型態":Number.isFinite(historicalRain)?(historicalRain>=250||rainDays>=16?"歷史雨季":historicalRain>=150||rainDays>=12?"歷史偏濕季":historicalRain<=60&&rainDays<=8?"歷史乾季":"歷史降雨接近常態"):"季節型態資料不足";
- const best=[...dailyAssessment].sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount).slice(0,5);
- const datesText=best.length?best.map(x=>Number(x.date.slice(8,10))+"日").join("、"):"目前無足夠資料";
- const lines=[];
- lines.push("本月季節判讀："+seasonLabel+"。");
- if(dailyAssessment.length){
-  lines.push("逐日資料可評估 "+dailyAssessment.length+"/"+daysInMonth+" 天；較適合安排球敘約 "+playable.length+" 天，天氣需留意約 "+watch.length+" 天，降雨風險較高約 "+wet.length+" 天。");
-  lines.push("相對優先日期："+datesText+"。依降雨頻率及雨量排序，並非保證晴天。");
- }else lines.push("目前缺少足夠逐日資料，無法可靠計算適合打球天數及推薦日期。");
- lines.push("評估優先使用前16天逐日預報；其他日期採 ERA5 歷史同期統計與可取得的週／月季節模式訊號。適打天數是規劃參考，出發前仍須確認最新降雨、風勢及雷雨警示。");
- narrative.replaceChildren(node("p",lines.join(" ")),node("p","分級原則：較適合＝降雨風險低且估計雨量少；需留意＝有一定降雨風險；不優先＝降雨頻率或雨量偏高。資料不足的日期不列入評估。","monthly-analysis-note"));
+ const best=[...dailyAssessment].sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.date.localeCompare(b.date)).slice(0,5);
+ const datesText=best.length?best.map(x=>Number(x.date.slice(8,10))+"日").join("、"):"資料不足，暫無推薦日期";
+ // Recommend a continuous five-day travel window only when all five dates have usable data.
+ const byDate=new Map(dailyAssessment.map(x=>[x.date,x]));
+ const fiveDayWindows=[];
+ for(let i=0;i<=dates.length-5;i++){
+  const window=dates.slice(i,i+5).map(d=>byDate.get(d));
+  if(window.some(x=>!x))continue;
+  fiveDayWindows.push({days:window,grade:window.reduce((s,x)=>s+x.grade,0)/5,chance:window.reduce((s,x)=>s+x.chance,0)/5,amount:window.reduce((s,x)=>s+x.amount,0)/5});
+ }
+ fiveDayWindows.sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.days[0].date.localeCompare(b.days[0].date));
+ const preferredWindow=fiveDayWindows[0]||null;
+ const dateRange=preferredWindow?Number(preferredWindow.days[0].date.slice(8,10))+"月"+Number(preferredWindow.days[0].date.slice(8,10))+"日 ～ "+Number(preferredWindow.days[4].date.slice(5,7))+"月"+Number(preferredWindow.days[4].date.slice(8,10))+"日":"資料不足，無法推薦連續5天";
+ const seasonDescription=seasonLabel==="季節型態資料不足"?"目前沒有足夠季節資料判讀本月型態。":seasonLabel.includes("雨季")||seasonLabel.includes("偏濕")?"本月降雨訊號較明顯，安排球敘宜優先挑選降雨風險較低的日期。":seasonLabel.includes("乾季")||seasonLabel.includes("偏乾")?"本月整體降雨訊號較少，較有利於安排戶外球敘。":"本月降雨訊號接近歷史常態，仍需比較逐日差異安排球敘。";
+ const summary=node("div",undefined,"monthly-playability-card");
+ const seasonBanner=node("div",undefined,"monthly-playability-season");
+ seasonBanner.append(node("div","🌦️ 季節型態","monthly-playability-kicker"),node("strong",seasonLabel,"monthly-playability-season-label"),node("p",seasonDescription));
+ summary.append(seasonBanner);
+ const counts=node("div",undefined,"monthly-playability-counts");
+ const countItems=[
+  {label:"較適合",count:playable.length,desc:"降雨風險低且雨量少",tone:"good",icon:"😊"},
+  {label:"需留意",count:watch.length,desc:"有一定降雨風險",tone:"watch",icon:"😐"},
+  {label:"不優先",count:wet.length,desc:"降雨頻率或雨量偏高",tone:"poor",icon:"🌧️"}
+ ];
+ countItems.forEach(item=>{const card=node("div",undefined,"monthly-playability-count "+item.tone);card.append(node("span",item.icon,"monthly-playability-icon"),node("strong",item.label),node("b","約 "+item.count+" 天"),node("small",item.desc));counts.append(card)});
+ summary.append(counts);
+ const priority=node("div",undefined,"monthly-playability-priority");
+ priority.append(node("strong","📅 優先日期"),node("span",datesText));
+ const week=node("div",undefined,"monthly-playability-week");
+ week.append(node("strong","🗓️ 優先週數"),node("span",dateRange));
+ summary.append(priority,week);
+ const notes=node("div",undefined,"monthly-playability-notes");
+ const noteRows=[
+  ["🎯 日期評估","依降雨頻率及估計雨量排序，並非保證晴天。"],
+  ["📊 資料來源","優先使用前16天逐日預報；其他日期採 ERA5 歷史同期統計與可取得的週／月季節模式訊號。"],
+  ["⛳ 適打天數","僅列入資料完整且可評估的日期；出發前仍須確認最新降雨、風勢及雷雨警示。"],
+  ["ⓘ 說明","推薦優先日期為全月條件較佳的5天；優先週數為連續5天的建議出發時段，適合安排五天四夜行程。資料不足的日期不列入評估。"]
+ ];
+ noteRows.forEach(([label,detail])=>{const row=node("div",undefined,"monthly-playability-note-row");row.append(node("strong",label),node("span",detail));notes.append(row)});
+ summary.append(notes);
+ narrative.replaceChildren(summary);
  const expectedClimateDates=dates.filter(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=18&&lead<=89});
  const producedDates=new Set(seasonalDailyRows.map(x=>x.date));
  const missingClimateDates=expectedClimateDates.filter(d=>!producedDates.has(d));
