@@ -47,3 +47,12 @@ The first audit script did not correctly extract lead hours because this GRIB's 
 A separate single-lead precipitation retrieval probe was added to determine whether the missing tp leads were caused by the multi-lead request form. That probe is still running / must be checked before interpreting missing precipitation fields as dataset unavailability.
 
 This pilot remains insufficient for forecast-skill evaluation: it is one initialization, only four lead times, no resolved precipitation accumulation series, and no independent verification pairs. It demonstrates automated CDS access and GRIB metadata extraction only. It is not yet a D17–D90 hindcast validation dataset.
+
+
+## Course-point extraction pilot
+
+The automated workflow now extracts each available ensemble member's nearest GRIB grid-point value for the five Okinawa courses with coordinates. The extraction records course and grid coordinates, nearest-grid distance, initialization/valid time, lead hour, ensemble member, variable, raw value, unit and GRIB step metadata.
+
+Temperature is converted from Kelvin to Celsius while retaining the original unit. Wind components remain in m s-1. Precipitation is retained only as the raw instantaneous GRIB field; the script explicitly labels it as not an accumulation. PGM is omitted until its coordinates are verified. The other five course coordinates are provisional, and extracted values are marked accordingly. A 35 km maximum nearest-grid distance prevents silently accepting distant grid cells.
+
+This output is a spatial extraction pilot, not a verification dataset. It still requires multiple hindcast initializations, reliable course coordinates, precipitation accumulation semantics, and matching reanalysis values before skill metrics or calibration can be computed.
