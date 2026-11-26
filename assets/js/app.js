@@ -505,7 +505,27 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
   const historicalRain=avg(hist,"rain"),rain=Number.isFinite(seasonRain)?seasonRain:historicalRain;
   const rainDays=avg(hist,"rainDays"),low=avg(hist,"low"),high=avg(hist,"high");
   const avgDaily=avg(hist,"avgDailyRain"),maxDaily=hist.length?Math.max(...hist.map(x=>x.maxDailyRain).filter(Number.isFinite)):null;
-  let outlook="歷史同期參考";
+  // Historical-month description is based on historical monthly rainfall,
+  // rainy-day frequency and mean temperatures, not a fabricated daily forecast.
+  const historicalOutlook=()=>{
+   const parts=[];
+   if(Number.isFinite(historicalRain)||Number.isFinite(rainDays)){
+    if((Number.isFinite(historicalRain)&&historicalRain>=250)||(Number.isFinite(rainDays)&&rainDays>=16))parts.push("雨季多雨");
+    else if((Number.isFinite(historicalRain)&&historicalRain>=150)||(Number.isFinite(rainDays)&&rainDays>=12))parts.push("偏濕");
+    else if((Number.isFinite(historicalRain)&&historicalRain<=60)&&(Number.isFinite(rainDays)&&rainDays<=8))parts.push("乾季偏乾");
+    else if((Number.isFinite(historicalRain)&&historicalRain<100)||(Number.isFinite(rainDays)&&rainDays<10))parts.push("降雨較少");
+    else parts.push("降雨接近常態");
+   }
+   if(Number.isFinite(low)&&Number.isFinite(high)){
+    const meanTemp=(low+high)/2;
+    if(meanTemp<=12)parts.push("寒冷");
+    else if(meanTemp<=18)parts.push("偏冷");
+    else if(meanTemp>=28)parts.push("炎熱");
+    else if(meanTemp>=24)parts.push("溫暖");
+   }
+   return parts.length?parts.join("、"):"歷史氣候資料不足";
+  };
+  let outlook=historicalOutlook();
   if(Number.isFinite(seasonRain)&&Number.isFinite(seasonAnomaly)){
    const baseline=seasonRain-seasonAnomaly;
    outlook=baseline>0?(seasonRain/baseline>=1.2?"季節預測偏濕":seasonRain/baseline<=.8?"季節預測偏乾":"季節預測接近常態"):"季節預測可用";
