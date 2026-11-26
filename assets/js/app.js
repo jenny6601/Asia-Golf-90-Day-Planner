@@ -692,7 +692,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
     if(result.status==="fulfilled")historicalNormals.push(result.value);
     else historyErrors.push(sampleCourses[index].name+"：歷史資料讀取失敗（"+(result.reason?.message||String(result.reason))+"）");
    });
-   const hasLongRangeDates=dates.some(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=19&&lead<=90});
+   const hasLongRangeDates=dates.some(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=18&&lead<=89});
    if(hasLongRangeDates){
     const seasonalResults=await Promise.allSettled(sampleCourses.map(c=>fetchCourseSeasonalForecast(c)));
     const seasonalErrors=[];
@@ -715,7 +715,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   })());
  }
  await Promise.all(tasks);
- const expectedClimateDates=dates.filter(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=19&&lead<=90});
+ const expectedClimateDates=dates.filter(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=18&&lead<=89});
  const producedDates=new Set(seasonalDailyRows.map(x=>x.date));
  const missingClimateDates=expectedClimateDates.filter(d=>!producedDates.has(d));
  if(missingClimateDates.length){
@@ -732,7 +732,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const actualEntries=forecastCourses.map(f=>{const i=(f.daily?.time||[]).indexOf(date);return i<0?null:{code:f.daily.weather_code?.[i],high:f.daily.temperature_2m_max?.[i],low:f.daily.temperature_2m_min?.[i],prob:f.daily.precipitation_probability_max?.[i]}}).filter(Boolean);
   const isForecast=lead>=0&&lead<16&&actualEntries.length>0,historicalEntries=historicalNormals.map(n=>n.days?.find(d=>d.date===date)).filter(Boolean);
   const seasonalEntries=seasonalDailyRows.filter(x=>x.date===date);
-  const useSeasonal=!isForecast&&lead>=19&&lead<=90&&seasonalEntries.length>0;
+  const useSeasonal=!isForecast&&lead>=18&&lead<=89&&seasonalEntries.length>0;
   const dayOfWeek=new Date(date+"T12:00:00Z").getUTCDay(),isWeekend=dayOfWeek===0||dayOfWeek===6;
   const card=node(isForecast?"button":"article",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":useSeasonal?"monthly-day-seasonal":"monthly-day-history")+(isWeekend?" monthly-weekend":""));
   if(isForecast){card.type="button";card.setAttribute("aria-label",date+" 逐日天氣，點選查看出發日七天天氣預報");card.title="點選查看 "+date+" 出發日七天天氣預報";card.addEventListener("click",()=>openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,sampleCourses[0],date))}
