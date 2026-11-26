@@ -6,7 +6,7 @@ on:
     - cron: "17 22 * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   paired-snapshot:
@@ -24,10 +24,27 @@ jobs:
         env:
           WEATHERAPI_KEY: ${{ secrets.WEATHERAPI_KEY }}
         run: node scripts/fetch-paired-weather.mjs
-      - name: Upload paired forecast snapshot
+      - name: Upload paired forecast audit artifact
         uses: actions/upload-artifact@v4
         with:
           name: paired-weather-audit-${{ github.run_number }}
           path: artifacts/paired-weather-audit.json
           if-no-files-found: error
           retention-days: 14
+      - name: Preserve latest forecast snapshot for the static planner
+        shell: bash
+        run: |
+          cp artifacts/paired-weather-audit.json "$RUNNER_TEMP/paired-weather-audit.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin forecast-data || true
+          if git show-ref --verify --quiet refs/remotes/origin/forecast-data; then
+            git checkout -B forecast-data origin/forecast-data
+          else
+            git checkout --orphan forecast-data
+          fi
+          mkdir -p data
+          cp "$RUNNER_TEMP/paired-weather-audit.json" data/latest.json
+          git add data/latest.json
+          git commit -m "Update paired forecast snapshot ${{ github.run_number }}"
+          git push origin forecast-data
