@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Create a read-only inventory over one or more normalized CDS batch JSON files. The report counts initializations, batches, courses, variables and D17–D90 lead buckets. It flags duplicate batch IDs, duplicate deterministic record keys, invalid envelopes and missing provenance without silently deleting data.
+Create a read-only inventory over one or more normalized CDS batch JSON files. The report counts initialization dates, batches, courses, variables and four planning horizons: D17–30, D31–45, D46–60 and D61–90. It flags duplicate batch IDs, duplicate record keys, invalid envelopes and missing provenance without silently deleting data.
 
 ## Supported inputs
 
@@ -19,8 +19,8 @@ python -m unittest discover -s tests -p "test_inventory_cds_archive_batches.py" 
 
 - `initializationCount` is the number of distinct initialization timestamps represented in each country/variable/lead group.
 - Duplicate records remain in the input count and are flagged for review; they are not deduplicated automatically.
-- Grid distances over 35 km are counted separately for representativeness review, not discarded.
+- Distance metadata is retained as a descriptive diagnostic only; it does not filter regional long-range guidance.
 - A structurally valid inventory is not forecast-skill validation and does not prove durable archive storage.
-- The current CDS pilot still contains one initialization; multiple years must be retrieved and normalized before multi-year validation is possible.
+- The current CDS pilot still contains one initialization; multiple initializations must be retrieved and normalized before multi-year validation is possible.
 
 This tool does not broaden or modify the approved CDS retrieval scope.
