@@ -6,6 +6,7 @@ name: SEAS5.1 historical hindcast retrieval and GRIB audit
     paths:
       - "scripts/retrieve-seas51-hindcast-pilot.py"
       - "scripts/audit-seas51-grib.py"
+      - "scripts/extract-seas51-course-points.py"
       - "scripts/probe-seas51-precipitation-leads.py"
       - ".github/workflows/seas51-hindcast-retrieval.yml"
 permissions:
@@ -32,6 +33,8 @@ jobs:
         run: python scripts/retrieve-seas51-hindcast-pilot.py
       - name: Audit GRIB metadata
         run: python scripts/audit-seas51-grib.py
+      - name: Extract ensemble values at course-nearest grid points
+        run: python scripts/extract-seas51-course-points.py
       - name: Probe precipitation leads individually
         run: python scripts/probe-seas51-precipitation-leads.py
       - name: Upload raw GRIB and machine-readable audit
