@@ -13,6 +13,8 @@ const WEEKLY=[
  "precipitation_anomaly_gt0","precipitation_anomaly_gt10","precipitation_anomaly_gt20",
  "wind_speed_10m_mean","wind_speed_10m_anomaly","temperature_2m_mean","temperature_2m_anomaly"
 ].join(",");
+const DAILY=["weather_code","temperature_2m_max","temperature_2m_min","temperature_2m_mean","wind_speed_10m_mean","cloud_cover_mean","sunshine_duration"].join(",");
+const HOURLY=["precipitation","rain","showers","temperature_2m","apparent_temperature","weather_code","wind_speed_10m","wind_gusts_10m","cloud_cover","relative_humidity_2m"].join(",");
 const MONTHLY=[
  "precipitation_mean","precipitation_anomaly","wind_speed_10m_mean","wind_speed_10m_anomaly",
  "temperature_2m_mean","temperature_2m_anomaly","temperature_min24h_2m_mean","temperature_max24h_2m_mean","cloud_cover_mean","cloud_cover_anomaly",
@@ -31,7 +33,7 @@ export async function fetchOkinawaLongRange(fetchImpl=fetch){
   if(!response.ok)throw new Error(`${point.label} 長期展望 API HTTP ${response.status}`);
   const payload=await response.json();
   if(!payload.weekly?.time?.length && !payload.monthly?.time?.length)throw new Error(`${point.label} 未回傳週/月展望資料`);
-  return {point,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,timezone:payload.timezone,model:payload.model??"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null};
+  return {point,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,timezone:payload.timezone,model:payload.model??"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null,daily:payload.daily??null,hourly:payload.hourly??null};
  }));
  return {provider:"Open-Meteo Seasonal Forecast API",model:"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),timezone:"Asia/Tokyo",points};
 }
@@ -51,10 +53,10 @@ export function interpretPrecipitationEfi(value){
 export async function fetchCourseSeasonalForecast(course,fetchImpl=fetch){
  if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足，無法讀取長期趨勢");
  const timezone=course.timezone||"Asia/Tokyo";
- const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),weekly:WEEKLY,monthly:MONTHLY,forecast_days:"90",timezone,wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius",models:"ecmwf_seasonal_seamless"});
+ const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),weekly:WEEKLY,monthly:MONTHLY,daily:DAILY,hourly:HOURLY,forecast_days:"90",timezone,wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius",models:"ecmwf_seasonal_seamless"});
  const response=await fetchImpl(ENDPOINT+"?"+params);if(!response.ok)throw new Error("長期趨勢 API HTTP "+response.status);
  const payload=await response.json();if(!payload.weekly?.time?.length&&!payload.monthly?.time?.length)throw new Error("未回傳長期趨勢資料");
- return {course,provider:"Open-Meteo Seasonal Forecast API",model:payload.model??"ECMWF seasonal seamless",timezone:payload.timezone||timezone,fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null};
+ return {course,provider:"Open-Meteo Seasonal Forecast API",model:payload.model??"ECMWF seasonal seamless",timezone:payload.timezone||timezone,fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null,daily:payload.daily??null,hourly:payload.hourly??null};
 }
 
 /**
