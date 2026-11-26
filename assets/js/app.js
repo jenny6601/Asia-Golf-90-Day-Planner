@@ -668,6 +668,21 @@ function showDepartureForm(startDate){
  $("course-note").textContent="已帶入所選週次起始日；請選擇球場及開球時間。";
  $("climate-explorer").hidden=true;
  const form=$("departure").closest(".panel");form.hidden=false;
+ let nav=$("departure-form-nav");
+ if(!nav){nav=node("div",undefined,"departure-form-nav");nav.id="departure-form-nav";form.insertBefore(nav,form.firstChild)}
+ nav.replaceChildren();
+ const back=node("button","← 返回上一層","departure-form-back");back.type="button";
+ back.addEventListener("click",()=>{
+  form.hidden=true;$("climate-explorer").hidden=false;
+  const action=climateBackAction;climateBackAction=null;
+  if(action)action();else showCountryOverview();
+ });
+ const home=node("button","⌂ 返回首頁","departure-form-home");home.type="button";
+ home.addEventListener("click",()=>{
+  form.hidden=true;$("report").replaceChildren();$("climate-explorer").hidden=false;
+  climateBackAction=null;showCountryOverview();
+ });
+ nav.append(back,home);
  form.scrollIntoView({behavior:"smooth",block:"start"});
 }
 async function initDepartureCalendar(){
