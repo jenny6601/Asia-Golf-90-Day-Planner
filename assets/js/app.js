@@ -268,7 +268,7 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
 }
 
 async function run(){
- const button=$("run");button.disabled=true;$("report").replaceChildren();
+ const button=$("run"),reportHost=$("report");button.disabled=true;reportHost.replaceChildren();reportHost.hidden=false;
  try{
   const selectedDate=$("departure").value;
   S.course=S.directory?.courses?.find(c=>c.id===$("course").value)||null;
