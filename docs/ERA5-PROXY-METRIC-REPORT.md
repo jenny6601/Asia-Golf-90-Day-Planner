@@ -1,6 +1,6 @@
 # ERA5 proxy metric report
 
-This report calculates descriptive MAE, bias and RMSE for exact CDS–ERA5 paired samples. It groups results by country, variable, unit and the four long-range lead bands D17–30, D31–46, D47–60 and D61–90.
+This report calculates descriptive MAE, bias and RMSE for exact CDS–ERA5 paired samples. It groups results by country, variable, unit and the four long-range lead bands D17–30, D31–45, D46–60 and D61–90.
 
 All metric groups carry the label `descriptive-proxy-metrics-not-station-validated`. ERA5 is a reanalysis proxy, not course-station truth. Sample counts are always shown; the report does not infer statistical significance, calibrated probabilities or forecast skill from small samples.
 
