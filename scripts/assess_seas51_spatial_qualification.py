@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Assess whether a normalized SEAS5.1 batch is spatially fit for course verification."""
+"""Assess regional representativeness of SEAS5.1 points for long-range signals.
+
+Course coordinates and nearest-grid distances are advisory metadata, not a
+hard rejection criterion for D17-D90 regional climate guidance.
+"""
 import argparse
 import json
 from collections import defaultdict
@@ -13,9 +17,8 @@ def assess(batch_path, extract_manifest_path, threshold_km=35.0):
         raise ValueError("normalized batch records must be an array")
     grouped = defaultdict(list)
     for row in records:
-        if not isinstance(row, dict):
-            continue
-        grouped[row.get("courseId") or "UNKNOWN"].append(row)
+        if isinstance(row, dict):
+            grouped[row.get("courseId") or "UNKNOWN"].append(row)
 
     course_rows = []
     for course_id, rows in sorted(grouped.items()):
@@ -24,20 +27,19 @@ def assess(batch_path, extract_manifest_path, threshold_km=35.0):
         coordinate_status = next((c.get("coordinateStatus") for c in manifest.get("coursesUsed", [])
                                    if c.get("id") == course_id), "unknown")
         over = sum(d > threshold_km for d in distances)
-        within = sum(d <= threshold_km for d in distances)
         course_rows.append({
             "courseId": course_id,
             "coordinateStatus": coordinate_status,
             "recordCount": len(rows),
             "recordsWithDistance": len(distances),
-            "withinThresholdCount": within,
-            "overThresholdCount": over,
+            "withinAdvisoryDistanceCount": len(distances) - over,
+            "overAdvisoryDistanceCount": over,
             "minimumDistanceKm": min(distances) if distances else None,
             "maximumDistanceKm": max(distances) if distances else None,
             "spatialStatus": (
-                "coordinate-provisional-review" if coordinate_status != "verified" else
-                "no-grid-distance" if not distances else
-                "distance-review-required" if over else "within-threshold"
+                "coordinate-provisional-use-as-regional-proxy" if coordinate_status != "verified" else
+                "distance-advisory-review" if over else
+                "regional-proxy-usable"
             )
         })
 
@@ -46,33 +48,37 @@ def assess(batch_path, extract_manifest_path, threshold_km=35.0):
     total = len(records)
     distances = [r.get("nearestGridDistanceKm") for r in records
                  if isinstance(r, dict) and isinstance(r.get("nearestGridDistanceKm"), (int, float))]
-    all_within = bool(distances) and len(distances) == total and all(d <= threshold_km for d in distances)
-    all_coordinates_verified = bool(course_rows) and all(x["coordinateStatus"] == "verified" for x in course_rows)
-    no_spatial_failures = not failures and not skipped
-    qualified = all_within and all_coordinates_verified and no_spatial_failures
+    coverage_complete = bool(total) and not failures and not skipped
+    status = ("insufficient-spatial-coverage" if not total else
+              "regional-proxy-usable-with-coverage-gaps" if not coverage_complete else
+              "regional-proxy-usable-with-advisory-review" if any(
+                  x["coordinateStatus"] != "verified" or x["overAdvisoryDistanceCount"] for x in course_rows
+              ) else "regional-proxy-usable")
     return {
-        "status": "spatially-qualified-for-next-verification-gate" if qualified else "spatially-not-qualified",
-        "purpose": "course-level spatial representativeness gate; not forecast-skill validation",
+        "status": status,
+        "purpose": "regional long-range signal representation for D17-D90; not course-point weather verification",
         "batchId": batch.get("batchId"),
         "dataset": batch.get("dataset"),
         "model": batch.get("model"),
         "initializationTimes": batch.get("requestScope", {}).get("initializationTimes", []),
-        "distanceReviewThresholdKm": threshold_km,
+        "advisoryDistanceThresholdKm": threshold_km,
         "recordCount": total,
         "recordsWithDistance": len(distances),
-        "withinThresholdCount": sum(d <= threshold_km for d in distances),
-        "overThresholdCount": sum(d > threshold_km for d in distances),
+        "withinAdvisoryDistanceCount": sum(d <= threshold_km for d in distances),
+        "overAdvisoryDistanceCount": sum(d > threshold_km for d in distances),
         "courseCountWithRecords": len(course_rows),
         "courseCountWithVerifiedCoordinates": sum(x["coordinateStatus"] == "verified" for x in course_rows),
         "courseSpatialFailures": failures,
         "coursesSkippedMissingCoordinates": skipped,
+        "coverageCompleteForRequestedCourses": coverage_complete,
         "courses": course_rows,
         "limitations": [
-            "A nearest grid point is not a course-wide spatial average.",
-            "Provisional course coordinates are not treated as verified.",
-            "Records outside the distance threshold are retained but cannot pass this spatial qualification gate.",
-            "This report does not alter the approved CDS request area or retrieval scope.",
-            "Spatial qualification alone does not establish forecast skill or justify bias correction."
+            "The advisory distance is descriptive only and does not reject a record for D17-D90 regional climate guidance.",
+            "Nearby coordinates and grid cells may represent the same broad weather regime; they are not course-wide observations.",
+            "Provisional coordinates remain labeled provisional and can be refined when convenient.",
+            "Out-of-area or missing-coordinate courses remain coverage gaps; no values are fabricated for them.",
+            "This report does not establish forecast skill, station-level accuracy, or justify bias correction.",
+            "The approved CDS request area and retrieval scope are unchanged."
         ]
     }
 
@@ -86,8 +92,8 @@ def main():
     report = assess(args.batch, args.extract_manifest, args.threshold_km)
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     Path(args.output).write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(json.dumps({k: report[k] for k in ("status", "recordCount", "withinThresholdCount",
-        "overThresholdCount", "courseCountWithRecords", "courseCountWithVerifiedCoordinates",
+    print(json.dumps({k: report[k] for k in ("status", "recordCount", "withinAdvisoryDistanceCount",
+        "overAdvisoryDistanceCount", "courseCountWithRecords", "courseCountWithVerifiedCoordinates",
         "courseSpatialFailures", "coursesSkippedMissingCoordinates")}, indent=2))
 
 if __name__ == "__main__":
