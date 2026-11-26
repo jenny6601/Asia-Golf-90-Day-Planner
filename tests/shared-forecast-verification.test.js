@@ -10,28 +10,27 @@ const sample=(leadDays,forecastValue,verificationValue,extra={})=>({
  leadDays,variable:"precipitation",forecastValue,verificationValue,
  verificationSource:"era5-proxy",temporalResolution:"daily",unit:"mm",...extra
 });
-test("long-range lead bands split the four required horizons",()=>{
+test("long-range lead bands align with the 17-90 day planning horizons",()=>{
  assert.equal(longRangeLeadBand(17),"D17_30");
  assert.equal(longRangeLeadBand(30),"D17_30");
- assert.equal(longRangeLeadBand(31),"D31_46");
- assert.equal(longRangeLeadBand(46),"D31_46");
- assert.equal(longRangeLeadBand(47),"D47_60");
- assert.equal(longRangeLeadBand(60),"D47_60");
+ assert.equal(longRangeLeadBand(31),"D31_45");
+ assert.equal(longRangeLeadBand(45),"D31_45");
+ assert.equal(longRangeLeadBand(46),"D46_60");
+ assert.equal(longRangeLeadBand(60),"D46_60");
  assert.equal(longRangeLeadBand(61),"D61_90");
  assert.equal(longRangeLeadBand(90),"D61_90");
  assert.equal(longRangeLeadBand(91),"OUT_OF_RANGE");
 });
-test("paired samples require provenance, same-time keys and numeric values",()=>{
+test("paired samples require provenance and numeric values",()=>{
  assert.equal(validatePairedForecastSample(sample(25,5,3)).valid,true);
- const invalid=sample(25,5,3,{provider:""});
- assert.equal(validatePairedForecastSample(invalid).valid,false);
+ assert.equal(validatePairedForecastSample(sample(25,5,3,{provider:""})).valid,false);
 });
 test("paired metrics and band summary skip invalid data",()=>{
  const rows=[sample(20,5,3),sample(35,4,6),sample(55,8,6),sample(70,1,3),sample(20,null,3)];
  const summary=summarizeLongRangeVerification(rows);
  assert.equal(summary.bands.D17_30.n,1);
- assert.equal(summary.bands.D31_46.n,1);
- assert.equal(summary.bands.D47_60.n,1);
+ assert.equal(summary.bands.D31_45.n,1);
+ assert.equal(summary.bands.D46_60.n,1);
  assert.equal(summary.bands.D61_90.n,1);
  assert.equal(pairedForecastMetrics(rows).n,4);
 });
