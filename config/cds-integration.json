@@ -1,0 +1,32 @@
+{
+  "provider": "CDS",
+  "datasetFamily": "seasonal-original-single-levels",
+  "model": "ECMWF-SEAS5.1",
+  "system": "51",
+  "enabled": false,
+  "role": "historical-verification-only",
+  "affectsLiveForecast": false,
+  "mayApplyBiasCorrection": false,
+  "storageMode": "append-only-raw-and-normalized",
+  "requiredMetadata": [
+    "dataset",
+    "countryCode",
+    "initializationTime",
+    "validTime",
+    "leadHours",
+    "ensembleMember",
+    "variable",
+    "value",
+    "unit",
+    "temporalSemantics",
+    "verificationSource",
+    "spatialMethod",
+    "nearestGridDistanceKm"
+  ],
+  "activationRequirements": [
+    "independent paired historical samples exist",
+    "variable units and temporal semantics are verified",
+    "sample coverage is reported by country, variable and lead band",
+    "holdout validation passes before any calibration is considered"
+  ]
+}
