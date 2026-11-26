@@ -1,0 +1,32 @@
+name: Audit EC46 and SEAS5 Seasonal API
+
+on:
+  push:
+    branches:
+      - feature/ec46-seas5-api-audit-v1
+    paths:
+      - "scripts/audit-seasonal-api.mjs"
+      - ".github/workflows/audit-seasonal-api.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seasonal-api-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Probe EC46, SEAS5 and Seasonal Seamless
+        run: node scripts/audit-seasonal-api.mjs
+      - name: Publish machine-readable audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: seasonal-api-audit
+          path: seasonal-api-audit.json
+          if-no-files-found: error
+          retention-days: 30
