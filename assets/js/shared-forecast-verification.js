@@ -1,26 +1,19 @@
 /**
  * Country- and provider-neutral verification utilities for D17-D90 forecasts.
- * Only forecasts paired to an independent verification value at the same valid
- * time are scored. ERA5/reanalysis must be labelled as a verification proxy,
- * never as an issued forecast or station observation.
+ * Regional long-range guidance is evaluated in four planning horizons.
+ * ERA5/reanalysis is a verification proxy, never station truth.
  */
 const finite = value => typeof value === "number" && Number.isFinite(value);
 export const LONG_RANGE_LEAD_BANDS = Object.freeze([
   { id: "D17_30", label: "D17–30", minDay: 17, maxDay: 30 },
-  { id: "D31_46", label: "D31–46", minDay: 31, maxDay: 46 },
-  { id: "D47_60", label: "D47–60", minDay: 47, maxDay: 60 },
+  { id: "D31_45", label: "D31–45", minDay: 31, maxDay: 45 },
+  { id: "D46_60", label: "D46–60", minDay: 46, maxDay: 60 },
   { id: "D61_90", label: "D61–90", minDay: 61, maxDay: 90 }
 ]);
 export function longRangeLeadBand(leadDays) {
   if (!finite(leadDays) || leadDays < 0) return "unknown";
   return LONG_RANGE_LEAD_BANDS.find(b => leadDays >= b.minDay && leadDays <= b.maxDay)?.id ?? (leadDays <= 16 ? "D1_16" : "OUT_OF_RANGE");
 }
-/**
- * Canonical sample shape:
- * {countryCode,courseId,provider,model,modelVersion,initializationTime,
- *  validTime,leadDays,variable,forecastValue,verificationValue,
- *  verificationSource,temporalResolution,unit}
- */
 export function validatePairedForecastSample(sample) {
   const requiredStrings = ["countryCode","provider","model","initializationTime","validTime","variable","verificationSource","unit"];
   const missing = requiredStrings.filter(key => typeof sample?.[key] !== "string" || !sample[key].trim());
@@ -50,11 +43,6 @@ export function summarizeLongRangeVerification(samples, filters = {}) {
   }
   return { sampleCount: rows.length, bands: result };
 }
-/**
- * Brier score is only valid when probability is an explicitly calibrated
- * probability and the verification event is observed for the same valid time.
- * Ensemble member fraction must not be passed as calibrated probability.
- */
 export function calibratedRainBrierScore(samples) {
   const usable = (Array.isArray(samples) ? samples : []).filter(s =>
     s?.probabilityType === "calibrated" &&
