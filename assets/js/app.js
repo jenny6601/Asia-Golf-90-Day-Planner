@@ -540,7 +540,7 @@ async function renderRegionClimate(){
 async function renderRegionMonths(country,region,months,courses,subregion=""){
  const out=$("region-report"),status=$("climate-status");out.replaceChildren();
  const scopeName=region+(subregion?"｜"+subregion:"");
- showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+scopeName+"｜\\n三個月天氣總表",()=>renderSubregionMenu(country,region));
+ showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+scopeName+"｜\n三個月天氣總表",()=>renderSubregionMenu(country,region));
  const valid=courses.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
  const records=(await Promise.allSettled(valid.map(c=>fetchCourseSeasonalForecast(c)))).filter(x=>x.status==="fulfilled").map(x=>x.value);
  const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table region-matrix"),thead=node("thead"),hr=node("tr");
