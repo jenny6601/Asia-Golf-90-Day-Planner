@@ -40,13 +40,16 @@ class StandardizeSeas51Tests(unittest.TestCase):
                 encoding="utf-8"
             )
             manifest_path = root / "manifest.json"
-            manifest_path.write_text(json.dumps({"createdUtc": "2026-11-26T00:00:00+00:00", "input": "pilot.grib"}), encoding="utf-8")
+            manifest_path.write_text(json.dumps({"retrieved_utc": "2026-11-26T00:00:00+00:00", "target": "pilot.grib", "sha256": "aabbcc", "size_bytes": 1234}), encoding="utf-8")
             output_path = root / "batch.json"
             result = standardize(csv_path, manifest_path, output_path)
             self.assertEqual(result["normalizedRecordCount"], 1)
             self.assertEqual(result["rejectedRecordCount"], 1)
             self.assertEqual(result["records"][0]["leadHours"], 408)
             self.assertEqual(result["rawArchive"], "pilot.grib")
+            self.assertEqual(result["rawSha256"], "aabbcc")
+            self.assertEqual(result["rawArchiveSizeBytes"], 1234)
+            self.assertEqual(result["retrievedAt"], "2026-11-26T00:00:00+00:00")
             self.assertTrue(output_path.exists())
 
     def test_initialization_must_be_single_per_batch(self):
