@@ -1,42 +1,53 @@
-# Asia Golf Climate — 90-day forecast accuracy improvement
+# Asia Golf 90-Day Planner — five-stage accuracy improvement plan
 
-Scope: shared engine for JP, KR, CN, VN, TH, MY, SG and ID. This work is isolated from production UI and deployment.
+## Product purpose
 
-## Stage 1 — Existing-engine inventory and data-quality baseline
-- Inventory forecast providers, model identifiers, initialization cadence, valid-time coverage, temporal resolution, units, missingness, course coordinates and timezone.
-- Keep D1–D16 operational forecast separate from D17–D46 subseasonal guidance and D47–D90 seasonal guidance.
-- Record whether a value is a forecast, hindcast, reanalysis proxy, or climatology.
-- Acceptance: a machine-readable inventory and explicit unsupported/missing fields; no inferred data completeness.
+Help users choose golf-travel dates by showing the weather outlook around each selected golf course. For D17-D90, nearby regional weather guidance is sufficient. It is not expected to be a precise forecast for the exact course, fairway or green. Do not spend project effort pursuing survey-grade course coordinates or treating grid-to-course distance as a blocking quality gate.
 
-## Stage 2 — Shared paired hindcast verification dataset
-- Canonical sample fields are defined in assets/js/shared-forecast-verification.js.
-- Pair a forecast only with verification for the exact same valid time, variable, unit and spatial point/grid policy.
-- Preserve provider, model/version, initialization time, lead, temporal resolution and verification provenance.
-- ERA5 is a reanalysis verification proxy, not a station observation or a forecast issued at the time.
-- Do not mix daily totals with 6-hour accumulations or instantaneous fields.
-- Acceptance: invalid/incomplete pairs are rejected; sample counts and coverage are reported by D17–30, D31–46, D47–60 and D61–90.
+Keep the forecast horizons honest:
+- D1-D16: operational forecast, with daily/hourly detail only where the source supports it.
+- D17-D30 and D31-D45: longer-range regional outlook; communicate broad temperature, precipitation and weather-pattern tendencies.
+- D46-D60 and D61-D90: increasingly broad subseasonal/seasonal context; avoid presenting these as deterministic daily weather.
+The exact source temporal resolution and forecast semantics must remain visible.
 
-## Stage 3 — Shared calibration and bias-correction engine
-- Start with transparent, variable-specific bias estimates from out-of-sample paired hindcasts.
-- Do not apply a correction until sample sufficiency, temporal holdout and stability checks pass.
-- Rainfall occurrence probabilities require calibration against observed event labels. Ensemble member fraction is not automatically a calibrated probability.
-- Keep raw and corrected forecasts side-by-side; corrections must be reversible and versioned.
-- Acceptance: a correction is enabled only if held-out performance improves versus raw forecast and climatology baseline without material subgroup degradation.
+## Stage 1 — Existing forecast architecture and data-source audit
+- Inventory providers, model identifiers, update cadence, horizon, temporal resolution, units and missingness.
+- Distinguish forecast, hindcast, reanalysis proxy and climatology.
+- Record what each source can and cannot support.
+- Status: substantially completed.
 
-## Stage 4 — Eight-country shared validation
-- Country-specific input is limited to verified course coordinates, timezone and course metadata.
-- Reuse the same adapter, sample schema, metrics, quality gates and tests across all markets.
-- Flag provisional coordinates and avoid claiming course-level skill until location validation is complete.
-- Acceptance: one shared test suite reports country/course coverage, source availability and lead-band sample sufficiency.
+## Stage 2 — Shared verification framework
+- Use common sample definitions and metrics across providers, countries and lead bands.
+- Pair values by compatible valid time, variable, unit and temporal semantics.
+- Separate D17-D30, D31-D45, D46-D60 and D61-D90 reporting where source data supports those bands.
+- Use ERA5 only as a clearly labeled reanalysis proxy, not station truth.
+- Status: core modules and tests implemented.
 
-## Stage 5 — Before/after skill comparison and release gate
-- Compare raw model, corrected model and climatology baseline on identical held-out samples.
-- Continuous variables: MAE, bias and RMSE. Rain-event probabilities: Brier score only for explicitly calibrated probabilities; categorical rain events: POD/FAR/CSI with stated threshold.
-- Report metrics by country, provider, variable and lead band, with sample counts and uncertainty.
-- Acceptance: release only where out-of-sample skill improves; otherwise retain raw forecast and label the horizon as low/very-low confidence.
+## Stage 3 — Historical data and verification dataset
+- Build repeatable, multi-initialization historical batches with provenance and explicit missingness.
+- Preserve the nearby grid point used for each course-region association, but treat coordinates and distance as descriptive metadata, not a hard rejection gate for D17-D90.
+- Do not fabricate values for courses outside the source coverage.
+- Keep precipitation accumulation, instantaneous fields and other temporal semantics distinct.
+- Establish adequate date coverage and sample counts before skill claims.
+- Status: pilot archive and processing pipeline exist; current one-initialization sparse-lead pilot is not sufficient for skill validation. Continue this stage.
 
-## Current limitations and honest status
-- Existing production-facing long-range feed is ECMWF seasonal seamless weekly/monthly context, not a daily D17–D90 forecast.
-- The current Okinawa-only hindcast metrics module computes basic metrics but previously grouped all leads beyond 16 days together. The shared module now separates the four required lead bands.
-- A code-level framework and tests do not constitute measured forecast-skill improvement. No calibration is enabled until real paired hindcast data and held-out validation are available.
-- No production website, UI, or deployment is changed by this implementation branch.
+## Stage 4 — Bias correction and confidence evaluation
+- Evaluate raw forecasts against independent verification data and climatology baselines.
+- Use chronological holdout and prevent target-time leakage.
+- Apply variable-specific correction only when sample size and out-of-sample evidence support it.
+- Do not treat raw ensemble fractions as calibrated probabilities.
+- Status: framework exists; no correction or measured improvement claim is approved yet.
+
+## Stage 5 — Integration, testing and production readiness
+- Integrate only validated signals into the shared planning engine.
+- Present horizon-appropriate guidance and uncertainty clearly.
+- Run country/provider/lead-band regression and data-quality tests.
+- Production changes require separate explicit authorization.
+- Status: not started for release acceptance.
+
+## Working rules
+- Keep the work on `feature/90day-accuracy-five-stage`.
+- Do not merge, deploy or change production/main without explicit authorization.
+- Do not expand the approved CDS pilot request scope without review.
+- Do not let coordinate precision or grid-distance diagnostics displace the product objective.
+- Do not claim D17-D90 daily precision, forecast-skill improvement or durable archive storage without evidence.
