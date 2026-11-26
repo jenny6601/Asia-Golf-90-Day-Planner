@@ -19,3 +19,11 @@ jobs:
           node-version: 20
       - name: Run unit tests
         run: npm test
+      - name: Generate eight-country coverage audit
+        run: node scripts/report-eight-country-coverage.mjs
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: eight-country-coverage
+          path: artifacts/eight-country-coverage.json
+          if-no-files-found: error
