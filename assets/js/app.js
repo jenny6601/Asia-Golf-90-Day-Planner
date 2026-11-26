@@ -689,13 +689,27 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const avg=(arr,key)=>{const values=arr.map(x=>x?.[key]).filter(Number.isFinite);return values.length?values.reduce((a,b)=>a+b,0)/values.length:null};
  const seasonRain=avg(season,"rain"),rainAnomaly=avg(season,"rainAnomaly"),seasonTemp=avg(season,"temp"),tempAnomaly=avg(season,"tempAnomaly"),wind=avg(season,"wind"),cloud=avg(season,"cloud");
  const historicalRain=avg(hist,"rain"),rainDays=avg(hist,"rainDays"),low=avg(hist,"low"),high=avg(hist,"high"),dailyRain=avg(hist,"avgDailyRain"),maxRain=hist.length?Math.max(...hist.map(x=>x.maxDailyRain).filter(Number.isFinite)):null;
- const stats=node("div",undefined,"monthly-analysis-stats"),statItems=[["季節模式月均降雨",seasonRain," mm"],["季節模式降雨距平",rainAnomaly," mm"],["季節模式月均氣溫",seasonTemp," °C"],["季節模式氣溫距平",tempAnomaly," °C"],["季節模式平均風速",wind," m/s"],["季節模式雲量",cloud," %"],["歷史月平均最高溫",high," °C"],["歷史月平均最低溫",low," °C"],["歷史月降雨量",historicalRain," mm"],["歷史月降雨日數（≥1 mm）",rainDays," 日"],["歷史月平均日雨量",dailyRain," mm／日"],["歷史月最高單日雨量",maxRain," mm"]];
- for(const [label,value,unit] of statItems){const item=node("article",undefined,"monthly-analysis-stat");item.append(node("small",label),node("strong",Number.isFinite(value)?value.toFixed(1)+unit:"資料不足"));stats.append(item)}
+ // Seasonal-model fields and ERA5 historical normals are different evidence.
+ // When the seasonal endpoint omits a field, show the available historical
+ // analogue explicitly rather than presenting every seasonal tile as "資料不足".
+ const historicalMeanTemp=Number.isFinite(high)&&Number.isFinite(low)?(high+low)/2:null;
+ const stats=node("div",undefined,"monthly-analysis-stats"),statItems=[
+  [Number.isFinite(seasonRain)?"季節模式月均降雨":"歷史月平均降雨（季節模式未提供）",Number.isFinite(seasonRain)?seasonRain:historicalRain," mm"],
+  ["季節模式降雨距平",rainAnomaly," mm"],
+  [Number.isFinite(seasonTemp)?"季節模式月均氣溫":"歷史月均溫估計（高低溫平均）",Number.isFinite(seasonTemp)?seasonTemp:historicalMeanTemp," °C"],
+  ["季節模式氣溫距平",tempAnomaly," °C"],
+  ["季節模式平均風速（歷史資料未擷取）",wind," m/s"],
+  ["季節模式雲量（歷史資料未擷取）",cloud," %"],
+  ["歷史月平均最高溫",high," °C"],["歷史月平均最低溫",low," °C"],
+  ["歷史月降雨量",historicalRain," mm"],["歷史月降雨日數（≥1 mm）",rainDays," 日"],
+  ["歷史月平均日雨量",dailyRain," mm／日"],["歷史月最高單日雨量",maxRain," mm"]
+ ];
+ for(const [label,value,unit] of statItems){const item=node("article",undefined,"monthly-analysis-stat");const shown=Number.isFinite(value)?value.toFixed(1)+unit:(label.includes("距平")?"無歷史距平可替代":"此資料來源未提供");item.append(node("small",label),node("strong",shown));stats.append(item)}
  title.append(stats);
  const narrative=node("div",undefined,"monthly-analysis-narrative"),parts=[];
  if(Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)){const baseline=seasonRain-rainAnomaly,trend=baseline>0?(seasonRain/baseline>=1.2?"季節模式呈偏濕訊號":seasonRain/baseline<=.8?"季節模式呈偏乾訊號":"季節模式接近氣候基準"):"季節降雨趨勢資料不足";parts.push("降雨："+trend+"；模式月均降雨約 "+seasonRain.toFixed(1)+" mm，距平 "+(rainAnomaly>=0?"+":"")+rainAnomaly.toFixed(1)+" mm。")}
- else if(Number.isFinite(historicalRain))parts.push("降雨：目前缺少本月季節模式資料，歷史月平均降雨量約 "+historicalRain.toFixed(1)+" mm，平均降雨日數 "+(Number.isFinite(rainDays)?rainDays.toFixed(1):"—")+" 日。");
- if(Number.isFinite(tempAnomaly))parts.push("氣溫：季節模式氣溫距平 "+(tempAnomaly>=0?"+":"")+tempAnomaly.toFixed(1)+" °C。");
+ else if(Number.isFinite(historicalRain))parts.push("降雨：本月季節模式月資料未回傳，改以 ERA5 最近十個完整年度歷史統計作參考；歷史月平均降雨量約 "+historicalRain.toFixed(1)+" mm，平均降雨日數 "+(Number.isFinite(rainDays)?rainDays.toFixed(1):"—")+" 日。");
+ if(Number.isFinite(tempAnomaly))parts.push("氣溫：季節模式氣溫距平 "+(tempAnomaly>=0?"+":"")+tempAnomaly.toFixed(1)+" °C。");else if(Number.isFinite(historicalMeanTemp))parts.push("氣溫：季節模式氣溫距平未回傳；歷史同期月均溫估計約 "+historicalMeanTemp.toFixed(1)+" °C（歷史平均最高、最低溫之平均），不代表季節距平。");
  if(Number.isFinite(high)&&Number.isFinite(low))parts.push("歷史同期平均高低溫約 "+high.toFixed(1)+" / "+low.toFixed(1)+" °C。");
  if(Number.isFinite(wind))parts.push("模式平均風速約 "+wind.toFixed(1)+" m/s。");
  if(Number.isFinite(rainDays))parts.push("歷史上每月平均約 "+rainDays.toFixed(1)+" 個降雨日（單日雨量 ≥1 mm），歷史最大單日雨量為 "+(Number.isFinite(maxRain)?maxRain.toFixed(1):"—")+" mm。");
