@@ -138,7 +138,7 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null){
   try{const result=await fetchCourseHistoricalWeekNormals(course,dates);historical=result.days||[]}
   catch(e){report.append(node("p","部分日期歷史資料暫時無法取得："+e.message,"risk-summary"))}
  }
- if(dates.some(date=>leadFor(date)>=19&&leadFor(date)<=90)){
+ if(dates.some(date=>leadFor(date)>=18&&leadFor(date)<=89)){
   try{const raw=await fetchCourseSeasonalForecast(course);seasonal=blendSeasonalWithHistory(normalizeSeasonalDaily(raw,today()),historical)}
   catch(e){report.append(node("p","季節模式逐日資料暫時無法取得："+e.message,"risk-summary"))}
  }
@@ -734,8 +734,11 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const seasonalEntries=seasonalDailyRows.filter(x=>x.date===date);
   const useSeasonal=!isForecast&&lead>=18&&lead<=89&&seasonalEntries.length>0;
   const dayOfWeek=new Date(date+"T12:00:00Z").getUTCDay(),isWeekend=dayOfWeek===0||dayOfWeek===6;
-  const card=node(isForecast?"button":"article",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":useSeasonal?"monthly-day-seasonal":"monthly-day-history")+(isWeekend?" monthly-weekend":""));
-  if(isForecast){card.type="button";card.setAttribute("aria-label",date+" 逐日天氣，點選查看出發日七天天氣預報");card.title="點選查看 "+date+" 出發日七天天氣預報";card.addEventListener("click",()=>openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,sampleCourses[0],date))}
+  const card=node("button",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":useSeasonal?"monthly-day-seasonal":"monthly-day-history")+(isWeekend?" monthly-weekend":""));
+  card.type="button";
+  card.setAttribute("aria-label",date+" 天氣摘要，點選查看出發日七天天氣摘要");
+  card.title="點選查看 "+date+" 出發日七天天氣摘要";
+  card.addEventListener("click",()=>openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,sampleCourses[0],date))
   const code=mode(isForecast?actualEntries.map(x=>x.code):useSeasonal?seasonalEntries.map(x=>x.code):[]),highValue=isForecast?avg(actualEntries,"high"):useSeasonal?avg(seasonalEntries,"highEstimate"):avg(historicalEntries,"highMean"),lowValue=isForecast?avg(actualEntries,"low"):useSeasonal?avg(seasonalEntries,"lowEstimate"):avg(historicalEntries,"lowMean"),rainProb=isForecast?avg(actualEntries,"prob"):useSeasonal?avg(seasonalEntries,"rainChanceEstimate"):avg(historicalEntries,"rainFrequency"),rainValue=useSeasonal?avg(seasonalEntries,"rainEstimate"):null,confidenceLabel=useSeasonal?seasonalEntries.map(x=>x.confidence).filter(Boolean).sort((a,b)=>({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[b]??4)-({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[a]??4))[0]:null;
   const icon=createWeatherIcon(code,!isForecast&&!useSeasonal,rainProb);icon.classList.add("monthly-day-icon");
   card.append(node("strong",String(Number(date.slice(8,10))),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):useSeasonal?seasonalEntries[0].weather:(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
