@@ -709,7 +709,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   calendar.append(card);
  });
  dailySection.append(calendar);
- const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（D1–D16）","monthly-legend-forecast"),node("span","● 季節＋歷史融合估計（D19–D90）","monthly-legend-history"),node("span","● 歷史同期（其他日期）","monthly-legend-history"));dailySection.append(legend);
+ const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（D1–D16）","monthly-legend-forecast"),node("span","● 季節訊號調整的每日氣候估計（D19–D90）","monthly-legend-seasonal"),node("span","● 歷史同期參考（其他日期）","monthly-legend-history"));dailySection.append(legend);
  dailySection.append(node("p","資料分層：D1–D16 使用 Open-Meteo 逐日預報；D19–D90 使用最近十年 ERA5 同月日統計，並以週／月季節降雨與氣溫距平調整，輸出每日趨勢估計、估計雨日頻率及可信度。D17–D18及缺少季節訊號的日期以歷史同期參考。長期估計不是確定性逐日預報；估計雨日頻率也不是當日降雨機率。區域數值取最多三個已核實座標球場的平均參考。","monthly-source-note"));
  if(!sampleCourses.length)dailySection.append(node("p","此分區尚無具有效 GPS 座標的球場，無法產生逐日天氣簡表。","risk-summary"));
  host.scrollIntoView({behavior:"smooth",block:"start"});
