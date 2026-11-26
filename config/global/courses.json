@@ -16,7 +16,8 @@
     "coordinateStatus": "provisional",
     "officialUrl": "https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/southernlinks",
     "enabled": true,
-    "prefecture": "沖繩縣"
+    "prefecture": "沖繩縣",
+    "weatherRegionId": "JP-OKINAWA-SOUTH"
   },
   {
     "id": "pgm-okinawa",
@@ -35,7 +36,8 @@
     "coordinateStatus": "pending",
     "officialUrl": "https://www.pacificgolf.co.jp/okinawa/",
     "enabled": true,
-    "prefecture": "沖繩縣"
+    "prefecture": "沖繩縣",
+    "weatherRegionId": "JP-OKINAWA-CENTRAL"
   },
   {
     "id": "kise",
@@ -54,7 +56,8 @@
     "coordinateStatus": "provisional",
     "officialUrl": "https://www.kise-cc.jp/en/",
     "enabled": true,
-    "prefecture": "沖繩縣"
+    "prefecture": "沖繩縣",
+    "weatherRegionId": "JP-OKINAWA-NORTH"
   },
   {
     "id": "atta-terrace",
@@ -73,7 +76,8 @@
     "coordinateStatus": "provisional",
     "officialUrl": "https://www.terrace.co.jp/en/atta/",
     "enabled": true,
-    "prefecture": "沖繩縣"
+    "prefecture": "沖繩縣",
+    "weatherRegionId": "JP-OKINAWA-NORTH"
   },
   {
     "id": "palm-hills",
@@ -92,7 +96,8 @@
     "coordinateStatus": "provisional",
     "officialUrl": "https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/palmhills/",
     "enabled": true,
-    "prefecture": "沖繩縣"
+    "prefecture": "沖繩縣",
+    "weatherRegionId": "JP-OKINAWA-SOUTH"
   },
   {
     "id": "chura-orchard",
@@ -111,6 +116,7 @@
     "coordinateStatus": "provisional",
     "officialUrl": "http://www.churaorchard.co.jp/",
     "enabled": true,
-    "prefecture": "沖繩縣"
+    "prefecture": "沖繩縣",
+    "weatherRegionId": "JP-OKINAWA-NORTH"
   }
 ]
