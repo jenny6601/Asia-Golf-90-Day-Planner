@@ -207,7 +207,7 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null){
    });
    assessment.append(suitability);
    assessment.append(node("small","適打判斷依目前可取得的降雨機率、雨量、天氣現象及氣溫作初步評估；未納入球場即時積水、雷擊警報及當地風況，請於開球前再確認。","data-note"));
-   const reselect=node("button","重新選擇出發日","departure-reselect-button");reselect.type="button";reselect.addEventListener("click",()=>{const form=$("departure").closest(".panel");form.scrollIntoView({behavior:"smooth",block:"start"});$("departure").focus({preventScroll:true})});
+   const reselect=node("button","重新選擇出發日","departure-reselect-button");reselect.type="button";reselect.addEventListener("click",()=>showDepartureForm(startDate));
    assessment.append(reselect);
    page.append(assessment);
   }
