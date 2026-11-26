@@ -609,30 +609,14 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
  const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),btn=node("button","查看週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{const group={region:scopeName,rootRegion:region,subregion,country,courses:valid,months};if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,scopeName,item.month,()=>renderRegionMonths(country,region,months,valid,subregion))}});td.append(btn);actionRow.append(td)}body.append(actionRow);
  tbl.append(body);table.append(tbl);out.append(table);
  const coursePanel=node("section",undefined,"cluster-course-panel");
- coursePanel.append(node("h3","已建置球場"));
-
- const picker=node("select",undefined,"cluster-course-select");picker.setAttribute("aria-label","選擇已建置球場");
- picker.add(new Option(courses.length?"請選擇球場":"尚無已建置球場", ""));
- for(const course of courses){
-  const hasCoords=Number.isFinite(course.latitude)&&Number.isFinite(course.longitude);
-  const option=new Option(course.name+(hasCoords?"":"（座標待核實）"),course.id);
-  picker.add(option);
- }
- const choose=node("button","使用此球場","cluster-course-use");choose.type="button";choose.disabled=!courses.length;
+ coursePanel.append(node("h3","選擇出發日期及球場"));
+ const choose=node("button","前往選擇出發日期及球場","cluster-course-use");
+ choose.type="button";
  choose.addEventListener("click",()=>{
-  const course=courses.find(c=>c.id===picker.value);if(!course)return;
-  $("country").value=course.countryCode;$("country").dispatchEvent(new Event("change"));
-  if([...$("region").options].some(o=>o.value===course.region))$("region").value=course.region;
-  $("region").dispatchEvent(new Event("change"));
-  if([...$("course").options].some(o=>o.value===course.id)){
-   $("course").value=course.id;$("course").dispatchEvent(new Event("change"));
-  }
-  $("departure").scrollIntoView({behavior:"smooth",block:"center"});
-  $("course-note").textContent=Number.isFinite(course.latitude)&&Number.isFinite(course.longitude)
-   ?"已選擇 "+course.name+"｜座標 "+course.latitude.toFixed(4)+", "+course.longitude.toFixed(4)+"｜"+course.coordinateStatus
-   :"已選擇 "+course.name+"，但座標尚待核實，暫不能產生實際球場天氣報告。";
+  const currentDate=$("departure").value||today();
+  showDepartureForm(currentDate);
  });
- coursePanel.append(picker,choose);out.append(coursePanel);
+ coursePanel.append(choose);out.append(coursePanel);
  status.textContent=valid.length?"已選擇 "+scopeName+"｜球場 "+courses.length+" 個，其中 "+valid.length+" 個具有效座標，成功取得季節資料 "+records.length+" 組。":"已選擇 "+scopeName+"。此次分區尚無球場／天氣資料，但月份及週分析操作仍可使用。";
 }
 function renderEmptyWeekAnalysis(country,region,month,backAction){
