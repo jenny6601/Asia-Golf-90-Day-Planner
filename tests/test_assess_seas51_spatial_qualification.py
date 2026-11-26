@@ -18,34 +18,37 @@ def fixtures(root, distance=20, coordinate_status="verified", failure=None, skip
     return bp,mp
 
 class SpatialQualificationTests(unittest.TestCase):
-    def test_verified_coordinates_and_distances_pass(self):
+    def test_verified_coordinates_are_usable(self):
         with tempfile.TemporaryDirectory() as d:
             bp,mp=fixtures(Path(d))
-            self.assertEqual(assess(bp,mp)["status"],"spatially-qualified-for-next-verification-gate")
+            self.assertEqual(assess(bp,mp)["status"],"regional-proxy-usable")
 
-    def test_far_grid_points_are_retained_but_fail_gate(self):
+    def test_far_grid_points_are_retained_and_only_advisory(self):
         with tempfile.TemporaryDirectory() as d:
             bp,mp=fixtures(Path(d),distance=48.6)
             report=assess(bp,mp)
             self.assertEqual(report["recordCount"],2)
-            self.assertEqual(report["overThresholdCount"],2)
-            self.assertEqual(report["status"],"spatially-not-qualified")
+            self.assertEqual(report["overAdvisoryDistanceCount"],2)
+            self.assertEqual(report["status"],"regional-proxy-usable-with-advisory-review")
 
-    def test_provisional_coordinates_fail_gate(self):
+    def test_provisional_coordinates_are_usable_with_label(self):
         with tempfile.TemporaryDirectory() as d:
             bp,mp=fixtures(Path(d),coordinate_status="provisional")
-            self.assertEqual(assess(bp,mp)["status"],"spatially-not-qualified")
+            report=assess(bp,mp)
+            self.assertEqual(report["status"],"regional-proxy-usable-with-advisory-review")
+            self.assertEqual(report["courses"][0]["spatialStatus"],"coordinate-provisional-use-as-regional-proxy")
 
-    def test_out_of_area_course_failure_fails_gate(self):
+    def test_out_of_area_course_failure_is_a_coverage_gap(self):
         with tempfile.TemporaryDirectory() as d:
             bp,mp=fixtures(Path(d),failure={"course-b":{"count":25}})
-            self.assertEqual(assess(bp,mp)["status"],"spatially-not-qualified")
+            self.assertEqual(assess(bp,mp)["status"],"regional-proxy-usable-with-coverage-gaps")
 
-    def test_missing_coordinate_courses_are_reported(self):
+    def test_missing_coordinate_courses_are_reported_as_gap(self):
         with tempfile.TemporaryDirectory() as d:
             bp,mp=fixtures(Path(d),skipped=["course-c"])
-            self.assertEqual(assess(bp,mp)["coursesSkippedMissingCoordinates"],["course-c"])
-            self.assertEqual(assess(bp,mp)["status"],"spatially-not-qualified")
+            report=assess(bp,mp)
+            self.assertEqual(report["coursesSkippedMissingCoordinates"],["course-c"])
+            self.assertEqual(report["status"],"regional-proxy-usable-with-coverage-gaps")
 
 if __name__ == "__main__":
     unittest.main()
