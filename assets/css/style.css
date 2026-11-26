@@ -850,3 +850,9 @@
 @media(max-width:480px){
  .region-table.region-matrix .monthly-analysis-open{font-size:.7rem!important;padding:9px 2px!important;margin:3px 2px;width:calc(100% - 4px)}
 }
+
+/* Monthly calendar: Monday-first week; distinguish weekends without reducing contrast */
+.monthly-calendar-weekday.monthly-weekend{color:#bd3f3f;background:#f8e9e6}
+.monthly-calendar-day.monthly-weekend{background:#fff4f1;border-color:#efd6d1}
+.monthly-calendar-day.monthly-day-history.monthly-weekend{background:#f7eeeb;border-color:#ead9d4}
+.monthly-calendar-day.monthly-weekend .monthly-day-date{color:#bd3f3f}
