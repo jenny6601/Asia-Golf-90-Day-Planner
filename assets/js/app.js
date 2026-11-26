@@ -650,15 +650,16 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  if(overlaps&&sampleCourses.length)tasks.push(fetchCourseForecast(sampleCourses).then(r=>{forecastCourses=r.courses||[]}).catch(e=>{loadNote.textContent="即時逐日預報暫時無法取得，將以歷史同期統計呈現："+(e?.message||String(e))}));
  if(sampleCourses.length)tasks.push(Promise.allSettled(sampleCourses.map(c=>fetchCourseHistoricalWeekNormals(c,dates))).then(results=>{historicalNormals=results.filter(x=>x.status==="fulfilled").map(x=>x.value)}));
  await Promise.all(tasks);loadNote.remove();
- const calendar=node("div",undefined,"monthly-calendar-grid");["日","一","二","三","四","五","六"].forEach(d=>calendar.append(node("div",d,"monthly-calendar-weekday")));
- const offset=new Date(dates[0]+"T12:00:00Z").getUTCDay();for(let i=0;i<offset;i++)calendar.append(node("div","","monthly-calendar-empty"));
+ const calendar=node("div",undefined,"monthly-calendar-grid");["一","二","三","四","五","六","日"].forEach((d,i)=>calendar.append(node("div",d,"monthly-calendar-weekday"+(i>=5?" monthly-weekend":""))));
+ const offset=(new Date(dates[0]+"T12:00:00Z").getUTCDay()+6)%7;for(let i=0;i<offset;i++)calendar.append(node("div","","monthly-calendar-empty"));
  const weatherLabel=code=>!Number.isFinite(code)?"資料不足":code===0?"晴朗":code<=2?"晴時多雲":code===3?"陰天":code>=51&&code<=57?"毛毛雨":code>=61&&code<=67?"降雨":code>=80&&code<=82?"陣雨":code>=95?"雷雨":"多雲";
  const mode=values=>{const nums=values.filter(Number.isFinite);if(!nums.length)return null;const counts=new Map();nums.forEach(v=>counts.set(v,(counts.get(v)||0)+1));return [...counts.entries()].sort((a,b)=>b[1]-a[1])[0][0]};
  dates.forEach(date=>{
   const lead=Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
   const actualEntries=forecastCourses.map(f=>{const i=(f.daily?.time||[]).indexOf(date);return i<0?null:{code:f.daily.weather_code?.[i],high:f.daily.temperature_2m_max?.[i],low:f.daily.temperature_2m_min?.[i],prob:f.daily.precipitation_probability_max?.[i]}}).filter(Boolean);
   const isForecast=lead>=0&&lead<16&&actualEntries.length>0,historicalEntries=historicalNormals.map(n=>n.days?.find(d=>d.date===date)).filter(Boolean);
-  const card=node("article",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":"monthly-day-history"));
+  const dayOfWeek=new Date(date+"T12:00:00Z").getUTCDay(),isWeekend=dayOfWeek===0||dayOfWeek===6;
+  const card=node("article",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":"monthly-day-history")+(isWeekend?" monthly-weekend":""));
   const code=mode(actualEntries.map(x=>x.code)),highValue=isForecast?avg(actualEntries,"high"):avg(historicalEntries,"highMean"),lowValue=isForecast?avg(actualEntries,"low"):avg(historicalEntries,"lowMean"),rainProb=isForecast?avg(actualEntries,"prob"):avg(historicalEntries,"rainFrequency");
   const icon=createWeatherIcon(code,!isForecast,rainProb);icon.classList.add("monthly-day-icon");
   card.append(node("strong",String(Number(date.slice(8,10))),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
