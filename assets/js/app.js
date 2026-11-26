@@ -683,10 +683,39 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  let forecastCourses=[],historicalNormals=[],seasonalDailyRows=[];
  const loadNote=node("p","正在整理全月逐日資料…","data-note");dailySection.append(loadNote);
  const tasks=[];
- if(overlaps&&sampleCourses.length)tasks.push(fetchCourseForecast(sampleCourses).then(r=>{forecastCourses=r.courses||[]}).catch(e=>{loadNote.textContent="即時逐日預報暫時無法取得，將以歷史同期統計呈現："+(e?.message||String(e))}));
- if(sampleCourses.length)tasks.push(Promise.allSettled(sampleCourses.map(c=>fetchCourseHistoricalWeekNormals(c,dates))).then(results=>{historicalNormals=results.filter(x=>x.status==="fulfilled").map(x=>x.value)}));
- if(sampleCourses.length&&dates.some(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=19&&lead<=90}))tasks.push(Promise.allSettled(sampleCourses.map(async c=>{const [raw,hist]=await Promise.all([fetchCourseSeasonalForecast(c),fetchCourseHistoricalWeekNormals(c,dates)]);return buildDailyClimateOutlook(raw,hist.days||[],today(),90)})).then(results=>{seasonalDailyRows=results.filter(x=>x.status==="fulfilled").flat()}));
- await Promise.all(tasks);loadNote.remove();
+ if(overlaps&&sampleCourses.length)tasks.push(fetchCourseForecast(sampleCourses).then(r=>{forecastCourses=r.courses||[]}).catch(e=>{loadNote.textContent="即時逐日預報暫時無法取得，將以氣候資料呈現："+(e?.message||String(e))}));
+ if(sampleCourses.length){
+  tasks.push((async()=>{
+   const historyResults=await Promise.allSettled(sampleCourses.map(c=>fetchCourseHistoricalWeekNormals(c,dates)));
+   const historyErrors=[];
+   historyResults.forEach((result,index)=>{
+    if(result.status==="fulfilled")historicalNormals.push(result.value);
+    else historyErrors.push(sampleCourses[index].name+"：歷史資料讀取失敗（"+(result.reason?.message||String(result.reason))+"）");
+   });
+   const hasLongRangeDates=dates.some(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=19&&lead<=90});
+   if(hasLongRangeDates){
+    const seasonalResults=await Promise.allSettled(sampleCourses.map(c=>fetchCourseSeasonalForecast(c)));
+    const seasonalErrors=[];
+    seasonalResults.forEach((result,index)=>{
+     const course=sampleCourses[index],history=historicalNormals.find(x=>x.course?.id===course.id)||historicalNormals[index]||null;
+     const raw=result.status==="fulfilled"?result.value:{};
+     if(result.status==="rejected")seasonalErrors.push(course.name+"：季節訊號讀取失敗（"+(result.reason?.message||String(result.reason))+"）");
+     // Historical ERA5 normals remain usable when the seasonal endpoint is unavailable.
+     if(history||result.status==="fulfilled")seasonalDailyRows.push(...buildDailyClimateOutlook(raw,history?.days||[],today(),90));
+    });
+    if(historyErrors.length||seasonalErrors.length){
+     const issues=[...historyErrors,...seasonalErrors];
+     loadNote.textContent="資料來源狀態："+issues.join("；")+"。已使用成功取得的歷史資料與季節訊號產生可用估計；缺少來源的欄位不會填入虛構數值。";
+     loadNote.classList.add("risk-summary");
+    }
+   }else if(historyErrors.length){
+    loadNote.textContent="歷史資料來源暫時無法取得："+historyErrors.join("；");
+    loadNote.classList.add("risk-summary");
+   }
+  })());
+ }
+ await Promise.all(tasks);
+ if(loadNote.textContent==="正在整理全月逐日資料…")loadNote.remove();
  const calendar=node("div",undefined,"monthly-calendar-grid");["一","二","三","四","五","六","日"].forEach((d,i)=>calendar.append(node("div",d,"monthly-calendar-weekday"+(i>=5?" monthly-weekend":""))));
  const offset=(new Date(dates[0]+"T12:00:00Z").getUTCDay()+6)%7;for(let i=0;i<offset;i++)calendar.append(node("div","","monthly-calendar-empty"));
  const weatherLabel=code=>!Number.isFinite(code)?"資料不足":code===0?"晴朗":code<=2?"晴時多雲":code===3?"陰天":code>=51&&code<=57?"毛毛雨":code>=61&&code<=67?"降雨":code>=80&&code<=82?"陣雨":code>=95?"雷雨":"多雲";
