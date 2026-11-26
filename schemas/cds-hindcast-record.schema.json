@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asia-golf-climate.invalid/schemas/cds-hindcast-record.schema.json",
+  "title": "CDS Hindcast Normalized Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source", "dataset", "model", "modelVersion", "countryCode",
+    "initializationTime", "validTime", "leadHours", "variable", "value",
+    "unit", "temporalSemantics", "qualityStatus"
+  ],
+  "properties": {
+    "source": { "const": "CDS" },
+    "dataset": { "type": "string", "minLength": 1 },
+    "model": { "type": "string", "minLength": 1 },
+    "modelVersion": { "type": "string", "minLength": 1 },
+    "countryCode": { "type": "string", "minLength": 2, "maxLength": 3 },
+    "courseId": { "type": ["string", "null"] },
+    "initializationTime": { "type": "string", "format": "date-time" },
+    "validTime": { "type": "string", "format": "date-time" },
+    "leadHours": { "type": "number", "minimum": 0 },
+    "ensembleMember": { "type": ["integer", "null"], "minimum": 0 },
+    "variable": { "type": "string", "minLength": 1 },
+    "value": { "type": "number" },
+    "unit": { "type": "string", "minLength": 1 },
+    "temporalSemantics": { "type": "string", "enum": ["instantaneous", "period_accumulation", "period_average", "period_maximum", "period_minimum", "unknown"] },
+    "verificationSource": { "type": ["string", "null"] },
+    "spatialMethod": { "type": "string" },
+    "nearestGridDistanceKm": { "type": ["number", "null"], "minimum": 0 },
+    "qualityStatus": { "const": "unverified" }
+  }
+}
