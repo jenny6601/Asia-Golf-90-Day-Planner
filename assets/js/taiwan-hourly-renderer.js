@@ -261,8 +261,9 @@ function chart(id,series,maxVal,colors,labels=[],unit="",chartTheme="",weatherCo
 export function renderTaiwanPwaHourly(host,course,date,records){
  const card=document.createElement("section");card.className="weather-card departure-day-details pwa-hourly-compatible";
  const courseName=String(course?.name||"").replace(/高爾夫球場/g,"").trim();
- const heading=(n,label)=>{const h=document.createElement("h3");h.className="forecast-heading forecast-heading-"+n;h.textContent=label+"｜"+courseName+"｜"+date+"（06:00–18:00）";return h};
- const note=document.createElement("p");note.className="data-note";note.textContent="資料範圍：06:00–18:00｜逐時預報資料。";card.append(note);
+ const startTime=records[0]?.time||"—",lastTime=records[records.length-1]?.time||"—",rangeLabel=startTime+"–"+lastTime;
+ const heading=(n,label)=>{const h=document.createElement("h3");h.className="forecast-heading forecast-heading-"+n;h.textContent=label+"｜"+courseName+"｜"+date+"（"+rangeLabel+"）";return h};
+ const note=document.createElement("p");note.className="data-note";note.textContent="資料範圍："+rangeLabel+"｜開球時間後六小時逐時預報資料。";card.append(note);
  const title=heading(1,"① 逐時天氣預報");
  card.append(title);
  const tableWrap=document.createElement("div");tableWrap.className="hourly-table-wrap";
