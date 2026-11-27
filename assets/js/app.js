@@ -991,26 +991,8 @@ async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAss
    candidates.push({...window,rank:window.grade<0.75?0:window.grade<1.5?1:window.grade<2.5?2:3,signal:window.grade,coverage:5,source:"daily"});
   }
  }
- if(!hasDailyAssessment){
- for(let start=first;start<=last;start=add(start,7)){
-  const weekEnd=add(start,6);if(weekEnd>last)continue;
-  const days=Array.from({length:7},(_,i)=>add(start,i)),signals=[];
-  for(const rec of records){
-   const w=rec.weekly,m=rec.monthly;
-   const efiValues=days.map(d=>{let idx=-1;(w?.time||[]).forEach((t,i)=>{if(t<=d)idx=i});return idx>=0?w.precipitation_efi?.[idx]:null}).filter(Number.isFinite);
-   const monthIdx=(m?.time||[]).findIndex(t=>t.slice(0,7)===month);
-   const anomaly=monthIdx>=0?m.precipitation_anomaly?.[monthIdx]:null,mean=monthIdx>=0?m.precipitation_mean?.[monthIdx]:null;
-   if(efiValues.length)signals.push({efi:efiValues.reduce((a,b)=>a+b,0)/efiValues.length,source:"weekly"});
-   else if(Number.isFinite(mean))signals.push({efi:Number.isFinite(anomaly)&&mean>0?anomaly/mean:0,source:"monthly"});
-  }
-  if(!signals.length)continue;
-  const mean=signals.reduce((s,x)=>s+x.efi,0)/signals.length,rank=mean<=-.2?0:mean<=.05?1:mean<=.2?2:3;
-  candidates.push({start,end:weekEnd,rank,signal:mean,coverage:signals.length,source:signals.every(x=>x.source==="weekly")?"weekly":"monthly"});
- }
- }
- if(!hasDailyAssessment)candidates.sort((a,b)=>a.rank-b.rank||a.signal-b.signal||a.start.localeCompare(b.start));
- const picked=hasDailyAssessment?pickRecommendedFiveDayWindows(candidates,3):pickTopNonOverlappingWindows(candidates,3);
- if(!picked.length){panel.append(node("div",hasDailyAssessment?"目前沒有完整的逐日適打資料可供連續五天行程比較；為避免誤導，暫不以其他尺度資料替代。":"目前沒有取得可用的逐日適打資料，因此暫時無法排序推薦行程。","risk-summary"))}
+ const picked=hasDailyAssessment?pickRecommendedFiveDayWindows(candidates,3):[];
+ if(!picked.length){panel.append(node("div",hasDailyAssessment?"目前沒有完整的逐日適打資料可供連續五天行程比較；為避免誤導，暫不以其他尺度資料替代。":"目前沒有完整的逐日適打分級資料，無法判斷中間連續3天是否適合打球；暫不使用週／月季節訊號代替逐日適打評估。","risk-summary"))}
  else{
   const grid=node("div",undefined,"week-grid top-week-grid");
   picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");const heading=node("div",undefined,"week-card-heading");heading.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")));const summary=node("div",undefined,"week-card-summary");if(x.source==="daily"){summary.append(node("span",x.recommendationType||"五天行程推薦","week-rain-summary"),node("span","核心打球日："+x.coreStart.slice(5).replace("-","/")+" – "+x.coreEnd.slice(5).replace("-","/")+"（中間連續3天）","week-confidence"),node("span","五天內適打 "+x.suitable+" 天｜可打 "+x.possible+" 天","week-confidence"),node("span",x.explanation||"依五天行程條件排序。","week-confidence"))}else{summary.append(node("span","降雨趨勢："+["偏乾","接近基準","偏濕","顯著偏濕"][x.rank],"week-rain-summary"),node("span","資料可信度："+(x.source==="weekly"?"週尺度":"月尺度參考")+"｜覆蓋 "+x.coverage+"/"+records.length,"week-confidence"))}card.append(heading,summary);const choose=node("button","查看起始日起 7 天天氣報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month,null,()=>renderRegionTopWeeks(group,records,month,backAction,dailyAssessment),dailyAssessment));card.append(choose);grid.append(card)});
