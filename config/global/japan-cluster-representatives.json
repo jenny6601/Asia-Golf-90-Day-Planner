@@ -30,16 +30,19 @@
       "sourceUrl": "https://www.the-north.co.jp/en/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "26 Rankoshi, Chitose-shi, Hokkaido 066-0068, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 42.82058,
+      "longitude": 141.59652,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.jgto.org/en/club/jgto",
+      "coordinateEvidenceStatus": "public-map-coordinate",
+      "legacyWeatherSubregionId": "JP-HKD-CENTRAL"
     },
     {
       "clusterId": "JP-HKD-NISEKO",
@@ -51,7 +54,7 @@
       "sourceUrl": "https://niseko-golf.com/en/course/",
       "sourceEvidence": "Official course page lists the 18-hole Niseko Village Golf Course and its location at Higashiyama Onsen, Niseko Town, Abuta District, Hokkaido; identity/address source verified, current seasonal operating dates require annual confirmation.",
       "address": "Higashiyama Onsen, Niseko Town, Abuta District, Hokkaido 048-1592, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -72,16 +75,19 @@
       "sourceUrl": "https://www.princehotels.co.jp/golf/hokkaido/faq/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "Nishionuma, Nanae-cho, Kameda-gun, Hokkaido 041-1392, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 41.9892895,
+      "longitude": 140.6549955,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
+      "coordinateEvidenceStatus": "official-operator-google-maps-place-pin",
+      "legacyWeatherSubregionId": "JP-HKD-SOUTH"
     },
     {
       "clusterId": "JP-THK-AOMORI-AKITA",
@@ -93,7 +99,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses/region/Tohoku",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "Kuzuno-229 Obetsunai, Aomori 030-0144, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -114,16 +120,19 @@
       "sourceUrl": "https://www.appi.co.jp/en/golf-club/agc-appi-kogen-golf-club/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "180-1 Appikogen, Hachimantai-shi, Iwate 028-7306, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 40.01249,
+      "longitude": 141.00652,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://elitegolfjapan.com/courses/appi-kogen-golf-club/",
+      "coordinateEvidenceStatus": "third-party-course-map-coordinate",
+      "legacyWeatherSubregionId": "JP-THK-NORTH"
     },
     {
       "clusterId": "JP-THK-MIYAGI-SENDAI",
@@ -135,16 +144,19 @@
       "sourceUrl": "https://ir.pacificgolf.co.jp/rifu/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "3-25 Uchinome-kita, Morigo, Rifu-machi, Miyagi-gun, Miyagi 981-0103, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 38.35994,
+      "longitude": 140.981828,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/miyagi/miyagi/rifu-golf-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "legacyWeatherSubregionId": "JP-THK-SOUTH"
     },
     {
       "clusterId": "JP-THK-FUKUSHIMA-YAMAGATA",
@@ -156,7 +168,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
       "address": "15 Yuheidai, Nihonmatsu-shi, Fukushima 964-8691, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -177,7 +189,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses/tokyo",
       "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
       "address": "2352 Kawaguchimachi, Hachioji, Tokyo 192-0001, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -198,16 +210,19 @@
       "sourceUrl": "https://www.japan.travel/en/sports/golf/courses/narita-hills-country-club/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "1236-3, Ryukakuji, Sakae-machi, Inba-gun, Chiba-ken, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 35.83503,
+      "longitude": 140.27659,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://mapcarta.com/W426264339",
+      "coordinateEvidenceStatus": "osm-map-coordinate",
+      "legacyWeatherSubregionId": "JP-KNT-SOUTH"
     },
     {
       "clusterId": "JP-KNT-IBARAKI-TSUKUBA",
@@ -219,7 +234,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
       "address": "460 Modo, Sakaimachi, Sashima-gun, Ibaraki 306-0423, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -240,16 +255,19 @@
       "sourceUrl": "https://www.visit-tochigi.com/plan-your-trip/things-to-do/25836/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "2370 Sotome, Sakura City, Tochigi Prefecture, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 36.709629,
+      "longitude": 140.004827,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/tochigi/sakura/seven-hundred-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "legacyWeatherSubregionId": "JP-KNT-NORTH"
     },
     {
       "clusterId": "JP-KNT-GUNMA-SAITAMA",
@@ -261,7 +279,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan directory course card; name, local name, prefecture and address captured from published listing",
       "address": "1159-1 Neoi, Ogose-machi, Iruma-gun, Saitama 350-0413, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -282,16 +300,19 @@
       "sourceUrl": "https://kcc.tatemono-golf.com/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "6236 Funatsu, Fujikawaguchiko-machi, Minamitsuru-gun, Yamanashi 401-0301, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 35.4682136,
+      "longitude": 138.7517012,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://kcc.tatemono-golf.com/access/",
+      "coordinateEvidenceStatus": "official-operator-google-maps-place-pin",
+      "legacyWeatherSubregionId": "JP-CHB-KOSHIN"
     },
     {
       "clusterId": "JP-CHB-SHIZUOKA-FUJI-IZU",
@@ -303,7 +324,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan directory course card; name, local name, prefecture and address captured from published listing",
       "address": "1240 Chojagahara, Izunokuni-shi, Shizuoka 410-2312, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -324,7 +345,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan directory course card; name, local name, prefecture and address captured from published listing",
       "address": "Mozawa, Karuizawa-machi, Kitasaku-gun, Nagano 389-0114, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -345,7 +366,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
       "address": "572 Kamiyahagicho Urushihara, Ena, Gifu 509-7511, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -366,16 +387,19 @@
       "sourceUrl": "https://tsu.co.jp/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "30 Katada-Hasecho, Tsu-shi, Mie 514-0077, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 34.72587,
+      "longitude": 136.42721,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/mie/tsu/tsu-country-club",
+      "coordinateEvidenceStatus": "previously-researched-public-coordinate",
+      "legacyWeatherSubregionId": "JP-CHB-TOKAI"
     },
     {
       "clusterId": "JP-CHB-HOKURIKU",
@@ -387,16 +411,19 @@
       "sourceUrl": "https://tokinodai.co.jp/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "8-8 Yanagida-machi, Hakui-shi, Ishikawa 925-0018, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 36.91549,
+      "longitude": 136.775147,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/ishikawa/hakui/tokinodai-country-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "legacyWeatherSubregionId": "JP-CHB-HOKURIKU"
     },
     {
       "clusterId": "JP-KNS-OSAKA-HYOGO",
@@ -408,16 +435,19 @@
       "sourceUrl": "https://arima-royal.com/access",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "571 Kitahata, Ogocho, Kita-ku, Kobe-shi, Hyogo 651-1616, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 34.826383,
+      "longitude": 135.123729,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hyogo/kobe/arima-royal-golf-club",
+      "coordinateEvidenceStatus": "third-party-course-map-coordinate",
+      "legacyWeatherSubregionId": "JP-KNS-CENTRAL"
     },
     {
       "clusterId": "JP-KNS-KYOTO-SHIGA-NARA",
@@ -429,7 +459,7 @@
       "sourceUrl": "https://www.japan.travel/en/sports/golf/courses/kyoto-golf-club/",
       "sourceEvidence": "JNTO official Japan tourism golf course profile lists Kyoto Golf Club, its Kamigamo address, 18-hole Kamigamo and 18-hole Funayama layouts; facility identity/address source verified, current operating status to reconfirm.",
       "address": "Kamigamo-Motoyama, Kita-ku, Kyoto-shi, Kyoto-fu, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -450,16 +480,19 @@
       "sourceUrl": "https://www.leograd.jp/concept_outline/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "694 Sai, Hidaka-gawa-cho, Hidaka-gun, Wakayama 644-1164, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 33.9232299832,
+      "longitude": 135.2723593476,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.leograd.jp/access_map/",
+      "coordinateEvidenceStatus": "approximate-official-map-viewport-center-not-course-pin",
+      "legacyWeatherSubregionId": "JP-KNS-KII"
     },
     {
       "clusterId": "JP-CHG-SANYO",
@@ -471,16 +504,19 @@
       "sourceUrl": "https://www.resol-golf.jp/en/setouchi/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "831 Yoshina-cho, Takehara City, Hiroshima Prefecture 725-0013, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 34.3061999,
+      "longitude": 132.864325,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.resol-golf.jp/en/setouchi/",
+      "coordinateEvidenceStatus": "official-operator-google-maps-place-pin",
+      "legacyWeatherSubregionId": "JP-CHG-SANYO"
     },
     {
       "clusterId": "JP-CHG-SANIN",
@@ -492,16 +528,19 @@
       "sourceUrl": "https://www.jgto.org/en/club/jgto",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "753 Ogina, Nanbu-cho, Saihaku-gun, Tottori 683-0215, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 35.364639,
+      "longitude": 133.397062,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "legacyWeatherSubregionId": "JP-CHG-SANIN"
     },
     {
       "clusterId": "JP-SHK-KAGAWA-TOKUSHIMA",
@@ -513,7 +552,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses/region/Shikoku",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "Miyadani-36 Uchiwaracho, Anan, Tokushima 779-1401, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -534,16 +573,19 @@
       "sourceUrl": "https://www.japan.travel/en/sports/golf/courses/tosa-country-club/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "668 Yasucho Teiyama, Konan-shi, Kochi Prefecture, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 33.5213,
+      "longitude": 133.7758,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.parscape.com/location/golf_clubs/tosacountryclubkamikochi",
+      "coordinateEvidenceStatus": "previously-researched-public-coordinate",
+      "legacyWeatherSubregionId": "JP-SHK-01"
     },
     {
       "clusterId": "JP-KYS-FUKUOKA-SAGA",
@@ -555,16 +597,19 @@
       "sourceUrl": "https://cm-g.co.jp/the-classic/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "1-3 Kurahisa, Miyawaka-shi, Fukuoka 823-0017, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 33.770453,
+      "longitude": 130.644917,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/fukuoka/kurate/classic-golf-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "legacyWeatherSubregionId": "JP-KYS-NORTH"
     },
     {
       "clusterId": "JP-KYS-NAGASAKI-KUMAMOTO",
@@ -576,7 +621,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses/region/Kyushu-Island",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "2789 Ainomachiko, Unzen, Nagasaki 854-0301, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -597,7 +642,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses/region/Kyushu-Island",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "841-21 Sakuradake, Amagase-machi, Hita-shi, Oita 879-4201, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -618,16 +663,19 @@
       "sourceUrl": "https://en.seagaia.co.jp/hotel-facility/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "3083 Hamayama, Shioji, Miyazaki City, Miyazaki 880-0122, Japan",
-      "coordinateStatus": "pending",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "legacy_weather_subregion_coordinate_available_pending_new_cluster_acceptance",
+      "latitude": 31.974525,
+      "longitude": 131.472898,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.where2golf.com/japan/phoenix-country-club/",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "legacyWeatherSubregionId": "JP-KYS-SOUTH"
     },
     {
       "clusterId": "JP-OKI-MAIN-NORTH",
@@ -639,7 +687,7 @@
       "sourceUrl": "https://www.kise-cc.jp/en/",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "1107-1 Kise, Nago, Okinawa 905-0026, Japan",
-      "coordinateStatus": "existing_course_record_coordinates_not_revalidated_for_new_cluster",
+      "coordinateStatus": "existing_course_record_coordinates_pending_new_cluster_acceptance",
       "latitude": 26.524228,
       "longitude": 127.939192,
       "weatherEnabled": false,
@@ -660,7 +708,7 @@
       "sourceUrl": "https://www.pacificgolf.co.jp/okinawa/information.asp",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "1043 Fuchaku, Onna-son, Kunigami-gun, Okinawa 904-0413, Japan",
-      "coordinateStatus": "existing_course_record_coordinates_not_revalidated_for_new_cluster",
+      "coordinateStatus": "existing_course_record_coordinates_pending_new_cluster_acceptance",
       "latitude": 26.455335,
       "longitude": 127.820344,
       "weatherEnabled": false,
@@ -681,7 +729,7 @@
       "sourceUrl": "https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/southernlinks",
       "sourceEvidence": "Existing Japan course catalog record; independent facility and operating-status review remains outstanding.",
       "address": "697 Hanashiro, Yaese, Shimajiri District, Okinawa 901-0513, Japan",
-      "coordinateStatus": "existing_course_record_coordinates_not_revalidated_for_new_cluster",
+      "coordinateStatus": "existing_course_record_coordinates_pending_new_cluster_acceptance",
       "latitude": 26.113785,
       "longitude": 127.739021,
       "weatherEnabled": false,
@@ -702,7 +750,7 @@
       "sourceUrl": "https://golf-in-japan.com/courses/okinawa",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "Bora-940-1 Gusukube, Miyakojima, Okinawa 906-0101, Japan",
-      "coordinateStatus": "pending",
+      "coordinateStatus": "pending_coordinate_research",
       "latitude": null,
       "longitude": null,
       "weatherEnabled": false,
@@ -713,5 +761,7 @@
         "check cluster fit and avoid duplicate facility/layout records"
       ]
     }
-  ]
+  ],
+  "coordinateAvailableCount": 19,
+  "coordinatePendingCount": 14
 }
