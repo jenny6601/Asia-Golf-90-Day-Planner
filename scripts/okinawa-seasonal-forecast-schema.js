@@ -7,6 +7,10 @@ export function validateSeasonalSnapshot(snapshot){
   const point=snapshot?.points?.find(x=>x.point?.id===id);
   if(!point){errors.push("missing region "+id);continue;}
   if(!point.weekly?.time?.length)errors.push(id+" missing weekly time");
+  if(!point.weeklyUnits||typeof point.weeklyUnits.precipitation_mean!=="string")errors.push(id+" missing weekly precipitation_mean unit metadata");
+  if(!point.weeklyUnits||typeof point.weeklyUnits.precipitation_anomaly!=="string")errors.push(id+" missing weekly precipitation_anomaly unit metadata");
+  if(!point.monthlyUnits||typeof point.monthlyUnits.precipitation_mean!=="string")errors.push(id+" missing monthly precipitation_mean unit metadata");
+  if(!point.monthlyUnits||typeof point.monthlyUnits.precipitation_anomaly!=="string")errors.push(id+" missing monthly precipitation_anomaly unit metadata");
   if(!point.weekly?.precipitation_efi?.length)errors.push(id+" missing weekly precipitation_efi");
   if(!point.weekly?.precipitation_mean?.length)errors.push(id+" missing weekly precipitation_mean");
   if(!point.monthly?.time?.length)errors.push(id+" missing monthly time");
