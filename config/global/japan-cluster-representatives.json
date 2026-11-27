@@ -291,16 +291,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan directory course card; name, local name, prefecture and address captured from published listing",
       "address": "1159-1 Neoi, Ogose-machi, Iruma-gun, Saitama 350-0413, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 35.969597,
+      "longitude": 139.315163,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.resol-golf.jp/en/iruma/access/",
+      "coordinateEvidenceStatus": "official_operator_google_maps_place_pin",
+      "coordinateEvidence": "Official Resol Golf access page links Google Maps; redirect resolves to a named Iruma Country Club place pin at 35.969597,139.315163."
     },
     {
       "clusterId": "JP-CHB-FUJI-YAMANASHI",
@@ -360,16 +363,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan directory course card; name, local name, prefecture and address captured from published listing",
       "address": "Mozawa, Karuizawa-machi, Kitasaku-gun, Nagano 389-0114, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 36.296969,
+      "longitude": 138.584117,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://esv-club.com/access/",
+      "coordinateEvidenceStatus": "official_operator_google_maps_embed_center",
+      "coordinateEvidence": "Official operator access page embeds a Google Map centered at 36.296969,138.584117 for Eau Sol Vert Karuizawa Club; this is a map viewport center, not asserted as a surveyed pin."
     },
     {
       "clusterId": "JP-CHB-NAGOYA-GIFU",
@@ -381,16 +387,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
       "address": "572 Kamiyahagicho Urushihara, Ena, Gifu 509-7511, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 35.31468298028144,
+      "longitude": 137.45991731575117,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://adonis-gc.com/access.html",
+      "coordinateEvidenceStatus": "official_operator_google_maps_embed_center",
+      "coordinateEvidence": "Official Adonis Golf Club access page embeds a Google Map centered at 35.31468298028144,137.45991731575117; this is a map viewport center, not asserted as a surveyed pin."
     },
     {
       "clusterId": "JP-CHB-MIE-ISE",
@@ -792,8 +801,8 @@
       "coordinateEvidence": "FullGolf course coordinate and address; separate golf travel directory confirms course address and current visitor information."
     }
   ],
-  "coordinateAvailableCount": 29,
-  "coordinatePendingCount": 4,
+  "coordinateAvailableCount": 32,
+  "coordinatePendingCount": 1,
   "coordinateResearchUpdatedOn": "2026-11-27",
-  "coordinateResearchNote": "Ten additional representative coordinates were added from official operator published rounded coordinates or third-party map/course directories, with source and evidence recorded. They remain pending review and do not activate weather."
+  "coordinateResearchNote": "Thirteen additional representative coordinates have been researched in this cycle (10 prior batch + 3 official map links/embeds); 32 of 33 now have sourced candidate points. All remain pending independent review and no weather point is activated."
 }
