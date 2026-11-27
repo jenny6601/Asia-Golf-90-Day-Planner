@@ -41,7 +41,7 @@ def parse_index4(text):
         start = parse_date(row[23])
         end = parse_date(row[24], allow_open=True)
         if end < start:
-            raise ValueError(f"amdmaster.index4 line {line_no}: end date precedes start date")
+            raise ValueError(f"amdmaster.index4 line {line_no} station {station_id}: end date {row[24]!r} precedes start date {row[23]!r}; parsed {start.isoformat()}..{end.isoformat()}")
         precip = row[16].strip()
         temp = row[18].strip()
         precip_link = row[26].strip()
