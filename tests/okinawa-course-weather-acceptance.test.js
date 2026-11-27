@@ -73,7 +73,7 @@ test("App runtime directory loads all six GPS points and sends exact points to O
   const fetchMock = async input => {
     const url = new URL(input);
     if (url.pathname.endsWith("/countries.json")) {
-      return {ok:true,json:async()=>[{code:"JP",nameZh:"日本"}]};
+      return {ok:true,json:async()=>["JP","KR","CN","VN","TH","MY","SG","ID"].map(code=>({code,nameZh:code}))};
     }
     if (url.pathname.endsWith("/courses.json")) {
       return {ok:true,json:async()=>runtime};
