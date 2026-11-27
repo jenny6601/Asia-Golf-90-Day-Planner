@@ -5,31 +5,96 @@
     {
       "countryCode": "JP",
       "countryNameZh": "日本",
-      "coverageStatus": "pilot",
+      "coverageStatus": "partial",
+      "referenceUrl": "https://www.japan.travel/en/sports/golf/courses/",
       "subregions": [
+        {
+          "id": "JP-HKD-01",
+          "region": "Hokkaido",
+          "subregion": "札幌／道央",
+          "label": "北海道・札幌／道央",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "JP-THK-01",
+          "region": "Tohoku",
+          "subregion": "仙台／東北",
+          "label": "東北・仙台",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "JP-KNT-01",
+          "region": "Kanto",
+          "subregion": "東京／關東",
+          "label": "關東・東京",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "JP-CHB-01",
+          "region": "Chubu",
+          "subregion": "名古屋／中部",
+          "label": "中部・名古屋／富士",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "JP-KNS-01",
+          "region": "Kansai",
+          "subregion": "大阪／京都",
+          "label": "關西・大阪／京都",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "JP-CHG-01",
+          "region": "Chugoku",
+          "subregion": "廣島／中國地方",
+          "label": "中國地方・廣島",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "JP-SHK-01",
+          "region": "Shikoku",
+          "subregion": "高松／四國",
+          "label": "四國・高松",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "JP-KYS-01",
+          "region": "Kyushu",
+          "subregion": "福岡／九州",
+          "label": "九州・福岡",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
         {
           "id": "JP-OKI-NORTH",
           "region": "Okinawa",
           "subregion": "北部",
           "label": "沖繩北部",
-          "coverageStatus": "configured",
-          "representativeCourseId": "kise"
+          "coverageStatus": "planned",
+          "representativeCourseId": null
         },
         {
           "id": "JP-OKI-CENTRAL",
           "region": "Okinawa",
           "subregion": "中部",
           "label": "沖繩中部",
-          "coverageStatus": "configured",
-          "representativeCourseId": "pgm-okinawa"
+          "coverageStatus": "planned",
+          "representativeCourseId": null
         },
         {
           "id": "JP-OKI-SOUTH",
           "region": "Okinawa",
           "subregion": "南部",
           "label": "沖繩南部",
-          "coverageStatus": "configured",
-          "representativeCourseId": "southern-links"
+          "coverageStatus": "planned",
+          "representativeCourseId": null
         }
       ]
     },
@@ -37,43 +102,402 @@
       "countryCode": "KR",
       "countryNameZh": "韓國",
       "coverageStatus": "planned",
-      "subregions": []
+      "referenceUrl": "https://kr.pacificlinks.co.kr/en/golf/korea",
+      "subregions": [
+        {
+          "id": "KR-CAP-01",
+          "region": "Capital Area",
+          "subregion": "首都圈",
+          "label": "首爾／京畿／仁川",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "KR-GW-01",
+          "region": "Gangwon",
+          "subregion": "江原道",
+          "label": "江原道／春川",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "KR-CC-01",
+          "region": "Chungcheong",
+          "subregion": "忠清道",
+          "label": "忠清道",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "KR-YN-01",
+          "region": "Yeongnam",
+          "subregion": "嶺南",
+          "label": "釜山／慶州／嶺南",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "KR-HN-01",
+          "region": "Honam",
+          "subregion": "湖南",
+          "label": "全羅道／湖南",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "KR-JJ-01",
+          "region": "Jeju",
+          "subregion": "濟州島",
+          "label": "濟州島",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        }
+      ]
     },
     {
       "countryCode": "CN",
       "countryNameZh": "中國",
       "coverageStatus": "planned",
-      "subregions": []
+      "referenceUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
+      "subregions": [
+        {
+          "id": "CN-HN-NORTH",
+          "region": "Hainan",
+          "subregion": "海口",
+          "label": "海南・海口",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "CN-HN-EAST",
+          "region": "Hainan",
+          "subregion": "萬寧／神州半島",
+          "label": "海南・萬寧／神州半島",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "CN-HN-SOUTH",
+          "region": "Hainan",
+          "subregion": "三亞",
+          "label": "海南・三亞",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "CN-SH-01",
+          "region": "Shanghai",
+          "subregion": "上海／長三角",
+          "label": "上海／長三角",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "CN-BJ-01",
+          "region": "Beijing",
+          "subregion": "北京／華北",
+          "label": "北京／華北",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "CN-GD-01",
+          "region": "Guangdong",
+          "subregion": "廣州／深圳／珠三角",
+          "label": "廣東・珠三角",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "CN-YN-01",
+          "region": "Yunnan",
+          "subregion": "昆明／雲南",
+          "label": "雲南・昆明",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        }
+      ]
     },
     {
       "countryCode": "VN",
       "countryNameZh": "越南",
       "coverageStatus": "planned",
-      "subregions": []
+      "referenceUrl": "https://vietnam.travel/things-to-do/golf/",
+      "subregions": [
+        {
+          "id": "VN-NORTH-01",
+          "region": "Northern Vietnam",
+          "subregion": "河內",
+          "label": "北越・河內",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "VN-CENTRAL-01",
+          "region": "Central Vietnam",
+          "subregion": "峴港／會安",
+          "label": "中越・峴港／會安",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "VN-CENTRAL-02",
+          "region": "Central Vietnam",
+          "subregion": "順化／陵姑",
+          "label": "中越・順化／陵姑",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "VN-SOUTH-01",
+          "region": "Southern Vietnam",
+          "subregion": "胡志明市",
+          "label": "南越・胡志明市",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "VN-SOUTH-02",
+          "region": "Southern Vietnam",
+          "subregion": "藩切／美奈",
+          "label": "南越・藩切／美奈",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "VN-ISLAND-01",
+          "region": "Southern Islands",
+          "subregion": "富國島",
+          "label": "南部島嶼・富國島",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        }
+      ]
     },
     {
       "countryCode": "TH",
       "countryNameZh": "泰國",
       "coverageStatus": "planned",
-      "subregions": []
+      "referenceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
+      "subregions": [
+        {
+          "id": "TH-BKK-01",
+          "region": "Bangkok & Central",
+          "subregion": "曼谷",
+          "label": "曼谷／中部",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "TH-EAST-01",
+          "region": "Pattaya & Eastern",
+          "subregion": "芭達雅／春武里",
+          "label": "東部・芭達雅／春武里",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "TH-WEST-01",
+          "region": "Hua Hin & Western",
+          "subregion": "華欣／七岩",
+          "label": "西部・華欣／七岩",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "TH-SOUTH-01",
+          "region": "Phuket & Southern",
+          "subregion": "普吉／安達曼海岸",
+          "label": "南部・普吉／安達曼海岸",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "TH-NORTH-01",
+          "region": "Chiang Mai & Northern",
+          "subregion": "清邁／北部",
+          "label": "北部・清邁",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "TH-NE-01",
+          "region": "Khao Yai & Northeast",
+          "subregion": "考艾／東北部",
+          "label": "東北部・考艾",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "TH-ISLAND-01",
+          "region": "Gulf Islands",
+          "subregion": "蘇梅島",
+          "label": "泰國灣島嶼・蘇梅島",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        }
+      ]
     },
     {
       "countryCode": "MY",
       "countryNameZh": "馬來西亞",
       "coverageStatus": "planned",
-      "subregions": []
+      "referenceUrl": "https://www.malaysiagolfholiday.com/destinations/",
+      "subregions": [
+        {
+          "id": "MY-CENTRAL-01",
+          "region": "Kuala Lumpur & Central",
+          "subregion": "吉隆坡／雪蘭莪",
+          "label": "中部・吉隆坡／雪蘭莪",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "MY-NORTH-01",
+          "region": "North Malaysia",
+          "subregion": "檳城／吉打／霹靂",
+          "label": "北馬・檳城／吉打／霹靂",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "MY-SOUTH-01",
+          "region": "South Malaysia",
+          "subregion": "柔佛／馬六甲",
+          "label": "南馬・柔佛／馬六甲",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "MY-ISLAND-01",
+          "region": "Langkawi",
+          "subregion": "蘭卡威",
+          "label": "蘭卡威",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "MY-BORNEO-01",
+          "region": "Borneo",
+          "subregion": "沙巴／亞庇",
+          "label": "婆羅洲・沙巴／亞庇",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "MY-BORNEO-02",
+          "region": "Borneo",
+          "subregion": "砂拉越／古晉",
+          "label": "婆羅洲・砂拉越／古晉",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "MY-EAST-01",
+          "region": "East Coast Region",
+          "subregion": "登嘉樓／東海岸",
+          "label": "東海岸・登嘉樓",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "MY-HIGHLAND-01",
+          "region": "Highlands",
+          "subregion": "金馬崙／雲頂高原",
+          "label": "高原・金馬崙／雲頂",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        }
+      ]
     },
     {
       "countryCode": "SG",
       "countryNameZh": "新加坡",
       "coverageStatus": "planned",
-      "subregions": []
+      "referenceUrl": "https://www.mlaw.gov.sg/files/Annex__List_of_Golf_Courses_in_Singapore__7_July_2025_.pdf",
+      "subregions": [
+        {
+          "id": "SG-ISLAND-01",
+          "region": "Singapore",
+          "subregion": "全島",
+          "label": "新加坡全島",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        }
+      ]
     },
     {
       "countryCode": "ID",
       "countryNameZh": "印尼",
       "coverageStatus": "planned",
-      "subregions": []
+      "referenceUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
+      "subregions": [
+        {
+          "id": "ID-JKT-01",
+          "region": "Greater Jakarta",
+          "subregion": "雅加達／大雅加達",
+          "label": "爪哇・雅加達都會區",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "ID-WJAVA-01",
+          "region": "West Java",
+          "subregion": "茂物／萬隆",
+          "label": "爪哇・西爪哇",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "ID-CJAVA-01",
+          "region": "Central Java",
+          "subregion": "日惹／三寶瓏",
+          "label": "爪哇・中爪哇",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "ID-EJAVA-01",
+          "region": "East Java",
+          "subregion": "泗水／瑪琅",
+          "label": "爪哇・東爪哇",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "ID-BALI-01",
+          "region": "Bali",
+          "subregion": "峇里島",
+          "label": "峇里島",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "ID-RIAU-01",
+          "region": "Riau Islands",
+          "subregion": "巴淡島／民丹島",
+          "label": "廖內群島・巴淡／民丹",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "ID-SUMATRA-01",
+          "region": "Sumatra",
+          "subregion": "棉蘭／蘇門答臘",
+          "label": "蘇門答臘・棉蘭",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        },
+        {
+          "id": "ID-KAL-01",
+          "region": "Kalimantan",
+          "subregion": "巴厘巴板",
+          "label": "加里曼丹・巴厘巴板",
+          "coverageStatus": "planned",
+          "representativeCourseId": null
+        }
+      ]
     }
-  ]
+  ],
+  "planningNote": "Subregions are geographic planning groups based on publicly documented golf destinations and course clusters. They are not yet weather-enabled. Do not request forecasts until a representative course and verified coordinates are added for that subregion."
 }
