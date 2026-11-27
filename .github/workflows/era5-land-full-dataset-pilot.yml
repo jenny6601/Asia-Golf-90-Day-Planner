@@ -1,28 +1,15 @@
-name: ERA5-Land Full Dataset Regional Pilot
+name: Legacy ERA5-Land hourly pilot (manual download disabled)
 on:
   push:
     branches: [asia-eight-country-shared-engine]
     paths:
-      - "scripts/acquire_era5_land_full_dataset_pilot.py"
-      - "tests/test_era5_land_full_dataset_pilot.py"
-      - ".github/workflows/era5-land-full-dataset-pilot.yml"
-      - "requirements-data.txt"
-  workflow_dispatch:
-    inputs:
-      subregion:
-        description: Current registry subregion ID
-        required: true
-        default: JP-OKI-MAIN-NORTH
-        type: string
-      year:
-        description: Single calendar year to acquire
-        required: true
-        default: "1991"
-        type: string
+      - "scripts/acquire_daily_climate_statistics_pilot.py"
+      - "tests/test_daily_climate_statistics_pilot.py"
+      - ".github/workflows/daily-climate-statistics-pilot.yml"
 permissions:
   contents: read
 concurrency:
-  group: era5-land-full-dataset-pilot
+  group: daily-climate-statistics-pilot
   cancel-in-progress: false
 jobs:
   preflight:
@@ -33,9 +20,9 @@ jobs:
         with: {ref: asia-eight-country-shared-engine}
       - uses: actions/setup-python@v5
         with: {python-version: "3.11"}
-      - run: python -m unittest tests/test_era5_land_full_dataset_pilot.py
-      - run: python scripts/acquire_era5_land_full_dataset_pilot.py --subregion JP-OKI-MAIN-NORTH --year 1991 --dry-run
-  acquire-one-point-year:
+      - run: python -m unittest tests/test_daily_climate_statistics_pilot.py
+      - run: python scripts/acquire_daily_climate_statistics_pilot.py --subregion JP-OKI-MAIN-NORTH --year 1991 --dry-run
+  acquire-daily-only:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 90
@@ -46,28 +33,28 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install data dependencies
+      - name: Install CDS dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-data.txt
       - name: Configure CDS credentials
         env:
-          CDSAPI_KEY: \${{ secrets.CDS_API_KEY }}
+          CDSAPI_KEY: ${{ secrets.CDS_API_KEY }}
         run: |
           test -n "$CDSAPI_KEY" || { echo "Missing CDS_API_KEY; no request sent."; exit 1; }
           umask 077
           printf '%s\n' 'url: https://cds.climate.copernicus.eu/api' "key: $CDSAPI_KEY" > "$HOME/.cdsapirc"
-      - name: Run one-point one-year full-dataset pilot
+      - name: Retrieve daily aggregates only
         run: |
-          python scripts/acquire_era5_land_full_dataset_pilot.py \
-            --subregion "\${{ inputs.subregion }}" \
-            --year "\${{ inputs.year }}" \
-            --output-dir data/era5-land-full-dataset-pilot
-      - name: Upload raw archive and inspection
+          python scripts/acquire_daily_climate_statistics_pilot.py \
+            --subregion "${{ inputs.subregion }}" \
+            --year "${{ inputs.year }}" \
+            --output-dir data/daily-statistics-pilot
+      - name: Upload daily-statistics archives
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: era5-land-\${{ inputs.subregion }}-\${{ inputs.year }}-full-dataset-pilot
-          path: data/era5-land-full-dataset-pilot/
+          name: daily-stats-${{ inputs.subregion }}-${{ inputs.year }}
+          path: data/daily-statistics-pilot/
           if-no-files-found: warn
           retention-days: 90
