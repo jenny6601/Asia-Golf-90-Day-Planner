@@ -6,6 +6,8 @@ const root = new URL("../", import.meta.url);
 const candidates = JSON.parse(await fs.readFile(new URL("config/okinawa/course-coordinate-candidates.json", root), "utf8"));
 const runtime = JSON.parse(await fs.readFile(new URL("config/global/courses.json", root), "utf8"));
 const ids = ["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"];
+const pilotModule = await import("../assets/js/okinawa-courses.js");
+const pilot = pilotModule.OKINAWA_COURSES;
 
 test("Okinawa acceptance scope contains exactly the six requested main-island courses", () => {
   assert.deepEqual(candidates.map(x => x.id).sort(), [...ids].sort());
@@ -45,4 +47,26 @@ test("official map coordinates are explicitly distinguished from provisional can
 test("runtime course catalogue still preserves all six records and does not activate pending PGM", () => {
   assert.deepEqual(runtime.map(x => x.id), ids);
   assert.equal(runtime.find(x => x.id === "pgm-okinawa").enabled, false);
+});
+
+test("runtime and pilot catalogs match audited candidate points without promoting pending PGM", () => {
+  for (const candidate of candidates) {
+    const globalCourse = runtime.find(x => x.id === candidate.id);
+    const pilotCourse = pilot.find(x => x.id === candidate.id);
+    assert.ok(globalCourse && pilotCourse, candidate.id);
+    if (candidate.coordinateStatus === "pending") {
+      assert.equal(globalCourse.latitude, null);
+      assert.equal(globalCourse.longitude, null);
+      assert.equal(globalCourse.enabled, false);
+      assert.equal(pilotCourse.latitude, null);
+      assert.equal(pilotCourse.longitude, null);
+    } else {
+      assert.equal(globalCourse.latitude, candidate.latitude, candidate.id);
+      assert.equal(globalCourse.longitude, candidate.longitude, candidate.id);
+      assert.equal(pilotCourse.latitude, candidate.latitude, candidate.id);
+      assert.equal(pilotCourse.longitude, candidate.longitude, candidate.id);
+      assert.equal(globalCourse.coordinateStatus, candidate.coordinateStatus, candidate.id);
+      assert.equal(pilotCourse.coordinateStatus, candidate.coordinateStatus, candidate.id);
+    }
+  }
 });
