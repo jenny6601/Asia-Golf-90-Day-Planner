@@ -6,7 +6,7 @@ test("classifies using available rainfall evidence without fabricating missing f
   assert.deepEqual(classifyMonthlyDay({rainFrequency:20,rainAmount:0.4}), {grade:0,status:"適打",playable:true});
   assert.equal(classifyMonthlyDay({rainFrequency:20}).grade,0);
   assert.equal(classifyMonthlyDay({rainAmount:2.5}).grade,2);
-  assert.equal(classifyMonthlyDay({}).grade,undefined);
+  assert.equal(classifyMonthlyDay({}),null);
   assert.equal(classifyMonthlyDay({rainAmount:0.2,highTemp:34}).status,"不適");
 });
 
