@@ -962,7 +962,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（前16天）","monthly-legend-forecast"),node("span","● 歷史＋季節訊號估計（第19–90天）","monthly-legend-seasonal"));dailySection.append(legend);
  dailySection.append(node("p","全表說明：前16天優先採逐日預報；第17–18天若無季節估計則以歷史同期參考；第19–90天採 ERA5 歷史同期統計結合可取得的週／月季節訊號估計。卡片中的雨日頻率是長期風險指標，不等同當日實際降雨機率；雨量為日均估計量。信心等級及歷史樣本年數不逐日重複顯示，統一由本說明交代：信心反映歷史樣本與季節訊號覆蓋，不是預報命中率；歷史樣本以最近十個完整年度為基礎。","monthly-source-note"));
  if(!sampleCourses.length)dailySection.append(node("p","此分區尚無具有效 GPS 座標的球場，無法產生逐日天氣簡表。","risk-summary"));
- host.scrollIntoView({behavior:"smooth",block:"start"});
+ // Do not scroll to the report body after loading; keep the destination page header at the top.
 }
 
 async function renderEmptyWeekAnalysis(country,region,month,backAction){
