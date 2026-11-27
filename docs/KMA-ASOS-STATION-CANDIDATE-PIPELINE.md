@@ -8,10 +8,11 @@ Build a metadata-only shortlist for the six Korea regional representative points
 2. Export the complete station-history CSV (not the first 10 rows shown in the web table).
 3. Save it as `data/observation-stations/input/kma-station-metadata.csv` for a local run, or provide it as a secured workflow input.
 
-The official metadata includes station number, observation start/end dates, coordinates and site elevation. Keep separate history rows for one station number; they may represent relocation or coordinate changes.
+The official metadata includes station number, observation start/end dates, coordinates and site elevation. Keep separate history rows for one station number; they may represent relocation or coordinate changes. The parser fails closed if no network/type column is present, and it excludes blank or non-ASOS labels.
 
 ## Ranking
-- Restrict to the KMA ASOS / synoptic observation network; do not mix AWS into the primary ASOS shortlist.
+- Require an explicit observation-network/type column in the source CSV. Recognize ASOS or 종관 labels only; blank, AWS, and every unclassified row are excluded. If the classification column is absent, stop with an error rather than infer network membership.
+- Do not treat a generic station-history inventory as an ASOS roster. Prefer the official ASOS-specific annual file-set catalog (`SURFACE_ASOS_(stationNo)_...`) as an independent cross-check of station IDs.
 - Compute the union of each station's metadata date intervals intersecting 1991-01-01 through 2020-12-31.
 - Rank by metadata-period coverage first, then great-circle distance.
 - Retain elevation, coordinate-history count and coordinate-change count for review.
