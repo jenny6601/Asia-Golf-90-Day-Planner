@@ -54,7 +54,7 @@ const currentSnapshot={
   ]))
 };
 await fs.mkdir(SNAPSHOT_DIR,{recursive:true});
-const snapshotFiles=(await fs.readdir(SNAPSHOT_DIR)).filter(name=>/^\\d{4}-\\d{2}-\\d{2}\\.json$/.test(name)).sort();
+const snapshotFiles=(await fs.readdir(SNAPSHOT_DIR)).filter(name=>/^\d{4}-\d{2}-\d{2}\.json$/.test(name)).sort();
 const stabilitySnapshots=[];
 for(const name of snapshotFiles){
   try{
@@ -96,7 +96,8 @@ const report={
     "EC46 weekly EFI and SEAS5 monthly precipitation anomalies are normalized into comparative rain-risk indices, not probabilities.",
     "ERA5 historical same-calendar-day wet-day frequency and rainfall amount are climate references, not future weather.",
     "Forecast direction stability is calculated only where at least two distinct daily forecast snapshots overlap the same target date; it is an uncertainty penalty, not rainfall probability.",
-    "Each Okinawa region uses exactly one representative course for historical climate context: north=Kise, central=PGM Okinawa, south=Southern Links. Other same-region courses inherit the representative regional assessment.",\n    "One forecast snapshot per Okinawa-local date is retained in data/okinawa-forecast-snapshots; same-day reruns replace rather than inflate the archive.",
+    "Each Okinawa region uses exactly one representative course for historical climate context: north=Kise, central=PGM Okinawa, south=Southern Links. Other same-region courses inherit the representative regional assessment.",
+    "One forecast snapshot per Okinawa-local date is retained in data/okinawa-forecast-snapshots; same-day reruns replace rather than inflate the archive.",
     "No data is imputed. Missing source fields remain absent and reduce eligibility."
   ]
 };
