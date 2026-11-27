@@ -1,0 +1,55 @@
+name: Okinawa Daily Model Hindcast Verification
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 19 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: okinawa-daily-model-hindcast
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout archive branch
+        uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run JMA and model validation tests
+        run: node --test tests/jma-amedas-validation.test.js
+      - name: Collect seven-day model hindcast verification
+        id: verify
+        continue-on-error: true
+        run: node scripts/validate-okinawa-jma-observations.mjs
+      - name: Commit daily hindcast archive
+        if: always()
+        run: |
+          if [ -d data/okinawa/model-hindcast-archive ] && [ -n "$(git status --porcelain data/okinawa/model-hindcast-archive)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/okinawa/model-hindcast-archive/
+            git commit -m "Archive daily Okinawa model hindcast verification"
+            git push
+          else
+            echo "No new hindcast report to commit."
+          fi
+      - name: Upload hindcast report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-model-hindcast-verification
+          path: |
+            data/okinawa/model-hindcast-archive/
+            artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.*
+          if-no-files-found: warn
+          retention-days: 90
