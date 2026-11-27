@@ -34,7 +34,9 @@
     "regionalClimatePoint": {
       "latitude": 26.113785,
       "longitude": 127.739021
-    }
+    },
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "pgm-okinawa",
@@ -71,7 +73,9 @@
     "regionalClimatePoint": {
       "latitude": 26.455335,
       "longitude": 127.820344
-    }
+    },
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "kise",
@@ -108,7 +112,9 @@
     "regionalClimatePoint": {
       "latitude": 26.524228,
       "longitude": 127.939192
-    }
+    },
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "atta-terrace",
@@ -142,7 +148,9 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "palm-hills",
@@ -176,7 +184,9 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "chura-orchard",
@@ -210,7 +220,9 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-north-country",
@@ -249,7 +261,9 @@
       "latitude": 42.716198,
       "longitude": 141.655636
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-hokkaido-country",
@@ -290,7 +304,9 @@
     "regionalClimatePoint": {
       "latitude": 41.9892895,
       "longitude": 140.6549955
-    }
+    },
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-appi-kogen",
@@ -331,7 +347,9 @@
     "regionalClimatePoint": {
       "latitude": 40.01249,
       "longitude": 141.00652
-    }
+    },
+    "regionalMacroRegion": "東北",
+    "regionalMacroRegionDisplayName": "東北"
   },
   {
     "id": "jp-rifu",
@@ -372,7 +390,9 @@
     "regionalClimatePoint": {
       "latitude": 38.35994,
       "longitude": 140.981828
-    }
+    },
+    "regionalMacroRegion": "東北",
+    "regionalMacroRegionDisplayName": "東北"
   },
   {
     "id": "jp-seven-hundred",
@@ -413,7 +433,9 @@
     "regionalClimatePoint": {
       "latitude": 36.709629,
       "longitude": 140.004827
-    }
+    },
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-narita-hills",
@@ -454,7 +476,9 @@
     "regionalClimatePoint": {
       "latitude": 35.83503,
       "longitude": 140.27659
-    }
+    },
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-kawaguchiko",
@@ -495,7 +519,9 @@
     "regionalClimatePoint": {
       "latitude": 35.4682136,
       "longitude": 138.7517012
-    }
+    },
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-tsu",
@@ -536,7 +562,9 @@
     "regionalClimatePoint": {
       "latitude": 34.72587,
       "longitude": 136.42721
-    }
+    },
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-tokinodai",
@@ -577,7 +605,9 @@
     "regionalClimatePoint": {
       "latitude": 36.91549,
       "longitude": 136.775147
-    }
+    },
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-arima-royal",
@@ -618,7 +648,9 @@
     "regionalClimatePoint": {
       "latitude": 34.826383,
       "longitude": 135.123729
-    }
+    },
+    "regionalMacroRegion": "關西",
+    "regionalMacroRegionDisplayName": "關西"
   },
   {
     "id": "jp-leograd",
@@ -660,7 +692,9 @@
     "regionalClimatePoint": {
       "latitude": 33.9232299832,
       "longitude": 135.2723593476
-    }
+    },
+    "regionalMacroRegion": "關西",
+    "regionalMacroRegionDisplayName": "關西"
   },
   {
     "id": "jp-green-park-daisen",
@@ -701,7 +735,9 @@
     "regionalClimatePoint": {
       "latitude": 35.364639,
       "longitude": 133.397062
-    }
+    },
+    "regionalMacroRegion": "中國地方",
+    "regionalMacroRegionDisplayName": "中國地方"
   },
   {
     "id": "jp-setouchi",
@@ -742,7 +778,9 @@
     "regionalClimatePoint": {
       "latitude": 34.3061999,
       "longitude": 132.864325
-    }
+    },
+    "regionalMacroRegion": "中國地方",
+    "regionalMacroRegionDisplayName": "中國地方"
   },
   {
     "id": "jp-tosa",
@@ -783,7 +821,9 @@
     "regionalClimatePoint": {
       "latitude": 33.5213,
       "longitude": 133.7758
-    }
+    },
+    "regionalMacroRegion": "四國",
+    "regionalMacroRegionDisplayName": "四國"
   },
   {
     "id": "jp-the-classic",
@@ -824,7 +864,9 @@
     "regionalClimatePoint": {
       "latitude": 33.770453,
       "longitude": 130.644917
-    }
+    },
+    "regionalMacroRegion": "九州",
+    "regionalMacroRegionDisplayName": "九州"
   },
   {
     "id": "jp-phoenix",
@@ -865,7 +907,9 @@
     "regionalClimatePoint": {
       "latitude": 31.974525,
       "longitude": 131.472898
-    }
+    },
+    "regionalMacroRegion": "九州",
+    "regionalMacroRegionDisplayName": "九州"
   },
   {
     "id": "kr-kr-cap-01",
@@ -905,7 +949,9 @@
     "regionalClimatePoint": {
       "latitude": 37.37985,
       "longitude": 126.62439
-    }
+    },
+    "regionalMacroRegion": "Capital Area",
+    "regionalMacroRegionDisplayName": "首都圈"
   },
   {
     "id": "kr-kr-gw-01",
@@ -945,7 +991,9 @@
     "regionalClimatePoint": {
       "latitude": 37.7701,
       "longitude": 127.6784
-    }
+    },
+    "regionalMacroRegion": "Gangwon",
+    "regionalMacroRegionDisplayName": "江原道"
   },
   {
     "id": "kr-kr-cc-01",
@@ -985,7 +1033,9 @@
     "regionalClimatePoint": {
       "latitude": 36.766741,
       "longitude": 127.224659
-    }
+    },
+    "regionalMacroRegion": "Chungcheong",
+    "regionalMacroRegionDisplayName": "忠清道"
   },
   {
     "id": "kr-kr-yn-01",
@@ -1025,7 +1075,9 @@
     "regionalClimatePoint": {
       "latitude": 35.36594,
       "longitude": 129.19943
-    }
+    },
+    "regionalMacroRegion": "Yeongnam",
+    "regionalMacroRegionDisplayName": "慶尚道"
   },
   {
     "id": "kr-kr-hn-01",
@@ -1065,7 +1117,9 @@
     "regionalClimatePoint": {
       "latitude": 34.6979,
       "longitude": 126.26506
-    }
+    },
+    "regionalMacroRegion": "Honam",
+    "regionalMacroRegionDisplayName": "全羅道"
   },
   {
     "id": "kr-kr-jj-01",
@@ -1105,7 +1159,9 @@
     "regionalClimatePoint": {
       "latitude": 33.3159979,
       "longitude": 126.387643
-    }
+    },
+    "regionalMacroRegion": "Jeju",
+    "regionalMacroRegionDisplayName": "濟州島"
   },
   {
     "id": "cn-cn-hn-north",
@@ -1145,7 +1201,9 @@
     "regionalClimatePoint": {
       "latitude": 19.913184,
       "longitude": 110.322778
-    }
+    },
+    "regionalMacroRegion": "Hainan",
+    "regionalMacroRegionDisplayName": "華南"
   },
   {
     "id": "cn-cn-hn-east",
@@ -1185,7 +1243,9 @@
     "regionalClimatePoint": {
       "latitude": 18.678566,
       "longitude": 110.368412
-    }
+    },
+    "regionalMacroRegion": "Hainan",
+    "regionalMacroRegionDisplayName": "華南"
   },
   {
     "id": "cn-cn-hn-south",
@@ -1225,7 +1285,9 @@
     "regionalClimatePoint": {
       "latitude": 18.231389,
       "longitude": 109.627161
-    }
+    },
+    "regionalMacroRegion": "Hainan",
+    "regionalMacroRegionDisplayName": "華南"
   },
   {
     "id": "cn-cn-sh-01",
@@ -1265,7 +1327,9 @@
     "regionalClimatePoint": {
       "latitude": 31.105843,
       "longitude": 121.217694
-    }
+    },
+    "regionalMacroRegion": "Shanghai",
+    "regionalMacroRegionDisplayName": "華東"
   },
   {
     "id": "cn-cn-bj-01",
@@ -1305,7 +1369,9 @@
     "regionalClimatePoint": {
       "latitude": 40.4076639,
       "longitude": 116.7039686
-    }
+    },
+    "regionalMacroRegion": "Beijing",
+    "regionalMacroRegionDisplayName": "華北"
   },
   {
     "id": "cn-cn-gd-01",
@@ -1345,7 +1411,9 @@
     "regionalClimatePoint": {
       "latitude": 23.13171,
       "longitude": 113.26627
-    }
+    },
+    "regionalMacroRegion": "Guangdong",
+    "regionalMacroRegionDisplayName": "華南"
   },
   {
     "id": "cn-cn-yn-01",
@@ -1385,7 +1453,9 @@
     "regionalClimatePoint": {
       "latitude": 24.92756,
       "longitude": 103.02897
-    }
+    },
+    "regionalMacroRegion": "Yunnan",
+    "regionalMacroRegionDisplayName": "西南"
   },
   {
     "id": "vn-vn-north-01",
@@ -1425,7 +1495,9 @@
     "regionalClimatePoint": {
       "latitude": 21.060953,
       "longitude": 105.472269
-    }
+    },
+    "regionalMacroRegion": "Northern Vietnam",
+    "regionalMacroRegionDisplayName": "北部"
   },
   {
     "id": "vn-vn-central-01",
@@ -1465,7 +1537,9 @@
     "regionalClimatePoint": {
       "latitude": 15.821549,
       "longitude": 108.404053
-    }
+    },
+    "regionalMacroRegion": "Central Vietnam",
+    "regionalMacroRegionDisplayName": "中部沿海"
   },
   {
     "id": "vn-vn-central-02",
@@ -1505,7 +1579,9 @@
     "regionalClimatePoint": {
       "latitude": 16.324958,
       "longitude": 107.959213
-    }
+    },
+    "regionalMacroRegion": "Central Vietnam",
+    "regionalMacroRegionDisplayName": "中部沿海"
   },
   {
     "id": "vn-vn-south-01",
@@ -1545,7 +1621,9 @@
     "regionalClimatePoint": {
       "latitude": 10.8184,
       "longitude": 106.663
-    }
+    },
+    "regionalMacroRegion": "Southern Vietnam",
+    "regionalMacroRegionDisplayName": "東南部"
   },
   {
     "id": "vn-vn-south-02",
@@ -1585,7 +1663,9 @@
     "regionalClimatePoint": {
       "latitude": 10.942919,
       "longitude": 108.18188
-    }
+    },
+    "regionalMacroRegion": "Southern Vietnam",
+    "regionalMacroRegionDisplayName": "東南部"
   },
   {
     "id": "vn-vn-island-01",
@@ -1625,7 +1705,9 @@
     "regionalClimatePoint": {
       "latitude": 10.3116,
       "longitude": 103.9156
-    }
+    },
+    "regionalMacroRegion": "Southern Islands",
+    "regionalMacroRegionDisplayName": "湄公河三角洲"
   },
   {
     "id": "th-th-bkk-01",
@@ -1665,7 +1747,9 @@
     "regionalClimatePoint": {
       "latitude": 13.6971,
       "longitude": 100.8086
-    }
+    },
+    "regionalMacroRegion": "Bangkok & Central",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "th-th-east-01",
@@ -1705,7 +1789,9 @@
     "regionalClimatePoint": {
       "latitude": 12.91061,
       "longitude": 100.98388
-    }
+    },
+    "regionalMacroRegion": "Pattaya & Eastern",
+    "regionalMacroRegionDisplayName": "東部"
   },
   {
     "id": "th-th-west-01",
@@ -1745,7 +1831,9 @@
     "regionalClimatePoint": {
       "latitude": 12.6144,
       "longitude": 99.8917
-    }
+    },
+    "regionalMacroRegion": "Hua Hin & Western",
+    "regionalMacroRegionDisplayName": "西部"
   },
   {
     "id": "th-th-south-01",
@@ -1785,7 +1873,9 @@
     "regionalClimatePoint": {
       "latitude": 8.103,
       "longitude": 98.328
-    }
+    },
+    "regionalMacroRegion": "Phuket & Southern",
+    "regionalMacroRegionDisplayName": "南部"
   },
   {
     "id": "th-th-north-01",
@@ -1825,7 +1915,9 @@
     "regionalClimatePoint": {
       "latitude": 18.69188,
       "longitude": 99.17359
-    }
+    },
+    "regionalMacroRegion": "Chiang Mai & Northern",
+    "regionalMacroRegionDisplayName": "北部"
   },
   {
     "id": "th-th-ne-01",
@@ -1865,7 +1957,9 @@
     "regionalClimatePoint": {
       "latitude": 14.512665,
       "longitude": 101.432599
-    }
+    },
+    "regionalMacroRegion": "Khao Yai & Northeast",
+    "regionalMacroRegionDisplayName": "東北部"
   },
   {
     "id": "th-th-island-01",
@@ -1905,7 +1999,9 @@
     "regionalClimatePoint": {
       "latitude": 9.56001,
       "longitude": 99.97647
-    }
+    },
+    "regionalMacroRegion": "Gulf Islands",
+    "regionalMacroRegionDisplayName": "南部"
   },
   {
     "id": "my-my-central-01",
@@ -1945,7 +2041,9 @@
     "regionalClimatePoint": {
       "latitude": 3.13449,
       "longitude": 101.632646
-    }
+    },
+    "regionalMacroRegion": "Kuala Lumpur & Central",
+    "regionalMacroRegionDisplayName": "中馬"
   },
   {
     "id": "my-my-north-01",
@@ -1985,7 +2083,9 @@
     "regionalClimatePoint": {
       "latitude": 5.336035,
       "longitude": 100.283686
-    }
+    },
+    "regionalMacroRegion": "North Malaysia",
+    "regionalMacroRegionDisplayName": "北馬"
   },
   {
     "id": "my-my-south-01",
@@ -2025,7 +2125,9 @@
     "regionalClimatePoint": {
       "latitude": 1.526621,
       "longitude": 104.267824
-    }
+    },
+    "regionalMacroRegion": "South Malaysia",
+    "regionalMacroRegionDisplayName": "南馬"
   },
   {
     "id": "my-my-island-01",
@@ -2065,7 +2167,9 @@
     "regionalClimatePoint": {
       "latitude": 6.426397,
       "longitude": 99.683912
-    }
+    },
+    "regionalMacroRegion": "Langkawi",
+    "regionalMacroRegionDisplayName": "北馬"
   },
   {
     "id": "my-my-borneo-01",
@@ -2105,7 +2209,9 @@
     "regionalClimatePoint": {
       "latitude": 6.155901,
       "longitude": 116.151667
-    }
+    },
+    "regionalMacroRegion": "Borneo",
+    "regionalMacroRegionDisplayName": "沙巴"
   },
   {
     "id": "my-my-borneo-02",
@@ -2145,7 +2251,9 @@
     "regionalClimatePoint": {
       "latitude": 1.583633,
       "longitude": 110.33254
-    }
+    },
+    "regionalMacroRegion": "Borneo",
+    "regionalMacroRegionDisplayName": "砂拉越"
   },
   {
     "id": "my-my-east-01",
@@ -2185,7 +2293,9 @@
     "regionalClimatePoint": {
       "latitude": 5.3862,
       "longitude": 103.0898
-    }
+    },
+    "regionalMacroRegion": "East Coast Region",
+    "regionalMacroRegionDisplayName": "東海岸"
   },
   {
     "id": "my-my-highland-01",
@@ -2225,7 +2335,9 @@
     "regionalClimatePoint": {
       "latitude": 4.4716,
       "longitude": 101.379
-    }
+    },
+    "regionalMacroRegion": "Highlands",
+    "regionalMacroRegionDisplayName": "高原"
   },
   {
     "id": "sg-sg-island-01",
@@ -2265,7 +2377,9 @@
     "regionalClimatePoint": {
       "latitude": 1.248855,
       "longitude": 103.829331
-    }
+    },
+    "regionalMacroRegion": "Singapore",
+    "regionalMacroRegionDisplayName": "新加坡全島"
   },
   {
     "id": "id-id-jkt-01",
@@ -2305,7 +2419,9 @@
     "regionalClimatePoint": {
       "latitude": -6.2734,
       "longitude": 106.7883
-    }
+    },
+    "regionalMacroRegion": "Greater Jakarta",
+    "regionalMacroRegionDisplayName": "爪哇"
   },
   {
     "id": "id-id-wjava-01",
@@ -2345,7 +2461,9 @@
     "regionalClimatePoint": {
       "latitude": -6.601398,
       "longitude": 106.835495
-    }
+    },
+    "regionalMacroRegion": "West Java",
+    "regionalMacroRegionDisplayName": "爪哇"
   },
   {
     "id": "id-id-cjava-01",
@@ -2385,7 +2503,9 @@
     "regionalClimatePoint": {
       "latitude": -7.62108,
       "longitude": 110.445324
-    }
+    },
+    "regionalMacroRegion": "Central Java",
+    "regionalMacroRegionDisplayName": "爪哇"
   },
   {
     "id": "id-id-ejava-01",
@@ -2425,7 +2545,9 @@
     "regionalClimatePoint": {
       "latitude": -7.703039,
       "longitude": 112.674623
-    }
+    },
+    "regionalMacroRegion": "East Java",
+    "regionalMacroRegionDisplayName": "爪哇"
   },
   {
     "id": "id-id-bali-01",
@@ -2465,7 +2587,9 @@
     "regionalClimatePoint": {
       "latitude": -8.804651,
       "longitude": 115.127245
-    }
+    },
+    "regionalMacroRegion": "Bali",
+    "regionalMacroRegionDisplayName": "峇里及努沙登加拉"
   },
   {
     "id": "id-id-riau-01",
@@ -2505,7 +2629,9 @@
     "regionalClimatePoint": {
       "latitude": 1.195277,
       "longitude": 104.405221
-    }
+    },
+    "regionalMacroRegion": "Riau Islands",
+    "regionalMacroRegionDisplayName": "蘇門答臘"
   },
   {
     "id": "id-id-sumatra-01",
@@ -2545,7 +2671,9 @@
     "regionalClimatePoint": {
       "latitude": 3.61,
       "longitude": 98.62
-    }
+    },
+    "regionalMacroRegion": "Sumatra",
+    "regionalMacroRegionDisplayName": "蘇門答臘"
   },
   {
     "id": "id-id-kal-01",
@@ -2585,7 +2713,9 @@
     "regionalClimatePoint": {
       "latitude": -1.2706,
       "longitude": 116.8693
-    }
+    },
+    "regionalMacroRegion": "Kalimantan",
+    "regionalMacroRegionDisplayName": "加里曼丹"
   },
   {
     "id": "jp-arita-resol",
@@ -2618,7 +2748,9 @@
       "latitude": 33.9232299832,
       "longitude": 135.2723593476
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關西",
+    "regionalMacroRegionDisplayName": "關西"
   },
   {
     "id": "jp-green-valley",
@@ -2651,7 +2783,9 @@
       "latitude": 35.4682136,
       "longitude": 138.7517012
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-dai-atami-kokusai",
@@ -2688,7 +2822,9 @@
     "regionalClimatePoint": {
       "latitude": 35.016667,
       "longitude": 139.033333
-    }
+    },
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-daifuji",
@@ -2721,7 +2857,9 @@
       "latitude": 35.016667,
       "longitude": 139.033333
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-eau-sol-vert-karuizawa",
@@ -2758,7 +2896,9 @@
     "regionalClimatePoint": {
       "latitude": 36.296969,
       "longitude": 138.584117
-    }
+    },
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-fuji-classic",
@@ -2791,7 +2931,9 @@
       "latitude": 35.4682136,
       "longitude": 138.7517012
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-fuji-golf-course",
@@ -2824,7 +2966,9 @@
       "latitude": 35.4682136,
       "longitude": 138.7517012
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-gora-kadan-fuji",
@@ -2857,7 +3001,9 @@
       "latitude": 35.016667,
       "longitude": 139.033333
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-hanna-country",
@@ -2890,7 +3036,9 @@
       "latitude": 34.826383,
       "longitude": 135.123729
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關西",
+    "regionalMacroRegionDisplayName": "關西"
   },
   {
     "id": "jp-hayama-kokusai",
@@ -2923,7 +3071,9 @@
       "latitude": 35.695169,
       "longitude": 139.279074
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-hokkaido-golf-club",
@@ -2956,7 +3106,9 @@
       "latitude": 42.716198,
       "longitude": 141.655636
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-iruma-country",
@@ -2993,7 +3145,9 @@
     "regionalClimatePoint": {
       "latitude": 35.969597,
       "longitude": 139.315163
-    }
+    },
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-14-hills",
@@ -3027,7 +3181,9 @@
       "latitude": 35.31468298028144,
       "longitude": 137.45991731575117
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-25-nasu",
@@ -3061,7 +3217,9 @@
       "latitude": 36.709629,
       "longitude": 140.004827
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-31-country",
@@ -3099,7 +3257,9 @@
     "regionalClimatePoint": {
       "latitude": 36.07964324951172,
       "longitude": 139.82562255859375
-    }
+    },
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-adatara",
@@ -3137,7 +3297,9 @@
     "regionalClimatePoint": {
       "latitude": 37.57389,
       "longitude": 140.362964
-    }
+    },
+    "regionalMacroRegion": "東北",
+    "regionalMacroRegionDisplayName": "東北"
   },
   {
     "id": "jp-adonis",
@@ -3175,7 +3337,9 @@
     "regionalClimatePoint": {
       "latitude": 35.31468298028144,
       "longitude": 137.45991731575117
-    }
+    },
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-adonis-ogawa",
@@ -3209,7 +3373,9 @@
       "latitude": 35.969597,
       "longitude": 139.315163
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-aga-kogen",
@@ -3243,7 +3409,9 @@
       "latitude": 36.91549,
       "longitude": 136.775147
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "中部",
+    "regionalMacroRegionDisplayName": "中部"
   },
   {
     "id": "jp-fuchu-country",
@@ -3277,7 +3445,9 @@
       "latitude": 35.695169,
       "longitude": 139.279074
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-gmg-hachioji",
@@ -3311,7 +3481,9 @@
       "latitude": 35.695169,
       "longitude": 139.279074
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-hachioji-cc",
@@ -3349,7 +3521,9 @@
     "regionalClimatePoint": {
       "latitude": 35.695169,
       "longitude": 139.279074
-    }
+    },
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-izu-oshima",
@@ -3387,7 +3561,9 @@
     "regionalClimatePoint": {
       "latitude": 34.789,
       "longitude": 139.393
-    }
+    },
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-manna-country",
@@ -3421,7 +3597,9 @@
       "latitude": 35.83503,
       "longitude": 140.27659
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-mashiko-country",
@@ -3455,7 +3633,9 @@
       "latitude": 36.709629,
       "longitude": 140.004827
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-murasakizuka",
@@ -3489,7 +3669,9 @@
       "latitude": 36.709629,
       "longitude": 140.004827
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "關東",
+    "regionalMacroRegionDisplayName": "關東"
   },
   {
     "id": "jp-anan-cc",
@@ -3527,7 +3709,9 @@
     "regionalClimatePoint": {
       "latitude": 33.875869,
       "longitude": 134.65131
-    }
+    },
+    "regionalMacroRegion": "四國",
+    "regionalMacroRegionDisplayName": "四國"
   },
   {
     "id": "jp-bizan-cc",
@@ -3561,7 +3745,9 @@
       "latitude": 33.875869,
       "longitude": 134.65131
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "四國",
+    "regionalMacroRegionDisplayName": "四國"
   },
   {
     "id": "jp-reomakogen",
@@ -3595,7 +3781,9 @@
       "latitude": 33.875869,
       "longitude": 134.65131
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "四國",
+    "regionalMacroRegionDisplayName": "四國"
   },
   {
     "id": "jp-shikoku-anabuki",
@@ -3629,7 +3817,9 @@
       "latitude": 33.875869,
       "longitude": 134.65131
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "四國",
+    "regionalMacroRegionDisplayName": "四國"
   },
   {
     "id": "jp-akita-kita-kuko",
@@ -3667,7 +3857,9 @@
     "regionalClimatePoint": {
       "latitude": 40.17,
       "longitude": 140.37
-    }
+    },
+    "regionalMacroRegion": "東北",
+    "regionalMacroRegionDisplayName": "東北"
   },
   {
     "id": "jp-aomori-cc",
@@ -3705,7 +3897,9 @@
     "regionalClimatePoint": {
       "latitude": 40.73722,
       "longitude": 140.74876
-    }
+    },
+    "regionalMacroRegion": "東北",
+    "regionalMacroRegionDisplayName": "東北"
   },
   {
     "id": "jp-aomori-royal",
@@ -3739,7 +3933,9 @@
       "latitude": 40.73722,
       "longitude": 140.74876
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "東北",
+    "regionalMacroRegionDisplayName": "東北"
   },
   {
     "id": "jp-banyan-tree-okinawa",
@@ -3773,7 +3969,9 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-bel-beach",
@@ -3807,7 +4005,9 @@
       "latitude": 26.524228,
       "longitude": 127.939192
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-emerald-coast",
@@ -3841,7 +4041,9 @@
       "latitude": 24.734437,
       "longitude": 125.437101
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-ginoza-cc",
@@ -3875,7 +4077,9 @@
       "latitude": 26.524228,
       "longitude": 127.939192
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-kanucha-golf",
@@ -3909,7 +4113,9 @@
       "latitude": 26.524228,
       "longitude": 127.939192
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-naha-golf",
@@ -3943,7 +4149,9 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-nanzan-cc",
@@ -3977,7 +4185,9 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-ocean-castle",
@@ -4011,7 +4221,9 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-ocean-links-miyako",
@@ -4049,7 +4261,9 @@
     "regionalClimatePoint": {
       "latitude": 24.734437,
       "longitude": 125.437101
-    }
+    },
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-okinawa-country",
@@ -4083,7 +4297,9 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-okinawa-royal",
@@ -4117,7 +4333,9 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-onishi-terrace",
@@ -4151,7 +4369,9 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-risonare-kohamajima",
@@ -4189,7 +4409,9 @@
     "regionalClimatePoint": {
       "latitude": 24.346608,
       "longitude": 123.980576
-    }
+    },
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-ryukyu-golf",
@@ -4223,7 +4445,9 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-sashiba-links",
@@ -4257,7 +4481,9 @@
       "latitude": 24.734437,
       "longitude": 125.437101
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-shigira-bay",
@@ -4291,7 +4517,9 @@
       "latitude": 24.734437,
       "longitude": 125.437101
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-shurei-cc",
@@ -4325,7 +4553,9 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "沖繩",
+    "regionalMacroRegionDisplayName": "沖繩"
   },
   {
     "id": "jp-aino-cc",
@@ -4363,7 +4593,9 @@
     "regionalClimatePoint": {
       "latitude": 32.8008,
       "longitude": 130.1815
-    }
+    },
+    "regionalMacroRegion": "九州",
+    "regionalMacroRegionDisplayName": "九州"
   },
   {
     "id": "jp-aiwa-miyazaki",
@@ -4397,7 +4629,9 @@
       "latitude": 31.974525,
       "longitude": 131.472898
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "九州",
+    "regionalMacroRegionDisplayName": "九州"
   },
   {
     "id": "jp-amagase-onsen",
@@ -4435,7 +4669,9 @@
     "regionalClimatePoint": {
       "latitude": 33.2442744,
       "longitude": 131.0166391
-    }
+    },
+    "regionalMacroRegion": "九州",
+    "regionalMacroRegionDisplayName": "九州"
   },
   {
     "id": "jp-amami-cc",
@@ -4469,7 +4705,9 @@
       "latitude": 31.974525,
       "longitude": 131.472898
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "九州",
+    "regionalMacroRegionDisplayName": "九州"
   },
   {
     "id": "jp-niseko-village-golf",
@@ -4508,7 +4746,9 @@
     "regionalClimatePoint": {
       "latitude": 42.847109,
       "longitude": 140.685607
-    }
+    },
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-kyoto-golf-club",
@@ -4546,7 +4786,9 @@
     "regionalClimatePoint": {
       "latitude": 35.067014,
       "longitude": 135.759207
-    }
+    },
+    "regionalMacroRegion": "關西",
+    "regionalMacroRegionDisplayName": "關西"
   },
   {
     "id": "jp-sapporo-teine",
@@ -4593,7 +4835,9 @@
     "regionalClimatePoint": {
       "latitude": 43.1039996,
       "longitude": 141.2091466
-    }
+    },
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-nidom-classic",
@@ -4640,7 +4884,9 @@
     "regionalClimatePoint": {
       "latitude": 42.716198,
       "longitude": 141.655636
-    }
+    },
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-makomanai-cc",
@@ -4675,7 +4921,9 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-takino-cc",
@@ -4710,7 +4958,9 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-hitsujigaoka-cc",
@@ -4745,7 +4995,9 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-sapporo-fuyo-cc",
@@ -4780,7 +5032,9 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-tsukisappu-gc",
@@ -4815,7 +5069,9 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-jozankei-komagaoka",
@@ -4849,7 +5105,9 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-rembrandt-sapporo",
@@ -4884,7 +5142,9 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   },
   {
     "id": "jp-niseko-golf-course",
@@ -4919,6 +5179,8 @@
       "latitude": 42.847109,
       "longitude": 140.685607
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "regionalMacroRegion": "北海道",
+    "regionalMacroRegionDisplayName": "北海道"
   }
 ]
