@@ -23,3 +23,7 @@ All three regional points must return weekly and monthly time arrays, weekly pre
 
 ## Future verification
 As snapshots accumulate, pair each archived weekly/monthly target period with later observed JMA regional precipitation summaries. Evaluate wet/dry anomaly direction and category reliability at the native weekly/monthly temporal scale. Do not treat weekly/monthly products as daily forecasts.
+
+
+## API metadata retention (2026-11-27)
+Each regional snapshot retains `weekly_units` and `monthly_units` as `weeklyUnits` and `monthlyUnits`, including precipitation mean/anomaly units. The archive quality gate rejects snapshots missing these unit labels. Open-Meteo documents weekly/monthly precipitation Mean and Anomaly, but the reviewed documentation does not explicitly define the exact timestamp boundary convention for each returned time label. Do not infer week-start or month-start semantics for verification solely from the array label.
