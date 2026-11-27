@@ -69,7 +69,7 @@ class JapanDailyQATests(unittest.TestCase):
         self.assertEqual(report["failedTasks"], 1)
         self.assertEqual(report["pendingOrMissingTasks"], 1)
         self.assertEqual(report["missingTaskIds"], ["JP-TEST-1993"])
-        self.assertEqual(report["unexpectedTaskIds"], ["UNKNOWN-1991"])
+        self.assertEqual(report["unexpectedTaskIds"], ["JP-TEST-1994", "UNKNOWN-1991"])
 
     def test_missing_batch_state_is_not_reported_as_success(self):
         from pathlib import Path
