@@ -101,7 +101,10 @@ test("three golf rounds stay on the middle three consecutive days, not the trave
   const days=buildDays(5);
   for(const day of days){
     for(const region of Object.values(day.regions)){
-      const score=day.date===days[0].date||day.date===days[4].date?1:75;\n      region.forecast=signal(score);\n      region.historical=signal(score,1,{sampleYears:20});\n      region.stability=signal(score);
+      const score=day.date===days[0].date||day.date===days[4].date?1:75;
+      region.forecast=signal(score);
+      region.historical=signal(score,1,{sampleYears:20});
+      region.stability=signal(score);
     }
   }
   const result=recommendGolfTripDates({asOf,horizonDays:5,days});
