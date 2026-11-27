@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "status": "specification-only-no-observations-loaded",
+  "purpose": "Define the historical regional climate baseline used as a prior for Japan 90-day golf date ranking. One representative point per subregion; all courses in that subregion inherit the same regional assessment.",
+  "geography": {
+    "countryCode": "JP",
+    "subregionRegistryPath": "config/global/weather-subregions.json",
+    "representativePointPath": "countries[].subregions[].candidateCoordinates",
+    "requiredCoordinatePurpose": "regional-climate-representative-point",
+    "requiredTimezone": "Asia/Tokyo",
+    "mainlandSubregionIds": [
+      "JP-HKD-CENTRAL",
+      "JP-HKD-SOUTH",
+      "JP-THK-NORTH",
+      "JP-THK-SOUTH",
+      "JP-KNT-NORTH",
+      "JP-KNT-SOUTH",
+      "JP-CHB-KOSHIN",
+      "JP-CHB-TOKAI",
+      "JP-CHB-HOKURIKU",
+      "JP-KNS-KANSAI",
+      "JP-KNS-KII",
+      "JP-CHG-SANIN",
+      "JP-CHG-SANYO",
+      "JP-SHK-SHIKOKU",
+      "JP-KYU-NORTH",
+      "JP-KYU-SOUTH"
+    ],
+    "existingOkinawaPilotIds": [
+      "JP-OKI-NORTH",
+      "JP-OKI-CENTRAL",
+      "JP-OKI-SOUTH"
+    ],
+    "pointPolicy": "Use the existing accepted regional representative point. Exact course pin/fairway precision is not required. Do not create per-course weather records within a subregion."
+  },
+  "baseline": {
+    "startDate": "1991-01-01",
+    "endDate": "2020-12-31",
+    "referencePeriod": "WMO 1991-2020 climate normal",
+    "temporalResolution": "daily",
+    "calendarWindowDays": 15,
+    "leapDayPolicy": "Map February 29 to the February 28/March 1 pooled window; retain original source date in raw records.",
+    "minimumValidYears": 24,
+    "minimumDailyCompleteness": 0.9,
+    "missingDataPolicy": "Keep null/missing values; never convert missing precipitation to zero. Suppress climatology metrics below completeness thresholds."
+  },
+  "sourceStrategy": [
+    {
+      "sourceId": "ERA5_HOURLY_SINGLE_LEVELS",
+      "provider": "ECMWF Copernicus Climate Data Store",
+      "dataset": "reanalysis-era5-single-levels",
+      "role": "primary-gridded-historical-baseline",
+      "status": "planned-not-downloaded",
+      "variables": [
+        "total_precipitation",
+        "2m_temperature",
+        "2m_dewpoint_temperature",
+        "10m_u_component_of_wind",
+        "10m_v_component_of_wind"
+      ],
+      "temporalResolution": "hourly",
+      "spatialMethod": "Nearest grid cell to the subregion representative point; record grid-cell coordinates and point-to-cell distance. Do not imply the grid cell is a course observation.",
+      "limitations": "ERA5 is a model-based reanalysis, not an independent rain-gauge observation. Use as a consistent regional baseline and disclose grid-scale limitations."
+    },
+    {
+      "sourceId": "JMA_STATION_OBSERVATIONS",
+      "provider": "Japan Meteorological Agency",
+      "role": "independent-observation-cross-check",
+      "status": "planned-station-matching-not-started",
+      "variables": [
+        "daily_precipitation",
+        "daily_temperature_min",
+        "daily_temperature_mean",
+        "daily_temperature_max"
+      ],
+      "spatialMethod": "Select suitable nearby long-running stations by region and elevation/coastal context; retain station distance and elevation difference. Do not substitute station data for the regional grid without documenting representativeness.",
+      "limitations": "Station observations are point measurements and may not represent elevated, coastal, or mountainous golf areas."
+    }
+  ],
+  "derivedMetrics": {
+    "precipitation": {
+      "dailyTotal": "sum hourly total_precipitation after unit conversion to mm",
+      "wetDayThresholdMm": 1,
+      "wetDayFrequency": "fraction of valid calendar-window days with daily precipitation >= 1 mm",
+      "medianDailyRainMm": "median daily total precipitation including dry days",
+      "percentile90DailyRainMm": "90th percentile daily total precipitation including dry days",
+      "heavyRainFrequencyThresholdsMm": [
+        10,
+        30
+      ]
+    },
+    "temperature": {
+      "dailyMin": "minimum hourly 2m_temperature",
+      "dailyMean": "mean hourly 2m_temperature",
+      "dailyMax": "maximum hourly 2m_temperature"
+    },
+    "humidity": {
+      "dailyMeanRelativeHumidity": "derive hourly relative humidity from 2m_temperature and 2m_dewpoint_temperature, then daily mean; document formula and clamp to 0-100%"
+    },
+    "wind": {
+      "hourlySpeed": "sqrt(u10^2 + v10^2)",
+      "dailyMeanSpeed": "mean hourly wind speed",
+      "dailyMaxSpeed": "maximum hourly wind speed",
+      "direction": "derive meteorological wind direction from u10/v10; preserve vector components in raw data"
+    }
+  },
+  "normalizedDailyRecord": {
+    "requiredFields": [
+      "countryCode",
+      "subregionId",
+      "representativeCourseId",
+      "latitude",
+      "longitude",
+      "timezone",
+      "sourceId",
+      "dataset",
+      "sourceVersion",
+      "retrievedAt",
+      "validDate",
+      "baselineYear",
+      "gridLatitude",
+      "gridLongitude",
+      "gridDistanceKm",
+      "precipitationMm",
+      "wetDay",
+      "temperatureMinC",
+      "temperatureMeanC",
+      "temperatureMaxC",
+      "relativeHumidityMeanPct",
+      "windSpeedMeanMs",
+      "windSpeedMaxMs",
+      "validHourCount",
+      "qualityFlags"
+    ],
+    "nullableMetrics": true,
+    "provenanceRequired": true
+  },
+  "qualityGates": [
+    "All 16 mainland subregions resolve to exactly one regional representative point from the canonical registry.",
+    "No subregion is expanded into separate per-course climate points.",
+    "All source records retain provider, dataset, retrieval time, valid date, source version and spatial extraction metadata.",
+    "No missing precipitation is interpreted as a dry day.",
+    "ERA5 reanalysis and JMA station observations remain separately identified.",
+    "Each subregion has at least 24 valid baseline years and >=90% daily completeness before its climatology is marked usable.",
+    "Historical climatology is a seasonal prior for 19-90 day ranking, not a deterministic daily forecast."
+  ],
+  "activationPolicy": {
+    "climateBaselineEnabled": false,
+    "forecastEnabled": false,
+    "enableOnlyAfter": [
+      "historical source data have been downloaded and archived",
+      "all 16 subregions pass spatial and temporal coverage checks",
+      "daily aggregation and unit conversions are tested",
+      "JMA cross-check coverage and limitations are documented",
+      "regional baseline summaries are independently inspected"
+    ]
+  }
+}
