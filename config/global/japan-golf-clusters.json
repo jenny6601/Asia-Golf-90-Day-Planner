@@ -439,5 +439,57 @@
       "weatherPointStatus": "pending_representative_selection",
       "weatherEnabled": false
     }
-  ]
+  ],
+  "areas": {
+    "okinawaAssignmentRules": [
+      {
+        "clusterId": "JP-OKI-MAIN-NORTH",
+        "keywords": [
+          "Motobu",
+          "Nago",
+          "Ginoza",
+          "Kunigami",
+          "Nakijin",
+          "Higashi",
+          "Ogimi"
+        ]
+      },
+      {
+        "clusterId": "JP-OKI-MAIN-CENTRAL",
+        "keywords": [
+          "Chatan",
+          "Nakagusuku",
+          "Uruma",
+          "Yomitan",
+          "Ginowan",
+          "Okinawa City",
+          "Okinawa, Japan"
+        ]
+      },
+      {
+        "clusterId": "JP-OKI-MAIN-SOUTH",
+        "keywords": [
+          "Naha",
+          "Itoman",
+          "Nanjo",
+          "Yaese",
+          "Tomigusuku",
+          "Haebaru",
+          "Tamagusuku"
+        ]
+      },
+      {
+        "clusterId": "JP-OKI-OUTER-ISLANDS",
+        "keywords": [
+          "Miyakojima",
+          "Irabu",
+          "Ishigaki",
+          "Taketomi",
+          "Kohama",
+          "Yaeyama"
+        ]
+      }
+    ],
+    "notes": "Okinawa prefecture contains mainland and outer-island clusters; assign by town/island address rather than prefecture alone."
+  }
 }
