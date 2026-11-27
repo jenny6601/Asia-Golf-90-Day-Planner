@@ -30,8 +30,8 @@
     "japanSubregionsAudited": 37,
     "candidateRowsAudited": 366,
     "officialMatchedCandidateRows": 366,
-    "candidateRowsWithPrecipitationBreaks": 1,
-    "candidateRowsWithTemperatureBreaks": 1,
+    "candidateRowsWithPrecipitationBreaks": 0,
+    "candidateRowsWithTemperatureBreaks": 0,
     "candidateRowsWithMirrorHistoryMismatch": 0,
     "approvedStations": 0,
     "weatherIngestionEnabled": 0
@@ -128,8 +128,8 @@
           "officialPrecipitationMetadataCoveragePct": 100.0,
           "officialTemperatureCoverageDays": 10958,
           "officialTemperatureMetadataCoveragePct": 100.0,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "14086",
