@@ -9,11 +9,12 @@ const add=(date,n)=>new Date(Date.parse(date+"T12:00:00Z")+n*86400000).toISOStri
 const referenceDate=today();
 const dates=Array.from({length:72},(_,i)=>add(referenceDate,18+i));
 const finite=x=>typeof x==="number"&&Number.isFinite(x);
+const fetchWithTimeout=(url,options={})=>fetch(url,{...options,signal:AbortSignal.timeout(45000)});
 const results=[];
 for(const course of courses){
  const result={courseId:course.id,name:course.name,coordinate:{latitude:course.latitude,longitude:course.longitude},referenceDate,horizon:{start:dates[0],end:dates.at(-1),days:72}};
  try{
-  const [seasonal,history]=await Promise.all([fetchCourseSeasonalForecast(course),fetchCourseHistoricalWeekNormals(course,dates)]);
+  const [seasonal,history]=await Promise.all([fetchCourseSeasonalForecast(course,fetchWithTimeout),fetchCourseHistoricalWeekNormals(course,dates,fetchWithTimeout)]);
   const estimates=buildDailyClimateOutlook(seasonal,history.days,referenceDate,90);
   const byLead=leads=>estimates.filter(x=>leads.includes(x.band));
   const summarize=rows=>({days:rows.length,completeCombined:rows.filter(x=>x.sourceType==="seasonal-plus-historical-estimate").length,historyOnly:rows.filter(x=>x.sourceType==="historical-climate-reference").length,seasonalOnly:rows.filter(x=>x.sourceType==="seasonal-signal-without-daily-baseline").length,insufficient:rows.filter(x=>x.sourceType==="insufficient-data").length,missingHigh:rows.filter(x=>!finite(x.highEstimate)).length,missingLow:rows.filter(x=>!finite(x.lowEstimate)).length,missingRainAmount:rows.filter(x=>!finite(x.rainEstimate)).length,missingRainFrequencyEstimate:rows.filter(x=>!finite(x.rainChanceEstimate)).length,windSeasonalAvailable:rows.filter(x=>finite(x.windMeanEstimate)).length,windSeasonalUnavailable:rows.filter(x=>!finite(x.windMeanEstimate)).length,minHistoryRainYears:Math.min(...rows.map(x=>x.historicalRainSampleYears)),minHistoryTemperatureYears:Math.min(...rows.map(x=>x.historicalTemperatureSampleYears)),minSeasonalEvidence:Math.min(...rows.map(x=>x.seasonalEvidenceCount))});
