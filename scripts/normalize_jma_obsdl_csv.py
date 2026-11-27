@@ -100,13 +100,13 @@ def normalize_csv(path, station_id, station_name, latitude, longitude, region_id
 
     # The parser only accepts a single station's export. JMA places station names
     # in the row immediately above the element-name row.
-    station_header = [norm(x) for x in rows[header_i - 1]] if header_i > 0 else []
+    has_metadata_header = any(label in META_LABELS for label in subheaders)
+    station_header = [norm(x) for x in rows[header_i - 1]] if header_i > 0 and has_metadata_header else []
     station_names = {x for x in station_header if x and x not in {"集計開始", "集計終了"}}
     if len(station_names) > 1:
         raise ValueError("CSV contains multiple station columns; export one station at a time")
 
     records, seen = [], set()
-    has_metadata_header = any(label in META_LABELS for label in subheaders)
     data_start = header_i + 2 if has_metadata_header else header_i + 1
     for row in rows[data_start:]:
         if not row or len(row) <= max(indexes.values(), default=-1):
