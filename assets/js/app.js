@@ -200,7 +200,7 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
   const cards=node("div",undefined,"departure-five-cards");
   pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),day=node("button",undefined,"departure-five-card"+(r.date===startDate?" is-departure":"")+(r.actual?" departure-hourly-target":""));day.type="button";day.dataset.hourlyDate=r.date;day.setAttribute("aria-label",r.date+" 天氣狀況，點選查看逐時天氣");day.title=r.actual?"點選查看"+r.date+"逐時天氣":r.seasonal?"點選查看"+r.date+"季節模式逐日估計":"點選查看"+r.date+"歷史氣候資料";day.append(createWeatherIcon(r.code,!r.actual&&!r.seasonal,r.prob),node("strong",r.label));const statusClass=r.playabilityStatus==="適打"?"monthly-status-good":r.playabilityStatus==="可打"?"monthly-status-watch":r.playabilityStatus==="不適"?"monthly-status-bad":"monthly-status-unknown";day.append(node("small",r.playabilityStatus||"資料不足","monthly-day-playability "+statusClass));day.append(node("small",r.actual?"降雨機率":r.seasonal?"雨日頻率（季節調整）":"歷史雨日頻率"),node("b",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"),node("small",r.actual?"累積雨量":r.seasonal?"季節估計日雨量":"歷史日均雨量"),node("b",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));if([0,6].includes(wd))day.classList.add("weekend");day.addEventListener("click",()=>renderDepartureDayPage(host,course,r,onBack));cards.append(day)});
   page.append(cards);
-  if(pageIndex===0){
+  {
    const assessment=node("section",undefined,"departure-week-analysis");
    assessment.append(node("h4","七天天氣總覽與適打分析"));
    const actualDays=rows.filter(r=>r.actual),rainy=actualDays.filter(r=>(Number.isFinite(r.prob)&&r.prob>=40)||(Number.isFinite(r.rain)&&r.rain>=1)).length;
