@@ -18,15 +18,15 @@ The initial source inventory is in `config/global/observation-source-readiness.j
 |---|---|---|
 | Japan | JMA station portal is already specified in the engine plan | Build station inventory and verify per-element history and station moves |
 | South Korea | KMA ASOS portal documents minute/hour/day/month/year data and historical records from 1904 for some station/element combinations; selected elements have QC flags | Download station inventory; verify record continuity and QC semantics |
-| China | No verified archive endpoint in this pass | Official archive discovery required |
+| China | CMA open-data catalogue lists national ground observations and 1991–2020 climate normals | Confirm programmatic portal, terms and station-level access |
 | Vietnam | National service response says station records generally start 1977 onward, hourly/daily formats are possible, and access is fee-based | Request access, pricing and license terms |
-| Thailand | No verified archive endpoint in this pass | Official archive discovery required |
-| Malaysia | No verified archive endpoint in this pass | Official archive discovery required |
+| Thailand | TMD lists about 1,200 stations and 127 WMO-standard stations; historical climate statistics are paid | Obtain station inventory, historic records and cost/terms |
+| Malaysia | MetMalaysia myMETdata accepts hourly/daily/monthly climate data requests; fee-based | Request station inventory and 1991–2020 coverage |
 | Singapore | NEA/MSS publishes historical daily station records; duration varies by station; some additional extraction is paid | Obtain station list and element coverage |
 | Indonesia | SACA&D provides some daily station series for non-commercial research; BMKG access restrictions apply to some products | Check licensing and commercial-use rights before acquisition |
 | Global fallback | NOAA GHCN-Daily provides quality-reviewed daily station records across many countries | Coverage varies by station and element; many stations report precipitation only |
 
-A portal being found is not proof that a suitable station exists near a representative point or that 1991–2020 data can be downloaded under an acceptable license.
+An official catalogue or request portal being found is not proof that a suitable station exists near a representative point or that 1991–2020 data can be downloaded under an acceptable license. China currently has a catalogue reference, not a verified programmatic download endpoint.
 
 ## Phase 1C — Station matching
 For each representative point:
