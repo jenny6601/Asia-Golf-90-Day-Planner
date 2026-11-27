@@ -164,7 +164,7 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
   }
   if(sd){
    const code=mode(seasonalEntries.map(x=>x.code));
-   return {date,actual:false,seasonal:true,seasonalData:sd,code,high:mean(seasonalEntries.map(x=>x.highEstimate)),low:mean(seasonalEntries.map(x=>x.lowEstimate)),feel:null,prob:mean(seasonalEntries.map(x=>x.rainChanceEstimate)),rain:mean(seasonalEntries.map(x=>x.rainEstimate)),wetDayRain:mean(seasonalEntries.map(x=>x.wetDayRainEstimate)),rainConsistency:modeText(seasonalEntries.map(x=>x.rainConsistency)),rainKind:"seasonal-frequency",label:modeText(seasonalEntries.map(x=>x.weather))||sd.weather};
+   return {date,actual:false,seasonal:true,seasonalData:sd,code,high:mean(seasonalEntries.map(x=>x.highEstimate)),low:mean(seasonalEntries.map(x=>x.lowEstimate)),feel:mean(seasonalEntries.map(x=>x.feelsLikeMaxEstimateC)),prob:mean(seasonalEntries.map(x=>x.rainChanceEstimate)),rain:mean(seasonalEntries.map(x=>x.rainEstimate)),wetDayRain:mean(seasonalEntries.map(x=>x.wetDayRainEstimate)),rainConsistency:modeText(seasonalEntries.map(x=>x.rainConsistency)),rainKind:"seasonal-frequency",label:modeText(seasonalEntries.map(x=>x.weather))||sd.weather};
   }
   const histRows=monthlyContext?hRows:(h?[h]:[]);
   const rainFrequency=monthlyContext?mean(histRows.map(x=>x.rainFrequency)):h?.rainFrequency;
@@ -246,9 +246,9 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
  if(!actual){
   if(row.seasonal&&row.seasonalData){
    const s=row.seasonalData;
-   card.append(node("p","第 19–90 日綜合估計：季節模式與歷史同期每日資料融合，屬於旅遊決策參考，不是確定性天氣預報；不提供虛構逐時資料或降雨機率。","long-range-note"));
+   card.append(node("p","第 19–90 日綜合估計：週／月季節預報訊號結合 1991–2020 歷史同期資料；體感溫度顯示高低範圍，屬長期趨勢參考，不是確定性逐日預報。","long-range-note"));
    const stats=node("div",undefined,"results");
-   for(const [label,value,unit] of [["綜合估計最高溫",s.highEstimate," °C"],["綜合估計最低溫",s.lowEstimate," °C"],["估計日均雨量（含無雨日）",s.rainEstimate," mm"],["估計有雨日平均雨量",s.wetDayRainEstimate," mm／有雨日"],["歷史同期雨日頻率（季節調整）",s.rainChanceEstimate,"%"],["歷史同期第90百分位日雨量",s.rainP90Estimate," mm"],["季節模式平均風速",s.windMean," m/s"],["資料完整度",s.dataCompleteness*100,"%"]]){
+   for(const [label,value,unit] of [["體感溫度高點估計",s.feelsLikeMaxEstimateC," °C"],["體感溫度低點估計",s.feelsLikeMinEstimateC," °C"],["估計日均雨量（含無雨日）",s.rainEstimate," mm"],["估計有雨日平均雨量",s.wetDayRainEstimate," mm／有雨日"],["歷史同期雨日頻率（季節調整）",s.rainChanceEstimate,"%"],["歷史同期第90百分位日雨量",s.rainP90Estimate," mm"],["季節模式平均風速",s.windMean," m/s"],["資料完整度",s.dataCompleteness*100,"%"]]){
     const item=node("article",undefined,"result-card");item.append(node("p",label),node("strong",Number.isFinite(value)?value.toFixed(1)+unit:"資料不足"));stats.append(item);
    }
    card.append(stats);
