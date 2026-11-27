@@ -29,5 +29,29 @@ class KMAASOSCandidateTests(unittest.TestCase):
         stations = parse_inventory(CSV)
         self.assertGreater(stations["101"][0]["overlapDays"], 0)
 
+    def test_unclassified_network_is_excluded(self):
+        csv_text = """지점번호,지점명,시작일,종료일,위도,경도,지점유형
+201,ASOS명칭누락,1990-01-01,,37.0,127.0,
+202,AWS,1990-01-01,,37.1,127.1,AWS
+203,종관관측소,1990-01-01,,37.2,127.2,종관기상관측
+"""
+        stations = parse_inventory(csv_text)
+        self.assertEqual(set(stations), {"203"})
+
+    def test_missing_network_column_fails_closed(self):
+        csv_text = """지점번호,지점명,시작일,종료일,위도,경도
+301,미분류관측소,1990-01-01,,37.0,127.0
+"""
+        with self.assertRaisesRegex(ValueError, "explicit observation-network/type column"):
+            parse_inventory(csv_text)
+
+    def test_device_name_network_alias_is_supported(self):
+        csv_text = """지점번호,지점명,시작일,종료일,위도,경도,장비명
+401,서울,1990-01-01,,37.5,127.0,ASOS
+402,서울AWS,1990-01-01,,37.6,127.1,AWS
+"""
+        stations = parse_inventory(csv_text)
+        self.assertEqual(set(stations), {"401"})
+
 if __name__ == "__main__":
     unittest.main()
