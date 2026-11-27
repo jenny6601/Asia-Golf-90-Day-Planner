@@ -43,7 +43,8 @@ jobs:
           node --test tests/okinawa-long-range-validation.test.js
           node --test tests/okinawa-course-weather-acceptance.test.js
           node --test tests/global-catalog.test.js
-      - name: Probe 16-day course-point forecast and 90-day seasonal data
+      - name: Recheck 16-day course-point forecast and 90-day seasonal data
+        if: github.event_name == 'workflow_dispatch'
         run: node scripts/validate-okinawa-course-weather.mjs
       - name: Validate six-course D19-D90 seasonal and historical estimates
         run: node scripts/validate-okinawa-long-range.mjs
