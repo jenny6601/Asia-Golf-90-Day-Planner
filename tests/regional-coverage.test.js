@@ -289,3 +289,31 @@ test("Japan Setouchi official pin and Tosa/Phoenix evidence are recorded conserv
  assert.equal(phoenix.coordinateQuality.officialMapReference.coordinateType,"no-official-pin-extracted");
  assert.equal(phoenix.coordinateQuality.weatherPointEligible,false);
 });
+
+
+test("Japan GPS decision matrix covers all 16 mainland subregions and blocks premature forecast activation",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const matrix=JSON.parse(readFileSync(new URL("../config/global/japan-gps-quality-matrix.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
+ assert.equal(matrix.schemaVersion,"1.0.0");
+ assert.equal(matrix.entries.length,16);
+ assert.equal(matrix.summary.mainlandSubregions,16);
+ assert.equal(matrix.summary.officialPlacePins,3);
+ assert.equal(matrix.summary.officialMapViewportCenters,8);
+ assert.equal(matrix.summary.officialAccessOrAddressReferences,5);
+ assert.equal(matrix.summary.forecastEnabled,0);
+ assert.equal(new Set(matrix.entries.map(x=>x.subregionId)).size,16);
+ for(const entry of matrix.entries){
+  const source=mainland.find(x=>x.id===entry.subregionId);
+  assert.ok(source,entry.subregionId+" must exist in regional registry");
+  assert.equal(entry.representativeCandidate,source.candidateCourseName);
+  assert.equal(entry.candidateCoordinate.latitude,source.candidateCoordinates.latitude);
+  assert.equal(entry.candidateCoordinate.longitude,source.candidateCoordinates.longitude);
+  assert.equal(entry.weatherPointEligible,false);
+  assert.equal(source.coordinateQuality.weatherPointEligible,false);
+ }
+ const classic=matrix.entries.find(x=>x.representativeCandidate==="The Classic Golf Club");
+ assert.equal(classic.evidenceClass,"official-map-viewport-center-only");
+ assert.equal(classic.offsetFromCandidateKm,0.202);
+});
