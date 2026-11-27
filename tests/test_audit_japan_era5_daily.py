@@ -50,6 +50,34 @@ class JapanDailyQATests(unittest.TestCase):
         self.assertEqual(qa["dailyWindowValidYears"]["06-15"]["precipitationMm"], 24)
         self.assertEqual(qa["metricReadiness"]["precipitationMm"]["status"], "partial-calendar-coverage")
 
+    def test_batch_state_counts_success_failed_and_missing_tasks(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "batch-state.json"
+            path.write_text(json.dumps({"status": "in-progress", "tasks": {
+                "JP-TEST-1991": {"status": "daily-converted-structurally-validated"},
+                "JP-TEST-1992": {"status": "failed"},
+                "JP-TEST-1994": {"status": "pending"},
+                "UNKNOWN-1991": {"status": "daily-converted-existing"}
+            }}), encoding="utf-8")
+            report = MODULE.audit_batch_state(path, {"JP-TEST"}, 1991, 1993)
+        self.assertEqual(report["expectedTasks"], 3)
+        self.assertEqual(report["recordedTasks"], 2)
+        self.assertEqual(report["completedTasks"], 1)
+        self.assertEqual(report["failedTasks"], 1)
+        self.assertEqual(report["pendingOrMissingTasks"], 1)
+        self.assertEqual(report["missingTaskIds"], ["JP-TEST-1993"])
+        self.assertEqual(report["unexpectedTaskIds"], ["UNKNOWN-1991"])
+
+    def test_missing_batch_state_is_not_reported_as_success(self):
+        from pathlib import Path
+        report = MODULE.audit_batch_state(Path("/definitely/missing/batch-state.json"), {"JP-TEST"}, 1991, 1992)
+        self.assertEqual(report["status"], "batch-state-not-provided")
+        self.assertEqual(report["completedTasks"], 0)
+        self.assertEqual(report["pendingOrMissingTasks"], 2)
+
     def test_empty_region_is_not_eligible(self):
         qa = MODULE.audit_climate_windows([], 1991, 2020)
         self.assertEqual(qa["metricReadiness"]["precipitationMm"]["usableCalendarDays"], 0)
