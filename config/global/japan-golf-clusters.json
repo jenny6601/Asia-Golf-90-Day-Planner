@@ -1,0 +1,443 @@
+{
+  "schemaVersion": 1,
+  "updatedOn": "2026-11-27",
+  "status": "proposed_backend_taxonomy",
+  "purpose": "Japan golf course cluster layer for regional golf climate analysis. This is a practical travel/course-cluster taxonomy, not a prefectural or official administrative classification.",
+  "designRules": [
+    "Group courses by practical golf travel cluster and course concentration, not only by broad administrative regions.",
+    "Each facility maps to exactly one golfClusterId.",
+    "A golf cluster will use one representative course/location for regional climate assessment; other courses inherit that assessment.",
+    "Do not activate a cluster weather point until a representative course and coordinate pass review.",
+    "Keep course facility and selectable course-layout identities separate."
+  ],
+  "sourceReferences": [
+    {
+      "name": "JNTO Japan golf course selection",
+      "url": "https://www.japan.travel/en/sports/golf/courses/",
+      "use": "Cross-check curated representative destinations and broad regions."
+    },
+    {
+      "name": "Play Golf Tokyo Japan course directory",
+      "url": "https://www.play-golf-tokyo.com/courses",
+      "use": "Regional and prefecture-level course concentration discovery."
+    },
+    {
+      "name": "Nomae Golf Japan prefecture directory",
+      "url": "https://golf.nomaejapan.com/en/courses/all-prefectures",
+      "use": "47-prefecture coverage and regional groupings; counts treated as directory estimates."
+    },
+    {
+      "name": "Miramar Japan practical golf regions",
+      "url": "https://miramar.co.jp/travel/golf/courses/",
+      "use": "Practical golf travel cluster examples such as Mount Fuji, Kawana/Izu, Chiba/Ibaraki, Tokyo/Kanagawa."
+    }
+  ],
+  "count": 33,
+  "clusters": [
+    {
+      "id": "JP-HKD-SAPPORO",
+      "countryCode": "JP",
+      "region": "北海道",
+      "label": "札幌／千歲球場群",
+      "prefectures": [
+        "Hokkaido"
+      ],
+      "rationale": "札幌、千歲、苫小牧及新千歲機場周邊；北海道中央及空港交通圈",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-HKD-NISEKO",
+      "countryCode": "JP",
+      "region": "北海道",
+      "label": "二世谷／留壽都度假球場群",
+      "prefectures": [],
+      "rationale": "二世谷、留壽都及羊蹄山周邊度假球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-HKD-HAKODATE",
+      "countryCode": "JP",
+      "region": "北海道",
+      "label": "函館／大沼球場群",
+      "prefectures": [],
+      "rationale": "函館、大沼及道南球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-THK-AOMORI-AKITA",
+      "countryCode": "JP",
+      "region": "東北",
+      "label": "青森／秋田北部球場群",
+      "prefectures": [
+        "Aomori",
+        "Akita"
+      ],
+      "rationale": "北東北日本海與津輕區域球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-THK-IWATE-APPI",
+      "countryCode": "JP",
+      "region": "東北",
+      "label": "岩手／安比高原球場群",
+      "prefectures": [
+        "Iwate"
+      ],
+      "rationale": "盛岡、八幡平及安比高原球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-THK-MIYAGI-SENDAI",
+      "countryCode": "JP",
+      "region": "東北",
+      "label": "仙台／宮城球場群",
+      "prefectures": [
+        "Miyagi"
+      ],
+      "rationale": "仙台都市圈及宮城縣球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-THK-FUKUSHIMA-YAMAGATA",
+      "countryCode": "JP",
+      "region": "東北",
+      "label": "福島／山形球場群",
+      "prefectures": [
+        "Fukushima",
+        "Yamagata"
+      ],
+      "rationale": "福島盆地、磐梯及山形縣球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KNT-TOKYO-KANAGAWA",
+      "countryCode": "JP",
+      "region": "關東",
+      "label": "東京／神奈川球場群",
+      "prefectures": [
+        "Tokyo",
+        "Kanagawa"
+      ],
+      "rationale": "東京、橫濱、箱根及神奈川周邊球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KNT-CHIBA-NARITA",
+      "countryCode": "JP",
+      "region": "關東",
+      "label": "千葉／成田／市原球場群",
+      "prefectures": [
+        "Chiba"
+      ],
+      "rationale": "成田機場、千葉北部、房總及市原高密度球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KNT-IBARAKI-TSUKUBA",
+      "countryCode": "JP",
+      "region": "關東",
+      "label": "茨城／筑波球場群",
+      "prefectures": [
+        "Ibaraki"
+      ],
+      "rationale": "筑波、土浦及茨城縣球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KNT-TOCHIGI-NASU",
+      "countryCode": "JP",
+      "region": "關東",
+      "label": "栃木／那須／日光球場群",
+      "prefectures": [
+        "Tochigi"
+      ],
+      "rationale": "宇都宮、那須高原及日光周邊球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KNT-GUNMA-SAITAMA",
+      "countryCode": "JP",
+      "region": "關東",
+      "label": "群馬／埼玉球場群",
+      "prefectures": [
+        "Gunma",
+        "Saitama"
+      ],
+      "rationale": "埼玉西部、秩父及群馬縣球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-CHB-FUJI-YAMANASHI",
+      "countryCode": "JP",
+      "region": "中部",
+      "label": "富士五湖／山梨球場群",
+      "prefectures": [
+        "Yamanashi"
+      ],
+      "rationale": "河口湖、山中湖及富士山北麓球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-CHB-SHIZUOKA-FUJI-IZU",
+      "countryCode": "JP",
+      "region": "中部",
+      "label": "靜岡／御殿場／伊豆球場群",
+      "prefectures": [
+        "Shizuoka"
+      ],
+      "rationale": "御殿場、富士山南麓、伊豆及川奈球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-CHB-NAGANO-KARUIZAWA",
+      "countryCode": "JP",
+      "region": "中部",
+      "label": "長野／輕井澤球場群",
+      "prefectures": [
+        "Nagano"
+      ],
+      "rationale": "輕井澤、蓼科及長野高原球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-CHB-NAGOYA-GIFU",
+      "countryCode": "JP",
+      "region": "中部",
+      "label": "名古屋／愛知／岐阜球場群",
+      "prefectures": [
+        "Aichi",
+        "Gifu"
+      ],
+      "rationale": "名古屋都市圈、愛知及岐阜球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-CHB-MIE-ISE",
+      "countryCode": "JP",
+      "region": "中部",
+      "label": "三重／伊勢志摩球場群",
+      "prefectures": [
+        "Mie"
+      ],
+      "rationale": "津、四日市、伊勢及志摩球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-CHB-HOKURIKU",
+      "countryCode": "JP",
+      "region": "中部",
+      "label": "北陸／新潟／富山／石川／福井球場群",
+      "prefectures": [
+        "Niigata",
+        "Toyama",
+        "Ishikawa",
+        "Fukui"
+      ],
+      "rationale": "北陸及新潟沿海、內陸球場群；後續可按實際球場密度再拆分",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KNS-OSAKA-HYOGO",
+      "countryCode": "JP",
+      "region": "關西",
+      "label": "大阪／神戶／兵庫球場群",
+      "prefectures": [
+        "Osaka",
+        "Hyogo"
+      ],
+      "rationale": "大阪都市圈、神戶、六甲及兵庫東西部球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KNS-KYOTO-SHIGA-NARA",
+      "countryCode": "JP",
+      "region": "關西",
+      "label": "京都／滋賀／奈良球場群",
+      "prefectures": [
+        "Kyoto",
+        "Shiga",
+        "Nara"
+      ],
+      "rationale": "京都、大津琵琶湖及奈良周邊球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KNS-WAKAYAMA",
+      "countryCode": "JP",
+      "region": "關西",
+      "label": "和歌山／紀伊半島球場群",
+      "prefectures": [
+        "Wakayama"
+      ],
+      "rationale": "和歌山市、紀伊半島及南紀球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-CHG-SANYO",
+      "countryCode": "JP",
+      "region": "中國地方",
+      "label": "廣島／岡山／山口球場群",
+      "prefectures": [
+        "Hiroshima",
+        "Okayama",
+        "Yamaguchi"
+      ],
+      "rationale": "山陽沿線及瀨戶內海周邊球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-CHG-SANIN",
+      "countryCode": "JP",
+      "region": "中國地方",
+      "label": "鳥取／島根／山陰球場群",
+      "prefectures": [
+        "Tottori",
+        "Shimane"
+      ],
+      "rationale": "日本海側山陰球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-SHK-KAGAWA-TOKUSHIMA",
+      "countryCode": "JP",
+      "region": "四國",
+      "label": "高松／德島／瀨戶內球場群",
+      "prefectures": [
+        "Kagawa",
+        "Tokushima"
+      ],
+      "rationale": "高松、德島及四國東部球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-SHK-EHIME-KOCHI",
+      "countryCode": "JP",
+      "region": "四國",
+      "label": "愛媛／高知球場群",
+      "prefectures": [
+        "Ehime",
+        "Kochi"
+      ],
+      "rationale": "松山、道後及高知縣球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KYS-FUKUOKA-SAGA",
+      "countryCode": "JP",
+      "region": "九州",
+      "label": "福岡／佐賀球場群",
+      "prefectures": [
+        "Fukuoka",
+        "Saga"
+      ],
+      "rationale": "福岡都市圈、北九州及佐賀球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KYS-NAGASAKI-KUMAMOTO",
+      "countryCode": "JP",
+      "region": "九州",
+      "label": "長崎／熊本球場群",
+      "prefectures": [
+        "Nagasaki",
+        "Kumamoto"
+      ],
+      "rationale": "長崎半島、熊本及阿蘇西側球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KYS-OITA",
+      "countryCode": "JP",
+      "region": "九州",
+      "label": "大分／別府球場群",
+      "prefectures": [
+        "Oita"
+      ],
+      "rationale": "大分、別府及九重周邊球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-KYS-MIYAZAKI-KAGOSHIMA",
+      "countryCode": "JP",
+      "region": "九州",
+      "label": "宮崎／鹿兒島球場群",
+      "prefectures": [
+        "Miyazaki",
+        "Kagoshima"
+      ],
+      "rationale": "宮崎海岸、鹿兒島及南九州球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-OKI-MAIN-NORTH",
+      "countryCode": "JP",
+      "region": "沖繩",
+      "label": "沖繩本島北部球場群",
+      "prefectures": [
+        "Okinawa"
+      ],
+      "rationale": "名護、本部及本島北部球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-OKI-MAIN-CENTRAL",
+      "countryCode": "JP",
+      "region": "沖繩",
+      "label": "沖繩本島中部球場群",
+      "prefectures": [],
+      "rationale": "恩納、讀谷、宜野灣及中部球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-OKI-MAIN-SOUTH",
+      "countryCode": "JP",
+      "region": "沖繩",
+      "label": "沖繩本島南部球場群",
+      "prefectures": [],
+      "rationale": "那霸、南城、糸滿及南部球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    },
+    {
+      "id": "JP-OKI-OUTER-ISLANDS",
+      "countryCode": "JP",
+      "region": "沖繩",
+      "label": "宮古／八重山離島球場群",
+      "prefectures": [],
+      "rationale": "宮古島、石垣島及八重山離島球場群",
+      "weatherPointStatus": "pending_representative_selection",
+      "weatherEnabled": false
+    }
+  ]
+}
