@@ -8,13 +8,13 @@ const japan = registry.countries.find(country => country.countryCode === "JP");
 const mainland = japan.subregions.filter(item => !item.id.startsWith("JP-OKI-"));
 
 test("ERA5-Land mapping contains exactly one expected grid point for each Japan mainland subregion", () => {
-  assert.equal(mapping.subregionCount, 19);
-  assert.equal(mapping.points.length, 19);
+  assert.equal(mapping.subregionCount, 37);
+  assert.equal(mapping.points.length, 37);
   const mappedMainland = mapping.points.filter(point => !point.subregionId.startsWith("JP-OKI-"));
   const mappedOkinawa = mapping.points.filter(point => point.subregionId.startsWith("JP-OKI-"));
   assert.deepEqual(mappedMainland.map(point => point.subregionId).sort(), mainland.map(item => item.id).sort());
-  assert.equal(mappedOkinawa.length, 3);
-  assert.equal(new Set(mapping.points.map(point => point.subregionId)).size, 19);
+  assert.equal(mappedOkinawa.length, 5);
+  assert.equal(new Set(mapping.points.map(point => point.subregionId)).size, 37);
 });
 
 test("mapped points preserve canonical representative coordinates and use nearest 0.1 degree grid", () => {
@@ -31,7 +31,7 @@ test("mapped points preserve canonical representative coordinates and use neares
 });
 
 test("grid mapping is explicitly provisional until actual CDS coordinates are read back", () => {
-  assert.equal(mapping.status, "expected-grid-mapping-for-19-japan-subregions-not-yet-verified-by-CDS-download");
+  assert.equal(mapping.status, "expected-grid-mapping-for-37-japan-subregions-not-yet-verified-by-CDS-download");
   assert.match(mapping.caveat, /actual latitude\/longitude coordinates/);
   assert.equal(mapping.gridResolutionDegrees, 0.1);
 });
