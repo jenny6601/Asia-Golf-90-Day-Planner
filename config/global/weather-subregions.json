@@ -14,34 +14,67 @@
           "subregion": "札幌市球場群",
           "label": "北海道・札幌市球場群",
           "coverageStatus": "planned",
-          "representativeCourseId": null,
+          "representativeCourseId": "jp-sapporo-teine",
           "candidateCourseName": "Sapporo Teine Golf Club",
           "candidateRationale": "以札幌市行政區內的球場群作為獨立高爾夫目的地；札幌市球場共用此代表點進行區域氣候分析，不與千歲、苫小牧合併。",
           "candidateSourceUrl": "https://sapporo-teine.com/golf/",
-          "candidateStatus": "identity-confirmed-coordinate-pending",
-          "coordinateReviewStatus": "representative-coordinate-pending",
+          "candidateStatus": "official-operator-identity-address-confirmed-coordinate-source-conflict-under-review",
+          "coordinateReviewStatus": "candidate-coordinate-conflict-review-pending",
           "candidateCourseId": "jp-sapporo-teine",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-course-identity-address-and-2026-operation-confirmed",
             "officialSourceUrl": "https://sapporo-teine.com/golf/business-information/",
-            "officialAddress": "〒006-0029 北海道札幌市手稲区手稲本町593番地3, Japan",
-            "operationalEvidence": "Official operator lists the Sapporo-city address, 27-hole facility and 2026 operating season 2026-04-25 to 2026-11-03; 2026 season closure notice confirms next planned opening 2027-04-24.",
+            "independentOfficialDirectoryUrl": "https://www.japan.travel/en/sports/golf/courses/sapporo-teine-golf-club/",
+            "officialAddress": "593-3 Teinehoncho, Teine-ku, Sapporo-shi, Hokkaido 006-0029, Japan",
+            "operationalEvidence": "Official operator confirms 27-hole course and 2026 season 2026-04-25 to 2026-11-03; official notice states season closed 2026-11-03 and next planned opening 2027-04-24.",
             "checkedOn": "2026-11-27"
           },
           "coordinateQuality": {
-            "grade": "pending",
-            "label": "官方球場身分已確認，區域代表座標待補",
+            "grade": "B-pending",
+            "label": "球場身分已確認，座標來源存在差異",
             "reviewStatus": "candidate-only-not-enabled",
             "weatherPointEligible": false,
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
-            "reason": "球場身分與札幌市地址已由官方營運商確認；尚未取得並核實代表點座標，不得啟用正式天氣資料擷取。"
+            "reason": "FullGolf published course coordinate 43.077052,141.200096; 14Golf published 43.101490,141.2125397. Difference is approximately 2.8 km, larger than acceptable cross-check tolerance. The higher coordinate may reflect a course/resort map point rather than the same representative location. Do not average or activate until map-pin/official course map position is reconciled.",
+            "coordinateCrossCheck": {
+              "checkedOn": "2026-11-27",
+              "sources": [
+                {
+                  "name": "FullGolf",
+                  "latitude": 43.077052,
+                  "longitude": 141.200096,
+                  "url": "https://fullgolf.com/en/golf-club/japan/hokkaido/sapporo/sapporo-teine-golf-club"
+                },
+                {
+                  "name": "14Golf",
+                  "latitude": 43.10149,
+                  "longitude": 141.2125397,
+                  "url": "https://14golf.com/course/sapporoteinegorufukurabu/"
+                },
+                {
+                  "name": "Official operator map reference",
+                  "type": "mapcode",
+                  "value": "493 385 165*66",
+                  "url": "https://sapporo-teine.com/golf/access/"
+                }
+              ],
+              "maximumDisagreementKm": 2.8,
+              "disposition": "coordinate-review-required"
+            }
           },
           "golfClusterId": "JP-HKD-SAPPORO",
           "clusterCourseIds": [
-            "jp-sapporo-teine"
+            "jp-sapporo-teine",
+            "jp-makomanai-cc",
+            "jp-takino-cc",
+            "jp-hitsujigaoka-cc",
+            "jp-sapporo-fuyo-cc",
+            "jp-tsukisappu-gc",
+            "jp-jozankei-komagaoka",
+            "jp-rembrandt-sapporo"
           ],
-          "courseCount": 1,
+          "courseCount": 8,
           "climateUnit": "golf-course-cluster",
           "regionId": "JP-REG-01",
           "regionName": "北海道",
@@ -1815,9 +1848,16 @@
             "jp-hokkaido-golf-club",
             "jp-niseko-village-golf",
             "jp-sapporo-teine",
-            "jp-nidom-classic"
+            "jp-nidom-classic",
+            "jp-makomanai-cc",
+            "jp-takino-cc",
+            "jp-hitsujigaoka-cc",
+            "jp-sapporo-fuyo-cc",
+            "jp-tsukisappu-gc",
+            "jp-jozankei-komagaoka",
+            "jp-rembrandt-sapporo"
           ],
-          "courseCount": 6
+          "courseCount": 13
         },
         {
           "id": "JP-REG-02",
@@ -4113,5 +4153,5 @@
   ],
   "planningNote": "Japan uses 36 destination-oriented golf clusters (3 Hokkaido, 5 Tohoku, 6 Kanto, 6 Chubu, 3 Kansai, 2 Chugoku, 2 Shikoku, 4 Kyushu, 5 Okinawa). Other seven countries retain their destination-oriented subregions, explicitly typed as golf-course clusters. Candidate representatives are not operational forecast points until validated. Hokkaido refinement: Sapporo city is separated from the Chitose/Tomakomai destination cluster; Sapporo Teine Golf Club is the identity-confirmed representative candidate, while The North Country remains the Chitose/Tomakomai candidate. Neither candidate point is enabled for live weather ingestion.",
   "candidatePolicy": "Candidate names are research selections only. They must not be used for weather ingestion or forecast generation until current operating status, exact official course identity, GPS coordinates, timezone, and subregion fit are verified. Candidate is not an enabled representative.",
-  "candidateCount": 77
+  "candidateCount": 75
 }
