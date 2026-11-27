@@ -26,14 +26,21 @@ class JmaStationHistoryTests(unittest.TestCase):
         ]))
         result = audit_candidate({"stationId":"47412","historySegments":[]}, data)
         self.assertEqual(result["officialPrecipitationCoverageDays"], 10958)
-        self.assertEqual(result["precipitationStatisticalBreakCount"], 2)
-        self.assertEqual(result["temperatureStatisticalBreakCount"], 2)
+        self.assertEqual(result["precipitationStatisticalBreakCount"], 1)
+        self.assertEqual(result["temperatureStatisticalBreakCount"], 1)
 
     def test_missing_station_is_not_approved(self):
         result = audit_candidate({"stationId":"99999"}, {})
         self.assertFalse(result["officialHistoryMatch"])
         self.assertFalse(result["stationApproved"])
         self.assertEqual(result["officialPrecipitationCoverageDays"], 0)
+
+
+    def test_initial_station_start_codes_are_not_counted_as_breaks(self):
+        data = parse_index4(row(pc="1", tc="1"))
+        result = audit_candidate({"stationId":"47412"}, data)
+        self.assertEqual(result["precipitationStatisticalBreakCount"], 0)
+        self.assertEqual(result["temperatureStatisticalBreakCount"], 0)
 
     def test_temperature_code_four_is_adjusted_continuity_not_cut(self):
         data = parse_index4(row(tc="4"))
