@@ -1267,3 +1267,10 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 .departure-five-chart{width:990px!important;min-width:990px!important;max-width:none!important}
 .departure-five-chart svg{width:990px!important;min-width:990px!important;max-width:none!important}
 .departure-five-date,.departure-five-card{min-width:0!important;width:auto!important;max-width:none!important;box-sizing:border-box}
+
+/* Shared seven-day chart layout for recommended week and departure summary */
+.selected-week-five-pages{width:100%;min-width:0}
+.selected-week-five-page .taiwan-style-seven-day{width:100%;min-width:0;overflow-x:auto!important;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;touch-action:pan-x pan-y}
+.selected-week-five-page .taiwan-seven-row{display:grid!important;grid-template-columns:repeat(7,minmax(112px,1fr))!important;min-width:784px!important;width:784px!important;gap:0}
+.selected-week-five-page .taiwan-style-seven-day .seven-day-inline-graph{min-width:784px!important;width:784px!important}
+.selected-week-five-page .taiwan-seven-cell{min-width:112px!important;box-sizing:border-box}
