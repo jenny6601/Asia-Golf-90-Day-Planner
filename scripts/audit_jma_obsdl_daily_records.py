@@ -22,7 +22,7 @@ ELEMENT_LABELS = {
     "TMIN": ("日最低気温", "最低気温"),
 }
 QUALITY_CODES = {"8", "5", "4", "2", "1", "0"}
-DATE_RE = re.compile(r"^\\d{4}/\\d{1,2}/\\d{1,2}$")
+DATE_RE = re.compile(r"^\d{4}/\d{1,2}/\d{1,2}$")
 
 def _find_header_rows(rows):
     for i in range(len(rows) - 2):
@@ -53,7 +53,7 @@ def _element_columns(station_row, item_row, detail_row):
     return found
 
 def parse_obsdl_csv(csv_text):
-    rows = list(csv.reader(csv_text.lstrip("\\ufeff").splitlines()))
+    rows = list(csv.reader(csv_text.lstrip("\ufeff").splitlines()))
     if not rows:
         raise ValueError("Empty JMA CSV")
     station_i, item_i, detail_i = _find_header_rows(rows)
@@ -186,7 +186,7 @@ def main():
     report = build_report(args.input_dir)
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report["summary"], ensure_ascii=False))
 
 if __name__ == "__main__":
