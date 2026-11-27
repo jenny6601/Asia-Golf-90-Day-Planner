@@ -6,7 +6,7 @@ from datetime import date, datetime
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_SOURCES = {
- "era5-land-daily": ("ERA5_LAND", "reanalysis-era5-land"),
+ "era5-daily": ("ERA5_DAILY", "derived-era5-single-levels-daily-statistics"),
  "ecmwf-extended-range": ("ECMWF_IFS", "IFS-EXTENDED-RANGE"),
  "c3s-seasonal": ("C3S_MULTI_SYSTEM", "C3S-SEASONAL-MULTI-SYSTEM")}
 def load(path): return json.loads(path.read_text(encoding="utf-8"))
@@ -47,7 +47,7 @@ def validate_document(doc,kind,known_regions):
   if rid: covered.add(rid)
   if tz and "/" not in tz: errors.append(f"{w}: timezone must be an IANA region name")
   if not pid: errors.append(f"{w}: representativePointId must be non-empty")
-  if kind=="era5-land-daily":
+  if kind=="era5-daily":
    ds=req(r,"dateLocal",str,w); d=parse_date(ds)
    if not d: errors.append(f"{w}: dateLocal must be YYYY-MM-DD")
    key=(rid,ds)
