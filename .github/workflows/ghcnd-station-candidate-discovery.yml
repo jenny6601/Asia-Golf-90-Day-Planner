@@ -57,10 +57,10 @@ jobs:
       - name: Rank KMA ASOS candidates when official station metadata CSV is supplied
         shell: bash
         run: |
-          if [ -f data/observation-stations/input/kma-station-metadata.csv ]; then
-            python scripts/discover_kma_asos_candidates.py --inventory data/observation-stations/input/kma-station-metadata.csv
+          if [ -f data/observation-stations/input/kma-station-metadata.csv ] && [ -f data/observation-stations/input/kma-asos-fileset-catalog.csv ]; then
+            python scripts/discover_kma_asos_candidates.py --inventory data/observation-stations/input/kma-station-metadata.csv --asos-file-catalog data/observation-stations/input/kma-asos-fileset-catalog.csv
           else
-            echo "KMA candidate ranking skipped: official full station-history CSV has not been supplied; no station candidates are fabricated."
+            echo "KMA candidate ranking skipped: both official station-history CSV and ASOS DAY file-set catalog are required; no station candidates are fabricated."
           fi
       - name: Discover JMA AMeDAS candidates for Japan regional points
         run: python scripts/discover_jma_station_candidates.py
