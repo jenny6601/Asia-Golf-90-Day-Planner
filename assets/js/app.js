@@ -623,7 +623,7 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
    status:season.length&&hist.length?"季節預測＋歷史統計":season.length?"季節預測可用":hist.length?"歷史氣候參考":valid.length?"天氣資料暫缺":"待建置"};
  });
  const group={region:scopeName,rootRegion:region,subregion,country,courses:valid,months};
- const actionRow=node("tr");actionRow.append(node("th","本月週分析"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"週分析","region-select");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults));td.append(btn);actionRow.append(td)}body.append(actionRow);
+ const actionRow=node("tr");actionRow.append(node("th","本月週分析"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"週分析","region-select");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults,true));td.append(btn);actionRow.append(td)}body.append(actionRow);
  const monthlyAnalysisRow=node("tr");monthlyAnalysisRow.append(node("th","本月分析"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"分析","monthly-analysis-open");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults));td.append(btn);monthlyAnalysisRow.append(td)}body.append(monthlyAnalysisRow);
  const metrics=[
   {label:"月天氣總況",key:"outlook",text:true},
@@ -668,7 +668,7 @@ async function openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,hi
  finally{loading.remove()}
  host.scrollIntoView({behavior:"smooth",block:"start"});
 }
-async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords){
+async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords,openWeekAnalysis=false){
  let monthlyDailyAssessmentForWeeks=[];
  const host=$("region-report");host.replaceChildren();
  const back=()=>renderRegionMonths(group.country,group.rootRegion,group.months||monthOptions(),group.courses,group.subregion||"");
@@ -953,6 +953,9 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  dailySection.append(node("p","全表說明：前16天優先採逐日預報；第17–18天若無季節估計則以歷史同期參考；第19–90天採 ERA5 歷史同期統計結合可取得的週／月季節訊號估計。卡片中的雨日頻率是長期風險指標，不等同當日實際降雨機率；雨量為日均估計量。信心等級及歷史樣本年數不逐日重複顯示，統一由本說明交代：信心反映歷史樣本與季節訊號覆蓋，不是預報命中率；歷史樣本以最近十個完整年度為基礎。","monthly-source-note"));
  if(!sampleCourses.length)dailySection.append(node("p","此分區尚無具有效 GPS 座標的球場，無法產生逐日天氣簡表。","risk-summary"));
  // Do not scroll to the report body after loading; keep the destination page header at the top.
+ if(openWeekAnalysis){
+  renderRegionTopWeeks(group,seasonalRecords||[],month,()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords),monthlyDailyAssessmentForWeeks);
+ }
 }
 
 async function renderEmptyWeekAnalysis(country,region,month,backAction){
