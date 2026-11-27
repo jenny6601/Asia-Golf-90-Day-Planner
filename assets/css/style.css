@@ -1259,3 +1259,11 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 .departure-five-card.weekend>strong{color:#173f35!important}
 .departure-five-card.weekend .monthly-day-playability{color:inherit}
 .departure-five-chart svg{max-width:none}
+
+/* Stable seven-day continuous strip: keep all seven columns on one row */
+.departure-week-pages{display:block;width:100%;max-width:100%;overflow-x:auto!important;overflow-y:hidden!important;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
+.departure-five-day-page{box-sizing:border-box;width:1020px!important;min-width:1020px!important;max-width:none!important;overflow:visible!important}
+.departure-five-dates,.departure-five-cards{display:grid!important;width:990px!important;min-width:990px!important;max-width:none!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;grid-auto-flow:row;gap:6px}
+.departure-five-chart{width:990px!important;min-width:990px!important;max-width:none!important}
+.departure-five-chart svg{width:990px!important;min-width:990px!important;max-width:none!important}
+.departure-five-date,.departure-five-card{min-width:0!important;width:auto!important;max-width:none!important;box-sizing:border-box}
