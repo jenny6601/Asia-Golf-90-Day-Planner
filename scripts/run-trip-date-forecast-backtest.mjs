@@ -145,6 +145,12 @@ for(const prediction of windowPredictions){
   }
 }
 const tripWindowRanking=scoreTripWindowRankingSamples(tripWindowSamples);
+for(const modelId of Object.keys(TRIP_DATE_CANDIDATE_MODELS)){
+  if(!tripWindowRanking.groups[modelId])
+    tripWindowRanking.groups[modelId]={sampleCount:0,spearman:null,ready:false};
+}
+const candidateModelDefinitions=Object.fromEntries(Object.entries(TRIP_DATE_CANDIDATE_MODELS)
+  .map(([id,model])=>[id,{label:model.label,description:model.description,sourceWeights:model.sourceWeights}]));
 const tripWindowSummary={candidateWindows:windowPredictions.length,completeObservedWindows:tripWindowSamples.length,
   excludedIncompleteWindows:windowPredictions.length-tripWindowSamples.length};
 
@@ -225,7 +231,7 @@ const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
   method:"Short forecasts: daily probability/amount versus ERA5. EC46/SEAS5: archived weekly/monthly precipitation means versus the sum of ERA5 daily precipitation over the exact same valid period.",
-  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,tripWindowSummary,tripWindowRanking,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
+  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,candidateModelDefinitions,tripWindowSummary,tripWindowRanking,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
   caveats:[
     "ERA5 reanalysis is a model-reference dataset, not an independent rain-gauge observation.",
@@ -290,6 +296,7 @@ const lines=[
   "- Complete ERA5-observed windows (9 region-days): "+tripWindowSummary.completeObservedWindows,
   "- Excluded incomplete windows: "+tripWindowSummary.excludedIncompleteWindows,
   "- Metric: Spearman correlation; higher positive values mean predicted high-risk windows also had more observed golf-day rain.",
+  ...Object.entries(TRIP_DATE_CANDIDATE_MODELS).map(([id,model])=>"- "+id+": "+model.label+" — "+model.description),
   ...Object.entries(tripWindowRanking.groups).map(([model,x])=>"- "+model+": n="+x.sampleCount+", Spearman="+(x.spearman??"資料不足")+", gate="+(x.ready?"ready":"locked")),
   "- Candidate weights are provisional and shadow-only; no production weights were changed.",
   "",
