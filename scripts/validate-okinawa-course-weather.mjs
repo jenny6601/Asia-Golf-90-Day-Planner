@@ -54,7 +54,7 @@ export function auditRuntimeCourse(runtime,candidate) {
     runtimeToCandidateDistanceKm:hasRuntime?haversineKm(runtime.latitude,runtime.longitude,candidate.latitude,candidate.longitude):null,
     coordinateSource:candidate.coordinateSource,
     coordinateStatus:candidate.coordinateStatus,
-    promotionAllowed:candidate.coordinateStatus==="verified"
+    promotionAllowed:candidate.coordinateStatus==="verified"||candidate.coordinateStatus==="user_provided_google_maps"
   };
 }
 export function assessForecastPayload(payload) {
@@ -188,7 +188,7 @@ const report={
   allSixSeasonalPass:courseResults.length===6&&courseResults.every(x=>x.seasonal?.coreFieldsComplete&&x.seasonal?.timezone==="Asia/Tokyo"),
   allSixCourseWeatherDataPass:courseResults.length===6&&courseResults.every(x=>x.courseWeatherDataPass),
   limitations:[
-    "Coordinate candidates with status provisional or pending are used for this diagnostic only; they are not automatically promoted into the production course catalog.",
+    "The six current course points are user-provided Google Maps coordinates (2026-11-27), synchronized to candidate, global runtime and pilot catalogs. This source attribution is not an independent survey or polygon verification.",
     "Open-Meteo returned grid coordinates are model grid cells, not proof of course-boundary GPS accuracy.",
     "Seasonal API daily and six-hourly field completeness does not establish forecast skill or daily rain probability.",
     "Seasonal rainfall is a model-derived amount signal; no seasonal precipitation probability is inferred.",
