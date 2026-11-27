@@ -14,7 +14,11 @@
           "subregion": "札幌／道央",
           "label": "北海道・札幌／道央",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "The North Country Golf Club",
+          "candidateRationale": "北海道札幌近郊代表球場；JNTO 列為北海道代表球場之一",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "JP-THK-01",
@@ -22,7 +26,11 @@
           "subregion": "仙台／東北",
           "label": "東北・仙台",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Appi Kogen Golf Club",
+          "candidateRationale": "東北岩手縣高原型球場，作為東北氣候帶候選代表",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "JP-KNT-01",
@@ -30,7 +38,11 @@
           "subregion": "東京／關東",
           "label": "關東・東京",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Narita Hills Country Club",
+          "candidateRationale": "千葉縣關東球場，兼顧東京圈與成田周邊",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "JP-CHB-01",
@@ -38,7 +50,11 @@
           "subregion": "名古屋／中部",
           "label": "中部・名古屋／富士",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Kawaguchiko Country Club",
+          "candidateRationale": "山梨縣富士山周邊高原候選代表；中部區域仍需確認代表點是否應改為名古屋近郊",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "JP-KNS-01",
@@ -46,7 +62,11 @@
           "subregion": "大阪／京都",
           "label": "關西・大阪／京都",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Arima Royal Golf Club",
+          "candidateRationale": "兵庫縣關西代表球場，位於大阪／神戶高爾夫活動圈",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "JP-CHG-01",
@@ -54,7 +74,11 @@
           "subregion": "廣島／中國地方",
           "label": "中國地方・廣島",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Setouchi Golf Resort",
+          "candidateRationale": "廣島縣代表球場，與中國地方分區相符",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "JP-SHK-01",
@@ -62,7 +86,11 @@
           "subregion": "高松／四國",
           "label": "四國・高松",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Tosa Country Club",
+          "candidateRationale": "高知縣四國代表球場；作為四國南部海岸氣候取樣候選",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "JP-KYS-01",
@@ -70,7 +98,11 @@
           "subregion": "福岡／九州",
           "label": "九州・福岡",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "The Classic Golf Club",
+          "candidateRationale": "福岡縣九州代表球場，符合福岡區域",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "JP-OKI-NORTH",
@@ -110,7 +142,11 @@
           "subregion": "首都圈",
           "label": "首爾／京畿／仁川",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Jack Nicklaus Golf Club Korea",
+          "candidateRationale": "仁川松島首都圈候選；需再核對球場實際對外開放及座標",
+          "candidateSourceUrl": "https://kgba.or.kr/03sub02",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "KR-GW-01",
@@ -118,7 +154,11 @@
           "subregion": "江原道",
           "label": "江原道／春川",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Pine Ridge Country Club",
+          "candidateRationale": "江原道東海岸候選代表；需確認球場現行營運資訊",
+          "candidateSourceUrl": "https://kgba.or.kr/03sub02",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "KR-CC-01",
@@ -126,7 +166,11 @@
           "subregion": "忠清道",
           "label": "忠清道",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Woo Jeong Hills Country Club",
+          "candidateRationale": "忠清南道天安候選代表，區域位置明確",
+          "candidateSourceUrl": "https://kgba.or.kr/03sub02",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "KR-YN-01",
@@ -134,7 +178,11 @@
           "subregion": "嶺南",
           "label": "釜山／慶州／嶺南",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Haeundae Country Club",
+          "candidateRationale": "釜山／嶺南候選代表，作為東南部氣候取樣點",
+          "candidateSourceUrl": "https://kgba.or.kr/03sub02",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "KR-HN-01",
@@ -142,7 +190,11 @@
           "subregion": "湖南",
           "label": "全羅道／湖南",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Pine Beach Golf Links",
+          "candidateRationale": "全羅南道海岸候選代表，對應湖南分區",
+          "candidateSourceUrl": "https://kgba.or.kr/03sub02",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "KR-JJ-01",
@@ -150,7 +202,11 @@
           "subregion": "濟州島",
           "label": "濟州島",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Pinx Golf Club",
+          "candidateRationale": "濟州西歸浦代表候選；27 洞球場，已有地點與營運資訊線索",
+          "candidateSourceUrl": "https://kgba.or.kr/03sub02",
+          "candidateStatus": "research-candidate"
         }
       ]
     },
@@ -166,7 +222,11 @@
           "subregion": "海口",
           "label": "海南・海口",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Mission Hills Golf Club Haikou",
+          "candidateRationale": "海南省政府旅遊資料列名球場，位於海口",
+          "candidateSourceUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "CN-HN-EAST",
@@ -174,7 +234,11 @@
           "subregion": "萬寧／神州半島",
           "label": "海南・萬寧／神州半島",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "The Dunes at Shenzhou Peninsula Golf Club",
+          "candidateRationale": "海南省政府列名萬寧海岸球場，36 洞",
+          "candidateSourceUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "CN-HN-SOUTH",
@@ -182,7 +246,11 @@
           "subregion": "三亞",
           "label": "海南・三亞",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Yalong Bay Golf Club",
+          "candidateRationale": "海南省政府列名三亞球場，代表南端熱帶海岸",
+          "candidateSourceUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "CN-SH-01",
@@ -190,7 +258,11 @@
           "subregion": "上海／長三角",
           "label": "上海／長三角",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Sheshan International Golf Club",
+          "candidateRationale": "上海代表性錦標賽球場候選",
+          "candidateSourceUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "CN-BJ-01",
@@ -198,7 +270,11 @@
           "subregion": "北京／華北",
           "label": "北京／華北",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Topwin Golf and Country Club",
+          "candidateRationale": "北京懷柔區代表球場候選",
+          "candidateSourceUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "CN-GD-01",
@@ -206,7 +282,11 @@
           "subregion": "廣州／深圳／珠三角",
           "label": "廣東・珠三角",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Foison Golf Club (Dye Course)",
+          "candidateRationale": "廣州／佛山珠三角候選代表",
+          "candidateSourceUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "CN-YN-01",
@@ -214,7 +294,11 @@
           "subregion": "昆明／雲南",
           "label": "雲南・昆明",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Spring City Golf & Lake Resort",
+          "candidateRationale": "昆明代表球場候選，具有高原湖區地理代表性",
+          "candidateSourceUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
+          "candidateStatus": "research-candidate"
         }
       ]
     },
@@ -230,7 +314,11 @@
           "subregion": "河內",
           "label": "北越・河內",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "BRG Kings Island Golf Resort",
+          "candidateRationale": "河內周邊主要球場，54 洞度假球場候選",
+          "candidateSourceUrl": "https://www.teetimevn.com/vi/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "VN-CENTRAL-01",
@@ -238,7 +326,11 @@
           "subregion": "峴港／會安",
           "label": "中越・峴港／會安",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Hoiana Shores Golf Club",
+          "candidateRationale": "會安海岸代表球場，亞洲排名及設計辨識度高",
+          "candidateSourceUrl": "https://vietnam.travel/things-to-do/golf-courses-central-vietnam/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "VN-CENTRAL-02",
@@ -246,7 +338,11 @@
           "subregion": "順化／陵姑",
           "label": "中越・順化／陵姑",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Laguna Golf Lang Co",
+          "candidateRationale": "順化／陵姑代表球場，官方旅遊資料介紹的中越球場",
+          "candidateSourceUrl": "https://vietnam.travel/things-to-do/golf-courses-central-vietnam/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "VN-SOUTH-01",
@@ -254,7 +350,11 @@
           "subregion": "胡志明市",
           "label": "南越・胡志明市",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Tan Son Nhat Golf Course",
+          "candidateRationale": "胡志明市市區代表球場，具明確城市定位",
+          "candidateSourceUrl": "https://www.aseanlinksgolf.com/golf-courses",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "VN-SOUTH-02",
@@ -262,7 +362,11 @@
           "subregion": "藩切／美奈",
           "label": "南越・藩切／美奈",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Sea Links Golf & Country Club",
+          "candidateRationale": "藩切／美奈海岸代表球場候選",
+          "candidateSourceUrl": "https://www.teetimevn.com/vi/courses/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "VN-ISLAND-01",
@@ -270,7 +374,11 @@
           "subregion": "富國島",
           "label": "南部島嶼・富國島",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Eschuri Vung Bau Golf",
+          "candidateRationale": "富國島北部海岸18洞球場候選，已找到球場地址線索",
+          "candidateSourceUrl": "https://www.aseanlinksgolf.com/golf-courses",
+          "candidateStatus": "research-candidate"
         }
       ]
     },
@@ -286,7 +394,11 @@
           "subregion": "曼谷",
           "label": "曼谷／中部",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "The Royal Golf & Country Club",
+          "candidateRationale": "曼谷近機場代表球場候選，交通與區域代表性兼具",
+          "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "TH-EAST-01",
@@ -294,7 +406,11 @@
           "subregion": "芭達雅／春武里",
           "label": "東部・芭達雅／春武里",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Siam Country Club Old Course",
+          "candidateRationale": "芭達雅／春武里代表性錦標賽球場",
+          "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "TH-WEST-01",
@@ -302,7 +418,11 @@
           "subregion": "華欣／七岩",
           "label": "西部・華欣／七岩",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Black Mountain Golf Club",
+          "candidateRationale": "華欣代表性高原球場，為泰國主要高爾夫旅遊區之一",
+          "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "TH-SOUTH-01",
@@ -310,7 +430,11 @@
           "subregion": "普吉／安達曼海岸",
           "label": "南部・普吉／安達曼海岸",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Blue Canyon Country Club",
+          "candidateRationale": "普吉島代表性錦標賽球場，兩座18洞球場",
+          "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "TH-NORTH-01",
@@ -318,7 +442,11 @@
           "subregion": "清邁／北部",
           "label": "北部・清邁",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Alpine Golf Resort Chiang Mai",
+          "candidateRationale": "清邁代表性山區球場",
+          "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "TH-NE-01",
@@ -326,7 +454,11 @@
           "subregion": "考艾／東北部",
           "label": "東北部・考艾",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Kirimaya Golf Resort Spa",
+          "candidateRationale": "考艾山區代表性度假球場",
+          "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "TH-ISLAND-01",
@@ -334,7 +466,11 @@
           "subregion": "蘇梅島",
           "label": "泰國灣島嶼・蘇梅島",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Santiburi Samui Country Club",
+          "candidateRationale": "蘇梅島高地代表球場候選",
+          "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
+          "candidateStatus": "research-candidate"
         }
       ]
     },
@@ -350,7 +486,11 @@
           "subregion": "吉隆坡／雪蘭莪",
           "label": "中部・吉隆坡／雪蘭莪",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Kelab Golf Perkhidmatan Awam (KGPA)",
+          "candidateRationale": "吉隆坡市區候選代表，已列入核對官方資料的馬來西亞球場名錄",
+          "candidateSourceUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "MY-NORTH-01",
@@ -358,7 +498,11 @@
           "subregion": "檳城／吉打／霹靂",
           "label": "北馬・檳城／吉打／霹靂",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Penang Golf Club",
+          "candidateRationale": "檳城代表球場，位於 Bayan Lepas",
+          "candidateSourceUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "MY-SOUTH-01",
@@ -366,7 +510,11 @@
           "subregion": "柔佛／馬六甲",
           "label": "南馬・柔佛／馬六甲",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "The Els Club Desaru Coast - Ocean Course",
+          "candidateRationale": "柔佛迪沙魯海岸代表球場，具度假與海岸地理代表性",
+          "candidateSourceUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "MY-ISLAND-01",
@@ -374,7 +522,11 @@
           "subregion": "蘭卡威",
           "label": "蘭卡威",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "The Els Club Teluk Datai",
+          "candidateRationale": "蘭卡威候選代表球場；座標與現行營運狀態待核",
+          "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "MY-BORNEO-01",
@@ -382,7 +534,11 @@
           "subregion": "沙巴／亞庇",
           "label": "婆羅洲・沙巴／亞庇",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Dalit Bay Golf & Country Club",
+          "candidateRationale": "沙巴亞庇周邊海岸度假球場候選",
+          "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "MY-BORNEO-02",
@@ -390,7 +546,11 @@
           "subregion": "砂拉越／古晉",
           "label": "婆羅洲・砂拉越／古晉",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Kelab Golf Sarawak",
+          "candidateRationale": "古晉城市代表球場候選",
+          "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "MY-EAST-01",
@@ -398,7 +558,11 @@
           "subregion": "登嘉樓／東海岸",
           "label": "東海岸・登嘉樓",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Kuala Terengganu Golf Resort",
+          "candidateRationale": "登嘉樓東海岸候選代表；需再核對目前營運及座標",
+          "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "MY-HIGHLAND-01",
@@ -406,7 +570,11 @@
           "subregion": "金馬崙／雲頂高原",
           "label": "高原・金馬崙／雲頂",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Cameron Highlands Golf Course",
+          "candidateRationale": "金馬崙高原候選代表；需再核對目前球場營運狀態",
+          "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
+          "candidateStatus": "research-candidate"
         }
       ]
     },
@@ -422,7 +590,11 @@
           "subregion": "全島",
           "label": "新加坡全島",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Sentosa Golf Club - Serapong Course",
+          "candidateRationale": "新加坡全島候選代表；World Golf Awards 2026 最佳球場名單列名",
+          "candidateSourceUrl": "https://worldgolfawards.com/award/singapore-best-golf-course/2026",
+          "candidateStatus": "research-candidate"
         }
       ]
     },
@@ -438,7 +610,11 @@
           "subregion": "雅加達／大雅加達",
           "label": "爪哇・雅加達都會區",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Pondok Indah Golf Course",
+          "candidateRationale": "雅加達市區代表候選，印尼高爾夫協會區域名錄列名",
+          "candidateSourceUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "ID-WJAVA-01",
@@ -446,7 +622,11 @@
           "subregion": "茂物／萬隆",
           "label": "爪哇・西爪哇",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Klub Golf Bogor Raya",
+          "candidateRationale": "茂物代表球場，位於大雅加達南部高地球場群",
+          "candidateSourceUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "ID-CJAVA-01",
@@ -454,7 +634,11 @@
           "subregion": "日惹／三寶瓏",
           "label": "爪哇・中爪哇",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Merapi Golf Yogyakarta",
+          "candidateRationale": "日惹代表球場候選，印尼青少年高爾夫賽事場地名錄列名",
+          "candidateSourceUrl": "https://ijg.or.id/venuelist",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "ID-EJAVA-01",
@@ -462,7 +646,11 @@
           "subregion": "泗水／瑪琅",
           "label": "爪哇・東爪哇",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Taman Dayu Golf Club",
+          "candidateRationale": "東爪哇泗水／瑪琅周邊代表球場候選，賽事場地名錄列名",
+          "candidateSourceUrl": "https://ijg.or.id/venuelist",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "ID-BALI-01",
@@ -470,7 +658,11 @@
           "subregion": "峇里島",
           "label": "峇里島",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "New Kuta Golf Bali",
+          "candidateRationale": "峇里島代表性海岸球場候選，賽事場地名錄列名",
+          "candidateSourceUrl": "https://ijg.or.id/venuelist",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "ID-RIAU-01",
@@ -478,7 +670,11 @@
           "subregion": "巴淡島／民丹島",
           "label": "廖內群島・巴淡／民丹",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Ria Bintan Golf Club",
+          "candidateRationale": "民丹島代表性海岸球場候選；此分區需再確認是否改以巴淡或民丹單一代表",
+          "candidateSourceUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "ID-SUMATRA-01",
@@ -486,7 +682,11 @@
           "subregion": "棉蘭／蘇門答臘",
           "label": "蘇門答臘・棉蘭",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Graha Metropolitan Golf Course",
+          "candidateRationale": "棉蘭代表球場候選，印尼青少年高爾夫場地名錄列名",
+          "candidateSourceUrl": "https://ijg.or.id/venuelist",
+          "candidateStatus": "research-candidate"
         },
         {
           "id": "ID-KAL-01",
@@ -494,10 +694,16 @@
           "subregion": "巴厘巴板",
           "label": "加里曼丹・巴厘巴板",
           "coverageStatus": "planned",
-          "representativeCourseId": null
+          "representativeCourseId": null,
+          "candidateCourseName": "Pertamina Golf Club Balikpapan",
+          "candidateRationale": "巴厘巴板代表球場候選，印尼青少年高爾夫場地名錄列名",
+          "candidateSourceUrl": "https://ijg.or.id/venuelist",
+          "candidateStatus": "research-candidate"
         }
       ]
     }
   ],
-  "planningNote": "Subregions are geographic planning groups based on publicly documented golf destinations and course clusters. They are not yet weather-enabled. Do not request forecasts until a representative course and verified coordinates are added for that subregion."
+  "planningNote": "Subregions are geographic planning groups based on publicly documented golf destinations and course clusters. They are not yet weather-enabled. Do not request forecasts until a representative course and verified coordinates are added for that subregion.",
+  "candidatePolicy": "Candidate names are research selections only. They must not be used for weather ingestion or forecast generation until current operating status, exact official course identity, GPS coordinates, timezone, and subregion fit are verified. Candidate is not an enabled representative.",
+  "candidateCount": 51
 }
