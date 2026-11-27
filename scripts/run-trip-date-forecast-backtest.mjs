@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import {scoreForecastSamples} from "../assets/js/trip-date-forecast-backtest.js";
+import {summarizeSeasonalArchive} from "../assets/js/trip-date-seasonal-backtest.js";
 
 const snapshotDir=new URL("../data/okinawa-forecast-snapshots/",import.meta.url);
 const outDir=new URL("../artifacts/trip-date-backtest/",import.meta.url);
@@ -58,11 +59,12 @@ const byRegion=Object.fromEntries(Object.entries(rowsByRegion).map(([region,rows
 const allRows=Object.values(rowsByRegion).flat();
 const overall=scoreForecastSamples(allRows);
 const sampleCount=overall.overall.probabilitySampleCount;
+const seasonalArchive=summarizeSeasonalArchive(snapshots,today);
 const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
   method:"Archived Open-Meteo daily precipitation probability and amount compared with ERA5 reanalysis precipitation at the same three regional coordinates.",
-  overall,byRegion,regionErrors,
+  overall,byRegion,regionErrors,seasonalArchive,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
   minimumSampleGuidance:"Do not interpret as calibrated skill until at least 30 probability samples per lead bucket and per region are available; 90 total is only a minimum descriptive threshold.",
   caveats:[
@@ -81,6 +83,13 @@ const lines=[
   "Forecast rows with ERA5 reference: "+sampleCount,
   "Status: "+report.validationStatus,
   "",
+  "## Seasonal source archive readiness",
+  "- EC46 weekly archived periods: "+seasonalArchive.totals.ec46.archivedPeriods,
+  "- EC46 completed and unit-verified periods: "+seasonalArchive.totals.ec46.unitVerifiedPeriods,
+  "- SEAS5 monthly archived periods: "+seasonalArchive.totals.seas5.archivedPeriods,
+  "- SEAS5 completed and unit-verified periods: "+seasonalArchive.totals.seas5.unitVerifiedPeriods,
+  "- Weight calibration: "+seasonalArchive.readiness,
+  "",
   "## Overall",
   "- Brier score: "+(overall.overall.brierScore??"資料不足"),
   "- Rainfall amount MAE: "+(overall.overall.rainfallAmountMaeMm==null?"資料不足":overall.overall.rainfallAmountMaeMm+" mm/day"),
@@ -98,6 +107,7 @@ const lines=[
   "",
   "## Limitations",
   ...report.caveats.map(x=>"- "+x),
+  "- "+seasonalArchive.guidance,
   ...Object.entries(regionErrors).map(([region,error])=>"- "+region+" ERA5 reference unavailable: "+error)
 ];
 await fs.writeFile(new URL("backtest.md",outDir),lines.join("\n"));
