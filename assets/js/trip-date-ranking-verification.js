@@ -121,11 +121,11 @@ export function compareTripWindowModels(samples=[],baselineModel="baseline"){
 }
 
 /** Conservative readiness: repeated forecast issues for one valid date count as one outcome day. */
-export function buildVerificationMaturity(samples=[],tripWindows=[],minimum=30){
+export function buildVerificationMaturity(samples=[],tripWindows=[],minimum=30,expectedSources=[],expectedModels=[]){
  if(!Array.isArray(samples)||!Array.isArray(tripWindows))throw new TypeError("samples and tripWindows must be arrays");
  if(!Number.isInteger(minimum)||minimum<1)throw new TypeError("minimum must be a positive integer");
  const buckets=["1-16","17-46","47-90"],regions=["north","central","south"];
- const sources=[...new Set(samples.map(x=>x.source).filter(x=>typeof x==="string"))].sort();
+ const sources=[...new Set([...samples.map(x=>x.source),...expectedSources].filter(x=>typeof x==="string"))].sort();
  const dailyGroups={};
  for(const source of sources)for(const region of regions)for(const bucket of buckets){
   const rows=samples.filter(x=>x.source===source&&x.region===region&&leadBucketId(x.leadDays)===bucket
@@ -136,7 +136,7 @@ export function buildVerificationMaturity(samples=[],tripWindows=[],minimum=30){
   dailyGroups[source+"."+region+"."+bucket]={forecastSamples:rows.length,uniqueValidDates:outcomes.size,wetDates:wet,dryDates:dry,
    required:{uniqueValidDates:minimum,wetDates:5,dryDates:5},ready:outcomes.size>=minimum&&wet>=5&&dry>=5};
  }
- const models=[...new Set(tripWindows.map(x=>x.model).filter(x=>typeof x==="string"))].sort();
+ const models=[...new Set([...tripWindows.map(x=>x.model),...expectedModels].filter(x=>typeof x==="string"))].sort();
  const tripGroups={};
  for(const model of models){
   const rows=tripWindows.filter(x=>x.model===model&&typeof x.issueDate==="string"&&typeof x.startDate==="string"

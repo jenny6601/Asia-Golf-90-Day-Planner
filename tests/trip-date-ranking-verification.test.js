@@ -103,3 +103,14 @@ test("trip maturity counts unique issue-date windows and wet/dry windows",()=>{
  assert.equal(result.tripWindows.groups.baseline.uniqueMaturedWindows,30);
  assert.equal(result.tripWindows.groups.baseline.ready,true);
 });
+
+test("maturity report retains all expected model buckets before observations mature",()=>{
+ const result=buildVerificationMaturity([],[],30,
+  ["composite-baseline","composite-historyEnhanced","composite-longRangeEnhanced"],
+  ["baseline","historyEnhanced","longRangeEnhanced"]);
+ assert.equal(result.daily.requiredGroups,27);
+ assert.equal(result.daily.readyGroups,0);
+ assert.equal(result.tripWindows.requiredModels,3);
+ assert.equal(result.tripWindows.readyModels,0);
+ assert.equal(result.daily.groups["composite-baseline.north.1-16"].uniqueValidDates,0);
+});
