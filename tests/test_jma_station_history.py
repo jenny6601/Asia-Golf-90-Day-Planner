@@ -29,6 +29,13 @@ class JmaStationHistoryTests(unittest.TestCase):
         self.assertEqual(result["precipitationStatisticalBreakCount"], 1)
         self.assertEqual(result["temperatureStatisticalBreakCount"], 1)
 
+
+    def test_discontinuity_before_1991_is_not_counted_in_normal_period(self):
+        data = parse_index4(row(start="1990-03-08", end="2005-11-10", pc="1", tc="1", old="14086"))
+        result = audit_candidate({"stationId":"47412"}, data)
+        self.assertEqual(result["precipitationStatisticalBreakCount"], 0)
+        self.assertEqual(result["temperatureStatisticalBreakCount"], 0)
+
     def test_missing_station_is_not_approved(self):
         result = audit_candidate({"stationId":"99999"}, {})
         self.assertFalse(result["officialHistoryMatch"])
