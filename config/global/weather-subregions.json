@@ -132,10 +132,22 @@
           },
           "coordinateQuality": {
             "grade": "B",
-            "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "label": "官方地址確認，圖釘未取得",
+            "reviewStatus": "official-address-confirmed;official-pin-not-published-on-course-profile",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方球場頁確認地址與 36 洞規模，但頁面未提供可提取的球場圖釘座標。",
+            "officialMapReference": {
+              "type": "official-operator-address-only",
+              "url": "https://www.appi.co.jp/golf-club/agc-appi-kogen-golf-club/",
+              "address": "〒028-7306 岩手県八幡平市安比高原180-1",
+              "courseFacts": {
+                "holes": 36,
+                "season": "mid-April-to-mid-November"
+              },
+              "coordinateType": "no-official-pin-extracted",
+              "crossCheckResult": "official-course-identity-and-address-confirmed;no-course-pin-coordinate-on-access-section",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -277,10 +289,10 @@
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
           "candidateStatus": "identity-and-location-researched",
           "candidateCoordinates": {
-            "latitude": 35.46897,
-            "longitude": 138.75275,
-            "coordinateStatus": "osm-map-coordinate",
-            "coordinateSourceUrl": "https://mapcarta.com/33942390",
+            "latitude": 35.4682136,
+            "longitude": 138.7517012,
+            "coordinateStatus": "official-operator-google-maps-place-pin",
+            "coordinateSourceUrl": "https://kcc.tatemono-golf.com/access/",
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
@@ -293,11 +305,30 @@
             "checkedOn": "2026-11-27"
           },
           "coordinateQuality": {
-            "grade": "B",
-            "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "grade": "A",
+            "label": "官方營運商 Google Maps 地點圖釘",
+            "reviewStatus": "official-operator-google-maps-place-pin-confirmed;course-boundary-not-independently-surveyed",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方交通頁 Google Map 連結解析出球場地點圖釘座標；以該地點圖釘更新候選座標。",
+            "officialMapReference": {
+              "type": "official-google-maps-place-pin",
+              "url": "https://kcc.tatemono-golf.com/access/",
+              "latitude": 35.4682136,
+              "longitude": 138.7517012,
+              "coordinateType": "place-pin-coordinate",
+              "mapViewportCenter": {
+                "latitude": 35.468430341633585,
+                "longitude": 138.74889107628448
+              },
+              "previousCandidateCoordinate": {
+                "latitude": 35.46897,
+                "longitude": 138.75275,
+                "source": "https://mapcarta.com/33942390"
+              },
+              "distanceFromPreviousCandidateKm": 0.127,
+              "crossCheckResult": "official-access-page-google-map-place-pin-matches-course-name;replace-public-map-point",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -368,10 +399,21 @@
           },
           "coordinateQuality": {
             "grade": "B",
-            "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "label": "官方地圖低倍率中心點，非球場圖釘",
+            "reviewStatus": "official-map-embed-found-but-low-zoom-center-only;pin-level-check-pending",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方交通頁有 Google Maps 嵌入地圖，但其視野寬度約 42 公里，中心點不能作為球場 GPS。",
+            "officialMapReference": {
+              "type": "official-google-maps-embed-center",
+              "url": "https://tokinodai.co.jp/access/",
+              "latitude": 36.91209514201531,
+              "longitude": 136.78245395878608,
+              "coordinateType": "map-viewport-center-not-pin",
+              "distanceFromCandidateKm": 0.751,
+              "mapZoomScale": "approximately-42km-map-width",
+              "crossCheckResult": "official-embed-center-is-low-zoom-regional-view;not-suitable-to-replace-course-coordinate",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -659,11 +701,11 @@
         "approximateCoordinates": 1,
         "forecastEnabled": false,
         "officialIdentityAddressVerified": 16,
-        "coordinateQualityA": 3,
-        "coordinateQualityB": 12,
+        "coordinateQualityA": 4,
+        "coordinateQualityB": 11,
         "coordinateQualityC": 1,
         "weatherPointEligible": 0,
-        "officialMapCrossChecks": 3
+        "officialMapCrossChecks": 6
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
