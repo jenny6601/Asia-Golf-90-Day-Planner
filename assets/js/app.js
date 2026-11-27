@@ -622,6 +622,9 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
   return {month,outlook,rain,low,high,rainDays,avgDaily:Number.isFinite(avgDaily)?avgDaily:(Number.isFinite(rain)?rain/days:null),maxDaily,
    status:season.length&&hist.length?"季節預測＋歷史統計":season.length?"季節預測可用":hist.length?"歷史氣候參考":valid.length?"天氣資料暫缺":"待建置"};
  });
+ const group={region:scopeName,rootRegion:region,subregion,country,courses:valid,months};
+ const actionRow=node("tr");actionRow.append(node("th","本月週分析"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"週分析","region-select");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults));td.append(btn);actionRow.append(td)}body.append(actionRow);
+ const monthlyAnalysisRow=node("tr");monthlyAnalysisRow.append(node("th","本月分析"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"分析","monthly-analysis-open");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults));td.append(btn);monthlyAnalysisRow.append(td)}body.append(monthlyAnalysisRow);
  const metrics=[
   {label:"月天氣總況",key:"outlook",text:true},
   {label:"歷史月平均低溫",key:"low",unit:" °C"},
@@ -641,9 +644,6 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
   body.append(tr);
  }
  const statusRow=node("tr");statusRow.append(node("th","資料狀態"));for(const item of monthData)statusRow.append(node("td",item.status));body.append(statusRow);
- const group={region:scopeName,rootRegion:region,subregion,country,courses:valid,months};
- const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"週分析","region-select");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults));td.append(btn);actionRow.append(td)}body.append(actionRow);
- const monthlyAnalysisRow=node("tr");monthlyAnalysisRow.append(node("th","本月分析"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"分析","monthly-analysis-open");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults));td.append(btn);monthlyAnalysisRow.append(td)}body.append(monthlyAnalysisRow);
  tbl.append(body);table.append(tbl);out.append(table);
  status.textContent=valid.length?"已選擇 "+scopeName+"｜球場 "+courses.length+" 個，其中 "+valid.length+" 個具有效座標，成功取得季節資料 "+records.length+" 組。":"已選擇 "+scopeName+"。此次分區尚無球場／天氣資料，但月份及週分析操作仍可使用。";
 }
