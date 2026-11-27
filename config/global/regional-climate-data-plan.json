@@ -33,7 +33,7 @@
     ],
     "pointPolicy": "Use the existing accepted regional representative point. Exact course pin/fairway precision is not required. Do not create per-course weather records within a subregion.",
     "era5LandGridMappingPath": "config/global/era5-land-grid-points-japan.json",
-    "gridMappingStatus": "expected-nearest-grid-points-calculated;actual-CDS-returned-coordinates-not-yet-verified"
+    "gridMappingStatus": "expected nearest-neighbour mapping; pilot download must verify actual returned coordinates"
   },
   "baseline": {
     "startDate": "1991-01-01",
@@ -46,16 +46,16 @@
     "minimumDailyCompleteness": 0.9,
     "missingDataPolicy": "Keep null/missing values; never convert missing precipitation to zero. Suppress climatology metrics below completeness thresholds.",
     "dailyBoundaryTimezone": "Asia/Tokyo",
-    "dailyAggregationRule": "Convert each hourly valid_time from UTC to Asia/Tokyo first, then group into local calendar days 00:00-23:00 JST. Do not group by UTC date.",
-    "precipitationHandling": "The ERA5-Land hourly time-series product documents total_precipitation as de-accumulated hourly values in metres. Convert each hourly value to millimetres (x1000), then sum the 24 JST-hour values. Verify units, variable metadata and 24-hour coverage in the returned file before aggregation; do not de-accumulate a second time."
+    "dailyAggregationRule": "Download at least one UTC day before and after the requested local date range. Convert each hourly UTC valid_time to Asia/Tokyo, then group into JST calendar days 00:00-23:00. Require exactly 24 valid hourly samples per complete local day.",
+    "precipitationHandling": "For the ERA5-Land hourly time-series endpoint, total_precipitation is documented as de-accumulated hourly values in metres. Convert each hourly value to millimetres (x1000), then sum the 24 JST-hour values. Do not de-accumulate a second time. For the full ERA5-Land hourly fallback, use its own accumulation/de-accumulation handling and never reuse this rule blindly."
   },
   "sourceStrategy": [
     {
-      "sourceId": "ERA5_HOURLY_SINGLE_LEVELS",
+      "sourceId": "ERA5_LAND_HOURLY_TIMESERIES",
       "provider": "ECMWF Copernicus Climate Data Store",
-      "dataset": "reanalysis-era5-land",
+      "dataset": "reanalysis-era5-land-timeseries",
       "role": "primary-gridded-historical-baseline",
-      "status": "planned-not-downloaded",
+      "status": "pilot-ready-experimental-service",
       "variables": [
         "2m_temperature",
         "2m_dewpoint_temperature",
@@ -63,16 +63,18 @@
         "10m_v_component_of_wind",
         "10m_u_component_of_wind"
       ],
-      "temporalResolution": "hourly; valid_time converted from UTC to Asia/Tokyo for local-day aggregation",
-      "spatialMethod": "Nearest ERA5-Land 0.1-degree grid cell to the subregion representative point; record actual grid-cell coordinates and point-to-cell distance. This is a land-focused regional grid, not a course observation.",
-      "limitations": "ERA5-Land is a land-surface reanalysis forced by ERA5 atmospheric fields, not an independent rain-gauge observation. Its 0.1-degree grid is more spatially detailed than ERA5 single-level 0.25-degree grid but remains grid-scale and may smooth local coastal or mountain effects.",
-      "documentationUrl": "https://confluence.ecmwf.int/pages/viewpage.action?pageId=576394633",
+      "temporalResolution": "hourly UTC; convert valid_time to Asia/Tokyo before daily aggregation",
+      "spatialMethod": "Submit the representative course locality to the CDS location selector; CDS rounds it to the nearest 0.1-degree grid point. Compare returned NetCDF latitude/longitude against config/global/era5-land-grid-points-japan.json.",
+      "limitations": "The ERA5-Land hourly time-series endpoint is optimized for single-point long time series but ECMWF describes it as experimental/not recommended for production; response file structure may change. Use it for pilot/schema validation only. Production fallback is the full ERA5-Land hourly dataset with explicit spatial extraction and de-accumulation.",
+      "documentationUrl": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries",
       "spatialResolutionDegrees": 0.1,
       "variableHandling": {
-        "total_precipitation": "Hourly values are documented as de-accumulated in the CDS time-series product; source unit metres; convert to mm and sum by JST calendar day. Confirm metadata before processing.",
+        "total_precipitation": "The time-series product provides de-accumulated hourly precipitation in metres. Convert to mm (x1000) and sum by JST day. Verify returned metadata and reconstruct sample totals where possible.",
         "temperatures": "Source unit Kelvin; convert to Celsius by subtracting 273.15.",
         "windComponents": "Source unit m s**-1; preserve U/V and derive speed/direction."
-      }
+      },
+      "experimental": true,
+      "productionFallbackDataset": "reanalysis-era5-land"
     },
     {
       "sourceId": "JMA_STATION_OBSERVATIONS",
