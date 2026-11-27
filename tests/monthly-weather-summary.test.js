@@ -13,12 +13,12 @@ test("classifies using available rainfall evidence without fabricating missing f
 test("monthly summary counts only future dates and reports coverage", () => {
   const days = [
     {date:"2026-11-27",grade:3},
-    ...Array.from({length:10},(_,i)=>({date:`2026-12-${String(i+1).padStart(2,"0")}`,grade:i<8?0:3}))
+    ...Array.from({length:10},(_,i)=>({date:`2026-12-${String(i+1).padStart(2,"0")}`,grade:i<9?0:3}))
   ];
   const result=summarizeMonthlyWeather(days,"2026-11-28",days.map(x=>x.date));
   assert.equal(result.validDays,10);
-  assert.equal(result.counts.suitable,8);
-  assert.equal(result.counts.poor,2);
+  assert.equal(result.counts.suitable,9);
+  assert.equal(result.counts.poor,1);
   assert.equal(result.label,"整體適打");
 });
 
