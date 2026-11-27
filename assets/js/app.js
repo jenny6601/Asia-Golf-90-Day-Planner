@@ -803,7 +803,9 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   if(!Number.isFinite(rainChance)&&!Number.isFinite(rainAmount))return {date,valid:false};
   const chance=Number.isFinite(rainChance)?rainChance:100,amount=Number.isFinite(rainAmount)?rainAmount:0;
   const grade=chance<30&&amount<1?0:chance<45&&amount<2?1:chance<60&&amount<4?2:3;
-  return {date,valid:true,grade,playable:grade<=1&&(!Number.isFinite(highTemp)||highTemp<=33),chance,amount,source:isForecast?"逐日預報":seasonal.length?"歷史＋季節模式估計":"歷史氣候參考"};
+  const tooHot=Number.isFinite(highTemp)&&highTemp>33;
+  const status=tooHot||grade===3?"不適":grade===2?"可打":"適打";
+  return {date,valid:true,grade,status,playable:status==="適打",chance,amount,source:isForecast?"逐日預報":seasonal.length?"歷史＋季節模式估計":"歷史氣候參考"};
  }).filter(x=>x.valid);
  const playable=dailyAssessment.filter(x=>x.playable),watch=dailyAssessment.filter(x=>x.grade===2),wet=dailyAssessment.filter(x=>x.grade===3);
  const seasonBaseline=Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)?seasonRain-rainAnomaly:null;
@@ -955,8 +957,9 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   card.addEventListener("click",()=>openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,sampleCourses[0],date,{forecastCourses,historicalNormals,seasonalDailyRows}))
   const code=mode(isForecast?actualEntries.map(x=>x.code):useSeasonal?seasonalEntries.map(x=>x.code):[]),highValue=isForecast?avg(actualEntries,"high"):useSeasonal?avg(seasonalEntries,"highEstimate"):avg(historicalEntries,"highMean"),lowValue=isForecast?avg(actualEntries,"low"):useSeasonal?avg(seasonalEntries,"lowEstimate"):avg(historicalEntries,"lowMean"),rainProb=isForecast?avg(actualEntries,"prob"):useSeasonal?avg(seasonalEntries,"rainChanceEstimate"):avg(historicalEntries,"rainFrequency"),rainValue=useSeasonal?avg(seasonalEntries,"rainEstimate"):null,confidenceLabel=useSeasonal?seasonalEntries.map(x=>x.confidence).filter(Boolean).sort((a,b)=>({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[b]??4)-({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[a]??4))[0]:null;
   const icon=createWeatherIcon(code,!isForecast&&!useSeasonal,rainProb);icon.classList.add("monthly-day-icon");
-  card.append(node("strong",String(Number(date.slice(8,10)))+(isPlayable?" ✓":""),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):useSeasonal?(modeText(seasonalEntries.map(x=>x.weather))||"長期氣候估計"):(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
-  if(isPlayable)card.append(node("small","適打","monthly-day-playable-label"));
+  const dayAssessment=byDate.get(date),playabilityStatus=dayAssessment?.status||"資料不足";
+  const statusClass=playabilityStatus==="適打"?"monthly-status-good":playabilityStatus==="可打"?"monthly-status-watch":playabilityStatus==="不適"?"monthly-status-bad":"monthly-status-unknown";
+  card.append(node("strong",String(Number(date.slice(8,10)))+(isPlayable?" ✓":""),"monthly-day-date"),icon,node("small",playabilityStatus,"monthly-day-playability "+statusClass),node("span",isForecast?weatherLabel(code):useSeasonal?(modeText(seasonalEntries.map(x=>x.weather))||"長期氣候估計"):(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
   card.append(node("b",Number.isFinite(highValue)?highValue.toFixed(0)+"°":"—","monthly-day-high"),node("span",Number.isFinite(lowValue)?lowValue.toFixed(0)+"°":"—","monthly-day-low"));
   card.append(node("small",isForecast?"雨機率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):useSeasonal?"雨日頻率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):"歷史雨頻 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"),"monthly-day-rain"));
   if(useSeasonal){
