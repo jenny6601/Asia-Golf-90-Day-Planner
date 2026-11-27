@@ -956,14 +956,19 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  host.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-function renderEmptyWeekAnalysis(country,region,month,backAction){
+async function renderEmptyWeekAnalysis(country,region,month,backAction){
  const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+region+"｜"+month+"｜週次預覽",backAction||(()=>showCountryOverview()));
+ const pageLoading=node("div",undefined,"monthly-page-loading");pageLoading.setAttribute("role","status");pageLoading.setAttribute("aria-live","polite");
+ pageLoading.append(node("div",undefined,"monthly-page-spinner"),node("strong","正在開啟週分析…"),node("span","正在準備週次分析頁面"));
+ $("flow-nav").append(pageLoading);
+ await new Promise(resolve=>requestAnimationFrame(resolve));
  const panel=node("section",undefined,"week-recommendations");
  panel.append(node("h3","③ "+region+"｜"+month+" 週天氣分析"),node("p","此分區目前尚無球場座標或天氣資料。以下提供週次版面預覽；資料建置完成後會自動以該區實際季節資料取代。","long-range-note"));
  const grid=node("div",undefined,"week-grid");
  const first=month+"-01";
  for(let i=0;i<3;i++){const start=add(first,i*7),end=add(start,6),card=node("article",undefined,"week-card");card.append(node("div","週次 "+(i+1),"week-rank"),node("h4",start+" ～ "+end),node("strong","天氣資料待建置"),node("p","降雨、溫度及適打分析暫無資料。"),node("button","查看七天報告","week-open"));card.lastChild.type="button";card.lastChild.addEventListener("click",()=>renderEmptySevenDay(country,region,start));grid.append(card)}
  panel.append(grid);out.append(panel);
+ pageLoading.remove();
 }
 function renderEmptySevenDay(country,region,start){
  const out=$("region-report");out.replaceChildren();showClimateScreen("④ "+region+"｜七天天氣報告預覽",()=>renderEmptyWeekAnalysis(country,region,start.slice(0,7)));const panel=node("section",undefined,"selected-week-report");
@@ -973,8 +978,13 @@ function renderEmptySevenDay(country,region,start){
  panel.append(strip);const choose=node("button","前往選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>{$("departure").value=start;$("departure").scrollIntoView({behavior:"smooth",block:"center"})});panel.append(choose);out.append(panel);
 }
 
-function renderRegionTopWeeks(group,records,month){
- const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜本月推薦週次",()=>renderRegionMonths(group.country||$("climate-country").value,group.rootRegion||group.region,group.months||monthOptions(),group.courses,group.subregion||""));const panel=node("section",undefined,"week-recommendations");
+async function renderRegionTopWeeks(group,records,month){
+ const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜本月推薦週次",()=>renderRegionMonths(group.country||$("climate-country").value,group.rootRegion||group.region,group.months||monthOptions(),group.courses,group.subregion||""));
+ const pageLoading=node("div",undefined,"monthly-page-loading");pageLoading.setAttribute("role","status");pageLoading.setAttribute("aria-live","polite");
+ pageLoading.append(node("div",undefined,"monthly-page-spinner"),node("strong","正在開啟週分析…"),node("span","正在整理所選月份的推薦週次"));
+ $("flow-nav").append(pageLoading);
+ await new Promise(resolve=>requestAnimationFrame(resolve));
+ const panel=node("section",undefined,"week-recommendations");
  const monthStart=month+"-01",monthEnd=new Date(Date.parse(monthStart+"T12:00:00Z"));monthEnd.setUTCMonth(monthEnd.getUTCMonth()+1);monthEnd.setUTCDate(0);const last=monthEnd.toISOString().slice(0,10),todayDate=today(),first=monthStart>todayDate?monthStart:todayDate,candidates=[];
  for(let start=first;start<=last;start=add(start,7)){
   const weekEnd=add(start,6);if(weekEnd>last)continue;
@@ -1000,6 +1010,7 @@ function renderRegionTopWeeks(group,records,month){
   panel.append(grid);
  }
  out.append(panel);
+ pageLoading.remove();
  const coursePanel=node("section",undefined,"cluster-course-panel");
  coursePanel.append(node("h3","選擇出發日期及球場"));
  const choose=node("button","前往選擇出發日期及球場","cluster-course-use");
