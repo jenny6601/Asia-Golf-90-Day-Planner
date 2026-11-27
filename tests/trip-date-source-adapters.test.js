@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {buildTripDateEngineInput,TRIP_DATE_SOURCE_ADAPTERS} from "../assets/js/trip-date-source-adapters.js";
+import {buildTripDateEngineInput,groupCourseHistoricalNormals,TRIP_DATE_SOURCE_ADAPTERS} from "../assets/js/trip-date-source-adapters.js";
 
 const asOf="2026-11-27";
 const addDays=(date,n)=>new Date(Date.parse(date+"T00:00:00Z")+n*86400000).toISOString().slice(0,10);
@@ -70,4 +70,19 @@ test("missing forecast fields stay missing and reduce source coverage",()=>{
 
 test("invalid dates fail closed",()=>{
   assert.throws(()=>buildTripDateEngineInput({asOf:"2026-02-30"}),/valid YYYY-MM-DD/);
+});
+
+test("aggregates the six Okinawa course histories into the three fixed regions",()=>{
+  const ids=["southern-links","palm-hills","pgm-okinawa","kise","atta-terrace","chura-orchard"];
+  const results=ids.map(courseId=>({
+    course:{id:courseId},
+    days:[{date:addDays(asOf,60),rainFrequency:30,rainMean:2,rainSampleYears:10}]
+  }));
+  const grouped=groupCourseHistoricalNormals(results);
+  assert.equal(grouped.north[0].courseNormals.length,3);
+  assert.equal(grouped.central[0].courseNormals.length,1);
+  assert.equal(grouped.south[0].courseNormals.length,2);
+  const input=buildTripDateEngineInput({asOf,forecastZones,longRangePoints,historicalCourseResults:results});
+  assert.equal(input.days[59].regions.north.historical.validCourseCount,3);
+  assert.equal(input.days[59].regions.north.historical.coverage,1);
 });
