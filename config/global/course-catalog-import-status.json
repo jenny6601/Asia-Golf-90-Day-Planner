@@ -26,8 +26,9 @@
       "status": "in_progress",
       "targetSubregions": 19,
       "seedRecords": 22,
-      "knownSourceCoverage": "Golf in Japan directory states 2,308 records; JNTO selected destination list as cross-check",
-      "next": "Extract prefecture-level course names and map to the 19 Japan subregions; reconcile the six Okinawa pilot records."
+      "knownSourceCoverage": "Golf in Japan: headline claims 2,308 courses, while directory result count shows 2,138; 12 course cards imported in batch 1. JNTO curated list used as independent identity cross-check.",
+      "next": "Continue prefecture-by-prefecture extraction from the paginated directory; reconcile directory counts and existing seed records; then verify operation/address/coordinates before activation.",
+      "importedDirectoryRecords": 12
     },
     {
       "code": "KR",
