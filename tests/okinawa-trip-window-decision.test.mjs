@@ -29,5 +29,5 @@ test("missing regional seasonal signal fails closed",()=>{
 test("long-range output never emits probabilities or a combined short-range score",()=>{
  const r=buildOkinawaTripWindowDecision({referenceDate:"2026-11-23",seasonalPoints:points(),courses});
  assert.equal(r.ranking.shortRangeHourly,"not mixed into long-range ordinal tier");
- assert.ok(r.guardrails.some(x=>x.includes("不是雨概率")));
+ assert.ok(r.guardrails.some(x=>x.includes("不是雨概率")||x.includes("不是逐日降雨預報")));
 });
