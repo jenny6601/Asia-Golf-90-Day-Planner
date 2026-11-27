@@ -182,8 +182,8 @@ test("Japan mainland GPS candidates have explicit evidence grades and none is fo
  const japan=registry.countries.find(x=>x.countryCode==="JP");
  const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
  const count=grade=>mainland.filter(x=>x.coordinateQuality?.grade===grade).length;
- assert.equal(count("A"),4);
- assert.equal(count("B"),11);
+ assert.equal(count("A"),3);
+ assert.equal(count("B"),12);
  assert.equal(count("C"),1);
  assert.ok(mainland.every(x=>x.coordinateQuality.weatherPointEligible===false));
  assert.ok(mainland.every(x=>x.coordinateQuality.reviewStatus));
@@ -303,6 +303,7 @@ test("Japan GPS decision matrix covers all 16 mainland subregions and blocks pre
  assert.equal(matrix.summary.officialMapViewportCenters,8);
  assert.equal(matrix.summary.officialAccessOrAddressReferences,5);
  assert.equal(matrix.summary.forecastEnabled,0);
+ assert.deepEqual(matrix.summary.legacyGrades,{A:3,B:12,C:1});
  assert.equal(new Set(matrix.entries.map(x=>x.subregionId)).size,16);
  for(const entry of matrix.entries){
   const source=mainland.find(x=>x.id===entry.subregionId);
@@ -313,6 +314,9 @@ test("Japan GPS decision matrix covers all 16 mainland subregions and blocks pre
   assert.equal(entry.weatherPointEligible,false);
   assert.equal(source.coordinateQuality.weatherPointEligible,false);
  }
+ const seven=matrix.entries.find(x=>x.representativeCandidate==="Seven Hundred Club");
+ assert.equal(seven.legacyGrade,"B");
+ assert.equal(seven.evidenceClass,"official-map-viewport-center-only");
  const classic=matrix.entries.find(x=>x.representativeCandidate==="The Classic Golf Club");
  assert.equal(classic.evidenceClass,"official-map-viewport-center-only");
  assert.equal(classic.offsetFromCandidateKm,0.202);
