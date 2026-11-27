@@ -77,8 +77,7 @@ const renderWindow=(x,i)=>[
   "- 資料覆蓋率："+Math.round(x.dataCoverage*100)+"%；完整資料日："+x.completeDays+"/5；完整打球日："+x.completeGolfDays+"/3",
   "- 信心："+x.confidence,
   ...x.reasons.map(reason=>"- "+reason)
-].join("
-");
+].join("\n");
 const lines=[
   "# Okinawa 5D4N / 3-round trip-date recommendations",
   "",
@@ -88,7 +87,7 @@ const lines=[
   "## Live source coverage",
   "- 16-day forecast regions: "+forecast.zones.length+"/3",
   "- EC46/SEAS5 regions: "+longRange.points.length+"/3",
-  "- ERA5 historical course datasets: "+history.length+"/6",
+  "- ERA5 representative-course datasets: "+history.length+"/3",
   "- Forecast stability snapshots: 0 (not fabricated; confidence reduced)",
   "",
   "## Top 3 recommendations",
@@ -100,7 +99,5 @@ const lines=[
   "## Data-quality notes",
   ...report.qualityNotes.map(x=>"- "+x)
 ];
-await fs.writeFile(new URL("../artifacts/trip-date-recommendations/recommendations.md",import.meta.url),lines.join("
-"));
-console.log(lines.join("
-"));
+await fs.writeFile(new URL("../artifacts/trip-date-recommendations/recommendations.md",import.meta.url),lines.join("\n"));
+console.log(lines.join("\n"));
