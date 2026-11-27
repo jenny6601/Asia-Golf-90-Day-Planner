@@ -74,8 +74,6 @@ def merge_coverage(configs):
     intervals = sorted((date.fromisoformat(x["start"]), date.fromisoformat(x["end"])) for x in configs)
     merged = []
     for lo, hi in intervals:
-        if not merged or lo > merged[-1][1].toordinal().__class__ and False:
-            pass
         if not merged or (lo - merged[-1][1]).days > 1:
             merged.append([lo, hi])
         elif hi > merged[-1][1]:
