@@ -1,0 +1,159 @@
+{
+  "archive": "/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/data/era5-land-japan-1991-2020/raw/JP-KNT-NORTH_1991-01-01_1991-12-31.zip",
+  "subregionId": "JP-KNT-NORTH",
+  "requestedJstDates": [
+    "1991-01-01",
+    "1991-12-31"
+  ],
+  "expectedGridPoint": {
+    "latitude": 36.7,
+    "longitude": 140
+  },
+  "expectedUtcCoverage": [
+    "1990-12-31T15:00:00Z",
+    "1991-12-31T14:00:00Z"
+  ],
+  "files": [
+    {
+      "name": "reanalysis-era5-land-timeseries-sfc-2m-temperaturew2n0bl6d.nc",
+      "variables": [
+        "2m_dewpoint_temperature",
+        "2m_temperature"
+      ],
+      "timeCount": 8808,
+      "duplicateTimestamps": false
+    },
+    {
+      "name": "reanalysis-era5-land-timeseries-sfc-pressure-precipitationu5ulwsvj.nc",
+      "variables": [
+        "total_precipitation"
+      ],
+      "timeCount": 8808,
+      "duplicateTimestamps": false
+    },
+    {
+      "name": "reanalysis-era5-land-timeseries-sfc-windjvu91qh8.nc",
+      "variables": [
+        "10m_u_component_of_wind",
+        "10m_v_component_of_wind"
+      ],
+      "timeCount": 8808,
+      "duplicateTimestamps": false
+    }
+  ],
+  "variables": {
+    "2m_dewpoint_temperature": {
+      "file": "reanalysis-era5-land-timeseries-sfc-2m-temperaturew2n0bl6d.nc",
+      "units": "K",
+      "missingFraction": 0.0,
+      "validValueCount": 8808,
+      "min": 258.24285888671875,
+      "max": 300.4456787109375
+    },
+    "2m_temperature": {
+      "file": "reanalysis-era5-land-timeseries-sfc-2m-temperaturew2n0bl6d.nc",
+      "units": "K",
+      "missingFraction": 0.0,
+      "validValueCount": 8808,
+      "min": 268.402587890625,
+      "max": 306.55377197265625
+    },
+    "total_precipitation": {
+      "file": "reanalysis-era5-land-timeseries-sfc-pressure-precipitationu5ulwsvj.nc",
+      "units": "m",
+      "missingFraction": 0.0,
+      "validValueCount": 8808,
+      "min": -1.996522769331932e-08,
+      "max": 0.00948610994964838
+    },
+    "10m_u_component_of_wind": {
+      "file": "reanalysis-era5-land-timeseries-sfc-windjvu91qh8.nc",
+      "units": "m s**-1",
+      "missingFraction": 0.0,
+      "validValueCount": 8808,
+      "min": -4.5617828369140625,
+      "max": 4.9093475341796875
+    },
+    "10m_v_component_of_wind": {
+      "file": "reanalysis-era5-land-timeseries-sfc-windjvu91qh8.nc",
+      "units": "m s**-1",
+      "missingFraction": 0.0,
+      "validValueCount": 8808,
+      "min": -5.3554840087890625,
+      "max": 9.323623657226562
+    }
+  },
+  "checks": {
+    "netcdfFilesPresent": true,
+    "allFilesAtExpectedGridPoint": true,
+    "allRequiredVariablesPresent": true,
+    "completeHourlyJstDateCoverage": true,
+    "noDuplicateTimestamps": true,
+    "precipitationUnitsAreMetres": true,
+    "precipitationDeaccumulation": "CDS time-series product documents total_precipitation as de-accumulated; do not de-accumulate again"
+  },
+  "status": "passed-structural-validation",
+  "climatologyEligible": false,
+  "coordinates": [
+    {
+      "file": "reanalysis-era5-land-timeseries-sfc-2m-temperaturew2n0bl6d.nc",
+      "latitude": 36.70000000000109,
+      "longitude": 139.99999999999636,
+      "matchesExpected": true
+    },
+    {
+      "file": "reanalysis-era5-land-timeseries-sfc-pressure-precipitationu5ulwsvj.nc",
+      "latitude": 36.70000000000109,
+      "longitude": 139.99999999999636,
+      "matchesExpected": true
+    },
+    {
+      "file": "reanalysis-era5-land-timeseries-sfc-windjvu91qh8.nc",
+      "latitude": 36.70000000000109,
+      "longitude": 139.99999999999636,
+      "matchesExpected": true
+    }
+  ],
+  "timeCoverage": {
+    "uniqueTimestampCount": 8808,
+    "requestedWindowExpectedHours": 8760,
+    "observedHoursInWindow": 8760,
+    "missingHours": [],
+    "unexpectedHours": [],
+    "duplicateTimestampDetected": false,
+    "firstObservedUtc": "1990-12-31T00:00:00Z",
+    "lastObservedUtc": "1992-01-01T23:00:00Z"
+  },
+  "variableTimeCoverage": {
+    "10m_u_component_of_wind": {
+      "observedHours": 8760,
+      "missingHours": 0,
+      "duplicateTimestamps": false,
+      "complete": true
+    },
+    "10m_v_component_of_wind": {
+      "observedHours": 8760,
+      "missingHours": 0,
+      "duplicateTimestamps": false,
+      "complete": true
+    },
+    "2m_dewpoint_temperature": {
+      "observedHours": 8760,
+      "missingHours": 0,
+      "duplicateTimestamps": false,
+      "complete": true
+    },
+    "2m_temperature": {
+      "observedHours": 8760,
+      "missingHours": 0,
+      "duplicateTimestamps": false,
+      "complete": true
+    },
+    "total_precipitation": {
+      "observedHours": 8760,
+      "missingHours": 0,
+      "duplicateTimestamps": false,
+      "complete": true
+    }
+  }
+}
