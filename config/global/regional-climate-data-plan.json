@@ -42,7 +42,10 @@
     "leapDayPolicy": "Map February 29 to the February 28/March 1 pooled window; retain original source date in raw records.",
     "minimumValidYears": 24,
     "minimumDailyCompleteness": 0.9,
-    "missingDataPolicy": "Keep null/missing values; never convert missing precipitation to zero. Suppress climatology metrics below completeness thresholds."
+    "missingDataPolicy": "Keep null/missing values; never convert missing precipitation to zero. Suppress climatology metrics below completeness thresholds.",
+    "dailyBoundaryTimezone": "Asia/Tokyo",
+    "dailyAggregationRule": "Convert each hourly valid_time from UTC to Asia/Tokyo first, then group into local calendar days 00:00-23:00 JST. Do not group by UTC date.",
+    "precipitationHandling": "The ERA5-Land hourly time-series product documents total_precipitation as de-accumulated hourly values in metres. Convert each hourly value to millimetres (x1000), then sum the 24 JST-hour values. Verify units, variable metadata and 24-hour coverage in the returned file before aggregation; do not de-accumulate a second time."
   },
   "sourceStrategy": [
     {
@@ -52,17 +55,22 @@
       "role": "primary-gridded-historical-baseline",
       "status": "planned-not-downloaded",
       "variables": [
-        "total_precipitation",
         "2m_temperature",
         "2m_dewpoint_temperature",
-        "10m_u_component_of_wind",
-        "10m_v_component_of_wind"
+        "total_precipitation",
+        "10m_v_component_of_wind",
+        "10m_u_component_of_wind"
       ],
-      "temporalResolution": "hourly",
+      "temporalResolution": "hourly; valid_time converted from UTC to Asia/Tokyo for local-day aggregation",
       "spatialMethod": "Nearest ERA5-Land 0.1-degree grid cell to the subregion representative point; record actual grid-cell coordinates and point-to-cell distance. This is a land-focused regional grid, not a course observation.",
       "limitations": "ERA5-Land is a land-surface reanalysis forced by ERA5 atmospheric fields, not an independent rain-gauge observation. Its 0.1-degree grid is more spatially detailed than ERA5 single-level 0.25-degree grid but remains grid-scale and may smooth local coastal or mountain effects.",
       "documentationUrl": "https://confluence.ecmwf.int/pages/viewpage.action?pageId=576394633",
-      "spatialResolutionDegrees": 0.1
+      "spatialResolutionDegrees": 0.1,
+      "variableHandling": {
+        "total_precipitation": "Hourly values are documented as de-accumulated in the CDS time-series product; source unit metres; convert to mm and sum by JST calendar day. Confirm metadata before processing.",
+        "temperatures": "Source unit Kelvin; convert to Celsius by subtracting 273.15.",
+        "windComponents": "Source unit m s**-1; preserve U/V and derive speed/direction."
+      }
     },
     {
       "sourceId": "JMA_STATION_OBSERVATIONS",
@@ -152,7 +160,10 @@
       "windSpeedMeanMs",
       "windSpeedMaxMs",
       "validHourCount",
-      "qualityFlags"
+      "qualityFlags",
+      "localDayTimezone",
+      "precipitationUnitConversion",
+      "aggregationMethod"
     ],
     "nullableMetrics": true,
     "provenanceRequired": true
