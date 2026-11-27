@@ -1,0 +1,49 @@
+name: Okinawa Forecast Observation Pairing
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "50 18 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: okinawa-forecast-observation-pairing
+  cancel-in-progress: false
+
+jobs:
+  pair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout archive branch
+        uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build timestamp-paired forecast and observation dataset
+        run: node scripts/build-okinawa-forecast-observation-pairs.mjs
+      - name: Commit paired dataset
+        if: always()
+        run: |
+          if [ -d data/okinawa/forecast-observation-pairs ] && [ -n "$(git status --porcelain data/okinawa/forecast-observation-pairs)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/okinawa/forecast-observation-pairs/
+            git commit -m "Build daily Okinawa forecast observation pairs"
+            git push
+          else
+            echo "No paired dataset changes."
+          fi
+      - name: Upload paired dataset report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-forecast-observation-pairs
+          path: data/okinawa/forecast-observation-pairs/
+          if-no-files-found: warn
+          retention-days: 90
