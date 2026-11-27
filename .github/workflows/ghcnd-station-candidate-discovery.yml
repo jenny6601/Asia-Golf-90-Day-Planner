@@ -12,7 +12,7 @@ on:
       - "tests/test_kma_asos_candidates.py"
       - "tests/test_jma_station_candidates.py"
       - "tests/test_jp_kr_official_acquisition_queue.py"
-      - "tests/test_ghcnd_daily_record_coverage.py"
+      - "tests/test_ghcnd_daily_record_coverage.py"\n      - "scripts/score_ghcnd_daily_record_quality.py"\n      - "tests/test_ghcnd_daily_record_quality.py"
       - "tests/test_ghcnd_station_discovery.py"
       - "scripts/discover_metmalaysia_station_candidates.py"
       - "tests/test_metmalaysia_station_candidates.py"
@@ -41,7 +41,7 @@ jobs:
         run: |
           python -m unittest tests/test_ghcnd_station_discovery.py
           python -m unittest tests/test_metmalaysia_station_candidates.py
-          python -m unittest tests/test_ghcnd_daily_record_coverage.py
+          python -m unittest tests/test_ghcnd_daily_record_coverage.py\n          python -m unittest tests/test_ghcnd_daily_record_quality.py
           python -m unittest tests/test_jp_kr_official_acquisition_queue.py
           python -m unittest tests/test_jma_station_candidates.py
           python -m unittest tests/test_kma_asos_candidates.py
@@ -63,12 +63,12 @@ jobs:
         run: python scripts/discover_jma_station_candidates.py
       - name: Audit actual NOAA daily records for bounded regional shortlist
         run: python scripts/validate_ghcnd_daily_record_coverage.py --per-region 3 --workers 8
-      - name: Commit station candidate inventory to development branch
+      - name: Score actual daily-record completeness by element and region\n        run: python scripts/score_ghcnd_daily_record_quality.py\n      - name: Commit station candidate inventory to development branch
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/observation-stations/ghcnd-candidates-1991-2020.json data/observation-stations/metmalaysia-candidates.json data/observation-stations/ghcnd-daily-record-audit-1991-2020.json data/observation-stations/jp-kr-official-acquisition-queue.json data/observation-stations/jma-station-candidates-1991-2020.json
+          git add data/observation-stations/ghcnd-candidates-1991-2020.json data/observation-stations/metmalaysia-candidates.json data/observation-stations/ghcnd-daily-record-audit-1991-2020.json data/observation-stations/ghcnd-daily-record-quality-1991-2020.json data/observation-stations/jp-kr-official-acquisition-queue.json data/observation-stations/jma-station-candidates-1991-2020.json
           if ! git diff --cached --quiet; then
             git commit -m "Archive GHCN station candidates for eight-country regions"
             git pull --rebase origin asia-eight-country-shared-engine
@@ -83,7 +83,7 @@ jobs:
           path: |
             data/observation-stations/ghcnd-candidates-1991-2020.json
             data/observation-stations/metmalaysia-candidates.json
-            data/observation-stations/ghcnd-daily-record-audit-1991-2020.json
+            data/observation-stations/ghcnd-daily-record-audit-1991-2020.json\n            data/observation-stations/ghcnd-daily-record-quality-1991-2020.json
             data/observation-stations/jp-kr-official-acquisition-queue.json
             data/observation-stations/jma-station-candidates-1991-2020.json
             data/observation-stations/kma-asos-candidates-1991-2020.json
