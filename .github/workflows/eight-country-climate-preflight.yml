@@ -1,0 +1,36 @@
+name: Eight-Country Climate Preflight QA
+
+on:
+  push:
+    branches: [asia-eight-country-shared-engine]
+    paths:
+      - "config/global/countries.json"
+      - "config/global/weather-subregions.json"
+      - "config/global/courses.json"
+      - "scripts/build_eight_country_climate_registry.py"
+      - "scripts/build_representative_point_quality_audit.py"
+      - "tests/test_representative_point_quality_audit.py"
+      - ".github/workflows/eight-country-climate-preflight.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eight-country-climate-preflight
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate all representative points and IANA timezones
+        run: python scripts/build_representative_point_quality_audit.py
+      - name: Run representative point audit tests
+        run: python -m unittest tests/test_representative_point_quality_audit.py
