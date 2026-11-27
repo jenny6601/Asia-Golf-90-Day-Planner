@@ -60,9 +60,15 @@ def compare_region(region, era5_rows, station, max_distance_km=75.0, minimum_pai
     station_rows = {r.get("validDate"): r for r in station.get("records", []) if r.get("validDate")}
     era5_by_date = {r.get("validDate"): r for r in era5_rows}
     paired = []
+    jma_quality_rejected_days = 0
+    required_fields = ("precipitationMm", "temperatureMinC", "temperatureMaxC")
     for day in sorted(set(era5_by_date) & set(station_rows)):
         e, j = era5_by_date[day], station_rows[day]
         if e.get("sourceId") != ERA5_SOURCE or e.get("validHourCount") != 24 or not quality_flags_acceptable(e):
+            continue
+        qcodes = j.get("jmaQualityCodes") or {}
+        if not all(number(qcodes.get(field)) == 8 for field in required_fields):
+            jma_quality_rejected_days += 1
             continue
         paired.append((e, j))
     rain_pairs = [(e, j) for e, j in paired if number(e.get("precipitationMm")) is not None and number(j.get("precipitationMm")) is not None]
@@ -81,6 +87,13 @@ def compare_region(region, era5_rows, station, max_distance_km=75.0, minimum_pai
         station_issues.append("unsupported_or_missing_jma_source_id")
     if station.get("qualityPolicyStatus") != "validated":
         station_issues.append("jma_quality_and_homogeneity_metadata_not_validated")
+    homogeneity_values = {
+        field: sorted({str((row.get("jmaHomogeneityNumbers") or {}).get(field)) for row in station.get("records", []) if (row.get("jmaHomogeneityNumbers") or {}).get(field) not in (None, "")})
+        for field in ("precipitationMm", "temperatureMinC", "temperatureMaxC")
+    }
+    homogeneity_breaks = {field: values for field, values in homogeneity_values.items() if len(values) > 1}
+    if homogeneity_breaks:
+        station_issues.append("jma_homogeneity_number_changes_within_period")
     if distance > max_distance_km:
         station_issues.append("station_outside_maximum_distance")
     if len(rain_pairs) < minimum_pairs:
@@ -92,6 +105,9 @@ def compare_region(region, era5_rows, station, max_distance_km=75.0, minimum_pai
         "stationDistanceKm": round(distance, 2),
         "maximumAllowedDistanceKm": max_distance_km,
         "pairedDays": len(paired),
+        "jmaQualityRejectedDays": jma_quality_rejected_days,
+        "jmaHomogeneityNumbers": homogeneity_values,
+        "jmaHomogeneityBreaks": homogeneity_breaks,
         "rainfall": rain,
         "temperatureMin": temp_min,
         "temperatureMax": temp_max,
