@@ -17,7 +17,7 @@ async function collect(point){
  const w=payload.weekly,m=payload.monthly;
  if(!w?.time?.length||!m?.time?.length)throw new Error(point.id+" missing weekly/monthly seasonal arrays");
  if(!Array.isArray(w.precipitation_efi)||!Array.isArray(w.precipitation_mean)||!Array.isArray(m.precipitation_mean)||!Array.isArray(m.precipitation_anomaly))throw new Error(point.id+" missing required precipitation fields");
- return {point,provider:"Open-Meteo Seasonal Forecast API",model:payload.model??"ecmwf_seasonal_seamless",grid:{latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation},timezone:payload.timezone,weekly:w,monthly:m,coverage:{weeklyPeriods:w.time.length,monthlyPeriods:m.time.length,weeklyStart:w.time[0],weeklyEnd:w.time.at(-1),monthlyStart:m.time[0],monthlyEnd:m.time.at(-1)}};
+ return {point,provider:"Open-Meteo Seasonal Forecast API",model:payload.model??"ecmwf_seasonal_seamless",grid:{latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation},timezone:payload.timezone,weeklyUnits:payload.weekly_units??{},monthlyUnits:payload.monthly_units??{},weekly:w,monthly:m,coverage:{weeklyPeriods:w.time.length,monthlyPeriods:m.time.length,weeklyStart:w.time[0],weeklyEnd:w.time.at(-1),monthlyStart:m.time[0],monthlyEnd:m.time.at(-1)}};
 }
 const results=await Promise.allSettled(points.map(collect));
 const failed=results.map((r,i)=>r.status==="rejected"?{pointId:points[i].id,error:String(r.reason)}:null).filter(Boolean);
