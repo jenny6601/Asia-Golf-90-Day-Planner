@@ -84,6 +84,17 @@ jobs:
             --force \
             --output-root data/era5-land-japan-1991-2020
 
+      - name: Run Japan regional daily QA audit
+        if: success()
+        shell: bash
+        run: |
+          python scripts/audit_japan_era5_daily.py \
+            data/era5-land-japan-1991-2020/daily/JP-KNT-NORTH-1991-daily.json \
+            --start-year 1991 \
+            --end-year 1991 \
+            --batch-state data/era5-land-japan-1991-2020/batch-state.json \
+            --output data/era5-land-japan-1991-2020/reports/JP-KNT-NORTH-1991-qa.json
+
       - name: Print pilot failure diagnostics
         if: always()
         shell: bash
