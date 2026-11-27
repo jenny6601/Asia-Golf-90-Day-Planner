@@ -123,7 +123,7 @@ def main():
     report = json.loads(Path(args.input).read_text(encoding="utf-8"))
     result = build_queue(report, args.top_n)
     p = Path(args.output); p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    p.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result["summary"], ensure_ascii=False))
 
 if __name__ == "__main__":
