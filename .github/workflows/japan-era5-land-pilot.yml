@@ -11,6 +11,7 @@ on:
       - "scripts/aggregate_era5_land_daily.py"
       - "scripts/batch_era5_land_japan.py"
       - "scripts/audit_japan_era5_daily.py"
+      - "scripts/compare_jma_station_daily.py"
       - "config/global/era5-land-grid-points-japan.json"
       - "tests/test_era5_land_pilot.py"
       - "tests/test_era5_land_inspector.py"
