@@ -1,8 +1,10 @@
 const validPoint=course=>course?.enabled===true&&Number.isFinite(course.latitude)&&Number.isFinite(course.longitude);
 const distanceSquared=(a,b)=>(a.latitude-b.latitude)**2*Math.cos((a.latitude+b.latitude)*Math.PI/360)**2+(a.longitude-b.longitude)**2;
 function selectRepresentative(rows,preferredId){
- const preferred=rows.find(x=>x.id===preferredId);
- if(preferred)return preferred;
+ if(preferredId){
+  const preferred=rows.find(x=>x.id===preferredId);
+  return preferred||null;
+ }
  const centroid={latitude:rows.reduce((sum,x)=>sum+x.latitude,0)/rows.length,longitude:rows.reduce((sum,x)=>sum+x.longitude,0)/rows.length};
  return [...rows].sort((a,b)=>distanceSquared(a,centroid)-distanceSquared(b,centroid)||a.id.localeCompare(b.id))[0];
 }
@@ -21,7 +23,7 @@ export function buildRegionalCoverage(countries,courses,registry=[]){
    const key=[country.code,subregion.region,subregion.subregion].join("|");
    const rows=groups.get(key)||[];
    const representative=rows.length?selectRepresentative(rows,subregion.representativeCourseId):null;
-   return {id:subregion.id,countryCode:country.code,region:subregion.region,area:subregion.subregion,label:subregion.label,candidateCount:rows.length,coverageStatus:representative?"ready":"awaiting-course-coordinate",representative:representative?{id:representative.id,name:representative.name,nameLocal:representative.nameLocal||"",latitude:representative.latitude,longitude:representative.longitude,coordinateStatus:representative.coordinateStatus}:null};
+   return {id:subregion.id,countryCode:country.code,region:subregion.region,area:subregion.subregion,label:subregion.label,candidateCount:rows.length,requestedRepresentativeCourseId:subregion.representativeCourseId||null,coverageStatus:representative?"ready":(subregion.representativeCourseId?"invalid-representative-course-id":"awaiting-course-coordinate"),representative:representative?{id:representative.id,name:representative.name,nameLocal:representative.nameLocal||"",latitude:representative.latitude,longitude:representative.longitude,coordinateStatus:representative.coordinateStatus}:null};
   });
   const extra=[...groups.entries()].filter(([key])=>key.startsWith(country.code+"|")).map(([key,rows])=>{
    const [countryCode,region,area]=key.split("|");
