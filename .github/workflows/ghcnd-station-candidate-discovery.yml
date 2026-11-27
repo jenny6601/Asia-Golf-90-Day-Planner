@@ -3,11 +3,6 @@ name: GHCN-Daily Station Candidate Discovery
 on:
   push:
     branches: [asia-eight-country-shared-engine]
-    paths:
-      - "scripts/discover_ghcnd_station_candidates.py"
-      - "tests/test_ghcnd_station_discovery.py"
-      - "data/era5-land-eight-country-1991-2020/representative-point-quality-audit.json"
-      - ".github/workflows/ghcnd-station-candidate-discovery.yml"
   workflow_dispatch:
 
 permissions:
