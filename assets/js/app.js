@@ -181,27 +181,8 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
   const tooHot=Number.isFinite(r.high)&&r.high>33;
   r.playabilityStatus=tooHot||grade===3?"不適":grade===2?"可打":"適打";
  });
- const pages=node("div",undefined,"departure-week-pages");let pageIndex=0;
- const renderPage=()=>{
-  pages.replaceChildren();const pageRows=rows;
-  const page=node("section",undefined,"departure-five-day-page");
-  page.append(node("h4","七天逐日天氣｜"+pageRows[0].date+" ～ "+pageRows[pageRows.length-1].date));
-  const datesRow=node("div",undefined,"departure-five-dates");
-  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),canOpen=!!r.actual,d=node(canOpen?"button":"div",undefined,"departure-five-date"+([0,6].includes(wd)?" weekend-red":"")+(canOpen?" departure-hourly-target":""));if(canOpen){d.type="button";d.dataset.hourlyDate=r.date;d.setAttribute("aria-label",r.date+" 點選查看逐時天氣");d.title="點選查看"+r.date+"逐時天氣";d.addEventListener("click",()=>renderDepartureDayPage(host,course,r,onBack))}d.append(node("strong",r.date.slice(5).replace("-","/")),node("small","週"+["日","一","二","三","四","五","六"][wd]));datesRow.append(d)});
-  page.append(datesRow);
-  const chartWrap=node("div",undefined,"departure-five-chart");
-  const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("viewBox","0 0 980 220");svg.setAttribute("role","img");svg.setAttribute("aria-label","每日最高溫、最低溫及最高體感溫度曲線");svg.style.width="100%";svg.style.display="block";
-  const values=pageRows.flatMap(r=>[r.high,r.low,r.feel].filter(Number.isFinite));
-  if(values.length){const lo=Math.min(...values)-2,hi=Math.max(...values)+2,x=i=>70+i*140,y=v=>150-(v-lo)/(hi-lo||1)*80;
-   [20,82,144].forEach(yy=>{const l=document.createElementNS(svg.namespaceURI,"line");l.setAttribute("x1",35);l.setAttribute("x2",950);l.setAttribute("y1",yy);l.setAttribute("y2",yy);l.setAttribute("stroke","#dce5e9");svg.append(l)});
-   [{key:"high",color:"#ef6b54"},{key:"low",color:"#3198dc"},{key:"feel",color:"#d49b22"}].filter(s=>pageRows.some(r=>Number.isFinite(r[s.key]))).forEach(s=>{const pts=pageRows.map((r,i)=>Number.isFinite(r[s.key])?{x:x(i),y:y(r[s.key]),index:i}:null).filter(Boolean);if(pts.length>1){const p=document.createElementNS(svg.namespaceURI,"polyline");p.setAttribute("points",pts.map(p=>p.x+","+p.y).join(" "));p.setAttribute("fill","none");p.setAttribute("stroke",s.color);p.setAttribute("stroke-width","4");p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");svg.append(p)}pts.forEach(p=>{const dot=document.createElementNS(svg.namespaceURI,"circle");dot.setAttribute("cx",p.x);dot.setAttribute("cy",p.y);dot.setAttribute("r","4.5");dot.setAttribute("fill",s.color);svg.append(dot);const tx=document.createElementNS(svg.namespaceURI,"text");tx.setAttribute("x",p.x);const labelOffset=s.key==="high"?-22:s.key==="low"?26:(Number.isFinite(pageRows[p.index].high)&&Number.isFinite(pageRows[p.index].low)&&pageRows[p.index].feel>=pageRows[p.index].high?-54:Number.isFinite(pageRows[p.index].low)&&pageRows[p.index].feel<pageRows[p.index].low?58:-12);tx.setAttribute("y",p.y+labelOffset);tx.setAttribute("text-anchor","middle");tx.setAttribute("font-size","30");tx.setAttribute("font-weight","900");tx.setAttribute("fill",s.color);tx.textContent=pageRows[p.index][s.key].toFixed(0)+"°";svg.append(tx)})});
-  }
-  chartWrap.append(svg);const legend=node("div",undefined,"departure-five-legend");legend.append(node("span","● 最高溫","legend-high"),node("span","● 最低溫","legend-low"),node("span","● 體感溫度","legend-feel"));chartWrap.append(legend);page.append(chartWrap);
-  const cards=node("div",undefined,"departure-five-cards");
-  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),day=node("button",undefined,"departure-five-card"+(r.date===startDate?" is-departure":"")+(r.actual?" departure-hourly-target":""));day.type="button";day.dataset.hourlyDate=r.date;day.setAttribute("aria-label",r.date+" 天氣狀況，點選查看逐時天氣");day.title=r.actual?"點選查看"+r.date+"逐時天氣":r.seasonal?"點選查看"+r.date+"季節模式逐日估計":"點選查看"+r.date+"歷史氣候資料";day.append(createWeatherIcon(r.code,!r.actual&&!r.seasonal,r.prob),node("strong",r.label));const statusClass=r.playabilityStatus==="適打"?"monthly-status-good":r.playabilityStatus==="可打"?"monthly-status-watch":r.playabilityStatus==="不適"?"monthly-status-bad":"monthly-status-unknown";day.append(node("small",r.playabilityStatus||"資料不足","monthly-day-playability "+statusClass));day.append(node("small",r.actual?"降雨機率":r.seasonal?"雨日頻率（季節調整）":"歷史雨日頻率"),node("b",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"),node("small",r.actual?"累積雨量":r.seasonal?"季節估計日雨量":"歷史日均雨量"),node("b",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));if([0,6].includes(wd))day.classList.add("weekend");day.addEventListener("click",()=>renderDepartureDayPage(host,course,r,onBack));cards.append(day)});
-  page.append(cards);
-  {
-   const assessment=node("section",undefined,"departure-week-analysis");
+ renderSevenDayVisual(report,rows.map(r=>({...r,clickable:r.actual})),rows.every(r=>!r.actual),date=>{const selected=rows.find(r=>r.date===date);if(selected)renderDepartureDayPage(host,course,selected,onBack)});
+ const assessment=node("section",undefined,"departure-week-analysis");
    assessment.append(node("h4","七天天氣總覽與適打分析"));
    const actualDays=rows.filter(r=>r.actual),rainy=actualDays.filter(r=>(Number.isFinite(r.prob)&&r.prob>=40)||(Number.isFinite(r.rain)&&r.rain>=1)).length;
    const temps=actualDays.map(r=>r.high).filter(Number.isFinite),rainMax=actualDays.map(r=>r.prob).filter(Number.isFinite);
@@ -241,12 +222,8 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
    assessment.append(node("small","適打判斷依目前可取得的降雨機率、雨量、天氣現象及氣溫作初步評估；未納入球場即時積水、雷擊警報及當地風況，請於開球前再確認。","data-note"));
    const reselect=node("button","重新選擇出發日","departure-reselect-button");reselect.type="button";reselect.addEventListener("click",()=>showDepartureForm(startDate));
    assessment.append(reselect);
-   page.append(assessment);
-  }
-  pages.append(page);
- };
- pages.tabIndex=0;renderPage();
- report.append(pages);
+ report.append(assessment);
+
  report.append(node("p","七天日期、溫度曲線及天氣卡片可左右滑動查看；點選任一天即可展開逐時預報或歷史資料。前 16 天使用逐日預報，超出範圍以歷史同期資料補充。","long-range-note"));
 }
 async function renderDepartureDayPage(host,course,row,onBack=null){
