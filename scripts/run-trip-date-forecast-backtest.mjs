@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import {scoreForecastSamples} from "../assets/js/trip-date-forecast-backtest.js";
-import {scoreRiskRankingSamples,scoreTripWindowRankingSamples,compareCandidateRankingSamples,compareTripWindowModels} from "../assets/js/trip-date-ranking-verification.js";
+import {scoreRiskRankingSamples,scoreTripWindowRankingSamples,compareCandidateRankingSamples,compareTripWindowModels,buildVerificationMaturity} from "../assets/js/trip-date-ranking-verification.js";
 import {TRIP_DATE_CANDIDATE_MODELS} from "../assets/js/trip-date-candidate-models.js";
 import {recommendGolfTripDates} from "../assets/js/trip-date-recommendation-engine.js";
 import {buildDailyClimatology,compareForecastToClimatology} from "../assets/js/trip-date-climatology-baseline.js";
@@ -147,6 +147,7 @@ for(const prediction of windowPredictions){
 const tripWindowRanking=scoreTripWindowRankingSamples(tripWindowSamples);
 const pairedDailyComparison=compareCandidateRankingSamples(rankingSamples);
 const pairedTripWindowComparison=compareTripWindowModels(tripWindowSamples);
+const verificationMaturity=buildVerificationMaturity(rankingSamples,tripWindowSamples,30);
 for(const modelId of Object.keys(TRIP_DATE_CANDIDATE_MODELS)){
   if(!tripWindowRanking.groups[modelId])
     tripWindowRanking.groups[modelId]={sampleCount:0,spearman:null,ready:false};
@@ -233,7 +234,7 @@ const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
   method:"Short forecasts: daily probability/amount versus ERA5. EC46/SEAS5: archived weekly/monthly precipitation means versus the sum of ERA5 daily precipitation over the exact same valid period.",
-  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,pairedDailyComparison,pairedTripWindowComparison,candidateModelDefinitions,tripWindowSummary,tripWindowRanking,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
+  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,pairedDailyComparison,pairedTripWindowComparison,verificationMaturity,candidateModelDefinitions,tripWindowSummary,tripWindowRanking,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
   caveats:[
     "ERA5 reanalysis is a model-reference dataset, not an independent rain-gauge observation.",
@@ -307,6 +308,13 @@ const lines=[
   "## Paired daily model comparison (same observations)",
   ...Object.entries(pairedDailyComparison.groups).filter(([key])=>key.endsWith(".overall")||key.endsWith(".1-16")||key.endsWith(".17-46")||key.endsWith(".47-90")).map(([key,x])=>"- "+key+": matched="+x.matchedSamples+", baseline AUC="+(x.baselineAuc??"資料不足")+", candidate AUC="+(x.candidateAuc??"資料不足")+", delta="+(x.deltaAuc??"資料不足")+", gate="+(x.ready?"ready":"locked")),
   "- Positive delta means the candidate discriminates wet days better than V1 on identical observations.",
+  "",
+  "## Verification maturity (unique outcome dates)",
+  "- Daily groups ready: "+verificationMaturity.daily.readyGroups+"/"+verificationMaturity.daily.requiredGroups,
+  ...Object.entries(verificationMaturity.daily.groups).filter(([key,x])=>x.forecastSamples>0||x.ready).map(([key,x])=>"- "+key+": forecasts="+x.forecastSamples+", unique dates="+x.uniqueValidDates+", wet dates="+x.wetDates+", dry dates="+x.dryDates+", gate="+(x.ready?"ready":"locked")),
+  "- Trip-window models ready: "+verificationMaturity.tripWindows.readyModels+"/"+verificationMaturity.tripWindows.requiredModels,
+  ...Object.entries(verificationMaturity.tripWindows.groups).map(([key,x])=>"- "+key+": unique windows="+x.uniqueMaturedWindows+", issue dates="+x.uniqueIssueDates+", wet="+x.wetWindows+", dry="+x.dryWindows+", gate="+(x.ready?"ready":"locked")),
+  "- Repeated forecast issues for the same valid date do not increase independent-day maturity.",
   "",
   "## Calibration gate",
   "- Status: "+calibrationGate.status,

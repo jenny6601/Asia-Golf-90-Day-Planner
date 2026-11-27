@@ -74,3 +74,32 @@ test("paired trip window comparison compares only matching windows",()=>{
  assert.equal(r.groups.history.deltaSpearman,0);
  assert.equal(r.groups.history.ready,true);
 });
+
+import {buildVerificationMaturity} from "../assets/js/trip-date-ranking-verification.js";
+test("maturity gate counts unique outcome dates, not repeated issue dates",()=>{
+ const rows=[];
+ for(let issue=0;issue<35;issue++){
+  const targetDate=new Date(Date.parse("2026-01-01T00:00:00Z")+(issue%10)*86400000).toISOString().slice(0,10);
+  rows.push({source:"composite-baseline",region:"north",leadDays:10,targetDate,observedRainMm:issue%2?2:0});
+ }
+ const result=buildVerificationMaturity(rows,[],30);
+ const gate=result.daily.groups["composite-baseline.north.1-16"];
+ assert.equal(gate.forecastSamples,35);
+ assert.equal(gate.uniqueValidDates,10);
+ assert.equal(gate.ready,false);
+});
+test("maturity gate requires 30 unique dates plus five wet and five dry",()=>{
+ const rows=Array.from({length:30},(_,i)=>({source:"composite-baseline",region:"south",leadDays:55,
+  targetDate:new Date(Date.parse("2026-01-01T00:00:00Z")+i*86400000).toISOString().slice(0,10),
+  observedRainMm:i<5?2:i<10?0:3}));
+ const result=buildVerificationMaturity(rows,[],30);
+ assert.equal(result.daily.groups["composite-baseline.south.47-90"].uniqueValidDates,30);
+ assert.equal(result.daily.groups["composite-baseline.south.47-90"].ready,true);
+});
+test("trip maturity counts unique issue-date windows and wet/dry windows",()=>{
+ const rows=Array.from({length:30},(_,i)=>({model:"baseline",issueDate:"2026-01-"+String(i+1).padStart(2,"0"),
+  startDate:"2026-02-01",endDate:"2026-02-05",observedGolfRainMm:i<5?0:i<10?2:0.2}));
+ const result=buildVerificationMaturity([],rows,30);
+ assert.equal(result.tripWindows.groups.baseline.uniqueMaturedWindows,30);
+ assert.equal(result.tripWindows.groups.baseline.ready,true);
+});

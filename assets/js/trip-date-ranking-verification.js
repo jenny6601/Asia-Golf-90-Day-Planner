@@ -119,3 +119,37 @@ export function compareTripWindowModels(samples=[],baselineModel="baseline"){
  }
  return {baselineModel,method:"Paired Spearman delta on identical issue-date and five-day trip windows; positive delta favors candidate.",minimumGate:{matchedWindows:30},groups};
 }
+
+/** Conservative readiness: repeated forecast issues for one valid date count as one outcome day. */
+export function buildVerificationMaturity(samples=[],tripWindows=[],minimum=30){
+ if(!Array.isArray(samples)||!Array.isArray(tripWindows))throw new TypeError("samples and tripWindows must be arrays");
+ if(!Number.isInteger(minimum)||minimum<1)throw new TypeError("minimum must be a positive integer");
+ const buckets=["1-16","17-46","47-90"],regions=["north","central","south"];
+ const sources=[...new Set(samples.map(x=>x.source).filter(x=>typeof x==="string"))].sort();
+ const dailyGroups={};
+ for(const source of sources)for(const region of regions)for(const bucket of buckets){
+  const rows=samples.filter(x=>x.source===source&&x.region===region&&leadBucketId(x.leadDays)===bucket
+   &&typeof x.targetDate==="string"&&finite(x.observedRainMm)&&x.observedRainMm>=0);
+  const outcomes=new Map();
+  for(const row of rows)if(!outcomes.has(row.targetDate))outcomes.set(row.targetDate,row.observedRainMm>=1);
+  const wet=[...outcomes.values()].filter(Boolean).length,dry=outcomes.size-wet;
+  dailyGroups[source+"."+region+"."+bucket]={forecastSamples:rows.length,uniqueValidDates:outcomes.size,wetDates:wet,dryDates:dry,
+   required:{uniqueValidDates:minimum,wetDates:5,dryDates:5},ready:outcomes.size>=minimum&&wet>=5&&dry>=5};
+ }
+ const models=[...new Set(tripWindows.map(x=>x.model).filter(x=>typeof x==="string"))].sort();
+ const tripGroups={};
+ for(const model of models){
+  const rows=tripWindows.filter(x=>x.model===model&&typeof x.issueDate==="string"&&typeof x.startDate==="string"
+   &&typeof x.endDate==="string"&&finite(x.observedGolfRainMm)&&x.observedGolfRainMm>=0);
+  const unique=new Map(rows.map(x=>[x.issueDate+"|"+x.startDate+"|"+x.endDate,x]));
+  const outcomes=[...unique.values()];
+  const wet=outcomes.filter(x=>x.observedGolfRainMm>=1).length,dry=outcomes.length-wet;
+  tripGroups[model]={forecastWindows:rows.length,uniqueMaturedWindows:outcomes.length,
+   uniqueIssueDates:new Set(outcomes.map(x=>x.issueDate)).size,wetWindows:wet,dryWindows:dry,
+   required:{uniqueMaturedWindows:minimum,wetWindows:5,dryWindows:5},
+   ready:outcomes.length>=minimum&&wet>=5&&dry>=5};
+ }
+ return {method:"Daily gate counts unique target dates per source/region/lead bucket; trip gate counts unique issue-date/5-day-window pairs.",
+  daily:{requiredGroups:Object.keys(dailyGroups).length,readyGroups:Object.values(dailyGroups).filter(x=>x.ready).length,groups:dailyGroups},
+  tripWindows:{requiredModels:models.length,readyModels:Object.values(tripGroups).filter(x=>x.ready).length,groups:tripGroups}};
+}
