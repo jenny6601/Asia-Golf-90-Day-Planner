@@ -77,7 +77,7 @@
           "region": "Okinawa",
           "subregion": "北部",
           "label": "沖繩北部",
-          "coverageStatus": "planned",
+          "coverageStatus": "configured",
           "representativeCourseId": null
         },
         {
@@ -85,7 +85,7 @@
           "region": "Okinawa",
           "subregion": "中部",
           "label": "沖繩中部",
-          "coverageStatus": "planned",
+          "coverageStatus": "configured",
           "representativeCourseId": null
         },
         {
@@ -93,7 +93,7 @@
           "region": "Okinawa",
           "subregion": "南部",
           "label": "沖繩南部",
-          "coverageStatus": "planned",
+          "coverageStatus": "configured",
           "representativeCourseId": null
         }
       ]
