@@ -144,7 +144,7 @@ def main() -> int:
         registry = builder.compile_registry(countries, subregions, courses)
         manifest = build_manifest(registry, args.start_year, args.end_year)
     except Exception as exc:
-        parser.exit(2, f"Request preflight failed: {exc}\\n")
+        parser.exit(2, f"Request preflight failed: {exc}\n")
     summary = {
         "status": manifest["status"],
         "pointCount": manifest["pointCount"],
@@ -159,7 +159,7 @@ def main() -> int:
     if args.write:
         path = ROOT / args.output
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+        path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         summary["output"] = str(path.relative_to(ROOT))
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
