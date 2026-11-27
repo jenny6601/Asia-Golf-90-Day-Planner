@@ -778,7 +778,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const isForecast=lead>=0&&lead<16&&actual.length>0;
   const rainChance=isForecast?mean(actual,"prob"):seasonal.length?mean(seasonal,"rainChanceEstimate"):mean(historical,"rainFrequency");
   const rainAmount=isForecast?mean(actual,"rain"):seasonal.length?mean(seasonal,"rainEstimate"):mean(historical,"rainMean");
-  const highTemp=isForecast?mean(actual,"high"):seasonal.length?mean(seasonal,"feelsLikeMaxEstimateC"):mean(historical,"feelsLikeMaxMeanC");
+  const highTemp=isForecast?mean(actual,"high"):seasonal.length?mean(seasonal,"highEstimate"):mean(historical,"highMean");
   if(!Number.isFinite(rainChance)&&!Number.isFinite(rainAmount))return {date,valid:false};
   const classification=classifyMonthlyDay({rainFrequency:rainChance,rainAmount:rainAmount,highTemp});
   if(!classification)return {date,valid:false};
