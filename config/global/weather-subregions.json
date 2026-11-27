@@ -39,9 +39,19 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "reviewStatus": "official-address-and-google-map-embed-found-center-is-not-pin-candidate-point-needs-pin-level-check",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方頁面提供 Google Maps 嵌入地圖；抽取到的是地圖視窗中心，與公開地圖球場點相差約 532 公尺。視窗中心不是球場圖釘，因此不能判定候選座標錯誤，也不能據此升級 A 級。",
+            "officialMapReference": {
+              "type": "official-google-maps-embed-center",
+              "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2926.6358546078563!2d141.6011047!3d42.8171806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f75272b7ab3191d:0x709047ead59e4467!2sThe+-+North+Country+Golf+Club!5e0!3m2!1sen!2sjp!4v1708072517450!5m2!1sen!2sjp",
+              "latitude": 42.8171806,
+              "longitude": 141.6011047,
+              "coordinateType": "map-viewport-center-not-pin",
+              "distanceFromCandidateKm": 0.532,
+              "crossCheckResult": "candidate-public-map-coordinate-is-approximately-532m-from-official-map-viewport-center;cannot-interpret-as-pin-error",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
