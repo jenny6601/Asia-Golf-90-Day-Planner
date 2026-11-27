@@ -80,7 +80,23 @@ def run_task(task: dict, output_root: Path, retries: int = 3, retry_delay: int =
     report = report_dir / f"{sid}-{year}-inspection.json"
     daily = daily_dir / f"{sid}-{year}-daily.json"
     if daily.exists() and daily.stat().st_size > 0:
-        return {**task, "status": "daily-converted-existing", "archive": str(archive), "daily": str(daily), "attempts": 0}
+        try:
+            existing = json.loads(daily.read_text(encoding="utf-8"))
+            expected_days = (date(year, 12, 31) - date(year, 1, 1)).days + 1
+            rows = existing.get("records", [])
+            valid_existing = (
+                existing.get("status") == "pilot-daily-aggregation-complete"
+                and existing.get("climatologyEligible") is False
+                and existing.get("recordCount") == expected_days
+                and len(rows) == expected_days
+                and all(row.get("subregionId") == sid and row.get("localDayTimezone") == "Asia/Tokyo" for row in rows)
+                and rows[0].get("validDate") == f"{year}-01-01"
+                and rows[-1].get("validDate") == f"{year}-12-31"
+            )
+            if valid_existing:
+                return {**task, "status": "daily-converted-existing", "archive": str(archive), "daily": str(daily), "attempts": 0}
+        except (OSError, ValueError, TypeError, IndexError):
+            pass
 
     last_error = None
     for attempt in range(1, retries + 1):
@@ -171,8 +187,8 @@ def main() -> int:
         result = run_task(task, root, args.retries, args.retry_delay)
         state["tasks"][task["taskId"]] = result
         state["updatedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-        completed = sum(v.get("status", "").startswith("daily-converted") for v in state["tasks"].values())
-        failed = sum(v.get("status") == "failed" for v in state["tasks"].values())
+        completed = sum(state["tasks"].get(t["taskId"], {}).get("status", "").startswith("daily-converted") for t in tasks)
+        failed = sum(state["tasks"].get(t["taskId"], {}).get("status") == "failed" for t in tasks)
         state["status"] = "completed" if completed == len(tasks) else "in-progress"
         _atomic_json(state_path, state)
         print(json.dumps({
