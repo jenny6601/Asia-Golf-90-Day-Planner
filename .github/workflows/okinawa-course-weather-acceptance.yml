@@ -11,6 +11,8 @@ on:
       - "config/global/courses.json"
       - "scripts/validate-okinawa-course-weather.mjs"
       - "tests/okinawa-course-weather-acceptance.test.js"
+      - "tests/okinawa-courses.test.js"
+      - "assets/js/okinawa-courses.js"
       - ".github/workflows/okinawa-course-weather-acceptance.yml"
 
 permissions:
