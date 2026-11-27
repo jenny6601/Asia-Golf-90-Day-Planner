@@ -1,0 +1,1105 @@
+{
+  "generatedAt": "2026-11-27T07:21:58.335Z",
+  "asOf": "2026-11-27",
+  "archive": {
+    "snapshotCount": 1,
+    "firstSnapshot": "2026-11-27",
+    "lastSnapshot": "2026-11-27"
+  },
+  "method": "Short forecasts: daily probability/amount versus ERA5. EC46/SEAS5: archived weekly/monthly precipitation means versus the sum of ERA5 daily precipitation over the exact same valid period.",
+  "overall": {
+    "reference": "Open-Meteo ERA5 reanalysis daily precipitation; wet day threshold >=1.0 mm",
+    "totalArchivedForecastRows": 0,
+    "overall": {
+      "probabilitySampleCount": 0,
+      "amountSampleCount": 0,
+      "wetDayCount": 0,
+      "dryDayCount": 0,
+      "brierScore": null,
+      "rainfallAmountMaeMm": null
+    },
+    "byLeadBucket": [
+      {
+        "id": "1-3",
+        "label": "1–3 days",
+        "probabilitySampleCount": 0,
+        "amountSampleCount": 0,
+        "wetDayCount": 0,
+        "dryDayCount": 0,
+        "brierScore": null,
+        "rainfallAmountMaeMm": null
+      },
+      {
+        "id": "4-7",
+        "label": "4–7 days",
+        "probabilitySampleCount": 0,
+        "amountSampleCount": 0,
+        "wetDayCount": 0,
+        "dryDayCount": 0,
+        "brierScore": null,
+        "rainfallAmountMaeMm": null
+      },
+      {
+        "id": "8-16",
+        "label": "8–16 days",
+        "probabilitySampleCount": 0,
+        "amountSampleCount": 0,
+        "wetDayCount": 0,
+        "dryDayCount": 0,
+        "brierScore": null,
+        "rainfallAmountMaeMm": null
+      }
+    ],
+    "interpretation": [
+      "Brier score evaluates archived precipitation probability against an ERA5 wet/dry reference; lower is better.",
+      "Rainfall amount MAE is reported separately in mm/day and is not a probability metric.",
+      "ERA5 is a reanalysis reference, not an independent rain-gauge observation.",
+      "Small samples are descriptive only; do not claim forecast skill until each lead bucket has adequate sample size."
+    ]
+  },
+  "byRegion": {
+    "north": {
+      "reference": "Open-Meteo ERA5 reanalysis daily precipitation; wet day threshold >=1.0 mm",
+      "totalArchivedForecastRows": 0,
+      "overall": {
+        "probabilitySampleCount": 0,
+        "amountSampleCount": 0,
+        "wetDayCount": 0,
+        "dryDayCount": 0,
+        "brierScore": null,
+        "rainfallAmountMaeMm": null
+      },
+      "byLeadBucket": [
+        {
+          "id": "1-3",
+          "label": "1–3 days",
+          "probabilitySampleCount": 0,
+          "amountSampleCount": 0,
+          "wetDayCount": 0,
+          "dryDayCount": 0,
+          "brierScore": null,
+          "rainfallAmountMaeMm": null
+        },
+        {
+          "id": "4-7",
+          "label": "4–7 days",
+          "probabilitySampleCount": 0,
+          "amountSampleCount": 0,
+          "wetDayCount": 0,
+          "dryDayCount": 0,
+          "brierScore": null,
+          "rainfallAmountMaeMm": null
+        },
+        {
+          "id": "8-16",
+          "label": "8–16 days",
+          "probabilitySampleCount": 0,
+          "amountSampleCount": 0,
+          "wetDayCount": 0,
+          "dryDayCount": 0,
+          "brierScore": null,
+          "rainfallAmountMaeMm": null
+        }
+      ],
+      "interpretation": [
+        "Brier score evaluates archived precipitation probability against an ERA5 wet/dry reference; lower is better.",
+        "Rainfall amount MAE is reported separately in mm/day and is not a probability metric.",
+        "ERA5 is a reanalysis reference, not an independent rain-gauge observation.",
+        "Small samples are descriptive only; do not claim forecast skill until each lead bucket has adequate sample size."
+      ]
+    },
+    "central": {
+      "reference": "Open-Meteo ERA5 reanalysis daily precipitation; wet day threshold >=1.0 mm",
+      "totalArchivedForecastRows": 0,
+      "overall": {
+        "probabilitySampleCount": 0,
+        "amountSampleCount": 0,
+        "wetDayCount": 0,
+        "dryDayCount": 0,
+        "brierScore": null,
+        "rainfallAmountMaeMm": null
+      },
+      "byLeadBucket": [
+        {
+          "id": "1-3",
+          "label": "1–3 days",
+          "probabilitySampleCount": 0,
+          "amountSampleCount": 0,
+          "wetDayCount": 0,
+          "dryDayCount": 0,
+          "brierScore": null,
+          "rainfallAmountMaeMm": null
+        },
+        {
+          "id": "4-7",
+          "label": "4–7 days",
+          "probabilitySampleCount": 0,
+          "amountSampleCount": 0,
+          "wetDayCount": 0,
+          "dryDayCount": 0,
+          "brierScore": null,
+          "rainfallAmountMaeMm": null
+        },
+        {
+          "id": "8-16",
+          "label": "8–16 days",
+          "probabilitySampleCount": 0,
+          "amountSampleCount": 0,
+          "wetDayCount": 0,
+          "dryDayCount": 0,
+          "brierScore": null,
+          "rainfallAmountMaeMm": null
+        }
+      ],
+      "interpretation": [
+        "Brier score evaluates archived precipitation probability against an ERA5 wet/dry reference; lower is better.",
+        "Rainfall amount MAE is reported separately in mm/day and is not a probability metric.",
+        "ERA5 is a reanalysis reference, not an independent rain-gauge observation.",
+        "Small samples are descriptive only; do not claim forecast skill until each lead bucket has adequate sample size."
+      ]
+    },
+    "south": {
+      "reference": "Open-Meteo ERA5 reanalysis daily precipitation; wet day threshold >=1.0 mm",
+      "totalArchivedForecastRows": 0,
+      "overall": {
+        "probabilitySampleCount": 0,
+        "amountSampleCount": 0,
+        "wetDayCount": 0,
+        "dryDayCount": 0,
+        "brierScore": null,
+        "rainfallAmountMaeMm": null
+      },
+      "byLeadBucket": [
+        {
+          "id": "1-3",
+          "label": "1–3 days",
+          "probabilitySampleCount": 0,
+          "amountSampleCount": 0,
+          "wetDayCount": 0,
+          "dryDayCount": 0,
+          "brierScore": null,
+          "rainfallAmountMaeMm": null
+        },
+        {
+          "id": "4-7",
+          "label": "4–7 days",
+          "probabilitySampleCount": 0,
+          "amountSampleCount": 0,
+          "wetDayCount": 0,
+          "dryDayCount": 0,
+          "brierScore": null,
+          "rainfallAmountMaeMm": null
+        },
+        {
+          "id": "8-16",
+          "label": "8–16 days",
+          "probabilitySampleCount": 0,
+          "amountSampleCount": 0,
+          "wetDayCount": 0,
+          "dryDayCount": 0,
+          "brierScore": null,
+          "rainfallAmountMaeMm": null
+        }
+      ],
+      "interpretation": [
+        "Brier score evaluates archived precipitation probability against an ERA5 wet/dry reference; lower is better.",
+        "Rainfall amount MAE is reported separately in mm/day and is not a probability metric.",
+        "ERA5 is a reanalysis reference, not an independent rain-gauge observation.",
+        "Small samples are descriptive only; do not claim forecast skill until each lead bucket has adequate sample size."
+      ]
+    }
+  },
+  "regionErrors": {},
+  "climatologyComparison": {
+    "reference": "ERA5 same-calendar-day climatology 1991-2020; wet day >=1 mm",
+    "overall": {
+      "sampleCount": 0,
+      "forecastBrier": null,
+      "climatologyBrier": null,
+      "brierSkillScore": null,
+      "forecastAmountMaeMm": null,
+      "climatologyAmountMaeMm": null,
+      "amountMaeSkillScore": null
+    },
+    "byRegion": {
+      "north": {
+        "sampleCount": 0,
+        "forecastBrier": null,
+        "climatologyBrier": null,
+        "brierSkillScore": null,
+        "forecastAmountMaeMm": null,
+        "climatologyAmountMaeMm": null,
+        "amountMaeSkillScore": null
+      },
+      "central": {
+        "sampleCount": 0,
+        "forecastBrier": null,
+        "climatologyBrier": null,
+        "brierSkillScore": null,
+        "forecastAmountMaeMm": null,
+        "climatologyAmountMaeMm": null,
+        "amountMaeSkillScore": null
+      },
+      "south": {
+        "sampleCount": 0,
+        "forecastBrier": null,
+        "climatologyBrier": null,
+        "brierSkillScore": null,
+        "forecastAmountMaeMm": null,
+        "climatologyAmountMaeMm": null,
+        "amountMaeSkillScore": null
+      }
+    },
+    "byLeadBucket": {
+      "1-3": {
+        "sampleCount": 0,
+        "forecastBrier": null,
+        "climatologyBrier": null,
+        "brierSkillScore": null,
+        "forecastAmountMaeMm": null,
+        "climatologyAmountMaeMm": null,
+        "amountMaeSkillScore": null
+      },
+      "4-7": {
+        "sampleCount": 0,
+        "forecastBrier": null,
+        "climatologyBrier": null,
+        "brierSkillScore": null,
+        "forecastAmountMaeMm": null,
+        "climatologyAmountMaeMm": null,
+        "amountMaeSkillScore": null
+      },
+      "8-16": {
+        "sampleCount": 0,
+        "forecastBrier": null,
+        "climatologyBrier": null,
+        "brierSkillScore": null,
+        "forecastAmountMaeMm": null,
+        "climatologyAmountMaeMm": null,
+        "amountMaeSkillScore": null
+      }
+    },
+    "excluded": {
+      "missingClimatology": 0,
+      "missingForecastProbabilityOrAmount": 0
+    },
+    "interpretation": "Positive skill score means the forecast error is lower than the climatology baseline; negative means worse. Skill scores are descriptive until samples are adequate."
+  },
+  "climatologyErrors": {},
+  "rankingArchiveSummary": {
+    "normalizedSnapshots": 1,
+    "maturedSignalPairs": 0,
+    "excludedUnmaturedOrMissingObservations": 0,
+    "observationErrors": {}
+  },
+  "rankingVerification": {
+    "reference": "ERA5 daily precipitation >=1.0 mm/day",
+    "metric": "AUC; higher is better; riskScore is not a probability",
+    "minimumGate": {
+      "samples": 30,
+      "wetDays": 5,
+      "dryDays": 5
+    },
+    "groups": {}
+  },
+  "pairedDailyComparison": {
+    "baselineSource": "composite-baseline",
+    "method": "Paired AUC delta on identical issue date, valid date, region and ERA5 outcome; positive delta favors candidate.",
+    "minimumGate": {
+      "matchedSamples": 30,
+      "wetDays": 5,
+      "dryDays": 5
+    },
+    "groups": {}
+  },
+  "pairedTripWindowComparison": {
+    "baselineModel": "baseline",
+    "method": "Paired Spearman delta on identical issue-date and five-day trip windows; positive delta favors candidate.",
+    "minimumGate": {
+      "matchedWindows": 30
+    },
+    "groups": {}
+  },
+  "verificationMaturity": {
+    "method": "Daily gate counts unique target dates per source/region/lead bucket; trip gate counts unique issue-date/5-day-window pairs.",
+    "daily": {
+      "requiredGroups": 27,
+      "readyGroups": 0,
+      "groups": {
+        "composite-baseline.north.1-16": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-baseline.north.17-46": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-baseline.north.47-90": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-baseline.central.1-16": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-baseline.central.17-46": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-baseline.central.47-90": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-baseline.south.1-16": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-baseline.south.17-46": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-baseline.south.47-90": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-historyEnhanced.north.1-16": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-historyEnhanced.north.17-46": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-historyEnhanced.north.47-90": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-historyEnhanced.central.1-16": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-historyEnhanced.central.17-46": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-historyEnhanced.central.47-90": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-historyEnhanced.south.1-16": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-historyEnhanced.south.17-46": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-historyEnhanced.south.47-90": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-longRangeEnhanced.north.1-16": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-longRangeEnhanced.north.17-46": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-longRangeEnhanced.north.47-90": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-longRangeEnhanced.central.1-16": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-longRangeEnhanced.central.17-46": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-longRangeEnhanced.central.47-90": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-longRangeEnhanced.south.1-16": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-longRangeEnhanced.south.17-46": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        },
+        "composite-longRangeEnhanced.south.47-90": {
+          "forecastSamples": 0,
+          "uniqueValidDates": 0,
+          "wetDates": 0,
+          "dryDates": 0,
+          "required": {
+            "uniqueValidDates": 30,
+            "wetDates": 5,
+            "dryDates": 5
+          },
+          "ready": false
+        }
+      }
+    },
+    "tripWindows": {
+      "requiredModels": 3,
+      "readyModels": 0,
+      "groups": {
+        "baseline": {
+          "forecastWindows": 0,
+          "uniqueMaturedWindows": 0,
+          "uniqueIssueDates": 0,
+          "wetWindows": 0,
+          "dryWindows": 0,
+          "required": {
+            "uniqueMaturedWindows": 30,
+            "wetWindows": 5,
+            "dryWindows": 5
+          },
+          "ready": false
+        },
+        "historyEnhanced": {
+          "forecastWindows": 0,
+          "uniqueMaturedWindows": 0,
+          "uniqueIssueDates": 0,
+          "wetWindows": 0,
+          "dryWindows": 0,
+          "required": {
+            "uniqueMaturedWindows": 30,
+            "wetWindows": 5,
+            "dryWindows": 5
+          },
+          "ready": false
+        },
+        "longRangeEnhanced": {
+          "forecastWindows": 0,
+          "uniqueMaturedWindows": 0,
+          "uniqueIssueDates": 0,
+          "wetWindows": 0,
+          "dryWindows": 0,
+          "required": {
+            "uniqueMaturedWindows": 30,
+            "wetWindows": 5,
+            "dryWindows": 5
+          },
+          "ready": false
+        }
+      }
+    }
+  },
+  "recommendationQuality": {
+    "reference": "ERA5 daily precipitation at three regional representative points; wet region-day >=1.0 mm",
+    "strategy": "Three non-overlapping 5-day windows per issue date; only middle three golf days counted; all strategies use the same fully observed eligible window pool.",
+    "randomControl": {
+      "drawsPerIssueDate": 500,
+      "portfolioCount": 0,
+      "selectedWindows": 0,
+      "wetWindows": 0,
+      "dryWindows": 0,
+      "meanRainMmPerRegionDay": null,
+      "wetRegionDayRate": null,
+      "meanWetRegionDaysPerWindow": null,
+      "ready": false,
+      "portfolioRainP05": null,
+      "portfolioRainP95": null
+    },
+    "historicalClimatology": {
+      "portfolioCount": 0,
+      "selectedWindows": 0,
+      "wetWindows": 0,
+      "dryWindows": 0,
+      "meanRainMmPerRegionDay": null,
+      "wetRegionDayRate": null,
+      "meanWetRegionDaysPerWindow": null,
+      "ready": false
+    },
+    "candidates": {
+      "baseline": {
+        "portfolioCount": 0,
+        "selectedWindows": 0,
+        "wetWindows": 0,
+        "dryWindows": 0,
+        "meanRainMmPerRegionDay": null,
+        "wetRegionDayRate": null,
+        "meanWetRegionDaysPerWindow": null,
+        "issueDatesCompared": 0,
+        "meanRainDeltaVsHistorical": null,
+        "meanRainDeltaVsRandom": null,
+        "ready": false
+      },
+      "historyEnhanced": {
+        "portfolioCount": 0,
+        "selectedWindows": 0,
+        "wetWindows": 0,
+        "dryWindows": 0,
+        "meanRainMmPerRegionDay": null,
+        "wetRegionDayRate": null,
+        "meanWetRegionDaysPerWindow": null,
+        "issueDatesCompared": 0,
+        "meanRainDeltaVsHistorical": null,
+        "meanRainDeltaVsRandom": null,
+        "ready": false
+      },
+      "longRangeEnhanced": {
+        "portfolioCount": 0,
+        "selectedWindows": 0,
+        "wetWindows": 0,
+        "dryWindows": 0,
+        "meanRainMmPerRegionDay": null,
+        "wetRegionDayRate": null,
+        "meanWetRegionDaysPerWindow": null,
+        "issueDatesCompared": 0,
+        "meanRainDeltaVsHistorical": null,
+        "meanRainDeltaVsRandom": null,
+        "ready": false
+      }
+    },
+    "minimumGate": {
+      "issueDates": 30,
+      "wetWindows": 5,
+      "dryWindows": 5
+    },
+    "issueDatesWithThreeMaturedWindows": 0,
+    "caveats": [
+      "ERA5 is a reanalysis reference, not an independent rain-gauge observation.",
+      "Historical-climate strategy ranks windows using the historical risk signals supplied in each archived snapshot.",
+      "Random control is deterministic Monte Carlo sampling from the same matured, eligible window pool; it is a benchmark, not a real travel strategy.",
+      "Lower mean rainfall and lower wet-region-day rate are better; results are comparative and not probabilities."
+    ]
+  },
+  "candidateModelDefinitions": {
+    "baseline": {
+      "label": "V1 baseline",
+      "description": "Current production weights; unchanged reference model.",
+      "sourceWeights": {
+        "short": {
+          "forecast": 0.62,
+          "historical": 0.23,
+          "stability": 0.15
+        },
+        "ec46": {
+          "ec46": 0.45,
+          "seas5": 0.15,
+          "historical": 0.25,
+          "stability": 0.15
+        },
+        "seas5": {
+          "seas5": 0.45,
+          "historical": 0.35,
+          "stability": 0.2
+        }
+      }
+    },
+    "historyEnhanced": {
+      "label": "History-enhanced",
+      "description": "Provisional shadow candidate; higher same-calendar historical climate weight.",
+      "sourceWeights": {
+        "short": {
+          "forecast": 0.5,
+          "historical": 0.35,
+          "stability": 0.15
+        },
+        "ec46": {
+          "ec46": 0.35,
+          "seas5": 0.1,
+          "historical": 0.45,
+          "stability": 0.1
+        },
+        "seas5": {
+          "seas5": 0.35,
+          "historical": 0.5,
+          "stability": 0.15
+        }
+      }
+    },
+    "longRangeEnhanced": {
+      "label": "Long-range-enhanced",
+      "description": "Provisional shadow candidate; higher EC46/SEAS5 influence at medium and long leads.",
+      "sourceWeights": {
+        "short": {
+          "forecast": 0.62,
+          "historical": 0.23,
+          "stability": 0.15
+        },
+        "ec46": {
+          "ec46": 0.55,
+          "seas5": 0.2,
+          "historical": 0.15,
+          "stability": 0.1
+        },
+        "seas5": {
+          "seas5": 0.6,
+          "historical": 0.25,
+          "stability": 0.15
+        }
+      }
+    }
+  },
+  "tripWindowSummary": {
+    "candidateWindows": 258,
+    "completeObservedWindows": 0,
+    "excludedIncompleteWindows": 258
+  },
+  "tripWindowRanking": {
+    "reference": "Mean ERA5 precipitation across 3 golf days and 3 regional representative points (9 region-days)",
+    "metric": "Spearman correlation between predicted window risk score and observed golf-day rainfall; positive is better",
+    "minimumGate": {
+      "windows": 30
+    },
+    "groups": {
+      "baseline": {
+        "sampleCount": 0,
+        "spearman": null,
+        "ready": false
+      },
+      "historyEnhanced": {
+        "sampleCount": 0,
+        "spearman": null,
+        "ready": false
+      },
+      "longRangeEnhanced": {
+        "sampleCount": 0,
+        "spearman": null,
+        "ready": false
+      }
+    }
+  },
+  "seasonalArchive": {
+    "asOf": "2026-11-27",
+    "snapshotCount": 1,
+    "byRegion": {
+      "north": {
+        "ec46": {
+          "archivedPeriods": 7,
+          "maturedPeriods": 0,
+          "unitVerifiedPeriods": 0
+        },
+        "seas5": {
+          "archivedPeriods": 3,
+          "maturedPeriods": 0,
+          "unitVerifiedPeriods": 0
+        }
+      },
+      "central": {
+        "ec46": {
+          "archivedPeriods": 7,
+          "maturedPeriods": 0,
+          "unitVerifiedPeriods": 0
+        },
+        "seas5": {
+          "archivedPeriods": 3,
+          "maturedPeriods": 0,
+          "unitVerifiedPeriods": 0
+        }
+      },
+      "south": {
+        "ec46": {
+          "archivedPeriods": 7,
+          "maturedPeriods": 0,
+          "unitVerifiedPeriods": 0
+        },
+        "seas5": {
+          "archivedPeriods": 3,
+          "maturedPeriods": 0,
+          "unitVerifiedPeriods": 0
+        }
+      }
+    },
+    "totals": {
+      "ec46": {
+        "archivedPeriods": 21,
+        "maturedPeriods": 0,
+        "unitVerifiedPeriods": 0
+      },
+      "seas5": {
+        "archivedPeriods": 9,
+        "maturedPeriods": 0,
+        "unitVerifiedPeriods": 0
+      }
+    },
+    "readiness": "collecting",
+    "guidance": "Only fully completed valid periods are eligible. Do not fit source weights until each region/source has at least 30 matured, unit-verified periods and sufficient wet/dry outcome diversity."
+  },
+  "seasonalVerification": {
+    "bySource": {
+      "EC46": {
+        "sampleCount": 0,
+        "maeMm": null,
+        "meanBiasMm": null,
+        "rmseMm": null,
+        "wetDry": {
+          "hits": 0,
+          "falseAlarms": 0,
+          "misses": 0,
+          "correctNegatives": 0,
+          "accuracy": null
+        }
+      },
+      "SEAS5": {
+        "sampleCount": 0,
+        "maeMm": null,
+        "meanBiasMm": null,
+        "rmseMm": null,
+        "wetDry": {
+          "hits": 0,
+          "falseAlarms": 0,
+          "misses": 0,
+          "correctNegatives": 0,
+          "accuracy": null
+        }
+      }
+    },
+    "bySourceRegion": {},
+    "excluded": {
+      "incompleteObservedPeriods": 0,
+      "missingObservedDays": 0
+    }
+  },
+  "seasonalErrors": {},
+  "calibrationGate": {
+    "status": "locked-awaiting-observations",
+    "weightsUpdated": false,
+    "currentModelWeights": "Provisional v1 weights remain unchanged; no empirical fitting is allowed yet.",
+    "shortForecast": {
+      "requiredPairsPerRegionAndLeadBucket": 30,
+      "requiredWetAndDryCases": 5,
+      "byRegion": {
+        "north": {
+          "1-3": {
+            "samples": 0,
+            "wetDays": 0,
+            "dryDays": 0,
+            "ready": false
+          },
+          "4-7": {
+            "samples": 0,
+            "wetDays": 0,
+            "dryDays": 0,
+            "ready": false
+          },
+          "8-16": {
+            "samples": 0,
+            "wetDays": 0,
+            "dryDays": 0,
+            "ready": false
+          }
+        },
+        "central": {
+          "1-3": {
+            "samples": 0,
+            "wetDays": 0,
+            "dryDays": 0,
+            "ready": false
+          },
+          "4-7": {
+            "samples": 0,
+            "wetDays": 0,
+            "dryDays": 0,
+            "ready": false
+          },
+          "8-16": {
+            "samples": 0,
+            "wetDays": 0,
+            "dryDays": 0,
+            "ready": false
+          }
+        },
+        "south": {
+          "1-3": {
+            "samples": 0,
+            "wetDays": 0,
+            "dryDays": 0,
+            "ready": false
+          },
+          "4-7": {
+            "samples": 0,
+            "wetDays": 0,
+            "dryDays": 0,
+            "ready": false
+          },
+          "8-16": {
+            "samples": 0,
+            "wetDays": 0,
+            "dryDays": 0,
+            "ready": false
+          }
+        }
+      },
+      "ready": false,
+      "observedPairs": 0
+    },
+    "ec46": {
+      "requiredPerRegion": 30,
+      "wetAndDryOutcomeMinimum": 5,
+      "byRegion": {
+        "north": {
+          "verifiedPeriods": 0,
+          "wetOutcomes": 0,
+          "dryOutcomes": 0,
+          "ready": false
+        },
+        "central": {
+          "verifiedPeriods": 0,
+          "wetOutcomes": 0,
+          "dryOutcomes": 0,
+          "ready": false
+        },
+        "south": {
+          "verifiedPeriods": 0,
+          "wetOutcomes": 0,
+          "dryOutcomes": 0,
+          "ready": false
+        }
+      },
+      "ready": false
+    },
+    "seas5": {
+      "requiredPerRegion": 30,
+      "wetAndDryOutcomeMinimum": 5,
+      "byRegion": {
+        "north": {
+          "verifiedPeriods": 0,
+          "wetOutcomes": 0,
+          "dryOutcomes": 0,
+          "ready": false
+        },
+        "central": {
+          "verifiedPeriods": 0,
+          "wetOutcomes": 0,
+          "dryOutcomes": 0,
+          "ready": false
+        },
+        "south": {
+          "verifiedPeriods": 0,
+          "wetOutcomes": 0,
+          "dryOutcomes": 0,
+          "ready": false
+        }
+      },
+      "ready": false
+    },
+    "rule": "Do not change source weights until every region/source has at least 30 completed, unit-verified outcomes and at least five wet plus five dry outcomes. Keep uncertainty/stability separate from rain-risk predictors."
+  },
+  "validationStatus": "collecting-insufficient-samples",
+  "caveats": [
+    "ERA5 reanalysis is a model-reference dataset, not an independent rain-gauge observation.",
+    "Climatology benchmark uses ERA5 1991-2020 same-calendar-day wet frequency and mean rainfall; forecast and baseline scores use identical matched verification rows.",
+    "Brier and amount MAE skill scores compare the forecast against the 1991-2020 ERA5 climatology baseline; positive is better, negative is worse.",
+    "Short-range Brier score uses wet day >=1.0 mm; rainfall amount MAE is reported separately.",
+    "Seasonal precipitation means are compared with accumulated ERA5 precipitation over the exact forecast week/month; only explicit mm units and fully complete periods are eligible.",
+    "Seasonal wet/dry classification uses period-average precipitation >=1.0 mm/day. It is categorical verification, not a probability score.",
+    "Snapshots are one per Okinawa-local issue date; reruns on the same date replace the prior snapshot.",
+    "Unavailable observed dates and incomplete seasonal periods are excluded, never imputed."
+  ]
+}
