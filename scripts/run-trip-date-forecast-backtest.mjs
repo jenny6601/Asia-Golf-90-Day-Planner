@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import {scoreForecastSamples} from "../assets/js/trip-date-forecast-backtest.js";
+import {buildDailyClimatology,compareForecastToClimatology} from "../assets/js/trip-date-climatology-baseline.js";
 import {summarizeSeasonalArchive} from "../assets/js/trip-date-seasonal-backtest.js";
 import {buildSeasonalVerificationTargets,scoreSeasonalVerification} from "../assets/js/trip-date-seasonal-verification.js";
 
@@ -51,13 +52,50 @@ for(const [region,point] of Object.entries(regions)){
     for(const target of targets){
       const actual=observed.get(target.targetDate);
       if(typeof actual==="number"&&Number.isFinite(actual)&&actual>=0)
-        rowsByRegion[region].push({...target,observedRainMm:actual});
+        rowsByRegion[region].push({...target,region,observedRainMm:actual});
     }
   }catch(error){regionErrors[region]=error.message}
 }
 const byRegion=Object.fromEntries(Object.entries(rowsByRegion).map(([region,rows])=>[region,scoreForecastSamples(rows)]));
 const overall=scoreForecastSamples(Object.values(rowsByRegion).flat());
 const sampleCount=overall.overall.probabilitySampleCount;
+
+// Independent benchmark: same-calendar-day ERA5 climatology from 1991-2020.
+// This baseline period ends before the archived forecast verification period.
+const climatologyByRegion={north:{},central:{},south:{}};
+const climatologyErrors={};
+for(const [region,point] of Object.entries(regions)){
+  const params=new URLSearchParams({
+    latitude:String(point.latitude),longitude:String(point.longitude),
+    start_date:"1991-01-01",end_date:"2020-12-31",
+    daily:"precipitation_sum",timezone:"Asia/Tokyo",
+    precipitation_unit:"mm",models:"era5"
+  });
+  try{
+    const response=await fetch("https://archive-api.open-meteo.com/v1/archive?"+params);
+    if(!response.ok)throw new Error("ERA5 climatology HTTP "+response.status);
+    const payload=await response.json();
+    const daily=(payload.daily?.time||[]).map((date,i)=>({date,rainMm:payload.daily?.precipitation_sum?.[i]}));
+    climatologyByRegion[region]=buildDailyClimatology(daily);
+  }catch(error){climatologyErrors[region]=error.message}
+}
+const allShortRows=Object.values(rowsByRegion).flat();
+const climatologyComparison=compareForecastToClimatology(allShortRows,climatologyByRegion);
+const shortForecastGate={
+  requiredPairsPerRegionAndLeadBucket:30,requiredWetAndDryCases:5,byRegion:{}
+};
+for(const [region,rows] of Object.entries(rowsByRegion)){
+  const scored=scoreForecastSamples(rows);
+  shortForecastGate.byRegion[region]={};
+  for(const bucket of scored.byLeadBucket){
+    const ready=bucket.probabilitySampleCount>=30&&bucket.wetDayCount>=5&&bucket.dryDayCount>=5;
+    shortForecastGate.byRegion[region][bucket.id]={
+      samples:bucket.probabilitySampleCount,wetDays:bucket.wetDayCount,dryDays:bucket.dryDayCount,ready
+    };
+  }
+}
+shortForecastGate.ready=Object.values(shortForecastGate.byRegion)
+  .every(region=>Object.values(region).every(bucket=>bucket.ready));
 
 // Seasonal verification: aggregate ERA5 daily rain over each forecast's exact
 // valid week/month. Only complete periods with explicit mm units are eligible.
@@ -104,7 +142,7 @@ const ec46Gate=sourceGate("EC46"),seas5Gate=sourceGate("SEAS5");
 const calibrationGate={
   status:"locked-awaiting-observations",weightsUpdated:false,
   currentModelWeights:"Provisional v1 weights remain unchanged; no empirical fitting is allowed yet.",
-  shortForecast:{observedPairs:sampleCount,requiredPerRegionAndLeadBucket:30,wetAndDryOutcomeMinimum:5},
+  shortForecast:{...shortForecastGate,observedPairs:sampleCount},
   ec46:ec46Gate,seas5:seas5Gate,
   rule:"Do not change source weights until every region/source has at least 30 completed, unit-verified outcomes and at least five wet plus five dry outcomes. Keep uncertainty/stability separate from rain-risk predictors."
 };
@@ -112,10 +150,12 @@ const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
   method:"Short forecasts: daily probability/amount versus ERA5. EC46/SEAS5: archived weekly/monthly precipitation means versus the sum of ERA5 daily precipitation over the exact same valid period.",
-  overall,byRegion,regionErrors,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
+  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
   caveats:[
     "ERA5 reanalysis is a model-reference dataset, not an independent rain-gauge observation.",
+    "Climatology benchmark uses ERA5 1991-2020 same-calendar-day wet frequency and mean rainfall; forecast and baseline scores use identical matched verification rows.",
+    "Brier and amount MAE skill scores compare the forecast against the 1991-2020 ERA5 climatology baseline; positive is better, negative is worse.",
     "Short-range Brier score uses wet day >=1.0 mm; rainfall amount MAE is reported separately.",
     "Seasonal precipitation means are compared with accumulated ERA5 precipitation over the exact forecast week/month; only explicit mm units and fully complete periods are eligible.",
     "Seasonal wet/dry classification uses period-average precipitation >=1.0 mm/day. It is categorical verification, not a probability score.",
@@ -153,6 +193,16 @@ const lines=[
           bySource[source]?"- "+region+": n="+bySource[source].sampleCount+", MAE="+bySource[source].maeMm+" mm, bias="+bySource[source].meanBiasMm+" mm":"- "+region+": 尚無完整驗證樣本"));
   }),
   "",
+  "## Short forecast vs 1991-2020 climatology baseline",
+  "- Matched forecast/climatology samples: "+climatologyComparison.overall.sampleCount,
+  "- Forecast Brier: "+(climatologyComparison.overall.forecastBrier??"資料不足"),
+  "- Climatology Brier: "+(climatologyComparison.overall.climatologyBrier??"資料不足"),
+  "- Brier skill score: "+(climatologyComparison.overall.brierSkillScore??"資料不足"),
+  "- Forecast rainfall MAE: "+(climatologyComparison.overall.forecastAmountMaeMm??"資料不足")+" mm/day",
+  "- Climatology rainfall MAE: "+(climatologyComparison.overall.climatologyAmountMaeMm??"資料不足")+" mm/day",
+  "- Rainfall amount MAE skill score: "+(climatologyComparison.overall.amountMaeSkillScore??"資料不足"),
+  ...Object.entries(climatologyComparison.byLeadBucket).map(([bucket,x])=>"- "+bucket+" days: n="+x.sampleCount+", Brier skill="+(x.brierSkillScore??"資料不足")+", amount MAE skill="+(x.amountMaeSkillScore??"資料不足")),
+  "",
   "## Calibration gate",
   "- Status: "+calibrationGate.status,
   "- Weights updated: "+calibrationGate.weightsUpdated,
@@ -180,7 +230,8 @@ const lines=[
   ...report.caveats.map(x=>"- "+x),
   "- "+seasonalArchive.guidance,
   ...Object.entries(regionErrors).map(([region,error])=>"- "+region+" short ERA5 reference unavailable: "+error),
-  ...Object.entries(seasonalErrors).map(([region,error])=>"- "+region+" seasonal ERA5 reference unavailable: "+error)
+  ...Object.entries(seasonalErrors).map(([region,error])=>"- "+region+" seasonal ERA5 reference unavailable: "+error),
+  ...Object.entries(climatologyErrors).map(([region,error])=>"- "+region+" ERA5 climatology baseline unavailable: "+error)
 ];
 await fs.writeFile(new URL("backtest.md",outDir),lines.join("\n"));
 console.log(lines.join("\n"));
