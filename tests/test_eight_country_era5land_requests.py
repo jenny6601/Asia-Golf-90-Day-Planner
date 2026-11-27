@@ -21,12 +21,12 @@ class EightCountryEra5LandRequestTests(unittest.TestCase):
         builder = MODULE._load_registry_builder()
         cls.registry = builder.compile_registry(countries, subregions, courses)
 
-    def test_full_dataset_manifest_covers_all_62_regions(self):
+    def test_full_dataset_manifest_covers_all_80_regions(self):
         manifest = MODULE.build_manifest(self.registry)
         self.assertEqual(manifest["dataset"], "reanalysis-era5-land")
-        self.assertEqual(manifest["pointCount"], 62)
+        self.assertEqual(manifest["pointCount"], 80)
         self.assertEqual(manifest["pendingSubregionCount"], 0)
-        self.assertEqual(manifest["requestCount"], 186)
+        self.assertEqual(manifest["requestCount"], 240)
         self.assertEqual(manifest["requestsPerSubregion"], 3)
         self.assertFalse(manifest["activation"]["downloadPerformed"])
         self.assertFalse(manifest["activation"]["climateBaselineEnabled"])
@@ -36,7 +36,7 @@ class EightCountryEra5LandRequestTests(unittest.TestCase):
         by_region = {}
         for request in manifest["requests"]:
             by_region.setdefault(request["subregionId"], []).append(request)
-        self.assertEqual(len(by_region), 62)
+        self.assertEqual(len(by_region), 80)
         for requests in by_region.values():
             self.assertEqual(
                 {x["segment"] for x in requests},
