@@ -45,3 +45,35 @@ test("falls back per metric when a higher-priority source has a missing value", 
   assert.equal(firstAvailableMetric(undefined,NaN,28),28);
   assert.equal(firstAvailableMetric(null,undefined),null);
 });
+
+
+test("partial rainfall fields remain assessable without inventing the missing metric", () => {
+  const { grade: frequencyOnly } = classifyMonthlyDay({ rainFrequency: 29, rainAmount: null, highTemp: 27 });
+  const { grade: amountOnly } = classifyMonthlyDay({ rainFrequency: null, rainAmount: 1.5, highTemp: 27 });
+  assert.equal(frequencyOnly, 0);
+  assert.equal(amountOnly, 1);
+  assert.equal(classifyMonthlyDay({ rainFrequency: null, rainAmount: null, highTemp: 27 }), null);
+});
+
+test("monthly coverage denominator includes all future calendar dates, not only returned rows", () => {
+  const expected = Array.from({ length: 30 }, (_, i) => `2026-12-${String(i + 1).padStart(2, "0")}`);
+  const rows = expected.slice(0, 14).map(date => ({ date, grade: 0 }));
+  const result = summarizeMonthlyWeather(rows, "2026-11-28", expected);
+  assert.equal(result.expectedDays, 30);
+  assert.equal(result.validDays, 14);
+  assert.equal(result.coverage, 14 / 30);
+  assert.equal(result.label, "資料不足");
+});
+
+test("missing daily grades are excluded from all suitability counts", () => {
+  const rows = [
+    { date: "2026-12-01", grade: 0 },
+    { date: "2026-12-02", grade: 2 },
+    { date: "2026-12-03", grade: null },
+    { date: "2026-12-04", grade: 4 }
+  ];
+  const result = summarizeMonthlyWeather(rows, "2026-11-28", rows.map(x => x.date));
+  assert.equal(result.validDays, 2);
+  assert.deepEqual(result.counts, { suitable: 1, watch: 1, poor: 0 });
+  assert.equal(result.coverage, 0.5);
+});
