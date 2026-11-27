@@ -14,7 +14,7 @@ const forecastZones=regions.map(id=>({
 const longRangePoints=regions.map(id=>({
   point:{id},
   weekly:{time:["2026-12-14"],precipitation_efi:[-0.6],precipitation_mean:[12],precipitation_anomaly:[-3]},
-  monthly:{time:["2027-01-01","2027-02-01"],precipitation_mean:[80,120],precipitation_anomaly:[-10,20]}
+  monthly:{time:["2026-12-01","2027-01-01","2027-02-01"],precipitation_mean:[70,80,120],precipitation_anomaly:[-5,-10,20]}
 }));
 const historicalByRegion=Object.fromEntries(regions.map(id=>[id,Array.from({length:90},(_,i)=>({
   date:addDays(asOf,i+1),
