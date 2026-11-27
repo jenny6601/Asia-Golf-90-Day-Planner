@@ -1390,3 +1390,22 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
   height:auto!important;
 }
 /* SVG viewBox is 980 units: seven equal 140-unit daily tracks. */
+
+
+/* 90-day forecast verification panel */
+.validation-panel{margin:0 0 18px;padding:16px;border:1px solid #d8e5df;border-radius:14px;background:#f8fbf9}
+.validation-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.validation-heading h2{margin:0;font-size:1.15rem}
+.validation-tag{font-size:.78rem;color:#356b53;background:#e5f2e9;border-radius:999px;padding:4px 9px}
+.validation-updated,.validation-note{font-size:.82rem;line-height:1.55;color:#5d6d65;margin:9px 0}
+.validation-metrics,.validation-horizon-grid,.validation-model-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
+.validation-metric,.validation-horizon-card,.validation-model-card{min-width:0;padding:10px;border:1px solid #e0e9e4;border-radius:10px;background:#fff}
+.validation-metric span,.validation-horizon-card small,.validation-model-card small{display:block;font-size:.75rem;color:#68776f;line-height:1.4}
+.validation-metric strong,.validation-horizon-card b,.validation-model-card b{display:block;margin-top:5px;font-size:.94rem;line-height:1.35;overflow-wrap:anywhere}
+.validation-horizon-card>strong,.validation-model-card>strong{display:block;font-size:.83rem}
+.validation-section{margin-top:14px}
+.validation-section h3{font-size:.95rem;margin:0 0 7px}
+.validation-empty{font-size:.88rem;color:#68776f;margin:10px 0}
+@media(max-width:520px){.validation-panel{padding:12px}.validation-metrics,.validation-horizon-grid,.validation-model-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.validation-metric,.validation-horizon-card,.validation-model-card{padding:8px}}
+
+.validation-scope-note{margin:8px 0;padding:9px 11px;border-left:3px solid #b7791f;background:#fff8e9;color:#72521e;font-size:.82rem;line-height:1.55;border-radius:4px}
