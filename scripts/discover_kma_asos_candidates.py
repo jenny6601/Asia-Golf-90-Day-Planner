@@ -13,7 +13,7 @@ START = date(1991, 1, 1)
 END = date(2020, 12, 31)
 PERIOD_DAYS = (END - START).days + 1
 START_YEAR, END_YEAR = START.year, END.year
-FILESET_RE = re.compile(r'SURFACE_ASOS_(\\d+)_(\\w+)_(\\d{4})_(\\d{4})_(\\d{4})\\.ZIP', re.IGNORECASE)
+FILESET_RE = re.compile(r'SURFACE_ASOS_(\d+)_(\w+)_(\d{4})_(\d{4})_(\d{4})\.ZIP', re.IGNORECASE)
 
 ALIASES = {
     "station_id": ["지점번호", "표준지점번호", "기관지점번호", "지점"],
