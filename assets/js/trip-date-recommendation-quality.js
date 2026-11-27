@@ -68,12 +68,12 @@ export function evaluateRecommendationQuality(samples=[],randomDraws=500){
   if(history.length<3)continue;
   historyPortfolios.push(history);
   const rng=seeded(issueDate+"|random-control-v1");
+  const randomForIssue=[];
   for(let draw=0;draw<randomDraws;draw++){
    const selected=randomPortfolio(pool,rng);
-   if(selected.length===3)randomPortfolios.push(selected);
+   if(selected.length===3){randomPortfolios.push(selected);randomForIssue.push(selected);}
   }
   const histMean=history.reduce((sum,x)=>sum+x.observedGolfRainMm,0)/history.length;
-  const randomForIssue=randomPortfolios.slice(-randomDraws);
   const randomMean=randomForIssue.length?randomForIssue.reduce((sum,rows)=>sum+rows.reduce((a,x)=>a+x.observedGolfRainMm,0)/rows.length,0)/randomForIssue.length:null;
   for(const model of models){
    const modelRows=valid.filter(x=>x.issueDate===issueDate&&x.model===model);

@@ -122,7 +122,7 @@ test("recommendation quality compares top-three non-overlapping portfolios with 
   const startDate=new Date(Date.parse("2026-01-01T00:00:00Z")+i*5*86400000).toISOString().slice(0,10);
   const rain=i<3?0:i<6?2:5;
   const common={issueDate:"2025-12-01",startDate,endDate:new Date(Date.parse(startDate+"T00:00:00Z")+4*86400000).toISOString().slice(0,10),
-   historicalScore:i,predictedScore:8-i,observedGolfRainMm:rain,observedWetRegionDays:rain===0?0:rain===2?5:9,observedRegionDays:9};
+   historicalScore:8-i,predictedScore:i,observedGolfRainMm:rain,observedWetRegionDays:rain===0?0:rain===2?5:9,observedRegionDays:9};
   rows.push({...common,model:"baseline"});
   rows.push({...common,model:"historyEnhanced"});
  }
@@ -132,7 +132,7 @@ test("recommendation quality compares top-three non-overlapping portfolios with 
  assert.equal(result.historicalClimatology.portfolioCount,1);
  assert.equal(result.randomControl.portfolioCount,200);
  assert.equal(result.candidates.historyEnhanced.meanRainMmPerRegionDay,0);
- assert.equal(result.candidates.historyEnhanced.meanRainDeltaVsHistorical,-3.5);
+ assert.equal(result.candidates.historyEnhanced.meanRainDeltaVsHistorical,-5);
  assert.equal(result.candidates.historyEnhanced.ready,false);
 });
 test("recommendation quality excludes incomplete observed windows and is deterministic",()=>{
