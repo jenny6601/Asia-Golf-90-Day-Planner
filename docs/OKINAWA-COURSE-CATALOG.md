@@ -1,46 +1,48 @@
 # Okinawa Main Island Course Catalog — Pilot
 
-The fixed pilot scope contains six user-selected Okinawa Main Island courses. Runtime course data is stored in `config/global/courses.json`. Candidate coordinates and their provenance are tracked separately in `config/okinawa/course-coordinate-candidates.json` and must not be automatically promoted.
+The fixed pilot scope contains six user-selected Okinawa Main Island courses. The exact Google Maps coordinates below were supplied by the user on 2026-11-27 and are the active coordinates for the course-weather acceptance run. They are synchronized across:
+- `config/global/courses.json`
+- `config/okinawa/course-coordinate-candidates.json`
+- `assets/js/okinawa-courses.js`
 
-## Current coordinate acceptance status
+## Current GPS points — user-supplied Google Maps coordinates
 
-| Course | Zone | Address source | Candidate coordinate | GPS status | Runtime availability |
-|---|---|---|---|---|---|
-| The Southern Links Golf Club | South / Yaese | Official Accordia | 26.118019, 127.738385 | Provisional | Enabled for preview |
-| Palm Hills Golf Resort Club | South / Itoman | Official Accordia | 26.1220517, 127.7076402 | Provisional | Enabled for preview |
-| PGM Golf Resort Okinawa | Central / Onna | Official PGM | 26.458099, 127.814610 (candidate only) | Pending independent verification | Disabled; runtime coordinates remain null |
-| The Atta Terrace Golf Resort | North / Onna | Official Atta Terrace | 26.500916, 127.895049 | Verified against official Google Maps destination link | Enabled |
-| Chura Orchard Golf Club | North / Onna | Official JGM | 26.5100539, 127.8927318 | Verified against official Google Maps place link | Enabled |
-| Kanehide Kise Country Club | North / Nago | Official Kanehide Kise | 26.5241373, 127.9393349 | Verified against official Google Maps place link | Enabled |
+| Course | Zone | Latitude | Longitude | Source status | Runtime |
+|---|---|---:|---:|---|---|
+| The Southern Links Golf Club | South / Yaese | 26.113785 | 127.739021 | User-provided Google Maps | Enabled |
+| Palm Hills Golf Resort Club | South / Itoman | 26.120580 | 127.699640 | User-provided Google Maps | Enabled |
+| PGM Golf Resort Okinawa | Central / Onna | 26.455335 | 127.820344 | User-provided Google Maps | Enabled |
+| Kanehide Kise Country Club | North / Nago | 26.524228 | 127.939192 | User-provided Google Maps | Enabled |
+| The Atta Terrace Golf Resort | North / Onna | 26.499868 | 127.896002 | User-provided Google Maps | Enabled |
+| Chura Orchard Golf Club | North / Onna | 26.506260 | 127.895720 | User-provided Google Maps | Enabled |
 
-## Coordinate reconciliation notes
+All six records use:
+- `coordinateStatus: user_provided_google_maps`
+- `coordinateSource: User-provided Google Maps coordinate (2026-11-27)`
+- `timezone: Asia/Tokyo`
 
-- Southern Links: FullGolf / OpenStreetMap course listing provides 26.118019, 127.738385. Accordia confirms the official address 697 Hanashiro, Yaese. Keep provisional until the point is checked against the course property/map.
-- Palm Hills: MapFan lists 26.1220517, 127.7076402. Accordia confirms 762 Arakaki, Itoman. The official Google Maps embed viewport centre is 26.1219569, 127.7056698; this is not assumed to be the exact facility pin. Keep provisional pending map-pin/property review.
-- PGM: official PGM confirms the golf-course address 1043 Fuchaku, Onna. The earlier manually supplied coordinate 26.458099, 127.814610 is retained only as a validation candidate. Do not confuse the separate PGM Hotel Resort at 1390 Fuchaku with the golf course. PGM remains disabled until its point is independently verified.
-- Atta Terrace: the official access page links to Google Maps destination 26.500916, 127.895049. This supersedes the older Where2Golf point.
-- Chura Orchard: the official JGM course page's Google Maps place link resolves to 26.5100539, 127.8927318. This supersedes the earlier manual candidate 26.499221, 127.893139 and older FullGolf point; the manual candidate is about 1.2 km away.
-- Kanehide Kise: the official club website's Google Maps link resolves to 26.5241373, 127.9393349. This supersedes older approximate third-party/manual coordinates.
+These are the exact user-provided points. Earlier third-party course listings, old manual candidates, and official map viewport/destination coordinates are retained only as historical audit context; they must not overwrite this six-point set.
 
-## Safety and runtime rules
+## Data and runtime rules
 
-- A pending GPS record must keep runtime latitude/longitude null and must be disabled in the course picker.
-- Provisional coordinates may be used for read-only preview comparison but must retain their status and source provenance.
-- A provider-returned forecast grid coordinate is not a course boundary or course GPS verification.
-- Never substitute a town-centre coordinate when a course GPS is missing.
+- The exact six GPS values above must match in the candidate, global runtime and pilot module catalogs.
+- All six courses are enabled because each now has a user-supplied coordinate.
+- The source attribution means the coordinates were supplied from Google Maps by the user; it does not claim independent land-survey or golf-course polygon validation.
+- A provider-returned forecast grid coordinate is not the course GPS or a course boundary.
 - The weather engine must preserve the selected course identity and requested coordinate in every result.
-- Any coordinate promotion requires source URL, verification date, course-property/map review and regression tests.
+- Any future coordinate change requires updating all three catalogs and the coordinate regression test in one change.
 
 ## Weather coverage
 
 The six-course availability probe is implemented in:
 - Script: `scripts/validate-okinawa-course-weather.mjs`
 - Workflow: `.github/workflows/okinawa-course-weather-acceptance.yml`
-- Report: workflow artifact `okinawa-six-course-weather-acceptance`
+- Test: `tests/okinawa-course-weather-acceptance.test.js`
+- Report artifact: `okinawa-six-course-weather-acceptance`
 
-The probe requests 16-day hourly/daily forecast fields and 90-day seasonal daily/six-hourly fields at each candidate course point. It records timezone, non-null coverage, returned grid coordinates and shared grid cells. It is a data-availability test, not forecast-accuracy verification.
+The probe requests 16-day hourly/daily forecast fields and 90-day seasonal daily/six-hourly fields at each of the six user-supplied course points. It records timezone, non-null coverage, returned grid coordinates, shared grid cells, and nearest JMA AMeDAS station candidates. It is a data-availability and structural-completeness test, not forecast-accuracy verification.
 
-## Official and reference URLs
+## Official course and observation references
 
 - Southern Links: https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/southernlinks/access
 - Palm Hills: https://reserve.accordiagolf.com/en/global/golfcourse/okinawa/palmhills/access/
@@ -48,3 +50,4 @@ The probe requests 16-day hourly/daily forecast fields and 90-day seasonal daily
 - Atta Terrace: https://www.terrace.co.jp/atta/information/access.php
 - Chura Orchard: https://www.jgmgroup.co.jp/churaorchard/
 - Kanehide Kise: https://www.kise-cc.jp/en/
+- Japan Meteorological Agency AMeDAS: https://www.jma.go.jp/bosai/amedas/
