@@ -45,7 +45,8 @@ class JmaObsdlCsvTests(unittest.TestCase):
         self.assertEqual(result["qualityPolicy"]["status"], "metadata-present-needs-review")
         self.assertTrue(result["qualityPolicy"]["qualityColumnsPresentForAllElements"])
         self.assertTrue(result["qualityPolicy"]["homogeneityColumnsPresentForAllElements"])
-\n    def test_rejects_duplicate_dates(self):
+
+    def test_rejects_duplicate_dates(self):
         csv_text = "年月日,降水量の合計(mm),最高気温(℃),最低気温(℃)\n1991/01/01,0,8,-1\n1991/01/01,1,9,0\n"
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "jma.csv"
