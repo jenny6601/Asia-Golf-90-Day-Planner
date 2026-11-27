@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: asia-golf-climate-preview
+  group: asia-golf-climate-preview-registry-integration
   cancel-in-progress: true
 
 jobs:
