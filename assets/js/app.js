@@ -589,12 +589,17 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
  const out=$("region-report"),status=$("climate-status");out.replaceChildren();
  const scopeName=region+(subregion?"｜"+subregion:"");
  showClimateScreen("② "+(S.directory.countries.find(c=>c.code===country)?.nameZh||country)+"｜"+scopeName+"｜\n三個月天氣總表",()=>renderSubregionMenu(country,region));
+ const loading=node("div",undefined,"region-month-loading");
+ loading.setAttribute("role","status");loading.setAttribute("aria-live","polite");
+ loading.append(node("div",undefined,"region-month-spinner"),node("strong","正在整理三個月份的天氣資料…"),node("span","正在讀取季節模式與歷史氣候資料，請稍候"));
+ out.append(loading);
  const valid=courses.filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));
  const records=(await Promise.allSettled(valid.map(c=>fetchCourseSeasonalForecast(c)))).filter(x=>x.status==="fulfilled").map(x=>x.value);
  const table=node("div",undefined,"region-table-wrap"),tbl=node("table",undefined,"region-table region-matrix"),thead=node("thead"),hr=node("tr");
  ["天氣指標",...months.map(m=>m)].forEach(t=>hr.append(node("th",t)));thead.append(hr);tbl.append(thead);
  const body=node("tbody");
  const historicalResults=(await Promise.allSettled(valid.map(c=>fetchCourseHistoricalMonthlyClimate(c)))).filter(x=>x.status==="fulfilled").map(x=>x.value);
+ loading.remove();
  const monthData=months.map(month=>{
   const season=records.map(rec=>{
    const i=(rec.monthly?.time||[]).findIndex(t=>t.slice(0,7)===month);
