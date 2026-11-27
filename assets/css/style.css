@@ -1444,3 +1444,37 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
   color:#c43d3d!important;
   background:#f8e9e6!important;
 }
+
+
+/* Keep the optional validation disclosure compact and place it after the country tiles. */
+#validation-panel.validation-panel{
+  margin:16px 0 0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+}
+#validation-panel .validation-disclosure{
+  border:1px solid #d8e5df!important;
+  border-radius:12px!important;
+  background:#f8fbf9!important;
+}
+#validation-panel .validation-summary{
+  min-height:54px!important;
+  padding:8px 12px!important;
+  gap:8px!important;
+}
+#validation-panel .validation-summary h2{
+  margin:0!important;
+  font-size:1rem!important;
+  line-height:1.25!important;
+}
+#validation-panel .validation-tag{
+  padding:3px 8px!important;
+  font-size:.7rem!important;
+}
+#validation-panel .validation-summary::after{
+  font-size:1.05rem!important;
+}
+#validation-panel .validation-disclosure-content{
+  padding:0 10px 10px!important;
+}
