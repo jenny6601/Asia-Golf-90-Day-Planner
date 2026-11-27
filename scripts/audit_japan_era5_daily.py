@@ -285,14 +285,18 @@ def audit_batch_state(state_path, mapping_ids, start_year, end_year):
     }
 
 
-def build_report(mapping, records, file_issues, start_year, end_year, batch_audit=None):
+def build_report(mapping, records, file_issues, start_year, end_year, batch_audit=None,
+                 include_climate_windows=True):
     regions = {}
     all_region_ids = [p["subregionId"] for p in mapping["points"]]
     for point in mapping["points"]:
         region = point["subregionId"]
         rows = list(records.get(region, {}).values())
         years = [audit_region_year(region, y, rows) for y in range(start_year, end_year + 1)]
-        window_qa = audit_climate_windows(rows, start_year, end_year)
+        window_qa = (audit_climate_windows(rows, start_year, end_year) if include_climate_windows else {
+            "status": "not-assessed-single-year-pilot",
+            "reason": "Calendar-window climatology readiness requires a multi-year reference period."
+        })
         complete_years = [y["year"] for y in years if y["status"] == "annual-coverage-usable"]
         regions[region] = {
             "subregion": point["subregion"],
@@ -336,14 +340,25 @@ def main():
     parser.add_argument("--end-year", type=int, default=2020)
     parser.add_argument("--output", type=Path, default=Path("data/processed/japan-era5-1991-2020-qa.json"))
     parser.add_argument("--batch-state", type=Path, default=Path("data/era5-japan-1991-2020/batch-state.json"))
+    parser.add_argument("--subregions", help="comma-separated subregion IDs to include")
+    parser.add_argument("--skip-climate-windows", action="store_true", help="omit 365-day climatology windows for single-year pilot QA")
     args = parser.parse_args()
     if args.start_year > args.end_year:
         parser.error("--start-year must be <= --end-year")
     paths = args.daily_files or sorted((ROOT / "data/era5-japan-1991-2020/daily").glob("*.json"))
     mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
-    records, issues = _load_files(paths, {p["subregionId"] for p in mapping["points"]}, args.start_year, args.end_year)
-    batch_audit = audit_batch_state(args.batch_state, {p["subregionId"] for p in mapping["points"]}, args.start_year, args.end_year)
-    report = build_report(mapping, records, issues, args.start_year, args.end_year, batch_audit)
+    if args.subregions:
+        selected = {x.strip() for x in args.subregions.split(",") if x.strip()}
+        known = {p["subregionId"] for p in mapping["points"]}
+        unknown = selected - known
+        if unknown:
+            parser.error(f"unknown subregion IDs: {', '.join(sorted(unknown))}")
+        mapping["points"] = [p for p in mapping["points"] if p["subregionId"] in selected]
+    mapping_ids = {p["subregionId"] for p in mapping["points"]}
+    records, issues = _load_files(paths, mapping_ids, args.start_year, args.end_year)
+    batch_audit = audit_batch_state(args.batch_state, mapping_ids, args.start_year, args.end_year)
+    report = build_report(mapping, records, issues, args.start_year, args.end_year, batch_audit,
+                          include_climate_windows=not args.skip_climate_windows)
     target = ROOT / args.output
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
