@@ -5,7 +5,7 @@ name: Okinawa Trip Date Live Data Integration
     branches:
       - asia-eight-country-shared-engine
     paths:
-      - "scripts/run-trip-date-recommendation-validation.mjs"
+      - "scripts/run-trip-date-recommendation-validation.mjs"\n      - "scripts/run-trip-date-forecast-backtest.mjs"\n      - "assets/js/trip-date-forecast-backtest.js"
       - "assets/js/trip-date-recommendation-engine.js"
       - "assets/js/trip-date-source-adapters.js"
       - "assets/js/weather-api.js"
@@ -52,6 +52,6 @@ jobs:
           name: okinawa-trip-date-recommendations
           path: |
             artifacts/trip-date-recommendations/recommendations.json
-            artifacts/trip-date-recommendations/recommendations.md
+            artifacts/trip-date-recommendations/recommendations.md\n            artifacts/trip-date-backtest/backtest.json\n            artifacts/trip-date-backtest/backtest.md
           if-no-files-found: warn
           retention-days: 30
