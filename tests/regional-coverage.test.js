@@ -70,3 +70,14 @@ test("eight-country subregion registry has unique IDs and only the verified Okin
   assert.equal(item.representativeCourseId,null);
  }
 });
+
+test("all planned subregions expose a research candidate without enabling forecast use",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const all=registry.countries.flatMap(x=>x.subregions);
+ const candidates=all.filter(x=>x.candidateStatus==="research-candidate");
+ assert.equal(candidates.length,51);
+ assert.ok(candidates.every(x=>typeof x.candidateCourseName==="string"&&x.candidateCourseName.length>3));
+ assert.ok(candidates.every(x=>x.representativeCourseId===null));
+ assert.ok(candidates.every(x=>x.coverageStatus==="planned"));
+ assert.equal(registry.candidateCount,51);
+});
