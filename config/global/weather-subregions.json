@@ -78,7 +78,7 @@
           "subregion": "北部",
           "label": "沖繩北部",
           "coverageStatus": "configured",
-          "representativeCourseId": null
+          "representativeCourseId": "kise"
         },
         {
           "id": "JP-OKI-CENTRAL",
@@ -86,7 +86,7 @@
           "subregion": "中部",
           "label": "沖繩中部",
           "coverageStatus": "configured",
-          "representativeCourseId": null
+          "representativeCourseId": "pgm-okinawa"
         },
         {
           "id": "JP-OKI-SOUTH",
@@ -94,7 +94,7 @@
           "subregion": "南部",
           "label": "沖繩南部",
           "coverageStatus": "configured",
-          "representativeCourseId": null
+          "representativeCourseId": "southern-links"
         }
       ]
     },
