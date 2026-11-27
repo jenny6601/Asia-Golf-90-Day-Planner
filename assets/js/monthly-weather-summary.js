@@ -7,7 +7,10 @@
 export function classifyMonthlyDay({ rainFrequency, rainAmount, highTemp }) {
   const hasFrequency = Number.isFinite(rainFrequency);
   const hasAmount = Number.isFinite(rainAmount);
-  if (!hasFrequency && !hasAmount) return null;
+  const tooHot = Number.isFinite(highTemp) && highTemp > 33;
+  if (!hasFrequency && !hasAmount) {
+    return tooHot ? { grade: 3, status: "不適", playable: false } : null;
+  }
 
   let grade;
   if (hasFrequency && hasAmount) {
@@ -20,7 +23,6 @@ export function classifyMonthlyDay({ rainFrequency, rainAmount, highTemp }) {
     grade = rainAmount < 1 ? 0 : rainAmount < 2 ? 1 : rainAmount < 4 ? 2 : 3;
   }
 
-  const tooHot = Number.isFinite(highTemp) && highTemp > 33;
   if (tooHot) grade = 3;
   return { grade, status: grade === 3 ? "不適" : grade === 2 ? "可打" : "適打", playable: grade <= 1 };
 }
