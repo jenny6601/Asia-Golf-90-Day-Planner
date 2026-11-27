@@ -9,6 +9,8 @@ on:
       - "scripts/build_jp_kr_official_acquisition_queue.py"
       - "scripts/discover_jma_station_candidates.py"
       - "scripts/audit_jma_obsdl_daily_records.py"
+      - "scripts/audit_jma_station_history.py"
+      - "tests/test_jma_station_history.py"
       - "tests/test_jma_obsdl_daily_records.py"
       - "scripts/discover_kma_asos_candidates.py"
       - "tests/test_kma_asos_candidates.py"
@@ -50,6 +52,7 @@ jobs:
           python -m unittest tests/test_jp_kr_official_acquisition_queue.py
           python -m unittest tests/test_jma_station_candidates.py
           python -m unittest tests/test_jma_obsdl_daily_records.py
+          python -m unittest tests/test_jma_station_history.py
           python -m unittest tests/test_kma_asos_candidates.py
       - name: Download public NOAA metadata and rank station candidates
         run: python scripts/discover_ghcnd_station_candidates.py --top-n 10
@@ -67,6 +70,14 @@ jobs:
           fi
       - name: Discover JMA AMeDAS candidates for Japan regional points
         run: python scripts/discover_jma_station_candidates.py
+      - name: Cross-check JMA candidates against official amdmaster.index4 when supplied
+        shell: bash
+        run: |
+          if [ -f data/observation-stations/input/amdmaster.index4 ]; then
+            python scripts/audit_jma_station_history.py --catalog data/observation-stations/input/amdmaster.index4
+          else
+            echo "JMA official history cross-check skipped: amdmaster.index4 not supplied; candidate metadata remains unverified."
+          fi
       - name: Audit official JMA ObsDL daily exports when supplied
         shell: bash
         run: |
@@ -85,7 +96,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/observation-stations/ghcnd-candidates-1991-2020.json data/observation-stations/metmalaysia-candidates.json data/observation-stations/ghcnd-daily-record-audit-1991-2020.json data/observation-stations/ghcnd-daily-record-quality-1991-2020.json data/observation-stations/jp-kr-official-acquisition-queue.json data/observation-stations/jma-station-candidates-1991-2020.json\n          if [ -f data/observation-stations/jma-daily-record-quality-1991-2020.json ]; then git add data/observation-stations/jma-daily-record-quality-1991-2020.json; fi
-          if ! git diff --cached --quiet; then
+          for optional_file in data/observation-stations/jma-daily-record-quality-1991-2020.json data/observation-stations/jma-official-history-crosscheck-1991-2020.json; do\n            if [ -f "$optional_file" ]; then git add "$optional_file"; fi\n          done\n          if ! git diff --cached --quiet; then
             git commit -m "Archive GHCN station candidates for eight-country regions"
             git pull --rebase origin asia-eight-country-shared-engine
             git push origin asia-eight-country-shared-engine
@@ -107,3 +118,4 @@ jobs:
             data/observation-stations/kma-asos-candidates-1991-2020.json
           if-no-files-found: error
           retention-days: 90
+\n      - name: Upload JMA official history and daily quality reports\n        if: always()\n        uses: actions/upload-artifact@v4\n        with:\n          name: jma-station-history-quality-audits\n          path: |\n            data/observation-stations/jma-official-history-crosscheck-1991-2020.json\n            data/observation-stations/jma-daily-record-quality-1991-2020.json\n          if-no-files-found: ignore\n          retention-days: 90\n
