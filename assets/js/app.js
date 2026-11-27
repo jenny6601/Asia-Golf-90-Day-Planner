@@ -3,7 +3,6 @@ import {fetchAsiaGolfDirectory} from "./course-catalog.js";
 import {formatCourseDate} from "./course-time.js";
 import {fetchCourseForecast} from "./weather-api.js";
 import {fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals} from "./long-range-api.js?v=era5-history-1991-2020";
-import {normalizeSeasonalDaily,blendSeasonalWithHistory} from "./seasonal-daily-engine.js";
 import {buildDailyClimateOutlook} from "./daily-climate-outlook.js";
 import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
