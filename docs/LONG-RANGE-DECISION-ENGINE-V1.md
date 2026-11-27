@@ -2,7 +2,7 @@
 
 ## Objective
 
-Generate a date-by-date estimated weather dataset for every local calendar day from D19 through D90 across the eight countries and 80 regional subregions. The daily series is the primary decision material. The App's analysis and departure-window ranking are advisory only; the user reviews the daily records and makes the final departure-date decision.
+Generate a date-by-date estimated weather dataset for every local calendar day from D17 through D90 across the eight countries and 80 regional subregions. The daily series is the primary decision material. The App's analysis and departure-window ranking are advisory only; the user reviews the daily records and makes the final departure-date decision.
 
 ## Product boundaries
 
@@ -10,7 +10,7 @@ Generate a date-by-date estimated weather dataset for every local calendar day f
 - No App screen, layout, navigation or interaction changes in this data-engine phase.
 - One regional representative point per subregion; courses in that subregion share the same regional daily estimates.
 - No station discovery, station-boundary investigation or daily real-time station observation ingestion.
-- D19–D90 daily records are model-derived estimates with uncertainty, not deterministic local forecasts.
+- D17–D90 daily records are model-derived estimates with uncertainty, not deterministic local forecasts.
 - A weekly or monthly anomaly must never be copied as the same daily weather value across its valid dates.
 - The App must not automatically select or book a date. Its recommendation is an aid, not a decision.
 
@@ -18,12 +18,16 @@ Generate a date-by-date estimated weather dataset for every local calendar day f
 
 | Source | Horizon | Role in daily estimate | Limitation |
 |---|---|---|---|
-| ERA5-Land 1991–2020 | All D19–D90 | Regional day-of-year daily distributions and historical multi-day sequences | Historical prior, not a forecast |
-| ECMWF IFS extended-range ensemble | D19–D46 | Weekly precipitation/temperature anomaly and probability conditioning | Weekly signal cannot independently resolve exact daily weather |
+| ERA5-Land 1991–2020 | D17–D90 | Regional day-of-year daily distributions and historical multi-day sequences | Historical prior, not a forecast |
+| ECMWF IFS extended-range ensemble | D17–D46 | Weekly precipitation/temperature anomaly and probability conditioning | Weekly signal cannot independently resolve exact daily weather |
 | C3S seasonal multi-system | D47–D90 | Monthly precipitation/temperature anomaly, tercile probability and model agreement conditioning | Monthly signal has weak day-specific discrimination |
 | Validated daily-shaped seasonal model streams | D19–D90 where available | Supply additional date-level structure and independent model evidence | Use only after region/season/lead-specific hindcast skill is demonstrated |
 
 Multiple products from the same underlying model family are not counted as independent votes. Every record retains provider, dataset, model/system, initialization, valid period, retrieval time, grid/representative point and transformation provenance.
+
+## D17–D18 transition band
+
+D17 and D18 are not left blank and are not treated as deterministic extensions of D01–D16. For each date, use the overlapping ECMWF IFS extended-range weekly ensemble signal (precipitation/temperature anomaly or probability and ensemble spread where available) to condition the ERA5-Land same-calendar-day daily distribution and coherent historical analogue sequences. Generate a separate daily record for D17 and D18, retaining rainfall amount/range, Tmin/Tmax, supported wind/cloud tendencies, uncertainty and source provenance. Confidence is lower than D01–D16 and must be separately validated. If the relevant weekly signal or historical prior is missing, mark the date unavailable/low-evidence; never copy D16 forward, substitute zero, or fabricate daily rain probability. D17–D18 are included in the same date-by-date user decision dataset, but their transition-band provenance remains explicit.
 
 ## Daily generation method
 
@@ -59,13 +63,13 @@ If a variable is unsupported or missing, retain null/unknown and lower the relev
 
 ## Calibration and validation
 
-Validate separately by region, season and lead band: D19–D30, D31–D46, D47–D60 and D61–D90. Required checks include daily precipitation MAE/bias, wet-day Brier score and reliability, Tmin/Tmax MAE/bias, prediction-interval coverage, weather-category skill, wet-spell duration/persistence and seven-day sequence skill. Only publish numeric daily precipitation or playable-day probabilities after relevant date-level hindcast calibration passes. Until then, show estimated amounts/ranges, categorical risk and explicit uncertainty.
+Validate separately by region, season and lead band: D17–D18, D19–D30, D31–D46, D47–D60 and D61–D90. Required checks include daily precipitation MAE/bias, wet-day Brier score and reliability, Tmin/Tmax MAE/bias, prediction-interval coverage, weather-category skill, wet-spell duration/persistence and seven-day sequence skill. Only publish numeric daily precipitation or playable-day probabilities after relevant date-level hindcast calibration passes. Until then, show estimated amounts/ranges, categorical risk and explicit uncertainty.
 
 Do not assume daily independence when estimating the chance of three playable days. Validate that statistic against complete hindcast seven-day windows or provide categorical guidance instead.
 
 ## Refresh policy
 
-- D19–D46: ingest each available ECMWF extended-range cycle (normally twice weekly).
+- D17–D46: ingest each available ECMWF extended-range cycle (normally twice weekly).
 - D47–D90: ingest each available C3S seasonal cycle (monthly).
 - Historical climate prior is static between intentional dataset/reference-period revisions.
 - No daily real-time station observation refresh is required.
