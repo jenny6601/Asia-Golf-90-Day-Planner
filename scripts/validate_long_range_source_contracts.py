@@ -54,7 +54,7 @@ def validate_document(doc,kind,known_regions):
    if key in seen: errors.append(f"{w}: duplicate subregion/date {key}")
    seen.add(key)
    vals=req(r,"values",dict,w) or {}
-   expected={"precipitationMm":"mm","temperatureMinC":"degC","temperatureMaxC":"degC","temperatureMeanC":"degC","dewpointMeanC":"degC","windDirectionDeg":"degrees","cloudCoverMeanPct":"%","windSpeedMs":"m/s","relativeHumidityPct":"%"}
+   expected={"precipitationMm":"mm","temperatureMinC":"degC","temperatureMaxC":"degC","dewpointMeanC":"degC","windDirectionDeg":"degrees","cloudCoverMeanPct":"%","windSpeedMs":"m/s","relativeHumidityPct":"%"}
    for field,unit in expected.items():
     if field in vals and not is_number(vals[field]): errors.append(f"{w}: {field} must be finite number or omitted")
     if field in vals and units.get(field)!=unit: errors.append(f"units.{field} must be {unit}")
