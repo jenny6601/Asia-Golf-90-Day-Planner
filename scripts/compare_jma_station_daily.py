@@ -62,7 +62,7 @@ def compare_region(region, era5_rows, station, max_distance_km=75.0, minimum_pai
     paired = []
     for day in sorted(set(era5_by_date) & set(station_rows)):
         e, j = era5_by_date[day], station_rows[day]
-        if e.get("sourceId") != ERA5_SOURCE or e.get("validHourCount") != 24 or e.get("qualityFlags"):
+        if e.get("sourceId") != ERA5_SOURCE or e.get("validHourCount") != 24 or not quality_flags_acceptable(e):
             continue
         paired.append((e, j))
     rain_pairs = [(e, j) for e, j in paired if number(e.get("precipitationMm")) is not None and number(j.get("precipitationMm")) is not None]
