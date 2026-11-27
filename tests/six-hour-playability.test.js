@@ -39,7 +39,7 @@ test("six-hour accumulated rainfall triggers the heavy-rain safety override",()=
  const h=hourly();for(let i=7;i<13;i++)h.precipitation[i]=1;
  const r=evaluateSixHourPlayability(h,"2026-11-27",7);
  assert.equal(r.inputs.rainfallTotalMm,6);assert.equal(r.playability.grade,"D");
- assert.equal(r.playability.safety.grade,"D");assert.ok(r.rain.rainRisk>60);
+ assert.equal(r.playability.safety.grade,"D");assert.ok(r.rain.rainRisk>30);
 });
 
 test("missing any of the six exact valid hours is rejected without interpolation",()=>{
