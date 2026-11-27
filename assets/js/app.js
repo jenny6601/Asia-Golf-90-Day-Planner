@@ -775,18 +775,24 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const seasonRatio=Number.isFinite(seasonBaseline)&&seasonBaseline>0?seasonRain/seasonBaseline:null;
  // Historical seasonal character and current model tendency are described separately.
  const historicalMonthType=Number.isFinite(historicalRain)?
-  ((historicalRain>=250||rainDays>=16)?"多為雨季，雨量與雨日都較多":
-   (historicalRain<=60&&rainDays<=8)?"多為乾季，雨量與雨日都較少":
-   (historicalRain>=150||rainDays>=12)?"多為偏濕季，雨量與雨日較多":
-   (historicalRain<=90&&rainDays<=10)?"多為偏乾季，降雨相對較少":"接近當地歷史常態"):
-  "歷史同期資料不足，無法判定季節型態";
+  ((historicalRain>=250||rainDays>=16)?"雨季（歷史同期降雨多、雨日多）":
+   (historicalRain<=60&&rainDays<=8)?"乾季（歷史同期降雨少、雨日少）":
+   (historicalRain>=150||rainDays>=12)?"偏濕季（歷史同期雨量或雨日較多）":
+   (historicalRain<=90&&rainDays<=10)?"偏乾季（歷史同期雨量及雨日較少）":
+   "季節轉換型（歷史同期雨量與雨日介於乾、濕季之間）"):
+  "歷史同期資料不足，無法判定";
+ const historicalTypeLabel=Number.isFinite(historicalRain)?
+  (historicalRain>=250||rainDays>=16?"雨季":
+   historicalRain<=60&&rainDays<=8?"乾季":
+   historicalRain>=150||rainDays>=12?"偏濕季":
+   historicalRain<=90&&rainDays<=10?"偏乾季":"季節轉換型"):"資料不足";
  const modelType=Number.isFinite(seasonRatio)?
-  (seasonRatio>=1.35?"明顯偏濕":seasonRatio>=1.15?"偏濕":seasonRatio<=.75?"偏乾":"接近常態"):
+  (seasonRatio>=1.35?"明顯偏濕":seasonRatio>=1.15?"偏濕":seasonRatio<=.75?"偏乾":"季節訊號不明顯"):
   "季節模式資料不足";
- const seasonLabel=modelType==="明顯偏濕"?"偏濕季":modelType==="偏濕"?"偏濕季":
-  modelType==="偏乾"?"偏乾季":
-  modelType==="接近常態"?(Number.isFinite(historicalRain)&&historicalRain>=250?"雨季":Number.isFinite(historicalRain)&&historicalRain<=60?"乾季":"接近常態"):
-  Number.isFinite(historicalRain)?(historicalRain>=250?"雨季":historicalRain<=60?"乾季":historicalRain>=150?"偏濕季":historicalRain<=90?"偏乾季":"接近常態"):"資料不足";
+ const seasonLabel=Number.isFinite(seasonRatio)?
+  (modelType==="明顯偏濕"||modelType==="偏濕"?"偏濕季":
+   modelType==="偏乾"?"偏乾季":historicalTypeLabel):
+  historicalTypeLabel;
  const best=[...dailyAssessment].sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.date.localeCompare(b.date)).slice(0,5);
  const datesText=best.length?best.map(x=>Number(x.date.slice(8,10))+"日").join("、"):"資料不足，暫無推薦日期";
  // Recommend a continuous five-day travel window only when all five dates have usable data.
@@ -801,24 +807,20 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const preferredWindow=fiveDayWindows[0]||null;
  const dateRange=preferredWindow?Number(preferredWindow.days[0].date.slice(5,7))+"月"+Number(preferredWindow.days[0].date.slice(8,10))+"日 ～ "+Number(preferredWindow.days[4].date.slice(5,7))+"月"+Number(preferredWindow.days[4].date.slice(8,10))+"日":"資料不足，無法推薦連續5天";
  const modelDescription=Number.isFinite(seasonRatio)?
-  (modelType==="明顯偏濕"?"本月降雨明顯高於常態，呈偏濕型態。":
-   modelType==="偏濕"?"本月降雨高於常態，呈偏濕型態。":
-   modelType==="偏乾"?"本月降雨低於常態，呈偏乾型態。":
-   "本月降雨接近模式常態，整體型態與常年相近。"):
-  "目前沒有足夠季節模式訊號，暫以歷史同期型態作參考。";
+  (modelType==="明顯偏濕"?"模式推估本月雨勢明顯偏多，屬偏濕型態。":
+   modelType==="偏濕"?"模式推估本月雨勢較多，屬偏濕型態。":
+   modelType==="偏乾"?"模式推估本月雨勢較少，屬偏乾型態。":
+   "模式推估未顯示明顯偏濕或偏乾，參考歷史同期，本月屬"+historicalTypeLabel+"。"):
+  "目前沒有足夠季節模式資料；依歷史同期型態推估，本月屬"+historicalTypeLabel+"。";
  const playableRatio=dailyAssessment.length?playable.length/dailyAssessment.length:null;
  const playableDescription=Number.isFinite(playableRatio)?
   (playableRatio>=.5?"適打天數：偏多（本月較多日期具較佳打球條件）":
    playableRatio>=.3?"適打天數：普通（仍有部分日期適合安排）":
    "適打天數：偏少（較容易受降雨影響）"):
   "適打天數：資料不足，暫無法判定";
- const historyDescription=Number.isFinite(historicalRain)?
-  (historicalMonthType==="多為雨季，雨量與雨日都較多"?"多為雨季，雨量與雨日較多。":
-   historicalMonthType==="多為乾季，雨量與雨日都較少"?"多為乾季，雨量與雨日較少。":
-   historicalMonthType==="多為偏濕季，雨量與雨日較多"?"多為偏濕季，雨量與雨日較多。":
-   historicalMonthType==="多為偏乾季，降雨相對較少"?"多為偏乾季，降雨相對較少。":
-   "歷史同期降雨型態接近常態。"):
-  "歷史同期資料不足，暫無法判定。";
+ const historyDescription=historicalMonthType==="歷史同期資料不足，無法判定"?
+  "歷史同期資料不足，暫無法判定。":
+  "歷史同期"+historicalMonthType+"。";
  const summary=node("div",undefined,"monthly-playability-card");
  const reportHeader=node("header",undefined,"monthly-playability-header");
  const headerTitle=node("strong",month.slice(0,4)+"年"+monthIndex+"月適打評估");
