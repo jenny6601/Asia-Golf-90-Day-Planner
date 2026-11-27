@@ -175,3 +175,24 @@ test("Japan official identity and address verification is recorded without enabl
  assert.match(tokinodai.courseIdentityVerification.verificationLevel,/2026-calendar-confirmed/);
  assert.equal(japan.coordinateResearchSummary.forecastEnabled,false);
 });
+
+
+test("Japan mainland GPS candidates have explicit evidence grades and none is forecast-eligible",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
+ const count=grade=>mainland.filter(x=>x.coordinateQuality?.grade===grade).length;
+ assert.equal(count("A"),1);
+ assert.equal(count("B"),14);
+ assert.equal(count("C"),1);
+ assert.ok(mainland.every(x=>x.coordinateQuality.weatherPointEligible===false));
+ assert.ok(mainland.every(x=>x.coordinateQuality.reviewStatus));
+ const leograd=mainland.find(x=>x.candidateCourseName==="Leograd Golf Club");
+ assert.equal(leograd.coordinateQuality.grade,"C");
+ assert.equal(leograd.candidateCoordinates.latitude,33.9232299832);
+ assert.match(leograd.candidateCoordinates.officialMapEmbedUrl,/google\.com\/maps\/embed/);
+ const setouchi=mainland.find(x=>x.candidateCourseName==="Setouchi Golf Resort");
+ assert.equal(setouchi.coordinateQuality.grade,"A");
+ assert.equal(japan.coordinateResearchSummary.weatherPointEligible,0);
+ assert.equal(japan.coordinateResearchSummary.forecastEnabled,false);
+});
