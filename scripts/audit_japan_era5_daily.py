@@ -201,7 +201,81 @@ def audit_climate_windows(region_rows, start_year=1991, end_year=2020,
     return {"dailyWindowValidYears": output, "metricReadiness": summary}
 
 
-def build_report(mapping, records, file_issues, start_year, end_year):
+def audit_batch_state(state_path, mapping_ids, start_year, end_year):
+    """Reconcile planned/downloaded annual tasks with the actual acquisition state."""
+    expected = {
+        f"{region}-{year}": {"regionId": region, "year": year}
+        for region in sorted(mapping_ids)
+        for year in range(start_year, end_year + 1)
+    }
+    if not state_path or not Path(state_path).exists():
+        return {
+            "status": "batch-state-not-provided",
+            "expectedTasks": len(expected),
+            "recordedTasks": 0,
+            "completedTasks": 0,
+            "failedTasks": 0,
+            "pendingOrMissingTasks": len(expected),
+            "missingTaskIds": list(expected),
+            "unexpectedTaskIds": [],
+            "byRegion": {
+                region: {"expected": end_year - start_year + 1, "completed": 0, "failed": 0,
+                         "pendingOrMissing": end_year - start_year + 1}
+                for region in sorted(mapping_ids)
+            },
+        }
+    try:
+        payload = json.loads(Path(state_path).read_text(encoding="utf-8"))
+    except Exception as exc:
+        return {"status": "batch-state-invalid", "error": str(exc), "expectedTasks": len(expected)}
+    tasks = payload.get("tasks") if isinstance(payload, dict) else None
+    if not isinstance(tasks, dict):
+        return {"status": "batch-state-invalid", "error": "tasks object missing", "expectedTasks": len(expected)}
+    success_states = {"daily-converted-structurally-validated", "daily-converted-existing"}
+    by_region = {
+        region: {"expected": end_year - start_year + 1, "completed": 0, "failed": 0,
+                 "pendingOrMissing": 0}
+        for region in sorted(mapping_ids)
+    }
+    missing, unexpected = [], []
+    completed = failed = recorded = 0
+    for task_id, task in tasks.items():
+        if task_id not in expected:
+            unexpected.append(task_id)
+    for task_id, identity in expected.items():
+        task = tasks.get(task_id)
+        region = identity["regionId"]
+        if not isinstance(task, dict):
+            missing.append(task_id)
+            by_region[region]["pendingOrMissing"] += 1
+            continue
+        recorded += 1
+        status = task.get("status")
+        if status in success_states:
+            completed += 1
+            by_region[region]["completed"] += 1
+        elif status == "failed":
+            failed += 1
+            by_region[region]["failed"] += 1
+        else:
+            by_region[region]["pendingOrMissing"] += 1
+    pending = len(expected) - completed - failed
+    return {
+        "status": "batch-state-reconciled",
+        "stateStatus": payload.get("status"),
+        "expectedTasks": len(expected),
+        "recordedTasks": recorded,
+        "completedTasks": completed,
+        "failedTasks": failed,
+        "pendingOrMissingTasks": pending,
+        "missingTaskIds": missing,
+        "unexpectedTaskIds": sorted(unexpected),
+        "byRegion": by_region,
+        "activationEligible": False,
+    }
+
+
+def build_report(mapping, records, file_issues, start_year, end_year, batch_audit=None):
     regions = {}
     all_region_ids = [p["subregionId"] for p in mapping["points"]]
     for point in mapping["points"]:
@@ -249,21 +323,21 @@ def main():
     parser.add_argument("daily_files", nargs="*", type=Path, help="daily JSON files; default recursively scans data/era5-japan-1991-2020/daily")
     parser.add_argument("--start-year", type=int, default=1991)
     parser.add_argument("--end-year", type=int, default=2020)
-    parser.add_argument("--output", type=Path, default=Path("data/processed/japan-era5-1991-2020-qa.json"))
+    parser.add_argument("--output", type=Path, default=Path("data/processed/japan-era5-1991-2020-qa.json"))\n    parser.add_argument("--batch-state", type=Path, default=Path("data/era5-japan-1991-2020/batch-state.json"))
     args = parser.parse_args()
     if args.start_year > args.end_year:
         parser.error("--start-year must be <= --end-year")
     paths = args.daily_files or sorted((ROOT / "data/era5-japan-1991-2020/daily").glob("*.json"))
     mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
     records, issues = _load_files(paths, {p["subregionId"] for p in mapping["points"]}, args.start_year, args.end_year)
-    report = build_report(mapping, records, issues, args.start_year, args.end_year)
+    batch_audit = audit_batch_state(args.batch_state, {p["subregionId"] for p in mapping["points"]}, args.start_year, args.end_year)\n    report = build_report(mapping, records, issues, args.start_year, args.end_year, batch_audit)
     target = ROOT / args.output
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     summary = {
         "status": report["status"], "regions": report["regionCount"],
         "filesScanned": len(paths), "fileIssues": len(issues),
-        "regionsWithData": sum(bool(records.get(p["subregionId"])) for p in mapping["points"]),
+        "regionsWithData": sum(bool(records.get(p["subregionId"])) for p in mapping["points"]),\n        "acquisition": {k: batch_audit.get(k) for k in ("status", "expectedTasks", "recordedTasks", "completedTasks", "failedTasks", "pendingOrMissingTasks")},
         "output": str(target), "climateBaselineEnabled": False,
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
