@@ -1819,13 +1819,15 @@
     "sourceUrl": "https://golf-in-japan.com/courses",
     "sourceEvidence": "Golf in Japan directory course card; name, local name, prefecture and address captured from published listing",
     "catalogStatus": "research_candidate",
-    "coordinateStatus": "pending",
-    "latitude": null,
-    "longitude": null,
+    "coordinateStatus": "official_operator_google_maps_embed_center",
+    "latitude": 36.296969,
+    "longitude": 138.584117,
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-CHB-NAGANO-KARUIZAWA"
+    "golfClusterId": "JP-CHB-NAGANO-KARUIZAWA",
+    "coordinateSource": "https://esv-club.com/access/",
+    "coordinateUse": "regional_climate_candidate_only"
   },
   {
     "id": "jp-fuji-classic",
@@ -1987,13 +1989,15 @@
     "sourceUrl": "https://golf-in-japan.com/courses",
     "sourceEvidence": "Golf in Japan directory course card; name, local name, prefecture and address captured from published listing",
     "catalogStatus": "research_candidate",
-    "coordinateStatus": "pending",
-    "latitude": null,
-    "longitude": null,
+    "coordinateStatus": "official_operator_google_maps_place_pin",
+    "latitude": 35.969597,
+    "longitude": 139.315163,
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-KNT-GUNMA-SAITAMA"
+    "golfClusterId": "JP-KNT-GUNMA-SAITAMA",
+    "coordinateSource": "https://www.resol-golf.jp/en/iruma/access/",
+    "coordinateUse": "regional_climate_candidate_only"
   },
   {
     "id": "jp-14-hills",
@@ -2109,13 +2113,15 @@
     "sourceUrl": "https://golf-in-japan.com/courses",
     "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
     "catalogStatus": "research_candidate",
-    "coordinateStatus": "pending",
-    "latitude": null,
-    "longitude": null,
+    "coordinateStatus": "official_operator_google_maps_embed_center",
+    "latitude": 35.31468298028144,
+    "longitude": 137.45991731575117,
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-CHB-NAGOYA-GIFU"
+    "golfClusterId": "JP-CHB-NAGOYA-GIFU",
+    "coordinateSource": "https://adonis-gc.com/access.html",
+    "coordinateUse": "regional_climate_candidate_only"
   },
   {
     "id": "jp-adonis-ogawa",
