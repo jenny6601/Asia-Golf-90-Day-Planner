@@ -32,6 +32,18 @@ class JapanDailyQATests(unittest.TestCase):
         self.assertEqual(len(report["missingDates"]), 35)
         self.assertEqual(report["status"], "annual-coverage-usable")  # 330/365 >= 90%
 
+    def test_trace_negative_precipitation_flag_does_not_discard_clamped_day(self):
+        day = date(1991, 1, 1)
+        value = row(day, qualityFlags=["trace_negative_precipitation_clamped"])
+        self.assertTrue(MODULE.quality_flags_acceptable(value))
+        report = MODULE.audit_region_year("JP-TEST", 1991, [value])
+        self.assertEqual(report["metricCoverage"]["precipitationMm"]["validDays"], 1)
+        self.assertEqual(report["qualityFlagCounts"]["trace_negative_precipitation_clamped"], 1)
+
+    def test_material_negative_precipitation_flag_remains_unacceptable(self):
+        value = row(date(1991, 1, 1), qualityFlags=["negative_hourly_precipitation"])
+        self.assertFalse(MODULE.quality_flags_acceptable(value))
+
     def test_metric_plausibility_bounds_exclude_invalid_values(self):
         rows = [row(date(1991, 1, 1), temperatureMeanC=999)]
         report = MODULE.audit_region_year("JP-TEST", 1991, rows)
