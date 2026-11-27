@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import {fieldCoverage,assessForecastPayload} from "./forecast-completeness.js";
 
 const ROOT = new URL("../", import.meta.url);
 const FORECAST_ENDPOINT = "https://api.open-meteo.com/v1/forecast";
@@ -30,48 +31,6 @@ export function haversineKm(aLat,aLon,bLat,bLon) {
   const dLat=toRad(bLat-aLat), dLon=toRad(bLon-aLon);
   const h=Math.sin(dLat/2)**2+Math.cos(toRad(aLat))*Math.cos(toRad(bLat))*Math.sin(dLon/2)**2;
   return 6371*2*Math.atan2(Math.sqrt(h),Math.sqrt(1-h));
-}
-export function fieldCoverage(payload, section, fields, startDate=null, endDate=null) {
-  const block=payload?.[section]||{};
-  const times=block.time||[];
-  const indexes=times.map((t,i)=>({t,i})).filter(x=>
-    (!startDate||x.t.slice(0,10)>=startDate)&&(!endDate||x.t.slice(0,10)<=endDate)
-  ).map(x=>x.i);
-  return Object.fromEntries(fields.map(key=>{
-    const values=block[key];
-    const selected=indexes.map(i=>values?.[i]);
-    return [key,{expected:indexes.length,valid:countFinite(selected),missing:indexes.length-countFinite(selected),coverage:indexes.length?countFinite(selected)/indexes.length:0}];
-  }));
-}
-export function auditRuntimeCourse(runtime,candidate) {
-  const hasRuntime=finite(runtime?.latitude)&&finite(runtime?.longitude);
-  return {
-    id:candidate.id,
-    runtimeEnabled:runtime?.enabled??null,
-    runtimeCoordinateStatus:runtime?.coordinateStatus??"missing",
-    runtimeCoordinate:hasRuntime?{latitude:runtime.latitude,longitude:runtime.longitude}:null,
-    candidateCoordinate:{latitude:candidate.latitude,longitude:candidate.longitude},
-    runtimeToCandidateDistanceKm:hasRuntime?haversineKm(runtime.latitude,runtime.longitude,candidate.latitude,candidate.longitude):null,
-    coordinateSource:candidate.coordinateSource,
-    coordinateStatus:candidate.coordinateStatus,
-    promotionAllowed:candidate.coordinateStatus==="verified"||candidate.coordinateStatus==="user_provided_google_maps"
-  };
-}
-export function assessForecastPayload(payload) {
-  const dailyCount=payload?.daily?.time?.length??0, hourlyCount=payload?.hourly?.time?.length??0;
-  const daily=fieldCoverage(payload,"daily",["weather_code","precipitation_sum","precipitation_probability_max","temperature_2m_min","temperature_2m_max","wind_speed_10m_max","wind_gusts_10m_max"]);
-  const hourly=fieldCoverage(payload,"hourly",["temperature_2m","apparent_temperature","precipitation_probability","precipitation","weather_code","wind_speed_10m","wind_gusts_10m","cloud_cover"]);
-  const requiredDaily=["weather_code","precipitation_sum","precipitation_probability_max","temperature_2m_min","temperature_2m_max"];
-  const requiredHourly=["temperature_2m","apparent_temperature","precipitation_probability","precipitation","weather_code","wind_speed_10m"];
-  const requiredCoverage=[...requiredDaily.map(k=>daily[k].coverage),...requiredHourly.map(k=>hourly[k].coverage)];
-  return {
-    timezone:payload?.timezone??null,
-    returnedCoordinate:{latitude:payload?.latitude??null,longitude:payload?.longitude??null},
-    elevation:payload?.elevation??null,
-    generationTimeMs:payload?.generationtime_ms??null,
-    dailyCount,hourlyCount,daily,hourly,
-    coreFieldsComplete:dailyCount>=16&&hourlyCount>=360&&requiredCoverage.every(x=>x>=0.95)
-  };
 }
 export function assessSeasonalPayload(payload) {
   const dates=payload?.daily?.time||[];
