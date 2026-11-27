@@ -102,3 +102,15 @@ test("App runtime directory loads all six GPS points and sends exact points to O
     assert.ok(request,"Open-Meteo request missing exact App GPS for "+id);
   }
 });
+
+test("JMA AMeDAS station metadata records official station type and observed-element flags", async () => {
+  const stations=JSON.parse(await fs.readFile(new URL("config/okinawa/jma-amedas-stations.json",root),"utf8"));
+  const expected={"91107":["B","11111011"],"91241":["C","11112010"],"91121":["C","01000000"],"91166":["C","11112010"]};
+  for(const [id,[type,elements]] of Object.entries(expected)){
+    const station=stations.find(x=>x.id===id);
+    assert.ok(station,id);
+    assert.equal(station.jmaType,type,id);
+    assert.equal(station.jmaElementsCode,elements,id);
+    assert.equal(station.officialStationTableUrl,"https://www.jma.go.jp/bosai/amedas/const/amedastable.json",id);
+  }
+});
