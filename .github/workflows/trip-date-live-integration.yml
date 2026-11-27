@@ -5,7 +5,9 @@ name: Okinawa Trip Date Live Data Integration
     branches:
       - asia-eight-country-shared-engine
     paths:
-      - "scripts/run-trip-date-recommendation-validation.mjs"\n      - "scripts/run-trip-date-forecast-backtest.mjs"\n      - "assets/js/trip-date-forecast-backtest.js"
+      - "scripts/run-trip-date-recommendation-validation.mjs"
+      - "scripts/run-trip-date-forecast-backtest.mjs"
+      - "assets/js/trip-date-forecast-backtest.js"
       - "assets/js/trip-date-recommendation-engine.js"
       - "assets/js/trip-date-source-adapters.js"
       - "assets/js/weather-api.js"
@@ -34,6 +36,9 @@ jobs:
           node-version: 20
       - name: Retrieve live forecast, EC46/SEAS5 and ERA5 history and rank 5D4N windows
         run: node scripts/run-trip-date-recommendation-validation.mjs
+      - name: Verify archived forecasts against ERA5 reference
+        continue-on-error: true
+        run: node scripts/run-trip-date-forecast-backtest.mjs
       - name: Persist one daily forecast snapshot
         run: |
           git config user.name "github-actions[bot]"
@@ -52,6 +57,8 @@ jobs:
           name: okinawa-trip-date-recommendations
           path: |
             artifacts/trip-date-recommendations/recommendations.json
-            artifacts/trip-date-recommendations/recommendations.md\n            artifacts/trip-date-backtest/backtest.json\n            artifacts/trip-date-backtest/backtest.md
+            artifacts/trip-date-recommendations/recommendations.md
+            artifacts/trip-date-backtest/backtest.json
+            artifacts/trip-date-backtest/backtest.md
           if-no-files-found: warn
           retention-days: 30
