@@ -693,6 +693,11 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const host=$("region-report");host.replaceChildren();
  const back=()=>renderRegionMonths(group.country,group.rootRegion,group.months||monthOptions(),group.courses,group.subregion||"");
  showClimateScreen(month+"｜"+group.region+"天氣分析",back);
+ // Keep the destination page header visible immediately while monthly data is assembled.
+ const pageLoading=node("div",undefined,"monthly-page-loading");
+ pageLoading.setAttribute("role","status");pageLoading.setAttribute("aria-live","polite");
+ pageLoading.append(node("div",undefined,"monthly-page-spinner"),node("strong","正在開啟月分析…"),node("span","正在整理本月氣象與逐日資料"));
+ $("flow-nav").append(pageLoading);
  const jumpNav=node("nav",undefined,"monthly-jump-nav");
  jumpNav.setAttribute("aria-label","月分析區塊快速跳轉");
  [
@@ -775,6 +780,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   })());
  }
  await Promise.all(tasks);
+ pageLoading.remove();
  // Aggregate the complete month into a practical golf-planning assessment.
  const dailyAssessment=dates.map(date=>{
   const lead=Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
