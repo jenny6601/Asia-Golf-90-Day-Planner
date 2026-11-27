@@ -62,3 +62,26 @@ test("a rolling window with less than 90 percent valid daily values is excluded"
  assert.equal(result.days[0].highMean,null);
  assert.equal(result.days[0].feelsLikeMaxMeanC,null);
 });
+
+
+test("courses in one subregion share the approved representative coordinate and cached history",async()=>{
+ let calls=0,requestUrl=null;
+ const fetchImpl=async url=>{
+  calls++;requestUrl=new URL(url);
+  return {ok:true,json:async()=>({daily:{
+   time:["2000-12-15","2001-12-15"],temperature_2m_max:[22,23],temperature_2m_min:[15,16],
+   dew_point_2m_mean:[12,13],relative_humidity_2m_mean:[65,66],wind_speed_10m_mean:[2,2],
+   wind_speed_10m_max:[4,4],precipitation_sum:[0,1],precipitation_hours:[0,1],weather_code:[1,3]
+  }})};
+ };
+ const representativePoint={latitude:26.5,longitude:127.8};
+ const regionalClimate={representativePoint,timezone:"Asia/Tokyo"};
+ const courseA={id:"course-a",latitude:26.1,longitude:127.6,timezone:"Asia/Tokyo",regionalClimate};
+ const courseB={id:"course-b",latitude:26.8,longitude:128.1,timezone:"Asia/Tokyo",regionalClimate};
+ await fetchCourseHistoricalWeekNormals(courseA,["2026-12-15"],fetchImpl);
+ await fetchCourseHistoricalWeekNormals(courseB,["2026-12-15"],fetchImpl);
+ assert.equal(calls,1);
+ assert.equal(requestUrl.searchParams.get("latitude"),"26.5");
+ assert.equal(requestUrl.searchParams.get("longitude"),"127.8");
+ assert.equal(requestUrl.searchParams.get("timezone"),"Asia/Tokyo");
+});
