@@ -807,11 +807,11 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const preferredWindow=fiveDayWindows[0]||null;
  const dateRange=preferredWindow?Number(preferredWindow.days[0].date.slice(5,7))+"月"+Number(preferredWindow.days[0].date.slice(8,10))+"日 ～ "+Number(preferredWindow.days[4].date.slice(5,7))+"月"+Number(preferredWindow.days[4].date.slice(8,10))+"日":"資料不足，無法推薦連續5天";
  const modelDescription=Number.isFinite(seasonRatio)?
-  (modelType==="明顯偏濕"?"模式推估本月雨勢明顯偏多，屬偏濕型態。":
-   modelType==="偏濕"?"模式推估本月雨勢較多，屬偏濕型態。":
-   modelType==="偏乾"?"模式推估本月雨勢較少，屬偏乾型態。":
-   "模式推估未顯示明顯偏濕或偏乾，參考歷史同期，本月屬"+historicalTypeLabel+"。"):
-  "目前沒有足夠季節模式資料；依歷史同期型態推估，本月屬"+historicalTypeLabel+"。";
+  (modelType==="明顯偏濕"?"本月雨勢明顯偏多，屬偏濕型態。":
+   modelType==="偏濕"?"本月雨勢較多，屬偏濕型態。":
+   modelType==="偏乾"?"本月雨勢較少，屬偏乾型態。":
+   "無明顯季節模式訊號，依歷史推估。"):
+  "無，依歷史推估。";
  const playableRatio=dailyAssessment.length?playable.length/dailyAssessment.length:null;
  const playableDescription=Number.isFinite(playableRatio)?
   (playableRatio>=.5?"適打天數：偏多（本月較多日期具較佳打球條件）":
@@ -819,8 +819,8 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
    "適打天數：偏少（較容易受降雨影響）"):
   "適打天數：資料不足，暫無法判定";
  const historyDescription=historicalMonthType==="歷史同期資料不足，無法判定"?
-  "歷史同期資料不足，暫無法判定。":
-  "歷史同期"+historicalMonthType+"。";
+  "資料不足，無法判定季節型態。":
+  historicalMonthType.replace(/^雨季（/,"雨季（").replace(/^乾季（/,"乾季（");
  const summary=node("div",undefined,"monthly-playability-card");
  const reportHeader=node("header",undefined,"monthly-playability-header");
  const headerTitle=node("strong",month.slice(0,4)+"年"+monthIndex+"月適打評估");
