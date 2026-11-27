@@ -77,3 +77,10 @@ test("missing daily grades are excluded from all suitability counts", () => {
   assert.deepEqual(result.counts, { suitable: 1, watch: 1, poor: 0 });
   assert.equal(result.coverage, 0.5);
 });
+
+
+test("extreme heat remains assessable when rainfall metrics are unavailable", () => {
+  assert.deepEqual(classifyMonthlyDay({rainFrequency:null,rainAmount:null,highTemp:34}), {grade:3,status:"不適",playable:false});
+  assert.equal(classifyMonthlyDay({rainFrequency:null,rainAmount:null,highTemp:33}), null);
+  assert.equal(classifyMonthlyDay({rainFrequency:null,rainAmount:null,highTemp:null}), null);
+});
