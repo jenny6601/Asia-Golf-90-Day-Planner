@@ -3302,17 +3302,25 @@
     "timezone": "Asia/Tokyo",
     "officialUrl": "https://sapporo-teine.com/golf/",
     "sourceUrl": "https://sapporo-teine.com/golf/business-information/",
-    "sourceEvidence": "Official operator confirms Sapporo address, 27 holes and 2026 season dates. FullGolf and 14Golf coordinates disagree by approximately 2.8 km; retain no selected coordinate until reconciled against the official map code 493 385 165*66.",
+    "sourceEvidence": "Official operator access page's map-code link resolves to Google Maps place pin at 43.1039996,141.2091466. 14Golf coordinate 43.10149,141.2125397 corroborates within 0.392 km. FullGolf point 43.077052,141.200096 is approximately 2.8 km away and is excluded as a likely mismatched map/area point.",
     "catalogStatus": "research_candidate",
-    "coordinateStatus": "conflicting_third_party_coordinates_pending_review",
-    "latitude": null,
-    "longitude": null,
+    "coordinateStatus": "official_operator_google_maps_place_pin",
+    "latitude": 43.1039996,
+    "longitude": 141.2091466,
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "official_operator_active_2026_season_closed_next_open_2027-04-24",
     "regionId": "JP-REG-01",
-    "coordinateSource": "https://fullgolf.com/en/golf-club/japan/hokkaido/sapporo/sapporo-teine-golf-club;https://14golf.com/course/sapporoteinegorufukurabu/",
-    "coordinateReviewStatus": "coordinate-source-conflict-pending"
+    "coordinateSource": "https://sapporo-teine.com/golf/access/ (official operator map-code link resolves to Google Maps place pin)",
+    "coordinateReviewStatus": "official-pin-confirmed-third-party-cross-check-complete",
+    "coordinateUse": "regional_climate_representative_point",
+    "candidateCoordinates": {
+      "latitude": 43.1039996,
+      "longitude": 141.2091466,
+      "coordinateStatus": "official_operator_google_maps_place_pin",
+      "coordinateSourceUrl": "https://sapporo-teine.com/golf/access/",
+      "timezone": "Asia/Tokyo"
+    }
   },
   {
     "id": "jp-nidom-classic",
