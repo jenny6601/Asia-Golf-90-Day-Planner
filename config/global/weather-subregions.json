@@ -35,6 +35,13 @@
             "officialAddress": "26 Rankoshi, Chitose-shi, Hokkaido 066-0068, Japan",
             "operationalEvidence": "official-website-present; JNTO notes seasonal winter closure; current play dates must be checked before trip planning",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -62,6 +69,13 @@
             "officialAddress": "Nishionuma, Nanae-cho, Kameda-gun, Hokkaido 041-1392, Japan",
             "operationalEvidence": "Prince Hotels official course page provides address, telephone and booking availability interface",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -90,6 +104,13 @@
             "officialAddress": "180-1 Appikogen, Hachimantai-shi, Iwate 028-7306, Japan",
             "operationalEvidence": "operator 2026 season notice found; published seasonal window is April-mid-November; actual tee-sheet availability must be checked for each travel date",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -119,6 +140,13 @@
             "officialAddress": "3-25 Uchinome-kita, Morigo, Rifu-machi, Miyagi-gun, Miyagi 981-0103, Japan",
             "operationalEvidence": "PGM operator course profile confirms 18-hole course, address, telephone and online reservation interface",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -148,6 +176,13 @@
             "officialAddress": "2370 Sotome, Sakura City, Tochigi Prefecture, Japan",
             "operationalEvidence": "Tochigi tourism authority provides course profile, address, telephone, website, hours and closure notes",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -176,6 +211,13 @@
             "officialAddress": "1236-3, Ryukakuji, Sakae-machi, Inba-gun, Chiba-ken, Japan",
             "operationalEvidence": "JNTO course profile and access details confirmed; current operator booking status not independently checked",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -204,6 +246,13 @@
             "officialAddress": "6236 Funatsu, Fujikawaguchiko-machi, Minamitsuru-gun, Yamanashi 401-0301, Japan",
             "operationalEvidence": "operator site displays 2026 notices and reservation/access information",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -234,6 +283,13 @@
             "officialAddress": "30 Katada-Hasecho, Tsu-shi, Mie 514-0077, Japan",
             "operationalEvidence": "operator website provides course details, booking/pricing, address, telephone and accommodation information",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -264,6 +320,13 @@
             "officialAddress": "8-8 Yanagida-machi, Hakui-shi, Ishikawa 925-0018, Japan",
             "operationalEvidence": "operator site confirms two 18-hole courses, access, reservation contact, 2026 calendar and operating notes; Monday/Tuesday are self-play-only days",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -292,6 +355,13 @@
             "officialAddress": "571 Kitahata, Ogocho, Kita-ku, Kobe-shi, Hyogo 651-1616, Japan",
             "operationalEvidence": "Operator provides address, telephone, access routes and shuttle details",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -310,7 +380,8 @@
             "longitude": 135.2723593476,
             "coordinateStatus": "approximate-official-map-viewport-center-not-course-pin",
             "coordinateSourceUrl": "https://www.leograd.jp/access_map/",
-            "timezone": "Asia/Tokyo"
+            "timezone": "Asia/Tokyo",
+            "officialMapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52971.13157452712!2d135.2723593476244!3d33.92322998321186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60076b35d7ab2287:0x4076b246f1847477!2z44Os44Kq44Kw44Op44O844OJ44K044Or44OV44Kv44Op44OW!5e0!3m2!1sja!2sjp!4v1485138120905"
           },
           "coordinateReviewStatus": "official-address-and-map-confirmed-pin-coordinate-still-unverified",
           "candidateCourseId": "jp-leograd",
@@ -321,6 +392,13 @@
             "officialAddress": "694 Sai, Hidaka-gawa-cho, Hidaka-gun, Wakayama 644-1164, Japan",
             "operationalEvidence": "Operator provides club outline, course details, closure days and 2026 tournament news",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "近似地圖中心",
+            "reviewStatus": "not-a-course-pin",
+            "weatherPointEligible": false,
+            "reason": "官方嵌入地圖的中心點，不等於球場標記；不得用於正式天氣座標。"
           }
         },
         {
@@ -350,6 +428,13 @@
             "officialAddress": "753 Ogina, Nanbu-cho, Saihaku-gun, Tottori 683-0215, Japan",
             "operationalEvidence": "JGTO partner-course listing confirmed; current tee-sheet/season status not independently checked",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -379,6 +464,13 @@
             "officialAddress": "831 Yoshina-cho, Takehara City, Hiroshima Prefecture 725-0013, Japan",
             "operationalEvidence": "operator site lists golf course, access, contact and booking link",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "A",
+            "label": "官方 Google Maps 地點連結",
+            "reviewStatus": "official-place-reference-found-pin-to-course-address-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "官方球場網站提供 Google Maps 地點連結；仍需確認座標精確落在球場會館或球場範圍內。"
           }
         },
         {
@@ -407,6 +499,13 @@
             "officialAddress": "668 Yasucho Teiyama, Konan-shi, Kochi Prefecture, Japan",
             "operationalEvidence": "JNTO course profile provides 36-hole details, access from Kochi Airport and address; current operator tee-sheet not checked",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -436,6 +535,13 @@
             "officialAddress": "1-3 Kurahisa, Miyawaka-shi, Fukuoka 823-0017, Japan",
             "operationalEvidence": "Operator site provides course details, access, booking form and telephone",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -465,6 +571,13 @@
             "officialAddress": "3083 Hamayama, Shioji, Miyazaki City, Miyazaki 880-0122, Japan",
             "operationalEvidence": "SEAGAIA official resort site lists 27 holes, facility address, telephone, course access and reservation",
             "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開／第三方候選座標",
+            "reviewStatus": "official-pin-crosscheck-pending",
+            "weatherPointEligible": false,
+            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
           }
         },
         {
@@ -500,7 +613,11 @@
         "thirdPartyOrPublicMapCoordinates": 14,
         "approximateCoordinates": 1,
         "forecastEnabled": false,
-        "officialIdentityAddressVerified": 16
+        "officialIdentityAddressVerified": 16,
+        "coordinateQualityA": 1,
+        "coordinateQualityB": 14,
+        "coordinateQualityC": 1,
+        "weatherPointEligible": 0
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
