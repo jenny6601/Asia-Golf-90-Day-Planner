@@ -23,7 +23,7 @@ const historicalByRegion=Object.fromEntries(regions.map(id=>[id,Array.from({leng
 
 test("uses only the fixed north/central/south regions and course counts",()=>{
   assert.deepEqual(TRIP_DATE_SOURCE_ADAPTERS.regions,regions);
-  assert.deepEqual(TRIP_DATE_SOURCE_ADAPTERS.expectedCourses,{north:3,central:1,south:2});
+  assert.deepEqual(TRIP_DATE_SOURCE_ADAPTERS.representativeCourseByRegion,{north:"kise",central:"pgm-okinawa",south:"southern-links"});
 });
 
 test("maps short forecast, EC46 weekly EFI, SEAS5 monthly anomaly and historical signals",()=>{
@@ -74,17 +74,17 @@ test("invalid dates fail closed",()=>{
   assert.throws(()=>buildTripDateEngineInput({asOf:"2026-02-30"}),/valid YYYY-MM-DD/);
 });
 
-test("aggregates the six Okinawa course histories into the three fixed regions",()=>{
+test("uses exactly one representative course per region; other same-region courses are ignored",()=>{
   const ids=["southern-links","palm-hills","pgm-okinawa","kise","atta-terrace","chura-orchard"];
   const results=ids.map(courseId=>({
     course:{id:courseId},
     days:[{date:addDays(asOf,60),rainFrequency:30,rainMean:2,rainSampleYears:10}]
   }));
-  const grouped=groupCourseHistoricalNormals(results);
+  const grouped=groupCourseHistoricalNormals(results);\n  assert.deepEqual(grouped.north[0].courseNormals.map(x=>x.courseId),["kise"]);\n  assert.deepEqual(grouped.central[0].courseNormals.map(x=>x.courseId),["pgm-okinawa"]);\n  assert.deepEqual(grouped.south[0].courseNormals.map(x=>x.courseId),["southern-links"]);
   assert.equal(grouped.north[0].courseNormals.length,3);
   assert.equal(grouped.central[0].courseNormals.length,1);
   assert.equal(grouped.south[0].courseNormals.length,2);
   const input=buildTripDateEngineInput({asOf,forecastZones,longRangePoints,historicalCourseResults:results});
-  assert.equal(input.days[59].regions.north.historical.validCourseCount,3);
+  assert.equal(input.days[59].regions.north.historical.validCourseCount,1);\n  assert.equal(input.days[59].regions.north.historical.representativeCourseId,"kise");
   assert.equal(input.days[59].regions.north.historical.coverage,1);
 });
