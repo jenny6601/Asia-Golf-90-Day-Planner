@@ -23,18 +23,19 @@ class EightCountryRegistryTests(unittest.TestCase):
         result = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         self.assertEqual(result["totalSubregions"], 62)
         self.assertEqual(result["readyPointCount"] + result["pendingPointCount"], 62)
-        self.assertEqual(result["readyPointCount"], 19)
-        self.assertEqual(result["pendingPointCount"], 43)
+        self.assertEqual(result["readyPointCount"], 25)
+        self.assertEqual(result["pendingPointCount"], 37)
         self.assertEqual(result["countsByCountry"]["JP"]["readyForAcquisition"], 19)
-        for code in ("KR", "CN", "VN", "TH", "MY", "SG", "ID"):
+        self.assertEqual(result["countsByCountry"]["KR"]["readyForAcquisition"], 6)
+        for code in ("CN", "VN", "TH", "MY", "SG", "ID"):
             self.assertEqual(result["countsByCountry"][code]["readyForAcquisition"], 0)
         self.assertFalse(result["activation"]["climateBaselineEnabled"])
 
     def test_task_plan_scales_by_year_and_region_and_is_plan_only(self):
         registry = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         plan = MODULE.build_task_plan(registry, 1991, 1993)
-        self.assertEqual(plan["readySubregions"], 19)
-        self.assertEqual(plan["annualTaskCount"], 57)
+        self.assertEqual(plan["readySubregions"], 25)
+        self.assertEqual(plan["annualTaskCount"], 75)
         self.assertFalse(plan["safety"]["downloadPerformed"])
         self.assertFalse(plan["safety"]["decisionUseEligible"])
 
@@ -48,7 +49,7 @@ class EightCountryRegistryTests(unittest.TestCase):
     def test_missing_coordinates_are_pending_not_zero_filled(self):
         result = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         pending_ids = {x["subregionId"] for x in result["pendingSubregions"]}
-        self.assertIn("KR-CAP-01", pending_ids)
+        self.assertIn("CN-HN-NORTH", pending_ids)
         self.assertTrue(all(p.get("subregionId") for p in result["pendingSubregions"]))
 
     def test_duplicate_subregion_ids_are_rejected(self):
