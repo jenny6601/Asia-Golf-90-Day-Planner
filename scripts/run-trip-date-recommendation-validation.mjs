@@ -46,6 +46,24 @@ const currentSnapshot={
   fetchedAt:forecast.fetchedAt||new Date().toISOString(),
   localDate:asOf,
   provider:forecast.provider,
+  seasonalProvider:longRange.provider,
+  seasonalModel:longRange.model,
+  // Preserve raw source values and valid-time labels so EC46 weekly and SEAS5
+  // monthly forecasts can be verified only after their target periods finish.
+  seasonal:Object.fromEntries(longRange.points.map(item=>[item.point.id,{
+    place:item.point.place,
+    weekly:{
+      time:item.weekly?.time||[],
+      precipitation_mean:item.weekly?.precipitation_mean||[],
+      precipitation_anomaly:item.weekly?.precipitation_anomaly||[],
+      precipitation_efi:item.weekly?.precipitation_efi||[]
+    },
+    monthly:{
+      time:item.monthly?.time||[],
+      precipitation_mean:item.monthly?.precipitation_mean||[],
+      precipitation_anomaly:item.monthly?.precipitation_anomaly||[]
+    }
+  }])),
   regions:Object.fromEntries(forecast.zones.map(zone=>[zone.zone.id,
     (zone.daily?.time||[]).map((date,i)=>{
       const signal=snapshotRisk(zone.daily.precipitation_probability_max?.[i],zone.daily.precipitation_sum?.[i]);
@@ -87,7 +105,8 @@ const report={
     shortForecast:{provider:forecast.provider,days:forecast.forecastDays,regions:forecast.zones.length},
     ec46Seas5:{provider:longRange.provider,model:longRange.model,regions:longRange.points.length},
     historical:{provider:"Open-Meteo Historical Weather API",model:"ERA5 reanalysis",representativeCourseCount:history.length,representativeCourseIds:representativeIds,period:history[0]?{startYear:history[0].startYear,endYear:history[0].endYear}:null},
-    forecastDirectionStability:{status:stabilitySnapshots.length>=2?"building":"collecting",snapshotCount:stabilitySnapshots.length,latestSnapshot:currentSnapshot.fetchedAt,archive:"data/okinawa-forecast-snapshots/YYYY-MM-DD.json",handling:"computed only from actual forecast runs for the same target date; one snapshot per Okinawa-local date"}
+    forecastDirectionStability:{status:stabilitySnapshots.length>=2?"building":"collecting",snapshotCount:stabilitySnapshots.length,latestSnapshot:currentSnapshot.fetchedAt,archive:"data/okinawa-forecast-snapshots/YYYY-MM-DD.json",handling:"computed only from actual forecast runs for the same target date; one snapshot per Okinawa-local date"},
+    seasonalForecastArchive:{weeklyPeriods:longRange.points.reduce((n,p)=>n+(p.weekly?.time?.length||0),0),monthlyPeriods:longRange.points.reduce((n,p)=>n+(p.monthly?.time?.length||0),0),regions:longRange.points.length,archive:"data/okinawa-forecast-snapshots/YYYY-MM-DD.json",verification:"periods are eligible only after their valid week/month has ended"}
   },
   sourceAvailability:input.sourceAvailability,
   recommendation:result,
@@ -98,6 +117,7 @@ const report={
     "Forecast direction stability is calculated only where at least two distinct daily forecast snapshots overlap the same target date; it is an uncertainty penalty, not rainfall probability.",
     "Each Okinawa region uses exactly one representative course for historical climate context: north=Kise, central=PGM Okinawa, south=Southern Links. Other same-region courses inherit the representative regional assessment.",
     "One forecast snapshot per Okinawa-local date is retained in data/okinawa-forecast-snapshots; same-day reruns replace rather than inflate the archive.",
+    "Each snapshot also preserves raw EC46 weekly and SEAS5 monthly precipitation forecasts with valid-time labels for later independent source verification.",
     "No data is imputed. Missing source fields remain absent and reduce eligibility."
   ]
 };
