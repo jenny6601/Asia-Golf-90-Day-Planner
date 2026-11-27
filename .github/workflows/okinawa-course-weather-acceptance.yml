@@ -22,6 +22,8 @@ on:
       - "assets/js/six-hour-playability.js"
       - "assets/js/taiwan-hourly-renderer.js"
       - "assets/js/app.js"
+      - "tests/departure-course-order.test.js"
+      - "assets/js/departure-course-order.js"
       - "tests/monthly-calendar-render.test.js"
       - "tests/six-hour-playability.test.js"
       - "tests/forecast-completeness.test.js"
