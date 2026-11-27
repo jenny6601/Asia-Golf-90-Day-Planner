@@ -12,13 +12,13 @@ const history=(date,overrides={})=>({
  ...overrides
 });
 
-test("builds D19-D90 daily estimates using historical climate only",()=>{
+test("builds D17-D90 daily estimates using historical climate only",()=>{
  const rows=buildDailyClimateOutlook({},[history("2026-12-14")],today,90);
- assert.equal(rows.length,72);
- assert.equal(rows[0].date,"2026-12-14");
- assert.equal(rows[0].lead,19);
- assert.equal(rows[0].band,"D19–D46");
- assert.equal(rows[28].band,"D47–D60");
+ assert.equal(rows.length,74);
+ assert.equal(rows[0].date,"2026-12-12");
+ assert.equal(rows[0].lead,17);
+ assert.equal(rows[0].band,"D17–D46");
+ assert.equal(rows[30].band,"D47–D60");
  assert.equal(rows.at(-1).lead,90);
  assert.equal(rows.at(-1).band,"D61–D90");
  assert.equal(rows[0].feelsLikeMinEstimateC,14.2);
@@ -63,5 +63,5 @@ test("historical wet-day frequency is never labelled as future rain probability"
 
 test("validates date and requested horizon",()=>{
  assert.throws(()=>buildDailyClimateOutlook({},[],"bad-date",90),/YYYY-MM-DD/);
- assert.throws(()=>buildDailyClimateOutlook({},[],today,16),/between 19 and 120/);
+ assert.throws(()=>buildDailyClimateOutlook({},[],today,16),/between 17 and 120/);
 });
