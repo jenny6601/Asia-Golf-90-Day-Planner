@@ -61,7 +61,10 @@
             "jp-hokkaido-golf-club"
           ],
           "courseCount": 2,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-01",
+          "regionName": "北海道",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-HKD-NISEKO",
@@ -97,7 +100,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-01",
+          "regionName": "北海道",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-HKD-HAKODATE",
@@ -155,7 +161,10 @@
             "jp-hokkaido-country"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-01",
+          "regionName": "北海道",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-THK-AOMORI-AKITA",
@@ -193,7 +202,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-02",
+          "regionName": "東北",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-THK-IWATE-APPI",
@@ -248,7 +260,10 @@
             "jp-appi-kogen"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-02",
+          "regionName": "東北",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-THK-MIYAGI-SENDAI",
@@ -305,7 +320,10 @@
             "jp-rifu"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-02",
+          "regionName": "東北",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-THK-FUKUSHIMA-YAMAGATA",
@@ -341,7 +359,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-02",
+          "regionName": "東北",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KNT-TOKYO-KANAGAWA",
@@ -381,7 +402,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-03",
+          "regionName": "關東",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KNT-CHIBA-NARITA",
@@ -435,7 +459,10 @@
             "jp-manna-country"
           ],
           "courseCount": 2,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-03",
+          "regionName": "關東",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KNT-IBARAKI-TSUKUBA",
@@ -471,7 +498,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-03",
+          "regionName": "關東",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KNT-TOCHIGI-NASU",
@@ -528,7 +558,10 @@
             "jp-murasakizuka"
           ],
           "courseCount": 4,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-03",
+          "regionName": "關東",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KNT-GUNMA-SAITAMA",
@@ -565,7 +598,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-03",
+          "regionName": "關東",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHB-SHIZUOKA-FUJI-IZU",
@@ -603,7 +639,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-04",
+          "regionName": "中部",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHB-FUJI-YAMANASHI",
@@ -668,7 +707,10 @@
             "jp-fuji-golf-course"
           ],
           "courseCount": 4,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-04",
+          "regionName": "中部",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHB-NAGANO-KARUIZAWA",
@@ -704,7 +746,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-04",
+          "regionName": "中部",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHB-NAGOYA-GIFU",
@@ -741,7 +786,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-04",
+          "regionName": "中部",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHB-MIE-ISE",
@@ -794,7 +842,10 @@
             "jp-tsu"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-04",
+          "regionName": "中部",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHB-HOKURIKU",
@@ -851,7 +902,10 @@
             "jp-aga-kogen"
           ],
           "courseCount": 2,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-04",
+          "regionName": "中部",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KNS-OSAKA-HYOGO",
@@ -906,7 +960,10 @@
             "jp-hanna-country"
           ],
           "courseCount": 2,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-05",
+          "regionName": "關西",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KNS-KYOTO-SHIGA-NARA",
@@ -942,7 +999,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-05",
+          "regionName": "關西",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KNS-WAKAYAMA",
@@ -997,7 +1057,10 @@
             "jp-arita-resol"
           ],
           "courseCount": 2,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-05",
+          "regionName": "關西",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHG-SANYO",
@@ -1052,7 +1115,10 @@
             "jp-setouchi"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-06",
+          "regionName": "中國地方",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHG-SANIN",
@@ -1105,7 +1171,10 @@
             "jp-green-park-daisen"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-06",
+          "regionName": "中國地方",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-SHK-KAGAWA-TOKUSHIMA",
@@ -1144,7 +1213,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-07",
+          "regionName": "四國",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-SHK-EHIME-KOCHI",
@@ -1200,7 +1272,10 @@
             "jp-tosa"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-07",
+          "regionName": "四國",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KYS-FUKUOKA-SAGA",
@@ -1260,7 +1335,10 @@
             "jp-the-classic"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-08",
+          "regionName": "九州",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KYS-NAGASAKI-KUMAMOTO",
@@ -1296,7 +1374,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-08",
+          "regionName": "九州",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KYS-OITA",
@@ -1332,7 +1413,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-08",
+          "regionName": "九州",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-KYS-MIYAZAKI-KAGOSHIMA",
@@ -1394,7 +1478,10 @@
             "jp-amami-cc"
           ],
           "courseCount": 3,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-08",
+          "regionName": "九州",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-OKI-MAIN-NORTH",
@@ -1415,7 +1502,10 @@
             "jp-kanucha-golf"
           ],
           "courseCount": 4,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-09",
+          "regionName": "沖繩",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-OKI-MAIN-CENTRAL",
@@ -1440,7 +1530,10 @@
             "jp-onishi-terrace"
           ],
           "courseCount": 8,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-09",
+          "regionName": "沖繩",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-OKI-MAIN-SOUTH",
@@ -1463,7 +1556,10 @@
             "jp-shurei-cc"
           ],
           "courseCount": 6,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-09",
+          "regionName": "沖繩",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-OKI-OUTER-ISLANDS",
@@ -1503,7 +1599,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-09",
+          "regionName": "沖繩",
+          "subregionUnit": "golf-course-cluster"
         }
       ],
       "coordinateResearchSummary": {
@@ -1523,7 +1622,220 @@
         "regionalClimateEligible": 16
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified.",
-      "subregionUnit": "golf-course-cluster"
+      "subregionUnit": "golf-course-cluster",
+      "regions": [
+        {
+          "id": "JP-REG-01",
+          "name": "北海道",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "JP-HKD-SAPPORO",
+            "JP-HKD-NISEKO",
+            "JP-HKD-HAKODATE"
+          ],
+          "subregionCount": 3,
+          "courseIds": [
+            "jp-north-country",
+            "jp-hokkaido-country",
+            "jp-hokkaido-golf-club",
+            "jp-niseko-village-golf"
+          ],
+          "courseCount": 4
+        },
+        {
+          "id": "JP-REG-02",
+          "name": "東北",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "JP-THK-AOMORI-AKITA",
+            "JP-THK-IWATE-APPI",
+            "JP-THK-MIYAGI-SENDAI",
+            "JP-THK-FUKUSHIMA-YAMAGATA"
+          ],
+          "subregionCount": 4,
+          "courseIds": [
+            "jp-appi-kogen",
+            "jp-rifu",
+            "jp-adatara",
+            "jp-akita-kita-kuko",
+            "jp-aomori-cc",
+            "jp-aomori-royal"
+          ],
+          "courseCount": 6
+        },
+        {
+          "id": "JP-REG-03",
+          "name": "關東",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "JP-KNT-TOKYO-KANAGAWA",
+            "JP-KNT-CHIBA-NARITA",
+            "JP-KNT-IBARAKI-TSUKUBA",
+            "JP-KNT-TOCHIGI-NASU",
+            "JP-KNT-GUNMA-SAITAMA"
+          ],
+          "subregionCount": 5,
+          "courseIds": [
+            "jp-seven-hundred",
+            "jp-narita-hills",
+            "jp-hayama-kokusai",
+            "jp-iruma-country",
+            "jp-25-nasu",
+            "jp-31-country",
+            "jp-adonis-ogawa",
+            "jp-fuchu-country",
+            "jp-gmg-hachioji",
+            "jp-hachioji-cc",
+            "jp-izu-oshima",
+            "jp-manna-country",
+            "jp-mashiko-country",
+            "jp-murasakizuka"
+          ],
+          "courseCount": 14
+        },
+        {
+          "id": "JP-REG-04",
+          "name": "中部",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "JP-CHB-SHIZUOKA-FUJI-IZU",
+            "JP-CHB-FUJI-YAMANASHI",
+            "JP-CHB-NAGANO-KARUIZAWA",
+            "JP-CHB-NAGOYA-GIFU",
+            "JP-CHB-MIE-ISE",
+            "JP-CHB-HOKURIKU"
+          ],
+          "subregionCount": 6,
+          "courseIds": [
+            "jp-kawaguchiko",
+            "jp-tsu",
+            "jp-tokinodai",
+            "jp-green-valley",
+            "jp-dai-atami-kokusai",
+            "jp-daifuji",
+            "jp-eau-sol-vert-karuizawa",
+            "jp-fuji-classic",
+            "jp-fuji-golf-course",
+            "jp-gora-kadan-fuji",
+            "jp-14-hills",
+            "jp-adonis",
+            "jp-aga-kogen"
+          ],
+          "courseCount": 13
+        },
+        {
+          "id": "JP-REG-05",
+          "name": "關西",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "JP-KNS-OSAKA-HYOGO",
+            "JP-KNS-KYOTO-SHIGA-NARA",
+            "JP-KNS-WAKAYAMA"
+          ],
+          "subregionCount": 3,
+          "courseIds": [
+            "jp-arima-royal",
+            "jp-leograd",
+            "jp-arita-resol",
+            "jp-hanna-country",
+            "jp-kyoto-golf-club"
+          ],
+          "courseCount": 5
+        },
+        {
+          "id": "JP-REG-06",
+          "name": "中國地方",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "JP-CHG-SANYO",
+            "JP-CHG-SANIN"
+          ],
+          "subregionCount": 2,
+          "courseIds": [
+            "jp-green-park-daisen",
+            "jp-setouchi"
+          ],
+          "courseCount": 2
+        },
+        {
+          "id": "JP-REG-07",
+          "name": "四國",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "JP-SHK-KAGAWA-TOKUSHIMA",
+            "JP-SHK-EHIME-KOCHI"
+          ],
+          "subregionCount": 2,
+          "courseIds": [
+            "jp-tosa",
+            "jp-anan-cc",
+            "jp-bizan-cc",
+            "jp-reomakogen",
+            "jp-shikoku-anabuki"
+          ],
+          "courseCount": 5
+        },
+        {
+          "id": "JP-REG-08",
+          "name": "九州",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "JP-KYS-FUKUOKA-SAGA",
+            "JP-KYS-NAGASAKI-KUMAMOTO",
+            "JP-KYS-OITA",
+            "JP-KYS-MIYAZAKI-KAGOSHIMA"
+          ],
+          "subregionCount": 4,
+          "courseIds": [
+            "jp-the-classic",
+            "jp-phoenix",
+            "jp-aino-cc",
+            "jp-aiwa-miyazaki",
+            "jp-amagase-onsen",
+            "jp-amami-cc"
+          ],
+          "courseCount": 6
+        },
+        {
+          "id": "JP-REG-09",
+          "name": "沖繩",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "JP-OKI-MAIN-NORTH",
+            "JP-OKI-MAIN-CENTRAL",
+            "JP-OKI-MAIN-SOUTH",
+            "JP-OKI-OUTER-ISLANDS"
+          ],
+          "subregionCount": 4,
+          "courseIds": [
+            "southern-links",
+            "pgm-okinawa",
+            "kise",
+            "atta-terrace",
+            "palm-hills",
+            "chura-orchard",
+            "jp-banyan-tree-okinawa",
+            "jp-bel-beach",
+            "jp-emerald-coast",
+            "jp-ginoza-cc",
+            "jp-kanucha-golf",
+            "jp-naha-golf",
+            "jp-nanzan-cc",
+            "jp-ocean-castle",
+            "jp-ocean-links-miyako",
+            "jp-okinawa-country",
+            "jp-okinawa-royal",
+            "jp-onishi-terrace",
+            "jp-risonare-kohamajima",
+            "jp-ryukyu-golf",
+            "jp-sashiba-links",
+            "jp-shigira-bay",
+            "jp-shurei-cc"
+          ],
+          "courseCount": 23
+        }
+      ],
+      "regionHierarchy": "region>subregion>golf-course"
     },
     {
       "countryCode": "KR",
@@ -1561,7 +1873,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "KR-CAP-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "KR-REG-01",
+          "regionName": "Capital Area",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "KR-GW-01",
@@ -1593,7 +1908,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "KR-GW-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "KR-REG-02",
+          "regionName": "Gangwon",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "KR-CC-01",
@@ -1625,7 +1943,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "KR-CC-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "KR-REG-03",
+          "regionName": "Chungcheong",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "KR-YN-01",
@@ -1657,7 +1978,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "KR-YN-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "KR-REG-04",
+          "regionName": "Yeongnam",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "KR-HN-01",
@@ -1689,7 +2013,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "KR-HN-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "KR-REG-05",
+          "regionName": "Honam",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "KR-JJ-01",
@@ -1721,10 +2048,94 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "KR-JJ-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "KR-REG-06",
+          "regionName": "Jeju",
+          "subregionUnit": "golf-course-cluster"
         }
       ],
-      "subregionUnit": "golf-course-cluster"
+      "subregionUnit": "golf-course-cluster",
+      "regions": [
+        {
+          "id": "KR-REG-01",
+          "name": "Capital Area",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "KR-CAP-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "kr-kr-cap-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "KR-REG-02",
+          "name": "Gangwon",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "KR-GW-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "kr-kr-gw-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "KR-REG-03",
+          "name": "Chungcheong",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "KR-CC-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "kr-kr-cc-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "KR-REG-04",
+          "name": "Yeongnam",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "KR-YN-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "kr-kr-yn-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "KR-REG-05",
+          "name": "Honam",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "KR-HN-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "kr-kr-hn-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "KR-REG-06",
+          "name": "Jeju",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "KR-JJ-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "kr-kr-jj-01"
+          ],
+          "courseCount": 1
+        }
+      ],
+      "regionHierarchy": "region>subregion>golf-course"
     },
     {
       "countryCode": "CN",
@@ -1762,7 +2173,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "CN-HN-NORTH",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "CN-REG-01",
+          "regionName": "Hainan",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "CN-HN-EAST",
@@ -1794,7 +2208,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "CN-HN-EAST",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "CN-REG-01",
+          "regionName": "Hainan",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "CN-HN-SOUTH",
@@ -1826,7 +2243,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "CN-HN-SOUTH",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "CN-REG-01",
+          "regionName": "Hainan",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "CN-SH-01",
@@ -1858,7 +2278,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "CN-SH-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "CN-REG-02",
+          "regionName": "Shanghai",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "CN-BJ-01",
@@ -1890,7 +2313,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "CN-BJ-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "CN-REG-03",
+          "regionName": "Beijing",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "CN-GD-01",
@@ -1922,7 +2348,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "CN-GD-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "CN-REG-04",
+          "regionName": "Guangdong",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "CN-YN-01",
@@ -1954,10 +2383,85 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "CN-YN-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "CN-REG-05",
+          "regionName": "Yunnan",
+          "subregionUnit": "golf-course-cluster"
         }
       ],
-      "subregionUnit": "golf-course-cluster"
+      "subregionUnit": "golf-course-cluster",
+      "regions": [
+        {
+          "id": "CN-REG-01",
+          "name": "Hainan",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "CN-HN-NORTH",
+            "CN-HN-EAST",
+            "CN-HN-SOUTH"
+          ],
+          "subregionCount": 3,
+          "courseIds": [
+            "cn-cn-hn-north",
+            "cn-cn-hn-east",
+            "cn-cn-hn-south"
+          ],
+          "courseCount": 3
+        },
+        {
+          "id": "CN-REG-02",
+          "name": "Shanghai",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "CN-SH-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "cn-cn-sh-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "CN-REG-03",
+          "name": "Beijing",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "CN-BJ-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "cn-cn-bj-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "CN-REG-04",
+          "name": "Guangdong",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "CN-GD-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "cn-cn-gd-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "CN-REG-05",
+          "name": "Yunnan",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "CN-YN-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "cn-cn-yn-01"
+          ],
+          "courseCount": 1
+        }
+      ],
+      "regionHierarchy": "region>subregion>golf-course"
     },
     {
       "countryCode": "VN",
@@ -1995,7 +2499,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "VN-NORTH-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "VN-REG-01",
+          "regionName": "Northern Vietnam",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "VN-CENTRAL-01",
@@ -2027,7 +2534,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "VN-CENTRAL-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "VN-REG-02",
+          "regionName": "Central Vietnam",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "VN-CENTRAL-02",
@@ -2059,7 +2569,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "VN-CENTRAL-02",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "VN-REG-02",
+          "regionName": "Central Vietnam",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "VN-SOUTH-01",
@@ -2091,7 +2604,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "VN-SOUTH-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "VN-REG-03",
+          "regionName": "Southern Vietnam",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "VN-SOUTH-02",
@@ -2123,7 +2639,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "VN-SOUTH-02",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "VN-REG-03",
+          "regionName": "Southern Vietnam",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "VN-ISLAND-01",
@@ -2155,10 +2674,72 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "VN-ISLAND-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "VN-REG-04",
+          "regionName": "Southern Islands",
+          "subregionUnit": "golf-course-cluster"
         }
       ],
-      "subregionUnit": "golf-course-cluster"
+      "subregionUnit": "golf-course-cluster",
+      "regions": [
+        {
+          "id": "VN-REG-01",
+          "name": "Northern Vietnam",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "VN-NORTH-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "vn-vn-north-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "VN-REG-02",
+          "name": "Central Vietnam",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "VN-CENTRAL-01",
+            "VN-CENTRAL-02"
+          ],
+          "subregionCount": 2,
+          "courseIds": [
+            "vn-vn-central-01",
+            "vn-vn-central-02"
+          ],
+          "courseCount": 2
+        },
+        {
+          "id": "VN-REG-03",
+          "name": "Southern Vietnam",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "VN-SOUTH-01",
+            "VN-SOUTH-02"
+          ],
+          "subregionCount": 2,
+          "courseIds": [
+            "vn-vn-south-01",
+            "vn-vn-south-02"
+          ],
+          "courseCount": 2
+        },
+        {
+          "id": "VN-REG-04",
+          "name": "Southern Islands",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "VN-ISLAND-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "vn-vn-island-01"
+          ],
+          "courseCount": 1
+        }
+      ],
+      "regionHierarchy": "region>subregion>golf-course"
     },
     {
       "countryCode": "TH",
@@ -2196,7 +2777,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "TH-BKK-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "TH-REG-01",
+          "regionName": "Bangkok & Central",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "TH-EAST-01",
@@ -2228,7 +2812,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "TH-EAST-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "TH-REG-02",
+          "regionName": "Pattaya & Eastern",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "TH-WEST-01",
@@ -2260,7 +2847,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "TH-WEST-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "TH-REG-03",
+          "regionName": "Hua Hin & Western",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "TH-SOUTH-01",
@@ -2292,7 +2882,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "TH-SOUTH-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "TH-REG-04",
+          "regionName": "Phuket & Southern",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "TH-NORTH-01",
@@ -2324,7 +2917,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "TH-NORTH-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "TH-REG-05",
+          "regionName": "Chiang Mai & Northern",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "TH-NE-01",
@@ -2356,7 +2952,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "TH-NE-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "TH-REG-06",
+          "regionName": "Khao Yai & Northeast",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "TH-ISLAND-01",
@@ -2388,10 +2987,107 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "TH-ISLAND-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "TH-REG-07",
+          "regionName": "Gulf Islands",
+          "subregionUnit": "golf-course-cluster"
         }
       ],
-      "subregionUnit": "golf-course-cluster"
+      "subregionUnit": "golf-course-cluster",
+      "regions": [
+        {
+          "id": "TH-REG-01",
+          "name": "Bangkok & Central",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "TH-BKK-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "th-th-bkk-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "TH-REG-02",
+          "name": "Pattaya & Eastern",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "TH-EAST-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "th-th-east-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "TH-REG-03",
+          "name": "Hua Hin & Western",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "TH-WEST-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "th-th-west-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "TH-REG-04",
+          "name": "Phuket & Southern",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "TH-SOUTH-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "th-th-south-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "TH-REG-05",
+          "name": "Chiang Mai & Northern",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "TH-NORTH-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "th-th-north-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "TH-REG-06",
+          "name": "Khao Yai & Northeast",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "TH-NE-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "th-th-ne-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "TH-REG-07",
+          "name": "Gulf Islands",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "TH-ISLAND-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "th-th-island-01"
+          ],
+          "courseCount": 1
+        }
+      ],
+      "regionHierarchy": "region>subregion>golf-course"
     },
     {
       "countryCode": "MY",
@@ -2429,7 +3125,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "MY-CENTRAL-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "MY-REG-01",
+          "regionName": "Kuala Lumpur & Central",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "MY-NORTH-01",
@@ -2461,7 +3160,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "MY-NORTH-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "MY-REG-02",
+          "regionName": "North Malaysia",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "MY-SOUTH-01",
@@ -2493,7 +3195,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "MY-SOUTH-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "MY-REG-03",
+          "regionName": "South Malaysia",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "MY-ISLAND-01",
@@ -2525,7 +3230,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "MY-ISLAND-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "MY-REG-04",
+          "regionName": "Langkawi",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "MY-BORNEO-01",
@@ -2557,7 +3265,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "MY-BORNEO-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "MY-REG-05",
+          "regionName": "Borneo",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "MY-BORNEO-02",
@@ -2589,7 +3300,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "MY-BORNEO-02",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "MY-REG-05",
+          "regionName": "Borneo",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "MY-EAST-01",
@@ -2621,7 +3335,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "MY-EAST-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "MY-REG-06",
+          "regionName": "East Coast Region",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "MY-HIGHLAND-01",
@@ -2653,10 +3370,109 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "MY-HIGHLAND-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "MY-REG-07",
+          "regionName": "Highlands",
+          "subregionUnit": "golf-course-cluster"
         }
       ],
-      "subregionUnit": "golf-course-cluster"
+      "subregionUnit": "golf-course-cluster",
+      "regions": [
+        {
+          "id": "MY-REG-01",
+          "name": "Kuala Lumpur & Central",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "MY-CENTRAL-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "my-my-central-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "MY-REG-02",
+          "name": "North Malaysia",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "MY-NORTH-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "my-my-north-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "MY-REG-03",
+          "name": "South Malaysia",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "MY-SOUTH-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "my-my-south-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "MY-REG-04",
+          "name": "Langkawi",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "MY-ISLAND-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "my-my-island-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "MY-REG-05",
+          "name": "Borneo",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "MY-BORNEO-01",
+            "MY-BORNEO-02"
+          ],
+          "subregionCount": 2,
+          "courseIds": [
+            "my-my-borneo-01",
+            "my-my-borneo-02"
+          ],
+          "courseCount": 2
+        },
+        {
+          "id": "MY-REG-06",
+          "name": "East Coast Region",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "MY-EAST-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "my-my-east-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "MY-REG-07",
+          "name": "Highlands",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "MY-HIGHLAND-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "my-my-highland-01"
+          ],
+          "courseCount": 1
+        }
+      ],
+      "regionHierarchy": "region>subregion>golf-course"
     },
     {
       "countryCode": "SG",
@@ -2694,10 +3510,29 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "SG-ISLAND-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "SG-REG-01",
+          "regionName": "Singapore",
+          "subregionUnit": "golf-course-cluster"
         }
       ],
-      "subregionUnit": "golf-course-cluster"
+      "subregionUnit": "golf-course-cluster",
+      "regions": [
+        {
+          "id": "SG-REG-01",
+          "name": "Singapore",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "SG-ISLAND-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "sg-sg-island-01"
+          ],
+          "courseCount": 1
+        }
+      ],
+      "regionHierarchy": "region>subregion>golf-course"
     },
     {
       "countryCode": "ID",
@@ -2735,7 +3570,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "ID-JKT-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "ID-REG-01",
+          "regionName": "Greater Jakarta",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "ID-WJAVA-01",
@@ -2767,7 +3605,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "ID-WJAVA-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "ID-REG-02",
+          "regionName": "West Java",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "ID-CJAVA-01",
@@ -2799,7 +3640,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "ID-CJAVA-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "ID-REG-03",
+          "regionName": "Central Java",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "ID-EJAVA-01",
@@ -2831,7 +3675,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "ID-EJAVA-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "ID-REG-04",
+          "regionName": "East Java",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "ID-BALI-01",
@@ -2863,7 +3710,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "ID-BALI-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "ID-REG-05",
+          "regionName": "Bali",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "ID-RIAU-01",
@@ -2895,7 +3745,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "ID-RIAU-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "ID-REG-06",
+          "regionName": "Riau Islands",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "ID-SUMATRA-01",
@@ -2927,7 +3780,10 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "ID-SUMATRA-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "ID-REG-07",
+          "regionName": "Sumatra",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "ID-KAL-01",
@@ -2959,10 +3815,120 @@
             "checkedOn": "2026-11-27"
           },
           "golfClusterId": "ID-KAL-01",
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "regionId": "ID-REG-08",
+          "regionName": "Kalimantan",
+          "subregionUnit": "golf-course-cluster"
         }
       ],
-      "subregionUnit": "golf-course-cluster"
+      "subregionUnit": "golf-course-cluster",
+      "regions": [
+        {
+          "id": "ID-REG-01",
+          "name": "Greater Jakarta",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "ID-JKT-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "id-id-jkt-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "ID-REG-02",
+          "name": "West Java",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "ID-WJAVA-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "id-id-wjava-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "ID-REG-03",
+          "name": "Central Java",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "ID-CJAVA-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "id-id-cjava-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "ID-REG-04",
+          "name": "East Java",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "ID-EJAVA-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "id-id-ejava-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "ID-REG-05",
+          "name": "Bali",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "ID-BALI-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "id-id-bali-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "ID-REG-06",
+          "name": "Riau Islands",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "ID-RIAU-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "id-id-riau-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "ID-REG-07",
+          "name": "Sumatra",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "ID-SUMATRA-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "id-id-sumatra-01"
+          ],
+          "courseCount": 1
+        },
+        {
+          "id": "ID-REG-08",
+          "name": "Kalimantan",
+          "regionUnit": "macro-region",
+          "subregionIds": [
+            "ID-KAL-01"
+          ],
+          "subregionCount": 1,
+          "courseIds": [
+            "id-id-kal-01"
+          ],
+          "courseCount": 1
+        }
+      ],
+      "regionHierarchy": "region>subregion>golf-course"
     }
   ],
   "planningNote": "Japan uses 33 destination-oriented golf clusters (3 Hokkaido, 4 Tohoku, 5 Kanto, 6 Chubu, 3 Kansai, 2 Chugoku, 2 Shikoku, 4 Kyushu, 4 Okinawa). Other seven countries retain their existing destination-oriented subregions, now explicitly typed as golf-course clusters. Candidate representatives are not operational forecast points until validated.",
