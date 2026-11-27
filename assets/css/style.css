@@ -1392,6 +1392,19 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 /* SVG viewBox is 980 units: seven equal 140-unit daily tracks. */
 
 
+/* 90-day verification details: collapsed by default, expanded on demand */
+.validation-disclosure{border:1px solid #d8e5df;border-radius:14px;background:#f8fbf9;overflow:hidden}
+.validation-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 16px;cursor:pointer;list-style:none}
+.validation-summary::-webkit-details-marker{display:none}
+.validation-summary::marker{content:""}
+.validation-summary::after{content:"＋";margin-left:auto;color:#356b53;font-size:1.25rem;font-weight:800;line-height:1}
+.validation-disclosure[open]>.validation-summary{border-bottom:1px solid #d8e5df}
+.validation-disclosure[open]>.validation-summary::after{content:"−"}
+.validation-summary:focus-visible{outline:3px solid #176caa;outline-offset:-3px}
+.validation-disclosure-content{padding:0 16px 14px}
+.validation-disclosure-content>.validation-body{padding-bottom:2px}
+@media(max-width:520px){.validation-summary{padding:13px 12px}.validation-disclosure-content{padding:0 12px 12px}}
+
 /* 90-day forecast verification panel */
 .validation-panel{margin:0 0 18px;padding:16px;border:1px solid #d8e5df;border-radius:14px;background:#f8fbf9}
 .validation-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
