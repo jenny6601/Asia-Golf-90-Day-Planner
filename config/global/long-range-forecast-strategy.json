@@ -30,14 +30,14 @@
         18
       ],
       "primarySource": "ECMWF_IFS_SUBSEASONAL",
-      "secondarySource": "ERA5_LAND_CLIMATOLOGY",
+      "secondarySource": "ERA5_DAILY_CLIMATOLOGY",
       "temporalResolution": "weekly forecast signal disaggregated to daily estimates using historical daily sequences",
       "updateCadence": "each available ECMWF extended-range cycle",
       "usableSignals": [
         "overlapping ECMWF weekly precipitation anomaly/probability",
         "overlapping ECMWF weekly 2m temperature anomaly/probability",
         "ensemble spread where available",
-        "ERA5-Land same-calendar-day distributions and coherent multi-day analogues"
+        "ERA5 same-calendar-day distributions and coherent multi-day analogues"
       ],
       "prohibitedClaims": [
         "deterministic daily weather",
@@ -94,18 +94,21 @@
   ],
   "sources": [
     {
-      "sourceId": "ERA5_LAND_CLIMATOLOGY",
+      "sourceId": "ERA5_DAILY_CLIMATOLOGY",
       "provider": "Copernicus Climate Change Service / ECMWF",
-      "dataset": "reanalysis-era5-land",
-      "role": "regional historical climate distribution and seasonal prior",
+      "dataset": "derived-era5-single-levels-daily-statistics",
+      "role": "regional historical climate distribution and seasonal prior from ERA5 daily aggregates",
       "referencePeriod": "1991-2020",
-      "status": "planned-existing-acquisition-manifest-not-yet-completed",
+      "status": "planned-ERA5-daily-acquisition-not-yet-completed",
       "variables": [
-        "daily precipitation",
-        "daily wet-day frequency",
-        "daily Tmin",
-        "daily Tmax",
-        "daily mean temperature"
+        "daily minimum 2m temperature",
+        "daily mean 2m temperature",
+        "daily maximum 2m temperature",
+        "daily total precipitation",
+        "daily mean 2m dewpoint",
+        "daily mean 10m U/V wind components",
+        "daily mean total cloud cover",
+        "daily mean sea-level pressure"
       ],
       "refreshPolicy": "static baseline; refresh only when reference period or dataset version is intentionally revised"
     },
@@ -209,7 +212,7 @@
     "dailyOutputRequired": true,
     "dailyObservationIngestionRequired": false,
     "d17D18DailyOutputRequired": true,
-    "d17D18Source": "ECMWF extended-range weekly signal plus ERA5-Land historical daily prior; no D16 carry-forward"
+    "d17D18Source": "ECMWF extended-range weekly signal plus ERA5 historical daily prior; no D16 carry-forward"
   },
   "activationGates": [
     "D17-D18 daily estimates are generated from available overlapping ECMWF weekly signals plus historical daily sequences, with missing-input fail-closed behavior and separate transition-band validation",
@@ -246,8 +249,9 @@
     ],
     "dataNature": "D19-D90 daily values are estimated daily distributions or representative daily scenarios, not deterministic forecasts. Preserve quantiles/ranges and uncertainty; never imply exact local weather. D17-D18 are transition-band daily estimates and must not be presented as a continuation of deterministic D01-D16 forecasts.",
     "generationMethod": [
-      "Use ERA5-Land 1991-2020 day-of-year daily distributions as the regional historical prior.",
-      "For D17-D18, use any overlapping ECMWF extended-range weekly ensemble signal as conditioning evidence with ERA5-Land day-of-year daily distributions and coherent historical sequences; do not extrapolate D16 deterministic values.",
+      "Historical prior must use the Copernicus ERA5 daily-statistics dataset only; ERA5-Land is prohibited.",
+      "Use ERA5 1991-2020 day-of-year daily distributions as the regional historical prior.",
+      "For D17-D18, use any overlapping ECMWF extended-range weekly ensemble signal as conditioning evidence with ERA5 day-of-year daily distributions and coherent historical sequences; do not extrapolate D16 deterministic values.",
       "Use ECMWF D19-D46 weekly ensemble anomalies and probabilities as conditioning signals for each overlapping local date.",
       "Use C3S D47-D90 monthly multi-system anomalies and tercile probabilities as conditioning signals for each local date.",
       "Use validated daily-shaped seasonal model outputs from independent model systems as additional daily structure only where hindcast skill is demonstrated.",
