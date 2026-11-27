@@ -173,7 +173,7 @@ const historicalCircularDistance=(a,b)=>{
 
 /**
  * Historical 31-day rolling climate normals around each target calendar date.
- * Uses ERA5 daily aggregates for 1991-2020 only; no seasonal model adjustment.
+ * The App combines these historical baselines with weekly/monthly seasonal signals.
  */
 export async function fetchCourseHistoricalWeekNormals(course,dates,fetchImpl=fetch,now=new Date()){
  if(!course)throw new TypeError("球場資料不足");
