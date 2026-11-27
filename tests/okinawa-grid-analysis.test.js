@@ -22,7 +22,7 @@ test("same-grid series comparison reports exact matches and downscaling differen
  const same=compareNumericSeries([1,2,3],[1,2,3]);
  assert.equal(same.n,3);assert.equal(same.exactMatchPercent,100);assert.equal(same.maxAbsoluteDifference,0);
  const different=compareNumericSeries([1,2,3],[1,2.5,4]);
- assert.equal(different.exactMatchPercent,100/3);assert.equal(different.meanAbsoluteDifference,0.5);assert.equal(different.maxAbsoluteDifference,1);
+ assert.ok(Math.abs(different.exactMatchPercent-100/3)<1e-10);assert.equal(different.meanAbsoluteDifference,0.5);assert.equal(different.maxAbsoluteDifference,1);
 });
 
 test("regional numeric summary ignores missing values and preserves sample count",()=>{
