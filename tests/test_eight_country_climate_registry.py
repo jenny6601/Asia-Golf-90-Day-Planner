@@ -46,11 +46,11 @@ class EightCountryRegistryTests(unittest.TestCase):
     def test_country_filter_and_unknown_country(self):
         registry = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         plan = MODULE.build_task_plan(registry, 1991, 1991, ["JP"])
-        self.assertEqual(plan["annualTaskCount"], 19)
+        self.assertEqual(plan["annualTaskCount"], 37)
         with self.assertRaises(ValueError):
             MODULE.build_task_plan(registry, 1991, 1991, ["XX"])
 
-    def test_all_62_subregions_have_regional_points_and_valid_timezones(self):
+    def test_all_80_subregions_have_regional_points_and_valid_timezones(self):
         result = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         pending_ids = {x["subregionId"] for x in result["pendingSubregions"]}
         self.assertEqual(pending_ids, set())
