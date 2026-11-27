@@ -73,8 +73,12 @@ export async function fetchAsiaGolfDirectory({fetchImpl = fetch} = {}) {
       regionalRepresentativeCourseId: subregion.representativeCourseId,
       regionalSubregionId: subregion.id,
       regionalSubregionLabel: subregion.label || subregion.subregion || subregion.id,
+      regionalMacroRegion: subregion.region,
+      regionalMacroRegionDisplayName: subregion.regionDisplayName || subregion.region,
       regionalClimate: {
         subregionId: subregion.id,
+        macroRegion: subregion.region,
+        macroRegionDisplayName: subregion.regionDisplayName || subregion.region,
         label: subregion.label || subregion.subregion || subregion.id,
         representativeCourseId: subregion.representativeCourseId,
         representativeCourseName: courseById.get(subregion.representativeCourseId)?.name || subregion.candidateCourseName,
