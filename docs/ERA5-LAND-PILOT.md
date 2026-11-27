@@ -147,3 +147,49 @@ python scripts/batch_era5_land_japan.py --start-year 1991 --end-year 2020 --limi
 Repeat the command to advance to the next pending task. The runner writes an atomic `batch-state.json` after each task and resumes by skipping validated daily outputs. Failed tasks remain recorded and are retried on a later invocation. Per task, it retries transient errors up to three times with increasing wait intervals, then runs structural inspection and daily JST aggregation. Raw archives, inspection reports and normalized daily JSON are stored separately under `data/era5-japan-1991-2020/`.
 
 The batch runner never sets `climatologyEligible=true`. It only records successful structural validation and daily conversion. Full 30-year completeness, JMA cross-check, station consistency and regional QA are separate gates before climatology activation.
+
+
+## 11. Japan 19-region daily QA and independent JMA comparison
+
+Run the regional completeness and climate-window QA after daily files have been acquired:
+
+```bash
+python scripts/audit_japan_era5_daily.py
+```
+
+The report is written to `data/processed/japan-era5-1991-2020-qa.json`. It reports, by region and year: missing dates, annual valid-day coverage, metric-specific coverage and ranges, monthly coverage, and 365 calendar-day rolling-window readiness for each metric. The rolling-window gate follows the climatology builder's 31-day window, 90% daily completeness and 24-valid-year threshold. It identifies which month/day/metric combinations have sufficient history; it does not activate the baseline.
+
+To provide an independent observation comparison, prepare a JMA daily-observation JSON file using the schema below. Assign each station to one regional ID and provide station coordinates and daily rainfall / Tmin / Tmax. The nearest supplied station is selected for each subregion; the default maximum distance is 75 km and at least 365 paired rainfall days are required for a comparison to be labelled available.
+
+```json
+{
+  "sourceId": "JMA_DAILY_OBSERVATION",
+  "stations": [
+    {
+      "stationId": "station-code",
+      "name": "station-name",
+      "latitude": 35.0,
+      "longitude": 139.0,
+      "regionId": "JP-KNT-SOUTH",
+      "records": [
+        {
+          "validDate": "1991-01-01",
+          "precipitationMm": 0.0,
+          "temperatureMinC": 2.1,
+          "temperatureMaxC": 8.4
+        }
+      ]
+    }
+  ]
+}
+```
+
+Run the comparison:
+
+```bash
+python scripts/compare_jma_station_daily.py path/to/jma-daily.json
+```
+
+Output: `data/processed/japan-jma-crosscheck.json`. The report includes station distance, paired-day counts, rainfall MAE/bias, wet-day hit/miss/false-alarm/correct-negative counts at 1 mm, and Tmin/Tmax MAE/bias. The interface does not automatically correct ERA5 values. Station metadata, station relocation/homogeneity, missingness and observation provenance must be checked before interpreting the comparison. A missing JMA input is reported as not available, not as a pass.
+
+**Important:** ERA5-Land is reanalysis, not a rain-gauge observation. Annual coverage and plausibility QA is not a substitute for independent JMA validation. All QA and cross-check outputs keep `climateBaselineEnabled=false`, `forecastEnabled=false` and `decisionUseEligible=false`.
