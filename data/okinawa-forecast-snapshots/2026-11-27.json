@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-27T06:44:18.814Z",
+  "fetchedAt": "2026-11-27T06:50:22.435Z",
   "localDate": "2026-11-27",
   "provider": "Open-Meteo Forecast API",
   "seasonalProvider": "Open-Meteo Seasonal Forecast API",
@@ -450,16 +450,16 @@
       },
       {
         "date": "2026-12-11",
-        "riskScore": 30.3,
+        "riskScore": 32.25,
         "coverage": 1,
-        "probability": 45,
+        "probability": 48,
         "rainMm": 0.3
       },
       {
         "date": "2026-12-12",
-        "riskScore": 43.05,
+        "riskScore": 54.1,
         "coverage": 1,
-        "probability": 35,
+        "probability": 52,
         "rainMm": 5.8
       }
     ],
@@ -571,9 +571,9 @@
       },
       {
         "date": "2026-12-12",
-        "riskScore": 51.8,
+        "riskScore": 62.85,
         "coverage": 1,
-        "probability": 35,
+        "probability": 52,
         "rainMm": 8.3
       }
     ],
@@ -685,9 +685,9 @@
       },
       {
         "date": "2026-12-12",
-        "riskScore": 48.55,
+        "riskScore": 60.25,
         "coverage": 1,
-        "probability": 30,
+        "probability": 48,
         "rainMm": 8.3
       }
     ]
@@ -1504,9 +1504,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 30.3,
+            "riskScore": 32.25,
             "coverage": 1,
-            "probability": 45,
+            "probability": 48,
             "rainMm": 0.3,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1566,9 +1566,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 43.05,
+            "riskScore": 54.1,
             "coverage": 1,
-            "probability": 35,
+            "probability": 52,
             "rainMm": 5.8,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1585,9 +1585,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 51.8,
+            "riskScore": 62.85,
             "coverage": 1,
-            "probability": 35,
+            "probability": 52,
             "rainMm": 8.3,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1604,9 +1604,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 48.55,
+            "riskScore": 60.25,
             "coverage": 1,
-            "probability": 30,
+            "probability": 48,
             "rainMm": 8.3,
             "method": "daily-probability-and-amount-impact-index"
           },
