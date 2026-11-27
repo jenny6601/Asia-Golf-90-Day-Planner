@@ -282,5 +282,18 @@
     ],
     "confidencePolicy": "Keep data confidence/source coverage separate from rainfall and playability risk. Long-range wet-day frequency estimates must never be labelled as daily rain probability.",
     "formalV1Scoring": "Do not change existing date-engine V1 weights or suitability thresholds in this stage."
+  },
+  "climatologyEvidenceExporter": {
+    "script": "scripts/export_regional_climate_evidence.py",
+    "status": "implemented-not-yet-run-on-observations",
+    "outputSchema": "date-addressable regional historical evidence",
+    "sourceContract": "regional-daily-evidence",
+    "february29Policy": "Interpolate means and wet-day frequency from February 28 and March 1; withhold P90 and heavy-rain frequencies because percentiles cannot be reconstructed by averaging.",
+    "minimumValidYears": "Use climatology output minimumValidYears; metrics below threshold remain null.",
+    "activationPolicy": {
+      "climateBaselineEnabled": false,
+      "forecastEnabled": false,
+      "decisionUseEligible": false
+    }
   }
 }
