@@ -75,6 +75,14 @@ def inspect_archive(archive: Path, subregion: str, start: date, end: date, mappi
     expected = point["era5LandGridPoint"]
     lower, upper = expected_utc_bounds(start, end)
 
+    expected_times = []
+    cursor = lower
+    while cursor <= upper:
+        expected_times.append(cursor)
+        cursor += timedelta(hours=1)
+    variable_times = {name: [] for name in REQUIRED_VARIABLES}
+    variable_duplicates = {name: False for name in REQUIRED_VARIABLES}
+
     report = {
         "archive": str(archive),
         "subregionId": subregion,
@@ -124,6 +132,8 @@ def inspect_archive(archive: Path, subregion: str, start: date, end: date, mappi
                     attrs = dict(da.attrs)
                     units = attrs.get("units") or attrs.get("unit")
                     file_info["variables"].append(name)
+                    variable_times[name].extend(times)
+                    variable_duplicates[name] = variable_duplicates[name] or (len(times) != len(set(times)))
                     report["variables"][name] = {
                         "file": path.name,
                         "units": units,
@@ -137,11 +147,6 @@ def inspect_archive(archive: Path, subregion: str, start: date, end: date, mappi
     ordered = sorted(all_times)
     duplicates = False  # set-based collection also detects duplicates below via per-file counts
     duplicates = any(item["duplicateTimestamps"] for item in report["files"])
-    expected_times = []
-    cursor = lower
-    while cursor <= upper:
-        expected_times.append(cursor)
-        cursor += timedelta(hours=1)
     observed_in_window = [t for t in ordered if lower <= t <= upper]
     missing = sorted(set(expected_times) - set(observed_in_window))
     unexpected = [t for t in observed_in_window if t not in set(expected_times)]
@@ -160,9 +165,20 @@ def inspect_archive(archive: Path, subregion: str, start: date, end: date, mappi
 
     coordinate_ok = bool(coordinate_results) and all(x["matchesExpected"] for x in coordinate_results)
     variables_ok = REQUIRED_VARIABLES.issubset(report["variables"])
-    time_ok = bool(expected_times) and not missing and not unexpected and not duplicates
+    variable_coverage = {}
+    for name in sorted(REQUIRED_VARIABLES):
+        observed = set(t for t in variable_times[name] if lower <= t <= upper)
+        absent = sorted(set(expected_times) - observed)
+        variable_coverage[name] = {
+            "observedHours": len(observed),
+            "missingHours": len(absent),
+            "duplicateTimestamps": variable_duplicates[name],
+            "complete": name in report["variables"] and not absent and not variable_duplicates[name],
+        }
+    time_ok = bool(expected_times) and not missing and not unexpected and not duplicates and all(x["complete"] for x in variable_coverage.values())
     precipitation_units = report["variables"].get("total_precipitation", {}).get("units")
     precipitation_units_ok = str(precipitation_units).strip().lower() in {"m", "metre", "meter", "metres", "meters"}
+    report["variableTimeCoverage"] = variable_coverage
     report["checks"] = {
         "netcdfFilesPresent": bool(netcdf_files),
         "allFilesAtExpectedGridPoint": coordinate_ok,
