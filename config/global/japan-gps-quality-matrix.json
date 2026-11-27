@@ -1,0 +1,414 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedOn": "2026-11-27",
+  "countryCode": "JP",
+  "countryName": "Japan",
+  "purpose": "One representative course per weather subregion; GPS evidence gate before regional forecast activation.",
+  "policy": {
+    "representativeCountPerSubregion": 1,
+    "forecastActivationRequires": [
+      "official course place pin or independently verified equivalent",
+      "pin spatially checked against course footprint",
+      "coordinates and timezone validated",
+      "source and verification date recorded"
+    ],
+    "mapViewportCenterIsNotCoursePin": true,
+    "addressOrCourseIdentityConfirmationIsNotGpsConfirmation": true,
+    "gradeIsNotActivationAuthorization": true,
+    "allForecastPointsRemainDisabled": true
+  },
+  "summary": {
+    "mainlandSubregions": 16,
+    "officialPlacePins": 3,
+    "officialMapViewportCenters": 8,
+    "officialAccessOrAddressReferences": 5,
+    "legacyGrades": {
+      "A": 4,
+      "B": 11,
+      "C": 1
+    },
+    "forecastEnabled": 0
+  },
+  "entries": [
+    {
+      "subregionId": "JP-HKD-CENTRAL",
+      "subregionName": "道央／札幌近郊",
+      "region": "Hokkaido",
+      "representativeCandidate": "The North Country Golf Club",
+      "candidateCoordinate": {
+        "latitude": 42.82058,
+        "longitude": 141.59652,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "public-map-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-map-viewport-center-only",
+      "decision": "not-a-course-pin",
+      "officialReferenceType": "official-google-maps-embed-center",
+      "officialReferenceUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2926.6358546078563!2d141.6011047!3d42.8171806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f75272b7ab3191d:0x709047ead59e4467!2sThe+-+North+Country+Golf+Club!5e0!3m2!1sen!2sjp!4v1708072517450!5m2!1sen!2sjp",
+      "officialReferenceCoordinate": {
+        "latitude": 42.8171806,
+        "longitude": 141.6011047,
+        "coordinateType": "map-viewport-center-not-pin"
+      },
+      "offsetFromCandidateKm": 0.532,
+      "weatherPointEligible": false,
+      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+    },
+    {
+      "subregionId": "JP-HKD-SOUTH",
+      "subregionName": "道南／函館・大沼",
+      "region": "Hokkaido",
+      "representativeCandidate": "Hokkaido Country Club",
+      "candidateCoordinate": {
+        "latitude": 41.9892895,
+        "longitude": 140.6549955,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "official-operator-google-maps-place-pin"
+      },
+      "legacyGrade": "A",
+      "evidenceClass": "official-place-pin",
+      "decision": "pin-identified-boundary-check-required",
+      "officialReferenceType": "official-google-maps-place-pin",
+      "officialReferenceUrl": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
+      "officialReferenceCoordinate": {
+        "latitude": 41.9892895,
+        "longitude": 140.6549955,
+        "coordinateType": "place-pin-coordinate"
+      },
+      "offsetFromCandidateKm": 0.583,
+      "weatherPointEligible": false,
+      "nextAction": "Verify the place pin against satellite imagery and course property footprint; retain disabled status until boundary check"
+    },
+    {
+      "subregionId": "JP-THK-NORTH",
+      "subregionName": "北東北／岩手・青森",
+      "region": "Tohoku",
+      "representativeCandidate": "Appi Kogen Golf Club",
+      "candidateCoordinate": {
+        "latitude": 40.01249,
+        "longitude": 141.00652,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "third-party-course-map-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-address-or-map-reference-only",
+      "decision": "coordinate-not-independently-confirmed",
+      "officialReferenceType": "official-operator-address-only",
+      "officialReferenceUrl": "https://www.appi.co.jp/golf-club/agc-appi-kogen-golf-club/",
+      "officialReferenceCoordinate": null,
+      "offsetFromCandidateKm": null,
+      "weatherPointEligible": false,
+      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+    },
+    {
+      "subregionId": "JP-THK-SOUTH",
+      "subregionName": "南東北／宮城・仙台",
+      "region": "Tohoku",
+      "representativeCandidate": "Rifu Golf Club",
+      "candidateCoordinate": {
+        "latitude": 38.35994,
+        "longitude": 140.981828,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "course-list-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-address-or-map-reference-only",
+      "decision": "coordinate-not-independently-confirmed",
+      "officialReferenceType": "official-operator-address-only",
+      "officialReferenceUrl": "https://www.pacificgolf.co.jp/rifu/information.asp",
+      "officialReferenceCoordinate": null,
+      "offsetFromCandidateKm": null,
+      "weatherPointEligible": false,
+      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+    },
+    {
+      "subregionId": "JP-KNT-NORTH",
+      "subregionName": "北關東／栃木・群馬・茨城",
+      "region": "Kanto",
+      "representativeCandidate": "Seven Hundred Club",
+      "candidateCoordinate": {
+        "latitude": 36.709629,
+        "longitude": 140.004827,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "course-list-coordinate"
+      },
+      "legacyGrade": "A",
+      "evidenceClass": "official-map-viewport-center-only",
+      "decision": "not-a-course-pin",
+      "officialReferenceType": "official-google-maps-embed-center",
+      "officialReferenceUrl": "https://www.700c.jp/access/",
+      "officialReferenceCoordinate": {
+        "latitude": 36.709635,
+        "longitude": 140.004828,
+        "coordinateType": "map-viewport-center-not-pin"
+      },
+      "offsetFromCandidateKm": 0.001,
+      "weatherPointEligible": false,
+      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+    },
+    {
+      "subregionId": "JP-KNT-SOUTH",
+      "subregionName": "南關東／千葉・東京灣",
+      "region": "Kanto",
+      "representativeCandidate": "Narita Hills Country Club",
+      "candidateCoordinate": {
+        "latitude": 35.83503,
+        "longitude": 140.27659,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "osm-map-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-map-viewport-center-only",
+      "decision": "not-a-course-pin",
+      "officialReferenceType": "official-google-maps-embed-center",
+      "officialReferenceUrl": "https://narita-hills.co.jp/access/",
+      "officialReferenceCoordinate": {
+        "latitude": 35.8339378,
+        "longitude": 140.2766322,
+        "coordinateType": "map-viewport-center-not-pin"
+      },
+      "offsetFromCandidateKm": 0.122,
+      "weatherPointEligible": false,
+      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+    },
+    {
+      "subregionId": "JP-CHB-KOSHIN",
+      "subregionName": "甲信／富士・山梨",
+      "region": "Chubu",
+      "representativeCandidate": "Kawaguchiko Country Club",
+      "candidateCoordinate": {
+        "latitude": 35.4682136,
+        "longitude": 138.7517012,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "official-operator-google-maps-place-pin"
+      },
+      "legacyGrade": "A",
+      "evidenceClass": "official-place-pin",
+      "decision": "pin-identified-boundary-check-required",
+      "officialReferenceType": "official-google-maps-place-pin",
+      "officialReferenceUrl": "https://kcc.tatemono-golf.com/access/",
+      "officialReferenceCoordinate": {
+        "latitude": 35.4682136,
+        "longitude": 138.7517012,
+        "coordinateType": "place-pin-coordinate"
+      },
+      "offsetFromCandidateKm": 0.127,
+      "weatherPointEligible": false,
+      "nextAction": "Verify the place pin against satellite imagery and course property footprint; retain disabled status until boundary check"
+    },
+    {
+      "subregionId": "JP-CHB-TOKAI",
+      "subregionName": "東海／三重・名古屋周邊",
+      "region": "Chubu",
+      "representativeCandidate": "Tsu Country Club",
+      "candidateCoordinate": {
+        "latitude": 34.72587,
+        "longitude": 136.42721,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "previously-researched-public-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-address-or-map-reference-only",
+      "decision": "coordinate-not-independently-confirmed",
+      "officialReferenceType": "official-operator-access-page-reference",
+      "officialReferenceUrl": "https://tsu.co.jp/pages/access",
+      "officialReferenceCoordinate": null,
+      "offsetFromCandidateKm": null,
+      "weatherPointEligible": false,
+      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+    },
+    {
+      "subregionId": "JP-CHB-HOKURIKU",
+      "subregionName": "北陸／石川・能登",
+      "region": "Chubu",
+      "representativeCandidate": "Tokinodai Country Club",
+      "candidateCoordinate": {
+        "latitude": 36.91549,
+        "longitude": 136.775147,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "course-list-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-map-viewport-center-only",
+      "decision": "not-a-course-pin",
+      "officialReferenceType": "official-google-maps-embed-center",
+      "officialReferenceUrl": "https://tokinodai.co.jp/access/",
+      "officialReferenceCoordinate": {
+        "latitude": 36.91209514201531,
+        "longitude": 136.78245395878608,
+        "coordinateType": "map-viewport-center-not-pin"
+      },
+      "offsetFromCandidateKm": 0.751,
+      "weatherPointEligible": false,
+      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+    },
+    {
+      "subregionId": "JP-KNS-CENTRAL",
+      "subregionName": "京阪神／兵庫・大阪・京都",
+      "region": "Kansai",
+      "representativeCandidate": "Arima Royal Golf Club",
+      "candidateCoordinate": {
+        "latitude": 34.826383,
+        "longitude": 135.123729,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "third-party-course-map-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-map-viewport-center-only",
+      "decision": "not-a-course-pin",
+      "officialReferenceType": "official-google-maps-embed-center",
+      "officialReferenceUrl": "https://arima-royal.com/access",
+      "officialReferenceCoordinate": {
+        "latitude": 34.831779606232836,
+        "longitude": 135.10602074886864,
+        "coordinateType": "map-viewport-center-not-pin"
+      },
+      "offsetFromCandidateKm": 1.724,
+      "weatherPointEligible": false,
+      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+    },
+    {
+      "subregionId": "JP-KNS-KII",
+      "subregionName": "紀伊半島／和歌山",
+      "region": "Kansai",
+      "representativeCandidate": "Leograd Golf Club",
+      "candidateCoordinate": {
+        "latitude": 33.9232299832,
+        "longitude": 135.2723593476,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "approximate-official-map-viewport-center-not-course-pin"
+      },
+      "legacyGrade": "C",
+      "evidenceClass": "official-map-viewport-center-only",
+      "decision": "not-a-course-pin",
+      "officialReferenceType": "official-google-maps-embed-center",
+      "officialReferenceUrl": "https://www.leograd.jp/access_map/",
+      "officialReferenceCoordinate": {
+        "latitude": 33.92322998321186,
+        "longitude": 135.2723593476244,
+        "coordinateType": "map-viewport-center-not-pin"
+      },
+      "offsetFromCandidateKm": null,
+      "weatherPointEligible": false,
+      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+    },
+    {
+      "subregionId": "JP-CHG-SANIN",
+      "subregionName": "山陰／鳥取・島根",
+      "region": "Chugoku",
+      "representativeCandidate": "Green Park Daisen Golf Club",
+      "candidateCoordinate": {
+        "latitude": 35.364639,
+        "longitude": 133.397062,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "course-list-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-address-or-map-reference-only",
+      "decision": "coordinate-not-independently-confirmed",
+      "officialReferenceType": "official-operator-access-page-with-user-created-google-my-map",
+      "officialReferenceUrl": "https://banryu-golf.sakura.ne.jp/gpdaisen/access/index.html",
+      "officialReferenceCoordinate": null,
+      "offsetFromCandidateKm": null,
+      "weatherPointEligible": false,
+      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+    },
+    {
+      "subregionId": "JP-CHG-SANYO",
+      "subregionName": "山陽／岡山・廣島",
+      "region": "Chugoku",
+      "representativeCandidate": "Setouchi Golf Resort",
+      "candidateCoordinate": {
+        "latitude": 34.3061999,
+        "longitude": 132.864325,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "official-operator-google-maps-place-pin"
+      },
+      "legacyGrade": "A",
+      "evidenceClass": "official-place-pin",
+      "decision": "pin-identified-boundary-check-required",
+      "officialReferenceType": "official-google-maps-place-pin",
+      "officialReferenceUrl": "https://www.resol-golf.jp/en/setouchi/",
+      "officialReferenceCoordinate": {
+        "latitude": 34.3061999,
+        "longitude": 132.864325,
+        "coordinateType": "place-pin-coordinate"
+      },
+      "offsetFromCandidateKm": null,
+      "weatherPointEligible": false,
+      "nextAction": "Verify the place pin against satellite imagery and course property footprint; retain disabled status until boundary check"
+    },
+    {
+      "subregionId": "JP-SHK-01",
+      "subregionName": "四國／高知・瀨戶內南岸",
+      "region": "Shikoku",
+      "representativeCandidate": "Tosa Country Club",
+      "candidateCoordinate": {
+        "latitude": 33.5213,
+        "longitude": 133.7758,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "previously-researched-public-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-map-viewport-center-only",
+      "decision": "not-a-course-pin",
+      "officialReferenceType": "official-tourism-google-maps-viewport-center",
+      "officialReferenceUrl": "https://visitkochijapan.com/en/activities/10466",
+      "officialReferenceCoordinate": {
+        "latitude": 33.5212123,
+        "longitude": 133.7758646,
+        "coordinateType": "map-viewport-center-not-pin"
+      },
+      "offsetFromCandidateKm": 0.01,
+      "weatherPointEligible": false,
+      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+    },
+    {
+      "subregionId": "JP-KYS-NORTH",
+      "subregionName": "北九州／福岡・佐賀・長崎",
+      "region": "Kyushu",
+      "representativeCandidate": "The Classic Golf Club",
+      "candidateCoordinate": {
+        "latitude": 33.770453,
+        "longitude": 130.644917,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "course-list-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-map-viewport-center-only",
+      "decision": "not-a-course-pin",
+      "officialReferenceType": "official-google-maps-embed-center",
+      "officialReferenceUrl": "https://cm-g.co.jp/the-classic/access/",
+      "officialReferenceCoordinate": {
+        "latitude": 33.7704748,
+        "longitude": 130.6427107,
+        "coordinateType": "map-viewport-center-not-pin"
+      },
+      "offsetFromCandidateKm": 0.202,
+      "weatherPointEligible": false,
+      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+    },
+    {
+      "subregionId": "JP-KYS-SOUTH",
+      "subregionName": "南九州／宮崎・鹿兒島",
+      "region": "Kyushu",
+      "representativeCandidate": "Phoenix Country Club",
+      "candidateCoordinate": {
+        "latitude": 31.974525,
+        "longitude": 131.472898,
+        "timezone": "Asia/Tokyo",
+        "sourceStatus": "course-list-coordinate"
+      },
+      "legacyGrade": "B",
+      "evidenceClass": "official-address-or-map-reference-only",
+      "decision": "coordinate-not-independently-confirmed",
+      "officialReferenceType": "official-tourism-course-address-only",
+      "officialReferenceUrl": "https://www.japan.travel/en/sports/golf/courses/phoenix-country-club/",
+      "officialReferenceCoordinate": null,
+      "offsetFromCandidateKm": null,
+      "weatherPointEligible": false,
+      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+    }
+  ]
+}
