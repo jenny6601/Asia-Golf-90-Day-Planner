@@ -197,7 +197,7 @@
     "name": "Hokkaido Country Club",
     "address": "Nishionuma, Nanae-cho, Kameda-gun, Hokkaido 041-1392, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "official-operator-google-maps-place-pin",
+    "coordinateStatus": "official_operator_google_maps_place_pin",
     "coordinateSource": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
     "candidateCoordinates": {
       "latitude": 41.9892895,
@@ -206,7 +206,7 @@
       "coordinateSourceUrl": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+    "coordinateReviewStatus": "official-operator-map-pin-confirmed",
     "officialUrl": "https://www.princehotels.co.jp/golf/hokkaido/faq/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -214,7 +214,7 @@
     "golfClusterId": "JP-HKD-HAKODATE",
     "latitude": 41.9892895,
     "longitude": 140.6549955,
-    "coordinateUse": "regional_climate_representative_approximation",
+    "coordinateUse": "regional_climate_representative_point",
     "regionId": "JP-REG-01"
   },
   {
@@ -3255,7 +3255,8 @@
     "coordinateSource": "https://www.where2golf.com/japan/niseko-village-golf-course/",
     "coordinateUse": "regional_climate_candidate_only",
     "subregionLabel": "北海道・二世谷／留壽都度假球場群",
-    "regionId": "JP-REG-01"
+    "regionId": "JP-REG-01",
+    "coordinateReviewStatus": "third-party-coordinate-cross-check-pending"
   },
   {
     "id": "jp-kyoto-golf-club",
