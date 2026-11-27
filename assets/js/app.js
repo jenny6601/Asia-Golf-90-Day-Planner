@@ -243,7 +243,7 @@ async function renderDepartureDayDetails(host,course,row,departureDate){
  if(!actual){
   if(row.seasonal&&row.seasonalData){
    const s=row.seasonalData;
-   card.append(node("p","第 19–90 日歷史氣候估算：依 1991–2020 年歷史同期統計，不是確定性天氣預報；不提供虛構逐時資料或未來降雨機率。","long-range-note"));
+   card.append(node("p","第 17–90 日歷史氣候估算：依 1991–2020 年歷史同期統計，不是確定性天氣預報；不提供虛構逐時資料或未來降雨機率。","long-range-note"));
    const stats=node("div",undefined,"results");
    for(const [label,value,unit] of [["體感溫度高點估計",s.feelsLikeMaxEstimateC," °C"],["體感溫度低點估計",s.feelsLikeMinEstimateC," °C"],["歷史日均雨量",s.rainEstimate," mm"],["有雨日平均雨量",s.wetDayRainEstimate," mm／有雨日"],["歷史同期雨日頻率",s.rainChanceEstimate,"%"],["歷史同期第90百分位日雨量",s.rainP90Estimate," mm"],["歷史平均風速",s.windMeanEstimate," m/s"],["歷史平均濕度",s.humidityMeanEstimate,"%"]]){
     const item=node("article",undefined,"result-card");item.append(node("p",label),node("strong",Number.isFinite(value)?value.toFixed(1)+unit:"資料不足"));stats.append(item);
@@ -739,7 +739,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
     if(result.status==="fulfilled")historicalNormals.push(result.value);
     else historyErrors.push(sampleCourses[index].name+"：歷史資料讀取失敗（"+(result.reason?.message||String(result.reason))+"）");
    });
-   const hasLongRangeDates=dates.some(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=18&&lead<=89});
+   const hasLongRangeDates=dates.some(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=16&&lead<=89});
    if(hasLongRangeDates){
     historicalNormals.forEach(history=>seasonalDailyRows.push(...buildDailyClimateOutlook({},history.days||[],today(),90)));
    }
@@ -874,7 +874,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  // Display the three report blocks in the requested order: suitability, daily calendar, monthly climate analysis.
  host.insertBefore(suitabilitySection,title);
  host.insertBefore(dailySection,title);
- const expectedClimateDates=dates.filter(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=18&&lead<=89});
+ const expectedClimateDates=dates.filter(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=16&&lead<=89});
  const producedDates=new Set(seasonalDailyRows.map(x=>x.date));
  const missingClimateDates=expectedClimateDates.filter(d=>!producedDates.has(d));
  if(missingClimateDates.length){
@@ -893,7 +893,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const actualEntries=forecastCourses.map(f=>{const i=(f.daily?.time||[]).indexOf(date);return i<0?null:{code:f.daily.weather_code?.[i],high:f.daily.temperature_2m_max?.[i],low:f.daily.temperature_2m_min?.[i],prob:f.daily.precipitation_probability_max?.[i]}}).filter(Boolean);
   const isForecast=lead>=0&&lead<16&&actualEntries.length>0,historicalEntries=historicalNormals.map(n=>n.days?.find(d=>d.date===date)).filter(Boolean);
   const seasonalEntries=seasonalDailyRows.filter(x=>x.date===date);
-  const useSeasonal=!isForecast&&lead>=18&&lead<=89&&seasonalEntries.length>0;
+  const useSeasonal=!isForecast&&lead>=16&&lead<=89&&seasonalEntries.length>0;
   const dayOfWeek=new Date(date+"T12:00:00Z").getUTCDay(),isWeekend=dayOfWeek===0||dayOfWeek===6;
   const isPlayable=playableDateSet.has(date);
   const card=node("button",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":useSeasonal?"monthly-day-seasonal":"monthly-day-history")+(isWeekend?" monthly-weekend":"")+(isPlayable?" monthly-day-playable":""));
@@ -928,8 +928,8 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   }
   calendar.append(card);
  });
- const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（前16天）","monthly-legend-forecast"),node("span","● 歷史＋季節訊號估計（第19–90天）","monthly-legend-seasonal"));dailySection.append(legend);
- dailySection.append(node("p","全表說明：前16天優先採逐日預報；第17–18天若無季節估計則以歷史同期參考；第19–90天採 ERA5 歷史同期統計結合可取得的週／月季節訊號估計。卡片中的雨日頻率是長期風險指標，不等同當日實際降雨機率；雨量為日均估計量。信心等級及歷史樣本年數不逐日重複顯示，統一由本說明交代：信心反映歷史樣本與季節訊號覆蓋，不是預報命中率；歷史樣本以最近十個完整年度為基礎。","monthly-source-note"));
+ const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（前16天）","monthly-legend-forecast"),node("span","● 歷史氣候估計（第17–90天）","monthly-legend-seasonal"));dailySection.append(legend);
+ dailySection.append(node("p","全表說明：前16天維持逐日預報；第17–90天統一採 ERA5 1991–2020 歷史同期 31 日窗口統計估算。卡片中的雨日頻率是歷史雨日比例，不等同未來降雨機率；雨量為歷史日均估計量。體感溫度顯示高低範圍，由每日最低／最高溫、平均露點及平均風速推算。信心反映有效歷史樣本與欄位完整度，不代表預報命中率。","monthly-source-note"));
  if(!sampleCourses.length)dailySection.append(node("p","此分區尚無具有效 GPS 座標的球場，無法產生逐日天氣簡表。","risk-summary"));
  // Do not scroll to the report body after loading; keep the destination page header at the top.
  if(openWeekAnalysis){
