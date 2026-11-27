@@ -1242,6 +1242,6 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 /* Monthly calendar playability classification directly below each weather icon */
 .monthly-day-playability{display:inline-block;align-self:center;min-width:3.1em;padding:3px 6px;margin:1px 0 3px;border-radius:7px;font-size:.72rem;font-weight:900;line-height:1.25;text-align:center}
 .monthly-status-good{background:#d8f2e2;color:#086b40;border:1px solid #9bd3b1}
-.monthly-status-watch{background:#fff0c7;color:#805500;border:1px solid #e7c96f}
+.monthly-status-watch{background:#dceeff;color:#0756a6;border:1px solid #79b7ed}
 .monthly-status-bad{background:#f9dfe1;color:#a12e37;border:1px solid #e8aeb4}
 .monthly-status-unknown{background:#edf0f2;color:#66727a;border:1px solid #d2d9dd}
