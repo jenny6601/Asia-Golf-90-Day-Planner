@@ -807,10 +807,10 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const modelType=Number.isFinite(seasonRatio)?
   (seasonRatio>=1.35?"明顯偏濕":seasonRatio>=1.15?"偏濕":seasonRatio<=.75?"偏乾":"季節訊號不明顯"):
   "季節模式資料不足";
- const seasonLabel=Number.isFinite(seasonRatio)?
-  (modelType==="明顯偏濕"||modelType==="偏濕"?"偏濕季":
-   modelType==="偏乾"?"偏乾季":historicalTypeLabel):
-  historicalTypeLabel;
+ // The month-type label describes the local climatological season and must
+ // come from historical normals only. A seasonal-model anomaly is a tendency
+ // relative to normal, not evidence that the location has entered a wet/dry season.
+ const seasonLabel=historicalTypeLabel;
  // 「優先日期」是全月評分最高的前5天；「本月適打日期」則列出所有符合適打門檻的日期，兩者用途不同。
  const best=[...dailyAssessment].filter(x=>x.date>=today()).sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.date.localeCompare(b.date)).slice(0,5);
  const datesText=best.length?best.map(x=>Number(x.date.slice(8,10))+"日").join("、"):"資料不足，暫無推薦日期";
@@ -823,11 +823,11 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const preferredWindow=fiveDayWindows[0]||null;
  const dateRange=preferredWindow?Number(preferredWindow.days[0].date.slice(5,7))+"月"+Number(preferredWindow.days[0].date.slice(8,10))+"日 ～ "+Number(preferredWindow.days[4].date.slice(5,7))+"月"+Number(preferredWindow.days[4].date.slice(8,10))+"日":"資料不足，無法推薦連續5天";
  const modelDescription=Number.isFinite(seasonRatio)?
-  (modelType==="明顯偏濕"?"本月雨勢明顯偏多，屬偏濕型態。":
-   modelType==="偏濕"?"本月雨勢較多，屬偏濕型態。":
-   modelType==="偏乾"?"本月雨勢較少，屬偏乾型態。":
-   "無明顯季節模式訊號，依歷史推估。"):
-  "無，依歷史推估。";
+  (modelType==="明顯偏濕"?"模式估計月雨量明顯高於常年約 "+Math.round((seasonRatio-1)*100)+"%。":
+   modelType==="偏濕"?"模式估計月雨量高於常年約 "+Math.round((seasonRatio-1)*100)+"%。":
+   modelType==="偏乾"?"模式估計月雨量低於常年約 "+Math.round((1-seasonRatio)*100)+"%。":
+   "模式訊號接近常年，未見明顯偏濕或偏乾。"):
+  "季節模式資料不足，暫以歷史同期型態作參考。";
  const playableRatio=dailyAssessment.length?playable.length/dailyAssessment.length:null;
  const playableDescription=Number.isFinite(playableRatio)?
   (playableRatio>=.5?"適打天數：偏多（本月較多日期具較佳打球條件）":
