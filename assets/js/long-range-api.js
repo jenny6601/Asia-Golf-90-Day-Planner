@@ -51,8 +51,8 @@ export function interpretPrecipitationEfi(value){
 }
 
 export async function fetchCourseSeasonalForecast(course,fetchImpl=fetch){
- if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足，無法讀取長期趨勢");
- const timezone=course.timezone||"Asia/Tokyo";
+ if(!course)throw new TypeError("球場資料不足，無法讀取長期趨勢");
+ const {latitude,longitude,timezone}=historicalLocation(course);
  const params=new URLSearchParams({latitude:String(latitude),longitude:String(longitude),weekly:WEEKLY,monthly:MONTHLY,daily:DAILY,hourly:HOURLY,forecast_days:"90",timezone,wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius",models:"ecmwf_seasonal_seamless"});
  const response=await fetchImpl(ENDPOINT+"?"+params);if(!response.ok)throw new Error("長期趨勢 API HTTP "+response.status);
  const payload=await response.json();if(!payload.weekly?.time?.length&&!payload.monthly?.time?.length)throw new Error("未回傳長期趨勢資料");
