@@ -1,0 +1,48 @@
+name: Eight-Country 90-Day and Monthly Validation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 19 * * 0"
+  push:
+    branches: [asia-eight-country-shared-engine]
+    paths:
+      - "scripts/validate-eight-country-90day.mjs"
+      - "assets/js/daily-climate-outlook.js"
+      - "assets/js/long-range-api.js"
+      - "assets/js/monthly-weather-summary.js"
+      - "assets/js/course-catalog.js"
+      - "config/global/countries.json"
+      - "config/global/courses.json"
+      - "config/global/weather-subregions.json"
+      - ".github/workflows/eight-country-90day-validation.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eight-country-90day-validation
+  cancel-in-progress: false
+
+jobs:
+  validate-all-regions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run project unit tests
+        run: npm test
+      - name: Validate all eight countries and 80 regional points
+        run: node scripts/validate-eight-country-90day.mjs
+      - name: Upload eight-country validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eight-country-90day-validation
+          path: artifacts/eight-country-validation/
+          if-no-files-found: warn
