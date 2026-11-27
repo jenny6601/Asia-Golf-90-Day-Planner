@@ -37,15 +37,20 @@ jobs:
       - name: Project station skill onto six golf courses
         if: steps.verify.outcome == 'success'
         run: node scripts/project-okinawa-course-source-reliability.mjs
+      - name: Archive ECMWF 17-90 day seasonal forecast snapshot
+        run: node scripts/archive-okinawa-seasonal-forecast.mjs
+      - name: Run seasonal archive schema tests
+        run: node --test tests/okinawa-seasonal-forecast-archive.test.mjs
       - name: Commit daily hindcast archive
         if: always()
         run: |
-          if [ -n "$(git status --porcelain data/okinawa/model-hindcast-archive data/okinawa/model-source-ranking data/okinawa/course-source-reliability)" ]; then
+          if [ -n "$(git status --porcelain data/okinawa/model-hindcast-archive data/okinawa/model-source-ranking data/okinawa/course-source-reliability data/okinawa/seasonal-forecast-archive)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             if [ -d data/okinawa/model-hindcast-archive ]; then git add data/okinawa/model-hindcast-archive/; fi
             if [ -d data/okinawa/model-source-ranking ]; then git add data/okinawa/model-source-ranking/; fi
             if [ -d data/okinawa/course-source-reliability ]; then git add data/okinawa/course-source-reliability/; fi
+            if [ -d data/okinawa/seasonal-forecast-archive ]; then git add data/okinawa/seasonal-forecast-archive/; fi
             git commit -m "Archive daily Okinawa model hindcast verification"
             git push
           else
@@ -60,6 +65,7 @@ jobs:
             data/okinawa/model-hindcast-archive/
             data/okinawa/model-source-ranking/
             data/okinawa/course-source-reliability/
+            data/okinawa/seasonal-forecast-archive/
             artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.*
           if-no-files-found: warn
           retention-days: 90
