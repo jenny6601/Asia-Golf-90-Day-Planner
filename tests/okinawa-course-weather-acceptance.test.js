@@ -6,68 +6,54 @@ const root = new URL("../", import.meta.url);
 const candidates = JSON.parse(await fs.readFile(new URL("config/okinawa/course-coordinate-candidates.json", root), "utf8"));
 const runtime = JSON.parse(await fs.readFile(new URL("config/global/courses.json", root), "utf8"));
 const ids = ["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"];
-const pilotModule = await import("../assets/js/okinawa-courses.js");
-const pilot = pilotModule.OKINAWA_COURSES;
+const expected = {
+  "southern-links":[26.113785,127.739021],
+  "palm-hills":[26.120580,127.699640],
+  "pgm-okinawa":[26.455335,127.820344],
+  "kise":[26.524228,127.939192],
+  "atta-terrace":[26.499868,127.896002],
+  "chura-orchard":[26.506260,127.895720]
+};
+const pilot = (await import("../assets/js/okinawa-courses.js")).OKINAWA_COURSES;
 
 test("Okinawa acceptance scope contains exactly the six requested main-island courses", () => {
   assert.deepEqual(candidates.map(x => x.id).sort(), [...ids].sort());
   assert.equal(new Set(candidates.map(x => x.id)).size, 6);
 });
 
-test("all Okinawa candidate coordinates are valid and use Japan local time", () => {
-  for (const course of candidates) {
-    assert.ok(Number.isFinite(course.latitude) && course.latitude >= 24 && course.latitude <= 28, course.id);
-    assert.ok(Number.isFinite(course.longitude) && course.longitude >= 122 && course.longitude <= 130, course.id);
-    assert.equal(course.timezone, "Asia/Tokyo", course.id);
-    assert.ok(course.officialSourceUrl, course.id);
-    assert.ok(course.coordinateSource, course.id);
-  }
-});
-
-test("PGM manual point remains pending and is not promoted into runtime coordinates", () => {
-  const candidate = candidates.find(x => x.id === "pgm-okinawa");
-  const runtimeCourse = runtime.find(x => x.id === "pgm-okinawa");
-  assert.equal(candidate.coordinateStatus, "pending");
-  assert.equal(candidate.coordinateSource, "User_Google_Maps_Manual");
-  assert.equal(runtimeCourse.coordinateStatus, "pending");
-  assert.equal(runtimeCourse.latitude, null);
-  assert.equal(runtimeCourse.longitude, null);
-  assert.equal(runtimeCourse.enabled, false);
-});
-
-test("official map coordinates are explicitly distinguished from provisional candidates", () => {
-  for (const id of ["atta-terrace","chura-orchard","kise"]) {
-    assert.equal(candidates.find(x => x.id === id).coordinateStatus, "verified", id);
-  }
-  for (const id of ["southern-links","palm-hills"]) {
-    assert.equal(candidates.find(x => x.id === id).coordinateStatus, "provisional", id);
-  }
-});
-
-test("runtime course catalogue still preserves all six records and does not activate pending PGM", () => {
-  assert.deepEqual(runtime.map(x => x.id), ids);
-  assert.equal(runtime.find(x => x.id === "pgm-okinawa").enabled, false);
-});
-
-test("runtime and pilot catalogs match audited candidate points without promoting pending PGM", () => {
-  for (const candidate of candidates) {
-    const globalCourse = runtime.find(x => x.id === candidate.id);
-    const pilotCourse = pilot.find(x => x.id === candidate.id);
-    assert.ok(globalCourse && pilotCourse, candidate.id);
-    if (candidate.coordinateStatus === "pending") {
-      assert.equal(globalCourse.latitude, null);
-      assert.equal(globalCourse.longitude, null);
-      assert.equal(globalCourse.enabled, false);
-      assert.equal(pilotCourse.latitude, null);
-      assert.equal(pilotCourse.longitude, null);
-    } else {
-      assert.equal(globalCourse.latitude, candidate.latitude, candidate.id);
-      assert.equal(globalCourse.longitude, candidate.longitude, candidate.id);
-      assert.equal(pilotCourse.latitude, candidate.latitude, candidate.id);
-      assert.equal(pilotCourse.longitude, candidate.longitude, candidate.id);
-      assert.equal(globalCourse.coordinateStatus, candidate.coordinateStatus, candidate.id);
-      assert.equal(pilotCourse.coordinateStatus, candidate.coordinateStatus, candidate.id);
+test("all six exact Google Maps coordinates supplied by the user are preserved", () => {
+  for (const id of ids) {
+    const [lat,lon] = expected[id];
+    const candidate = candidates.find(x => x.id === id);
+    const globalCourse = runtime.find(x => x.id === id);
+    const pilotCourse = pilot.find(x => x.id === id);
+    for (const record of [candidate,globalCourse,pilotCourse]) {
+      assert.equal(record.latitude,lat,id+" latitude");
+      assert.equal(record.longitude,lon,id+" longitude");
+      assert.equal(record.timezone,"Asia/Tokyo",id);
+      assert.equal(record.coordinateStatus,"user_provided_google_maps",id);
     }
+    assert.equal(globalCourse.enabled,true,id+" enabled");
+    assert.equal(candidate.coordinateSource,"User-provided Google Maps coordinate (2026-11-27)",id);
+    assert.equal(globalCourse.coordinateSource,"User-provided Google Maps coordinate (2026-11-27)",id);
+  }
+});
+
+test("all six user-supplied points are within Okinawa coordinate bounds", () => {
+  for (const course of candidates) {
+    assert.ok(course.latitude >= 24 && course.latitude <= 28, course.id);
+    assert.ok(course.longitude >= 122 && course.longitude <= 130, course.id);
+    assert.ok(course.officialSourceUrl, course.id);
+  }
+});
+
+test("runtime and pilot catalogs contain exactly the same six GPS points", () => {
+  assert.deepEqual(runtime.map(x => x.id),ids);
+  assert.deepEqual(pilot.map(x => x.id),ids);
+  for (const id of ids) {
+    const a=runtime.find(x=>x.id===id),b=pilot.find(x=>x.id===id);
+    assert.equal(a.latitude,b.latitude,id);
+    assert.equal(a.longitude,b.longitude,id);
   }
 });
 
