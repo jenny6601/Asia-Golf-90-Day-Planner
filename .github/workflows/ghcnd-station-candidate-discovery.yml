@@ -39,6 +39,7 @@ jobs:
           git add data/observation-stations/ghcnd-candidates-1991-2020.json
           if ! git diff --cached --quiet; then
             git commit -m "Archive GHCN station candidates for eight-country regions"
+            git pull --rebase origin asia-eight-country-shared-engine
             git push origin asia-eight-country-shared-engine
           else
             echo "Station candidate inventory is unchanged."
