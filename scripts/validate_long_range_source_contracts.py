@@ -60,7 +60,10 @@ def validate_document(doc,kind,known_regions):
     if field in vals and units.get(field)!=unit: errors.append(f"units.{field} must be {unit}")
    for f in ("precipitationMm","windSpeedMs"):
     if is_number(vals.get(f)) and vals[f]<0: errors.append(f"{w}: {f} cannot be negative")
-   if is_number(vals.get("relativeHumidityPct")) and not 0<=vals["relativeHumidityPct"]<=100: errors.append(f"{w}: relativeHumidityPct must be 0..100")\n   for f in ("cloudCoverMeanPct",):\n    if is_number(vals.get(f)) and not 0<=vals[f]<=100: errors.append(f"{w}: {f} must be 0..100")\n   if is_number(vals.get("windDirectionDeg")) and not 0<=vals["windDirectionDeg"]<360: errors.append(f"{w}: windDirectionDeg must be in [0,360)")
+   if is_number(vals.get("relativeHumidityPct")) and not 0<=vals["relativeHumidityPct"]<=100: errors.append(f"{w}: relativeHumidityPct must be 0..100")
+   for f in ("cloudCoverMeanPct",):
+    if is_number(vals.get(f)) and not 0<=vals[f]<=100: errors.append(f"{w}: {f} must be 0..100")
+   if is_number(vals.get("windDirectionDeg")) and not 0<=vals["windDirectionDeg"]<360: errors.append(f"{w}: windDirectionDeg must be in [0,360)")
    if is_number(vals.get("temperatureMinC")) and is_number(vals.get("temperatureMaxC")) and vals["temperatureMinC"]>vals["temperatureMaxC"]: errors.append(f"{w}: Tmin exceeds Tmax")
    grid=req(r,"gridCell",dict,w) or {}
    for f in ("latitude","longitude"):
