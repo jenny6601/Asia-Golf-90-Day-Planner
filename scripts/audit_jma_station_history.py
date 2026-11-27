@@ -102,8 +102,14 @@ def audit_candidate(candidate, official_segments):
     ]
     precip_days = _coverage(period_segments, "precipitationAvailable")
     temp_days = _coverage(period_segments, "temperatureAvailable")
-    p_cuts = [x for x in period_segments if x["precipitationContinuityCode"] == "1"]
-    t_cuts = [x for x in period_segments if x["temperatureContinuityCode"] in {"1", "5"}]
+    first_history_segment = segments[0] if segments else None
+    def is_initial_baseline(segment):
+        return segment is first_history_segment and segment["oldStationId"] == sid
+    # JMA explicitly marks the first-ever station segment with code 1 or 5
+    # even though there is no predecessor to disconnect; do not count that
+    # initial marker as a historical break.
+    p_cuts = [x for x in period_segments if x["precipitationContinuityCode"] == "1" and not is_initial_baseline(x)]
+    t_cuts = [x for x in period_segments if x["temperatureContinuityCode"] in {"1", "5"} and not is_initial_baseline(x)]
     t_adjusted = [x for x in period_segments if x["temperatureContinuityCode"] == "4"]
     mirror_segments = candidate.get("historySegments", [])
     def clipped_key(segment):
