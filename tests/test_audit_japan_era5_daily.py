@@ -26,11 +26,11 @@ class JapanDailyQATests(unittest.TestCase):
         self.assertEqual(MODULE.calendar_distance(date(2020, 2, 29), date(2001, 3, 1)), 0.5)
 
     def test_annual_report_flags_missing_dates_and_low_coverage(self):
-        rows = [row(date(1991, 1, 1) + __import__("datetime").timedelta(days=i)) for i in range(300)]
+        rows = [row(date(1991, 1, 1) + __import__("datetime").timedelta(days=i)) for i in range(330)]
         report = MODULE.audit_region_year("JP-TEST", 1991, rows)
-        self.assertEqual(report["presentDays"], 300)
-        self.assertEqual(len(report["missingDates"]), 65)
-        self.assertEqual(report["status"], "annual-coverage-usable")  # 300/365 >= 90%
+        self.assertEqual(report["presentDays"], 330)
+        self.assertEqual(len(report["missingDates"]), 35)
+        self.assertEqual(report["status"], "annual-coverage-usable")  # 330/365 >= 90%
 
     def test_metric_plausibility_bounds_exclude_invalid_values(self):
         rows = [row(date(1991, 1, 1), temperatureMeanC=999)]
@@ -47,7 +47,8 @@ class JapanDailyQATests(unittest.TestCase):
                 rows.append(row(d))
                 d += __import__("datetime").timedelta(days=1)
         qa = MODULE.audit_climate_windows(rows, 1991, 2014)
-        self.assertEqual(qa["metricReadiness"]["precipitationMm"]["usableCalendarDays"], 365)
+        self.assertEqual(qa["dailyWindowValidYears"]["06-15"]["precipitationMm"], 24)
+        self.assertEqual(qa["metricReadiness"]["precipitationMm"]["status"], "partial-calendar-coverage")
 
     def test_empty_region_is_not_eligible(self):
         qa = MODULE.audit_climate_windows([], 1991, 2020)
