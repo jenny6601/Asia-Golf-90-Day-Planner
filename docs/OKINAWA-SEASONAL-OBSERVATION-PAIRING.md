@@ -16,10 +16,10 @@ Pair archived EC46 weekly and SEAS5 monthly forecast snapshots with subsequent J
 - Missing hours are never imputed as zero.
 
 ## Forecast matching
-- Weekly timestamp is treated as the start of a seven-calendar-day target period; this semantic must be confirmed before numeric skill scoring.
-- Monthly timestamps are normalized to calendar months.
+- Weekly target boundaries are provisional only. The reviewed provider documentation does not explicitly define the timestamp boundary convention; weekly records must not be used for skill scoring until confirmed.
+- Monthly timestamp-to-calendar-month mapping is provisional only; do not score until provider timestamp semantics are confirmed.
 - A forecast vintage is eligible only when its retrieval date precedes the target period.
 - Provider initialization/issue time is not exposed and is not inferred.
 
 ## Explicit non-goals
-No forecast MAE, anomaly hit rate, category accuracy, or confidence score is calculated in this stage. Weekly field units/period semantics must first be confirmed. JMA regional stations are proxies, not golf-course observations.
+No forecast MAE, anomaly hit rate, category accuracy, or confidence score is calculated in this stage. API response units are now retained with each forecast field, but period boundary semantics remain unverified. Pair status `OBSERVATION_COVERAGE_COMPLETE_SEMANTICS_UNVERIFIED` means observation coverage is sufficient, not that forecast and observation periods are confirmed comparable. JMA regional stations are proxies, not golf-course observations.
