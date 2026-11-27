@@ -8,7 +8,7 @@ const monthEnd=value=>{
 };
 export function summarizeSeasonalArchive(snapshots=[],asOf){
   if(!Array.isArray(snapshots))throw new TypeError("snapshots must be an array");
-  if(typeof asOf!=="string"||!/^\\d{4}-\\d{2}-\\d{2}$/.test(asOf))throw new TypeError("asOf must be YYYY-MM-DD");
+  if(typeof asOf!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(asOf))throw new TypeError("asOf must be YYYY-MM-DD");
   const regions=["north","central","south"];
   const summary=Object.fromEntries(regions.map(region=>[region,{
     ec46:{archivedPeriods:0,maturedPeriods:0,unitVerifiedPeriods:0},
@@ -24,7 +24,7 @@ export function summarizeSeasonalArchive(snapshots=[],asOf){
       for(let i=0;i<(weekly.time||[]).length;i++){
         const start=String(weekly.time[i]).slice(0,10);
         const value=weekly.precipitation_mean?.[i];
-        if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(start)||!finite(value))continue;
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(start)||!finite(value))continue;
         const bucket=summary[region].ec46;
         bucket.archivedPeriods++;
         if(start>issue&&addDays(start,6)<asOf){
@@ -36,7 +36,7 @@ export function summarizeSeasonalArchive(snapshots=[],asOf){
       for(let i=0;i<(monthly.time||[]).length;i++){
         const month=String(monthly.time[i]).slice(0,7);
         const value=monthly.precipitation_mean?.[i];
-        if(!/^\\d{4}-\\d{2}$/.test(month)||!finite(value))continue;
+        if(!/^\d{4}-\d{2}$/.test(month)||!finite(value))continue;
         const bucket=summary[region].seas5;
         bucket.archivedPeriods++;
         if(monthStart(month)>issue&&monthEnd(month)<asOf){
