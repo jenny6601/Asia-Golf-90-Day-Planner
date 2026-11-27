@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 20
       - name: Run validation and archive schema tests
-        run: node --test tests/jma-amedas-validation.test.js tests/okinawa-model-source-ranking.test.mjs tests/okinawa-course-source-reliability.test.mjs tests/okinawa-seasonal-forecast-archive.test.mjs
+        run: node --test tests/jma-amedas-validation.test.js tests/okinawa-model-source-ranking.test.mjs tests/okinawa-course-source-reliability.test.mjs tests/okinawa-seasonal-forecast-archive.test.mjs tests/okinawa-seasonal-observation-pairing.test.mjs
       - name: Collect seven-day model hindcast verification
         id: verify
         continue-on-error: true
@@ -41,8 +41,6 @@ jobs:
         run: node scripts/archive-okinawa-seasonal-forecast.mjs
       - name: Pair seasonal forecasts with JMA regional observations
         run: node scripts/pair-okinawa-seasonal-forecasts-with-jma.mjs
-      - name: Run seasonal observation pairing tests
-        run: node --test tests/okinawa-seasonal-observation-pairing.test.mjs
       - name: Commit daily hindcast archive
         if: always()
         run: |
