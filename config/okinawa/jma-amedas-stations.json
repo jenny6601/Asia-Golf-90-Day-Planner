@@ -1,0 +1,12 @@
+[
+  {"id":"91107","name":"Nago","latitude":26.5933333,"longitude":127.965,"elevationM":6,"type":"official_station","observedElements":["precipitation","temperature","wind","sunshine","humidity","pressure"]},
+  {"id":"91197","name":"Naha","latitude":26.2066667,"longitude":127.6866667,"elevationM":28,"type":"official_station","observedElements":["precipitation","temperature","wind","sunshine","humidity","pressure"]},
+  {"id":"91236","name":"Ashimine","latitude":26.1933333,"longitude":127.6383333,"elevationM":3,"type":"official_station","observedElements":["precipitation","temperature","wind"]},
+  {"id":"91241","name":"Itokazu","latitude":26.1533333,"longitude":127.765,"elevationM":186,"type":"four_element_amedas","observedElements":["precipitation","temperature","wind","sunshine"]},
+  {"id":"91121","name":"Yomitan","latitude":26.4066667,"longitude":127.7333333,"elevationM":90,"type":"rain_gauge_only","observedElements":["precipitation"]},
+  {"id":"91161","name":"Goya","latitude":26.3266667,"longitude":127.8033333,"elevationM":105,"type":"rain_gauge_only","observedElements":["precipitation"]},
+  {"id":"91166","name":"Miyagijima","latitude":26.3633333,"longitude":127.9716667,"elevationM":100,"type":"four_element_amedas","observedElements":["precipitation","temperature","wind","sunshine"]},
+  {"id":"91021","name":"Oku","latitude":26.835,"longitude":128.2716667,"elevationM":232,"type":"four_element_amedas","observedElements":["precipitation","temperature","wind","sunshine"]},
+  {"id":"91066","name":"Motobu","latitude":26.685,"longitude":127.8983333,"elevationM":25,"type":"rain_gauge_only","observedElements":["precipitation"]},
+  {"id":"91046","name":"Kunigami","latitude":26.7283333,"longitude":128.1783333,"elevationM":8,"type":"rain_gauge_only","observedElements":["precipitation"]}
+]
