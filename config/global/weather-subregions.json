@@ -111,7 +111,15 @@
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-rifu"
+          "candidateCourseId": "jp-rifu",
+          "courseIdentityVerification": {
+            "verificationLevel": "official-PGM-operator-identity-address-booking-and-contact-confirmed",
+            "officialSourceUrl": "https://ir.pacificgolf.co.jp/rifu/",
+            "officialBookingUrl": "https://booking.pacificgolf.co.jp/",
+            "officialAddress": "3-25 Uchinome-kita, Morigo, Rifu-machi, Miyagi-gun, Miyagi 981-0103, Japan",
+            "operationalEvidence": "PGM operator course profile confirms 18-hole course, address, telephone and online reservation interface",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "JP-KNT-NORTH",
@@ -217,7 +225,16 @@
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-tsu"
+          "candidateCourseId": "jp-tsu",
+          "courseIdentityVerification": {
+            "verificationLevel": "official-operator-identity-address-booking-and-course-details-confirmed",
+            "officialSourceUrl": "https://tsu.co.jp/",
+            "officialAccessUrl": "https://tsu.co.jp/pages/access",
+            "officialCourseUrl": "https://tsu.co.jp/pages/course",
+            "officialAddress": "30 Katada-Hasecho, Tsu-shi, Mie 514-0077, Japan",
+            "operationalEvidence": "operator website provides course details, booking/pricing, address, telephone and accommodation information",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "JP-CHB-HOKURIKU",
@@ -238,7 +255,16 @@
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-tokinodai"
+          "candidateCourseId": "jp-tokinodai",
+          "courseIdentityVerification": {
+            "verificationLevel": "official-operator-identity-address-reservation-and-2026-calendar-confirmed",
+            "officialSourceUrl": "https://tokinodai.co.jp/",
+            "officialAccessUrl": "https://tokinodai.co.jp/access/",
+            "officialReservationUrl": "https://tokinodai.co.jp/reservation/",
+            "officialAddress": "8-8 Yanagida-machi, Hakui-shi, Ishikawa 925-0018, Japan",
+            "operationalEvidence": "operator site confirms two 18-hole courses, access, reservation contact, 2026 calendar and operating notes; Monday/Tuesday are self-play-only days",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "JP-KNS-CENTRAL",
@@ -474,7 +500,7 @@
         "thirdPartyOrPublicMapCoordinates": 14,
         "approximateCoordinates": 1,
         "forecastEnabled": false,
-        "officialIdentityAddressVerified": 13
+        "officialIdentityAddressVerified": 16
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
