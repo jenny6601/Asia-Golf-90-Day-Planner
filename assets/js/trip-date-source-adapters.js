@@ -124,7 +124,7 @@ function stabilitySignal(snapshots,region,date) {
 export function buildTripDateEngineInput({
   asOf,forecastZones=[],longRangePoints=[],historicalByRegion={},stabilitySnapshots=[]
 }={}) {
-  if(typeof asOf!=="string"||!/^\\d{4}-\\d{2}-\\d{2}$/.test(asOf)
+  if(typeof asOf!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(asOf)
     ||new Date(asOf+"T00:00:00Z").toISOString().slice(0,10)!==asOf)
     throw new TypeError("asOf must be a valid YYYY-MM-DD date");
   const forecastByRegion=new Map(forecastZones.map(x=>[x.zone?.id||x.id,x]));
