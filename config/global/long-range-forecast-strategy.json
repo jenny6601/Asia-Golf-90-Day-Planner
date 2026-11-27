@@ -24,6 +24,30 @@
   },
   "horizons": [
     {
+      "id": "D17_D18",
+      "leadDays": [
+        17,
+        18
+      ],
+      "primarySource": "ECMWF_IFS_SUBSEASONAL",
+      "secondarySource": "ERA5_LAND_CLIMATOLOGY",
+      "temporalResolution": "weekly forecast signal disaggregated to daily estimates using historical daily sequences",
+      "updateCadence": "each available ECMWF extended-range cycle",
+      "usableSignals": [
+        "overlapping ECMWF weekly precipitation anomaly/probability",
+        "overlapping ECMWF weekly 2m temperature anomaly/probability",
+        "ensemble spread where available",
+        "ERA5-Land same-calendar-day distributions and coherent multi-day analogues"
+      ],
+      "prohibitedClaims": [
+        "deterministic daily weather",
+        "daily rain probability without date-level hindcast calibration",
+        "copying D16 forecast values forward",
+        "using a weekly aggregate as identical daily values"
+      ],
+      "dailyOutput": "One distinct estimated record for each local date D17 and D18, conditioned by the ECMWF weekly signal and historical daily analogue sequences; explicitly lower confidence than D01-D16."
+    },
+    {
       "id": "D19_D46",
       "leadDays": [
         19,
@@ -183,9 +207,12 @@
     "d47D90Refresh": "when new C3S seasonal cycle is available",
     "d01D16Source": "existing application forecast provider; unchanged",
     "dailyOutputRequired": true,
-    "dailyObservationIngestionRequired": false
+    "dailyObservationIngestionRequired": false,
+    "d17D18DailyOutputRequired": true,
+    "d17D18Source": "ECMWF extended-range weekly signal plus ERA5-Land historical daily prior; no D16 carry-forward"
   },
   "activationGates": [
+    "D17-D18 daily estimates are generated from available overlapping ECMWF weekly signals plus historical daily sequences, with missing-input fail-closed behavior and separate transition-band validation",
     "80 regional representative points remain structurally valid",
     "1991-2020 regional historical climate distributions acquired and QA checked",
     "ECMWF extended-range forecast and matching hindcasts are ingested with weekly valid periods",
@@ -194,7 +221,7 @@
     "seven-day / three-round ranking passes backtest without modifying D01-D16 or UI"
   ],
   "dailyOutputContract": {
-    "purpose": "Produce a date-by-date estimated weather dataset for every calendar day D19-D90. The daily estimates are decision-support inputs; app analysis is advisory and the user independently chooses the departure date.",
+    "purpose": "Produce a date-by-date estimated weather dataset for every local calendar day from D17 through D90. The daily estimates are decision-support inputs; app analysis is advisory and the user independently chooses the departure date.",
     "granularity": "one record per local calendar date per regional representative point",
     "requiredDailyFields": [
       "dateLocal",
@@ -217,9 +244,10 @@
       "validPeriod",
       "modelRunIds"
     ],
-    "dataNature": "D19-D90 daily values are estimated daily distributions or representative daily scenarios, not deterministic forecasts. Preserve quantiles/ranges and uncertainty; never imply exact local weather.",
+    "dataNature": "D19-D90 daily values are estimated daily distributions or representative daily scenarios, not deterministic forecasts. Preserve quantiles/ranges and uncertainty; never imply exact local weather. D17-D18 are transition-band daily estimates and must not be presented as a continuation of deterministic D01-D16 forecasts.",
     "generationMethod": [
       "Use ERA5-Land 1991-2020 day-of-year daily distributions as the regional historical prior.",
+      "For D17-D18, use any overlapping ECMWF extended-range weekly ensemble signal as conditioning evidence with ERA5-Land day-of-year daily distributions and coherent historical sequences; do not extrapolate D16 deterministic values.",
       "Use ECMWF D19-D46 weekly ensemble anomalies and probabilities as conditioning signals for each overlapping local date.",
       "Use C3S D47-D90 monthly multi-system anomalies and tercile probabilities as conditioning signals for each local date.",
       "Use validated daily-shaped seasonal model outputs from independent model systems as additional daily structure only where hindcast skill is demonstrated.",
@@ -227,7 +255,7 @@
       "Preserve realistic multi-day weather persistence and cross-variable dependence by sampling complete historical weather sequences or calibrated ensemble trajectories, not independent random values for each date.",
       "Summarize daily ensemble/analog distributions with median and prediction intervals; retain the full member/analog trace for audit."
     ],
-    "dailyVsPeriodSignalRule": "Weekly/monthly forecast anomalies adjust the distribution of each date in their valid period; they do not get copied as identical values to every day. Daily variability is supplied by historical analog sequences and validated daily model structure. If daily structure is not supported, expose broad uncertainty and lower confidence rather than fabricate detail.",
+    "dailyVsPeriodSignalRule": "Weekly/monthly forecast anomalies adjust the distribution of each date in their valid period; they do not get copied as identical values to every day. Daily variability is supplied by historical analog sequences and validated daily model structure. If daily structure is not supported, expose broad uncertainty and lower confidence rather than fabricate detail. D17-D18 follow the same daily disaggregation discipline as D19-D46, but are explicitly labelled as a lower-confidence transition band.",
     "userDecisionPolicy": {
       "appRole": "Display daily estimated weather and a separate advisory summary/ranking to help compare candidate departure windows.",
       "userRole": "User reviews the individual daily estimates and chooses the departure date; app must never imply the recommendation is a booking instruction or automatic decision.",
@@ -239,6 +267,7 @@
     "numericProbabilityPolicy": "Daily numeric precipitation/playability probabilities are permitted only after date-level hindcast calibration passes for that region, season and lead band. Before then show estimated rainfall amount/range and categorical risk with explicit uncertainty; do not invent a rain probability.",
     "validation": {
       "requiredLeadBands": [
+        "D17-D18",
         "D19-D30",
         "D31-D46",
         "D47-D60",
