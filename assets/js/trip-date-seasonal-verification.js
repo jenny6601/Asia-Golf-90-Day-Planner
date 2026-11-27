@@ -19,9 +19,9 @@ function summarize(rows,periodDays){
   const mae=errors.reduce((s,x)=>s+Math.abs(x),0)/errors.length;
   const bias=errors.reduce((s,x)=>s+x,0)/errors.length;
   const rmse=Math.sqrt(errors.reduce((s,x)=>s+x*x,0)/errors.length);
-  const threshold=periodDays; // wet period = average >=1 mm/day
   let hits=0,falseAlarms=0,misses=0,correctNegatives=0;
   for(const x of valid){
+    const threshold=x.periodDays??periodDays; // wet period = average >=1 mm/day
     const forecastWet=x.forecastMm>=threshold,observedWet=x.observedMm>=threshold;
     if(forecastWet&&observedWet)hits++;
     else if(forecastWet)falseAlarms++;
