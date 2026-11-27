@@ -92,10 +92,11 @@ test("historical archive retries a temporary rate limit without duplicating late
  const fetchImpl=async url=>{
   calls++;
   if(calls===1)return {ok:false,status:429};
+  const dates=Array.from({length:31},(_,i)=>"2000-12-"+String(i+1).padStart(2,"0"));
   return {ok:true,json:async()=>({daily:{
-   time:["2000-12-15"],temperature_2m_max:[22],temperature_2m_min:[15],
-   dew_point_2m_mean:[12],relative_humidity_2m_mean:[65],wind_speed_10m_mean:[2],
-   wind_speed_10m_max:[4],precipitation_sum:[0],precipitation_hours:[0],weather_code:[1]
+   time:dates,temperature_2m_max:dates.map(()=>22),temperature_2m_min:dates.map(()=>15),
+   dew_point_2m_mean:dates.map(()=>12),relative_humidity_2m_mean:dates.map(()=>65),wind_speed_10m_mean:dates.map(()=>2),
+   wind_speed_10m_max:dates.map(()=>4),precipitation_sum:dates.map(()=>0),precipitation_hours:dates.map(()=>0),weather_code:dates.map(()=>1)
   }})};
  };
  const course={id:"retry-test",latitude:24.1,longitude:120.6,timezone:"Asia/Taipei"};
