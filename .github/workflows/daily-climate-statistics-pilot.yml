@@ -1,3 +1,4 @@
+# ERA5 only: daily aggregates returned by CDS; never request ERA5-Land or hourly output.
 name: Daily Climate Statistics Regional Pilot
 on:
   push:
