@@ -28,13 +28,34 @@ test("long-range horizons use weekly ECMWF and monthly C3S signals", () => {
   assert.equal(d47.temporalResolution, "monthly and seasonal aggregates");
 });
 
-test("daily numeric probabilities are blocked until hindcast calibration", () => {
-  assert.match(spec.decisionMethod.probabilityPolicy, /until matching hindcast validation/);
+test("daily estimated weather records are required for every D19-D90 date", () => {
+  assert.equal(spec.operations.dailyOutputRequired, true);
+  assert.equal(spec.dailyOutputContract.granularity, "one record per local calendar date per regional representative point");
+  assert.ok(spec.dailyOutputContract.requiredDailyFields.includes("precipitationAmountEstimateMm"));
+  assert.ok(spec.dailyOutputContract.requiredDailyFields.includes("temperatureMinEstimateC"));
+  assert.ok(spec.dailyOutputContract.requiredDailyFields.includes("dailyGolfConditionsAdvisory"));
+});
+
+test("daily estimates preserve sequence coherence and uncertainty", () => {
+  assert.match(spec.dailyOutputContract.dailyVsPeriodSignalRule, /not get copied as identical values/);
+  assert.ok(spec.dailyOutputContract.generationMethod.some(x => x.includes("multi-day weather persistence")));
+  assert.ok(spec.dailyOutputContract.generationMethod.some(x => x.includes("prediction intervals")));
+});
+
+test("the App recommendation is advisory and the user makes the final choice", () => {
+  assert.equal(spec.dailyOutputContract.userDecisionPolicy.advisoryOnly, true);
+  assert.equal(spec.dailyOutputContract.userDecisionPolicy.automaticDateSelection, false);
+  assert.equal(spec.dailyOutputContract.userDecisionPolicy.automaticBooking, false);
+  assert.equal(spec.dailyOutputContract.userDecisionPolicy.rankingMustNotHideDailyRecords, true);
+});
+
+test("daily numeric probabilities require hindcast calibration", () => {
+  assert.match(spec.dailyOutputContract.numericProbabilityPolicy, /only after date-level hindcast calibration/);
   assert.equal(spec.decisionMethod.calibration.noArbitraryNumericWeights, true);
   assert.equal(spec.decisionMethod.calibration.noConfidenceUpgradeWithoutHindcastEvidence, true);
 });
 
-test("trip decision unit is a seven-day window with three rounds", () => {
-  assert.equal(spec.decisionMethod.unit, "one rolling seven-day destination window");
+test("trip context is seven days and three golf rounds", () => {
+  assert.equal(spec.decisionMethod.unit, "one daily record per date, plus rolling seven-day trip-window analysis");
   assert.equal(spec.decisionMethod.tripPattern, "five days four nights with three golf rounds");
 });
