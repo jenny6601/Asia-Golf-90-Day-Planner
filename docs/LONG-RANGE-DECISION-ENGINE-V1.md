@@ -18,7 +18,7 @@ Generate a date-by-date estimated weather dataset for every local calendar day f
 
 | Source | Horizon | Role in daily estimate | Limitation |
 |---|---|---|---|
-| ERA5-Land 1991–2020 | D17–D90 | Regional day-of-year daily distributions and historical multi-day sequences | Historical prior, not a forecast |
+| ERA5 1991–2020 | D17–D90 | Regional day-of-year daily distributions and historical multi-day sequences | Historical prior, not a forecast |
 | ECMWF IFS extended-range ensemble | D17–D46 | Weekly precipitation/temperature anomaly and probability conditioning | Weekly signal cannot independently resolve exact daily weather |
 | C3S seasonal multi-system | D47–D90 | Monthly precipitation/temperature anomaly, tercile probability and model agreement conditioning | Monthly signal has weak day-specific discrimination |
 | Validated daily-shaped seasonal model streams | D19–D90 where available | Supply additional date-level structure and independent model evidence | Use only after region/season/lead-specific hindcast skill is demonstrated |
@@ -27,7 +27,7 @@ Multiple products from the same underlying model family are not counted as indep
 
 ## D17–D18 transition band
 
-D17 and D18 are not left blank and are not treated as deterministic extensions of D01–D16. For each date, use the overlapping ECMWF IFS extended-range weekly ensemble signal (precipitation/temperature anomaly or probability and ensemble spread where available) to condition the ERA5-Land same-calendar-day daily distribution and coherent historical analogue sequences. Generate a separate daily record for D17 and D18, retaining rainfall amount/range, Tmin/Tmax, supported wind/cloud tendencies, uncertainty and source provenance. Confidence is lower than D01–D16 and must be separately validated. If the relevant weekly signal or historical prior is missing, mark the date unavailable/low-evidence; never copy D16 forward, substitute zero, or fabricate daily rain probability. D17–D18 are included in the same date-by-date user decision dataset, but their transition-band provenance remains explicit.
+D17 and D18 are not left blank and are not treated as deterministic extensions of D01–D16. For each date, use the overlapping ECMWF IFS extended-range weekly ensemble signal (precipitation/temperature anomaly or probability and ensemble spread where available) to condition the ERA5 same-calendar-day daily distribution and coherent historical analogue sequences. Generate a separate daily record for D17 and D18, retaining rainfall amount/range, Tmin/Tmax, supported wind/cloud tendencies, uncertainty and source provenance. Confidence is lower than D01–D16 and must be separately validated. If the relevant weekly signal or historical prior is missing, mark the date unavailable/low-evidence; never copy D16 forward, substitute zero, or fabricate daily rain probability. D17–D18 are included in the same date-by-date user decision dataset, but their transition-band provenance remains explicit.
 
 ## Daily generation method
 
@@ -78,15 +78,15 @@ Do not assume daily independence when estimating the chance of three playable da
 ## Current implementation status
 
 - Eight countries and 80 regional representative points are registered.
-- ERA5-Land 1991–2020 full production request plan exists; complete regional historical acquisition is not yet confirmed.
+- ERA5 1991–2020 full production request plan exists; complete regional historical acquisition is not yet confirmed.
 - Okinawa Open-Meteo seasonal field-availability probe exists; it demonstrated field availability, not forecast skill, and three nominal points resolved to two unique grid cells.
 - ECMWF and C3S source strategy is specified; ingestion, coherent daily disaggregation and hindcast calibration remain to be implemented.
 - The daily-output contract is specified, but production daily estimates are not yet activated.
 
 ## Next implementation stage
 
-1. Inventory existing ERA5-Land and seasonal forecast files; reuse existing data.
-2. Build source adapters and normalized daily/period input contracts for ERA5-Land, ECMWF, C3S and validated daily-shaped model streams.
+1. Inventory existing ERA5 and seasonal forecast files; reuse existing data.
+2. Build source adapters and normalized daily/period input contracts for ERA5, ECMWF, C3S and validated daily-shaped model streams.
 3. Implement conditional analogue sequence generation for D19–D90 with daily uncertainty outputs.
 4. Create a complete daily dataset for each of the 80 regional subregions.
 5. Backtest all four lead bands and validate seven-day sequences before activating numeric probabilities or recommendation scores.
