@@ -70,3 +70,11 @@ test("runtime and pilot catalogs match audited candidate points without promotin
     }
   }
 });
+
+test("JMA AMeDAS station metadata includes rainfall and full-weather references", async () => {
+  const stations = JSON.parse(await fs.readFile(new URL("config/okinawa/jma-amedas-stations.json", root), "utf8"));
+  assert.ok(stations.length >= 8);
+  assert.ok(stations.every(x => Number.isFinite(x.latitude) && Number.isFinite(x.longitude) && Number.isFinite(x.elevationM)));
+  assert.ok(stations.some(x => x.id === "91241" && x.observedElements.includes("temperature") && x.observedElements.includes("wind")));
+  assert.ok(stations.some(x => x.id === "91121" && x.observedElements.length === 1 && x.observedElements[0] === "precipitation"));
+});
