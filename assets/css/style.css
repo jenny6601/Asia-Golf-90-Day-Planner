@@ -1227,3 +1227,13 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 .monthly-jump-nav{grid-template-columns:repeat(4,minmax(0,1fr)) !important}
 @media(max-width:600px){.monthly-jump-nav{grid-template-columns:repeat(2,minmax(0,1fr)) !important}}
 @media(max-width:380px){.monthly-jump-nav{grid-template-columns:repeat(2,minmax(0,1fr)) !important}}
+
+
+/* All dates meeting the monthly golf-playability threshold */
+.monthly-playability-all-dates{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:12px;align-items:start;padding:14px 16px;margin:10px 0;border:1px solid #b9dfc8;border-radius:16px;background:#edf8f0;color:#174b36}
+.monthly-playability-all-dates>strong{font-weight:800}
+.monthly-playability-all-dates>span{font-weight:700;line-height:1.65;overflow-wrap:anywhere}
+.monthly-day-playable{box-shadow:inset 0 0 0 2px #168653 !important}
+.monthly-day-playable .monthly-day-date{color:#087344 !important}
+.monthly-day-playable-label{display:inline-block;padding:2px 5px;margin-top:3px;border-radius:6px;background:#d8f2e2;color:#086b40;font-weight:800;font-size:.78em}
+@media(max-width:520px){.monthly-playability-all-dates{grid-template-columns:1fr;gap:5px}}
