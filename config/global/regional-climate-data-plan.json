@@ -215,5 +215,37 @@
     "outputStatus": "historical-climatology-computed-not-activated",
     "climateBaselineEnabled": false,
     "forecastEnabled": false
+  },
+  "tripDateRankingEngine": {
+    "script": "scripts/rank_golf_trip_dates.py",
+    "status": "preview-implemented-not-production",
+    "planningParameters": {
+      "tripDays": 5,
+      "nights": 4,
+      "golfRounds": 3,
+      "primaryPriority": "minimum-rainfall-risk"
+    },
+    "tripWindowPolicy": "Evaluate every rolling five-calendar-day trip start. Select three golf days from within the five-day window; the remaining two dates are rest or transfer days.",
+    "dailyRoundSelectionOrder": [
+      "wetDayFrequencyPct ascending",
+      "heavyRain10mmFrequencyPct ascending",
+      "heavyRain30mmFrequencyPct ascending",
+      "p90DailyRainMm ascending"
+    ],
+    "tripStartRankingOrder": [
+      "average selected-day wetDayFrequencyPct ascending",
+      "average selected-day heavyRain10mmFrequencyPct ascending",
+      "average selected-day heavyRain30mmFrequencyPct ascending",
+      "average selected-day p90DailyRainMm ascending",
+      "startDate ascending"
+    ],
+    "minimumCoverage": "All five dates in a candidate trip must have usable historical precipitation climatology; otherwise the candidate is blocked, not imputed.",
+    "interpretation": "Historical 1991-2020 seasonal climatology prior only; not a deterministic daily weather forecast or a guarantee.",
+    "shortRangeForecastPolicy": "Do not alter the existing 1-16 day live forecast path in this stage. A later fusion stage must retain distinct forecast maturity labels and must not present climatology as daily forecast.",
+    "activation": {
+      "climateBaselineEnabled": false,
+      "forecastEnabled": false,
+      "recommendationProductionEnabled": false
+    }
   }
 }
