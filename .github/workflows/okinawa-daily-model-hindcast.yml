@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 20
       - name: Run validation and archive schema tests
-        run: node --test tests/jma-amedas-validation.test.js tests/okinawa-model-source-ranking.test.mjs tests/okinawa-course-source-reliability.test.mjs tests/okinawa-seasonal-forecast-archive.test.mjs tests/okinawa-seasonal-observation-pairing.test.mjs tests/okinawa-era5-climate-baseline.test.mjs tests/okinawa-seasonal-monthly-context.test.mjs tests/okinawa-seasonal-validation-readiness.test.mjs tests/okinawa-seasonal-time-semantics.test.mjs tests/okinawa-seasonal-revision-history.test.mjs tests/okinawa-seasonal-direction-stability.test.mjs
+        run: node --test tests/jma-amedas-validation.test.js tests/okinawa-model-source-ranking.test.mjs tests/okinawa-course-source-reliability.test.mjs tests/okinawa-seasonal-forecast-archive.test.mjs tests/okinawa-seasonal-observation-pairing.test.mjs tests/okinawa-era5-climate-baseline.test.mjs tests/okinawa-seasonal-monthly-context.test.mjs tests/okinawa-seasonal-validation-readiness.test.mjs tests/okinawa-seasonal-time-semantics.test.mjs tests/okinawa-seasonal-revision-history.test.mjs tests/okinawa-seasonal-direction-stability.test.mjs tests/okinawa-trip-window-decision.test.mjs
       - name: Collect seven-day model hindcast verification
         id: verify
         continue-on-error: true
@@ -53,10 +53,12 @@ jobs:
         run: node scripts/build-okinawa-seasonal-revision-history.mjs
       - name: Build seasonal direction stability report
         run: node scripts/build-okinawa-seasonal-direction-stability.mjs
+      - name: Build five-day three-round trip-window decision report
+        run: node scripts/build-okinawa-trip-window-decision.mjs
       - name: Commit daily hindcast archive
         if: always()
         run: |
-          if [ -n "$(git status --porcelain data/okinawa/model-hindcast-archive data/okinawa/model-source-ranking data/okinawa/course-source-reliability data/okinawa/seasonal-forecast-archive data/okinawa/seasonal-observation-pairs data/okinawa/era5-climate-baseline data/okinawa/seasonal-monthly-context data/okinawa/seasonal-validation-readiness data/okinawa/seasonal-time-semantics data/okinawa/seasonal-revision-history data/okinawa/seasonal-direction-stability)" ]; then
+          if [ -n "$(git status --porcelain data/okinawa/model-hindcast-archive data/okinawa/model-source-ranking data/okinawa/course-source-reliability data/okinawa/seasonal-forecast-archive data/okinawa/seasonal-observation-pairs data/okinawa/era5-climate-baseline data/okinawa/seasonal-monthly-context data/okinawa/seasonal-validation-readiness data/okinawa/seasonal-time-semantics data/okinawa/seasonal-revision-history data/okinawa/seasonal-direction-stability data/okinawa/trip-window-decision)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             if [ -d data/okinawa/model-hindcast-archive ]; then git add data/okinawa/model-hindcast-archive/; fi
@@ -70,6 +72,7 @@ jobs:
             if [ -d data/okinawa/seasonal-time-semantics ]; then git add data/okinawa/seasonal-time-semantics/; fi
             if [ -d data/okinawa/seasonal-revision-history ]; then git add data/okinawa/seasonal-revision-history/; fi
             if [ -d data/okinawa/seasonal-direction-stability ]; then git add data/okinawa/seasonal-direction-stability/; fi
+            if [ -d data/okinawa/trip-window-decision ]; then git add data/okinawa/trip-window-decision/; fi
             git commit -m "Archive daily Okinawa model hindcast verification"
             git push
           else
@@ -92,6 +95,7 @@ jobs:
             data/okinawa/seasonal-time-semantics/
             data/okinawa/seasonal-revision-history/
             data/okinawa/seasonal-direction-stability/
+            data/okinawa/trip-window-decision/
             artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.*
           if-no-files-found: warn
           retention-days: 90
