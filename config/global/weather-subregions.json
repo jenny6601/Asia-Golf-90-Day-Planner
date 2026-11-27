@@ -39,9 +39,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "official-address-and-google-map-embed-found-center-is-not-pin-candidate-point-needs-pin-level-check",
-            "weatherPointEligible": false,
-            "reason": "官方頁面提供 Google Maps 嵌入地圖；抽取到的是地圖視窗中心，與公開地圖球場點相差約 532 公尺。視窗中心不是球場圖釘，因此不能判定候選座標錯誤，也不能據此升級 A 級。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
               "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2926.6358546078563!2d141.6011047!3d42.8171806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f75272b7ab3191d:0x709047ead59e4467!2sThe+-+North+Country+Golf+Club!5e0!3m2!1sen!2sjp!4v1708072517450!5m2!1sen!2sjp",
@@ -51,7 +51,9 @@
               "distanceFromCandidateKm": 0.532,
               "crossCheckResult": "candidate-public-map-coordinate-is-approximately-532m-from-official-map-viewport-center;cannot-interpret-as-pin-error",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -83,9 +85,9 @@
           "coordinateQuality": {
             "grade": "A",
             "label": "官方營運商 Google Maps 地點圖釘",
-            "reviewStatus": "official-operator-google-maps-place-pin-confirmed;course-boundary-not-independently-surveyed",
-            "weatherPointEligible": false,
-            "reason": "營運商官方大沼球場交通頁的 Google Maps 連結含明確 place pin 座標；以官方圖釘更新候選點。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-place-pin",
               "url": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
@@ -100,7 +102,9 @@
               "distanceFromPreviousCandidateKm": 0.583,
               "crossCheckResult": "official-operator-place-pin-coordinate-replaces-older-third-party-point",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -133,9 +137,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地址確認，圖釘未取得",
-            "reviewStatus": "official-address-confirmed;official-pin-not-published-on-course-profile",
-            "weatherPointEligible": false,
-            "reason": "官方球場頁確認地址與 36 洞規模，但頁面未提供可提取的球場圖釘座標。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-operator-address-only",
               "url": "https://www.appi.co.jp/golf-club/agc-appi-kogen-golf-club/",
@@ -147,7 +151,9 @@
               "coordinateType": "no-official-pin-extracted",
               "crossCheckResult": "official-course-identity-and-address-confirmed;no-course-pin-coordinate-on-access-section",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -181,9 +187,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "official-PGM-identity-address-confirmed;pin-not-extracted",
-            "weatherPointEligible": false,
-            "reason": "PGM 官方資料確認球場地址與營運資訊，但尚未取得可獨立驗證的官方球場圖釘。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-operator-address-only",
               "url": "https://www.pacificgolf.co.jp/rifu/information.asp",
@@ -196,7 +202,9 @@
               "coordinateType": "no-official-pin-extracted",
               "crossCheckResult": "PGM official page confirms course identity, address and access but map link could not be independently extracted; retain third-party candidate without promotion",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -230,9 +238,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地圖中心與候選座標一致，但非圖釘",
-            "reviewStatus": "official-map-viewport-center-matches-candidate;not-a-course-pin",
-            "weatherPointEligible": false,
-            "reason": "官方 Google Maps 中心與原候選座標相差約 1 公尺，但仍是地圖中心而非球場圖釘，因此不得列為 A 級定位。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
               "url": "https://www.700c.jp/access/",
@@ -242,7 +250,9 @@
               "distanceFromCandidateKm": 0.001,
               "crossCheckResult": "official-map-center-matches-existing-public-coordinate-within-one-metre;still-not-independent-pin-confirmation",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -275,9 +285,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地圖中心與公開球場點有差異",
-            "reviewStatus": "official-google-map-embed-found;center-121m-from-public-course-point;pin-level-check-pending",
-            "weatherPointEligible": false,
-            "reason": "官方地圖中心與現有公開球場座標相距約 121 公尺；地圖中心不是球場圖釘，暫不替換候選座標。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
               "url": "https://narita-hills.co.jp/access/",
@@ -287,7 +297,9 @@
               "distanceFromCandidateKm": 0.122,
               "crossCheckResult": "official-map-center-is-nearby-but-not-identical-to-public-course-centroid;must-not-replace-until-pin-confirmed",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -320,9 +332,9 @@
           "coordinateQuality": {
             "grade": "A",
             "label": "官方營運商 Google Maps 地點圖釘",
-            "reviewStatus": "official-operator-google-maps-place-pin-confirmed;course-boundary-not-independently-surveyed",
-            "weatherPointEligible": false,
-            "reason": "官方交通頁 Google Map 連結解析出球場地點圖釘座標；以該地點圖釘更新候選座標。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-place-pin",
               "url": "https://kcc.tatemono-golf.com/access/",
@@ -341,7 +353,9 @@
               "distanceFromPreviousCandidateKm": 0.127,
               "crossCheckResult": "official-access-page-google-map-place-pin-matches-course-name;replace-public-map-point",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -376,9 +390,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "official-access-page-known;pin-not-extracted",
-            "weatherPointEligible": false,
-            "reason": "官方交通頁已登錄，但本次無法擷取可核實的地圖圖釘；保留原公開座標。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-operator-access-page-reference",
               "url": "https://tsu.co.jp/pages/access",
@@ -386,7 +400,9 @@
               "coordinateType": "no-official-pin-extracted",
               "crossCheckResult": "operator access page is registered in identity record; map pin or usable coordinate could not be independently retrieved in this pass",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -421,9 +437,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地圖低倍率中心點，非球場圖釘",
-            "reviewStatus": "official-map-embed-found-but-low-zoom-center-only;pin-level-check-pending",
-            "weatherPointEligible": false,
-            "reason": "官方交通頁有 Google Maps 嵌入地圖，但其視野寬度約 42 公里，中心點不能作為球場 GPS。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
               "url": "https://tokinodai.co.jp/access/",
@@ -434,7 +450,9 @@
               "mapZoomScale": "approximately-42km-map-width",
               "crossCheckResult": "official-embed-center-is-low-zoom-regional-view;not-suitable-to-replace-course-coordinate",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -467,9 +485,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "official-map-embed-found;26km-viewport-center-not-pin",
-            "weatherPointEligible": false,
-            "reason": "官方交通頁嵌入 Google Maps，但中心點屬約 26 公里寬的區域視野，與球場候選座標相差約 1.75 公里，不可當成球場圖釘。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
               "url": "https://arima-royal.com/access",
@@ -480,7 +498,9 @@
               "approximateViewportWidthKm": 26,
               "crossCheckResult": "official-map-center-is-approximately-26km-wide-view;not-course-pin;do-not-replace-candidate",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -515,9 +535,9 @@
           "coordinateQuality": {
             "grade": "C",
             "label": "官方低倍率地圖中心，非球場圖釘",
-            "reviewStatus": "official-map-center-reconfirmed-not-a-course-pin",
-            "weatherPointEligible": false,
-            "reason": "官方嵌入地圖中心與既有近似座標一致，但視野寬度約 53 公里，不能用於正式天氣定位。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
               "url": "https://www.leograd.jp/access_map/",
@@ -527,7 +547,9 @@
               "approximateViewportWidthKm": 53,
               "crossCheckResult": "official-embed center exactly matches stored approximate center; map viewport is approximately 53km wide and confirms it is not a course pin",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -561,9 +583,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地址確認，嵌入地圖圖釘未提取",
-            "reviewStatus": "official-access-address-confirmed;embedded-user-created-map-pin-not-extracted",
-            "weatherPointEligible": false,
-            "reason": "官方交通頁有 Google My Maps，但該地圖標示為使用者建立，且未取得可獨立驗證的球場圖釘座標。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-operator-access-page-with-user-created-google-my-map",
               "url": "https://banryu-golf.sakura.ne.jp/gpdaisen/access/index.html",
@@ -572,7 +594,9 @@
               "coordinateType": "map-pin-not-extracted",
               "crossCheckResult": "operator site embeds a Google My Maps map explicitly attributed to a user-created map; no independently verifiable pin coordinates extracted",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -606,9 +630,9 @@
           "coordinateQuality": {
             "grade": "A",
             "label": "官方營運商 Google Maps 地點圖釘",
-            "reviewStatus": "official-operator-google-maps-place-pin-confirmed",
-            "weatherPointEligible": false,
-            "reason": "營運商官方網站 Google Map 連結解析出明確地點圖釘，座標與原候選點完全一致；仍需獨立確認點位是否為氣象代表點。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-place-pin",
               "url": "https://www.resol-golf.jp/en/setouchi/",
@@ -619,7 +643,9 @@
               "googleMapsResolvedUrl": "https://www.google.com/maps/place/Setouchi+Golf+Resort/@34.3062,132.864325,16z/",
               "crossCheckResult": "official-operator-google-map-place-pin-matches-existing-candidate-coordinate-exactly",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -652,9 +678,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方旅遊地圖中心，非球場圖釘",
-            "reviewStatus": "official-tourism-map-center-nearby;pin-level-confirmation-pending",
-            "weatherPointEligible": false,
-            "reason": "高知官方旅遊網站的 Google Maps 連結中心與候選點相差約 10 公尺，但縮放層級 15 的中心點仍非球場圖釘，不能據此升級。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-tourism-google-maps-viewport-center",
               "url": "https://visitkochijapan.com/en/activities/10466",
@@ -667,7 +693,9 @@
               "crossCheckResult": "official-tourism-map-opens-at-zoom-15-center-about-10m-from-existing-course-list-coordinate;center-not-pin",
               "mapCode": "335 363 132*07",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -701,9 +729,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方高倍率地圖中心，非球場圖釘",
-            "reviewStatus": "official-operator-google-map-embed-found;center-not-pin",
-            "weatherPointEligible": false,
-            "reason": "官方營運商交通頁提供 Google Maps 嵌入地圖，中心與既有候選點相差約 202 公尺；地圖中心仍非可驗證的球場圖釘。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
               "url": "https://cm-g.co.jp/the-classic/access/",
@@ -719,7 +747,9 @@
               "approximateViewportWidthKm": 3.317,
               "crossCheckResult": "official-operator-access-page-embed-identifies-The-Classic-Golf-Club;embedded-center-is-nearby-but-not-pin",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -753,9 +783,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "JNTO-official-course-address-and-layout-confirmed;pin-pending",
-            "weatherPointEligible": false,
-            "reason": "JNTO 官方球場資料確認地址及 27 洞三球道配置，但未取得可核實的官方圖釘座標。",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-tourism-course-address-only",
               "url": "https://www.japan.travel/en/sports/golf/courses/phoenix-country-club/",
@@ -771,7 +801,9 @@
               "coordinateType": "no-official-pin-extracted",
               "crossCheckResult": "JNTO course profile confirms address and course configuration; official pin coordinate not extracted",
               "checkedOn": "2026-11-27"
-            }
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
           }
         },
         {
@@ -811,8 +843,9 @@
         "coordinateQualityA": 3,
         "coordinateQualityB": 12,
         "coordinateQualityC": 1,
-        "weatherPointEligible": 0,
-        "officialMapCrossChecks": 16
+        "weatherPointEligible": 16,
+        "officialMapCrossChecks": 16,
+        "regionalClimateEligible": 16
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
