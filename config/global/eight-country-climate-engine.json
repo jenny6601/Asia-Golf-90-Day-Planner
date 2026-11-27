@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "engineId": "ASIA_EIGHT_COUNTRY_SHARED_CLIMATE_ENGINE",
+  "status": "architecture-defined-data-acquisition-and-validation-not-yet-complete",
+  "scope": {
+    "countryRegistryPath": "config/global/countries.json",
+    "subregionRegistryPath": "config/global/weather-subregions.json",
+    "countries": [
+      "JP",
+      "KR",
+      "CN",
+      "VN",
+      "TH",
+      "MY",
+      "SG",
+      "ID"
+    ],
+    "subregionCountsAtSpecificationTime": {
+      "JP": 19,
+      "KR": 6,
+      "CN": 7,
+      "VN": 6,
+      "TH": 7,
+      "MY": 8,
+      "SG": 1,
+      "ID": 8
+    },
+    "pointPolicy": "Exactly one regional-climate representative point per subregion. Other golf courses in that subregion inherit the regional assessment. Course-pin or fairway precision is not required.",
+    "timezonePolicy": "Use the IANA timezone stored on each representative point; aggregate source timestamps into the subregion's local calendar day.",
+    "doNotCreatePerCourseClimateRecords": true
+  },
+  "commonHistoricalBaseline": {
+    "sourceId": "ERA5_LAND_HOURLY",
+    "provider": "Copernicus Climate Change Service / ECMWF",
+    "dataset": "reanalysis-era5-land",
+    "role": "shared-global-gridded-historical-baseline",
+    "referencePeriod": {
+      "start": "1991-01-01",
+      "end": "2020-12-31"
+    },
+    "temporalResolution": "hourly",
+    "spatialCoverage": "global-land",
+    "nativeResolution": "approximately 9 km; distributed on 0.1-degree grid",
+    "productionStatus": "selected-common-baseline-not-yet-acquired-for-all-subregions",
+    "productionRule": "Use the full ERA5-Land hourly dataset for repeatable production acquisition. The single-point time-series endpoint may be used for schema/pilot work only and must not be the production dependency.",
+    "variables": [
+      "2m_temperature",
+      "2m_dewpoint_temperature",
+      "total_precipitation",
+      "10m_u_component_of_wind",
+      "10m_v_component_of_wind"
+    ],
+    "aggregation": {
+      "dailyBoundary": "local calendar day in the representative point's IANA timezone",
+      "temperature": "derive daily minimum, mean and maximum from valid hourly 2m temperature; convert Kelvin to Celsius",
+      "precipitation": "apply the selected ERA5-Land product's documented accumulation semantics exactly once, convert metres to millimetres, then sum local-day values",
+      "humidity": "derive hourly relative humidity from 2m temperature and dewpoint; aggregate to daily mean",
+      "wind": "derive hourly speed and direction from U/V components; retain components and aggregate daily mean/max speed",
+      "missingValues": "remain null; never replace missing precipitation with zero"
+    },
+    "provenanceRequired": [
+      "provider",
+      "dataset",
+      "datasetVersionOrRetrievalRevision",
+      "retrievedAt",
+      "validTime",
+      "representativePoint",
+      "returnedGridCoordinates",
+      "gridDistanceKm",
+      "timezone",
+      "unitConversions",
+      "aggregationMethod",
+      "qualityFlags"
+    ]
+  },
+  "independentValidation": {
+    "purpose": "Validate the common reanalysis baseline against station observations; station observations must remain separate from reanalysis records.",
+    "primaryStrategy": "Use the relevant national meteorological/hydrological service station archive for each country when historical daily data and metadata are accessible.",
+    "fallbackStrategy": "Use NOAA GHCN-Daily station records as a cross-country observation source where station coverage, variables, record length, licensing and provenance are adequate. GHCN availability must be assessed per station and element; it is not guaranteed for every subregion.",
+    "independenceRule": "ERA5 and ERA5-Land products are not independent station-observation validation. Multiple products derived from the same underlying model/analysis family must not be counted as independent evidence.",
+    "candidateNationalAgencies": {
+      "JP": {
+        "agency": "Japan Meteorological Agency",
+        "adapterStatus": "country-specific-adapter-pilot-only"
+      },
+      "KR": {
+        "agency": "Korea Meteorological Administration",
+        "adapterStatus": "discovery-required"
+      },
+      "CN": {
+        "agency": "China Meteorological Administration",
+        "adapterStatus": "discovery-required"
+      },
+      "VN": {
+        "agency": "Vietnam national hydro-meteorological service",
+        "adapterStatus": "discovery-required"
+      },
+      "TH": {
+        "agency": "Thai Meteorological Department",
+        "adapterStatus": "discovery-required"
+      },
+      "MY": {
+        "agency": "Malaysian Meteorological Department (MetMalaysia)",
+        "adapterStatus": "discovery-required"
+      },
+      "SG": {
+        "agency": "Meteorological Service Singapore",
+        "adapterStatus": "discovery-required"
+      },
+      "ID": {
+        "agency": "BMKG (Indonesia)",
+        "adapterStatus": "discovery-required"
+      }
+    },
+    "requiredObservationFields": [
+      "stationId",
+      "stationName",
+      "latitude",
+      "longitude",
+      "elevationM",
+      "validDate",
+      "precipitationMm",
+      "temperatureMinC",
+      "temperatureMaxC",
+      "elementQualityFlags",
+      "observationPeriodDefinition",
+      "sourceId",
+      "sourceDataset",
+      "retrievedAt"
+    ],
+    "stationMatching": {
+      "maxDistanceKmDefault": 75,
+      "retainElevationDifference": true,
+      "retainCoastalOrMountainExposure": true,
+      "stationHistoryRequired": true,
+      "noAutomaticBiasCorrection": true,
+      "noStationSubstitutionWithoutRepresentativenessReview": true
+    },
+    "diagnostics": [
+      "pairedDayCount",
+      "coveragePctByElement",
+      "precipitationMaeMm",
+      "precipitationBiasMm",
+      "wetDayContingencyAt1mm",
+      "tminMaeC",
+      "tminBiasC",
+      "tmaxMaeC",
+      "tmaxBiasC",
+      "stationDistanceKm",
+      "elevationDifferenceM",
+      "homogeneityAndRelocationFlags"
+    ]
+  },
+  "qualityGates": {
+    "representativePointExistsForEverySubregion": true,
+    "exactlyOneRepresentativePointPerSubregion": true,
+    "minimumValidYears": 24,
+    "referencePeriodYears": 30,
+    "minimumDailyCompletenessPct": 90,
+    "compareEachElementSeparately": true,
+    "requireSourceAndUnitProvenance": true,
+    "requireReturnedGridCoordinateAudit": true,
+    "requireStationHistoryAndHomogeneityReview": true,
+    "missingDataNeverZeroFilled": true,
+    "historicalClimateIsNotDeterministicDailyForecast": true
+  },
+  "activationPolicy": {
+    "climateBaselineEnabled": false,
+    "forecastEnabled": false,
+    "decisionUseEligible": false,
+    "enableOnlyAfter": [
+      "all eight country registries and representative points pass structural validation",
+      "shared ERA5-Land acquisition and daily aggregation pass QA for every configured subregion",
+      "country and subregion coverage reports are complete",
+      "independent station validation is completed where adequate observations exist, with explicit coverage limitations elsewhere",
+      "regional climatology is built and independently inspected",
+      "the separate D19-D90 evidence contract is tested without altering D01-D16 live forecast data",
+      "formal V1 weights and App presentation/interaction remain unchanged"
+    ]
+  },
+  "legacyCountryPilot": {
+    "countryCode": "JP",
+    "purpose": "Japan-specific implementation pilot only",
+    "jmaCsvNormalizerPath": "scripts/normalize_jma_obsdl_csv.py",
+    "jmaComparatorPath": "scripts/compare_jma_station_daily.py",
+    "rule": "JMA-specific CSV parsing, quality codes and station metadata must remain inside the Japan adapter. They must not become shared-core requirements for the other seven countries."
+  },
+  "appBoundary": {
+    "appUiChangesAllowed": false,
+    "appInteractionChangesAllowed": false,
+    "formalV1ScoringWeightsMayChange": false,
+    "engineLayerOnly": true
+  }
+}
