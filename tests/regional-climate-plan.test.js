@@ -39,7 +39,11 @@ test("ERA5 reanalysis and JMA observations remain separate source classes", () =
   const jma = plan.sourceStrategy.find(source => source.sourceId === "JMA_STATION_OBSERVATIONS");
   assert.ok(era5 && jma);
   assert.equal(era5.role, "primary-gridded-historical-baseline");
+  assert.equal(era5.dataset, "reanalysis-era5-land");
+  assert.equal(era5.spatialResolutionDegrees, 0.1);
+  assert.ok(era5.documentationUrl.startsWith("https://"));
   assert.equal(jma.role, "independent-observation-cross-check");
+  assert.ok(plan.sourceStrategy.some(source => source.sourceId === "JMA_CLIMATE_NORMALS_1991_2020"));
   assert.match(era5.limitations, /not an independent rain-gauge observation/);
   assert.equal(plan.activationPolicy.climateBaselineEnabled, false);
   assert.equal(plan.activationPolicy.forecastEnabled, false);
