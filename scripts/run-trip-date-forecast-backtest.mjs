@@ -154,7 +154,7 @@ const rankingArchiveSummary={
   excludedUnmaturedOrMissingObservations:rankingTargets.length-rankingSamples.length,
   observationErrors:rankingObservationErrors
 };
-\nconst allShortRows=Object.values(rowsByRegion).flat();
+const allShortRows=Object.values(rowsByRegion).flat();
 const climatologyComparison=compareForecastToClimatology(allShortRows,climatologyByRegion);
 const shortForecastGate={
   requiredPairsPerRegionAndLeadBucket:30,requiredWetAndDryCases:5,byRegion:{}
