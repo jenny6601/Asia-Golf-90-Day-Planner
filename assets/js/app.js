@@ -174,6 +174,13 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
   const rain=monthlyContext?mean(histRows.map(x=>x.rainMean)):h?.rainMean;
   return {date,actual:false,seasonal:false,code:null,high,low,feel:null,prob:rainFrequency,rain,rainKind:"historical-frequency",label:!Number.isFinite(rainFrequency)?"歷史資料不足":rainFrequency>=60?"歷史常有雨":rainFrequency>=30?"歷史偶有雨":"歷史較少雨"};
  });
+ rows.forEach(r=>{
+  const chance=Number.isFinite(r.prob)?r.prob:100,amount=Number.isFinite(r.rain)?r.rain:0;
+  if(!Number.isFinite(r.prob)&&!Number.isFinite(r.rain)){r.playabilityStatus="資料不足";return}
+  const grade=chance<30&&amount<1?0:chance<45&&amount<2?1:chance<60&&amount<4?2:3;
+  const tooHot=Number.isFinite(r.high)&&r.high>33;
+  r.playabilityStatus=tooHot||grade===3?"不適":grade===2?"可打":"適打";
+ });
  const pages=node("div",undefined,"departure-week-pages");let pageIndex=0;
  const renderPage=()=>{
   pages.replaceChildren();const pageRows=rows.slice(pageIndex*5,pageIndex*5+5);
@@ -191,7 +198,7 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
   }
   chartWrap.append(svg);const legend=node("div",undefined,"departure-five-legend");legend.append(node("span","● 最高溫","legend-high"),node("span","● 最低溫","legend-low"),node("span","● 體感溫度","legend-feel"));chartWrap.append(legend);page.append(chartWrap);
   const cards=node("div",undefined,"departure-five-cards");
-  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),day=node("button",undefined,"departure-five-card"+(r.date===startDate?" is-departure":"")+(r.actual?" departure-hourly-target":""));day.type="button";day.dataset.hourlyDate=r.date;day.setAttribute("aria-label",r.date+" 天氣狀況，點選查看逐時天氣");day.title=r.actual?"點選查看"+r.date+"逐時天氣":r.seasonal?"點選查看"+r.date+"季節模式逐日估計":"點選查看"+r.date+"歷史氣候資料";day.append(createWeatherIcon(r.code,!r.actual&&!r.seasonal,r.prob),node("strong",r.label));day.append(node("small",r.actual?"降雨機率":r.seasonal?"雨日頻率（季節調整）":"歷史雨日頻率"),node("b",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"),node("small",r.actual?"累積雨量":r.seasonal?"季節估計日雨量":"歷史日均雨量"),node("b",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));if([0,6].includes(wd))day.classList.add("weekend");day.addEventListener("click",()=>renderDepartureDayPage(host,course,r,onBack));cards.append(day)});
+  pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),day=node("button",undefined,"departure-five-card"+(r.date===startDate?" is-departure":"")+(r.actual?" departure-hourly-target":""));day.type="button";day.dataset.hourlyDate=r.date;day.setAttribute("aria-label",r.date+" 天氣狀況，點選查看逐時天氣");day.title=r.actual?"點選查看"+r.date+"逐時天氣":r.seasonal?"點選查看"+r.date+"季節模式逐日估計":"點選查看"+r.date+"歷史氣候資料";day.append(createWeatherIcon(r.code,!r.actual&&!r.seasonal,r.prob),node("strong",r.label));const statusClass=r.playabilityStatus==="適打"?"monthly-status-good":r.playabilityStatus==="可打"?"monthly-status-watch":r.playabilityStatus==="不適"?"monthly-status-bad":"monthly-status-unknown";day.append(node("small",r.playabilityStatus||"資料不足","monthly-day-playability "+statusClass));day.append(node("small",r.actual?"降雨機率":r.seasonal?"雨日頻率（季節調整）":"歷史雨日頻率"),node("b",Number.isFinite(r.prob)?r.prob.toFixed(0)+"%":"—","departure-rain-prob"),node("small",r.actual?"累積雨量":r.seasonal?"季節估計日雨量":"歷史日均雨量"),node("b",Number.isFinite(r.rain)?r.rain.toFixed(1)+" mm":"—","departure-rain-mm"));if([0,6].includes(wd))day.classList.add("weekend");day.addEventListener("click",()=>renderDepartureDayPage(host,course,r,onBack));cards.append(day)});
   page.append(cards);
   if(pageIndex===0){
    const assessment=node("section",undefined,"departure-week-analysis");
