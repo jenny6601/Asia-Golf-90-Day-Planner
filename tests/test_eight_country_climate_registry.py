@@ -80,7 +80,8 @@ class EightCountryRegistryTests(unittest.TestCase):
                 self.assertIsInstance(point.get("latitude"), (int, float), sid)
                 self.assertIsInstance(point.get("longitude"), (int, float), sid)
                 self.assertTrue(point.get("timezone"), sid)
-                self.assertFalse(subregion["coordinateQuality"]["weatherPointEligible"], sid)
+                self.assertIsInstance(subregion["coordinateQuality"]["weatherPointEligible"], bool, sid)
+                self.assertFalse(course["weatherEnabled"], sid)
         self.assertEqual(len(subregion_ids), 80)
 
     def test_duplicate_subregion_ids_are_rejected(self):
