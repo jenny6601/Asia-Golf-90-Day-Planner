@@ -42,7 +42,7 @@ class DailyStatisticsPilotTests(unittest.TestCase):
   result=M.calculate_feels_like_range(25.0,33.0,24.0,1.0,1.0)
   self.assertEqual(result["lowMethod"],"apparent-temperature")
   self.assertEqual(result["highMethod"],"apparent-temperature")
-  self.assertLess(result["feelsLikeMaxEstimateC"],33.0)
+  self.assertGreater(result["feelsLikeMaxEstimateC"],33.0)
  def test_feels_like_missing_inputs_fail_closed(self):
   result=M.calculate_feels_like_range(20.0,30.0,None,1.0,1.0)
   self.assertIsNone(result["feelsLikeMinEstimateC"])
