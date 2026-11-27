@@ -113,7 +113,7 @@ function summarizeWindow(windowDays) {
   const finalScore = clamp(rankingGolfRisk * 0.85 + allDayRisk * 0.15
     + (1 - dataCoverage) * 20 + missingDays * 8 + missingGolfDays * 20
     + (GOLF_ROUNDS - completeGolfDays) * 3);
-  const confidence = dataCoverage >= 0.85 && completeGolfDays === 3 && completeDays >= 4 ? "high"
+  const confidence = dataCoverage >= 0.95 && completeGolfDays === 3 && completeDays >= 4 ? "high"
     : dataCoverage >= 0.60 && completeGolfDays >= 2 ? "medium" : "low";
   return {
     startDate: windowDays[0].date, endDate: windowDays[WINDOW_DAYS - 1].date,
