@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "sourceId": "JMA_DAILY_OBSERVATION",
+  "status": "candidate-station-registry-not-yet-validated-against-exported-history",
+  "purpose": "Independent station observations for regional ERA5-Land quality comparison. Station-day comparisons are diagnostic only; no automatic bias correction or climate activation.",
+  "source": {
+    "organization": "Japan Meteorological Agency",
+    "historicalDataPortal": "https://www.data.jma.go.jp/risk/obsdl/",
+    "portalNotes": "Daily observations can be selected by station, element and period and exported as CSV. Preserve quality/homogeneity flags; missing values must remain null. The portal notes request-size limits and advises against excessive automated access."
+  },
+  "stations": [
+    {
+      "stationId": "41141",
+      "name": "Otawara",
+      "nameLocal": "大田原",
+      "latitude": 36.84,
+      "longitude": 140.035,
+      "elevationM": 188,
+      "regionId": "JP-KNT-NORTH",
+      "type": "AMeDAS",
+      "observedElements": [
+        "precipitation",
+        "temperature",
+        "wind",
+        "relativeHumidity"
+      ],
+      "requiredDailyFields": [
+        "precipitationMm",
+        "temperatureMinC",
+        "temperatureMaxC"
+      ],
+      "approxDistanceToRepresentativePointKm": 14.74,
+      "stationHistoryStart": "1976-02-20",
+      "stationHistoryStartEvidence": "JMA station listing / station metadata; confirm continuity and element-specific availability from the historical CSV export before pairing.",
+      "metadataEvidence": [
+        "https://www.jma-net.go.jp/utsunomiya/kishou/nogyo/615_2026_04_3.pdf",
+        "https://www.jma-net.go.jp/utsunomiya/kishou/nogyo/615_2024_01_3.pdf"
+      ],
+      "validationStatus": "candidate-awaiting-historical-export-validation",
+      "notes": "Official prefectural AMeDAS listing identifies precipitation, temperature and wind observations; elevation 188 m. Confirm daily series coverage, quality flags, station relocation/homogeneity and exact CSV column mapping before use."
+    }
+  ],
+  "activationPolicy": {
+    "climateBaselineEnabled": false,
+    "forecastEnabled": false,
+    "decisionUseEligible": false
+  }
+}
