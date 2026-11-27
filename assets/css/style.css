@@ -1335,3 +1335,58 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
   max-width:none!important;
   height:auto!important;
 }
+
+
+/* FINAL FIX — one shared five-visible-day track for every seven-day row.
+   The strip is 140% of the viewport: 7 equal columns / 5 visible columns.
+   No fixed pixel minimums are allowed to enlarge individual columns. */
+.selected-week-five-page .taiwan-style-seven-day{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior-x:contain!important;
+  scroll-snap-type:none!important;
+  touch-action:pan-x pan-y!important;
+}
+.selected-week-five-page .taiwan-style-seven-day > .taiwan-seven-row,
+.selected-week-five-page .taiwan-style-seven-day > .seven-day-inline-graph{
+  display:block!important;
+  box-sizing:border-box!important;
+  width:140%!important;
+  min-width:140%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+.selected-week-five-page .taiwan-style-seven-day > .taiwan-seven-row{
+  display:grid!important;
+  grid-template-columns:repeat(7,minmax(0,1fr))!important;
+  grid-auto-columns:unset!important;
+  gap:0!important;
+}
+.selected-week-five-page .taiwan-style-seven-day .taiwan-seven-cell{
+  box-sizing:border-box!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:0!important;
+}
+.selected-week-five-page .taiwan-style-seven-day > .seven-day-inline-graph{
+  display:block!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  overflow:visible!important;
+}
+.selected-week-five-page .taiwan-style-seven-day > .seven-day-inline-graph > svg{
+  display:block!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:auto!important;
+}
+/* SVG viewBox is 980 units: seven equal 140-unit daily tracks. */
