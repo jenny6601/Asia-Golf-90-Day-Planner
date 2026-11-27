@@ -140,7 +140,7 @@ def rank_candidates(regions, stations, catalog, top_n=10, radius_km=100):
                 "network":cfg["network"],"dailyRecordCompleteness":"not-yet-verified",
                 "stationApproved":False,"weatherIngestionEnabled":False
             })
-        ranked.sort(key=lambda x:(-x["metadataCoverageDays"], x["distanceKm"], x["stationId"]))
+        ranked.sort(key=lambda x:(-x["catalogDayYearCount"], -x["metadataCoverageDays"], x["distanceKm"], x["stationId"]))
         output.append({
             "countryCode":"KR","subregionId":region["subregionId"],
             "subregionLabel":region["subregionLabel"],
@@ -152,7 +152,7 @@ def rank_candidates(regions, stations, catalog, top_n=10, radius_km=100):
     return {
         "schemaVersion":1,"countryCode":"KR","source":"KMA official 관측지점정보 CSV",
         "period":{"start":"1991-01-01","end":"2020-12-31"},
-        "ranking":"official ASOS DAY catalog membership required; then metadata coverage and distance. Catalog year presence does not imply element completeness.",
+        "ranking":"official ASOS DAY catalog year coverage first, then metadata coverage and distance. Catalog year presence does not imply element completeness.",
         "summary":{"regions":len(output),"regionsWithCandidates":sum(bool(x["candidates"]) for x in output),
                    "catalogStationsWithDayFiles":len(catalog),
                    "candidateRows":sum(len(x["candidates"]) for x in output),
