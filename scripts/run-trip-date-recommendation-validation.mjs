@@ -14,6 +14,7 @@ const addDays=(date,n)=>{
   return d.toISOString().slice(0,10);
 };
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+const SNAPSHOT_DIR=new URL("../data/okinawa-forecast-snapshots/",import.meta.url);
 const asOf=today();
 const dates=Array.from({length:90},(_,i)=>addDays(asOf,i+1));
 const courseIds=["southern-links","palm-hills","pgm-okinawa","kise","atta-terrace","chura-orchard"];
@@ -32,12 +33,45 @@ for(const course of courses){
   history.push(result);
   await pause(350);
 }
+// Archive one forecast run per Okinawa-local calendar day. Re-runs replace that
+// day's snapshot instead of creating artificial same-day stability evidence.
+const snapshotRisk=(probability,amount)=>{
+  const p=typeof probability==="number"&&Number.isFinite(probability)&&probability>=0&&probability<=100?probability:null;
+  const a=typeof amount==="number"&&Number.isFinite(amount)&&amount>=0?Math.min(100,amount*10):null;
+  if(p===null&&a===null)return null;
+  const pw=p===null?0:0.65,aw=a===null?0:0.35;
+  return {riskScore:( (p??0)*pw+(a??0)*aw )/(pw+aw),coverage:(Number(p!==null)+Number(a!==null))/2,probability:p,rainMm:typeof amount==="number"&&Number.isFinite(amount)?amount:null};
+};
+const currentSnapshot={
+  fetchedAt:forecast.fetchedAt||new Date().toISOString(),
+  localDate:asOf,
+  provider:forecast.provider,
+  regions:Object.fromEntries(forecast.zones.map(zone=>[zone.zone.id,
+    (zone.daily?.time||[]).map((date,i)=>{
+      const signal=snapshotRisk(zone.daily.precipitation_probability_max?.[i],zone.daily.precipitation_sum?.[i]);
+      return signal?{date,...signal}:null;
+    }).filter(Boolean)
+  ]))
+};
+await fs.mkdir(SNAPSHOT_DIR,{recursive:true});
+const snapshotFiles=(await fs.readdir(SNAPSHOT_DIR)).filter(name=>/^\\d{4}-\\d{2}-\\d{2}\\.json$/.test(name)).sort();
+const stabilitySnapshots=[];
+for(const name of snapshotFiles){
+  try{
+    const item=JSON.parse(await fs.readFile(new URL(name,SNAPSHOT_DIR),"utf8"));
+    if(item.localDate!==asOf)stabilitySnapshots.push(item);
+  }catch(error){
+    console.warn("Skipping unreadable forecast snapshot",name,error.message);
+  }
+}
+stabilitySnapshots.push(currentSnapshot);
+await fs.writeFile(new URL(asOf+".json",SNAPSHOT_DIR),JSON.stringify(currentSnapshot,null,2));
 const input=buildTripDateEngineInput({
   asOf,
   forecastZones:forecast.zones,
   longRangePoints:longRange.points,
   historicalCourseResults:history,
-  stabilitySnapshots:[]
+  stabilitySnapshots
 });
 const result=recommendGolfTripDates(input);
 const report={
@@ -53,7 +87,7 @@ const report={
     shortForecast:{provider:forecast.provider,days:forecast.forecastDays,regions:forecast.zones.length},
     ec46Seas5:{provider:longRange.provider,model:longRange.model,regions:longRange.points.length},
     historical:{provider:"Open-Meteo Historical Weather API",model:"ERA5 reanalysis",representativeCourseCount:history.length,representativeCourseIds:representativeIds,period:history[0]?{startYear:history[0].startYear,endYear:history[0].endYear}:null},
-    forecastDirectionStability:{status:"not-available",snapshotCount:0,handling:"not fabricated; missing evidence is penalized in score and confidence"}
+    forecastDirectionStability:{status:stabilitySnapshots.length>=2?"building":"collecting",snapshotCount:stabilitySnapshots.length,latestSnapshot:currentSnapshot.fetchedAt,archive:"data/okinawa-forecast-snapshots/YYYY-MM-DD.json",handling:"computed only from actual forecast runs for the same target date; one snapshot per Okinawa-local date"}
   },
   sourceAvailability:input.sourceAvailability,
   recommendation:result,
@@ -61,8 +95,8 @@ const report={
     "This run is a live data integration check. It does not claim backtested forecast skill or calibrated rain probabilities.",
     "EC46 weekly EFI and SEAS5 monthly precipitation anomalies are normalized into comparative rain-risk indices, not probabilities.",
     "ERA5 historical same-calendar-day wet-day frequency and rainfall amount are climate references, not future weather.",
-    "No forecast direction stability archive was supplied; its absence lowers evidence coverage and prevents a high-confidence label.",
-    "Each Okinawa region uses exactly one representative course for historical climate context: north=Kise, central=PGM Okinawa, south=Southern Links. Other same-region courses inherit the representative regional assessment.",
+    "Forecast direction stability is calculated only where at least two distinct daily forecast snapshots overlap the same target date; it is an uncertainty penalty, not rainfall probability.",
+    "Each Okinawa region uses exactly one representative course for historical climate context: north=Kise, central=PGM Okinawa, south=Southern Links. Other same-region courses inherit the representative regional assessment.",\n    "One forecast snapshot per Okinawa-local date is retained in data/okinawa-forecast-snapshots; same-day reruns replace rather than inflate the archive.",
     "No data is imputed. Missing source fields remain absent and reduce eligibility."
   ]
 };
@@ -88,7 +122,7 @@ const lines=[
   "- 16-day forecast regions: "+forecast.zones.length+"/3",
   "- EC46/SEAS5 regions: "+longRange.points.length+"/3",
   "- ERA5 representative-course datasets: "+history.length+"/3",
-  "- Forecast stability snapshots: 0 (not fabricated; confidence reduced)",
+  "- Forecast stability snapshots: "+stabilitySnapshots.length+" (distinct daily runs)",
   "",
   "## Top 3 recommendations",
   ...(result.topThree.length?result.topThree.map(renderWindow):["No window had at least three valid daily assessments."]),
