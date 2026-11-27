@@ -47,7 +47,7 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩中部",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "kise",
@@ -97,7 +97,7 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩北部",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "palm-hills",
@@ -147,7 +147,7 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩北部",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "jp-north-country",
@@ -2591,7 +2591,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
+    "golfClusterId": "JP-OKI-MAIN-SOUTH"
   },
   {
     "id": "jp-nanzan-cc",
