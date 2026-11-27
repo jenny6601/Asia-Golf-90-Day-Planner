@@ -35,9 +35,11 @@ test("maps short forecast, EC46 weekly EFI, SEAS5 monthly anomaly and historical
   assert.ok(d1.historical);
   assert.equal(d1.ec46,undefined);
   const d20=input.days[19].regions.north;
-  assert.ok(d20.ec46);\n  assert.ok(d20.seas5);
+  assert.ok(d20.ec46);
+  assert.ok(d20.seas5);
   assert.equal(d20.ec46.method,"weekly-precipitation-efi-relative-risk-index");
-  assert.equal(d20.ec46.riskScore,20);\n  assert.equal(d20.seas5.method,"monthly-seas5-precipitation-anomaly-ratio-index");
+  assert.equal(d20.ec46.riskScore,20);
+  assert.equal(d20.seas5.method,"monthly-seas5-precipitation-anomaly-ratio-index");
   const d60=input.days[59].regions.north;
   assert.ok(d60.seas5);
   assert.equal(d60.seas5.method,"monthly-seas5-precipitation-anomaly-ratio-index");
