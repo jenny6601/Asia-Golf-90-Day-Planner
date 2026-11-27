@@ -23,7 +23,8 @@
             "latitude": 42.82058,
             "longitude": 141.59652,
             "coordinateStatus": "public-map-coordinate",
-            "coordinateSourceUrl": "https://www.jgto.org/en/club/jgto"
+            "coordinateSourceUrl": "https://www.jgto.org/en/club/jgto",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -41,7 +42,8 @@
             "latitude": 41.98934,
             "longitude": 140.64794,
             "coordinateStatus": "public-map-coordinate",
-            "coordinateSourceUrl": "https://mapcarta.com/36075708"
+            "coordinateSourceUrl": "https://mapcarta.com/36075708",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -60,7 +62,8 @@
             "latitude": 40.01249,
             "longitude": 141.00652,
             "coordinateStatus": "third-party-course-map-coordinate",
-            "coordinateSourceUrl": "https://elitegolfjapan.com/courses/appi-kogen-golf-club/"
+            "coordinateSourceUrl": "https://elitegolfjapan.com/courses/appi-kogen-golf-club/",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -79,7 +82,8 @@
             "latitude": 38.35994,
             "longitude": 140.981828,
             "coordinateStatus": "course-list-coordinate",
-            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/miyagi/miyagi/rifu-golf-club"
+            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/miyagi/miyagi/rifu-golf-club",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -98,7 +102,8 @@
             "latitude": 36.709629,
             "longitude": 140.004827,
             "coordinateStatus": "course-list-coordinate",
-            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/tochigi/sakura/seven-hundred-club"
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/tochigi/sakura/seven-hundred-club",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -117,7 +122,8 @@
             "latitude": 35.83503,
             "longitude": 140.27659,
             "coordinateStatus": "osm-map-coordinate",
-            "coordinateSourceUrl": "https://mapcarta.com/W426264339"
+            "coordinateSourceUrl": "https://mapcarta.com/W426264339",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -136,7 +142,8 @@
             "latitude": 35.46897,
             "longitude": 138.75275,
             "coordinateStatus": "osm-map-coordinate",
-            "coordinateSourceUrl": "https://mapcarta.com/33942390"
+            "coordinateSourceUrl": "https://mapcarta.com/33942390",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -155,7 +162,8 @@
             "latitude": 34.72587,
             "longitude": 136.42721,
             "coordinateStatus": "previously-researched-public-coordinate",
-            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/mie/tsu/tsu-country-club"
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/mie/tsu/tsu-country-club",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -174,7 +182,8 @@
             "latitude": 36.91549,
             "longitude": 136.775147,
             "coordinateStatus": "course-list-coordinate",
-            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/ishikawa/hakui/tokinodai-country-club"
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/ishikawa/hakui/tokinodai-country-club",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -193,7 +202,8 @@
             "latitude": 34.826383,
             "longitude": 135.123729,
             "coordinateStatus": "third-party-course-map-coordinate",
-            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hyogo/kobe/arima-royal-golf-club"
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hyogo/kobe/arima-royal-golf-club",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -212,7 +222,8 @@
             "latitude": 33.9232299832,
             "longitude": 135.2723593476,
             "coordinateStatus": "approximate-official-map-viewport-center-not-course-pin",
-            "coordinateSourceUrl": "https://www.leograd.jp/access_map/"
+            "coordinateSourceUrl": "https://www.leograd.jp/access_map/",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "needs-exact-course-pin-verification"
         },
@@ -231,7 +242,8 @@
             "latitude": 35.364639,
             "longitude": 133.397062,
             "coordinateStatus": "course-list-coordinate",
-            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club"
+            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -250,7 +262,8 @@
             "latitude": 34.3061999,
             "longitude": 132.864325,
             "coordinateStatus": "third-party-place-coordinate",
-            "coordinateSourceUrl": "https://steller.co/p/setouchi-golf-resort-3D4ngLMGn8HLJK2KMg2ACnt"
+            "coordinateSourceUrl": "https://steller.co/p/setouchi-golf-resort-3D4ngLMGn8HLJK2KMg2ACnt",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -269,7 +282,8 @@
             "latitude": 33.5213,
             "longitude": 133.7758,
             "coordinateStatus": "previously-researched-public-coordinate",
-            "coordinateSourceUrl": "https://www.parscape.com/location/golf_clubs/tosacountryclubkamikochi"
+            "coordinateSourceUrl": "https://www.parscape.com/location/golf_clubs/tosacountryclubkamikochi",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -288,7 +302,8 @@
             "latitude": 33.770453,
             "longitude": 130.644917,
             "coordinateStatus": "course-list-coordinate",
-            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/fukuoka/kurate/classic-golf-club"
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/fukuoka/kurate/classic-golf-club",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -307,7 +322,8 @@
             "latitude": 31.974525,
             "longitude": 131.472898,
             "coordinateStatus": "course-list-coordinate",
-            "coordinateSourceUrl": "https://www.where2golf.com/japan/phoenix-country-club/"
+            "coordinateSourceUrl": "https://www.where2golf.com/japan/phoenix-country-club/",
+            "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -338,10 +354,16 @@
       ],
       "coordinateResearchSummary": {
         "totalSubregions": 19,
-        "mainlandCandidates": 16,
-        "coordinateRecords": 16,
+        "mainlandSubregions": 16,
+        "mainlandCandidateCoordinateRecords": 16,
         "exactOrThirdPartyCoordinates": 15,
-        "approximateOnly": 1,
+        "approximateCoordinates": 1,
+        "subregionsWithNoCoordinateRecord": 0,
+        "configuredOkinawaRepresentatives": [
+          "kise",
+          "pgm-okinawa",
+          "southern-links"
+        ],
         "forecastEnabled": false
       }
     },
