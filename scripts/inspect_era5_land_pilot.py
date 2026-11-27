@@ -116,7 +116,7 @@ def inspect_archive(archive: Path, subregion: str, start: date, end: date, mappi
                 })
                 times = _time_values(ds)
                 all_times.update(times)
-                file_info = {"name": path.name, "variables": [], "timeCount": len(times)}
+                file_info = {"name": path.name, "variables": [], "timeCount": len(times), "duplicateTimestamps": len(times) != len(set(times))}
                 for name in REQUIRED_VARIABLES.intersection(ds.data_vars):
                     da = ds[name]
                     values = np.asarray(da.values, dtype="float64")
@@ -136,8 +136,7 @@ def inspect_archive(archive: Path, subregion: str, start: date, end: date, mappi
 
     ordered = sorted(all_times)
     duplicates = False  # set-based collection also detects duplicates below via per-file counts
-    total_time_count = sum(item["timeCount"] for item in report["files"])
-    duplicates = total_time_count != len(all_times)
+    duplicates = any(item["duplicateTimestamps"] for item in report["files"])
     expected_times = []
     cursor = lower
     while cursor <= upper:
