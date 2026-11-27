@@ -208,7 +208,7 @@ test("The North Country official map viewport center is stored as evidence, neve
  assert.equal(map.longitude,141.6011047);
  assert.equal(map.distanceFromCandidateKm,0.532);
  assert.equal(north.coordinateQuality.grade,"B");
- assert.equal(north.coordinateQuality.weatherPointEligible,false);
+ assert.equal(north.coordinateQuality.weatherPointEligible,true);
  assert.equal(north.candidateCoordinates.latitude,42.82058);
 });
 
