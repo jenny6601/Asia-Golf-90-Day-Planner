@@ -46,6 +46,7 @@
         {
           "stationId": "14116",
           "candidateName": null,
+          "candidateDistanceKm": 5.0,
           "officialNameJa": "山口",
           "officialLatitude": "43.148",
           "officialLongitude": "141.222",
@@ -117,6 +118,7 @@
         {
           "stationId": "14121",
           "candidateName": null,
+          "candidateDistanceKm": 16.38,
           "officialNameJa": "石狩",
           "officialLatitude": "43.193",
           "officialLongitude": "141.370",
@@ -204,6 +206,7 @@
         {
           "stationId": "16091",
           "candidateName": null,
+          "candidateDistanceKm": 17.98,
           "officialNameJa": "小樽",
           "officialLatitude": "43.182",
           "officialLongitude": "141.015",
@@ -305,6 +308,7 @@
         {
           "stationId": "14206",
           "candidateName": null,
+          "candidateDistanceKm": 34.99,
           "officialNameJa": "恵庭島松",
           "officialLatitude": "42.927",
           "officialLongitude": "141.565",
@@ -391,6 +395,7 @@
         {
           "stationId": "14071",
           "candidateName": null,
+          "candidateDistanceKm": 37.44,
           "officialNameJa": "厚田",
           "officialLatitude": "43.397",
           "officialLongitude": "141.437",
@@ -447,6 +452,7 @@
         {
           "stationId": "16076",
           "candidateName": null,
+          "candidateDistanceKm": 37.62,
           "officialNameJa": "余市",
           "officialLatitude": "43.182",
           "officialLongitude": "140.758",
@@ -533,6 +539,7 @@
         {
           "stationId": "14101",
           "candidateName": null,
+          "candidateDistanceKm": 37.63,
           "officialNameJa": "新篠津",
           "officialLatitude": "43.220",
           "officialLongitude": "141.645",
@@ -619,6 +626,7 @@
         {
           "stationId": "14286",
           "candidateName": null,
+          "candidateDistanceKm": 40.18,
           "officialNameJa": "支笏湖畔",
           "officialLatitude": "42.772",
           "officialLongitude": "141.407",
@@ -705,6 +713,7 @@
         {
           "stationId": "16286",
           "candidateName": null,
+          "candidateDistanceKm": 40.59,
           "officialNameJa": "喜茂別",
           "officialLatitude": "42.793",
           "officialLongitude": "140.948",
@@ -761,6 +770,7 @@
         {
           "stationId": "15431",
           "candidateName": null,
+          "candidateDistanceKm": 40.62,
           "officialNameJa": "長沼",
           "officialLatitude": "43.012",
           "officialLongitude": "141.693",
@@ -855,6 +865,7 @@
         {
           "stationId": "16206",
           "candidateName": null,
+          "candidateDistanceKm": 12.42,
           "officialNameJa": "蘭越",
           "officialLatitude": "42.810",
           "officialLongitude": "140.542",
@@ -926,6 +937,7 @@
         {
           "stationId": "16156",
           "candidateName": null,
+          "candidateDistanceKm": 16.24,
           "officialNameJa": "共和",
           "officialLatitude": "42.980",
           "officialLongitude": "140.603",
@@ -982,6 +994,7 @@
         {
           "stationId": "16281",
           "candidateName": null,
+          "candidateDistanceKm": 17.77,
           "officialNameJa": "真狩",
           "officialLatitude": "42.775",
           "officialLongitude": "140.880",
@@ -1053,6 +1066,7 @@
         {
           "stationId": "16286",
           "candidateName": null,
+          "candidateDistanceKm": 22.23,
           "officialNameJa": "喜茂別",
           "officialLatitude": "42.793",
           "officialLongitude": "140.948",
@@ -1109,6 +1123,7 @@
         {
           "stationId": "21226",
           "candidateName": null,
+          "candidateDistanceKm": 28.8,
           "officialNameJa": "大岸",
           "officialLatitude": "42.590",
           "officialLongitude": "140.643",
@@ -1195,6 +1210,7 @@
         {
           "stationId": "16321",
           "candidateName": null,
+          "candidateDistanceKm": 36.87,
           "officialNameJa": "黒松内",
           "officialLatitude": "42.663",
           "officialLongitude": "140.310",
@@ -1251,6 +1267,7 @@
         {
           "stationId": "21161",
           "candidateName": null,
+          "candidateDistanceKm": 37.6,
           "officialNameJa": "大滝",
           "officialLatitude": "42.670",
           "officialLongitude": "141.078",
@@ -1337,6 +1354,7 @@
         {
           "stationId": "16076",
           "candidateName": null,
+          "candidateDistanceKm": 37.7,
           "officialNameJa": "余市",
           "officialLatitude": "43.182",
           "officialLongitude": "140.758",
@@ -1423,6 +1441,7 @@
         {
           "stationId": "16252",
           "candidateName": null,
+          "candidateDistanceKm": 38.17,
           "officialNameJa": "寿都",
           "officialLatitude": "42.795",
           "officialLongitude": "140.223",
@@ -1525,6 +1544,7 @@
         {
           "stationId": "16061",
           "candidateName": null,
+          "candidateDistanceKm": 39.41,
           "officialNameJa": "神恵内",
           "officialLatitude": "43.145",
           "officialLongitude": "140.423",
@@ -1619,6 +1639,7 @@
         {
           "stationId": "23226",
           "candidateName": null,
+          "candidateDistanceKm": 11.38,
           "officialNameJa": "北斗",
           "officialLatitude": "41.887",
           "officialLongitude": "140.653",
@@ -1705,6 +1726,7 @@
         {
           "stationId": "23206",
           "candidateName": null,
+          "candidateDistanceKm": 27.69,
           "officialNameJa": "川汲",
           "officialLatitude": "41.905",
           "officialLongitude": "140.970",
@@ -1806,6 +1828,7 @@
         {
           "stationId": "24201",
           "candidateName": null,
+          "candidateDistanceKm": 28.51,
           "officialNameJa": "鶉",
           "officialLatitude": "41.930",
           "officialLongitude": "140.312",
@@ -1907,6 +1930,7 @@
         {
           "stationId": "23326",
           "candidateName": null,
+          "candidateDistanceKm": 37.85,
           "officialNameJa": "木古内",
           "officialLatitude": "41.680",
           "officialLongitude": "140.437",
@@ -2008,6 +2032,7 @@
         {
           "stationId": "23086",
           "candidateName": null,
+          "candidateDistanceKm": 42.96,
           "officialNameJa": "八雲",
           "officialLatitude": "42.252",
           "officialLongitude": "140.272",
@@ -2094,6 +2119,7 @@
         {
           "stationId": "21323",
           "candidateName": null,
+          "candidateDistanceKm": 44.54,
           "officialNameJa": "室蘭",
           "officialLatitude": "42.312",
           "officialLongitude": "140.975",
@@ -2165,6 +2191,7 @@
         {
           "stationId": "24217",
           "candidateName": null,
+          "candidateDistanceKm": 46.06,
           "officialNameJa": "江差",
           "officialLatitude": "41.867",
           "officialLongitude": "140.123",
@@ -2251,6 +2278,7 @@
         {
           "stationId": "31001",
           "candidateName": null,
+          "candidateDistanceKm": 55.65,
           "officialNameJa": "大間",
           "officialLatitude": "41.527",
           "officialLongitude": "140.912",
@@ -2337,6 +2365,7 @@
         {
           "stationId": "24141",
           "candidateName": null,
+          "candidateDistanceKm": 57.42,
           "officialNameJa": "熊石",
           "officialLatitude": "42.128",
           "officialLongitude": "139.985",
@@ -2393,6 +2422,7 @@
         {
           "stationId": "23031",
           "candidateName": null,
+          "candidateDistanceKm": 63.46,
           "officialNameJa": "長万部",
           "officialLatitude": "42.523",
           "officialLongitude": "140.382",
@@ -2487,6 +2517,7 @@
         {
           "stationId": "31312",
           "candidateName": null,
+          "candidateDistanceKm": 9.57,
           "officialNameJa": "青森",
           "officialLatitude": "40.822",
           "officialLongitude": "140.768",
@@ -2589,6 +2620,7 @@
         {
           "stationId": "31482",
           "candidateName": null,
+          "candidateDistanceKm": 12.98,
           "officialNameJa": "酸ケ湯",
           "officialLatitude": "40.648",
           "officialLongitude": "140.848",
@@ -2645,6 +2677,7 @@
         {
           "stationId": "31466",
           "candidateName": null,
+          "candidateDistanceKm": 15.86,
           "officialNameJa": "黒石",
           "officialLatitude": "40.667",
           "officialLongitude": "140.585",
@@ -2716,6 +2749,7 @@
         {
           "stationId": "31296",
           "candidateName": null,
+          "candidateDistanceKm": 25.72,
           "officialNameJa": "五所川原",
           "officialLatitude": "40.808",
           "officialLongitude": "140.458",
@@ -2787,6 +2821,7 @@
         {
           "stationId": "31461",
           "candidateName": null,
+          "candidateDistanceKm": 28.42,
           "officialNameJa": "弘前",
           "officialLatitude": "40.612",
           "officialLongitude": "140.455",
@@ -2873,6 +2908,7 @@
         {
           "stationId": "31646",
           "candidateName": null,
+          "candidateDistanceKm": 30.39,
           "officialNameJa": "碇ケ関",
           "officialLatitude": "40.482",
           "officialLongitude": "140.620",
@@ -2959,6 +2995,7 @@
         {
           "stationId": "31201",
           "candidateName": null,
+          "candidateDistanceKm": 35.47,
           "officialNameJa": "蟹田",
           "officialLatitude": "41.045",
           "officialLongitude": "140.633",
@@ -3030,6 +3067,7 @@
         {
           "stationId": "31662",
           "candidateName": null,
+          "candidateDistanceKm": 36.59,
           "officialNameJa": "休屋",
           "officialLatitude": "40.427",
           "officialLongitude": "140.898",
@@ -3086,6 +3124,7 @@
         {
           "stationId": "31586",
           "candidateName": null,
+          "candidateDistanceKm": 44.9,
           "officialNameJa": "十和田",
           "officialLatitude": "40.595",
           "officialLongitude": "141.247",
@@ -3172,6 +3211,7 @@
         {
           "stationId": "31156",
           "candidateName": null,
+          "candidateDistanceKm": 45.71,
           "officialNameJa": "脇野沢",
           "officialLatitude": "41.145",
           "officialLongitude": "140.822",
@@ -3281,6 +3321,7 @@
         {
           "stationId": "33226",
           "candidateName": null,
+          "candidateDistanceKm": 8.37,
           "officialNameJa": "岩手松尾",
           "officialLatitude": "39.952",
           "officialLongitude": "141.065",
@@ -3382,6 +3423,7 @@
         {
           "stationId": "33166",
           "candidateName": null,
+          "candidateDistanceKm": 10.72,
           "officialNameJa": "荒屋",
           "officialLatitude": "40.103",
           "officialLongitude": "141.050",
@@ -3468,6 +3510,7 @@
         {
           "stationId": "32266",
           "candidateName": null,
+          "candidateDistanceKm": 16.91,
           "officialNameJa": "八幡平",
           "officialLatitude": "40.013",
           "officialLongitude": "140.802",
@@ -3569,6 +3612,7 @@
         {
           "stationId": "32206",
           "candidateName": null,
+          "candidateDistanceKm": 18.54,
           "officialNameJa": "湯瀬",
           "officialLatitude": "40.120",
           "officialLongitude": "140.840",
@@ -3640,6 +3684,7 @@
         {
           "stationId": "33176",
           "candidateName": null,
+          "candidateDistanceKm": 19.34,
           "officialNameJa": "奥中山",
           "officialLatitude": "40.060",
           "officialLongitude": "141.225",
@@ -3726,6 +3771,7 @@
         {
           "stationId": "33296",
           "candidateName": null,
+          "candidateDistanceKm": 21.1,
           "officialNameJa": "好摩",
           "officialLatitude": "39.868",
           "officialLongitude": "141.167",
@@ -3782,6 +3828,7 @@
         {
           "stationId": "32146",
           "candidateName": null,
+          "candidateDistanceKm": 29.25,
           "officialNameJa": "鹿角",
           "officialLatitude": "40.215",
           "officialLongitude": "140.787",
@@ -3883,6 +3930,7 @@
         {
           "stationId": "33421",
           "candidateName": null,
+          "candidateDistanceKm": 35.18,
           "officialNameJa": "雫石",
           "officialLatitude": "39.697",
           "officialLongitude": "140.975",
@@ -3969,6 +4017,7 @@
         {
           "stationId": "33186",
           "candidateName": null,
+          "candidateDistanceKm": 36.76,
           "officialNameJa": "葛巻",
           "officialLatitude": "40.040",
           "officialLongitude": "141.457",
@@ -4055,6 +4104,7 @@
         {
           "stationId": "33371",
           "candidateName": null,
+          "candidateDistanceKm": 37.46,
           "officialNameJa": "薮川",
           "officialLatitude": "39.783",
           "officialLongitude": "141.328",
@@ -4164,6 +4214,7 @@
         {
           "stationId": "34331",
           "candidateName": null,
+          "candidateDistanceKm": 3.65,
           "officialNameJa": "塩釜",
           "officialLatitude": "38.338",
           "officialLongitude": "141.013",
@@ -4220,6 +4271,7 @@
         {
           "stationId": "34392",
           "candidateName": null,
+          "candidateDistanceKm": 13.17,
           "officialNameJa": "仙台",
           "officialLatitude": "38.262",
           "officialLongitude": "140.897",
@@ -4306,6 +4358,7 @@
         {
           "stationId": "34276",
           "candidateName": null,
+          "candidateDistanceKm": 14.69,
           "officialNameJa": "鹿島台",
           "officialLatitude": "38.460",
           "officialLongitude": "141.092",
@@ -4377,6 +4430,7 @@
         {
           "stationId": "34266",
           "candidateName": null,
+          "candidateDistanceKm": 15.0,
           "officialNameJa": "大衡",
           "officialLatitude": "38.473",
           "officialLongitude": "140.888",
@@ -4433,6 +4487,7 @@
         {
           "stationId": "34216",
           "candidateName": null,
+          "candidateDistanceKm": 24.41,
           "officialNameJa": "古川",
           "officialLatitude": "38.598",
           "officialLongitude": "140.912",
@@ -4519,6 +4574,7 @@
         {
           "stationId": "34292",
           "candidateName": null,
+          "candidateDistanceKm": 28.55,
           "officialNameJa": "石巻",
           "officialLatitude": "38.427",
           "officialLongitude": "141.298",
@@ -4621,6 +4677,7 @@
         {
           "stationId": "34311",
           "candidateName": null,
+          "candidateDistanceKm": 30.74,
           "officialNameJa": "新川",
           "officialLatitude": "38.303",
           "officialLongitude": "140.637",
@@ -4692,6 +4749,7 @@
         {
           "stationId": "34171",
           "candidateName": null,
+          "candidateDistanceKm": 34.7,
           "officialNameJa": "米山",
           "officialLatitude": "38.627",
           "officialLongitude": "141.188",
@@ -4763,6 +4821,7 @@
         {
           "stationId": "34471",
           "candidateName": null,
+          "candidateDistanceKm": 38.24,
           "officialNameJa": "亘理",
           "officialLatitude": "38.025",
           "officialLongitude": "140.858",
@@ -4834,6 +4893,7 @@
         {
           "stationId": "34111",
           "candidateName": null,
+          "candidateDistanceKm": 41.75,
           "officialNameJa": "築館",
           "officialLatitude": "38.735",
           "officialLongitude": "141.005",
@@ -4913,6 +4973,7 @@
         {
           "stationId": "36291",
           "candidateName": null,
+          "candidateDistanceKm": 5.99,
           "officialNameJa": "二本松",
           "officialLatitude": "37.583",
           "officialLongitude": "140.430",
@@ -4969,6 +5030,7 @@
         {
           "stationId": "36196",
           "candidateName": null,
+          "candidateDistanceKm": 13.85,
           "officialNameJa": "鷲倉",
           "officialLatitude": "37.668",
           "officialLongitude": "140.260",
@@ -5040,6 +5102,7 @@
         {
           "stationId": "36476",
           "candidateName": null,
+          "candidateDistanceKm": 17.45,
           "officialNameJa": "郡山",
           "officialLatitude": "37.368",
           "officialLongitude": "140.330",
@@ -5111,6 +5174,7 @@
         {
           "stationId": "36276",
           "candidateName": null,
+          "candidateDistanceKm": 21.34,
           "officialNameJa": "猪苗代",
           "officialLatitude": "37.552",
           "officialLongitude": "140.108",
@@ -5197,6 +5261,7 @@
         {
           "stationId": "36391",
           "candidateName": null,
+          "candidateDistanceKm": 22.52,
           "officialNameJa": "船引",
           "officialLatitude": "37.435",
           "officialLongitude": "140.577",
@@ -5268,6 +5333,7 @@
         {
           "stationId": "36126",
           "candidateName": null,
+          "candidateDistanceKm": 22.54,
           "officialNameJa": "福島",
           "officialLatitude": "37.758",
           "officialLongitude": "140.470",
@@ -5354,6 +5420,7 @@
         {
           "stationId": "36106",
           "candidateName": null,
+          "candidateDistanceKm": 31.3,
           "officialNameJa": "桧原",
           "officialLatitude": "37.722",
           "officialLongitude": "140.058",
@@ -5425,6 +5492,7 @@
         {
           "stationId": "36221",
           "candidateName": null,
+          "candidateDistanceKm": 33.63,
           "officialNameJa": "飯舘",
           "officialLatitude": "37.665",
           "officialLongitude": "140.727",
@@ -5526,6 +5594,7 @@
         {
           "stationId": "36066",
           "candidateName": null,
+          "candidateDistanceKm": 36.72,
           "officialNameJa": "梁川",
           "officialLatitude": "37.852",
           "officialLongitude": "140.588",
@@ -5612,6 +5681,7 @@
         {
           "stationId": "36591",
           "candidateName": null,
+          "candidateDistanceKm": 39.41,
           "officialNameJa": "小野新町",
           "officialLatitude": "37.287",
           "officialLongitude": "140.625",
@@ -5706,6 +5776,7 @@
         {
           "stationId": "44112",
           "candidateName": null,
+          "candidateDistanceKm": 4.64,
           "officialNameJa": "八王子",
           "officialLatitude": "35.667",
           "officialLongitude": "139.317",
@@ -5777,6 +5848,7 @@
         {
           "stationId": "44056",
           "candidateName": null,
+          "candidateDistanceKm": 10.74,
           "officialNameJa": "青梅",
           "officialLatitude": "35.788",
           "officialLongitude": "139.312",
@@ -5863,6 +5935,7 @@
         {
           "stationId": "43266",
           "candidateName": null,
+          "candidateDistanceKm": 14.87,
           "officialNameJa": "所沢",
           "officialLatitude": "35.773",
           "officialLongitude": "139.413",
@@ -5949,6 +6022,7 @@
         {
           "stationId": "44116",
           "candidateName": null,
+          "candidateDistanceKm": 18.38,
           "officialNameJa": "府中",
           "officialLatitude": "35.683",
           "officialLongitude": "139.483",
@@ -6035,6 +6109,7 @@
         {
           "stationId": "44046",
           "candidateName": null,
+          "candidateDistanceKm": 23.31,
           "officialNameJa": "小河内",
           "officialLatitude": "35.792",
           "officialLongitude": "139.050",
@@ -6106,6 +6181,7 @@
         {
           "stationId": "46091",
           "candidateName": null,
+          "candidateDistanceKm": 30.07,
           "officialNameJa": "海老名",
           "officialLatitude": "35.433",
           "officialLongitude": "139.387",
@@ -6192,6 +6268,7 @@
         {
           "stationId": "49161",
           "candidateName": null,
+          "candidateDistanceKm": 32.31,
           "officialNameJa": "大月",
           "officialLatitude": "35.608",
           "officialLongitude": "138.938",
@@ -6278,6 +6355,7 @@
         {
           "stationId": "43171",
           "candidateName": null,
+          "candidateDistanceKm": 32.39,
           "officialNameJa": "鳩山",
           "officialLatitude": "35.985",
           "officialLongitude": "139.335",
@@ -6349,6 +6427,7 @@
         {
           "stationId": "43241",
           "candidateName": null,
+          "candidateDistanceKm": 34.23,
           "officialNameJa": "さいたま",
           "officialLatitude": "35.875",
           "officialLongitude": "139.587",
@@ -6450,6 +6529,7 @@
         {
           "stationId": "43156",
           "candidateName": null,
+          "candidateDistanceKm": 37.68,
           "officialNameJa": "秩父",
           "officialLatitude": "35.990",
           "officialLongitude": "139.073",
@@ -6574,6 +6654,7 @@
         {
           "stationId": "40426",
           "candidateName": null,
+          "candidateDistanceKm": 8.44,
           "officialNameJa": "龍ケ崎",
           "officialLatitude": "35.890",
           "officialLongitude": "140.212",
@@ -6660,6 +6741,7 @@
         {
           "stationId": "45116",
           "candidateName": null,
+          "candidateDistanceKm": 13.25,
           "officialNameJa": "佐倉",
           "officialLatitude": "35.728",
           "officialLongitude": "140.212",
@@ -6746,6 +6828,7 @@
         {
           "stationId": "45181",
           "candidateName": null,
+          "candidateDistanceKm": 27.0,
           "officialNameJa": "横芝光",
           "officialLatitude": "35.657",
           "officialLongitude": "140.480",
@@ -6847,6 +6930,7 @@
         {
           "stationId": "40336",
           "candidateName": null,
+          "candidateDistanceKm": 28.2,
           "officialNameJa": "つくば",
           "officialLatitude": "36.057",
           "officialLongitude": "140.125",
@@ -6933,6 +7017,7 @@
         {
           "stationId": "40341",
           "candidateName": null,
+          "candidateDistanceKm": 29.58,
           "officialNameJa": "土浦",
           "officialLatitude": "36.103",
           "officialLongitude": "140.220",
@@ -7019,6 +7104,7 @@
         {
           "stationId": "45212",
           "candidateName": null,
+          "candidateDistanceKm": 30.28,
           "officialNameJa": "千葉",
           "officialLatitude": "35.602",
           "officialLongitude": "140.103",
@@ -7120,6 +7206,7 @@
         {
           "stationId": "40406",
           "candidateName": null,
+          "candidateDistanceKm": 34.21,
           "officialNameJa": "鹿嶋",
           "officialLatitude": "35.963",
           "officialLongitude": "140.622",
@@ -7221,6 +7308,7 @@
         {
           "stationId": "44136",
           "candidateName": null,
+          "candidateDistanceKm": 43.28,
           "officialNameJa": "江戸川臨海",
           "officialLatitude": "35.638",
           "officialLongitude": "139.863",
@@ -7322,6 +7410,7 @@
         {
           "stationId": "40311",
           "candidateName": null,
+          "candidateDistanceKm": 43.34,
           "officialNameJa": "鉾田",
           "officialLatitude": "36.168",
           "officialLongitude": "140.527",
@@ -7408,6 +7497,7 @@
         {
           "stationId": "45261",
           "candidateName": null,
+          "candidateDistanceKm": 44.29,
           "officialNameJa": "茂原",
           "officialLatitude": "35.437",
           "officialLongitude": "140.295",
@@ -7517,6 +7607,7 @@
         {
           "stationId": "40281",
           "candidateName": null,
+          "candidateDistanceKm": 14.54,
           "officialNameJa": "下妻",
           "officialLatitude": "36.168",
           "officialLongitude": "139.945",
@@ -7603,6 +7694,7 @@
         {
           "stationId": "40221",
           "candidateName": null,
+          "candidateDistanceKm": 16.74,
           "officialNameJa": "古河",
           "officialLatitude": "36.202",
           "officialLongitude": "139.717",
@@ -7689,6 +7781,7 @@
         {
           "stationId": "43126",
           "candidateName": null,
+          "candidateDistanceKm": 17.15,
           "officialNameJa": "久喜",
           "officialLatitude": "36.087",
           "officialLongitude": "139.635",
@@ -7775,6 +7868,7 @@
         {
           "stationId": "43256",
           "candidateName": null,
+          "candidateDistanceKm": 21.0,
           "officialNameJa": "越谷",
           "officialLatitude": "35.883",
           "officialLongitude": "139.757",
@@ -7846,6 +7940,7 @@
         {
           "stationId": "40336",
           "candidateName": null,
+          "candidateDistanceKm": 27.03,
           "officialNameJa": "つくば",
           "officialLatitude": "36.057",
           "officialLongitude": "140.125",
@@ -7932,6 +8027,7 @@
         {
           "stationId": "41376",
           "candidateName": null,
+          "candidateDistanceKm": 28.73,
           "officialNameJa": "小山",
           "officialLatitude": "36.338",
           "officialLongitude": "139.830",
@@ -8018,6 +8114,7 @@
         {
           "stationId": "43241",
           "candidateName": null,
+          "candidateDistanceKm": 31.29,
           "officialNameJa": "さいたま",
           "officialLatitude": "35.875",
           "officialLongitude": "139.587",
@@ -8119,6 +8216,7 @@
         {
           "stationId": "42366",
           "candidateName": null,
+          "candidateDistanceKm": 31.4,
           "officialNameJa": "館林",
           "officialLatitude": "36.240",
           "officialLongitude": "139.513",
@@ -8220,6 +8318,7 @@
         {
           "stationId": "40341",
           "candidateName": null,
+          "candidateDistanceKm": 34.31,
           "officialNameJa": "土浦",
           "officialLatitude": "36.103",
           "officialLongitude": "140.220",
@@ -8306,6 +8405,7 @@
         {
           "stationId": "41361",
           "candidateName": null,
+          "candidateDistanceKm": 36.78,
           "officialNameJa": "佐野",
           "officialLatitude": "36.363",
           "officialLongitude": "139.570",
@@ -8400,6 +8500,7 @@
         {
           "stationId": "41181",
           "candidateName": null,
+          "candidateDistanceKm": 12.07,
           "officialNameJa": "塩谷",
           "officialLatitude": "36.757",
           "officialLongitude": "139.883",
@@ -8471,6 +8572,7 @@
         {
           "stationId": "41141",
           "candidateName": null,
+          "candidateDistanceKm": 14.74,
           "officialNameJa": "大田原",
           "officialLatitude": "36.840",
           "officialLongitude": "140.035",
@@ -8542,6 +8644,7 @@
         {
           "stationId": "41277",
           "candidateName": null,
+          "candidateDistanceKm": 21.73,
           "officialNameJa": "宇都宮",
           "officialLatitude": "36.548",
           "officialLongitude": "139.868",
@@ -8629,6 +8732,7 @@
         {
           "stationId": "41331",
           "candidateName": null,
+          "candidateDistanceKm": 25.92,
           "officialNameJa": "真岡",
           "officialLatitude": "36.477",
           "officialLongitude": "139.987",
@@ -8700,6 +8804,7 @@
         {
           "stationId": "41271",
           "candidateName": null,
+          "candidateDistanceKm": 27.24,
           "officialNameJa": "鹿沼",
           "officialLatitude": "36.592",
           "officialLongitude": "139.735",
@@ -8786,6 +8891,7 @@
         {
           "stationId": "41171",
           "candidateName": null,
+          "candidateDistanceKm": 29.28,
           "officialNameJa": "今市",
           "officialLatitude": "36.727",
           "officialLongitude": "139.677",
@@ -8872,6 +8978,7 @@
         {
           "stationId": "41091",
           "candidateName": null,
+          "candidateDistanceKm": 30.31,
           "officialNameJa": "黒磯",
           "officialLatitude": "36.982",
           "officialLongitude": "140.018",
@@ -8958,6 +9065,7 @@
         {
           "stationId": "40091",
           "candidateName": null,
+          "candidateDistanceKm": 30.76,
           "officialNameJa": "常陸大宮",
           "officialLatitude": "36.607",
           "officialLongitude": "140.325",
@@ -9044,6 +9152,7 @@
         {
           "stationId": "40061",
           "candidateName": null,
+          "candidateDistanceKm": 31.25,
           "officialNameJa": "大子",
           "officialLatitude": "36.778",
           "officialLongitude": "140.345",
@@ -9115,6 +9224,7 @@
         {
           "stationId": "41076",
           "candidateName": null,
+          "candidateDistanceKm": 36.31,
           "officialNameJa": "五十里",
           "officialLatitude": "36.922",
           "officialLongitude": "139.695",
@@ -9209,6 +9319,7 @@
         {
           "stationId": "43171",
           "candidateName": null,
+          "candidateDistanceKm": 2.47,
           "officialNameJa": "鳩山",
           "officialLatitude": "35.985",
           "officialLongitude": "139.335",
@@ -9280,6 +9391,7 @@
         {
           "stationId": "43051",
           "candidateName": null,
+          "candidateDistanceKm": 19.18,
           "officialNameJa": "寄居",
           "officialLatitude": "36.105",
           "officialLongitude": "139.183",
@@ -9336,6 +9448,7 @@
         {
           "stationId": "44056",
           "candidateName": null,
+          "candidateDistanceKm": 20.19,
           "officialNameJa": "青梅",
           "officialLatitude": "35.788",
           "officialLongitude": "139.312",
@@ -9422,6 +9535,7 @@
         {
           "stationId": "43056",
           "candidateName": null,
+          "candidateDistanceKm": 20.89,
           "officialNameJa": "熊谷",
           "officialLatitude": "36.150",
           "officialLongitude": "139.380",
@@ -9523,6 +9637,7 @@
         {
           "stationId": "43156",
           "candidateName": null,
+          "candidateDistanceKm": 21.75,
           "officialNameJa": "秩父",
           "officialLatitude": "35.990",
           "officialLongitude": "139.073",
@@ -9639,6 +9754,7 @@
         {
           "stationId": "43266",
           "candidateName": null,
+          "candidateDistanceKm": 23.57,
           "officialNameJa": "所沢",
           "officialLatitude": "35.773",
           "officialLongitude": "139.413",
@@ -9725,6 +9841,7 @@
         {
           "stationId": "43241",
           "candidateName": null,
+          "candidateDistanceKm": 26.64,
           "officialNameJa": "さいたま",
           "officialLatitude": "35.875",
           "officialLongitude": "139.587",
@@ -9826,6 +9943,7 @@
         {
           "stationId": "44046",
           "candidateName": null,
+          "candidateDistanceKm": 31.0,
           "officialNameJa": "小河内",
           "officialLatitude": "35.792",
           "officialLongitude": "139.050",
@@ -9897,6 +10015,7 @@
         {
           "stationId": "43126",
           "candidateName": null,
+          "candidateDistanceKm": 31.59,
           "officialNameJa": "久喜",
           "officialLatitude": "36.087",
           "officialLongitude": "139.635",
@@ -9983,6 +10102,7 @@
         {
           "stationId": "44112",
           "candidateName": null,
+          "candidateDistanceKm": 33.65,
           "officialNameJa": "八王子",
           "officialLatitude": "35.667",
           "officialLongitude": "139.317",
@@ -10062,6 +10182,7 @@
         {
           "stationId": "50281",
           "candidateName": null,
+          "candidateDistanceKm": 6.2,
           "officialNameJa": "網代",
           "officialLatitude": "35.045",
           "officialLongitude": "139.092",
@@ -10118,6 +10239,7 @@
         {
           "stationId": "50206",
           "candidateName": null,
+          "candidateDistanceKm": 14.56,
           "officialNameJa": "三島",
           "officialLatitude": "35.113",
           "officialLongitude": "138.925",
@@ -10189,6 +10311,7 @@
         {
           "stationId": "50506",
           "candidateName": null,
+          "candidateDistanceKm": 26.13,
           "officialNameJa": "稲取",
           "officialLatitude": "34.782",
           "officialLongitude": "139.048",
@@ -10260,6 +10383,7 @@
         {
           "stationId": "46166",
           "candidateName": null,
+          "candidateDistanceKm": 28.61,
           "officialNameJa": "小田原",
           "officialLatitude": "35.277",
           "officialLongitude": "139.155",
@@ -10346,6 +10470,7 @@
         {
           "stationId": "50136",
           "candidateName": null,
+          "candidateDistanceKm": 33.17,
           "officialNameJa": "御殿場",
           "officialLatitude": "35.305",
           "officialLongitude": "138.927",
@@ -10432,6 +10557,7 @@
         {
           "stationId": "50196",
           "candidateName": null,
+          "candidateDistanceKm": 36.64,
           "officialNameJa": "富士",
           "officialLatitude": "35.185",
           "officialLongitude": "138.663",
@@ -10518,6 +10644,7 @@
         {
           "stationId": "50491",
           "candidateName": null,
+          "candidateDistanceKm": 36.99,
           "officialNameJa": "松崎",
           "officialLatitude": "34.755",
           "officialLongitude": "138.783",
@@ -10604,6 +10731,7 @@
         {
           "stationId": "50261",
           "candidateName": null,
+          "candidateDistanceKm": 46.73,
           "officialNameJa": "清水",
           "officialLatitude": "35.053",
           "officialLongitude": "138.522",
@@ -10675,6 +10803,7 @@
         {
           "stationId": "50561",
           "candidateName": null,
+          "candidateDistanceKm": 49.2,
           "officialNameJa": "石廊崎",
           "officialLatitude": "34.603",
           "officialLongitude": "138.842",
@@ -10761,6 +10890,7 @@
         {
           "stationId": "49256",
           "candidateName": null,
+          "candidateDistanceKm": 50.03,
           "officialNameJa": "山中",
           "officialLatitude": "35.437",
           "officialLongitude": "138.837",
@@ -10825,6 +10955,7 @@
         {
           "stationId": "49251",
           "candidateName": null,
+          "candidateDistanceKm": 3.61,
           "officialNameJa": "河口湖",
           "officialLatitude": "35.500",
           "officialLongitude": "138.760",
@@ -10926,6 +11057,7 @@
         {
           "stationId": "49256",
           "candidateName": null,
+          "candidateDistanceKm": 8.47,
           "officialNameJa": "山中",
           "officialLatitude": "35.437",
           "officialLongitude": "138.837",
@@ -10982,6 +11114,7 @@
         {
           "stationId": "49196",
           "candidateName": null,
+          "candidateDistanceKm": 14.05,
           "officialNameJa": "古関",
           "officialLatitude": "35.528",
           "officialLongitude": "138.615",
@@ -11083,6 +11216,7 @@
         {
           "stationId": "49151",
           "candidateName": null,
+          "candidateDistanceKm": 21.79,
           "officialNameJa": "勝沼",
           "officialLatitude": "35.663",
           "officialLongitude": "138.725",
@@ -11154,6 +11288,7 @@
         {
           "stationId": "49161",
           "candidateName": null,
+          "candidateDistanceKm": 22.93,
           "officialNameJa": "大月",
           "officialLatitude": "35.608",
           "officialLongitude": "138.938",
@@ -11240,6 +11375,7 @@
         {
           "stationId": "50136",
           "candidateName": null,
+          "candidateDistanceKm": 24.12,
           "officialNameJa": "御殿場",
           "officialLatitude": "35.305",
           "officialLongitude": "138.927",
@@ -11326,6 +11462,7 @@
         {
           "stationId": "49236",
           "candidateName": null,
+          "candidateDistanceKm": 28.05,
           "officialNameJa": "切石",
           "officialLatitude": "35.467",
           "officialLongitude": "138.442",
@@ -11427,6 +11564,7 @@
         {
           "stationId": "50196",
           "candidateName": null,
+          "candidateDistanceKm": 32.4,
           "officialNameJa": "富士",
           "officialLatitude": "35.185",
           "officialLongitude": "138.663",
@@ -11513,6 +11651,7 @@
         {
           "stationId": "49316",
           "candidateName": null,
+          "candidateDistanceKm": 33.45,
           "officialNameJa": "南部",
           "officialLatitude": "35.288",
           "officialLongitude": "138.445",
@@ -11599,6 +11738,7 @@
         {
           "stationId": "49086",
           "candidateName": null,
+          "candidateDistanceKm": 37.14,
           "officialNameJa": "韮崎",
           "officialLatitude": "35.693",
           "officialLongitude": "138.448",
@@ -11693,6 +11833,7 @@
         {
           "stationId": "48331",
           "candidateName": null,
+          "candidateDistanceKm": 6.01,
           "officialNameJa": "軽井沢",
           "officialLatitude": "36.342",
           "officialLongitude": "138.547",
@@ -11779,6 +11920,7 @@
         {
           "stationId": "48386",
           "candidateName": null,
+          "candidateDistanceKm": 11.09,
           "officialNameJa": "佐久",
           "officialLatitude": "36.247",
           "officialLongitude": "138.477",
@@ -11850,6 +11992,7 @@
         {
           "stationId": "42326",
           "candidateName": null,
+          "candidateDistanceKm": 12.44,
           "officialNameJa": "西野牧",
           "officialLatitude": "36.245",
           "officialLongitude": "138.707",
@@ -11936,6 +12079,7 @@
         {
           "stationId": "48321",
           "candidateName": null,
+          "candidateDistanceKm": 20.4,
           "officialNameJa": "東御",
           "officialLatitude": "36.383",
           "officialLongitude": "138.383",
@@ -12037,6 +12181,7 @@
         {
           "stationId": "42221",
           "candidateName": null,
+          "candidateDistanceKm": 21.41,
           "officialNameJa": "田代",
           "officialLatitude": "36.463",
           "officialLongitude": "138.463",
@@ -12138,6 +12283,7 @@
         {
           "stationId": "48381",
           "candidateName": null,
+          "candidateDistanceKm": 24.46,
           "officialNameJa": "立科",
           "officialLatitude": "36.272",
           "officialLongitude": "138.313",
@@ -12209,6 +12355,7 @@
         {
           "stationId": "42286",
           "candidateName": null,
+          "candidateDistanceKm": 29.23,
           "officialNameJa": "上里見",
           "officialLatitude": "36.377",
           "officialLongitude": "138.895",
@@ -12295,6 +12442,7 @@
         {
           "stationId": "48256",
           "candidateName": null,
+          "candidateDistanceKm": 30.79,
           "officialNameJa": "上田",
           "officialLatitude": "36.400",
           "officialLongitude": "138.265",
@@ -12381,6 +12529,7 @@
         {
           "stationId": "48216",
           "candidateName": null,
+          "candidateDistanceKm": 34.94,
           "officialNameJa": "菅平",
           "officialLatitude": "36.532",
           "officialLongitude": "138.325",
@@ -12467,6 +12616,7 @@
         {
           "stationId": "42396",
           "candidateName": null,
+          "candidateDistanceKm": 35.07,
           "officialNameJa": "神流",
           "officialLatitude": "36.108",
           "officialLongitude": "138.897",
@@ -12576,6 +12726,7 @@
         {
           "stationId": "51071",
           "candidateName": null,
+          "candidateDistanceKm": 12.19,
           "officialNameJa": "稲武",
           "officialLatitude": "35.212",
           "officialLongitude": "137.507",
@@ -12662,6 +12813,7 @@
         {
           "stationId": "52556",
           "candidateName": null,
+          "candidateDistanceKm": 15.59,
           "officialNameJa": "恵那",
           "officialLatitude": "35.447",
           "officialLongitude": "137.403",
@@ -12748,6 +12900,7 @@
         {
           "stationId": "48826",
           "candidateName": null,
+          "candidateDistanceKm": 22.03,
           "officialNameJa": "浪合",
           "officialLatitude": "35.373",
           "officialLongitude": "137.692",
@@ -12819,6 +12972,7 @@
         {
           "stationId": "52606",
           "candidateName": null,
+          "candidateDistanceKm": 32.13,
           "officialNameJa": "多治見",
           "officialLatitude": "35.347",
           "officialLongitude": "137.108",
@@ -12905,6 +13059,7 @@
         {
           "stationId": "51116",
           "candidateName": null,
+          "candidateDistanceKm": 32.71,
           "officialNameJa": "豊田",
           "officialLatitude": "35.132",
           "officialLongitude": "137.177",
@@ -12991,6 +13146,7 @@
         {
           "stationId": "48717",
           "candidateName": null,
+          "candidateDistanceKm": 35.9,
           "officialNameJa": "南木曽",
           "officialLatitude": "35.610",
           "officialLongitude": "137.620",
@@ -13077,6 +13233,7 @@
         {
           "stationId": "50226",
           "candidateName": null,
+          "candidateDistanceKm": 39.68,
           "officialNameJa": "佐久間",
           "officialLatitude": "35.057",
           "officialLongitude": "137.762",
@@ -13178,6 +13335,7 @@
         {
           "stationId": "48841",
           "candidateName": null,
+          "candidateDistanceKm": 42.84,
           "officialNameJa": "南信濃",
           "officialLatitude": "35.322",
           "officialLongitude": "137.932",
@@ -13264,6 +13422,7 @@
         {
           "stationId": "52536",
           "candidateName": null,
+          "candidateDistanceKm": 43.71,
           "officialNameJa": "美濃加茂",
           "officialLatitude": "35.445",
           "officialLongitude": "137.005",
@@ -13350,6 +13509,7 @@
         {
           "stationId": "52406",
           "candidateName": null,
+          "candidateDistanceKm": 47.21,
           "officialNameJa": "金山",
           "officialLatitude": "35.662",
           "officialLongitude": "137.160",
@@ -13444,6 +13604,7 @@
         {
           "stationId": "53091",
           "candidateName": null,
+          "candidateDistanceKm": 16.2,
           "officialNameJa": "亀山",
           "officialLatitude": "34.870",
           "officialLongitude": "136.453",
@@ -13530,6 +13691,7 @@
         {
           "stationId": "60236",
           "candidateName": null,
+          "candidateDistanceKm": 25.71,
           "officialNameJa": "土山",
           "officialLatitude": "34.938",
           "officialLongitude": "136.278",
@@ -13586,6 +13748,7 @@
         {
           "stationId": "53112",
           "candidateName": null,
+          "candidateDistanceKm": 26.37,
           "officialNameJa": "上野",
           "officialLatitude": "34.762",
           "officialLongitude": "136.142",
@@ -13672,6 +13835,7 @@
         {
           "stationId": "53061",
           "candidateName": null,
+          "candidateDistanceKm": 26.98,
           "officialNameJa": "四日市",
           "officialLatitude": "34.940",
           "officialLongitude": "136.580",
@@ -13743,6 +13907,7 @@
         {
           "stationId": "53196",
           "candidateName": null,
+          "candidateDistanceKm": 30.94,
           "officialNameJa": "小俣",
           "officialLatitude": "34.528",
           "officialLongitude": "136.665",
@@ -13829,6 +13994,7 @@
         {
           "stationId": "53231",
           "candidateName": null,
+          "candidateDistanceKm": 31.08,
           "officialNameJa": "粥見",
           "officialLatitude": "34.448",
           "officialLongitude": "136.390",
@@ -13915,6 +14081,7 @@
         {
           "stationId": "60226",
           "candidateName": null,
+          "candidateDistanceKm": 37.92,
           "officialNameJa": "信楽",
           "officialLatitude": "34.913",
           "officialLongitude": "136.080",
@@ -14001,6 +14168,7 @@
         {
           "stationId": "51311",
           "candidateName": null,
+          "candidateDistanceKm": 43.05,
           "officialNameJa": "南知多",
           "officialLatitude": "34.740",
           "officialLongitude": "136.938",
@@ -14087,6 +14255,7 @@
         {
           "stationId": "60196",
           "candidateName": null,
+          "candidateDistanceKm": 43.19,
           "officialNameJa": "東近江",
           "officialLatitude": "35.062",
           "officialLongitude": "136.190",
@@ -14173,6 +14342,7 @@
         {
           "stationId": "53041",
           "candidateName": null,
+          "candidateDistanceKm": 43.44,
           "officialNameJa": "桑名",
           "officialLatitude": "35.050",
           "officialLongitude": "136.693",
@@ -14267,6 +14437,7 @@
         {
           "stationId": "56176",
           "candidateName": null,
+          "candidateDistanceKm": 2.51,
           "officialNameJa": "羽咋",
           "officialLatitude": "36.893",
           "officialLongitude": "136.777",
@@ -14338,6 +14509,7 @@
         {
           "stationId": "55041",
           "candidateName": null,
+          "candidateDistanceKm": 17.44,
           "officialNameJa": "氷見",
           "officialLatitude": "36.863",
           "officialLongitude": "136.960",
@@ -14424,6 +14596,7 @@
         {
           "stationId": "56146",
           "candidateName": null,
+          "candidateDistanceKm": 21.48,
           "officialNameJa": "七尾",
           "officialLatitude": "37.030",
           "officialLongitude": "136.992",
@@ -14495,6 +14668,7 @@
         {
           "stationId": "56186",
           "candidateName": null,
+          "candidateDistanceKm": 23.81,
           "officialNameJa": "かほく",
           "officialLatitude": "36.712",
           "officialLongitude": "136.692",
@@ -14581,6 +14755,7 @@
         {
           "stationId": "56116",
           "candidateName": null,
+          "candidateDistanceKm": 25.69,
           "officialNameJa": "志賀",
           "officialLatitude": "37.143",
           "officialLongitude": "136.725",
@@ -14682,6 +14857,7 @@
         {
           "stationId": "55091",
           "candidateName": null,
+          "candidateDistanceKm": 28.44,
           "officialNameJa": "伏木",
           "officialLatitude": "36.792",
           "officialLongitude": "137.055",
@@ -14798,6 +14974,7 @@
         {
           "stationId": "55141",
           "candidateName": null,
+          "candidateDistanceKm": 35.64,
           "officialNameJa": "砺波",
           "officialLatitude": "36.610",
           "officialLongitude": "136.955",
@@ -14884,6 +15061,7 @@
         {
           "stationId": "55191",
           "candidateName": null,
+          "candidateDistanceKm": 42.09,
           "officialNameJa": "南砺高宮",
           "officialLatitude": "36.545",
           "officialLongitude": "136.872",
@@ -14955,6 +15133,7 @@
         {
           "stationId": "55102",
           "candidateName": null,
+          "candidateDistanceKm": 44.46,
           "officialNameJa": "富山",
           "officialLatitude": "36.708",
           "officialLongitude": "137.202",
@@ -15027,6 +15206,7 @@
         {
           "stationId": "55206",
           "candidateName": null,
+          "candidateDistanceKm": 49.19,
           "officialNameJa": "八尾",
           "officialLatitude": "36.570",
           "officialLongitude": "137.158",
@@ -15121,6 +15301,7 @@
         {
           "stationId": "63411",
           "candidateName": null,
+          "candidateDistanceKm": 11.09,
           "officialNameJa": "三田",
           "officialLatitude": "34.895",
           "officialLongitude": "135.212",
@@ -15207,6 +15388,7 @@
         {
           "stationId": "63461",
           "candidateName": null,
+          "candidateDistanceKm": 11.51,
           "officialNameJa": "三木",
           "officialLatitude": "34.777",
           "officialLongitude": "135.013",
@@ -15293,6 +15475,7 @@
         {
           "stationId": "63331",
           "candidateName": null,
+          "candidateDistanceKm": 22.31,
           "officialNameJa": "西脇",
           "officialLatitude": "34.998",
           "officialLongitude": "134.997",
@@ -15364,6 +15547,7 @@
         {
           "stationId": "62051",
           "candidateName": null,
+          "candidateDistanceKm": 29.1,
           "officialNameJa": "豊中",
           "officialLatitude": "34.783",
           "officialLongitude": "135.438",
@@ -15435,6 +15619,7 @@
         {
           "stationId": "62016",
           "candidateName": null,
+          "candidateDistanceKm": 33.1,
           "officialNameJa": "能勢",
           "officialLatitude": "34.948",
           "officialLongitude": "135.455",
@@ -15521,6 +15706,7 @@
         {
           "stationId": "63216",
           "candidateName": null,
+          "candidateDistanceKm": 34.95,
           "officialNameJa": "柏原",
           "officialLatitude": "35.137",
           "officialLongitude": "135.065",
@@ -15607,6 +15793,7 @@
         {
           "stationId": "63321",
           "candidateName": null,
+          "candidateDistanceKm": 36.92,
           "officialNameJa": "福崎",
           "officialLatitude": "34.950",
           "officialLongitude": "134.748",
@@ -15678,6 +15865,7 @@
         {
           "stationId": "62091",
           "candidateName": null,
+          "candidateDistanceKm": 44.74,
           "officialNameJa": "堺",
           "officialLatitude": "34.555",
           "officialLongitude": "135.485",
@@ -15764,6 +15952,7 @@
         {
           "stationId": "63551",
           "candidateName": null,
+          "candidateDistanceKm": 47.26,
           "officialNameJa": "郡家",
           "officialLatitude": "34.467",
           "officialLongitude": "134.848",
@@ -15835,6 +16024,7 @@
         {
           "stationId": "63201",
           "candidateName": null,
+          "candidateDistanceKm": 48.28,
           "officialNameJa": "生野",
           "officialLatitude": "35.167",
           "officialLongitude": "134.792",
@@ -15899,6 +16089,7 @@
         {
           "stationId": "61286",
           "candidateName": null,
+          "candidateDistanceKm": 6.29,
           "officialNameJa": "京都",
           "officialLatitude": "35.013",
           "officialLongitude": "135.732",
@@ -16045,6 +16236,7 @@
         {
           "stationId": "60216",
           "candidateName": null,
+          "candidateDistanceKm": 16.22,
           "officialNameJa": "大津",
           "officialLatitude": "34.992",
           "officialLongitude": "135.912",
@@ -16131,6 +16323,7 @@
         {
           "stationId": "60116",
           "candidateName": null,
+          "candidateDistanceKm": 25.93,
           "officialNameJa": "南小松",
           "officialLatitude": "35.235",
           "officialLongitude": "135.957",
@@ -16217,6 +16410,7 @@
         {
           "stationId": "61326",
           "candidateName": null,
+          "candidateDistanceKm": 26.35,
           "officialNameJa": "京田辺",
           "officialLatitude": "34.830",
           "officialLongitude": "135.760",
@@ -16303,6 +16497,7 @@
         {
           "stationId": "62046",
           "candidateName": null,
+          "candidateDistanceKm": 28.19,
           "officialNameJa": "枚方",
           "officialLatitude": "34.808",
           "officialLongitude": "135.672",
@@ -16404,6 +16599,7 @@
         {
           "stationId": "61206",
           "candidateName": null,
+          "candidateDistanceKm": 29.94,
           "officialNameJa": "美山",
           "officialLatitude": "35.275",
           "officialLongitude": "135.550",
@@ -16490,6 +16686,7 @@
         {
           "stationId": "62016",
           "candidateName": null,
+          "candidateDistanceKm": 30.7,
           "officialNameJa": "能勢",
           "officialLatitude": "34.948",
           "officialLongitude": "135.455",
@@ -16576,6 +16773,7 @@
         {
           "stationId": "60226",
           "candidateName": null,
+          "candidateDistanceKm": 33.87,
           "officialNameJa": "信楽",
           "officialLatitude": "34.913",
           "officialLongitude": "136.080",
@@ -16662,6 +16860,7 @@
         {
           "stationId": "60196",
           "candidateName": null,
+          "candidateDistanceKm": 39.21,
           "officialNameJa": "東近江",
           "officialLatitude": "35.062",
           "officialLongitude": "136.190",
@@ -16748,6 +16947,7 @@
         {
           "stationId": "64036",
           "candidateName": null,
+          "candidateDistanceKm": 42.05,
           "officialNameJa": "奈良",
           "officialLatitude": "34.673",
           "officialLongitude": "135.837",
@@ -16887,6 +17087,7 @@
         {
           "stationId": "65121",
           "candidateName": null,
+          "candidateDistanceKm": 22.84,
           "officialNameJa": "清水",
           "officialLatitude": "34.087",
           "officialLongitude": "135.425",
@@ -16973,6 +17174,7 @@
         {
           "stationId": "65256",
           "candidateName": null,
+          "candidateDistanceKm": 26.58,
           "officialNameJa": "栗栖川",
           "officialLatitude": "33.792",
           "officialLongitude": "135.513",
@@ -17059,6 +17261,7 @@
         {
           "stationId": "65061",
           "candidateName": null,
+          "candidateDistanceKm": 44.27,
           "officialNameJa": "高野山",
           "officialLatitude": "34.222",
           "officialLongitude": "135.590",
@@ -17145,6 +17348,7 @@
         {
           "stationId": "65026",
           "candidateName": null,
+          "candidateDistanceKm": 49.02,
           "officialNameJa": "かつらぎ",
           "officialLatitude": "34.310",
           "officialLongitude": "135.528",
@@ -17231,6 +17435,7 @@
         {
           "stationId": "64227",
           "candidateName": null,
+          "candidateDistanceKm": 49.34,
           "officialNameJa": "風屋",
           "officialLatitude": "34.045",
           "officialLongitude": "135.787",
@@ -17302,6 +17507,7 @@
         {
           "stationId": "71231",
           "candidateName": null,
+          "candidateDistanceKm": 49.89,
           "officialNameJa": "蒲生田",
           "officialLatitude": "33.837",
           "officialLongitude": "134.742",
@@ -17403,6 +17609,7 @@
         {
           "stationId": "65306",
           "candidateName": null,
+          "candidateDistanceKm": 51.4,
           "officialNameJa": "西川",
           "officialLatitude": "33.638",
           "officialLongitude": "135.710",
@@ -17489,6 +17696,7 @@
         {
           "stationId": "62131",
           "candidateName": null,
+          "candidateDistanceKm": 51.84,
           "officialNameJa": "熊取",
           "officialLatitude": "34.385",
           "officialLongitude": "135.350",
@@ -17575,6 +17783,7 @@
         {
           "stationId": "71106",
           "candidateName": null,
+          "candidateDistanceKm": 66.43,
           "officialNameJa": "徳島",
           "officialLatitude": "34.067",
           "officialLongitude": "134.573",
@@ -17676,6 +17885,7 @@
         {
           "stationId": "65356",
           "candidateName": null,
+          "candidateDistanceKm": 69.13,
           "officialNameJa": "潮岬",
           "officialLatitude": "33.450",
           "officialLongitude": "135.757",
@@ -17755,6 +17965,7 @@
         {
           "stationId": "67461",
           "candidateName": null,
+          "candidateDistanceKm": 11.13,
           "officialNameJa": "竹原",
           "officialLatitude": "34.330",
           "officialLongitude": "132.982",
@@ -17841,6 +18052,7 @@
         {
           "stationId": "73001",
           "candidateName": null,
+          "candidateDistanceKm": 13.48,
           "officialNameJa": "大三島",
           "officialLatitude": "34.250",
           "officialLongitude": "133.007",
@@ -17912,6 +18124,7 @@
         {
           "stationId": "67376",
           "candidateName": null,
+          "candidateDistanceKm": 19.48,
           "officialNameJa": "東広島",
           "officialLatitude": "34.417",
           "officialLongitude": "132.700",
@@ -17998,6 +18211,7 @@
         {
           "stationId": "67471",
           "candidateName": null,
+          "candidateDistanceKm": 23.97,
           "officialNameJa": "生口島",
           "officialLatitude": "34.278",
           "officialLongitude": "133.123",
@@ -18054,6 +18268,7 @@
         {
           "stationId": "73076",
           "candidateName": null,
+          "candidateDistanceKm": 27.98,
           "officialNameJa": "今治",
           "officialLatitude": "34.053",
           "officialLongitude": "132.975",
@@ -18140,6 +18355,7 @@
         {
           "stationId": "67511",
           "candidateName": null,
+          "candidateDistanceKm": 29.81,
           "officialNameJa": "呉",
           "officialLatitude": "34.240",
           "officialLongitude": "132.550",
@@ -18226,6 +18442,7 @@
         {
           "stationId": "67316",
           "candidateName": null,
+          "candidateDistanceKm": 35.17,
           "officialNameJa": "世羅",
           "officialLatitude": "34.583",
           "officialLongitude": "133.050",
@@ -18312,6 +18529,7 @@
         {
           "stationId": "67437",
           "candidateName": null,
+          "candidateDistanceKm": 38.32,
           "officialNameJa": "広島",
           "officialLatitude": "34.398",
           "officialLongitude": "132.462",
@@ -18399,6 +18617,7 @@
         {
           "stationId": "67401",
           "candidateName": null,
+          "candidateDistanceKm": 38.45,
           "officialNameJa": "福山",
           "officialLatitude": "34.447",
           "officialLongitude": "133.247",
@@ -18485,6 +18704,7 @@
         {
           "stationId": "67326",
           "candidateName": null,
+          "candidateDistanceKm": 44.11,
           "officialNameJa": "府中",
           "officialLatitude": "34.562",
           "officialLongitude": "133.232",
@@ -18579,6 +18799,7 @@
         {
           "stationId": "69076",
           "candidateName": null,
+          "candidateDistanceKm": 9.3,
           "officialNameJa": "米子",
           "officialLatitude": "35.433",
           "officialLongitude": "133.338",
@@ -18680,6 +18901,7 @@
         {
           "stationId": "69021",
           "candidateName": null,
+          "candidateDistanceKm": 23.39,
           "officialNameJa": "塩津",
           "officialLatitude": "35.523",
           "officialLongitude": "133.567",
@@ -18766,6 +18988,7 @@
         {
           "stationId": "69006",
           "candidateName": null,
+          "candidateDistanceKm": 24.67,
           "officialNameJa": "境",
           "officialLatitude": "35.543",
           "officialLongitude": "133.235",
@@ -18867,6 +19090,7 @@
         {
           "stationId": "69271",
           "candidateName": null,
+          "candidateDistanceKm": 24.9,
           "officialNameJa": "茶屋",
           "officialLatitude": "35.187",
           "officialLongitude": "133.230",
@@ -18938,6 +19162,7 @@
         {
           "stationId": "66046",
           "candidateName": null,
+          "candidateDistanceKm": 28.44,
           "officialNameJa": "上長田",
           "officialLatitude": "35.297",
           "officialLongitude": "133.725",
@@ -19009,6 +19234,7 @@
         {
           "stationId": "66091",
           "candidateName": null,
+          "candidateDistanceKm": 29.3,
           "officialNameJa": "千屋",
           "officialLatitude": "35.103",
           "officialLongitude": "133.435",
@@ -19095,6 +19321,7 @@
         {
           "stationId": "68132",
           "candidateName": null,
+          "candidateDistanceKm": 31.8,
           "officialNameJa": "松江",
           "officialLatitude": "35.457",
           "officialLongitude": "133.065",
@@ -19181,6 +19408,7 @@
         {
           "stationId": "68276",
           "candidateName": null,
+          "candidateDistanceKm": 34.16,
           "officialNameJa": "横田",
           "officialLatitude": "35.173",
           "officialLongitude": "133.103",
@@ -19267,6 +19495,7 @@
         {
           "stationId": "68091",
           "candidateName": null,
+          "candidateDistanceKm": 38.12,
           "officialNameJa": "鹿島",
           "officialLatitude": "35.520",
           "officialLongitude": "132.983",
@@ -19368,6 +19597,7 @@
         {
           "stationId": "69101",
           "candidateName": null,
+          "candidateDistanceKm": 41.73,
           "officialNameJa": "倉吉",
           "officialLatitude": "35.473",
           "officialLongitude": "133.838",
@@ -19462,6 +19692,7 @@
         {
           "stationId": "71231",
           "candidateName": null,
+          "candidateDistanceKm": 9.42,
           "officialNameJa": "蒲生田",
           "officialLatitude": "33.837",
           "officialLongitude": "134.742",
@@ -19563,6 +19794,7 @@
         {
           "stationId": "71266",
           "candidateName": null,
+          "candidateDistanceKm": 19.12,
           "officialNameJa": "日和佐",
           "officialLatitude": "33.732",
           "officialLongitude": "134.538",
@@ -19634,6 +19866,7 @@
         {
           "stationId": "71106",
           "candidateName": null,
+          "candidateDistanceKm": 22.45,
           "officialNameJa": "徳島",
           "officialLatitude": "34.067",
           "officialLongitude": "134.573",
@@ -19735,6 +19968,7 @@
         {
           "stationId": "71251",
           "candidateName": null,
+          "candidateDistanceKm": 42.82,
           "officialNameJa": "木頭",
           "officialLatitude": "33.772",
           "officialLongitude": "134.198",
@@ -19821,6 +20055,7 @@
         {
           "stationId": "72146",
           "candidateName": null,
+          "candidateDistanceKm": 43.73,
           "officialNameJa": "引田",
           "officialLatitude": "34.213",
           "officialLongitude": "134.407",
@@ -19907,6 +20142,7 @@
         {
           "stationId": "63551",
           "candidateName": null,
+          "candidateDistanceKm": 68.18,
           "officialNameJa": "郡家",
           "officialLatitude": "34.467",
           "officialLongitude": "134.848",
@@ -19978,6 +20214,7 @@
         {
           "stationId": "71191",
           "candidateName": null,
+          "candidateDistanceKm": 69.09,
           "officialNameJa": "京上",
           "officialLatitude": "33.867",
           "officialLongitude": "133.903",
@@ -20049,6 +20286,7 @@
         {
           "stationId": "72086",
           "candidateName": null,
+          "candidateDistanceKm": 73.76,
           "officialNameJa": "高松",
           "officialLatitude": "34.318",
           "officialLongitude": "134.053",
@@ -20150,6 +20388,7 @@
         {
           "stationId": "74136",
           "candidateName": null,
+          "candidateDistanceKm": 74.42,
           "officialNameJa": "大栃",
           "officialLatitude": "33.698",
           "officialLongitude": "133.875",
@@ -20221,6 +20460,7 @@
         {
           "stationId": "72061",
           "candidateName": null,
+          "candidateDistanceKm": 74.87,
           "officialNameJa": "内海",
           "officialLatitude": "34.472",
           "officialLongitude": "134.273",
@@ -20300,6 +20540,7 @@
         {
           "stationId": "74187",
           "candidateName": null,
+          "candidateDistanceKm": 14.48,
           "officialNameJa": "後免",
           "officialLatitude": "33.590",
           "officialLongitude": "133.643",
@@ -20356,6 +20597,7 @@
         {
           "stationId": "74271",
           "candidateName": null,
+          "candidateDistanceKm": 15.04,
           "officialNameJa": "安芸",
           "officialLatitude": "33.488",
           "officialLongitude": "133.933",
@@ -20427,6 +20669,7 @@
         {
           "stationId": "74136",
           "candidateName": null,
+          "candidateDistanceKm": 21.69,
           "officialNameJa": "大栃",
           "officialLatitude": "33.698",
           "officialLongitude": "133.875",
@@ -20498,6 +20741,7 @@
         {
           "stationId": "74181",
           "candidateName": null,
+          "candidateDistanceKm": 21.71,
           "officialNameJa": "高知",
           "officialLatitude": "33.567",
           "officialLongitude": "133.548",
@@ -20599,6 +20843,7 @@
         {
           "stationId": "74071",
           "candidateName": null,
+          "candidateDistanceKm": 30.99,
           "officialNameJa": "本山",
           "officialLatitude": "33.753",
           "officialLongitude": "133.575",
@@ -20685,6 +20930,7 @@
         {
           "stationId": "71191",
           "candidateName": null,
+          "candidateDistanceKm": 40.2,
           "officialNameJa": "京上",
           "officialLatitude": "33.867",
           "officialLongitude": "133.903",
@@ -20756,6 +21002,7 @@
         {
           "stationId": "74311",
           "candidateName": null,
+          "candidateDistanceKm": 47.48,
           "officialNameJa": "須崎",
           "officialLatitude": "33.385",
           "officialLongitude": "133.277",
@@ -20842,6 +21089,7 @@
         {
           "stationId": "71251",
           "candidateName": null,
+          "candidateDistanceKm": 48.0,
           "officialNameJa": "木頭",
           "officialLatitude": "33.772",
           "officialLongitude": "134.198",
@@ -20928,6 +21176,7 @@
         {
           "stationId": "74056",
           "candidateName": null,
+          "candidateDistanceKm": 48.75,
           "officialNameJa": "本川",
           "officialLatitude": "33.765",
           "officialLongitude": "133.338",
@@ -20999,6 +21248,7 @@
         {
           "stationId": "73151",
           "candidateName": null,
+          "candidateDistanceKm": 54.27,
           "officialNameJa": "四国中央",
           "officialLatitude": "33.982",
           "officialLongitude": "133.582",
@@ -21063,6 +21313,7 @@
         {
           "stationId": "82046",
           "candidateName": null,
+          "candidateDistanceKm": 10.73,
           "officialNameJa": "宗像",
           "officialLatitude": "33.808",
           "officialLongitude": "130.538",
@@ -21149,6 +21400,7 @@
         {
           "stationId": "82056",
           "candidateName": null,
+          "candidateDistanceKm": 12.82,
           "officialNameJa": "八幡",
           "officialLatitude": "33.852",
           "officialLongitude": "130.743",
@@ -21235,6 +21487,7 @@
         {
           "stationId": "82136",
           "candidateName": null,
+          "candidateDistanceKm": 13.9,
           "officialNameJa": "飯塚",
           "officialLatitude": "33.652",
           "officialLongitude": "130.693",
@@ -21336,6 +21589,7 @@
         {
           "stationId": "82206",
           "candidateName": null,
+          "candidateDistanceKm": 30.6,
           "officialNameJa": "添田",
           "officialLatitude": "33.558",
           "officialLongitude": "130.855",
@@ -21407,6 +21661,7 @@
         {
           "stationId": "82101",
           "candidateName": null,
+          "candidateDistanceKm": 31.18,
           "officialNameJa": "行橋",
           "officialLatitude": "33.713",
           "officialLongitude": "130.975",
@@ -21493,6 +21748,7 @@
         {
           "stationId": "82191",
           "candidateName": null,
+          "candidateDistanceKm": 31.61,
           "officialNameJa": "太宰府",
           "officialLatitude": "33.497",
           "officialLongitude": "130.490",
@@ -21594,6 +21850,7 @@
         {
           "stationId": "82261",
           "candidateName": null,
+          "candidateDistanceKm": 40.68,
           "officialNameJa": "朝倉",
           "officialLatitude": "33.407",
           "officialLongitude": "130.695",
@@ -21695,6 +21952,7 @@
         {
           "stationId": "82171",
           "candidateName": null,
+          "candidateDistanceKm": 48.17,
           "officialNameJa": "前原",
           "officialLatitude": "33.560",
           "officialLongitude": "130.190",
@@ -21781,6 +22039,7 @@
         {
           "stationId": "82306",
           "candidateName": null,
+          "candidateDistanceKm": 53.85,
           "officialNameJa": "久留米",
           "officialLatitude": "33.303",
           "officialLongitude": "130.493",
@@ -21852,6 +22111,7 @@
         {
           "stationId": "83137",
           "candidateName": null,
+          "candidateDistanceKm": 56.35,
           "officialNameJa": "日田",
           "officialLatitude": "33.322",
           "officialLongitude": "130.928",
@@ -21961,6 +22221,7 @@
         {
           "stationId": "84561",
           "candidateName": null,
+          "candidateDistanceKm": 21.0,
           "officialNameJa": "口之津",
           "officialLatitude": "32.612",
           "officialLongitude": "130.193",
@@ -22047,6 +22308,7 @@
         {
           "stationId": "84496",
           "candidateName": null,
+          "candidateDistanceKm": 30.36,
           "officialNameJa": "長崎",
           "officialLatitude": "32.733",
           "officialLongitude": "129.867",
@@ -22118,6 +22380,7 @@
         {
           "stationId": "86086",
           "candidateName": null,
+          "candidateDistanceKm": 33.38,
           "officialNameJa": "岱明",
           "officialLatitude": "32.915",
           "officialLongitude": "130.512",
@@ -22204,6 +22467,7 @@
         {
           "stationId": "86216",
           "candidateName": null,
+          "candidateDistanceKm": 34.79,
           "officialNameJa": "三角",
           "officialLatitude": "32.612",
           "officialLongitude": "130.478",
@@ -22275,6 +22539,7 @@
         {
           "stationId": "82361",
           "candidateName": null,
+          "candidateDistanceKm": 35.16,
           "officialNameJa": "大牟田",
           "officialLatitude": "33.007",
           "officialLongitude": "130.467",
@@ -22346,6 +22611,7 @@
         {
           "stationId": "86316",
           "candidateName": null,
+          "candidateDistanceKm": 37.01,
           "officialNameJa": "本渡",
           "officialLatitude": "32.468",
           "officialLongitude": "130.180",
@@ -22432,6 +22698,7 @@
         {
           "stationId": "85161",
           "candidateName": null,
+          "candidateDistanceKm": 39.23,
           "officialNameJa": "嬉野",
           "officialLatitude": "33.117",
           "officialLongitude": "129.995",
@@ -22518,6 +22785,7 @@
         {
           "stationId": "86271",
           "candidateName": null,
+          "candidateDistanceKm": 40.31,
           "officialNameJa": "松島",
           "officialLatitude": "32.515",
           "officialLongitude": "130.447",
@@ -22604,6 +22872,7 @@
         {
           "stationId": "85166",
           "candidateName": null,
+          "candidateDistanceKm": 42.61,
           "officialNameJa": "白石",
           "officialLatitude": "33.183",
           "officialLongitude": "130.148",
@@ -22690,6 +22959,7 @@
         {
           "stationId": "86141",
           "candidateName": null,
+          "candidateDistanceKm": 49.13,
           "officialNameJa": "熊本",
           "officialLatitude": "32.813",
           "officialLongitude": "130.707",
@@ -22814,6 +23084,7 @@
         {
           "stationId": "83137",
           "candidateName": null,
+          "candidateDistanceKm": 11.94,
           "officialNameJa": "日田",
           "officialLatitude": "33.322",
           "officialLongitude": "130.928",
@@ -22915,6 +23186,7 @@
         {
           "stationId": "83191",
           "candidateName": null,
+          "candidateDistanceKm": 13.86,
           "officialNameJa": "玖珠",
           "officialLatitude": "33.292",
           "officialLongitude": "131.155",
@@ -23001,6 +23273,7 @@
         {
           "stationId": "86066",
           "candidateName": null,
+          "candidateDistanceKm": 16.39,
           "officialNameJa": "南小国",
           "officialLatitude": "33.103",
           "officialLongitude": "131.067",
@@ -23072,6 +23345,7 @@
         {
           "stationId": "83201",
           "candidateName": null,
+          "candidateDistanceKm": 30.74,
           "officialNameJa": "湯布院",
           "officialLatitude": "33.253",
           "officialLongitude": "131.347",
@@ -23158,6 +23432,7 @@
         {
           "stationId": "82317",
           "candidateName": null,
+          "candidateDistanceKm": 33.09,
           "officialNameJa": "黒木",
           "officialLatitude": "33.225",
           "officialLongitude": "130.645",
@@ -23274,6 +23549,7 @@
         {
           "stationId": "86111",
           "candidateName": null,
+          "candidateDistanceKm": 33.13,
           "officialNameJa": "阿蘇乙姫",
           "officialLatitude": "32.947",
           "officialLongitude": "131.040",
@@ -23360,6 +23636,7 @@
         {
           "stationId": "86006",
           "candidateName": null,
+          "candidateDistanceKm": 33.46,
           "officialNameJa": "鹿北",
           "officialLatitude": "33.115",
           "officialLongitude": "130.692",
@@ -23446,6 +23723,7 @@
         {
           "stationId": "83106",
           "candidateName": null,
+          "candidateDistanceKm": 34.07,
           "officialNameJa": "院内",
           "officialLatitude": "33.420",
           "officialLongitude": "131.317",
@@ -23517,6 +23795,7 @@
         {
           "stationId": "82261",
           "candidateName": null,
+          "candidateDistanceKm": 34.82,
           "officialNameJa": "朝倉",
           "officialLatitude": "33.407",
           "officialLongitude": "130.695",
@@ -23618,6 +23897,7 @@
         {
           "stationId": "82206",
           "candidateName": null,
+          "candidateDistanceKm": 37.97,
           "officialNameJa": "添田",
           "officialLatitude": "33.558",
           "officialLongitude": "130.855",
@@ -23697,6 +23977,7 @@
         {
           "stationId": "87376",
           "candidateName": null,
+          "candidateDistanceKm": 6.96,
           "officialNameJa": "宮崎",
           "officialLatitude": "31.938",
           "officialLongitude": "131.413",
@@ -23783,6 +24064,7 @@
         {
           "stationId": "87331",
           "candidateName": null,
+          "candidateDistanceKm": 11.34,
           "officialNameJa": "西都",
           "officialLatitude": "32.063",
           "officialLongitude": "131.413",
@@ -23884,6 +24166,7 @@
         {
           "stationId": "87231",
           "candidateName": null,
+          "candidateDistanceKm": 41.48,
           "officialNameJa": "西米良",
           "officialLatitude": "32.240",
           "officialLongitude": "131.152",
@@ -23985,6 +24268,7 @@
         {
           "stationId": "87426",
           "candidateName": null,
+          "candidateDistanceKm": 45.85,
           "officialNameJa": "都城",
           "officialLatitude": "31.730",
           "officialLongitude": "131.082",
@@ -24086,6 +24370,7 @@
         {
           "stationId": "87206",
           "candidateName": null,
+          "candidateDistanceKm": 47.53,
           "officialNameJa": "神門",
           "officialLatitude": "32.385",
           "officialLongitude": "131.332",
@@ -24157,6 +24442,7 @@
         {
           "stationId": "87181",
           "candidateName": null,
+          "candidateDistanceKm": 49.66,
           "officialNameJa": "日向",
           "officialLatitude": "32.408",
           "officialLongitude": "131.600",
@@ -24243,6 +24529,7 @@
         {
           "stationId": "86477",
           "candidateName": null,
+          "candidateDistanceKm": 60.31,
           "officialNameJa": "上",
           "officialLatitude": "32.225",
           "officialLongitude": "130.905",
@@ -24314,6 +24601,7 @@
         {
           "stationId": "87501",
           "candidateName": null,
+          "candidateDistanceKm": 60.9,
           "officialNameJa": "串間",
           "officialLatitude": "31.465",
           "officialLongitude": "131.220",
@@ -24400,6 +24688,7 @@
         {
           "stationId": "87301",
           "candidateName": null,
+          "candidateDistanceKm": 63.02,
           "officialNameJa": "加久藤",
           "officialLatitude": "32.047",
           "officialLongitude": "130.810",
@@ -24486,6 +24775,7 @@
         {
           "stationId": "88406",
           "candidateName": null,
+          "candidateDistanceKm": 65.77,
           "officialNameJa": "志布志",
           "officialLatitude": "31.478",
           "officialLongitude": "131.095",
@@ -24580,6 +24870,7 @@
         {
           "stationId": "91107",
           "candidateName": null,
+          "candidateDistanceKm": 8.07,
           "officialNameJa": "名護",
           "officialLatitude": "26.593",
           "officialLongitude": "127.965",
@@ -24666,6 +24957,7 @@
         {
           "stationId": "91197",
           "candidateName": null,
+          "candidateDistanceKm": 43.31,
           "officialNameJa": "那覇",
           "officialLatitude": "26.207",
           "officialLongitude": "127.687",
@@ -24753,6 +25045,7 @@
         {
           "stationId": "91241",
           "candidateName": null,
+          "candidateDistanceKm": 44.78,
           "officialNameJa": "糸数",
           "officialLatitude": "26.153",
           "officialLongitude": "127.765",
@@ -24824,6 +25117,7 @@
         {
           "stationId": "91011",
           "candidateName": null,
+          "candidateDistanceKm": 44.79,
           "officialNameJa": "伊是名",
           "officialLatitude": "26.948",
           "officialLongitude": "127.940",
@@ -24895,6 +25189,7 @@
         {
           "stationId": "91021",
           "candidateName": null,
+          "candidateDistanceKm": 47.83,
           "officialNameJa": "奥",
           "officialLatitude": "26.835",
           "officialLongitude": "128.272",
@@ -24966,6 +25261,7 @@
         {
           "stationId": "91181",
           "candidateName": null,
+          "candidateDistanceKm": 67.2,
           "officialNameJa": "渡嘉敷",
           "officialLatitude": "26.210",
           "officialLongitude": "127.363",
@@ -25037,6 +25333,7 @@
         {
           "stationId": "88986",
           "candidateName": null,
+          "candidateDistanceKm": 73.74,
           "officialNameJa": "与論島",
           "officialLatitude": "27.043",
           "officialLongitude": "128.402",
@@ -25123,6 +25420,7 @@
         {
           "stationId": "91236",
           "candidateName": null,
+          "candidateDistanceKm": 46.9,
           "officialNameJa": "安次嶺",
           "officialLatitude": "26.193",
           "officialLongitude": "127.638",
@@ -25209,6 +25507,7 @@
         {
           "stationId": "91096",
           "candidateName": null,
+          "candidateDistanceKm": 69.95,
           "officialNameJa": "粟国",
           "officialLatitude": "26.592",
           "officialLongitude": "127.238",
@@ -25310,6 +25609,7 @@
         {
           "stationId": "91216",
           "candidateName": null,
+          "candidateDistanceKm": 75.6,
           "officialNameJa": "慶良間",
           "officialLatitude": "26.168",
           "officialLongitude": "127.293",
@@ -25389,6 +25689,7 @@
         {
           "stationId": "91107",
           "candidateName": null,
+          "candidateDistanceKm": 21.01,
           "officialNameJa": "名護",
           "officialLatitude": "26.593",
           "officialLongitude": "127.965",
@@ -25475,6 +25776,7 @@
         {
           "stationId": "91197",
           "candidateName": null,
+          "candidateDistanceKm": 30.64,
           "officialNameJa": "那覇",
           "officialLatitude": "26.207",
           "officialLongitude": "127.687",
@@ -25562,6 +25864,7 @@
         {
           "stationId": "91241",
           "candidateName": null,
+          "candidateDistanceKm": 34.07,
           "officialNameJa": "糸数",
           "officialLatitude": "26.153",
           "officialLongitude": "127.765",
@@ -25633,6 +25936,7 @@
         {
           "stationId": "91181",
           "candidateName": null,
+          "candidateDistanceKm": 53.12,
           "officialNameJa": "渡嘉敷",
           "officialLatitude": "26.210",
           "officialLongitude": "127.363",
@@ -25704,6 +26008,7 @@
         {
           "stationId": "91011",
           "candidateName": null,
+          "candidateDistanceKm": 53.78,
           "officialNameJa": "伊是名",
           "officialLatitude": "26.948",
           "officialLongitude": "127.940",
@@ -25775,6 +26080,7 @@
         {
           "stationId": "91021",
           "candidateName": null,
+          "candidateDistanceKm": 61.62,
           "officialNameJa": "奥",
           "officialLatitude": "26.835",
           "officialLongitude": "128.272",
@@ -25846,6 +26152,7 @@
         {
           "stationId": "88986",
           "candidateName": null,
+          "candidateDistanceKm": 87.21,
           "officialNameJa": "与論島",
           "officialLatitude": "27.043",
           "officialLongitude": "128.402",
@@ -25932,6 +26239,7 @@
         {
           "stationId": "91236",
           "candidateName": null,
+          "candidateDistanceKm": 33.81,
           "officialNameJa": "安次嶺",
           "officialLatitude": "26.193",
           "officialLongitude": "127.638",
@@ -26018,6 +26326,7 @@
         {
           "stationId": "91096",
           "candidateName": null,
+          "candidateDistanceKm": 59.71,
           "officialNameJa": "粟国",
           "officialLatitude": "26.592",
           "officialLongitude": "127.238",
@@ -26119,6 +26428,7 @@
         {
           "stationId": "91216",
           "candidateName": null,
+          "candidateDistanceKm": 61.51,
           "officialNameJa": "慶良間",
           "officialLatitude": "26.168",
           "officialLongitude": "127.293",
@@ -26198,6 +26508,7 @@
         {
           "stationId": "91241",
           "candidateName": null,
+          "candidateDistanceKm": 4.97,
           "officialNameJa": "糸数",
           "officialLatitude": "26.153",
           "officialLongitude": "127.765",
@@ -26269,6 +26580,7 @@
         {
           "stationId": "91197",
           "candidateName": null,
+          "candidateDistanceKm": 11.59,
           "officialNameJa": "那覇",
           "officialLatitude": "26.207",
           "officialLongitude": "127.687",
@@ -26356,6 +26668,7 @@
         {
           "stationId": "91181",
           "candidateName": null,
+          "candidateDistanceKm": 39.02,
           "officialNameJa": "渡嘉敷",
           "officialLatitude": "26.210",
           "officialLongitude": "127.363",
@@ -26427,6 +26740,7 @@
         {
           "stationId": "91107",
           "candidateName": null,
+          "candidateDistanceKm": 57.85,
           "officialNameJa": "名護",
           "officialLatitude": "26.593",
           "officialLongitude": "127.965",
@@ -26513,6 +26827,7 @@
         {
           "stationId": "91011",
           "candidateName": null,
+          "candidateDistanceKm": 92.61,
           "officialNameJa": "伊是名",
           "officialLatitude": "26.948",
           "officialLongitude": "127.940",
@@ -26584,6 +26899,7 @@
         {
           "stationId": "91021",
           "candidateName": null,
+          "candidateDistanceKm": 96.15,
           "officialNameJa": "奥",
           "officialLatitude": "26.835",
           "officialLongitude": "128.272",
@@ -26655,6 +26971,7 @@
         {
           "stationId": "91146",
           "candidateName": null,
+          "candidateDistanceKm": 96.61,
           "officialNameJa": "久米島",
           "officialLatitude": "26.337",
           "officialLongitude": "126.803",
@@ -26741,6 +27058,7 @@
         {
           "stationId": "91236",
           "candidateName": null,
+          "candidateDistanceKm": 13.02,
           "officialNameJa": "安次嶺",
           "officialLatitude": "26.193",
           "officialLongitude": "127.638",
@@ -26827,6 +27145,7 @@
         {
           "stationId": "91096",
           "candidateName": null,
+          "candidateDistanceKm": 72.8,
           "officialNameJa": "粟国",
           "officialLatitude": "26.592",
           "officialLongitude": "127.238",
@@ -26928,6 +27247,7 @@
         {
           "stationId": "91216",
           "candidateName": null,
+          "candidateDistanceKm": 44.93,
           "officialNameJa": "慶良間",
           "officialLatitude": "26.168",
           "officialLongitude": "127.293",
@@ -27007,6 +27327,7 @@
         {
           "stationId": "93041",
           "candidateName": null,
+          "candidateDistanceKm": 17.33,
           "officialNameJa": "宮古島",
           "officialLatitude": "24.793",
           "officialLongitude": "125.278",
@@ -27093,6 +27414,7 @@
         {
           "stationId": "93011",
           "candidateName": null,
+          "candidateDistanceKm": 28.67,
           "officialNameJa": "伊良部",
           "officialLatitude": "24.827",
           "officialLongitude": "125.172",
@@ -27134,6 +27456,7 @@
         {
           "stationId": "93061",
           "candidateName": null,
+          "candidateDistanceKm": 75.14,
           "officialNameJa": "多良間",
           "officialLatitude": "24.667",
           "officialLongitude": "124.697",
@@ -27175,6 +27498,7 @@
         {
           "stationId": "93042",
           "candidateName": null,
+          "candidateDistanceKm": 15.29,
           "officialNameJa": "鏡原",
           "officialLatitude": "24.782",
           "officialLongitude": "125.295",
@@ -27231,6 +27555,7 @@
         {
           "stationId": "93012",
           "candidateName": null,
+          "candidateDistanceKm": 31.42,
           "officialNameJa": "下地島",
           "officialLatitude": "24.827",
           "officialLongitude": "125.143",
@@ -27317,6 +27642,7 @@
         {
           "stationId": "93062",
           "candidateName": null,
+          "candidateDistanceKm": 74.68,
           "officialNameJa": "仲筋",
           "officialLatitude": "24.653",
           "officialLongitude": "124.675",
@@ -27396,6 +27722,7 @@
         {
           "stationId": "50506",
           "candidateName": null,
+          "candidateDistanceKm": 31.52,
           "officialNameJa": "稲取",
           "officialLatitude": "34.782",
           "officialLongitude": "139.048",
@@ -27467,6 +27794,7 @@
         {
           "stationId": "50281",
           "candidateName": null,
+          "candidateDistanceKm": 39.54,
           "officialNameJa": "網代",
           "officialLatitude": "35.045",
           "officialLongitude": "139.092",
@@ -27523,6 +27851,7 @@
         {
           "stationId": "46211",
           "candidateName": null,
+          "candidateDistanceKm": 48.34,
           "officialNameJa": "三浦",
           "officialLatitude": "35.178",
           "officialLongitude": "139.630",
@@ -27609,6 +27938,7 @@
         {
           "stationId": "45401",
           "candidateName": null,
+          "candidateDistanceKm": 48.35,
           "officialNameJa": "館山",
           "officialLatitude": "34.987",
           "officialLongitude": "139.865",
@@ -27695,6 +28025,7 @@
         {
           "stationId": "50561",
           "candidateName": null,
+          "candidateDistanceKm": 54.45,
           "officialNameJa": "石廊崎",
           "officialLatitude": "34.603",
           "officialLongitude": "138.842",
@@ -27781,6 +28112,7 @@
         {
           "stationId": "50206",
           "candidateName": null,
+          "candidateDistanceKm": 55.83,
           "officialNameJa": "三島",
           "officialLatitude": "35.113",
           "officialLongitude": "138.925",
@@ -27852,6 +28184,7 @@
         {
           "stationId": "50491",
           "candidateName": null,
+          "candidateDistanceKm": 55.84,
           "officialNameJa": "松崎",
           "officialLatitude": "34.755",
           "officialLongitude": "138.783",
@@ -27938,6 +28271,7 @@
         {
           "stationId": "46166",
           "candidateName": null,
+          "candidateDistanceKm": 56.27,
           "officialNameJa": "小田原",
           "officialLatitude": "35.277",
           "officialLongitude": "139.155",
@@ -28024,6 +28358,7 @@
         {
           "stationId": "50136",
           "candidateName": null,
+          "candidateDistanceKm": 71.09,
           "officialNameJa": "御殿場",
           "officialLatitude": "35.305",
           "officialLongitude": "138.927",
@@ -28110,6 +28445,7 @@
         {
           "stationId": "46091",
           "candidateName": null,
+          "candidateDistanceKm": 71.61,
           "officialNameJa": "海老名",
           "officialLatitude": "35.433",
           "officialLongitude": "139.387",
@@ -28204,6 +28540,7 @@
         {
           "stationId": "32126",
           "candidateName": null,
+          "candidateDistanceKm": 6.34,
           "officialNameJa": "鷹巣",
           "officialLatitude": "40.227",
           "officialLongitude": "140.372",
@@ -28275,6 +28612,7 @@
         {
           "stationId": "32136",
           "candidateName": null,
+          "candidateDistanceKm": 14.65,
           "officialNameJa": "大館",
           "officialLatitude": "40.252",
           "officialLongitude": "140.505",
@@ -28331,6 +28669,7 @@
         {
           "stationId": "32311",
           "candidateName": null,
+          "candidateDistanceKm": 19.88,
           "officialNameJa": "阿仁合",
           "officialLatitude": "39.993",
           "officialLongitude": "140.403",
@@ -28387,6 +28726,7 @@
         {
           "stationId": "32111",
           "candidateName": null,
+          "candidateDistanceKm": 28.88,
           "officialNameJa": "能代",
           "officialLatitude": "40.198",
           "officialLongitude": "140.032",
@@ -28458,6 +28798,7 @@
         {
           "stationId": "32296",
           "candidateName": null,
+          "candidateDistanceKm": 33.71,
           "officialNameJa": "五城目",
           "officialLatitude": "39.938",
           "officialLongitude": "140.115",
@@ -28529,6 +28870,7 @@
         {
           "stationId": "32146",
           "candidateName": null,
+          "candidateDistanceKm": 35.41,
           "officialNameJa": "鹿角",
           "officialLatitude": "40.215",
           "officialLongitude": "140.787",
@@ -28630,6 +28972,7 @@
         {
           "stationId": "32206",
           "candidateName": null,
+          "candidateDistanceKm": 40.17,
           "officialNameJa": "湯瀬",
           "officialLatitude": "40.120",
           "officialLongitude": "140.840",
@@ -28701,6 +29044,7 @@
         {
           "stationId": "31646",
           "candidateName": null,
+          "candidateDistanceKm": 40.36,
           "officialNameJa": "碇ケ関",
           "officialLatitude": "40.482",
           "officialLongitude": "140.620",
@@ -28787,6 +29131,7 @@
         {
           "stationId": "32287",
           "candidateName": null,
+          "candidateDistanceKm": 40.42,
           "officialNameJa": "大潟",
           "officialLatitude": "40.000",
           "officialLongitude": "139.950",
@@ -28858,6 +29203,7 @@
         {
           "stationId": "32266",
           "candidateName": null,
+          "candidateDistanceKm": 40.68,
           "officialNameJa": "八幡平",
           "officialLatitude": "40.013",
           "officialLongitude": "140.802",
@@ -28967,6 +29313,7 @@
         {
           "stationId": "94101",
           "candidateName": null,
+          "candidateDistanceKm": 14.26,
           "officialNameJa": "大原",
           "officialLatitude": "24.265",
           "officialLongitude": "123.872",
@@ -29038,6 +29385,7 @@
         {
           "stationId": "94081",
           "candidateName": null,
+          "candidateDistanceKm": 18.51,
           "officialNameJa": "石垣島",
           "officialLatitude": "24.337",
           "officialLongitude": "124.163",
@@ -29124,6 +29472,7 @@
         {
           "stationId": "94001",
           "candidateName": null,
+          "candidateDistanceKm": 35.17,
           "officialNameJa": "伊原間",
           "officialLatitude": "24.507",
           "officialLongitude": "124.280",
@@ -29210,6 +29559,7 @@
         {
           "stationId": "94116",
           "candidateName": null,
+          "candidateDistanceKm": 38.35,
           "officialNameJa": "波照間",
           "officialLatitude": "24.055",
           "officialLongitude": "123.767",
@@ -29296,6 +29646,7 @@
         {
           "stationId": "94017",
           "candidateName": null,
+          "candidateDistanceKm": 99.19,
           "officialNameJa": "与那国島",
           "officialLatitude": "24.467",
           "officialLongitude": "123.010",
@@ -29382,6 +29733,7 @@
         {
           "stationId": "93061",
           "candidateName": null,
+          "candidateDistanceKm": 80.77,
           "officialNameJa": "多良間",
           "officialLatitude": "24.667",
           "officialLongitude": "124.697",
@@ -29423,6 +29775,7 @@
         {
           "stationId": "93062",
           "candidateName": null,
+          "candidateDistanceKm": 78.09,
           "officialNameJa": "仲筋",
           "officialLatitude": "24.653",
           "officialLongitude": "124.675",
@@ -29494,6 +29847,7 @@
         {
           "stationId": "94062",
           "candidateName": null,
+          "candidateDistanceKm": 23.59,
           "officialNameJa": "西表島",
           "officialLatitude": "24.427",
           "officialLongitude": "123.765",
@@ -29550,6 +29904,7 @@
         {
           "stationId": "94121",
           "candidateName": null,
+          "candidateDistanceKm": 36.8,
           "officialNameJa": "志多阿原",
           "officialLatitude": "24.058",
           "officialLongitude": "123.803",
@@ -29606,6 +29961,7 @@
         {
           "stationId": "94061",
           "candidateName": null,
+          "candidateDistanceKm": 24.1,
           "officialNameJa": "西表島",
           "officialLatitude": "24.388",
           "officialLongitude": "123.747",
@@ -29670,6 +30026,7 @@
         {
           "stationId": "21187",
           "candidateName": null,
+          "candidateDistanceKm": 13.65,
           "officialNameJa": "苫小牧",
           "officialLatitude": "42.623",
           "officialLongitude": "141.547",
@@ -29787,6 +30144,7 @@
         {
           "stationId": "21111",
           "candidateName": null,
+          "candidateDistanceKm": 19.04,
           "officialNameJa": "厚真",
           "officialLatitude": "42.730",
           "officialLongitude": "141.888",
@@ -29858,6 +30216,7 @@
         {
           "stationId": "14286",
           "candidateName": null,
+          "candidateDistanceKm": 21.23,
           "officialNameJa": "支笏湖畔",
           "officialLatitude": "42.772",
           "officialLongitude": "141.407",
@@ -29944,6 +30303,7 @@
         {
           "stationId": "14206",
           "candidateName": null,
+          "candidateDistanceKm": 24.58,
           "officialNameJa": "恵庭島松",
           "officialLatitude": "42.927",
           "officialLongitude": "141.565",
@@ -30030,6 +30390,7 @@
         {
           "stationId": "21276",
           "candidateName": null,
+          "candidateDistanceKm": 26.67,
           "officialNameJa": "鵡川",
           "officialLatitude": "42.590",
           "officialLongitude": "141.933",
@@ -30101,6 +30462,7 @@
         {
           "stationId": "21261",
           "candidateName": null,
+          "candidateDistanceKm": 31.12,
           "officialNameJa": "白老",
           "officialLatitude": "42.543",
           "officialLongitude": "141.352",
@@ -30187,6 +30549,7 @@
         {
           "stationId": "15431",
           "candidateName": null,
+          "candidateDistanceKm": 33.03,
           "officialNameJa": "長沼",
           "officialLatitude": "43.012",
           "officialLongitude": "141.693",
@@ -30273,6 +30636,7 @@
         {
           "stationId": "21171",
           "candidateName": null,
+          "candidateDistanceKm": 34.22,
           "officialNameJa": "森野",
           "officialLatitude": "42.630",
           "officialLongitude": "141.247",
@@ -30344,6 +30708,7 @@
         {
           "stationId": "22141",
           "candidateName": null,
+          "candidateDistanceKm": 37.95,
           "officialNameJa": "日高門別",
           "officialLatitude": "42.497",
           "officialLongitude": "142.053",
@@ -30445,6 +30810,7 @@
         {
           "stationId": "21126",
           "candidateName": null,
+          "candidateDistanceKm": 40.13,
           "officialNameJa": "穂別",
           "officialLatitude": "42.762",
           "officialLongitude": "142.143",
