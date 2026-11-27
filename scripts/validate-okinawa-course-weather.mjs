@@ -119,6 +119,7 @@ function paramsFor(course,extra) {
 const candidates=JSON.parse(await fs.readFile(new URL("../config/okinawa/course-coordinate-candidates.json",import.meta.url),"utf8"));
 const runtimeCourses=JSON.parse(await fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8"));
 const runtimeById=new Map(runtimeCourses.map(x=>[x.id,x]));
+const jmaStations=JSON.parse(await fs.readFile(new URL("../config/okinawa/jma-amedas-stations.json",import.meta.url),"utf8"));
 const candidateIds=candidates.map(x=>x.id);
 const runtimeOkinawa=runtimeCourses.filter(x=>x.countryCode==="JP"&&x.region==="Okinawa");
 const uniqueIds=new Set(candidateIds);
@@ -150,6 +151,19 @@ for(const course of candidates){
   courseResults.push(result);
   await new Promise(resolve=>setTimeout(resolve,350));
 }
+const stationAudit=candidates.map(course=>{
+  const ranked=jmaStations.map(station=>({
+    stationId:station.id,name:station.name,type:station.type,
+    distanceKm:haversineKm(course.latitude,course.longitude,station.latitude,station.longitude),
+    elevationM:station.elevationM,observedElements:station.observedElements
+  })).sort((a,b)=>a.distanceKm-b.distanceKm);
+  return {
+    courseId:course.id,
+    nearestAll:ranked.slice(0,3),
+    nearestRain:ranked.filter(x=>x.observedElements.includes("precipitation")).slice(0,3),
+    nearestTemperatureWind:ranked.filter(x=>x.observedElements.includes("temperature")&&x.observedElements.includes("wind")).slice(0,3)
+  };
+});
 const gridGroups=section=>{
   const map=new Map();
   for(const r of courseResults){
@@ -167,7 +181,7 @@ const report={
   providerSeasonal:"Open-Meteo Seasonal Forecast API; requested model ecmwf_seasonal_seamless (90-day course-point request)",
   timezone:"Asia/Tokyo",
   purpose:"Read-only data completeness, returned-grid and timezone verification. This is not a forecast-accuracy validation or production calibration.",
-  catalogChecks,coordinateAudit,courseResults,
+  catalogChecks,coordinateAudit,stationSource:"JMA AMeDAS station list (2026-02-05) and Okinawa AMeDAS station information",stationAudit,courseResults,
   forecastGridGroups:gridGroups("forecast"),
   seasonalGridGroups:gridGroups("seasonal"),
   allSixForecastsPass:courseResults.length===6&&courseResults.every(x=>x.forecast?.coreFieldsComplete&&x.forecast?.timezone==="Asia/Tokyo"),
@@ -211,7 +225,11 @@ const lines=[
  "; candidate "+x.candidateCoordinate.latitude+","+x.candidateCoordinate.longitude+
  "; distance "+(x.runtimeToCandidateDistanceKm===null?"n/a":x.runtimeToCandidateDistanceKm.toFixed(3)+" km")+
  "; runtime enabled="+x.runtimeEnabled+"; candidate status="+x.coordinateStatus),
-"","## Interpretation guardrails",...report.limitations.map(x=>"- "+x)
+"","## Nearest JMA AMeDAS station candidates","",
+"| Course | Nearest precipitation station | Nearest temperature/wind station |",
+"|---|---|---|",
+...stationAudit.map(x=>{const r=x.nearestRain[0],w=x.nearestTemperatureWind[0];return "| "+x.courseId+" | "+(r?r.name+" ("+r.stationId+", "+r.distanceKm.toFixed(1)+" km; "+r.type+")":"—")+" | "+(w?w.name+" ("+w.stationId+", "+w.distanceKm.toFixed(1)+" km; "+w.type+")":"—")+" |";}),
+"","Station metadata source: https://xml.kishou.go.jp/20260205_jmaxml_info.pdf. Historical station observations can be obtained through https://www.data.jma.go.jp/risk/obsdl/index.php. Nearest station is a candidate reference, not automatically representative of course microclimate.","","## Interpretation guardrails",...report.limitations.map(x=>"- "+x)
 ];
 await fs.writeFile("artifacts/okinawa-acceptance/okinawa-course-weather-acceptance.md",lines.join("\n"));
 console.log(lines.join("\n"));
