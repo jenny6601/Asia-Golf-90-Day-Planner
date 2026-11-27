@@ -32,6 +32,20 @@ export function haversineKm(aLat,aLon,bLat,bLon) {
   const h=Math.sin(dLat/2)**2+Math.cos(toRad(aLat))*Math.cos(toRad(bLat))*Math.sin(dLon/2)**2;
   return 6371*2*Math.atan2(Math.sqrt(h),Math.sqrt(1-h));
 }
+export function auditRuntimeCourse(runtime,candidate) {
+  const hasRuntime=finite(runtime?.latitude)&&finite(runtime?.longitude);
+  return {
+    id:candidate.id,
+    runtimeEnabled:runtime?.enabled??null,
+    runtimeCoordinateStatus:runtime?.coordinateStatus??"missing",
+    runtimeCoordinate:hasRuntime?{latitude:runtime.latitude,longitude:runtime.longitude}:null,
+    candidateCoordinate:{latitude:candidate.latitude,longitude:candidate.longitude},
+    runtimeToCandidateDistanceKm:hasRuntime?haversineKm(runtime.latitude,runtime.longitude,candidate.latitude,candidate.longitude):null,
+    coordinateSource:candidate.coordinateSource,
+    coordinateStatus:candidate.coordinateStatus,
+    promotionAllowed:candidate.coordinateStatus==="verified"||candidate.coordinateStatus==="user_provided_google_maps"
+  };
+}
 export function assessSeasonalPayload(payload) {
   const dates=payload?.daily?.time||[];
   const start=dates[0]||null, d17=dates[16]||null, d46=dates[45]||null, d47=dates[46]||null, end=dates[89]||null;
