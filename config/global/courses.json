@@ -25,17 +25,16 @@
     "golfClusterId": "JP-OKI-MAIN-SOUTH",
     "regionId": "JP-REG-09",
     "coordinateUse": "regional_climate_representative_point",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-OKI-MAIN-SOUTH",
+    "regionalRepresentativeCourseId": "southern-links",
+    "regionalSubregionId": "JP-OKI-MAIN-SOUTH",
     "regionalSubregionLabel": "沖繩・本島南部球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 26.113785,
       "longitude": 127.739021
-    },
-    "regionalRepresentativeCourseId": "southern-links",
-    "regionalSubregionId": "JP-OKI-MAIN-SOUTH"
+    }
   },
   {
     "id": "pgm-okinawa",
@@ -63,17 +62,16 @@
     "golfClusterId": "JP-OKI-MAIN-CENTRAL",
     "regionId": "JP-REG-09",
     "coordinateUse": "regional_climate_representative_point",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-OKI-MAIN-CENTRAL",
+    "regionalRepresentativeCourseId": "pgm-okinawa",
+    "regionalSubregionId": "JP-OKI-MAIN-CENTRAL",
     "regionalSubregionLabel": "沖繩・本島中部球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 26.455335,
       "longitude": 127.820344
-    },
-    "regionalRepresentativeCourseId": "pgm-okinawa",
-    "regionalSubregionId": "JP-OKI-MAIN-CENTRAL"
+    }
   },
   {
     "id": "kise",
@@ -101,17 +99,16 @@
     "golfClusterId": "JP-OKI-MAIN-NORTH",
     "regionId": "JP-REG-09",
     "coordinateUse": "regional_climate_representative_point",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-OKI-MAIN-NORTH",
+    "regionalRepresentativeCourseId": "kise",
+    "regionalSubregionId": "JP-OKI-MAIN-NORTH",
     "regionalSubregionLabel": "沖繩・本島北部球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 26.524228,
       "longitude": 127.939192
-    },
-    "regionalRepresentativeCourseId": "kise",
-    "regionalSubregionId": "JP-OKI-MAIN-NORTH"
+    }
   },
   {
     "id": "atta-terrace",
@@ -274,7 +271,7 @@
       "coordinateSourceUrl": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "official-operator-map-pin-confirmed",
     "officialUrl": "https://www.princehotels.co.jp/golf/hokkaido/faq/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -286,14 +283,14 @@
     "regionId": "JP-REG-01",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-HKD-HAKODATE",
+    "regionalRepresentativeCourseId": "jp-hokkaido-country",
+    "regionalSubregionId": "JP-HKD-HAKODATE",
     "regionalSubregionLabel": "北海道・函館／大沼球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 41.9892895,
       "longitude": 140.6549955
-    },
-    "regionalRepresentativeCourseId": "jp-hokkaido-country",
-    "regionalSubregionId": "JP-HKD-HAKODATE"
+    }
   },
   {
     "id": "jp-appi-kogen",
@@ -315,7 +312,7 @@
       "coordinateSourceUrl": "https://elitegolfjapan.com/courses/appi-kogen-golf-club/",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://www.appi.co.jp/en/golf-club/agc-appi-kogen-golf-club/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -327,14 +324,14 @@
     "regionId": "JP-REG-02",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-THK-IWATE-APPI",
+    "regionalRepresentativeCourseId": "jp-appi-kogen",
+    "regionalSubregionId": "JP-THK-IWATE-APPI",
     "regionalSubregionLabel": "東北・岩手／安比高原球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 40.01249,
       "longitude": 141.00652
-    },
-    "regionalRepresentativeCourseId": "jp-appi-kogen",
-    "regionalSubregionId": "JP-THK-IWATE-APPI"
+    }
   },
   {
     "id": "jp-rifu",
@@ -356,7 +353,7 @@
       "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/miyagi/miyagi/rifu-golf-club",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://ir.pacificgolf.co.jp/rifu/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -368,14 +365,14 @@
     "regionId": "JP-REG-02",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-THK-MIYAGI-SENDAI",
+    "regionalRepresentativeCourseId": "jp-rifu",
+    "regionalSubregionId": "JP-THK-MIYAGI-SENDAI",
     "regionalSubregionLabel": "東北・仙台／宮城球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 38.35994,
       "longitude": 140.981828
-    },
-    "regionalRepresentativeCourseId": "jp-rifu",
-    "regionalSubregionId": "JP-THK-MIYAGI-SENDAI"
+    }
   },
   {
     "id": "jp-seven-hundred",
@@ -397,7 +394,7 @@
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/tochigi/sakura/seven-hundred-club",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://www.visit-tochigi.com/plan-your-trip/things-to-do/25836/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -409,14 +406,14 @@
     "regionId": "JP-REG-03",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KNT-TOCHIGI-NASU",
+    "regionalRepresentativeCourseId": "jp-seven-hundred",
+    "regionalSubregionId": "JP-KNT-TOCHIGI-NASU",
     "regionalSubregionLabel": "關東・栃木／那須球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 36.709629,
       "longitude": 140.004827
-    },
-    "regionalRepresentativeCourseId": "jp-seven-hundred",
-    "regionalSubregionId": "JP-KNT-TOCHIGI-NASU"
+    }
   },
   {
     "id": "jp-narita-hills",
@@ -438,7 +435,7 @@
       "coordinateSourceUrl": "https://mapcarta.com/W426264339",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://www.japan.travel/en/sports/golf/courses/narita-hills-country-club/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -450,14 +447,14 @@
     "regionId": "JP-REG-03",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KNT-CHIBA-NARITA",
+    "regionalRepresentativeCourseId": "jp-narita-hills",
+    "regionalSubregionId": "JP-KNT-CHIBA-NARITA",
     "regionalSubregionLabel": "關東・千葉／成田／市原球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 35.83503,
       "longitude": 140.27659
-    },
-    "regionalRepresentativeCourseId": "jp-narita-hills",
-    "regionalSubregionId": "JP-KNT-CHIBA-NARITA"
+    }
   },
   {
     "id": "jp-kawaguchiko",
@@ -479,7 +476,7 @@
       "coordinateSourceUrl": "https://kcc.tatemono-golf.com/access/",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://kcc.tatemono-golf.com/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -491,14 +488,14 @@
     "regionId": "JP-REG-04",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-CHB-FUJI-YAMANASHI",
+    "regionalRepresentativeCourseId": "jp-kawaguchiko",
+    "regionalSubregionId": "JP-CHB-FUJI-YAMANASHI",
     "regionalSubregionLabel": "中部・山梨／河口湖球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 35.4682136,
       "longitude": 138.7517012
-    },
-    "regionalRepresentativeCourseId": "jp-kawaguchiko",
-    "regionalSubregionId": "JP-CHB-FUJI-YAMANASHI"
+    }
   },
   {
     "id": "jp-tsu",
@@ -520,7 +517,7 @@
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/mie/tsu/tsu-country-club",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://tsu.co.jp/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -532,14 +529,14 @@
     "regionId": "JP-REG-04",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-CHB-MIE-ISE",
+    "regionalRepresentativeCourseId": "jp-tsu",
+    "regionalSubregionId": "JP-CHB-MIE-ISE",
     "regionalSubregionLabel": "中部・三重／伊勢志摩球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 34.72587,
       "longitude": 136.42721
-    },
-    "regionalRepresentativeCourseId": "jp-tsu",
-    "regionalSubregionId": "JP-CHB-MIE-ISE"
+    }
   },
   {
     "id": "jp-tokinodai",
@@ -561,7 +558,7 @@
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/ishikawa/hakui/tokinodai-country-club",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://tokinodai.co.jp/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -573,14 +570,14 @@
     "regionId": "JP-REG-04",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-CHB-HOKURIKU",
+    "regionalRepresentativeCourseId": "jp-tokinodai",
+    "regionalSubregionId": "JP-CHB-HOKURIKU",
     "regionalSubregionLabel": "中部・北陸／石川／富山／福井球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 36.91549,
       "longitude": 136.775147
-    },
-    "regionalRepresentativeCourseId": "jp-tokinodai",
-    "regionalSubregionId": "JP-CHB-HOKURIKU"
+    }
   },
   {
     "id": "jp-arima-royal",
@@ -602,7 +599,7 @@
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hyogo/kobe/arima-royal-golf-club",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://arima-royal.com/access",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -614,14 +611,14 @@
     "regionId": "JP-REG-05",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KNS-OSAKA-HYOGO",
+    "regionalRepresentativeCourseId": "jp-arima-royal",
+    "regionalSubregionId": "JP-KNS-OSAKA-HYOGO",
     "regionalSubregionLabel": "關西・大阪／神戶／兵庫球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 34.826383,
       "longitude": 135.123729
-    },
-    "regionalRepresentativeCourseId": "jp-arima-royal",
-    "regionalSubregionId": "JP-KNS-OSAKA-HYOGO"
+    }
   },
   {
     "id": "jp-leograd",
@@ -644,7 +641,7 @@
       "timezone": "Asia/Tokyo",
       "officialMapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52971.13157452712!2d135.2723593476244!3d33.92322998321186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60076b35d7ab2287:0x4076b246f1847477!2z44Os44Kq44Kw44Op44O844OJ44K044Or44OV44Kv44Op44OW!5e0!3m2!1sja!2sjp!4v1485138120905"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "official-address-and-map-confirmed-pin-coordinate-still-unverified",
     "officialUrl": "https://www.leograd.jp/concept_outline/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -656,14 +653,14 @@
     "regionId": "JP-REG-05",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KNS-WAKAYAMA",
+    "regionalRepresentativeCourseId": "jp-leograd",
+    "regionalSubregionId": "JP-KNS-WAKAYAMA",
     "regionalSubregionLabel": "關西・和歌山／紀伊半島球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 33.9232299832,
       "longitude": 135.2723593476
-    },
-    "regionalRepresentativeCourseId": "jp-leograd",
-    "regionalSubregionId": "JP-KNS-WAKAYAMA"
+    }
   },
   {
     "id": "jp-green-park-daisen",
@@ -685,7 +682,7 @@
       "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://www.jgto.org/en/club/jgto",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -697,14 +694,14 @@
     "regionId": "JP-REG-06",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-CHG-SANIN",
+    "regionalRepresentativeCourseId": "jp-green-park-daisen",
+    "regionalSubregionId": "JP-CHG-SANIN",
     "regionalSubregionLabel": "中國地方・鳥取／島根／山陰球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 35.364639,
       "longitude": 133.397062
-    },
-    "regionalRepresentativeCourseId": "jp-green-park-daisen",
-    "regionalSubregionId": "JP-CHG-SANIN"
+    }
   },
   {
     "id": "jp-setouchi",
@@ -726,7 +723,7 @@
       "coordinateStatus": "official-operator-google-maps-place-pin",
       "coordinateSourceUrl": "https://www.resol-golf.jp/en/setouchi/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "official-map-place-coordinate-found-course-identity-confirmed",
     "officialUrl": "https://www.resol-golf.jp/en/setouchi/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -738,14 +735,14 @@
     "regionId": "JP-REG-06",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-CHG-SANYO",
+    "regionalRepresentativeCourseId": "jp-setouchi",
+    "regionalSubregionId": "JP-CHG-SANYO",
     "regionalSubregionLabel": "中國地方・廣島／岡山／山陽球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 34.3061999,
       "longitude": 132.864325
-    },
-    "regionalRepresentativeCourseId": "jp-setouchi",
-    "regionalSubregionId": "JP-CHG-SANYO"
+    }
   },
   {
     "id": "jp-tosa",
@@ -767,7 +764,7 @@
       "coordinateSourceUrl": "https://www.parscape.com/location/golf_clubs/tosacountryclubkamikochi",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://www.japan.travel/en/sports/golf/courses/tosa-country-club/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -779,14 +776,14 @@
     "regionId": "JP-REG-07",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-SHK-EHIME-KOCHI",
+    "regionalRepresentativeCourseId": "jp-tosa",
+    "regionalSubregionId": "JP-SHK-EHIME-KOCHI",
     "regionalSubregionLabel": "四國・高知／愛媛球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 33.5213,
       "longitude": 133.7758
-    },
-    "regionalRepresentativeCourseId": "jp-tosa",
-    "regionalSubregionId": "JP-SHK-EHIME-KOCHI"
+    }
   },
   {
     "id": "jp-the-classic",
@@ -808,7 +805,7 @@
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/fukuoka/kurate/classic-golf-club",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://cm-g.co.jp/the-classic/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -820,14 +817,14 @@
     "regionId": "JP-REG-08",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KYS-FUKUOKA-SAGA",
+    "regionalRepresentativeCourseId": "jp-the-classic",
+    "regionalSubregionId": "JP-KYS-FUKUOKA-SAGA",
     "regionalSubregionLabel": "九州・福岡／佐賀球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 33.770453,
       "longitude": 130.644917
-    },
-    "regionalRepresentativeCourseId": "jp-the-classic",
-    "regionalSubregionId": "JP-KYS-FUKUOKA-SAGA"
+    }
   },
   {
     "id": "jp-phoenix",
@@ -849,7 +846,7 @@
       "coordinateSourceUrl": "https://www.where2golf.com/japan/phoenix-country-club/",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
     "officialUrl": "https://en.seagaia.co.jp/hotel-facility/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -861,14 +858,14 @@
     "regionId": "JP-REG-08",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KYS-MIYAZAKI-KAGOSHIMA",
+    "regionalRepresentativeCourseId": "jp-phoenix",
+    "regionalSubregionId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
     "regionalSubregionLabel": "九州・宮崎／鹿兒島球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 31.974525,
       "longitude": 131.472898
-    },
-    "regionalRepresentativeCourseId": "jp-phoenix",
-    "regionalSubregionId": "JP-KYS-MIYAZAKI-KAGOSHIMA"
+    }
   },
   {
     "id": "kr-kr-cap-01",
@@ -889,7 +886,7 @@
       "coordinateSourceUrl": "https://mapcarta.com/38817262",
       "timezone": "Asia/Seoul"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -901,14 +898,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "KR-CAP-01",
+    "regionalRepresentativeCourseId": "kr-kr-cap-01",
+    "regionalSubregionId": "KR-CAP-01",
     "regionalSubregionLabel": "首爾／京畿／仁川",
     "regionalClimateTimezone": "Asia/Seoul",
     "regionalClimatePoint": {
       "latitude": 37.37985,
       "longitude": 126.62439
-    },
-    "regionalRepresentativeCourseId": "kr-kr-cap-01",
-    "regionalSubregionId": "KR-CAP-01"
+    }
   },
   {
     "id": "kr-kr-gw-01",
@@ -929,7 +926,7 @@
       "coordinateSourceUrl": "https://www.whistlingrockcc.com/EN/Club/About",
       "timezone": "Asia/Seoul"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -941,14 +938,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "KR-GW-01",
+    "regionalRepresentativeCourseId": "kr-kr-gw-01",
+    "regionalSubregionId": "KR-GW-01",
     "regionalSubregionLabel": "江原道／春川",
     "regionalClimateTimezone": "Asia/Seoul",
     "regionalClimatePoint": {
       "latitude": 37.7701,
       "longitude": 127.6784
-    },
-    "regionalRepresentativeCourseId": "kr-kr-gw-01",
-    "regionalSubregionId": "KR-GW-01"
+    }
   },
   {
     "id": "kr-kr-cc-01",
@@ -969,7 +966,7 @@
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/south-korea/south-chungcheong/cheonan/woo-jeong-hills-country-club",
       "timezone": "Asia/Seoul"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -981,14 +978,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "KR-CC-01",
+    "regionalRepresentativeCourseId": "kr-kr-cc-01",
+    "regionalSubregionId": "KR-CC-01",
     "regionalSubregionLabel": "忠清道",
     "regionalClimateTimezone": "Asia/Seoul",
     "regionalClimatePoint": {
       "latitude": 36.766741,
       "longitude": 127.224659
-    },
-    "regionalRepresentativeCourseId": "kr-kr-cc-01",
-    "regionalSubregionId": "KR-CC-01"
+    }
   },
   {
     "id": "kr-kr-yn-01",
@@ -1009,7 +1006,7 @@
       "coordinateSourceUrl": "https://mapcarta.com/34569928",
       "timezone": "Asia/Seoul"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1021,14 +1018,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "KR-YN-01",
+    "regionalRepresentativeCourseId": "kr-kr-yn-01",
+    "regionalSubregionId": "KR-YN-01",
     "regionalSubregionLabel": "釜山／慶州／嶺南",
     "regionalClimateTimezone": "Asia/Seoul",
     "regionalClimatePoint": {
       "latitude": 35.36594,
       "longitude": 129.19943
-    },
-    "regionalRepresentativeCourseId": "kr-kr-yn-01",
-    "regionalSubregionId": "KR-YN-01"
+    }
   },
   {
     "id": "kr-kr-hn-01",
@@ -1049,7 +1046,7 @@
       "coordinateSourceUrl": "https://mapcarta.com/W390545752",
       "timezone": "Asia/Seoul"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1061,14 +1058,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "KR-HN-01",
+    "regionalRepresentativeCourseId": "kr-kr-hn-01",
+    "regionalSubregionId": "KR-HN-01",
     "regionalSubregionLabel": "全羅道／湖南",
     "regionalClimateTimezone": "Asia/Seoul",
     "regionalClimatePoint": {
       "latitude": 34.6979,
       "longitude": 126.26506
-    },
-    "regionalRepresentativeCourseId": "kr-kr-hn-01",
-    "regionalSubregionId": "KR-HN-01"
+    }
   },
   {
     "id": "kr-kr-jj-01",
@@ -1089,7 +1086,7 @@
       "coordinateSourceUrl": "https://www.visitjeju.net/en/detail/view?contentsid=CONT_000000000500672",
       "timezone": "Asia/Seoul"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1101,14 +1098,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "KR-JJ-01",
+    "regionalRepresentativeCourseId": "kr-kr-jj-01",
+    "regionalSubregionId": "KR-JJ-01",
     "regionalSubregionLabel": "濟州島",
     "regionalClimateTimezone": "Asia/Seoul",
     "regionalClimatePoint": {
       "latitude": 33.3159979,
       "longitude": 126.387643
-    },
-    "regionalRepresentativeCourseId": "kr-kr-jj-01",
-    "regionalSubregionId": "KR-JJ-01"
+    }
   },
   {
     "id": "cn-cn-hn-north",
@@ -1129,7 +1126,7 @@
       "coordinateStatus": "public-course-neighbourhood-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/china/mission-hills-haikou-blackstone-course/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1141,14 +1138,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "CN-HN-NORTH",
+    "regionalRepresentativeCourseId": "cn-cn-hn-north",
+    "regionalSubregionId": "CN-HN-NORTH",
     "regionalSubregionLabel": "海南・海口",
     "regionalClimateTimezone": "Asia/Shanghai",
     "regionalClimatePoint": {
       "latitude": 19.913184,
       "longitude": 110.322778
-    },
-    "regionalRepresentativeCourseId": "cn-cn-hn-north",
-    "regionalSubregionId": "CN-HN-NORTH"
+    }
   },
   {
     "id": "cn-cn-hn-east",
@@ -1169,7 +1166,7 @@
       "coordinateStatus": "public-course-neighbourhood-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/china/the-dunes-at-shenzhou-peninsula-west-course/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1181,14 +1178,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "CN-HN-EAST",
+    "regionalRepresentativeCourseId": "cn-cn-hn-east",
+    "regionalSubregionId": "CN-HN-EAST",
     "regionalSubregionLabel": "海南・萬寧／神州半島",
     "regionalClimateTimezone": "Asia/Shanghai",
     "regionalClimatePoint": {
       "latitude": 18.678566,
       "longitude": 110.368412
-    },
-    "regionalRepresentativeCourseId": "cn-cn-hn-east",
-    "regionalSubregionId": "CN-HN-EAST"
+    }
   },
   {
     "id": "cn-cn-hn-south",
@@ -1209,7 +1206,7 @@
       "coordinateStatus": "public-course-neighbourhood-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/china/yalong-bay-golf-club/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1221,14 +1218,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "CN-HN-SOUTH",
+    "regionalRepresentativeCourseId": "cn-cn-hn-south",
+    "regionalSubregionId": "CN-HN-SOUTH",
     "regionalSubregionLabel": "海南・三亞",
     "regionalClimateTimezone": "Asia/Shanghai",
     "regionalClimatePoint": {
       "latitude": 18.231389,
       "longitude": 109.627161
-    },
-    "regionalRepresentativeCourseId": "cn-cn-hn-south",
-    "regionalSubregionId": "CN-HN-SOUTH"
+    }
   },
   {
     "id": "cn-cn-sh-01",
@@ -1249,7 +1246,7 @@
       "coordinateStatus": "public-course-neighbourhood-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/china/sheshan-golf-club/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1261,14 +1258,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "CN-SH-01",
+    "regionalRepresentativeCourseId": "cn-cn-sh-01",
+    "regionalSubregionId": "CN-SH-01",
     "regionalSubregionLabel": "上海／長三角",
     "regionalClimateTimezone": "Asia/Shanghai",
     "regionalClimatePoint": {
       "latitude": 31.105843,
       "longitude": 121.217694
-    },
-    "regionalRepresentativeCourseId": "cn-cn-sh-01",
-    "regionalSubregionId": "CN-SH-01"
+    }
   },
   {
     "id": "cn-cn-bj-01",
@@ -1289,7 +1286,7 @@
       "coordinateStatus": "public-course-neighbourhood-coordinate",
       "coordinateSourceUrl": "https://elevation.maplogs.com/poi/topwin_golf_and_country_club_huairou_beijing_china.306237.html"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1301,14 +1298,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "CN-BJ-01",
+    "regionalRepresentativeCourseId": "cn-cn-bj-01",
+    "regionalSubregionId": "CN-BJ-01",
     "regionalSubregionLabel": "北京／華北",
     "regionalClimateTimezone": "Asia/Shanghai",
     "regionalClimatePoint": {
       "latitude": 40.4076639,
       "longitude": 116.7039686
-    },
-    "regionalRepresentativeCourseId": "cn-cn-bj-01",
-    "regionalSubregionId": "CN-BJ-01"
+    }
   },
   {
     "id": "cn-cn-gd-01",
@@ -1329,7 +1326,7 @@
       "coordinateStatus": "public-course-neighbourhood-coordinate",
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/china/guangdong/fengshen/guangzhou-foison-golf-club"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1341,14 +1338,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "CN-GD-01",
+    "regionalRepresentativeCourseId": "cn-cn-gd-01",
+    "regionalSubregionId": "CN-GD-01",
     "regionalSubregionLabel": "廣東・珠三角",
     "regionalClimateTimezone": "Asia/Shanghai",
     "regionalClimatePoint": {
       "latitude": 23.13171,
       "longitude": 113.26627
-    },
-    "regionalRepresentativeCourseId": "cn-cn-gd-01",
-    "regionalSubregionId": "CN-GD-01"
+    }
   },
   {
     "id": "cn-cn-yn-01",
@@ -1369,7 +1366,7 @@
       "coordinateStatus": "public-course-neighbourhood-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/china/spring-city-golf-lake-resort-mountain-course/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1381,14 +1378,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "CN-YN-01",
+    "regionalRepresentativeCourseId": "cn-cn-yn-01",
+    "regionalSubregionId": "CN-YN-01",
     "regionalSubregionLabel": "雲南・昆明",
     "regionalClimateTimezone": "Asia/Shanghai",
     "regionalClimatePoint": {
       "latitude": 24.92756,
       "longitude": 103.02897
-    },
-    "regionalRepresentativeCourseId": "cn-cn-yn-01",
-    "regionalSubregionId": "CN-YN-01"
+    }
   },
   {
     "id": "vn-vn-north-01",
@@ -1409,7 +1406,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/vietnam/brg-kings-island-golf-resort-mountainview-course/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.teetimevn.com/vi/courses/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1421,14 +1418,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "VN-NORTH-01",
+    "regionalRepresentativeCourseId": "vn-vn-north-01",
+    "regionalSubregionId": "VN-NORTH-01",
     "regionalSubregionLabel": "北越・河內",
     "regionalClimateTimezone": "Asia/Ho_Chi_Minh",
     "regionalClimatePoint": {
       "latitude": 21.060953,
       "longitude": 105.472269
-    },
-    "regionalRepresentativeCourseId": "vn-vn-north-01",
-    "regionalSubregionId": "VN-NORTH-01"
+    }
   },
   {
     "id": "vn-vn-central-01",
@@ -1449,7 +1446,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/vietnam/hoiana-shores-golf-club/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://vietnam.travel/things-to-do/golf-courses-central-vietnam/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1461,14 +1458,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "VN-CENTRAL-01",
+    "regionalRepresentativeCourseId": "vn-vn-central-01",
+    "regionalSubregionId": "VN-CENTRAL-01",
     "regionalSubregionLabel": "中越・峴港／會安",
     "regionalClimateTimezone": "Asia/Ho_Chi_Minh",
     "regionalClimatePoint": {
       "latitude": 15.821549,
       "longitude": 108.404053
-    },
-    "regionalRepresentativeCourseId": "vn-vn-central-01",
-    "regionalSubregionId": "VN-CENTRAL-01"
+    }
   },
   {
     "id": "vn-vn-central-02",
@@ -1489,7 +1486,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/vietnam/laguna-lang-co-golf-club/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://vietnam.travel/things-to-do/golf-courses-central-vietnam/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1501,14 +1498,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "VN-CENTRAL-02",
+    "regionalRepresentativeCourseId": "vn-vn-central-02",
+    "regionalSubregionId": "VN-CENTRAL-02",
     "regionalSubregionLabel": "中越・順化／陵姑",
     "regionalClimateTimezone": "Asia/Ho_Chi_Minh",
     "regionalClimatePoint": {
       "latitude": 16.324958,
       "longitude": 107.959213
-    },
-    "regionalRepresentativeCourseId": "vn-vn-central-02",
-    "regionalSubregionId": "VN-CENTRAL-02"
+    }
   },
   {
     "id": "vn-vn-south-01",
@@ -1529,7 +1526,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://playgolfvietnam.com/zh-TW/courses/tan-son-nhat-golf-course"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.aseanlinksgolf.com/golf-courses",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1541,14 +1538,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "VN-SOUTH-01",
+    "regionalRepresentativeCourseId": "vn-vn-south-01",
+    "regionalSubregionId": "VN-SOUTH-01",
     "regionalSubregionLabel": "南越・胡志明市",
     "regionalClimateTimezone": "Asia/Ho_Chi_Minh",
     "regionalClimatePoint": {
       "latitude": 10.8184,
       "longitude": 106.663
-    },
-    "regionalRepresentativeCourseId": "vn-vn-south-01",
-    "regionalSubregionId": "VN-SOUTH-01"
+    }
   },
   {
     "id": "vn-vn-south-02",
@@ -1569,7 +1566,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/vietnam/sea-links-golf-country-club/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.teetimevn.com/vi/courses/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1581,14 +1578,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "VN-SOUTH-02",
+    "regionalRepresentativeCourseId": "vn-vn-south-02",
+    "regionalSubregionId": "VN-SOUTH-02",
     "regionalSubregionLabel": "南越・藩切／美奈",
     "regionalClimateTimezone": "Asia/Ho_Chi_Minh",
     "regionalClimatePoint": {
       "latitude": 10.942919,
       "longitude": 108.18188
-    },
-    "regionalRepresentativeCourseId": "vn-vn-south-02",
-    "regionalSubregionId": "VN-SOUTH-02"
+    }
   },
   {
     "id": "vn-vn-island-01",
@@ -1609,7 +1606,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://mapcarta.com/30729022"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.aseanlinksgolf.com/golf-courses",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1621,14 +1618,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "VN-ISLAND-01",
+    "regionalRepresentativeCourseId": "vn-vn-island-01",
+    "regionalSubregionId": "VN-ISLAND-01",
     "regionalSubregionLabel": "南部島嶼・富國島",
     "regionalClimateTimezone": "Asia/Ho_Chi_Minh",
     "regionalClimatePoint": {
       "latitude": 10.3116,
       "longitude": 103.9156
-    },
-    "regionalRepresentativeCourseId": "vn-vn-island-01",
-    "regionalSubregionId": "VN-ISLAND-01"
+    }
   },
   {
     "id": "th-th-bkk-01",
@@ -1649,7 +1646,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://thailand.worldplaces.me/parks-in-lat-krabang/37645268-the-royal-golf-and-country-club.html"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1661,14 +1658,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "TH-BKK-01",
+    "regionalRepresentativeCourseId": "th-th-bkk-01",
+    "regionalSubregionId": "TH-BKK-01",
     "regionalSubregionLabel": "曼谷／中部",
     "regionalClimateTimezone": "Asia/Bangkok",
     "regionalClimatePoint": {
       "latitude": 13.6971,
       "longitude": 100.8086
-    },
-    "regionalRepresentativeCourseId": "th-th-bkk-01",
-    "regionalSubregionId": "TH-BKK-01"
+    }
   },
   {
     "id": "th-th-east-01",
@@ -1689,7 +1686,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://mapcarta.com/W132473847"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1701,14 +1698,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "TH-EAST-01",
+    "regionalRepresentativeCourseId": "th-th-east-01",
+    "regionalSubregionId": "TH-EAST-01",
     "regionalSubregionLabel": "東部・芭達雅／春武里",
     "regionalClimateTimezone": "Asia/Bangkok",
     "regionalClimatePoint": {
       "latitude": 12.91061,
       "longitude": 100.98388
-    },
-    "regionalRepresentativeCourseId": "th-th-east-01",
-    "regionalSubregionId": "TH-EAST-01"
+    }
   },
   {
     "id": "th-th-west-01",
@@ -1729,7 +1726,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://playgolfglobal.com/thailand/courses/black-mountain-golf-club-hua-hin"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1741,14 +1738,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "TH-WEST-01",
+    "regionalRepresentativeCourseId": "th-th-west-01",
+    "regionalSubregionId": "TH-WEST-01",
     "regionalSubregionLabel": "西部・華欣／七岩",
     "regionalClimateTimezone": "Asia/Bangkok",
     "regionalClimatePoint": {
       "latitude": 12.6144,
       "longitude": 99.8917
-    },
-    "regionalRepresentativeCourseId": "th-th-west-01",
-    "regionalSubregionId": "TH-WEST-01"
+    }
   },
   {
     "id": "th-th-south-01",
@@ -1769,7 +1766,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://en.wikipedia.org/wiki/Blue_Canyon_Country_Club"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1781,14 +1778,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "TH-SOUTH-01",
+    "regionalRepresentativeCourseId": "th-th-south-01",
+    "regionalSubregionId": "TH-SOUTH-01",
     "regionalSubregionLabel": "南部・普吉／安達曼海岸",
     "regionalClimateTimezone": "Asia/Bangkok",
     "regionalClimatePoint": {
       "latitude": 8.103,
       "longitude": 98.328
-    },
-    "regionalRepresentativeCourseId": "th-th-south-01",
-    "regionalSubregionId": "TH-SOUTH-01"
+    }
   },
   {
     "id": "th-th-north-01",
@@ -1809,7 +1806,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://www.chiangmaigolfclub.com/alpine-golf-resort"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1821,14 +1818,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "TH-NORTH-01",
+    "regionalRepresentativeCourseId": "th-th-north-01",
+    "regionalSubregionId": "TH-NORTH-01",
     "regionalSubregionLabel": "北部・清邁",
     "regionalClimateTimezone": "Asia/Bangkok",
     "regionalClimatePoint": {
       "latitude": 18.69188,
       "longitude": 99.17359
-    },
-    "regionalRepresentativeCourseId": "th-th-north-01",
-    "regionalSubregionId": "TH-NORTH-01"
+    }
   },
   {
     "id": "th-th-ne-01",
@@ -1849,7 +1846,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/thailand/kirimaya-golf-resort-spa/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1861,14 +1858,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "TH-NE-01",
+    "regionalRepresentativeCourseId": "th-th-ne-01",
+    "regionalSubregionId": "TH-NE-01",
     "regionalSubregionLabel": "東北部・考艾",
     "regionalClimateTimezone": "Asia/Bangkok",
     "regionalClimatePoint": {
       "latitude": 14.512665,
       "longitude": 101.432599
-    },
-    "regionalRepresentativeCourseId": "th-th-ne-01",
-    "regionalSubregionId": "TH-NE-01"
+    }
   },
   {
     "id": "th-th-island-01",
@@ -1889,7 +1886,7 @@
       "coordinateStatus": "public-course-or-nearby-locality-coordinate",
       "coordinateSourceUrl": "https://mapcarta.com/33098524"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.santiburigolfsamui.com/infomation/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1901,14 +1898,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "TH-ISLAND-01",
+    "regionalRepresentativeCourseId": "th-th-island-01",
+    "regionalSubregionId": "TH-ISLAND-01",
     "regionalSubregionLabel": "泰國灣島嶼・蘇梅島",
     "regionalClimateTimezone": "Asia/Bangkok",
     "regionalClimatePoint": {
       "latitude": 9.56001,
       "longitude": 99.97647
-    },
-    "regionalRepresentativeCourseId": "th-th-island-01",
-    "regionalSubregionId": "TH-ISLAND-01"
+    }
   },
   {
     "id": "my-my-central-01",
@@ -1929,7 +1926,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/malaysia/kuala-lumpur/kuala-lumpur/kelab-golf-perkhidmatan-awam"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1941,14 +1938,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "MY-CENTRAL-01",
+    "regionalRepresentativeCourseId": "my-my-central-01",
+    "regionalSubregionId": "MY-CENTRAL-01",
     "regionalSubregionLabel": "中部・吉隆坡／雪蘭莪",
     "regionalClimateTimezone": "Asia/Kuala_Lumpur",
     "regionalClimatePoint": {
       "latitude": 3.13449,
       "longitude": 101.632646
-    },
-    "regionalRepresentativeCourseId": "my-my-central-01",
-    "regionalSubregionId": "MY-CENTRAL-01"
+    }
   },
   {
     "id": "my-my-north-01",
@@ -1969,7 +1966,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/malaysia/penang-golf-club/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -1981,14 +1978,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "MY-NORTH-01",
+    "regionalRepresentativeCourseId": "my-my-north-01",
+    "regionalSubregionId": "MY-NORTH-01",
     "regionalSubregionLabel": "北馬・檳城／吉打／霹靂",
     "regionalClimateTimezone": "Asia/Kuala_Lumpur",
     "regionalClimatePoint": {
       "latitude": 5.336035,
       "longitude": 100.283686
-    },
-    "regionalRepresentativeCourseId": "my-my-north-01",
-    "regionalSubregionId": "MY-NORTH-01"
+    }
   },
   {
     "id": "my-my-south-01",
@@ -2009,7 +2006,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/malaysia/johor/desaru/els-club-desaru-coast-ocean-course"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2021,14 +2018,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "MY-SOUTH-01",
+    "regionalRepresentativeCourseId": "my-my-south-01",
+    "regionalSubregionId": "MY-SOUTH-01",
     "regionalSubregionLabel": "南馬・柔佛／馬六甲",
     "regionalClimateTimezone": "Asia/Kuala_Lumpur",
     "regionalClimatePoint": {
       "latitude": 1.526621,
       "longitude": 104.267824
-    },
-    "regionalRepresentativeCourseId": "my-my-south-01",
-    "regionalSubregionId": "MY-SOUTH-01"
+    }
   },
   {
     "id": "my-my-island-01",
@@ -2049,7 +2046,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/malaysia/the-els-club-teluk-datai/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.elsclubmalaysia.com/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2061,14 +2058,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "MY-ISLAND-01",
+    "regionalRepresentativeCourseId": "my-my-island-01",
+    "regionalSubregionId": "MY-ISLAND-01",
     "regionalSubregionLabel": "蘭卡威",
     "regionalClimateTimezone": "Asia/Kuala_Lumpur",
     "regionalClimatePoint": {
       "latitude": 6.426397,
       "longitude": 99.683912
-    },
-    "regionalRepresentativeCourseId": "my-my-island-01",
-    "regionalSubregionId": "MY-ISLAND-01"
+    }
   },
   {
     "id": "my-my-borneo-01",
@@ -2089,7 +2086,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/malaysia/dalit-bay-golf-country-club/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.malaysiagolfholiday.com/destinations/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2101,14 +2098,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "MY-BORNEO-01",
+    "regionalRepresentativeCourseId": "my-my-borneo-01",
+    "regionalSubregionId": "MY-BORNEO-01",
     "regionalSubregionLabel": "婆羅洲・沙巴／亞庇",
     "regionalClimateTimezone": "Asia/Kuala_Lumpur",
     "regionalClimatePoint": {
       "latitude": 6.155901,
       "longitude": 116.151667
-    },
-    "regionalRepresentativeCourseId": "my-my-borneo-01",
-    "regionalSubregionId": "MY-BORNEO-01"
+    }
   },
   {
     "id": "my-my-borneo-02",
@@ -2129,7 +2126,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/malaysia/sarawak/kuching/kelab-golf-sarawak"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.malaysiagolfholiday.com/destinations/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2141,14 +2138,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "MY-BORNEO-02",
+    "regionalRepresentativeCourseId": "my-my-borneo-02",
+    "regionalSubregionId": "MY-BORNEO-02",
     "regionalSubregionLabel": "婆羅洲・砂拉越／古晉",
     "regionalClimateTimezone": "Asia/Kuala_Lumpur",
     "regionalClimatePoint": {
       "latitude": 1.583633,
       "longitude": 110.33254
-    },
-    "regionalRepresentativeCourseId": "my-my-borneo-02",
-    "regionalSubregionId": "MY-BORNEO-02"
+    }
   },
   {
     "id": "my-my-east-01",
@@ -2169,7 +2166,7 @@
       "coordinateStatus": "nearby-regional-public-coordinate",
       "coordinateSourceUrl": "https://www.ancasahotels.com.my/sites/default/files/2023-07/fact%20sheet%20KTGR-01.pdf"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2181,14 +2178,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "MY-EAST-01",
+    "regionalRepresentativeCourseId": "my-my-east-01",
+    "regionalSubregionId": "MY-EAST-01",
     "regionalSubregionLabel": "東海岸・登嘉樓",
     "regionalClimateTimezone": "Asia/Kuala_Lumpur",
     "regionalClimatePoint": {
       "latitude": 5.3862,
       "longitude": 103.0898
-    },
-    "regionalRepresentativeCourseId": "my-my-east-01",
-    "regionalSubregionId": "MY-EAST-01"
+    }
   },
   {
     "id": "my-my-highland-01",
@@ -2209,7 +2206,7 @@
       "coordinateStatus": "nearby-regional-public-coordinate",
       "coordinateSourceUrl": "https://mygeoname.mygeoportal.gov.my/exportpdf00.jsp?kodnegeri=06"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.malaysiagolfholiday.com/destinations/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2221,14 +2218,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "MY-HIGHLAND-01",
+    "regionalRepresentativeCourseId": "my-my-highland-01",
+    "regionalSubregionId": "MY-HIGHLAND-01",
     "regionalSubregionLabel": "高原・金馬崙／雲頂",
     "regionalClimateTimezone": "Asia/Kuala_Lumpur",
     "regionalClimatePoint": {
       "latitude": 4.4716,
       "longitude": 101.379
-    },
-    "regionalRepresentativeCourseId": "my-my-highland-01",
-    "regionalSubregionId": "MY-HIGHLAND-01"
+    }
   },
   {
     "id": "sg-sg-island-01",
@@ -2249,7 +2246,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/singapore/sentosa-golf-club-serapong-course/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://worldgolfawards.com/award/singapore-best-golf-course/2026",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2261,14 +2258,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "SG-ISLAND-01",
+    "regionalRepresentativeCourseId": "sg-sg-island-01",
+    "regionalSubregionId": "SG-ISLAND-01",
     "regionalSubregionLabel": "新加坡全島",
     "regionalClimateTimezone": "Asia/Singapore",
     "regionalClimatePoint": {
       "latitude": 1.248855,
       "longitude": 103.829331
-    },
-    "regionalRepresentativeCourseId": "sg-sg-island-01",
-    "regionalSubregionId": "SG-ISLAND-01"
+    }
   },
   {
     "id": "id-id-jkt-01",
@@ -2289,7 +2286,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.golfworldmap.org/it/indonesia"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2301,14 +2298,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "ID-JKT-01",
+    "regionalRepresentativeCourseId": "id-id-jkt-01",
+    "regionalSubregionId": "ID-JKT-01",
     "regionalSubregionLabel": "爪哇・雅加達都會區",
     "regionalClimateTimezone": "Asia/Jakarta",
     "regionalClimatePoint": {
       "latitude": -6.2734,
       "longitude": 106.7883
-    },
-    "regionalRepresentativeCourseId": "id-id-jkt-01",
-    "regionalSubregionId": "ID-JKT-01"
+    }
   },
   {
     "id": "id-id-wjava-01",
@@ -2329,7 +2326,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.golfworldmap.org/it/indonesia"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2341,14 +2338,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "ID-WJAVA-01",
+    "regionalRepresentativeCourseId": "id-id-wjava-01",
+    "regionalSubregionId": "ID-WJAVA-01",
     "regionalSubregionLabel": "爪哇・西爪哇",
     "regionalClimateTimezone": "Asia/Jakarta",
     "regionalClimatePoint": {
       "latitude": -6.601398,
       "longitude": 106.835495
-    },
-    "regionalRepresentativeCourseId": "id-id-wjava-01",
-    "regionalSubregionId": "ID-WJAVA-01"
+    }
   },
   {
     "id": "id-id-cjava-01",
@@ -2369,7 +2366,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/indonesia/merapi-golf-club/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2381,14 +2378,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "ID-CJAVA-01",
+    "regionalRepresentativeCourseId": "id-id-cjava-01",
+    "regionalSubregionId": "ID-CJAVA-01",
     "regionalSubregionLabel": "爪哇・中爪哇",
     "regionalClimateTimezone": "Asia/Jakarta",
     "regionalClimatePoint": {
       "latitude": -7.62108,
       "longitude": 110.445324
-    },
-    "regionalRepresentativeCourseId": "id-id-cjava-01",
-    "regionalSubregionId": "ID-CJAVA-01"
+    }
   },
   {
     "id": "id-id-ejava-01",
@@ -2409,7 +2406,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/indonesia/taman-dayu-golf-club-resort/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2421,14 +2418,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "ID-EJAVA-01",
+    "regionalRepresentativeCourseId": "id-id-ejava-01",
+    "regionalSubregionId": "ID-EJAVA-01",
     "regionalSubregionLabel": "爪哇・東爪哇",
     "regionalClimateTimezone": "Asia/Jakarta",
     "regionalClimatePoint": {
       "latitude": -7.703039,
       "longitude": 112.674623
-    },
-    "regionalRepresentativeCourseId": "id-id-ejava-01",
-    "regionalSubregionId": "ID-EJAVA-01"
+    }
   },
   {
     "id": "id-id-bali-01",
@@ -2449,7 +2446,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/indonesia/new-kuta-golf/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2461,14 +2458,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "ID-BALI-01",
+    "regionalRepresentativeCourseId": "id-id-bali-01",
+    "regionalSubregionId": "ID-BALI-01",
     "regionalSubregionLabel": "峇里島",
     "regionalClimateTimezone": "Asia/Makassar",
     "regionalClimatePoint": {
       "latitude": -8.804651,
       "longitude": 115.127245
-    },
-    "regionalRepresentativeCourseId": "id-id-bali-01",
-    "regionalSubregionId": "ID-BALI-01"
+    }
   },
   {
     "id": "id-id-riau-01",
@@ -2489,7 +2486,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.where2golf.com/indonesia/ria-bintan-golf-club-ocean-course/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://www.riabintan.com/golf/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2501,14 +2498,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "ID-RIAU-01",
+    "regionalRepresentativeCourseId": "id-id-riau-01",
+    "regionalSubregionId": "ID-RIAU-01",
     "regionalSubregionLabel": "廖內群島・巴淡／民丹",
     "regionalClimateTimezone": "Asia/Jakarta",
     "regionalClimatePoint": {
       "latitude": 1.195277,
       "longitude": 104.405221
-    },
-    "regionalRepresentativeCourseId": "id-id-riau-01",
-    "regionalSubregionId": "ID-RIAU-01"
+    }
   },
   {
     "id": "id-id-sumatra-01",
@@ -2529,7 +2526,7 @@
       "coordinateStatus": "nearby-district-representative-coordinate",
       "coordinateSourceUrl": "https://playgolf.id/golf_courses/graha-metropolitan-golf-course/"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2541,14 +2538,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "ID-SUMATRA-01",
+    "regionalRepresentativeCourseId": "id-id-sumatra-01",
+    "regionalSubregionId": "ID-SUMATRA-01",
     "regionalSubregionLabel": "蘇門答臘・棉蘭",
     "regionalClimateTimezone": "Asia/Jakarta",
     "regionalClimatePoint": {
       "latitude": 3.61,
       "longitude": 98.62
-    },
-    "regionalRepresentativeCourseId": "id-id-sumatra-01",
-    "regionalSubregionId": "ID-SUMATRA-01"
+    }
   },
   {
     "id": "id-id-kal-01",
@@ -2569,7 +2566,7 @@
       "coordinateStatus": "public-course-map-coordinate",
       "coordinateSourceUrl": "https://www.golfworldmap.org/it/indonesia"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
@@ -2581,14 +2578,14 @@
     "coordinateUse": "regional_climate_representative_point",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "ID-KAL-01",
+    "regionalRepresentativeCourseId": "id-id-kal-01",
+    "regionalSubregionId": "ID-KAL-01",
     "regionalSubregionLabel": "加里曼丹・巴厘巴板",
     "regionalClimateTimezone": "Asia/Makassar",
     "regionalClimatePoint": {
       "latitude": -1.2706,
       "longitude": 116.8693
-    },
-    "regionalRepresentativeCourseId": "id-id-kal-01",
-    "regionalSubregionId": "ID-KAL-01"
+    }
   },
   {
     "id": "jp-arita-resol",
@@ -2621,8 +2618,7 @@
       "latitude": 33.9232299832,
       "longitude": 135.2723593476
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-green-valley",
@@ -2655,8 +2651,7 @@
       "latitude": 35.4682136,
       "longitude": 138.7517012
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-dai-atami-kokusai",
@@ -2684,17 +2679,16 @@
     "coordinateSource": "https://www.resol-golf.jp/en/daiatami/",
     "coordinateUse": "regional_climate_representative_point",
     "regionId": "JP-REG-04",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-CHB-SHIZUOKA-FUJI-IZU",
+    "regionalRepresentativeCourseId": "jp-dai-atami-kokusai",
+    "regionalSubregionId": "JP-CHB-SHIZUOKA-FUJI-IZU",
     "regionalSubregionLabel": "中部・富士／御殿場／靜岡東部球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 35.016667,
       "longitude": 139.033333
-    },
-    "regionalRepresentativeCourseId": "jp-dai-atami-kokusai",
-    "regionalSubregionId": "JP-CHB-SHIZUOKA-FUJI-IZU"
+    }
   },
   {
     "id": "jp-daifuji",
@@ -2727,8 +2721,7 @@
       "latitude": 35.016667,
       "longitude": 139.033333
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-eau-sol-vert-karuizawa",
@@ -2756,17 +2749,16 @@
     "coordinateSource": "https://esv-club.com/access/",
     "coordinateUse": "regional_climate_representative_point",
     "regionId": "JP-REG-04",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-CHB-NAGANO-KARUIZAWA",
+    "regionalRepresentativeCourseId": "jp-eau-sol-vert-karuizawa",
+    "regionalSubregionId": "JP-CHB-NAGANO-KARUIZAWA",
     "regionalSubregionLabel": "中部・長野／輕井澤球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 36.296969,
       "longitude": 138.584117
-    },
-    "regionalRepresentativeCourseId": "jp-eau-sol-vert-karuizawa",
-    "regionalSubregionId": "JP-CHB-NAGANO-KARUIZAWA"
+    }
   },
   {
     "id": "jp-fuji-classic",
@@ -2799,8 +2791,7 @@
       "latitude": 35.4682136,
       "longitude": 138.7517012
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-fuji-golf-course",
@@ -2833,8 +2824,7 @@
       "latitude": 35.4682136,
       "longitude": 138.7517012
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-gora-kadan-fuji",
@@ -2867,8 +2857,7 @@
       "latitude": 35.016667,
       "longitude": 139.033333
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-hanna-country",
@@ -2901,8 +2890,7 @@
       "latitude": 34.826383,
       "longitude": 135.123729
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-hayama-kokusai",
@@ -2935,8 +2923,7 @@
       "latitude": 35.695169,
       "longitude": 139.279074
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-hokkaido-golf-club",
@@ -2969,8 +2956,7 @@
       "latitude": 42.716198,
       "longitude": 141.655636
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-iruma-country",
@@ -2998,17 +2984,16 @@
     "coordinateSource": "https://www.resol-golf.jp/en/iruma/access/",
     "coordinateUse": "regional_climate_representative_point",
     "regionId": "JP-REG-03",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KNT-GUNMA-SAITAMA",
+    "regionalRepresentativeCourseId": "jp-iruma-country",
+    "regionalSubregionId": "JP-KNT-GUNMA-SAITAMA",
     "regionalSubregionLabel": "關東・群馬／埼玉球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 35.969597,
       "longitude": 139.315163
-    },
-    "regionalRepresentativeCourseId": "jp-iruma-country",
-    "regionalSubregionId": "JP-KNT-GUNMA-SAITAMA"
+    }
   },
   {
     "id": "jp-14-hills",
@@ -3042,8 +3027,7 @@
       "latitude": 35.31468298028144,
       "longitude": 137.45991731575117
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-25-nasu",
@@ -3077,8 +3061,7 @@
       "latitude": 36.709629,
       "longitude": 140.004827
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-31-country",
@@ -3107,17 +3090,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "關東・茨城／筑波球場群",
     "regionId": "JP-REG-03",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KNT-IBARAKI-TSUKUBA",
+    "regionalRepresentativeCourseId": "jp-31-country",
+    "regionalSubregionId": "JP-KNT-IBARAKI-TSUKUBA",
     "regionalSubregionLabel": "關東・茨城／筑波球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 36.07964324951172,
       "longitude": 139.82562255859375
-    },
-    "regionalRepresentativeCourseId": "jp-31-country",
-    "regionalSubregionId": "JP-KNT-IBARAKI-TSUKUBA"
+    }
   },
   {
     "id": "jp-adatara",
@@ -3146,17 +3128,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "東北・福島／山形球場群",
     "regionId": "JP-REG-02",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-THK-FUKUSHIMA-YAMAGATA",
+    "regionalRepresentativeCourseId": "jp-adatara",
+    "regionalSubregionId": "JP-THK-FUKUSHIMA-YAMAGATA",
     "regionalSubregionLabel": "東北・福島／山形球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 37.57389,
       "longitude": 140.362964
-    },
-    "regionalRepresentativeCourseId": "jp-adatara",
-    "regionalSubregionId": "JP-THK-FUKUSHIMA-YAMAGATA"
+    }
   },
   {
     "id": "jp-adonis",
@@ -3185,17 +3166,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "中部・名古屋／岐阜球場群",
     "regionId": "JP-REG-04",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-CHB-NAGOYA-GIFU",
+    "regionalRepresentativeCourseId": "jp-adonis",
+    "regionalSubregionId": "JP-CHB-NAGOYA-GIFU",
     "regionalSubregionLabel": "中部・名古屋／岐阜球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 35.31468298028144,
       "longitude": 137.45991731575117
-    },
-    "regionalRepresentativeCourseId": "jp-adonis",
-    "regionalSubregionId": "JP-CHB-NAGOYA-GIFU"
+    }
   },
   {
     "id": "jp-adonis-ogawa",
@@ -3229,8 +3209,7 @@
       "latitude": 35.969597,
       "longitude": 139.315163
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-aga-kogen",
@@ -3264,8 +3243,7 @@
       "latitude": 36.91549,
       "longitude": 136.775147
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-fuchu-country",
@@ -3299,8 +3277,7 @@
       "latitude": 35.695169,
       "longitude": 139.279074
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-gmg-hachioji",
@@ -3334,8 +3311,7 @@
       "latitude": 35.695169,
       "longitude": 139.279074
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-hachioji-cc",
@@ -3364,17 +3340,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "關東・東京／神奈川球場群",
     "regionId": "JP-REG-03",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KNT-TOKYO-KANAGAWA",
+    "regionalRepresentativeCourseId": "jp-hachioji-cc",
+    "regionalSubregionId": "JP-KNT-TOKYO-KANAGAWA",
     "regionalSubregionLabel": "關東・東京／神奈川球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 35.695169,
       "longitude": 139.279074
-    },
-    "regionalRepresentativeCourseId": "jp-hachioji-cc",
-    "regionalSubregionId": "JP-KNT-TOKYO-KANAGAWA"
+    }
   },
   {
     "id": "jp-izu-oshima",
@@ -3403,17 +3378,16 @@
     "regionId": "JP-REG-03",
     "coordinateSource": "https://golf.nomaejapan.com/en/course/izu-oshima-resort-golf-club",
     "coordinateUse": "regional_climate_representative_point",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KNT-IZU-OSHIMA",
+    "regionalRepresentativeCourseId": "jp-izu-oshima",
+    "regionalSubregionId": "JP-KNT-IZU-OSHIMA",
     "regionalSubregionLabel": "關東・伊豆大島球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 34.789,
       "longitude": 139.393
-    },
-    "regionalRepresentativeCourseId": "jp-izu-oshima",
-    "regionalSubregionId": "JP-KNT-IZU-OSHIMA"
+    }
   },
   {
     "id": "jp-manna-country",
@@ -3447,8 +3421,7 @@
       "latitude": 35.83503,
       "longitude": 140.27659
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-mashiko-country",
@@ -3482,8 +3455,7 @@
       "latitude": 36.709629,
       "longitude": 140.004827
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-murasakizuka",
@@ -3517,8 +3489,7 @@
       "latitude": 36.709629,
       "longitude": 140.004827
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-anan-cc",
@@ -3547,17 +3518,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "四國・高松／德島／瀨戶內球場群",
     "regionId": "JP-REG-07",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-SHK-KAGAWA-TOKUSHIMA",
+    "regionalRepresentativeCourseId": "jp-anan-cc",
+    "regionalSubregionId": "JP-SHK-KAGAWA-TOKUSHIMA",
     "regionalSubregionLabel": "四國・高松／德島／瀨戶內球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 33.875869,
       "longitude": 134.65131
-    },
-    "regionalRepresentativeCourseId": "jp-anan-cc",
-    "regionalSubregionId": "JP-SHK-KAGAWA-TOKUSHIMA"
+    }
   },
   {
     "id": "jp-bizan-cc",
@@ -3591,8 +3561,7 @@
       "latitude": 33.875869,
       "longitude": 134.65131
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/region/Shikoku"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-reomakogen",
@@ -3626,8 +3595,7 @@
       "latitude": 33.875869,
       "longitude": 134.65131
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/region/Shikoku"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-shikoku-anabuki",
@@ -3661,8 +3629,7 @@
       "latitude": 33.875869,
       "longitude": 134.65131
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/region/Shikoku"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-akita-kita-kuko",
@@ -3691,17 +3658,16 @@
     "regionId": "JP-REG-02",
     "coordinateSource": "https://golf-in-japan.com/courses/akita",
     "coordinateUse": "regional_climate_representative_point",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-THK-AKITA",
+    "regionalRepresentativeCourseId": "jp-akita-kita-kuko",
+    "regionalSubregionId": "JP-THK-AKITA",
     "regionalSubregionLabel": "東北・秋田球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 40.17,
       "longitude": 140.37
-    },
-    "regionalRepresentativeCourseId": "jp-akita-kita-kuko",
-    "regionalSubregionId": "JP-THK-AKITA"
+    }
   },
   {
     "id": "jp-aomori-cc",
@@ -3730,17 +3696,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "東北・青森／秋田北部球場群",
     "regionId": "JP-REG-02",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-THK-AOMORI-AKITA",
+    "regionalRepresentativeCourseId": "jp-aomori-cc",
+    "regionalSubregionId": "JP-THK-AOMORI-AKITA",
     "regionalSubregionLabel": "東北・青森球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 40.73722,
       "longitude": 140.74876
-    },
-    "regionalRepresentativeCourseId": "jp-aomori-cc",
-    "regionalSubregionId": "JP-THK-AOMORI-AKITA"
+    }
   },
   {
     "id": "jp-aomori-royal",
@@ -3774,8 +3739,7 @@
       "latitude": 40.73722,
       "longitude": 140.74876
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/region/Tohoku"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-banyan-tree-okinawa",
@@ -3809,8 +3773,7 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-bel-beach",
@@ -3844,8 +3807,7 @@
       "latitude": 26.524228,
       "longitude": 127.939192
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-emerald-coast",
@@ -3879,8 +3841,7 @@
       "latitude": 24.734437,
       "longitude": 125.437101
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-ginoza-cc",
@@ -3914,8 +3875,7 @@
       "latitude": 26.524228,
       "longitude": 127.939192
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-kanucha-golf",
@@ -3949,8 +3909,7 @@
       "latitude": 26.524228,
       "longitude": 127.939192
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-naha-golf",
@@ -3984,8 +3943,7 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-nanzan-cc",
@@ -4019,8 +3977,7 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-ocean-castle",
@@ -4054,8 +4011,7 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-ocean-links-miyako",
@@ -4084,17 +4040,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "沖繩・離島球場群",
     "regionId": "JP-REG-09",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-OKI-OUTER-ISLANDS",
+    "regionalRepresentativeCourseId": "jp-ocean-links-miyako",
+    "regionalSubregionId": "JP-OKI-OUTER-ISLANDS",
     "regionalSubregionLabel": "沖繩・宮古島球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 24.734437,
       "longitude": 125.437101
-    },
-    "regionalRepresentativeCourseId": "jp-ocean-links-miyako",
-    "regionalSubregionId": "JP-OKI-OUTER-ISLANDS"
+    }
   },
   {
     "id": "jp-okinawa-country",
@@ -4128,8 +4083,7 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-okinawa-royal",
@@ -4163,8 +4117,7 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-onishi-terrace",
@@ -4198,8 +4151,7 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-risonare-kohamajima",
@@ -4228,17 +4180,16 @@
     "regionId": "JP-REG-09",
     "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/okinawa/yaeyama/risonare-kohamajima-country-club",
     "coordinateUse": "regional_climate_representative_point",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-OKI-YAEYAMA",
+    "regionalRepresentativeCourseId": "jp-risonare-kohamajima",
+    "regionalSubregionId": "JP-OKI-YAEYAMA",
     "regionalSubregionLabel": "沖繩・八重山／小濱島球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 24.346608,
       "longitude": 123.980576
-    },
-    "regionalRepresentativeCourseId": "jp-risonare-kohamajima",
-    "regionalSubregionId": "JP-OKI-YAEYAMA"
+    }
   },
   {
     "id": "jp-ryukyu-golf",
@@ -4272,8 +4223,7 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-sashiba-links",
@@ -4307,8 +4257,7 @@
       "latitude": 24.734437,
       "longitude": 125.437101
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-shigira-bay",
@@ -4342,8 +4291,7 @@
       "latitude": 24.734437,
       "longitude": 125.437101
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-shurei-cc",
@@ -4377,8 +4325,7 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-aino-cc",
@@ -4407,17 +4354,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "九州・長崎／熊本球場群",
     "regionId": "JP-REG-08",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KYS-NAGASAKI-KUMAMOTO",
+    "regionalRepresentativeCourseId": "jp-aino-cc",
+    "regionalSubregionId": "JP-KYS-NAGASAKI-KUMAMOTO",
     "regionalSubregionLabel": "九州・長崎／熊本球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 32.8008,
       "longitude": 130.1815
-    },
-    "regionalRepresentativeCourseId": "jp-aino-cc",
-    "regionalSubregionId": "JP-KYS-NAGASAKI-KUMAMOTO"
+    }
   },
   {
     "id": "jp-aiwa-miyazaki",
@@ -4451,8 +4397,7 @@
       "latitude": 31.974525,
       "longitude": 131.472898
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/region/Kyushu-Island"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-amagase-onsen",
@@ -4481,17 +4426,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "九州・大分／阿蘇球場群",
     "regionId": "JP-REG-08",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KYS-OITA",
+    "regionalRepresentativeCourseId": "jp-amagase-onsen",
+    "regionalSubregionId": "JP-KYS-OITA",
     "regionalSubregionLabel": "九州・大分／阿蘇球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 33.2442744,
       "longitude": 131.0166391
-    },
-    "regionalRepresentativeCourseId": "jp-amagase-onsen",
-    "regionalSubregionId": "JP-KYS-OITA"
+    }
   },
   {
     "id": "jp-amami-cc",
@@ -4525,8 +4469,7 @@
       "latitude": 31.974525,
       "longitude": 131.472898
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://golf-in-japan.com/courses/region/Kyushu-Island"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-niseko-village-golf",
@@ -4555,17 +4498,17 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "北海道・二世谷／留壽都度假球場群",
     "regionId": "JP-REG-01",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "regional-climate-representative-coordinate-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-HKD-NISEKO",
+    "regionalRepresentativeCourseId": "jp-niseko-village-golf",
+    "regionalSubregionId": "JP-HKD-NISEKO",
     "regionalSubregionLabel": "北海道・二世谷／留壽都度假球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 42.847109,
       "longitude": 140.685607
-    },
-    "regionalRepresentativeCourseId": "jp-niseko-village-golf",
-    "regionalSubregionId": "JP-HKD-NISEKO"
+    }
   },
   {
     "id": "jp-kyoto-golf-club",
@@ -4594,17 +4537,16 @@
     "coordinateUse": "regional_climate_representative_point",
     "subregionLabel": "關西・京都／滋賀／奈良球場群",
     "regionId": "JP-REG-05",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-KNS-KYOTO-SHIGA-NARA",
+    "regionalRepresentativeCourseId": "jp-kyoto-golf-club",
+    "regionalSubregionId": "JP-KNS-KYOTO-SHIGA-NARA",
     "regionalSubregionLabel": "關西・京都／滋賀／奈良球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 35.067014,
       "longitude": 135.759207
-    },
-    "regionalRepresentativeCourseId": "jp-kyoto-golf-club",
-    "regionalSubregionId": "JP-KNS-KYOTO-SHIGA-NARA"
+    }
   },
   {
     "id": "jp-sapporo-teine",
@@ -4632,8 +4574,8 @@
     "enabled": true,
     "operationalStatus": "official_operator_active_2026_season_closed_next_open_2027-04-24",
     "regionId": "JP-REG-01",
-    "coordinateSource": "https://sapporo-teine.com/golf/access/",
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateSource": "https://sapporo-teine.com/golf/access/ (official operator map-code link resolves to Google Maps place pin)",
+    "coordinateReviewStatus": "official-pin-confirmed-third-party-cross-check-complete",
     "coordinateUse": "regional_climate_representative_point",
     "candidateCoordinates": {
       "latitude": 43.1039996,
@@ -4644,14 +4586,14 @@
     },
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-HKD-SAPPORO",
+    "regionalRepresentativeCourseId": "jp-sapporo-teine",
+    "regionalSubregionId": "JP-HKD-SAPPORO",
     "regionalSubregionLabel": "北海道・札幌市球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 43.1039996,
       "longitude": 141.2091466
-    },
-    "regionalRepresentativeCourseId": "jp-sapporo-teine",
-    "regionalSubregionId": "JP-HKD-SAPPORO"
+    }
   },
   {
     "id": "jp-nidom-classic",
@@ -4688,17 +4630,17 @@
       "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hokkaido/tomakomai/nidom-classic-course;https://www.navitime.co.jp/poi?spot=02301-1503591n;https://14golf.com/course/nidomukurasshikkukosu/",
       "timezone": "Asia/Tokyo"
     },
-    "coordinateReviewStatus": "regional-climate-representative-approved",
+    "coordinateReviewStatus": "regional-climate-representative-coordinate-cross-checked",
     "regionalRepresentative": true,
     "regionalRepresentativeFor": "JP-HKD-CHITOSE-TOMAKOMAI",
+    "regionalRepresentativeCourseId": "jp-nidom-classic",
+    "regionalSubregionId": "JP-HKD-CHITOSE-TOMAKOMAI",
     "regionalSubregionLabel": "北海道・千歲／苫小牧球場群",
     "regionalClimateTimezone": "Asia/Tokyo",
     "regionalClimatePoint": {
       "latitude": 42.716198,
       "longitude": 141.655636
-    },
-    "regionalRepresentativeCourseId": "jp-nidom-classic",
-    "regionalSubregionId": "JP-HKD-CHITOSE-TOMAKOMAI"
+    }
   },
   {
     "id": "jp-makomanai-cc",
@@ -4733,8 +4675,7 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-takino-cc",
@@ -4769,8 +4710,7 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-hitsujigaoka-cc",
@@ -4805,8 +4745,7 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-sapporo-fuyo-cc",
@@ -4841,8 +4780,7 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-tsukisappu-gc",
@@ -4877,8 +4815,7 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-jozankei-komagaoka",
@@ -4912,8 +4849,7 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-rembrandt-sapporo",
@@ -4948,8 +4884,7 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
+    "regionalClimateTimezone": "Asia/Tokyo"
   },
   {
     "id": "jp-niseko-golf-course",
@@ -4984,7 +4919,6 @@
       "latitude": 42.847109,
       "longitude": 140.685607
     },
-    "regionalClimateTimezone": "Asia/Tokyo",
-    "coordinateSource": "https://niseko-golf.com/en/contact/"
+    "regionalClimateTimezone": "Asia/Tokyo"
   }
 ]
