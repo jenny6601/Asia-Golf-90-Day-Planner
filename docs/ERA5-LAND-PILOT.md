@@ -154,10 +154,10 @@ The batch runner never sets `climatologyEligible=true`. It only records successf
 Run the regional completeness and climate-window QA after daily files have been acquired:
 
 ```bash
-python scripts/audit_japan_era5_daily.py
+python scripts/audit_japan_era5_daily.py --batch-state data/era5-japan-1991-2020/batch-state.json
 ```
 
-The report is written to `data/processed/japan-era5-1991-2020-qa.json`. It reports, by region and year: missing dates, annual valid-day coverage, metric-specific coverage and ranges, monthly coverage, and 365 calendar-day rolling-window readiness for each metric. The rolling-window gate follows the climatology builder's 31-day window, 90% daily completeness and 24-valid-year threshold. It identifies which month/day/metric combinations have sufficient history; it does not activate the baseline.
+The report is written to `data/processed/japan-era5-1991-2020-qa.json`. It reconciles the 570 expected annual acquisition tasks against `batch-state.json` (completed, failed, pending/missing, and unexpected task IDs), then reports, by region and year: missing dates, annual valid-day coverage, metric-specific coverage and ranges, monthly coverage, and 365 calendar-day rolling-window readiness for each metric. The rolling-window gate follows the climatology builder's 31-day window, 90% daily completeness and 24-valid-year threshold. It identifies which month/day/metric combinations have sufficient history; it does not activate the baseline.
 
 To provide an independent observation comparison, prepare a JMA daily-observation JSON file using the schema below. Assign each station to one regional ID and provide station coordinates and daily rainfall / Tmin / Tmax. The nearest supplied station is selected for each subregion; the default maximum distance is 75 km and at least 365 paired rainfall days are required for a comparison to be labelled available.
 
