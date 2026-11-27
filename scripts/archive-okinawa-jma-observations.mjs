@@ -27,7 +27,7 @@ await Promise.all(Array.from({length:12},async()=>{
 }));
 const observations=stations.map(station=>{
  const blocks=results.filter(x=>x.stationId===station.id&&x.ok);
- const rows=blocks.flatMap(x=>x.rows).filter((row,index,array)=>array.findIndex(y=>y.time===row.time)===index).sort((a,b)=>a.time.localeCompare(b.time));
+ const rows=blocks.flatMap(x=>x.rows).filter(row=>row.time.endsWith(":00")).filter((row,index,array)=>array.findIndex(y=>y.time===row.time)===index).sort((a,b)=>a.time.localeCompare(b.time));
  const valid=key=>rows.filter(row=>row[key]?.usable).length;
  return {station:{id:station.id,name:station.name,latitude:station.latitude,longitude:station.longitude,elevationM:station.elevationM,area:station.area,observedElements:station.observedElements,jmaType:station.jmaType,jmaElementsCode:station.jmaElementsCode},expectedBlockFiles:56,successfulBlockFiles:blocks.length,failedBlocks:results.filter(x=>x.stationId===station.id&&!x.ok).map(x=>({date:x.date,block:x.block,error:x.error})),expectedHours:168,returnedRows:rows.length,validCounts:{temperature:valid("temperature"),precipitation1h:valid("precipitation1h"),windSpeed:valid("windSpeed"),gust:valid("gust")},rows};
 });
