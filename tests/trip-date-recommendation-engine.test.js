@@ -60,7 +60,7 @@ test("missing source evidence is not imputed and lowers confidence/eligibility",
   delete target.regions.central.forecast;
   delete target.regions.south.forecast;
   const result=recommendGolfTripDates({asOf,horizonDays:16,days});
-  const assessed=result.topThree.flatMap(x=>x.daily).find(x=>x.date===target.date);
+  const assessed=result.dailyAssessment.find(x=>x.date===target.date);
   assert.ok(assessed);
   assert.equal(assessed.horizon,"short");
   assert.equal(assessed.regions[0].usedSources.includes("forecast"),false);
