@@ -1249,3 +1249,13 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 /* Departure 7-day summary: horizontal weekday labels and clearer playability badges */
 .departure-five-date small{writing-mode:horizontal-tb!important;text-orientation:mixed!important;white-space:nowrap!important;word-break:keep-all!important;letter-spacing:.02em;font-size:clamp(.78rem,2.8vw,.95rem)!important;line-height:1.2!important}
 .departure-five-card>.monthly-day-playability{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:3.8em!important;min-height:2em!important;padding:4px 9px!important;margin:3px 0 5px!important;font-size:clamp(.82rem,3.2vw,1rem)!important;line-height:1.2!important;font-weight:900!important;border-width:1.5px!important;border-radius:9px!important}
+
+/* Departure 7-day view: continuous horizontal scroll, no page switching */
+.departure-week-pages{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;touch-action:pan-x pan-y}
+.departure-five-day-page{width:980px;min-width:980px;max-width:none}
+.departure-five-dates,.departure-five-cards{grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.departure-five-card{min-width:0!important}
+.departure-five-card.weekend{color:#173f35!important}
+.departure-five-card.weekend>strong{color:#173f35!important}
+.departure-five-card.weekend .monthly-day-playability{color:inherit}
+.departure-five-chart svg{max-width:none}
