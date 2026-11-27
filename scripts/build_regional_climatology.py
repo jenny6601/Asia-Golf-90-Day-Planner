@@ -98,16 +98,23 @@ def summarize_window(records: list[dict], target: date, window_days: int = WINDO
                      minimum_valid_years: int = 24, minimum_completeness: float = 0.90) -> dict:
     half = window_days
     selected = []
+    target_ordinal = _calendar_ordinal(target)
     for record in records:
         day = date.fromisoformat(record["validDate"])
         if _calendar_distance(day, target) <= half:
-            selected.append((day, record))
+            ordinal = _calendar_ordinal(day)
+            season_year = day.year
+            if target_ordinal <= half and ordinal >= 365.0 - half:
+                season_year += 1
+            elif target_ordinal >= 365.0 - half and ordinal <= half + 1:
+                season_year -= 1
+            selected.append((season_year, record))
 
     expected_days = window_days * 2 + 1
     required_days_per_year = math.ceil(expected_days * minimum_completeness)
     by_year: dict[int, list[dict]] = defaultdict(list)
-    for day, record in selected:
-        by_year[day.year].append(record)
+    for season_year, record in selected:
+        by_year[season_year].append(record)
 
     metric_results = {}
     for field, category in METRICS.items():
@@ -180,9 +187,6 @@ def build_climatology(regions: dict[str, list[dict]], start_year: int = 1991, en
     }
     for region, records in sorted(regions.items()):
         metadata = records[0] if records else {}
-        by_date = {}
-        for record in records:
-            by_date[record["validDate"]] = record
         daily = []
         for month in range(1, 13):
             for day in range(1, 32):
