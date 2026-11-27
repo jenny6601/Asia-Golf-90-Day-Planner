@@ -60,11 +60,32 @@ const allRows=Object.values(rowsByRegion).flat();
 const overall=scoreForecastSamples(allRows);
 const sampleCount=overall.overall.probabilitySampleCount;
 const seasonalArchive=summarizeSeasonalArchive(snapshots,today);
+const calibrationGate={
+  status:"locked-awaiting-observations",
+  weightsUpdated:false,
+  currentModelWeights:"Provisional v1 weights remain unchanged; no empirical fitting is allowed yet.",
+  shortForecast:{
+    observedPairs:sampleCount,
+    requiredPerRegionAndLeadBucket:30,
+    wetAndDryOutcomeMinimum:5
+  },
+  ec46:{
+    maturedUnitVerifiedPeriods:seasonalArchive.totals.ec46.unitVerifiedPeriods,
+    requiredPerRegion:30,
+    wetAndDryOutcomeMinimum:5
+  },
+  seas5:{
+    maturedUnitVerifiedPeriods:seasonalArchive.totals.seas5.unitVerifiedPeriods,
+    requiredPerRegion:30,
+    wetAndDryOutcomeMinimum:5
+  },
+  rule:"Do not change source weights until each region/source has enough completed, unit-verified outcomes and both wet and dry cases. Keep uncertainty/stability separate from rain-risk predictors."
+};
 const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
   method:"Archived Open-Meteo daily precipitation probability and amount compared with ERA5 reanalysis precipitation at the same three regional coordinates.",
-  overall,byRegion,regionErrors,seasonalArchive,
+  overall,byRegion,regionErrors,seasonalArchive,calibrationGate,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
   minimumSampleGuidance:"Do not interpret as calibrated skill until at least 30 probability samples per lead bucket and per region are available; 90 total is only a minimum descriptive threshold.",
   caveats:[
@@ -89,6 +110,14 @@ const lines=[
   "- SEAS5 monthly archived periods: "+seasonalArchive.totals.seas5.archivedPeriods,
   "- SEAS5 completed and unit-verified periods: "+seasonalArchive.totals.seas5.unitVerifiedPeriods,
   "- Weight calibration: "+seasonalArchive.readiness,
+  "",
+  "## Weight calibration gate",
+  "- Status: "+calibrationGate.status,
+  "- Weights updated: "+calibrationGate.weightsUpdated,
+  "- Short forecast matched observations: "+calibrationGate.shortForecast.observedPairs,
+  "- EC46 completed, unit-verified periods: "+calibrationGate.ec46.maturedUnitVerifiedPeriods,
+  "- SEAS5 completed, unit-verified periods: "+calibrationGate.seas5.maturedUnitVerifiedPeriods,
+  "- "+calibrationGate.rule,
   "",
   "## Overall",
   "- Brier score: "+(overall.overall.brierScore??"資料不足"),
