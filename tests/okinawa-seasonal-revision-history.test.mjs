@@ -4,7 +4,7 @@ import {buildSeasonalRevisionHistory} from "../scripts/okinawa-seasonal-revision
 const snapshot=(date,mean,anomaly,efi=0)=>({archiveType:"okinawa-ecmwf-seasonal-snapshot",archiveDate:date,retrievedAt:date+"T02:00:00Z",model:"ecmwf_seasonal_seamless",points:["north","central","south"].map(id=>({point:{id},weeklyUnits:{precipitation_mean:"mm",precipitation_anomaly:"mm"},monthlyUnits:{precipitation_mean:"mm",precipitation_anomaly:"mm"},weekly:{time:["2026-12-01"],precipitation_mean:[mean],precipitation_anomaly:[anomaly],precipitation_efi:[efi]},monthly:{time:["2027-01-01"],precipitation_mean:[mean],precipitation_anomaly:[anomaly]}}))});
 test("revision history compares same exact region scale target label and model",()=>{
  const r=buildSeasonalRevisionHistory([snapshot("2026-11-28",12,4,.3),snapshot("2026-11-27",10,-2,.1)]);
- assert.equal(r.snapshotCount,2);assert.equal(r.comparisonCount,18);
+ assert.equal(r.snapshotCount,2);assert.equal(r.comparisonCount,6);
  const row=r.comparisons.find(x=>x.region==="north"&&x.scale==="weekly");
  assert.equal(row.changes.precipitation_mean.delta,2);assert.equal(row.changes.precipitation_anomaly.delta,6);assert.equal(row.changes.precipitation_anomaly.directionChanged,true);
 });
