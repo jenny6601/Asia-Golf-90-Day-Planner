@@ -31,6 +31,11 @@ class RegionalClimatologyTests(unittest.TestCase):
         self.assertEqual(MODULE._calendar_distance(leap, date(2001, 2, 28)), 0.5)
         self.assertEqual(MODULE._calendar_distance(leap, date(2001, 3, 1)), 0.5)
 
+    def test_leap_year_window_requires_one_additional_valid_day_near_february(self):
+        self.assertEqual(MODULE._expected_window_days(2020, date(2001, 2, 28), 15), 32)
+        self.assertEqual(MODULE._expected_window_days(2019, date(2001, 2, 28), 15), 31)
+        self.assertEqual(MODULE._expected_window_days(2020, date(2001, 6, 15), 15), 31)
+
     def test_percentile_interpolation(self):
         self.assertEqual(MODULE._percentile([0.0, 10.0], 0.9), 9.0)
 
