@@ -28,7 +28,7 @@ def _find_header_rows(rows):
     for i in range(len(rows) - 2):
         row = [x.strip() for x in rows[i]]
         if any("年月日" == x or x == "日付" for x in row):
-            return i, i + 1, i + 2
+            if i == 0:\n                raise ValueError("JMA CSV station-name header row is missing")\n            return i - 1, i, i + 1
     raise ValueError("JMA CSV does not contain the expected three-row ObsDL header")
 
 def _element_columns(station_row, item_row, detail_row):
