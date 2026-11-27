@@ -49,7 +49,7 @@ class JapanEra5BatchTests(unittest.TestCase):
         import json
         import subprocess
         import tempfile
-        with tempfile.TemporaryDirectory() as temp:
+        with tempfile.TemporaryDirectory(dir=ROOT) as temp:
             root = Path(temp)
             (root / "raw").mkdir()
             (root / "daily").mkdir()
