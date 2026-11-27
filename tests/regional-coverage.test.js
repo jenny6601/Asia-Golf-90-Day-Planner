@@ -111,3 +111,15 @@ test("Japan configured Okinawa representatives map to enabled course catalog rec
   assert.ok(Number.isFinite(course.latitude)&&Number.isFinite(course.longitude));
  }
 });
+
+
+test("Japan mainland candidate IDs are stable, unique, and cannot be mistaken for enabled course IDs",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
+ const ids=mainland.map(x=>x.candidateCourseId);
+ assert.equal(ids.length,16);
+ assert.ok(ids.every(x=>typeof x==="string"&&x.startsWith("jp-")));
+ assert.equal(new Set(ids).size,16);
+ assert.ok(mainland.every(x=>x.representativeCourseId===null));
+});
