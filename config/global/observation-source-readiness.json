@@ -68,17 +68,20 @@
     {
       "countryCode": "GLOBAL",
       "agency": "NOAA NCEI GHCN-Daily",
-      "status": "global-fallback-found-station-and-element-coverage-varies",
+      "status": "official-metadata-inventory-and-automated-candidate-workflow-added",
       "portal": "https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily",
-      "notes": "Global daily station data with common QA review; record lengths and variables vary, and many stations report precipitation only. Assess per subregion and element."
+      "notes": "NOAA provides public station and element-inventory metadata. The development workflow downloads these metadata files, ranks up to 10 stations per regional point with 1991-2020 element overlap, and outputs candidates only. It does not download observation records or auto-approve stations.",
+      "candidateDiscoveryScript": "scripts/discover_ghcnd_station_candidates.py",
+      "candidateDiscoveryWorkflow": ".github/workflows/ghcnd-station-candidate-discovery.yml",
+      "candidateOutput": "data/observation-stations/ghcnd-candidates-1991-2020.json"
     }
   ],
   "nextActions": [
-    "Confirm official archive access and terms for China, Thailand and Malaysia.",
-    "Download station inventories and metadata for all eight countries where possible.",
-    "Match candidate stations to 80 regional points using distance, elevation and coastal/mountain exposure.",
-    "Select overlapping 1991-2020 observation records by element and publish coverage before comparison.",
-    "Run independent ERA5-Land versus station diagnostics; do not apply bias correction before validation design approval."
+    "Run NOAA GHCN-Daily station metadata discovery and review country-code mapping and candidate coverage.",
+    "Review candidate station distance, element-specific overlap, station history, elevation and coastal/mountain representativeness.",
+    "Download official national station inventories for countries with better local networks and compare them with NOAA candidates.",
+    "Request paid or permission-controlled national datasets only after station IDs and target elements are specified.",
+    "Acquire a multi-year ERA5-Land and independent station pilot after station candidate review."
   ],
   "lastReviewed": "2026-11-27",
   "discoverySummary": {
@@ -88,6 +91,7 @@
     "stationInventoriesDownloaded": 0,
     "stationMatches": 0,
     "observationRecordsDownloaded": 0,
-    "interpretation": "Official source/service paths are identified for seven countries, but data availability, licensing and station-level 1991-2020 coverage still require station inventory and access checks. China is a catalogue reference rather than a verified programmatic endpoint."
+    "interpretation": "A repeatable NOAA metadata candidate workflow is now implemented. It produces ranked station candidates only; no station is approved and no observations have been acquired.",
+    "globalMetadataCandidateWorkflow": "implemented-awaiting-run"
   }
 }
