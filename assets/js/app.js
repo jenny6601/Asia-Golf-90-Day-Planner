@@ -781,7 +781,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const isForecast=lead>=0&&lead<16&&actual.length>0;
   const rainChance=isForecast?mean(actual,"prob"):seasonal.length?mean(seasonal,"rainChanceEstimate"):mean(historical,"rainFrequency");
   const rainAmount=isForecast?mean(actual,"rain"):seasonal.length?mean(seasonal,"rainEstimate"):mean(historical,"rainMean");
-  const highTemp=isForecast?mean(actual,"high"):seasonal.length?mean(seasonal,"highEstimate"):mean(historical,"highMean");
+  const highTemp=isForecast?mean(actual,"high"):seasonal.length?mean(seasonal,"feelsLikeMaxEstimateC"):mean(historical,"feelsLikeMaxMeanC");
   if(!Number.isFinite(rainChance)&&!Number.isFinite(rainAmount))return {date,valid:false};
   const chance=Number.isFinite(rainChance)?rainChance:100,amount=Number.isFinite(rainAmount)?rainAmount:0;
   const grade=chance<30&&amount<1?0:chance<45&&amount<2?1:chance<60&&amount<4?2:3;
@@ -934,7 +934,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   card.setAttribute("aria-label",date+" 天氣摘要，點選查看出發日七天天氣摘要");
   card.title="點選查看 "+date+" 出發日七天天氣摘要";
   card.addEventListener("click",()=>showDepartureForm(date,()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords),{country:group.country,region:group.rootRegion,courses:group.courses}))
-  const code=mode(isForecast?actualEntries.map(x=>x.code):useSeasonal?seasonalEntries.map(x=>x.code):[]),highValue=isForecast?avg(actualEntries,"high"):useSeasonal?avg(seasonalEntries,"highEstimate"):avg(historicalEntries,"highMean"),lowValue=isForecast?avg(actualEntries,"low"):useSeasonal?avg(seasonalEntries,"lowEstimate"):avg(historicalEntries,"lowMean"),rainProb=isForecast?avg(actualEntries,"prob"):useSeasonal?avg(seasonalEntries,"rainChanceEstimate"):avg(historicalEntries,"rainFrequency"),rainValue=useSeasonal?avg(seasonalEntries,"rainEstimate"):null,confidenceLabel=useSeasonal?seasonalEntries.map(x=>x.confidence).filter(Boolean).sort((a,b)=>({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[b]??4)-({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[a]??4))[0]:null;
+  const code=mode(isForecast?actualEntries.map(x=>x.code):useSeasonal?seasonalEntries.map(x=>x.code):[]),highValue=isForecast?avg(actualEntries,"high"):useSeasonal?avg(seasonalEntries,"feelsLikeMaxEstimateC"):avg(historicalEntries,"feelsLikeMaxMeanC"),lowValue=isForecast?avg(actualEntries,"low"):useSeasonal?avg(seasonalEntries,"feelsLikeMinEstimateC"):avg(historicalEntries,"feelsLikeMinMeanC"),rainProb=isForecast?avg(actualEntries,"prob"):useSeasonal?avg(seasonalEntries,"rainChanceEstimate"):avg(historicalEntries,"rainFrequency"),rainValue=useSeasonal?avg(seasonalEntries,"rainEstimate"):null,confidenceLabel=useSeasonal?seasonalEntries.map(x=>x.confidence).filter(Boolean).sort((a,b)=>({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[b]??4)-({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[a]??4))[0]:null;
   const icon=createWeatherIcon(code,!isForecast&&!useSeasonal,rainProb);icon.classList.add("monthly-day-icon");
   const dayAssessment=byDate.get(date),playabilityStatus=dayAssessment?.status||"資料不足";
   const statusClass=playabilityStatus==="適打"?"monthly-status-good":playabilityStatus==="可打"?"monthly-status-watch":playabilityStatus==="不適"?"monthly-status-bad":"monthly-status-unknown";
