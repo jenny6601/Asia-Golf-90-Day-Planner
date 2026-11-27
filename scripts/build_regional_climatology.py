@@ -177,7 +177,7 @@ def summarize_window(records: list[dict], target: date, window_days: int = WINDO
     return {
         "targetMonthDay": target.strftime("%m-%d"),
         "calendarWindowDaysEachSide": window_days,
-        "calendarWindowTotalDays": expected_days,
+        "calendarWindowTotalDays": nominal_expected_days,
         "leapDayPolicy": "February 29 mapped midway between February 28 and March 1 and included in both adjacent rolling windows when within 15 calendar days",
         "metrics": metric_results,
     }
