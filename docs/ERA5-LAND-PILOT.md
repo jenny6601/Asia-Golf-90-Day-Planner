@@ -1,4 +1,4 @@
-# Japan ERA5-Land pilot download
+# Japan ERA5-Land pilot download and daily conversion
 
 This workflow downloads **one subregion and at most one year per request** for schema validation. It does not download the full 1991-2020 archive and does not enable the climate baseline.
 
@@ -22,36 +22,37 @@ python -m venv .venv
 pip install -r requirements-data.txt
 ```
 
-## 3. Print the pilot request without downloading
+## 3. Print request and download one pilot year
 
 ```bash
 python scripts/era5_land_pilot.py --subregion JP-KNT-NORTH --start 1991-01-01 --end 1991-12-31 --print-request
-```
-
-## 4. Download one pilot year
-
-```bash
 python scripts/era5_land_pilot.py --subregion JP-KNT-NORTH --start 1991-01-01 --end 1991-12-31
 ```
 
-Default output: `data/raw/era5-land-pilot/`. The downloaded file is marked `downloaded-unvalidated`; do not use it in date recommendations until inspection and quality checks are complete.
+Default output: `data/raw/era5-land-pilot/`. A downloaded file is marked `downloaded-unvalidated`; do not use it in date recommendations until inspection and quality checks are complete.
 
-## 5. Inspect and validate the ZIP
+## 4. Structural inspection
 
 ```bash
 python scripts/inspect_era5_land_pilot.py data/raw/era5-land-pilot/JP-KNT-NORTH_1991-01-01_1991-12-31.zip --subregion JP-KNT-NORTH --start 1991-01-01 --end 1991-12-31 --report data/reports/JP-KNT-NORTH-1991-inspection.json
 ```
 
-The inspector verifies:
-- ZIP integrity and presence of NetCDF files;
-- actual returned latitude/longitude against the expected 0.1-degree grid point (0.001-degree tolerance);
-- all five required variables and their reported units;
-- complete hourly UTC coverage for every requested JST date, including all 24 hourly samples per local date;
-- duplicate or missing timestamps;
-- total precipitation units are metres.
+The inspector verifies ZIP integrity, NetCDF presence, returned grid coordinates, all five variables, units, hourly coverage, duplicate/missing timestamps, and precipitation units. A successful result is structural validation only.
 
-The CDS time-series product documents total precipitation as hourly de-accumulated values. The inspector therefore does not de-accumulate or transform precipitation. A successful result is only **structural validation**, not proof of climate quality or permission to activate the 30-year baseline.
+## 5. Convert to daily JST records
 
-## 6. Next validation
+```bash
+python scripts/aggregate_era5_land_daily.py data/raw/era5-land-pilot/JP-KNT-NORTH_1991-01-01_1991-12-31.zip --subregion JP-KNT-NORTH --start 1991-01-01 --end 1991-12-31 --output data/processed/JP-KNT-NORTH-1991-daily.json
+```
 
-After structural validation, independently review variable ranges, missing-value fractions, physical plausibility and agreement with JMA station/monthly normals. Keep the production climate baseline disabled until that QA is complete.
+The converter reruns structural inspection and refuses conversion if inspection fails. It:
+- converts UTC timestamps to Asia/Tokyo and groups local dates;
+- requires 24 valid hourly values for each of the five source variables before publishing daily metrics;
+- converts temperature K to °C and precipitation m to mm;
+- sums hourly de-accumulated precipitation without de-accumulating again;
+- derives relative humidity from temperature/dewpoint with the Magnus approximation;
+- derives wind speed and meteorological wind-from direction from U/V components;
+- writes provenance, grid metadata and quality flags;
+- keeps incomplete-day metrics null (never zero-fills missing precipitation).
+
+A successful conversion is a **pilot daily file only**. `climatologyEligible` remains false until 30-year completeness and independent JMA QA are complete.
