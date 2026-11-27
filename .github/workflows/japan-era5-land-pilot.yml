@@ -94,6 +94,8 @@ jobs:
             data/era5-land-japan-1991-2020/daily/JP-KNT-NORTH-1991-daily.json \
             --start-year 1991 \
             --end-year 1991 \
+            --subregions JP-KNT-NORTH \
+            --skip-climate-windows \
             --batch-state data/era5-land-japan-1991-2020/batch-state.json \
             --output data/era5-land-japan-1991-2020/reports/JP-KNT-NORTH-1991-qa.json
 
