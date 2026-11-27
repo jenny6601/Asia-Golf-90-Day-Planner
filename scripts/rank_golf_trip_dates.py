@@ -39,6 +39,22 @@ def load_climatology(path: Path, subregion: str) -> dict:
 def day_rain_risk(day: date, calendar: dict) -> dict:
     key = day.strftime("%m-%d")
     item = calendar.get(key)
+    leap_day = day.month == 2 and day.day == 29
+    if leap_day:
+        left = calendar.get("02-28")
+        right = calendar.get("03-01")
+        if left and right:
+            left_rain = left.get("metrics", {}).get("precipitationMm", {})
+            right_rain = right.get("metrics", {}).get("precipitationMm", {})
+            if left_rain.get("status") == "usable" and right_rain.get("status") == "usable":
+                fields = ("wetDayFrequencyPct", "heavyRain10mmFrequencyPct", "heavyRain30mmFrequencyPct", "median", "p90")
+                rain = {}
+                for field in fields:
+                    a, b = left_rain.get(field), right_rain.get(field)
+                    rain[field] = (float(a) + float(b)) / 2 if a is not None and b is not None else None
+                rain["validYears"] = min(left_rain.get("validYears", 0), right_rain.get("validYears", 0))
+                rain["sampleCount"] = min(left_rain.get("sampleCount", 0), right_rain.get("sampleCount", 0))
+                item = {"metrics": {"precipitationMm": {**rain, "status": "usable"}}}
     if not item:
         return {"date": day.isoformat(), "usable": False, "reason": "missing_calendar_day"}
     metrics = item.get("metrics", {})
@@ -55,6 +71,7 @@ def day_rain_risk(day: date, calendar: dict) -> dict:
         "p90DailyRainMm": rain.get("p90"),
         "validYears": rain.get("validYears"),
         "sampleCount": rain.get("sampleCount"),
+        "leapDayMethod": "mean of February 28 and March 1 climatology" if leap_day else None,
         "status": "historical-climate-prior-not-daily-forecast",
     }
 
@@ -114,11 +131,11 @@ def rank_departures(climate_path: Path, subregion: str, from_date: date, horizon
                     trip_days: int = 5, rounds: int = 3) -> dict:
     if trip_days != 5 or rounds != 3:
         raise ValueError("This planner is configured for exactly 5 days / 4 nights and 3 golf rounds")
-    if horizon_days < trip_days or horizon_days > 90:
-        raise ValueError("horizon_days must be between 5 and 90")
+    if horizon_days < 1 or horizon_days > 90:
+        raise ValueError("horizon_days must be between 1 and 90 departure dates")
     loaded = load_climatology(climate_path, subregion)
     candidates = []
-    for offset in range(horizon_days - trip_days + 1):
+    for offset in range(horizon_days):
         start = from_date + timedelta(days=offset)
         candidates.append(rank_trip_start(start, loaded["calendar"], trip_days, rounds))
     eligible = [x for x in candidates if x["status"] == "ranked-by-historical-rainfall-prior"]
@@ -146,7 +163,8 @@ def rank_departures(climate_path: Path, subregion: str, from_date: date, horizon
             "nights": trip_days - 1,
             "golfRounds": rounds,
             "primaryPriority": "minimum-rainfall-risk",
-            "candidateHorizonDays": horizon_days,
+            "candidateDepartureDates": horizon_days,
+            "tripMayExtendBeyondDepartureHorizon": True,
             "fromDate": from_date.isoformat(),
         },
         "method": {
