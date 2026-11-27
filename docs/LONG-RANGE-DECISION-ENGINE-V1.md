@@ -46,12 +46,12 @@ Each subregion/date record must include:
 - Weather tendency/category.
 - Estimated precipitation amount (mm) and uncertainty range.
 - Precipitation risk category; numeric probability only after date-level calibration passes.
-- Estimated feels-like temperature with uncertainty as the user-facing thermal indicator; retain Tmin/Tmax only as supporting air-temperature bounds.
+- Estimated daily feels-like low/high range with an uncertainty category as the user-facing thermal indicator; retain Tmin/Tmax only as supporting air-temperature bounds. Do not publish mean air temperature.
 - Wind estimate, cloud and sunshine tendency where supported by source data.
 - Daily golf-conditions advisory.
 - Confidence by variable, model/analogue contribution, valid period and model-run identifiers.
 
-Feels-like temperature is the primary thermal indicator. Estimate it from air-temperature bounds together with dewpoint/derived humidity and wind, applying a validated apparent-temperature method appropriate to the temperature regime. Daily aggregate inputs are not time-paired, so retain an uncertainty range and lower confidence; never imply hourly precision. Do not require or display mean air temperature as a product field. If a required feels-like input is missing, retain null/unknown rather than inventing a value. If any other variable is unsupported or missing, retain null/unknown and lower the relevant confidence. Never turn missing precipitation into zero. Do not infer a rain probability from a rainfall amount.
+Feels-like temperature is the primary thermal indicator and is output as a daily low/high range, not a mean. Calculate wind speed from daily mean 10 m U/V components. For air temperature at or below 10 °C with wind at least 4.8 km/h, use the standard wind-chill equation. In other regimes, use the shade apparent-temperature equation AT = Ta + 0.33e - 0.70v - 4.00, where e is vapor pressure in hPa derived from dewpoint and v is wind speed in m/s; cap vapor pressure at saturation for the evaluated air temperature. Because Tmin/Tmax, daily mean dewpoint and daily mean wind are not time-paired, the result is a broad daily estimate with an uncertainty category, never hourly precision. The shade formula does not directly account for solar radiation; show cloud/sunshine exposure context separately. Do not require or publish mean air temperature. If any required input is missing, leave both feels-like bounds unavailable. If any other variable is unsupported or missing, retain null/unknown and lower the relevant confidence. Never turn missing precipitation into zero. Do not infer a rain probability from a rainfall amount.
 
 ## Advisory and user decision policy
 
