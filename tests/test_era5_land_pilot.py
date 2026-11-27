@@ -11,10 +11,13 @@ SPEC.loader.exec_module(MODULE)
 
 
 class Era5LandPilotTests(unittest.TestCase):
-    def test_mapping_has_16_unique_mainland_points(self):
+    def test_mapping_has_19_unique_japan_regions(self):
         mapping = MODULE.load_mapping()
-        self.assertEqual(mapping["subregionCount"], 16)
-        self.assertEqual(len({p["subregionId"] for p in mapping["points"]}), 16)
+        ids = {p["subregionId"] for p in mapping["points"]}
+        self.assertEqual(mapping["subregionCount"], 19)
+        self.assertEqual(len(ids), 19)
+        self.assertEqual(sum(x.startswith("JP-OKI-") for x in ids), 3)
+        self.assertEqual(sum(not x.startswith("JP-OKI-") for x in ids), 16)
 
     def test_request_uses_cds_timeseries_and_five_required_variables(self):
         mapping = MODULE.load_mapping()
