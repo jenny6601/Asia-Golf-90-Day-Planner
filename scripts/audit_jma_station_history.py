@@ -19,7 +19,7 @@ DAYS = (END - START).days + 1
 def parse_date(value, allow_open=False):
     value = (value or "").strip()
     if allow_open and value in {"9999-99-99", "99999999", "9999/99/99"}:
-        return END
+        return date.max
     for fmt in ("%Y-%m-%d", "%Y%m%d", "%Y/%m/%d"):
         try:
             return date.fromisoformat(value) if fmt == "%Y-%m-%d" else __import__("datetime").datetime.strptime(value, fmt).date()
@@ -106,8 +106,21 @@ def audit_candidate(candidate, official_segments):
     t_cuts = [x for x in period_segments if x["temperatureContinuityCode"] in {"1", "5"}]
     t_adjusted = [x for x in period_segments if x["temperatureContinuityCode"] == "4"]
     mirror_segments = candidate.get("historySegments", [])
-    mirror_keys = {(x.get("startDate"), x.get("endDate")) for x in mirror_segments}
-    official_keys = {(x["startDate"], x["endDate"]) for x in period_segments}
+    def clipped_key(segment):
+        start_text = segment.get("startDate")
+        end_text = segment.get("endDate") or "9999-99-99"
+        if not start_text:
+            return None
+        lo = max(parse_date(start_text), START)
+        hi = min(parse_date(end_text, allow_open=True), END)
+        return (lo.isoformat(), hi.isoformat()) if lo <= hi else None
+    mirror_keys = {key for key in (clipped_key(x) for x in mirror_segments) if key}
+    official_keys = {
+        key for key in (
+            clipped_key(x) for x in period_segments
+            if x["precipitationAvailable"] and x["temperatureAvailable"]
+        ) if key
+    }
     return {
         "stationId": sid, "candidateName": candidate.get("name") or candidate.get("nameJa"),
         "officialNameJa": period_segments[-1]["nameJa"] if period_segments else (segments[-1]["nameJa"] if segments else None),
@@ -122,7 +135,7 @@ def audit_candidate(candidate, official_segments):
         "temperatureStatisticalBreakCount": len(t_cuts),
         "temperatureAdjustedContinuityCount": len(t_adjusted),
         "oldStationIds": sorted({x["oldStationId"] for x in period_segments if x["oldStationId"]}),
-        "mirrorHistoryIntervalMismatch": bool(mirror_segments) and not mirror_keys.issubset(official_keys),
+        "mirrorHistoryIntervalMismatch": bool(mirror_segments) and mirror_keys != official_keys,
         "officialHistorySegments": period_segments,
         "stationApproved": False, "weatherIngestionEnabled": False
     }
