@@ -21,6 +21,7 @@ test("pending course coordinates are explicitly unavailable, not fabricated", ()
   assert.equal(pgm.coordinateStatus, "pending");
   assert.equal(pgm.latitude, null);
   assert.equal(pgm.longitude, null);
+  assert.equal(pgm.enabled, false, "pending GPS must not be selectable in the runtime catalog");
 });
 
 test("global forecast policy uses two providers for preliminary screening and separates strict comparison", () => {
