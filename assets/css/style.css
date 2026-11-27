@@ -1221,3 +1221,9 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 .monthly-page-loading span{font-size:.88rem;color:#526c60}
 .monthly-page-spinner{flex:0 0 26px;width:26px;height:26px;border:3px solid #c9dfd4;border-top-color:#1976b8;border-right-color:#1976b8;border-radius:50%;animation:regionMonthSpin .8s linear infinite}
 @media(max-width:520px){.monthly-page-loading{gap:9px;padding:12px}.monthly-page-loading span{font-size:.8rem}}
+
+
+/* Four monthly-analysis shortcuts: four across on wide screens, 2x2 on phones */
+.monthly-jump-nav{grid-template-columns:repeat(4,minmax(0,1fr)) !important}
+@media(max-width:600px){.monthly-jump-nav{grid-template-columns:repeat(2,minmax(0,1fr)) !important}}
+@media(max-width:380px){.monthly-jump-nav{grid-template-columns:repeat(2,minmax(0,1fr)) !important}}
