@@ -38,12 +38,12 @@ class JapanEra5BatchTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             MODULE.build_tasks(mapping, 1991, 1991)
 
-    def test_all_19_japan_regions_are_in_mapping(self):
+    def test_all_37_japan_regions_are_in_mapping(self):
         mapping = __import__("json").loads((ROOT / "config/global/era5-land-grid-points-japan.json").read_text(encoding="utf-8"))
         tasks = MODULE.build_tasks(mapping, 1991, 2020)
-        self.assertEqual(len(mapping["points"]), 19)
-        self.assertEqual(len(tasks), 570)
-        self.assertEqual(len({t["subregionId"] for t in tasks}), 19)
+        self.assertEqual(len(mapping["points"]), 37)
+        self.assertEqual(len(tasks), 1110)
+        self.assertEqual(len({t["subregionId"] for t in tasks}), 37)
 
     def test_force_reprocess_bypasses_existing_daily_cache(self):
         import json
