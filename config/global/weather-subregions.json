@@ -226,7 +226,7 @@
           "representativeCourseId": null,
           "candidateCourseName": "Leograd Golf Club",
           "candidateRationale": "和歌山縣球場，補足紀伊半島南側海岸氣候帶。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
+          "candidateSourceUrl": "https://www.leograd.jp/concept_outline/",
           "candidateStatus": "address-confirmed-coordinate-approximate",
           "candidateCoordinates": {
             "latitude": 33.9232299832,
@@ -235,7 +235,7 @@
             "coordinateSourceUrl": "https://www.leograd.jp/access_map/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "needs-exact-course-pin-verification",
+          "coordinateReviewStatus": "official-address-and-map-confirmed-pin-coordinate-still-unverified",
           "candidateCourseId": "jp-leograd"
         },
         {
@@ -268,16 +268,16 @@
           "representativeCourseId": null,
           "candidateCourseName": "Setouchi Golf Resort",
           "candidateRationale": "廣島縣瀨戶內海側球場，代表山陽與瀨戶內海沿岸。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateSourceUrl": "https://www.resol-golf.jp/en/setouchi/",
+          "candidateStatus": "official-course-identity-and-location-confirmed",
           "candidateCoordinates": {
             "latitude": 34.3061999,
             "longitude": 132.864325,
-            "coordinateStatus": "third-party-place-coordinate",
-            "coordinateSourceUrl": "https://steller.co/p/setouchi-golf-resort-3D4ngLMGn8HLJK2KMg2ACnt",
-            "timezone": "Asia/Tokyo"
+            "timezone": "Asia/Tokyo",
+            "coordinateStatus": "official-google-maps-place-coordinate",
+            "coordinateSourceUrl": "https://maps.app.goo.gl/HkTraVHtr3VWRQPg9"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "official-map-place-coordinate-found-course-identity-confirmed",
           "candidateCourseId": "jp-setouchi"
         },
         {
@@ -371,15 +371,10 @@
       "coordinateResearchSummary": {
         "totalSubregions": 19,
         "mainlandSubregions": 16,
-        "mainlandCandidateCoordinateRecords": 16,
-        "exactOrThirdPartyCoordinates": 15,
+        "mainlandCoordinateRecords": 16,
+        "officialMapCoordinates": 1,
+        "thirdPartyOrPublicMapCoordinates": 14,
         "approximateCoordinates": 1,
-        "subregionsWithNoCoordinateRecord": 0,
-        "configuredOkinawaRepresentatives": [
-          "kise",
-          "pgm-okinawa",
-          "southern-links"
-        ],
         "forecastEnabled": false
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
