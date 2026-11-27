@@ -34,5 +34,14 @@ jobs:
           python-version: "3.11"
       - name: Compile registry and dry-run 30-year acquisition plan
         run: |
-          python scripts/build_eight_country_climate_registry.py
+          python scripts/build_eight_country_climate_registry.py --write
           python -m unittest tests/test_eight_country_climate_registry.py
+      - name: Upload generated registry and acquisition plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: eight-country-era5-land-preflight
+          path: |
+            config/global/era5-land-eight-country-registry.json
+            data/era5-land-eight-country-1991-2020/acquisition-plan.json
+          if-no-files-found: error
+          retention-days: 30
