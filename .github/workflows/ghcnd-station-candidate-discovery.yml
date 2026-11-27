@@ -70,6 +70,21 @@ jobs:
           fi
       - name: Discover JMA AMeDAS candidates for Japan regional points
         run: python scripts/discover_jma_station_candidates.py
+      - name: Download official JMA AMeDAS station history catalog when not supplied
+        shell: bash
+        run: |
+          mkdir -p data/observation-stations/input
+          if [ ! -s data/observation-stations/input/amdmaster.index4 ]; then
+            if curl --fail --location --retry 2 --connect-timeout 20 --max-time 120 -A "AsiaGolfClimateResearch/1.0" -o data/observation-stations/input/amdmaster.index4 https://www.data.jma.go.jp/stats/data/mdrr/chiten/meta/amdmaster.index4; then
+              test -s data/observation-stations/input/amdmaster.index4
+              echo "Downloaded official JMA amdmaster.index4."
+            else
+              rm -f data/observation-stations/input/amdmaster.index4
+              echo "::warning::JMA official station history download unavailable; history cross-check will be skipped."
+            fi
+          else
+            echo "Using supplied official JMA amdmaster.index4."
+          fi
       - name: Cross-check JMA candidates against official amdmaster.index4 when supplied
         shell: bash
         run: |
