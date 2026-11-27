@@ -79,6 +79,22 @@ class GolfTripDateRankingTests(unittest.TestCase):
             self.assertEqual(result["recommendations"][0]["startDate"], "2026-06-05")
             self.assertFalse(result["activation"]["recommendationProductionEnabled"])
 
+    def test_ninety_day_calendar_horizon_produces_86_complete_trip_windows(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "climate.json"
+            payload = {
+                "status": "historical-climatology-computed-not-activated",
+                "climateBaselineEnabled": False,
+                "forecastEnabled": False,
+                "regions": {"JP-TEST": {"dailyCalendar": list(sample_calendar().values())}},
+            }
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            result = MODULE.rank_departures(path, "JP-TEST", date(2026, 1, 1), horizon_days=90)
+            self.assertEqual(result["candidateCount"], 86)
+            self.assertEqual(result["planningParameters"]["completeTripWindows"], 86)
+            self.assertEqual(result["recommendations"][0]["playDates"],
+                             ["2026-01-02", "2026-01-03", "2026-01-04"])
+
     def test_missing_climatology_blocks_candidate_instead_of_zero_filling(self):
         calendar = sample_calendar()
         calendar["06-03"]["metrics"]["precipitationMm"]["status"] = "insufficient-history"
