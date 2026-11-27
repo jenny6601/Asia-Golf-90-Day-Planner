@@ -820,7 +820,11 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   "適打天數：資料不足，暫無法判定";
  const historyDescription=historicalMonthType==="歷史同期資料不足，無法判定"?
   "資料不足，無法判定季節型態。":
-  historicalMonthType.replace(/^雨季（/,"雨季（").replace(/^乾季（/,"乾季（");
+  historicalTypeLabel==="雨季"?"雨季，降雨多、雨日多。":
+  historicalTypeLabel==="乾季"?"乾季，降雨少、雨日少。":
+  historicalTypeLabel==="偏濕季"?"偏濕季，雨量或雨日較多。":
+  historicalTypeLabel==="偏乾季"?"偏乾季，降雨相對較少。":
+  "季節轉換型，雨量介於乾季與雨季之間。";
  const summary=node("div",undefined,"monthly-playability-card");
  const reportHeader=node("header",undefined,"monthly-playability-header");
  const headerTitle=node("strong",month.slice(0,4)+"年"+monthIndex+"月適打評估");
