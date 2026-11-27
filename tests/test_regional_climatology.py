@@ -46,6 +46,7 @@ class RegionalClimatologyTests(unittest.TestCase):
                 d = date(2001, 6, 15) + __import__("datetime").timedelta(days=offset)
                 records.append(make_record(date(year, d.month, d.day), rain=2.0))
         result = MODULE.summarize_window(records, date(2001, 6, 15), minimum_valid_years=24)
+        self.assertEqual(result["calendarWindowTotalDays"], 31)
         self.assertEqual(result["metrics"]["precipitationMm"]["status"], "usable")
         self.assertEqual(result["metrics"]["precipitationMm"]["validYears"], 24)
         self.assertEqual(result["metrics"]["precipitationMm"]["wetDayFrequencyPct"], 100.0)
