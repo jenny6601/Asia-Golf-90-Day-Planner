@@ -76,6 +76,32 @@ class Era5LandDailyAggregationTests(unittest.TestCase):
         self.assertAlmostEqual(day["windSpeedMeanMs"], 1.0, places=2)
         self.assertAlmostEqual(day["windDirectionMeanDeg"], 270.0, places=1)
 
+    def test_trace_negative_precipitation_is_clamped_and_day_remains_valid(self):
+        start = datetime(2019, 12, 31, 15, tzinfo=timezone.utc)
+        rows = [{
+            "time": start + timedelta(hours=hour),
+            "temperatureK": 293.15, "dewpointK": 283.15,
+            "precipitationM": -0.00000001, "u10Ms": 1.0, "v10Ms": 0.0,
+        } for hour in range(24)]
+        day = MODULE.aggregate_daily(rows, {"subregionId": "JP-TEST"})[0]
+        self.assertEqual(day["precipitationMm"], 0.0)
+        self.assertFalse(day["wetDay"])
+        self.assertEqual(day["validHourCount"], 24)
+        self.assertIn("trace_negative_precipitation_clamped", day["qualityFlags"])
+        self.assertNotIn("negative_hourly_precipitation", day["qualityFlags"])
+
+    def test_material_negative_precipitation_invalidates_daily_record(self):
+        start = datetime(2019, 12, 31, 15, tzinfo=timezone.utc)
+        rows = [{
+            "time": start + timedelta(hours=hour),
+            "temperatureK": 293.15, "dewpointK": 283.15,
+            "precipitationM": -0.000001 if hour == 0 else 0.0,
+            "u10Ms": 1.0, "v10Ms": 0.0,
+        } for hour in range(24)]
+        day = MODULE.aggregate_daily(rows, {"subregionId": "JP-TEST"})[0]
+        self.assertIsNone(day["precipitationMm"])
+        self.assertIn("negative_hourly_precipitation", day["qualityFlags"])
+
     def test_incomplete_day_never_becomes_zero_rain(self):
         rows = [{
             "time": datetime(2020, 1, 1, hour, tzinfo=timezone.utc),
