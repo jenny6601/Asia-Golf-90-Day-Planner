@@ -1,0 +1,40 @@
+name: GHCN-Daily Station Candidate Discovery
+
+on:
+  push:
+    branches: [asia-eight-country-shared-engine]
+    paths:
+      - "scripts/discover_ghcnd_station_candidates.py"
+      - "tests/test_ghcnd_station_discovery.py"
+      - "data/era5-land-eight-country-1991-2020/representative-point-quality-audit.json"
+      - ".github/workflows/ghcnd-station-candidate-discovery.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ghcnd-station-candidate-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test metadata parsers and candidate ranking
+        run: python -m unittest tests/test_ghcnd_station_discovery.py
+      - name: Download public NOAA metadata and rank station candidates
+        run: python scripts/discover_ghcnd_station_candidates.py --top-n 10
+      - name: Upload station candidate inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: ghcnd-station-candidates-1991-2020
+          path: data/observation-stations/ghcnd-candidates-1991-2020.json
+          if-no-files-found: error
+          retention-days: 90
