@@ -18,8 +18,8 @@
           "candidateCourseName": "Sapporo Teine Golf Club",
           "candidateRationale": "以札幌市行政區內的球場群作為獨立高爾夫目的地；札幌市球場共用此代表點進行區域氣候分析，不與千歲、苫小牧合併。",
           "candidateSourceUrl": "https://sapporo-teine.com/golf/",
-          "candidateStatus": "official-operator-identity-address-confirmed-coordinate-source-conflict-under-review",
-          "coordinateReviewStatus": "candidate-coordinate-conflict-review-pending",
+          "candidateStatus": "official-operator-identity-address-and-official-map-pin-confirmed",
+          "coordinateReviewStatus": "official-operator-map-pin-confirmed",
           "candidateCourseId": "jp-sapporo-teine",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-course-identity-address-and-2026-operation-confirmed",
@@ -30,37 +30,38 @@
             "checkedOn": "2026-11-27"
           },
           "coordinateQuality": {
-            "grade": "B-pending",
-            "label": "球場身分已確認，座標來源存在差異",
-            "reviewStatus": "candidate-only-not-enabled",
+            "grade": "A",
+            "label": "官方營運商 Google Maps 地點圖釘",
+            "reviewStatus": "regional-climate-approved-live-weather-ingestion-not-yet-enabled",
             "weatherPointEligible": false,
-            "regionalClimateEligible": false,
+            "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point",
-            "reason": "FullGolf published course coordinate 43.077052,141.200096; 14Golf published 43.101490,141.2125397. Difference is approximately 2.8 km, larger than acceptable cross-check tolerance. The higher coordinate may reflect a course/resort map point rather than the same representative location. Do not average or activate until map-pin/official course map position is reconciled.",
+            "reason": "官方營運商交通頁的 Map Code 連結可解析至 Google Maps 球場地點圖釘 43.1039996,141.2091466；14Golf 獨立座標與官方圖釘相距約0.392公里，足以作為區域尺度代表點交叉確認。FullGolf 的 43.077052,141.200096 與官方圖釘相距約2.8公里，排除為位置不一致的候選點。座標已核准作區域氣候代表點，但尚未接入正式逐時天氣擷取。",
             "coordinateCrossCheck": {
               "checkedOn": "2026-11-27",
-              "sources": [
-                {
-                  "name": "FullGolf",
-                  "latitude": 43.077052,
-                  "longitude": 141.200096,
-                  "url": "https://fullgolf.com/en/golf-club/japan/hokkaido/sapporo/sapporo-teine-golf-club"
-                },
-                {
-                  "name": "14Golf",
-                  "latitude": 43.10149,
-                  "longitude": 141.2125397,
-                  "url": "https://14golf.com/course/sapporoteinegorufukurabu/"
-                },
-                {
-                  "name": "Official operator map reference",
-                  "type": "mapcode",
-                  "value": "493 385 165*66",
-                  "url": "https://sapporo-teine.com/golf/access/"
+              "officialOperatorMap": {
+                "url": "https://sapporo-teine.com/golf/access/",
+                "mapCode": "493 385 165*66",
+                "resolvedGoogleMapsPlacePin": {
+                  "latitude": 43.1039996,
+                  "longitude": 141.2091466
                 }
-              ],
-              "maximumDisagreementKm": 2.8,
-              "disposition": "coordinate-review-required"
+              },
+              "corroboratingThirdParty": {
+                "name": "14Golf",
+                "url": "https://14golf.com/course/sapporoteinegorufukurabu/",
+                "latitude": 43.10149,
+                "longitude": 141.2125397,
+                "distanceFromOfficialPinKm": 0.392
+              },
+              "excludedOutlier": {
+                "name": "FullGolf",
+                "url": "https://fullgolf.com/en/golf-club/japan/hokkaido/sapporo/sapporo-teine-golf-club",
+                "latitude": 43.077052,
+                "longitude": 141.200096,
+                "reason": "approximately 2.8 km from official operator map pin; do not average"
+              },
+              "disposition": "official-pin-selected"
             }
           },
           "golfClusterId": "JP-HKD-SAPPORO",
@@ -78,7 +79,14 @@
           "climateUnit": "golf-course-cluster",
           "regionId": "JP-REG-01",
           "regionName": "北海道",
-          "subregionUnit": "golf-course-cluster"
+          "subregionUnit": "golf-course-cluster",
+          "candidateCoordinates": {
+            "latitude": 43.1039996,
+            "longitude": 141.2091466,
+            "coordinateStatus": "official_operator_google_maps_place_pin",
+            "coordinateSourceUrl": "https://sapporo-teine.com/golf/access/",
+            "timezone": "Asia/Tokyo"
+          }
         },
         {
           "id": "JP-HKD-NISEKO",
