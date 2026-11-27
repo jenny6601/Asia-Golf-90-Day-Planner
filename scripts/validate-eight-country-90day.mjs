@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import {fetchCourseSeasonalForecast,fetchCourseHistoricalWeekNormals} from "../assets/js/long-range-api.js";
+import {fetchCourseForecast} from "../assets/js/weather-api.js";
 import {buildDailyClimateOutlook} from "../assets/js/daily-climate-outlook.js";
 import {classifyMonthlyDay,summarizeMonthlyWeather,firstAvailableMetric} from "../assets/js/monthly-weather-summary.js";
 
@@ -33,10 +34,13 @@ for(const subregion of subregions){
  const result={countryCode:subregion.countryCode,countryNameZh:subregion.countryNameZh,subregionId:subregion.id,subregion:subregion.label||subregion.subregion,representativeCourseId:course?.id||null,representativeCourseName:course?.name||null,referenceDate};
  try{
   if(!course)throw new Error("Representative course missing from directory");
-  const [seasonal,history]=await Promise.all([
-   fetchCourseSeasonalForecast(course,fetchWithTimeout),
-   fetchCourseHistoricalWeekNormals(course,dates,fetchWithTimeout)
+  const representativeCourse={...course,latitude:subregion.candidateCoordinates.latitude,longitude:subregion.candidateCoordinates.longitude,timezone:subregion.candidateCoordinates.timezone};
+  const [shortForecast,seasonal,history]=await Promise.all([
+   fetchCourseForecast([representativeCourse],fetchWithTimeout),
+   fetchCourseSeasonalForecast(representativeCourse,fetchWithTimeout),
+   fetchCourseHistoricalWeekNormals(representativeCourse,dates,fetchWithTimeout)
   ]);
+  const actualDaily=shortForecast.courses?.[0]?.daily||{};
   const estimates=buildDailyClimateOutlook(seasonal,history.days,referenceDate,90);
   const summarize=rows=>({
    days:rows.length,
@@ -63,11 +67,20 @@ for(const subregion of subregions){
   result.pass=estimates.length===74&&new Set(estimates.map(x=>x.date)).size===74&&estimates[0]?.lead===17&&estimates.at(-1)?.lead===90&&estimates.every(x=>["seasonal-plus-historical-estimate","historical-climate-reference"].includes(x.sourceType)&&finite(x.highEstimate)&&finite(x.lowEstimate)&&finite(x.rainEstimate)&&finite(x.rainChanceEstimate)&&x.historicalRainSampleYears>=8&&x.historicalTemperatureSampleYears>=8);
   // Monthly-engine contract: assess future calendar dates with the exact same production classifier.
   const monthlyChecks=[];
+  const [refYear,refMonth]=referenceDate.slice(0,7).split("-").map(Number);
   for(let monthOffset=0;monthOffset<3;monthOffset++){
-   const monthDate=add(referenceDate,monthOffset*30),month=monthDate.slice(0,7);
-   const monthDates=Array.from({length:new Date(Date.UTC(Number(month.slice(0,4)),Number(month.slice(5,7)),0)).getUTCDate()},(_,i)=>month+"-"+String(i+1).padStart(2,"0"));
+   const monthDate=new Date(Date.UTC(refYear,refMonth-1+monthOffset,1));
+   const month=monthDate.toISOString().slice(0,7);
+   const monthDates=Array.from({length:new Date(Date.UTC(monthDate.getUTCFullYear(),monthDate.getUTCMonth()+1,0)).getUTCDate()},(_,i)=>month+"-"+String(i+1).padStart(2,"0"));
    const dayRows=monthDates.map(date=>{
     const lead=Math.round((Date.parse(date+"T12:00:00Z")-Date.parse(referenceDate+"T12:00:00Z"))/86400000);
+    if(lead>=0&&lead<=15){
+     const i=(actualDaily.time||[]).indexOf(date);
+     if(i>=0){
+      const classification=classifyMonthlyDay({rainFrequency:actualDaily.precipitation_probability_max?.[i],rainAmount:actualDaily.precipitation_sum?.[i],highTemp:actualDaily.temperature_2m_max?.[i]});
+      return classification?{date,grade:classification.grade}:null;
+     }
+    }
     const e=estimates.find(x=>x.date===date);
     if(lead>=16&&lead<=89&&e){
      const classification=classifyMonthlyDay({rainFrequency:e.rainChanceEstimate,rainAmount:e.rainEstimate,highTemp:e.highEstimate});
@@ -81,7 +94,7 @@ for(const subregion of subregions){
     return null;
    }).filter(Boolean);
    const summary=summarizeMonthlyWeather(dayRows,referenceDate,monthDates);
-   monthlyChecks.push({month,expectedDays:summary.expectedDays,validDays:summary.validDays,coverage:summary.coverage,label:summary.label,counts:summary.counts,pass:summary.label==="資料不足"||summary.validDays<=summary.expectedDays});
+   monthlyChecks.push({month,expectedDays:summary.expectedDays,validDays:summary.validDays,coverage:summary.coverage,label:summary.label,counts:summary.counts,pass:summary.validDays<=summary.expectedDays});
   }
   result.monthlyChecks=monthlyChecks;
  }catch(error){result.error=String(error);result.pass=false;}
@@ -93,7 +106,7 @@ const countrySummary=countryOrder.map(code=>{
  const rows=results.filter(x=>x.countryCode===code);
  return {countryCode:code,countryNameZh:rows[0]?.countryNameZh||code,subregions:rows.length,passed:rows.filter(x=>x.pass).length,failed:rows.filter(x=>!x.pass).length,meanD17D46Coverage:rows.length?rows.reduce((s,x)=>s+(x.d17D46?.combined||0),0)/(rows.length*30):0,meanD47D90Coverage:rows.length?rows.reduce((s,x)=>s+(x.d47D90?.combined||0),0)/(rows.length*44):0};
 });
-const report={generatedAt:new Date().toISOString(),referenceDate,horizon:"D17-D90 (74 days)",scope:"All eight countries and all 80 regional representative climate points; equal per-subregion validation, Okinawa is included within Japan and is not a separate priority.",method:"For each representative point, compare weekly/monthly ECMWF seasonal signals with ERA5 1991-2020 same-calendar-day historical normals, then run the production D17-D90 estimator and production monthly classifier. This validates data completeness and rule consistency, not forecast skill.",countrySummary,subregionResults:results,allPass:results.length===80&&results.every(x=>x.pass),limitations:["ERA5 is reanalysis, not on-course observations.","ECMWF seasonal weekly/monthly fields are anomaly context, not deterministic daily forecasts.","rainChanceEstimate is adjusted historical wet-day frequency, not calibrated daily precipitation probability.","A passing data-completeness gate does not establish forecast accuracy; archived forecast-versus-observation pairs are needed for skill verification.","Monthly sample checks use the same production classifier and do not alter UI or thresholds."]};
+const report={generatedAt:new Date().toISOString(),referenceDate,horizon:"D17-D90 (74 days)",scope:"All eight countries and all 80 regional representative climate points; equal per-subregion validation, Okinawa is included within Japan and is not a separate priority.",method:"For each representative point, validate D01-D16 with the live daily forecast, D17-D90 with ECMWF seasonal signals plus ERA5 1991-2020 same-calendar-day normals, and monthly summaries with the production per-metric fallback and production classifier. This validates data completeness and rule consistency, not forecast skill.",countrySummary,subregionResults:results,allPass:results.length===80&&results.every(x=>x.pass),limitations:["ERA5 is reanalysis, not on-course observations.","ECMWF seasonal weekly/monthly fields are anomaly context, not deterministic daily forecasts.","rainChanceEstimate is adjusted historical wet-day frequency, not calibrated daily precipitation probability.","A passing data-completeness gate does not establish forecast accuracy; archived forecast-versus-observation pairs are needed for skill verification.","Monthly sample checks use the same production classifier and do not alter UI or thresholds."]};
 await fs.mkdir("artifacts/eight-country-validation",{recursive:true});
 await fs.writeFile("artifacts/eight-country-validation/eight-country-90day-validation.json",JSON.stringify(report,null,2));
 const lines=["# Eight-Country D17-D90 and Monthly Engine Validation","",`Generated: ${report.generatedAt}`,`Reference date (Asia/Taipei): ${referenceDate}`,"",`**All 80 regional points:** ${report.allPass?"PASS":"FAIL"}`,"","| Country | Subregions | Passed | Failed | D17-D46 combined coverage | D47-D90 combined coverage |","|---|---:|---:|---:|---:|---:|",...countrySummary.map(x=>`| ${x.countryNameZh} | ${x.subregions} | ${x.passed} | ${x.failed} | ${(x.meanD17D46Coverage*100).toFixed(1)}% | ${(x.meanD47D90Coverage*100).toFixed(1)}% |`),"","## Per-subregion result","", "| Country | Subregion | Representative | D17-D46 | D47-D90 | Missing core fields | Result |","|---|---|---|---:|---:|---:|---|",...results.map(x=>`| ${x.countryNameZh||x.countryCode} | ${x.subregion||x.subregionId} | ${x.representativeCourseName||"—"} | ${x.d17D46?.combined??0}/30 | ${x.d47D90?.combined??0}/44 | ${(x.total?.missingHigh||0)+(x.total?.missingLow||0)+(x.total?.missingRainAmount||0)+(x.total?.missingRainFrequency||0)} | ${x.pass?"PASS":"FAIL"} |`),"","## Limitations",...report.limitations.map(x=>"- "+x)];
