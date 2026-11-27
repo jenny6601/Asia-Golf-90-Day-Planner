@@ -18,13 +18,13 @@
       "JP-CHB-KOSHIN",
       "JP-CHB-TOKAI",
       "JP-CHB-HOKURIKU",
-      "JP-KNS-KANSAI",
+      "JP-KNS-CENTRAL",
       "JP-KNS-KII",
       "JP-CHG-SANIN",
       "JP-CHG-SANYO",
-      "JP-SHK-SHIKOKU",
-      "JP-KYU-NORTH",
-      "JP-KYU-SOUTH"
+      "JP-SHK-01",
+      "JP-KYS-NORTH",
+      "JP-KYS-SOUTH"
     ],
     "existingOkinawaPilotIds": [
       "JP-OKI-NORTH",
