@@ -691,9 +691,9 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const jumpNav=node("nav",undefined,"monthly-jump-nav");
  jumpNav.setAttribute("aria-label","月分析區塊快速跳轉");
  [
-  [month+"｜③ 本月高爾夫適打評估","monthly-section-3"],
-  [month+"｜② 全月逐日天氣簡表","monthly-section-2"],
-  [month+"｜① 地區月氣象分析","monthly-section-1"]
+  ["本月高爾夫\n適打評估","monthly-section-3"],
+  ["全月逐日\n天氣簡表","monthly-section-2"],
+  ["地區月氣象\n分析","monthly-section-1"]
  ].forEach(([label,target])=>{
   const button=node("button",label,"monthly-jump-button");button.type="button";
   button.addEventListener("click",()=>{
@@ -840,7 +840,8 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   historicalTypeLabel==="偏濕季"?"偏濕季，雨量或雨日較多。":
   historicalTypeLabel==="偏乾季"?"偏乾季，降雨相對較少。":
   "季節轉換型，雨量介於乾季與雨季之間。";
- const summary=node("div",undefined,"monthly-playability-card");summary.id="monthly-section-3";
+ const suitabilitySection=section(host,"③ "+month+"｜本月高爾夫適打評估");suitabilitySection.id="monthly-section-3";suitabilitySection.classList.add("monthly-suitability-section");
+ const summary=node("div",undefined,"monthly-playability-card");
  const reportHeader=node("header",undefined,"monthly-playability-header");
  const headerTitle=node("strong",month.slice(0,4)+"年"+monthIndex+"月適打評估");
  const countryName=String(group.country||"").replace(/^[A-Z]{2,3}[・\\s]*/,"");
@@ -883,7 +884,10 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  ];
  noteRows.forEach(([label,detail])=>{const row=node("div",undefined,"monthly-playability-note-row");row.append(node("strong",label),node("span",detail));notes.append(row)});
  summary.append(notes);
- narrative.replaceChildren(summary);
+ suitabilitySection.append(summary);
+ // Display the three report blocks in the requested order: suitability, daily calendar, monthly climate analysis.
+ host.insertBefore(suitabilitySection,title);
+ host.insertBefore(dailySection,title);
  const expectedClimateDates=dates.filter(d=>{const lead=Math.floor((Date.parse(d+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);return lead>=18&&lead<=89});
  const producedDates=new Set(seasonalDailyRows.map(x=>x.date));
  const missingClimateDates=expectedClimateDates.filter(d=>!producedDates.has(d));
