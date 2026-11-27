@@ -49,6 +49,13 @@ class GolfTripDateRankingTests(unittest.TestCase):
         self.assertEqual(result["roundCount"], 3)
         self.assertEqual(len(result["restOrTransferDates"]), 2)
 
+    def test_february_29_uses_midpoint_of_adjacent_climatology_days(self):
+        calendar = sample_calendar({"02-28": 20.0, "03-01": 40.0})
+        result = MODULE.day_rain_risk(date(2028, 2, 29), calendar)
+        self.assertTrue(result["usable"])
+        self.assertEqual(result["wetDayFrequencyPct"], 30.0)
+        self.assertIn("February 28 and March 1", result["leapDayMethod"])
+
     def test_ranks_trip_starts_by_rainfall_before_secondary_metrics(self):
         start = date(2026, 6, 1)
         frequencies = {}
@@ -67,6 +74,7 @@ class GolfTripDateRankingTests(unittest.TestCase):
             }
             path.write_text(json.dumps(payload), encoding="utf-8")
             result = MODULE.rank_departures(path, "JP-TEST", start, horizon_days=10)
+            self.assertEqual(result["candidateCount"], 10)
             self.assertGreater(result["rankedCandidateCount"], 0)
             self.assertEqual(result["recommendations"][0]["startDate"], "2026-06-04")
             self.assertFalse(result["activation"]["recommendationProductionEnabled"])
