@@ -39,8 +39,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
@@ -52,7 +52,7 @@
               "crossCheckResult": "candidate-public-map-coordinate-is-approximately-532m-from-official-map-viewport-center;cannot-interpret-as-pin-error",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-HKD-SAPPORO",
@@ -128,8 +128,8 @@
           "coordinateQuality": {
             "grade": "A",
             "label": "官方營運商 Google Maps 地點圖釘",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-place-pin",
@@ -146,7 +146,7 @@
               "crossCheckResult": "official-operator-place-pin-coordinate-replaces-older-third-party-point",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-HKD-HAKODATE",
@@ -225,8 +225,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地址確認，圖釘未取得",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-operator-address-only",
@@ -240,7 +240,7 @@
               "crossCheckResult": "official-course-identity-and-address-confirmed;no-course-pin-coordinate-on-access-section",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-THK-IWATE-APPI",
@@ -281,8 +281,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-operator-address-only",
@@ -297,7 +297,7 @@
               "crossCheckResult": "PGM official page confirms course identity, address and access but map link could not be independently extracted; retain third-party candidate without promotion",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-THK-MIYAGI-SENDAI",
@@ -413,8 +413,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地圖中心與公開球場點有差異",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
@@ -426,7 +426,7 @@
               "crossCheckResult": "official-map-center-is-nearby-but-not-identical-to-public-course-centroid;must-not-replace-until-pin-confirmed",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-KNT-CHIBA-NARITA",
@@ -504,8 +504,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地圖中心與候選座標一致，但非圖釘",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
@@ -517,7 +517,7 @@
               "crossCheckResult": "official-map-center-matches-existing-public-coordinate-within-one-metre;still-not-independent-pin-confirmation",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-KNT-TOCHIGI-NASU",
@@ -635,8 +635,8 @@
           "coordinateQuality": {
             "grade": "A",
             "label": "官方營運商 Google Maps 地點圖釘",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-place-pin",
@@ -657,7 +657,7 @@
               "crossCheckResult": "official-access-page-google-map-place-pin-matches-course-name;replace-public-map-point",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-CHB-FUJI-YAMANASHI",
@@ -775,8 +775,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-operator-access-page-reference",
@@ -786,7 +786,7 @@
               "crossCheckResult": "operator access page is registered in identity record; map pin or usable coordinate could not be independently retrieved in this pass",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-CHB-MIE-ISE",
@@ -828,8 +828,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地圖低倍率中心點，非球場圖釘",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
@@ -842,7 +842,7 @@
               "crossCheckResult": "official-embed-center-is-low-zoom-regional-view;not-suitable-to-replace-course-coordinate",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-CHB-HOKURIKU",
@@ -883,8 +883,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
@@ -897,7 +897,7 @@
               "crossCheckResult": "official-map-center-is-approximately-26km-wide-view;not-course-pin;do-not-replace-candidate",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-KNS-OSAKA-HYOGO",
@@ -975,8 +975,8 @@
           "coordinateQuality": {
             "grade": "C",
             "label": "官方低倍率地圖中心，非球場圖釘",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
@@ -988,7 +988,7 @@
               "crossCheckResult": "official-embed center exactly matches stored approximate center; map viewport is approximately 53km wide and confirms it is not a course pin",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-KNS-WAKAYAMA",
@@ -1030,8 +1030,8 @@
           "coordinateQuality": {
             "grade": "A",
             "label": "官方營運商 Google Maps 地點圖釘",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-place-pin",
@@ -1044,7 +1044,7 @@
               "crossCheckResult": "official-operator-google-map-place-pin-matches-existing-candidate-coordinate-exactly",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-CHG-SANYO",
@@ -1085,8 +1085,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方地址確認，嵌入地圖圖釘未提取",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-operator-access-page-with-user-created-google-my-map",
@@ -1097,7 +1097,7 @@
               "crossCheckResult": "operator site embeds a Google My Maps map explicitly attributed to a user-created map; no independently verifiable pin coordinates extracted",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-CHG-SANIN",
@@ -1176,8 +1176,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方旅遊地圖中心，非球場圖釘",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-tourism-google-maps-viewport-center",
@@ -1192,7 +1192,7 @@
               "mapCode": "335 363 132*07",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-SHK-EHIME-KOCHI",
@@ -1233,8 +1233,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "官方高倍率地圖中心，非球場圖釘",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
@@ -1252,7 +1252,7 @@
               "crossCheckResult": "official-operator-access-page-embed-identifies-The-Classic-Golf-Club;embedded-center-is-nearby-but-not-pin",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-KYS-FUKUOKA-SAGA",
@@ -1365,8 +1365,8 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
             "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
             "officialMapReference": {
               "type": "official-tourism-course-address-only",
@@ -1384,7 +1384,7 @@
               "crossCheckResult": "JNTO course profile confirms address and course configuration; official pin coordinate not extracted",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": true,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
@@ -1553,9 +1553,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開地圖／球場目錄候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
@@ -1585,9 +1585,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開地圖／球場目錄候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
@@ -1617,9 +1617,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開地圖／球場目錄候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
@@ -1649,9 +1649,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開地圖／球場目錄候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
@@ -1681,9 +1681,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開地圖／球場目錄候選座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
@@ -1713,9 +1713,9 @@
           "coordinateQuality": {
             "grade": "A",
             "label": "官方觀光入口座標",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
@@ -1754,9 +1754,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Mission Hills Haikou, official resort address and course map coordinate",
             "checkedOn": "2026-11-27"
@@ -1786,9 +1786,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 The Dunes at Shenzhou Peninsula, course map coordinate",
             "checkedOn": "2026-11-27"
@@ -1818,9 +1818,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Yalong Bay Golf Club, course directory coordinate",
             "checkedOn": "2026-11-27"
@@ -1850,9 +1850,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Sheshan International Golf Club, course directory coordinate",
             "checkedOn": "2026-11-27"
@@ -1882,9 +1882,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Topwin Golf and Country Club, public map coordinate",
             "checkedOn": "2026-11-27"
@@ -1914,9 +1914,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Guangzhou Foison Golf Club, course directory coordinate",
             "checkedOn": "2026-11-27"
@@ -1946,9 +1946,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Spring City Golf and Lake Resort, course directory coordinate",
             "checkedOn": "2026-11-27"
@@ -1987,9 +1987,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 BRG Kings Island coordinates; Dong Mo/Son Tay, Hanoi region",
             "checkedOn": "2026-11-27"
@@ -2019,9 +2019,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Hoiana Shores coordinates; coastal Hoi An/Da Nang region",
             "checkedOn": "2026-11-27"
@@ -2051,9 +2051,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Laguna Lang Co coordinates; Hue-Da Nang coastal corridor",
             "checkedOn": "2026-11-27"
@@ -2083,9 +2083,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Tan Son Nhat Golf Course coordinates; Ho Chi Minh City",
             "checkedOn": "2026-11-27"
@@ -2115,9 +2115,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Sea Links coordinates; Mui Ne/Phan Thiet coastal region",
             "checkedOn": "2026-11-27"
@@ -2147,9 +2147,9 @@
           "coordinateQuality": {
             "grade": "C",
             "label": "球場鄰近城鎮代表座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Cua Can locality representative coordinate near Vung Bau, Phu Quoc; regional point rather than exact course pin",
             "checkedOn": "2026-11-27"
@@ -2188,9 +2188,9 @@
           "coordinateQuality": {
             "grade": "C",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Lat Krabang nearby public map coordinate; official course address independently confirms Lat Krabang, Bangkok",
             "checkedOn": "2026-11-27"
@@ -2220,9 +2220,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Siam Country Club Old Course OpenStreetMap-derived coordinate",
             "checkedOn": "2026-11-27"
@@ -2252,9 +2252,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Black Mountain course coordinate; official club address confirms Hua Hin district",
             "checkedOn": "2026-11-27"
@@ -2284,9 +2284,9 @@
           "coordinateQuality": {
             "grade": "C",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Blue Canyon public map coordinate; official club and Phuket tourism sources confirm Mai Khao, Thalang",
             "checkedOn": "2026-11-27"
@@ -2316,9 +2316,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Alpine GPS coordinate converted from published DMS; official resort confirms Chiang Mai location",
             "checkedOn": "2026-11-27"
@@ -2348,9 +2348,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Kirimaya Golf Resort course coordinate; official resort address confirms Khao Yai/Pak Chong",
             "checkedOn": "2026-11-27"
@@ -2380,9 +2380,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Santiburi Samui Country Club public map coordinate",
             "checkedOn": "2026-11-27"
@@ -2421,9 +2421,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 KGPA Bukit Kiara, Kuala Lumpur",
             "checkedOn": "2026-11-27"
@@ -2453,9 +2453,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Penang Golf Club, Bayan Lepas",
             "checkedOn": "2026-11-27"
@@ -2485,9 +2485,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 The Els Club Desaru Coast Ocean Course",
             "checkedOn": "2026-11-27"
@@ -2517,9 +2517,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 The Els Club Teluk Datai, Langkawi",
             "checkedOn": "2026-11-27"
@@ -2549,9 +2549,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Dalit Bay Golf & Country Club, Tuaran",
             "checkedOn": "2026-11-27"
@@ -2581,9 +2581,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Kelab Golf Sarawak, Petra Jaya Kuching",
             "checkedOn": "2026-11-27"
@@ -2613,9 +2613,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Kuala Terengganu Golf Resort vicinity; published GPS coordinate",
             "checkedOn": "2026-11-27"
@@ -2645,9 +2645,9 @@
           "coordinateQuality": {
             "grade": "C",
             "label": "高原鄰近區域代表座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Cameron Highlands/Tanah Rata regional vicinity; national gazetteer nearby location",
             "checkedOn": "2026-11-27"
@@ -2686,9 +2686,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Sentosa Golf Club Serapong; official club address at 27 Bukit Manis Road",
             "checkedOn": "2026-11-27"
@@ -2727,9 +2727,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Pondok Indah Golf Course, South Jakarta",
             "checkedOn": "2026-11-27"
@@ -2759,9 +2759,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Klub Golf Bogor Raya, Bogor",
             "checkedOn": "2026-11-27"
@@ -2791,9 +2791,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Merapi Golf Club, Cangkringan/Sleman, Yogyakarta region",
             "checkedOn": "2026-11-27"
@@ -2823,9 +2823,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Taman Dayu Golf Club, Pandaan, Pasuruan",
             "checkedOn": "2026-11-27"
@@ -2855,9 +2855,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 New Kuta Golf, Pecatu, Bali",
             "checkedOn": "2026-11-27"
@@ -2887,9 +2887,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Ria Bintan Golf Club, Lagoi, Bintan",
             "checkedOn": "2026-11-27"
@@ -2919,9 +2919,9 @@
           "coordinateQuality": {
             "grade": "C",
             "label": "球場鄰近行政區代表座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Graha Metropolitan Golf Course, Kp. Lalang/Sunggal, Medan vicinity; neighbourhood-level representative coordinate",
             "checkedOn": "2026-11-27"
@@ -2951,9 +2951,9 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "球場鄰近區域公開座標",
-            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
-            "weatherPointEligible": true,
-            "regionalClimateEligible": true,
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Pertamina Golf Club, Balikpapan",
             "checkedOn": "2026-11-27"
