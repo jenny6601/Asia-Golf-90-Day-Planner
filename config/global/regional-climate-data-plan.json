@@ -225,7 +225,7 @@
       "golfRounds": 3,
       "primaryPriority": "minimum-rainfall-risk"
     },
-    "tripWindowPolicy": "Evaluate every rolling five-calendar-day trip start. Select three golf days from within the five-day window; the remaining two dates are rest or transfer days.",
+    "tripWindowPolicy": "Evaluate every departure date in the requested horizon (up to 90 departure dates); each five-day trip may extend four calendar days beyond the final departure date in the horizon. Select three golf days from within the five-day window; the remaining two dates are rest or transfer days.",
     "dailyRoundSelectionOrder": [
       "wetDayFrequencyPct ascending",
       "heavyRain10mmFrequencyPct ascending",
@@ -246,6 +246,7 @@
       "climateBaselineEnabled": false,
       "forecastEnabled": false,
       "recommendationProductionEnabled": false
-    }
+    },
+    "leapDayPolicy": "For an actual February 29 departure/trip date, use the arithmetic midpoint of February 28 and March 1 historical rainfall statistics; both adjacent calendar-day climatology metrics must be usable."
   }
 }
