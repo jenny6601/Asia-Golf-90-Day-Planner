@@ -16,6 +16,7 @@ on:
       - "scripts/validate-okinawa-jma-observations.mjs"
       - "scripts/validate-okinawa-six-hour-playability.mjs"
       - "scripts/validate-okinawa-regional-grid.mjs"
+      - "scripts/validate-okinawa-regional-observations.mjs"
       - "assets/js/okinawa-grid-analysis.js"
       - "tests/okinawa-grid-analysis.test.js"
       - "assets/js/six-hour-playability.js"
@@ -72,6 +73,8 @@ jobs:
         run: node scripts/validate-okinawa-six-hour-playability.mjs
       - name: Compare north, central and south forecast grids for all six courses
         run: node scripts/validate-okinawa-regional-grid.mjs
+      - name: Compare north-central-south weather across ten JMA AMeDAS stations
+        run: node scripts/validate-okinawa-regional-observations.mjs
       - name: Upload Okinawa acceptance report
         if: always()
         uses: actions/upload-artifact@v4
@@ -88,5 +91,7 @@ jobs:
             artifacts/okinawa-acceptance/okinawa-six-hour-playability-validation.md
             artifacts/okinawa-acceptance/okinawa-regional-grid-analysis.json
             artifacts/okinawa-acceptance/okinawa-regional-grid-analysis.md
+            artifacts/okinawa-acceptance/okinawa-regional-amedas-observations.json
+            artifacts/okinawa-acceptance/okinawa-regional-amedas-observations.md
           if-no-files-found: warn
           retention-days: 30
