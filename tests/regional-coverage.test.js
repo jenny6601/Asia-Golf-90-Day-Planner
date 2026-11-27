@@ -155,7 +155,7 @@ test("Japan official identity and address verification is recorded without enabl
  const japan=registry.countries.find(x=>x.countryCode==="JP");
  const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
  const verified=mainland.filter(x=>x.courseIdentityVerification?.verificationLevel);
- assert.equal(verified.length,13);
+ assert.equal(verified.length,16);
  for(const item of verified){
   assert.ok(item.courseIdentityVerification.officialSourceUrl.startsWith("https://"));
   assert.ok(item.courseIdentityVerification.officialAddress.length>15);
@@ -166,7 +166,12 @@ test("Japan official identity and address verification is recorded without enabl
  assert.match(appi.courseIdentityVerification.verificationLevel,/2026-season-confirmed/);
  const setouchi=mainland.find(x=>x.candidateCourseName==="Setouchi Golf Resort");
  assert.equal(setouchi.courseIdentityVerification.verificationLevel,"official-operator-identity-address-and-google-maps-link-confirmed");
- const stillPending=mainland.filter(x=>!x.courseIdentityVerification);
- assert.deepEqual(stillPending.map(x=>x.candidateCourseName).sort(),["Rifu Golf Club","Tokinodai Country Club","Tsu Country Club"].sort());
+ assert.ok(mainland.every(x=>x.courseIdentityVerification?.officialSourceUrl?.startsWith("https://")));
+ const rifu=mainland.find(x=>x.candidateCourseName==="Rifu Golf Club");
+ assert.match(rifu.courseIdentityVerification.verificationLevel,/official-PGM-operator/);
+ const tsu=mainland.find(x=>x.candidateCourseName==="Tsu Country Club");
+ assert.match(tsu.courseIdentityVerification.verificationLevel,/official-operator/);
+ const tokinodai=mainland.find(x=>x.candidateCourseName==="Tokinodai Country Club");
+ assert.match(tokinodai.courseIdentityVerification.verificationLevel,/2026-calendar-confirmed/);
  assert.equal(japan.coordinateResearchSummary.forecastEnabled,false);
 });
