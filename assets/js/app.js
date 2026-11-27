@@ -691,9 +691,9 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const jumpNav=node("nav",undefined,"monthly-jump-nav");
  jumpNav.setAttribute("aria-label","月分析區塊快速跳轉");
  [
-  ["③ 本月高爾夫適打評估","monthly-section-3"],
-  ["② 全月逐日天氣簡表","monthly-section-2"],
-  ["① 地區月氣象分析","monthly-section-1"]
+  [month+"｜③ 本月高爾夫適打評估","monthly-section-3"],
+  [month+"｜② 全月逐日天氣簡表","monthly-section-2"],
+  [month+"｜① 地區月氣象分析","monthly-section-1"]
  ].forEach(([label,target])=>{
   const button=node("button",label,"monthly-jump-button");button.type="button";
   button.addEventListener("click",()=>{
