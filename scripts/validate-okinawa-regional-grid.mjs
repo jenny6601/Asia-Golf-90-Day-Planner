@@ -4,7 +4,7 @@ import {groupForecastGridCells,compareNumericSeries,summarizeNumeric} from "../a
 import {haversineKm} from "../assets/js/coordinate-audit.js";
 
 const root=new URL("../",import.meta.url);
-const courses=JSON.parse(await fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8")).filter(x=>x.countryCode==="JP"&&x.region==="Okinawa"&&x.enabled);
+const courses=JSON.parse(await fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8")).filter(x=>x.countryCode==="JP"&&x.regionGroup==="沖繩"&&String(x.subregionId||"").startsWith("JP-OKI-MAIN-")&&x.enabled&&Number.isFinite(x.latitude)&&Number.isFinite(x.longitude));
 const stations=JSON.parse(await fs.readFile(new URL("../config/okinawa/jma-amedas-stations.json",import.meta.url),"utf8"));
 const stationMap={
  "southern-links":{rain:"91241",temperature:"91241",wind:"91241"},
@@ -23,12 +23,13 @@ for(let i=0;i<courses.length;i+=3){
  const batch=await fetchCourseForecast(courses.slice(i,i+3),fetchWithTimeout);
  for(const item of batch.courses){
   const hourly=item.hourly,daily=item.daily;
+  const normalizedArea=String(item.course.subregionId||"").endsWith("-NORTH")?"北部":String(item.course.subregionId||"").endsWith("-CENTRAL")?"中部":String(item.course.subregionId||"").endsWith("-SOUTH")?"南部":item.course.area;
   const hourlyCoverage=Object.fromEntries(hourlyFields.map(k=>{const a=hourly[k]||[],n=a.filter(finite).length;return [k,{valid:n,expected:hourly.time.length,coverage:hourly.time.length?n/hourly.time.length:0}]}));
   const dailyCoverage=Object.fromEntries(dailyFields.map(k=>{const a=daily[k]||[],n=a.filter(finite).length;return [k,{valid:n,expected:daily.time.length,coverage:daily.time.length?n/daily.time.length:0}]}));
   const fields={};for(const k of hourlyFields)fields[k]=summarizeNumeric(hourly[k]);for(const k of dailyFields)fields[k]=summarizeNumeric(daily[k]);
   const stationRefs=stationMap[item.course.id];
   const stationLinks=Object.fromEntries(Object.entries(stationRefs).map(([variable,id])=>{const st=stations.find(x=>x.id===id);return [variable,{stationId:id,name:st.name,distanceKm:Number(haversineKm(item.course.latitude,item.course.longitude,st.latitude,st.longitude).toFixed(2)),stationElevationM:st.elevationM,observedElements:st.observedElements}]}));
-  courseResults.push({courseId:item.course.id,name:item.course.name,area:item.course.area,requestedCoordinate:{latitude:item.course.latitude,longitude:item.course.longitude},forecastGrid:item.coordinateAudit.providerGrid,gridOffsetKm:item.coordinateAudit.gridOffsetKm,gridElevationM:item.coordinateAudit.elevationM,timezone:item.timezone,dailyCount:daily.time?.length||0,hourlyCount:hourly.time?.length||0,hourlyCoverage,dailyCoverage,fields,stationReferences:stationLinks,hourlySnapshot:hourly,pass:daily.time?.length===16&&hourly.time?.length===384&&Object.values(hourlyCoverage).every(x=>x.coverage===1)&&Object.values(dailyCoverage).every(x=>x.coverage===1)});
+  courseResults.push({courseId:item.course.id,name:item.course.name,area:normalizedArea,requestedCoordinate:{latitude:item.course.latitude,longitude:item.course.longitude},forecastGrid:item.coordinateAudit.providerGrid,gridOffsetKm:item.coordinateAudit.gridOffsetKm,gridElevationM:item.coordinateAudit.elevationM,timezone:item.timezone,dailyCount:daily.time?.length||0,hourlyCount:hourly.time?.length||0,hourlyCoverage,dailyCoverage,fields,stationReferences:stationLinks,hourlySnapshot:hourly,pass:daily.time?.length===16&&hourly.time?.length===384&&Object.values(hourlyCoverage).every(x=>x.coverage===1)&&Object.values(dailyCoverage).every(x=>x.coverage===1)});
  }
 }
 const gridGroups=groupForecastGridCells(courseResults);
