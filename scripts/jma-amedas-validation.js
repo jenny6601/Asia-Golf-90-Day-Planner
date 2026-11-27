@@ -6,7 +6,7 @@ export function parseAmedasReading(entry){
 }
 
 export function parseAmedasPointBlock(payload){
- return Object.entries(payload||{}).filter(([key])=>/^\\d{14}$/.test(key)).map(([key,row])=>({
+ return Object.entries(payload||{}).filter(([key])=>/^\d{14}$/.test(key)).map(([key,row])=>({
   time:key.slice(0,4)+"-"+key.slice(4,6)+"-"+key.slice(6,8)+"T"+key.slice(8,10)+":"+key.slice(10,12),
   temperature:parseAmedasReading(row.temp),
   humidity:parseAmedasReading(row.humidity),
