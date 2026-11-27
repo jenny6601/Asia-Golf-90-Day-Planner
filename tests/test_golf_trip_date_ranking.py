@@ -47,7 +47,7 @@ class GolfTripDateRankingTests(unittest.TestCase):
         result = MODULE.rank_trip_start(start, sample_calendar(frequencies))
         self.assertEqual(result["playDates"], ["2026-06-02", "2026-06-03", "2026-06-04"])
         self.assertEqual(result["roundCount"], 3)
-        self.assertEqual(len(result["restOrTransferDates"]), 2)
+        self.assertEqual(result["travelDates"], ["2026-06-01", "2026-06-05"])
 
     def test_february_29_uses_midpoint_of_adjacent_climatology_days(self):
         calendar = sample_calendar({"02-28": 20.0, "03-01": 40.0})
