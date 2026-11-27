@@ -38,6 +38,14 @@ class JmaStationHistoryTests(unittest.TestCase):
         self.assertEqual(result["temperatureAdjustedContinuityCount"], 1)
         self.assertEqual(result["temperatureStatisticalBreakCount"], 0)
 
+
+    def test_open_ended_station_after_normal_period_is_valid_history(self):
+        data = parse_index4(row(start="2021-03-18", end="9999-99-99"))
+        result = audit_candidate({"stationId":"47412"}, data)
+        self.assertTrue(result["officialHistoryMatch"])
+        self.assertEqual(result["officialPrecipitationCoverageDays"], 0)
+        self.assertEqual(result["officialTemperatureCoverageDays"], 0)
+
     def test_unknown_codes_fail_closed(self):
         with self.assertRaisesRegex(ValueError, "unknown temperature continuity"):
             parse_index4(row(tc="9"))
