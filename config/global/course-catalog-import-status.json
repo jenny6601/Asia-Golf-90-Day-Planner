@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "updatedOn": "2026-11-27",
+  "scope": "Build a broad practical directory of currently operating golf facilities in all eight planned countries; do not represent partial curated lists as complete national censuses.",
+  "countryOrder": [
+    "JP",
+    "KR",
+    "CN",
+    "VN",
+    "TH",
+    "MY",
+    "SG",
+    "ID"
+  ],
+  "currentCountry": "JP",
+  "statusDefinitions": {
+    "queued": "Not yet processed beyond source discovery.",
+    "in_progress": "Source extraction, deduplication and subregion mapping underway.",
+    "source_gap": "No sufficiently complete authoritative national list found; continue triangulation and report the limitation.",
+    "imported_pending_review": "Names and regional mapping imported; operational status/address/coordinates still need review.",
+    "verified": "Identity, operating status, address, subregion and coordinates passed validation."
+  },
+  "countryProgress": [
+    {
+      "code": "JP",
+      "status": "in_progress",
+      "targetSubregions": 19,
+      "seedRecords": 22,
+      "knownSourceCoverage": "Golf in Japan directory states 2,308 records; JNTO selected destination list as cross-check",
+      "next": "Extract prefecture-level course names and map to the 19 Japan subregions; reconcile the six Okinawa pilot records."
+    },
+    {
+      "code": "KR",
+      "status": "queued",
+      "targetSubregions": 6,
+      "seedRecords": 6,
+      "next": "Extract KGA and KGBA regional directories; normalize Korean names and provinces."
+    },
+    {
+      "code": "CN",
+      "status": "queued",
+      "targetSubregions": 7,
+      "seedRecords": 7,
+      "next": "Build province/operator discovery list; explicitly record mainland/HK/Macau scope and source gaps."
+    },
+    {
+      "code": "VN",
+      "status": "queued",
+      "targetSubregions": 6,
+      "seedRecords": 6,
+      "next": "Reconcile Public Bank regional PDF and booking directory records."
+    },
+    {
+      "code": "TH",
+      "status": "queued",
+      "targetSubregions": 7,
+      "seedRecords": 7,
+      "next": "Extract TGA slope-rating directory and cross-check booking directory."
+    },
+    {
+      "code": "MY",
+      "status": "queued",
+      "targetSubregions": 8,
+      "seedRecords": 8,
+      "next": "Reconcile association, club affiliation and golf travel directory records."
+    },
+    {
+      "code": "SG",
+      "status": "queued",
+      "targetSubregions": 1,
+      "seedRecords": 1,
+      "next": "Parse government 2025 annex and distinguish golf facilities from separately selectable layouts."
+    },
+    {
+      "code": "ID",
+      "status": "queued",
+      "targetSubregions": 8,
+      "seedRecords": 8,
+      "next": "Reconcile IJG venue list, Golfasian and TeeTime Asia by island/province."
+    }
+  ],
+  "acceptanceRules": [
+    "A club with multiple 9-hole loops is one facility record unless each loop is independently selectable in the user's app.",
+    "A multi-course resort may have one facility with multiple selectable course layouts; preserve the distinction in layout metadata.",
+    "Never infer an exact course coordinate from a city centroid or a broad map viewport.",
+    "Each facility must map to exactly one configured weather subregion.",
+    "Only records with verified identity, current operating status, address, subregion and coordinates may be marked verified and enabled for live weather.",
+    "Candidate directory records can be visible as research candidates but must not be sent to weather providers while coordinates are pending.",
+    "Report source coverage counts separately from confirmed operating-course counts."
+  ]
+}
