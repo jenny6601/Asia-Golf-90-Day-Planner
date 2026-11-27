@@ -8,25 +8,26 @@ async function renderRegionalCoverage(host){
  section.append(node("h3","亞洲八國次分區資料覆蓋"));
  host.append(section);
  try{
-  const [countryResponse,courseResponse]=await Promise.all([
+  const [countryResponse,courseResponse,registryResponse]=await Promise.all([
    fetch("./config/global/countries.json",{cache:"no-store"}),
-   fetch("./config/global/courses.json",{cache:"no-store"})
+   fetch("./config/global/courses.json",{cache:"no-store"}),
+   fetch("./config/global/weather-subregions.json",{cache:"no-store"})
   ]);
-  if(!countryResponse.ok||!courseResponse.ok)throw new Error("國家或球場目錄讀取失敗");
-  const coverage=buildRegionalCoverage(await countryResponse.json(),await courseResponse.json());
+  if(!countryResponse.ok||!courseResponse.ok||!registryResponse.ok)throw new Error("國家、球場或次分區主檔讀取失敗");
+  const coverage=buildRegionalCoverage(await countryResponse.json(),await courseResponse.json(),(await registryResponse.json()).countries||[]);
   const summary=node("div",undefined,"validation-metrics");
-  summary.append(metric("國家資料",coverage.countryCount+" 國"),metric("已有球場分區",coverage.countriesWithCoverage+"/"+coverage.countryCount+" 國"),metric("可用次分區",coverage.subregionCount+" 區"));
+  summary.append(metric("國家資料",coverage.countryCount+" 國"),metric("已有代表球場",coverage.readySubregionCount+" 區"),metric("登錄次分區",coverage.subregionCount+" 區"));
   section.append(summary);
   for(const country of coverage.countries){
    const card=node("article",undefined,"coverage-country-card");
    const title=node("div",undefined,"coverage-country-heading");
-   title.append(node("strong",country.nameZh),node("span",country.subregionCount?country.subregionCount+" 個次分區":"尚無球場資料","coverage-state"));
+   title.append(node("strong",country.nameZh),node("span",country.subregionCount?country.readySubregionCount+"/"+country.subregionCount+" 區已配置":"尚未規劃次分區","coverage-state"));
    card.append(title);
    if(country.subregions.length){
     for(const region of country.subregions){
      const row=node("p",undefined,"coverage-region-row");
      const representative=region.representative;
-     row.textContent=region.region+" · "+region.area+"｜候選 "+region.candidateCount+" 座｜暫定代表："+(representative.nameLocal||representative.name);
+     row.textContent=region.label+"｜"+(representative?"候選 "+region.candidateCount+" 座｜代表："+(representative.nameLocal||representative.name):"尚待球場座標")+(region.coverageStatus==="unregistered-subregion"?"｜未登錄":"");
      card.append(row);
     }
    }else{
@@ -34,7 +35,7 @@ async function renderRegionalCoverage(host){
    }
    section.append(card);
   }
-  section.append(node("p","代表球場暫以同一氣象次分區內，距離球場群地理中心最近的可用球場選定；同區其他球場共用該代表點的天氣資料。這是資料配置盤點，並不代表該國已完成預報回測。","validation-note"));
+  section.append(node("p","已登錄分區優先使用主檔指定的代表球場 ID；未指定時才以球場群地理中心最近者作為暫定代表。同區其他球場共用代表點天氣資料。尚未登錄的國家或分區不會產生假資料，也不代表已完成預報回測。","validation-note"));
  }catch(error){
   section.append(node("p","分區覆蓋盤點尚未完成："+(error?.message||String(error)),"validation-empty"));
  }
