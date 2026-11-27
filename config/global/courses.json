@@ -22,7 +22,8 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩・本島南部球場群",
-    "golfClusterId": "JP-OKI-MAIN-SOUTH"
+    "golfClusterId": "JP-OKI-MAIN-SOUTH",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "pgm-okinawa",
@@ -47,7 +48,8 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩・本島中部球場群",
-    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "kise",
@@ -72,7 +74,8 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩・本島北部球場群",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-NORTH",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "atta-terrace",
@@ -97,7 +100,8 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩・本島中部球場群",
-    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "palm-hills",
@@ -122,7 +126,8 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩・本島南部球場群",
-    "golfClusterId": "JP-OKI-MAIN-SOUTH"
+    "golfClusterId": "JP-OKI-MAIN-SOUTH",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "chura-orchard",
@@ -147,7 +152,8 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩・本島中部球場群",
-    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-north-country",
@@ -177,7 +183,8 @@
     "golfClusterId": "JP-HKD-SAPPORO",
     "latitude": 42.82058,
     "longitude": 141.59652,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-01"
   },
   {
     "id": "jp-hokkaido-country",
@@ -207,7 +214,8 @@
     "golfClusterId": "JP-HKD-HAKODATE",
     "latitude": 41.9892895,
     "longitude": 140.6549955,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-01"
   },
   {
     "id": "jp-appi-kogen",
@@ -237,7 +245,8 @@
     "golfClusterId": "JP-THK-IWATE-APPI",
     "latitude": 40.01249,
     "longitude": 141.00652,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-02"
   },
   {
     "id": "jp-rifu",
@@ -267,7 +276,8 @@
     "golfClusterId": "JP-THK-MIYAGI-SENDAI",
     "latitude": 38.35994,
     "longitude": 140.981828,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-02"
   },
   {
     "id": "jp-seven-hundred",
@@ -297,7 +307,8 @@
     "golfClusterId": "JP-KNT-TOCHIGI-NASU",
     "latitude": 36.709629,
     "longitude": 140.004827,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-narita-hills",
@@ -327,7 +338,8 @@
     "golfClusterId": "JP-KNT-CHIBA-NARITA",
     "latitude": 35.83503,
     "longitude": 140.27659,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-kawaguchiko",
@@ -357,7 +369,8 @@
     "golfClusterId": "JP-CHB-FUJI-YAMANASHI",
     "latitude": 35.4682136,
     "longitude": 138.7517012,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-tsu",
@@ -387,7 +400,8 @@
     "golfClusterId": "JP-CHB-MIE-ISE",
     "latitude": 34.72587,
     "longitude": 136.42721,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-tokinodai",
@@ -417,7 +431,8 @@
     "golfClusterId": "JP-CHB-HOKURIKU",
     "latitude": 36.91549,
     "longitude": 136.775147,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-arima-royal",
@@ -447,7 +462,8 @@
     "golfClusterId": "JP-KNS-OSAKA-HYOGO",
     "latitude": 34.826383,
     "longitude": 135.123729,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-05"
   },
   {
     "id": "jp-leograd",
@@ -478,7 +494,8 @@
     "golfClusterId": "JP-KNS-WAKAYAMA",
     "latitude": 33.9232299832,
     "longitude": 135.2723593476,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-05"
   },
   {
     "id": "jp-green-park-daisen",
@@ -508,7 +525,8 @@
     "golfClusterId": "JP-CHG-SANIN",
     "latitude": 35.364639,
     "longitude": 133.397062,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-06"
   },
   {
     "id": "jp-setouchi",
@@ -538,7 +556,8 @@
     "golfClusterId": "JP-CHG-SANYO",
     "latitude": 34.3061999,
     "longitude": 132.864325,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-06"
   },
   {
     "id": "jp-tosa",
@@ -568,7 +587,8 @@
     "golfClusterId": "JP-SHK-EHIME-KOCHI",
     "latitude": 33.5213,
     "longitude": 133.7758,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-07"
   },
   {
     "id": "jp-the-classic",
@@ -598,7 +618,8 @@
     "golfClusterId": "JP-KYS-FUKUOKA-SAGA",
     "latitude": 33.770453,
     "longitude": 130.644917,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-08"
   },
   {
     "id": "jp-phoenix",
@@ -628,7 +649,8 @@
     "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
     "latitude": 31.974525,
     "longitude": 131.472898,
-    "coordinateUse": "regional_climate_representative_approximation"
+    "coordinateUse": "regional_climate_representative_approximation",
+    "regionId": "JP-REG-08"
   },
   {
     "id": "kr-kr-cap-01",
@@ -654,7 +676,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "KR-CAP-01"
+    "golfClusterId": "KR-CAP-01",
+    "regionId": "KR-REG-01"
   },
   {
     "id": "kr-kr-gw-01",
@@ -680,7 +703,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "KR-GW-01"
+    "golfClusterId": "KR-GW-01",
+    "regionId": "KR-REG-02"
   },
   {
     "id": "kr-kr-cc-01",
@@ -706,7 +730,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "KR-CC-01"
+    "golfClusterId": "KR-CC-01",
+    "regionId": "KR-REG-03"
   },
   {
     "id": "kr-kr-yn-01",
@@ -732,7 +757,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "KR-YN-01"
+    "golfClusterId": "KR-YN-01",
+    "regionId": "KR-REG-04"
   },
   {
     "id": "kr-kr-hn-01",
@@ -758,7 +784,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "KR-HN-01"
+    "golfClusterId": "KR-HN-01",
+    "regionId": "KR-REG-05"
   },
   {
     "id": "kr-kr-jj-01",
@@ -784,7 +811,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "KR-JJ-01"
+    "golfClusterId": "KR-JJ-01",
+    "regionId": "KR-REG-06"
   },
   {
     "id": "cn-cn-hn-north",
@@ -810,7 +838,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "CN-HN-NORTH"
+    "golfClusterId": "CN-HN-NORTH",
+    "regionId": "CN-REG-01"
   },
   {
     "id": "cn-cn-hn-east",
@@ -836,7 +865,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "CN-HN-EAST"
+    "golfClusterId": "CN-HN-EAST",
+    "regionId": "CN-REG-01"
   },
   {
     "id": "cn-cn-hn-south",
@@ -862,7 +892,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "CN-HN-SOUTH"
+    "golfClusterId": "CN-HN-SOUTH",
+    "regionId": "CN-REG-01"
   },
   {
     "id": "cn-cn-sh-01",
@@ -888,7 +919,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "CN-SH-01"
+    "golfClusterId": "CN-SH-01",
+    "regionId": "CN-REG-02"
   },
   {
     "id": "cn-cn-bj-01",
@@ -914,7 +946,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "CN-BJ-01"
+    "golfClusterId": "CN-BJ-01",
+    "regionId": "CN-REG-03"
   },
   {
     "id": "cn-cn-gd-01",
@@ -940,7 +973,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "CN-GD-01"
+    "golfClusterId": "CN-GD-01",
+    "regionId": "CN-REG-04"
   },
   {
     "id": "cn-cn-yn-01",
@@ -966,7 +1000,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "CN-YN-01"
+    "golfClusterId": "CN-YN-01",
+    "regionId": "CN-REG-05"
   },
   {
     "id": "vn-vn-north-01",
@@ -992,7 +1027,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "VN-NORTH-01"
+    "golfClusterId": "VN-NORTH-01",
+    "regionId": "VN-REG-01"
   },
   {
     "id": "vn-vn-central-01",
@@ -1018,7 +1054,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "VN-CENTRAL-01"
+    "golfClusterId": "VN-CENTRAL-01",
+    "regionId": "VN-REG-02"
   },
   {
     "id": "vn-vn-central-02",
@@ -1044,7 +1081,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "VN-CENTRAL-02"
+    "golfClusterId": "VN-CENTRAL-02",
+    "regionId": "VN-REG-02"
   },
   {
     "id": "vn-vn-south-01",
@@ -1070,7 +1108,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "VN-SOUTH-01"
+    "golfClusterId": "VN-SOUTH-01",
+    "regionId": "VN-REG-03"
   },
   {
     "id": "vn-vn-south-02",
@@ -1096,7 +1135,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "VN-SOUTH-02"
+    "golfClusterId": "VN-SOUTH-02",
+    "regionId": "VN-REG-03"
   },
   {
     "id": "vn-vn-island-01",
@@ -1122,7 +1162,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "VN-ISLAND-01"
+    "golfClusterId": "VN-ISLAND-01",
+    "regionId": "VN-REG-04"
   },
   {
     "id": "th-th-bkk-01",
@@ -1148,7 +1189,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "TH-BKK-01"
+    "golfClusterId": "TH-BKK-01",
+    "regionId": "TH-REG-01"
   },
   {
     "id": "th-th-east-01",
@@ -1174,7 +1216,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "TH-EAST-01"
+    "golfClusterId": "TH-EAST-01",
+    "regionId": "TH-REG-02"
   },
   {
     "id": "th-th-west-01",
@@ -1200,7 +1243,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "TH-WEST-01"
+    "golfClusterId": "TH-WEST-01",
+    "regionId": "TH-REG-03"
   },
   {
     "id": "th-th-south-01",
@@ -1226,7 +1270,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "TH-SOUTH-01"
+    "golfClusterId": "TH-SOUTH-01",
+    "regionId": "TH-REG-04"
   },
   {
     "id": "th-th-north-01",
@@ -1252,7 +1297,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "TH-NORTH-01"
+    "golfClusterId": "TH-NORTH-01",
+    "regionId": "TH-REG-05"
   },
   {
     "id": "th-th-ne-01",
@@ -1278,7 +1324,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "TH-NE-01"
+    "golfClusterId": "TH-NE-01",
+    "regionId": "TH-REG-06"
   },
   {
     "id": "th-th-island-01",
@@ -1304,7 +1351,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "TH-ISLAND-01"
+    "golfClusterId": "TH-ISLAND-01",
+    "regionId": "TH-REG-07"
   },
   {
     "id": "my-my-central-01",
@@ -1330,7 +1378,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "MY-CENTRAL-01"
+    "golfClusterId": "MY-CENTRAL-01",
+    "regionId": "MY-REG-01"
   },
   {
     "id": "my-my-north-01",
@@ -1356,7 +1405,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "MY-NORTH-01"
+    "golfClusterId": "MY-NORTH-01",
+    "regionId": "MY-REG-02"
   },
   {
     "id": "my-my-south-01",
@@ -1382,7 +1432,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "MY-SOUTH-01"
+    "golfClusterId": "MY-SOUTH-01",
+    "regionId": "MY-REG-03"
   },
   {
     "id": "my-my-island-01",
@@ -1408,7 +1459,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "MY-ISLAND-01"
+    "golfClusterId": "MY-ISLAND-01",
+    "regionId": "MY-REG-04"
   },
   {
     "id": "my-my-borneo-01",
@@ -1434,7 +1486,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "MY-BORNEO-01"
+    "golfClusterId": "MY-BORNEO-01",
+    "regionId": "MY-REG-05"
   },
   {
     "id": "my-my-borneo-02",
@@ -1460,7 +1513,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "MY-BORNEO-02"
+    "golfClusterId": "MY-BORNEO-02",
+    "regionId": "MY-REG-05"
   },
   {
     "id": "my-my-east-01",
@@ -1486,7 +1540,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "MY-EAST-01"
+    "golfClusterId": "MY-EAST-01",
+    "regionId": "MY-REG-06"
   },
   {
     "id": "my-my-highland-01",
@@ -1512,7 +1567,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "MY-HIGHLAND-01"
+    "golfClusterId": "MY-HIGHLAND-01",
+    "regionId": "MY-REG-07"
   },
   {
     "id": "sg-sg-island-01",
@@ -1538,7 +1594,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "SG-ISLAND-01"
+    "golfClusterId": "SG-ISLAND-01",
+    "regionId": "SG-REG-01"
   },
   {
     "id": "id-id-jkt-01",
@@ -1564,7 +1621,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "ID-JKT-01"
+    "golfClusterId": "ID-JKT-01",
+    "regionId": "ID-REG-01"
   },
   {
     "id": "id-id-wjava-01",
@@ -1590,7 +1648,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "ID-WJAVA-01"
+    "golfClusterId": "ID-WJAVA-01",
+    "regionId": "ID-REG-02"
   },
   {
     "id": "id-id-cjava-01",
@@ -1616,7 +1675,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "ID-CJAVA-01"
+    "golfClusterId": "ID-CJAVA-01",
+    "regionId": "ID-REG-03"
   },
   {
     "id": "id-id-ejava-01",
@@ -1642,7 +1702,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "ID-EJAVA-01"
+    "golfClusterId": "ID-EJAVA-01",
+    "regionId": "ID-REG-04"
   },
   {
     "id": "id-id-bali-01",
@@ -1668,7 +1729,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "ID-BALI-01"
+    "golfClusterId": "ID-BALI-01",
+    "regionId": "ID-REG-05"
   },
   {
     "id": "id-id-riau-01",
@@ -1694,7 +1756,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "ID-RIAU-01"
+    "golfClusterId": "ID-RIAU-01",
+    "regionId": "ID-REG-06"
   },
   {
     "id": "id-id-sumatra-01",
@@ -1720,7 +1783,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "ID-SUMATRA-01"
+    "golfClusterId": "ID-SUMATRA-01",
+    "regionId": "ID-REG-07"
   },
   {
     "id": "id-id-kal-01",
@@ -1746,7 +1810,8 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "ID-KAL-01"
+    "golfClusterId": "ID-KAL-01",
+    "regionId": "ID-REG-08"
   },
   {
     "id": "jp-arita-resol",
@@ -1770,7 +1835,8 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-KNS-WAKAYAMA"
+    "golfClusterId": "JP-KNS-WAKAYAMA",
+    "regionId": "JP-REG-05"
   },
   {
     "id": "jp-green-valley",
@@ -1794,7 +1860,8 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-CHB-FUJI-YAMANASHI"
+    "golfClusterId": "JP-CHB-FUJI-YAMANASHI",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-dai-atami-kokusai",
@@ -1820,7 +1887,8 @@
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-CHB-SHIZUOKA-FUJI-IZU",
     "coordinateSource": "https://www.resol-golf.jp/en/daiatami/",
-    "coordinateUse": "regional_climate_candidate_only"
+    "coordinateUse": "regional_climate_candidate_only",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-daifuji",
@@ -1844,7 +1912,8 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-CHB-SHIZUOKA-FUJI-IZU"
+    "golfClusterId": "JP-CHB-SHIZUOKA-FUJI-IZU",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-eau-sol-vert-karuizawa",
@@ -1870,7 +1939,8 @@
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-CHB-NAGANO-KARUIZAWA",
     "coordinateSource": "https://esv-club.com/access/",
-    "coordinateUse": "regional_climate_candidate_only"
+    "coordinateUse": "regional_climate_candidate_only",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-fuji-classic",
@@ -1894,7 +1964,8 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-CHB-FUJI-YAMANASHI"
+    "golfClusterId": "JP-CHB-FUJI-YAMANASHI",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-fuji-golf-course",
@@ -1918,7 +1989,8 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-CHB-FUJI-YAMANASHI"
+    "golfClusterId": "JP-CHB-FUJI-YAMANASHI",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-gora-kadan-fuji",
@@ -1942,7 +2014,8 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-CHB-SHIZUOKA-FUJI-IZU"
+    "golfClusterId": "JP-CHB-SHIZUOKA-FUJI-IZU",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-hanna-country",
@@ -1966,7 +2039,8 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-KNS-OSAKA-HYOGO"
+    "golfClusterId": "JP-KNS-OSAKA-HYOGO",
+    "regionId": "JP-REG-05"
   },
   {
     "id": "jp-hayama-kokusai",
@@ -1990,7 +2064,8 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-KNT-TOKYO-KANAGAWA"
+    "golfClusterId": "JP-KNT-TOKYO-KANAGAWA",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-hokkaido-golf-club",
@@ -2014,7 +2089,8 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-HKD-SAPPORO"
+    "golfClusterId": "JP-HKD-SAPPORO",
+    "regionId": "JP-REG-01"
   },
   {
     "id": "jp-iruma-country",
@@ -2040,7 +2116,8 @@
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KNT-GUNMA-SAITAMA",
     "coordinateSource": "https://www.resol-golf.jp/en/iruma/access/",
-    "coordinateUse": "regional_climate_candidate_only"
+    "coordinateUse": "regional_climate_candidate_only",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-14-hills",
@@ -2065,7 +2142,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-CHB-NAGOYA-GIFU",
-    "subregionLabel": "中部・名古屋／岐阜球場群"
+    "subregionLabel": "中部・名古屋／岐阜球場群",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-25-nasu",
@@ -2090,7 +2168,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KNT-TOCHIGI-NASU",
-    "subregionLabel": "關東・栃木／那須球場群"
+    "subregionLabel": "關東・栃木／那須球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-31-country",
@@ -2117,7 +2196,8 @@
     "golfClusterId": "JP-KNT-IBARAKI-TSUKUBA",
     "coordinateSource": "https://booking.gora.golf.rakuten.co.jp/guide/map/c_id/80122/",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "關東・茨城／筑波球場群"
+    "subregionLabel": "關東・茨城／筑波球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-adatara",
@@ -2144,7 +2224,8 @@
     "golfClusterId": "JP-THK-FUKUSHIMA-YAMAGATA",
     "coordinateSource": "https://arealog.net/20900/",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "東北・福島／山形球場群"
+    "subregionLabel": "東北・福島／山形球場群",
+    "regionId": "JP-REG-02"
   },
   {
     "id": "jp-adonis",
@@ -2171,7 +2252,8 @@
     "golfClusterId": "JP-CHB-NAGOYA-GIFU",
     "coordinateSource": "https://adonis-gc.com/access.html",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "中部・名古屋／岐阜球場群"
+    "subregionLabel": "中部・名古屋／岐阜球場群",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-adonis-ogawa",
@@ -2196,7 +2278,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KNT-GUNMA-SAITAMA",
-    "subregionLabel": "關東・群馬／埼玉球場群"
+    "subregionLabel": "關東・群馬／埼玉球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-aga-kogen",
@@ -2221,7 +2304,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-CHB-HOKURIKU",
-    "subregionLabel": "中部・北陸／石川／富山／福井球場群"
+    "subregionLabel": "中部・北陸／石川／富山／福井球場群",
+    "regionId": "JP-REG-04"
   },
   {
     "id": "jp-fuchu-country",
@@ -2246,7 +2330,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KNT-TOKYO-KANAGAWA",
-    "subregionLabel": "關東・東京／神奈川球場群"
+    "subregionLabel": "關東・東京／神奈川球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-gmg-hachioji",
@@ -2271,7 +2356,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KNT-TOKYO-KANAGAWA",
-    "subregionLabel": "關東・東京／神奈川球場群"
+    "subregionLabel": "關東・東京／神奈川球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-hachioji-cc",
@@ -2298,7 +2384,8 @@
     "golfClusterId": "JP-KNT-TOKYO-KANAGAWA",
     "coordinateSource": "https://fullgolf.com/en/golf-club/japan/tokyo/hachioji/hachioji-country-club",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "關東・東京／神奈川球場群"
+    "subregionLabel": "關東・東京／神奈川球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-izu-oshima",
@@ -2323,7 +2410,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KNT-TOKYO-KANAGAWA",
-    "subregionLabel": "關東・東京／神奈川球場群"
+    "subregionLabel": "關東・東京／神奈川球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-manna-country",
@@ -2348,7 +2436,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KNT-CHIBA-NARITA",
-    "subregionLabel": "關東・千葉／成田／市原球場群"
+    "subregionLabel": "關東・千葉／成田／市原球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-mashiko-country",
@@ -2373,7 +2462,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KNT-TOCHIGI-NASU",
-    "subregionLabel": "關東・栃木／那須球場群"
+    "subregionLabel": "關東・栃木／那須球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-murasakizuka",
@@ -2398,7 +2488,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KNT-TOCHIGI-NASU",
-    "subregionLabel": "關東・栃木／那須球場群"
+    "subregionLabel": "關東・栃木／那須球場群",
+    "regionId": "JP-REG-03"
   },
   {
     "id": "jp-anan-cc",
@@ -2425,7 +2516,8 @@
     "golfClusterId": "JP-SHK-KAGAWA-TOKUSHIMA",
     "coordinateSource": "https://fullgolf.com/en/golf-club/japan/tokushima/anan/anan-country-club",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "四國・高松／德島／瀨戶內球場群"
+    "subregionLabel": "四國・高松／德島／瀨戶內球場群",
+    "regionId": "JP-REG-07"
   },
   {
     "id": "jp-bizan-cc",
@@ -2450,7 +2542,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-SHK-KAGAWA-TOKUSHIMA",
-    "subregionLabel": "四國・高松／德島／瀨戶內球場群"
+    "subregionLabel": "四國・高松／德島／瀨戶內球場群",
+    "regionId": "JP-REG-07"
   },
   {
     "id": "jp-reomakogen",
@@ -2475,7 +2568,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-SHK-KAGAWA-TOKUSHIMA",
-    "subregionLabel": "四國・高松／德島／瀨戶內球場群"
+    "subregionLabel": "四國・高松／德島／瀨戶內球場群",
+    "regionId": "JP-REG-07"
   },
   {
     "id": "jp-shikoku-anabuki",
@@ -2500,7 +2594,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-SHK-KAGAWA-TOKUSHIMA",
-    "subregionLabel": "四國・高松／德島／瀨戶內球場群"
+    "subregionLabel": "四國・高松／德島／瀨戶內球場群",
+    "regionId": "JP-REG-07"
   },
   {
     "id": "jp-akita-kita-kuko",
@@ -2525,7 +2620,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-THK-AOMORI-AKITA",
-    "subregionLabel": "東北・青森／秋田北部球場群"
+    "subregionLabel": "東北・青森／秋田北部球場群",
+    "regionId": "JP-REG-02"
   },
   {
     "id": "jp-aomori-cc",
@@ -2552,7 +2648,8 @@
     "golfClusterId": "JP-THK-AOMORI-AKITA",
     "coordinateSource": "https://mapcarta.com/29357608",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "東北・青森／秋田北部球場群"
+    "subregionLabel": "東北・青森／秋田北部球場群",
+    "regionId": "JP-REG-02"
   },
   {
     "id": "jp-aomori-royal",
@@ -2577,7 +2674,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-THK-AOMORI-AKITA",
-    "subregionLabel": "東北・青森／秋田北部球場群"
+    "subregionLabel": "東北・青森／秋田北部球場群",
+    "regionId": "JP-REG-02"
   },
   {
     "id": "jp-banyan-tree-okinawa",
@@ -2602,7 +2700,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-CENTRAL",
-    "subregionLabel": "沖繩・本島中部球場群"
+    "subregionLabel": "沖繩・本島中部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-bel-beach",
@@ -2627,7 +2726,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-NORTH",
-    "subregionLabel": "沖繩・本島北部球場群"
+    "subregionLabel": "沖繩・本島北部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-emerald-coast",
@@ -2652,7 +2752,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-OUTER-ISLANDS",
-    "subregionLabel": "沖繩・離島球場群"
+    "subregionLabel": "沖繩・離島球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-ginoza-cc",
@@ -2677,7 +2778,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-NORTH",
-    "subregionLabel": "沖繩・本島北部球場群"
+    "subregionLabel": "沖繩・本島北部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-kanucha-golf",
@@ -2702,7 +2804,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-NORTH",
-    "subregionLabel": "沖繩・本島北部球場群"
+    "subregionLabel": "沖繩・本島北部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-naha-golf",
@@ -2727,7 +2830,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-SOUTH",
-    "subregionLabel": "沖繩・本島南部球場群"
+    "subregionLabel": "沖繩・本島南部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-nanzan-cc",
@@ -2752,7 +2856,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-SOUTH",
-    "subregionLabel": "沖繩・本島南部球場群"
+    "subregionLabel": "沖繩・本島南部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-ocean-castle",
@@ -2777,7 +2882,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-CENTRAL",
-    "subregionLabel": "沖繩・本島中部球場群"
+    "subregionLabel": "沖繩・本島中部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-ocean-links-miyako",
@@ -2804,7 +2910,8 @@
     "golfClusterId": "JP-OKI-OUTER-ISLANDS",
     "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/okinawa/miyako/ocean-links-miyakojima",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "沖繩・離島球場群"
+    "subregionLabel": "沖繩・離島球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-okinawa-country",
@@ -2829,7 +2936,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-CENTRAL",
-    "subregionLabel": "沖繩・本島中部球場群"
+    "subregionLabel": "沖繩・本島中部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-okinawa-royal",
@@ -2854,7 +2962,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-CENTRAL",
-    "subregionLabel": "沖繩・本島中部球場群"
+    "subregionLabel": "沖繩・本島中部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-onishi-terrace",
@@ -2879,7 +2988,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-CENTRAL",
-    "subregionLabel": "沖繩・本島中部球場群"
+    "subregionLabel": "沖繩・本島中部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-risonare-kohamajima",
@@ -2904,7 +3014,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-OUTER-ISLANDS",
-    "subregionLabel": "沖繩・離島球場群"
+    "subregionLabel": "沖繩・離島球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-ryukyu-golf",
@@ -2929,7 +3040,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-SOUTH",
-    "subregionLabel": "沖繩・本島南部球場群"
+    "subregionLabel": "沖繩・本島南部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-sashiba-links",
@@ -2954,7 +3066,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-OUTER-ISLANDS",
-    "subregionLabel": "沖繩・離島球場群"
+    "subregionLabel": "沖繩・離島球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-shigira-bay",
@@ -2979,7 +3092,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-OUTER-ISLANDS",
-    "subregionLabel": "沖繩・離島球場群"
+    "subregionLabel": "沖繩・離島球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-shurei-cc",
@@ -3004,7 +3118,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-OKI-MAIN-SOUTH",
-    "subregionLabel": "沖繩・本島南部球場群"
+    "subregionLabel": "沖繩・本島南部球場群",
+    "regionId": "JP-REG-09"
   },
   {
     "id": "jp-aino-cc",
@@ -3031,7 +3146,8 @@
     "golfClusterId": "JP-KYS-NAGASAKI-KUMAMOTO",
     "coordinateSource": "https://www.parscape.com/location/golf_clubs/ainocountryclubainonagasaki",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "九州・長崎／熊本球場群"
+    "subregionLabel": "九州・長崎／熊本球場群",
+    "regionId": "JP-REG-08"
   },
   {
     "id": "jp-aiwa-miyazaki",
@@ -3056,7 +3172,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
-    "subregionLabel": "九州・宮崎／鹿兒島球場群"
+    "subregionLabel": "九州・宮崎／鹿兒島球場群",
+    "regionId": "JP-REG-08"
   },
   {
     "id": "jp-amagase-onsen",
@@ -3083,7 +3200,8 @@
     "golfClusterId": "JP-KYS-OITA",
     "coordinateSource": "https://arealog.net/670179/",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "九州・大分／阿蘇球場群"
+    "subregionLabel": "九州・大分／阿蘇球場群",
+    "regionId": "JP-REG-08"
   },
   {
     "id": "jp-amami-cc",
@@ -3108,7 +3226,8 @@
     "enabled": true,
     "operationalStatus": "not_independently_verified",
     "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
-    "subregionLabel": "九州・宮崎／鹿兒島球場群"
+    "subregionLabel": "九州・宮崎／鹿兒島球場群",
+    "regionId": "JP-REG-08"
   },
   {
     "id": "jp-niseko-village-golf",
@@ -3135,7 +3254,8 @@
     "operationalStatus": "official_site_listed_seasonal_operation_to_reconfirm",
     "coordinateSource": "https://www.where2golf.com/japan/niseko-village-golf-course/",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "北海道・二世谷／留壽都度假球場群"
+    "subregionLabel": "北海道・二世谷／留壽都度假球場群",
+    "regionId": "JP-REG-01"
   },
   {
     "id": "jp-kyoto-golf-club",
@@ -3162,6 +3282,7 @@
     "operationalStatus": "official_jnto_profile_listed_current_operation_to_reconfirm",
     "coordinateSource": "https://fullgolf.com/en/golf-club/japan/kyoto/kyoto/kyoto-golf-club-kamigamo-course",
     "coordinateUse": "regional_climate_candidate_only",
-    "subregionLabel": "關西・京都／滋賀／奈良球場群"
+    "subregionLabel": "關西・京都／滋賀／奈良球場群",
+    "regionId": "JP-REG-05"
   }
 ]
