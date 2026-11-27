@@ -84,7 +84,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/observation-stations/ghcnd-candidates-1991-2020.json data/observation-stations/metmalaysia-candidates.json data/observation-stations/ghcnd-daily-record-audit-1991-2020.json data/observation-stations/ghcnd-daily-record-quality-1991-2020.json data/observation-stations/jp-kr-official-acquisition-queue.json data/observation-stations/jma-station-candidates-1991-2020.json data/observation-stations/jma-daily-record-quality-1991-2020.json
+          git add data/observation-stations/ghcnd-candidates-1991-2020.json data/observation-stations/metmalaysia-candidates.json data/observation-stations/ghcnd-daily-record-audit-1991-2020.json data/observation-stations/ghcnd-daily-record-quality-1991-2020.json data/observation-stations/jp-kr-official-acquisition-queue.json data/observation-stations/jma-station-candidates-1991-2020.json\n          if [ -f data/observation-stations/jma-daily-record-quality-1991-2020.json ]; then git add data/observation-stations/jma-daily-record-quality-1991-2020.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "Archive GHCN station candidates for eight-country regions"
             git pull --rebase origin asia-eight-country-shared-engine
