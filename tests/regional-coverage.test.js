@@ -131,8 +131,8 @@ test("Japan Setouchi representative candidate uses official Google Maps place co
  const setouchi=japan.subregions.find(x=>x.candidateCourseName==="Setouchi Golf Resort");
  assert.equal(setouchi.candidateCoordinates.latitude,34.3061999);
  assert.equal(setouchi.candidateCoordinates.longitude,132.864325);
- assert.equal(setouchi.candidateCoordinates.coordinateStatus,"official-google-maps-place-coordinate");
- assert.match(setouchi.candidateCoordinates.coordinateSourceUrl,/maps\.app\.goo\.gl/);
+ assert.equal(setouchi.candidateCoordinates.coordinateStatus,"official-operator-google-maps-place-pin");
+ assert.match(setouchi.candidateCoordinates.coordinateSourceUrl,/resol-golf\.jp/);
  assert.equal(setouchi.representativeCourseId,null);
 });
 
@@ -304,7 +304,7 @@ test("Japan GPS decision matrix covers all 16 mainland subregions and accepts re
  assert.equal(matrix.summary.officialMapViewportCenters,8);
  assert.equal(matrix.summary.officialAccessOrAddressReferences,5);
  assert.equal(matrix.summary.forecastEnabled,0);
- assert.deepEqual(matrix.summary.legacyGrades,{A:3,B:12,C:1});
+ assert.deepEqual(matrix.summary.provenanceGrades,{A:3,B:12,C:1});
  assert.equal(new Set(matrix.entries.map(x=>x.subregionId)).size,16);
  for(const entry of matrix.entries){
   const source=mainland.find(x=>x.id===entry.subregionId);
