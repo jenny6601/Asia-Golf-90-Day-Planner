@@ -271,3 +271,21 @@ test("Japan remaining five GPS reviews retain conservative official map evidence
  assert.equal(daisen.coordinateQuality.officialMapReference.coordinateType,"map-pin-not-extracted");
  assert.ok([rifu,tsu,arima,leo,daisen].every(x=>x.coordinateQuality.weatherPointEligible===false));
 });
+
+
+test("Japan Setouchi official pin and Tosa/Phoenix evidence are recorded conservatively",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const find=name=>japan.subregions.find(x=>x.candidateCourseName===name);
+ const setouchi=find("Setouchi Golf Resort");
+ assert.equal(setouchi.candidateCoordinates.coordinateStatus,"official-operator-google-maps-place-pin");
+ assert.equal(setouchi.coordinateQuality.officialMapReference.coordinateType,"place-pin-coordinate");
+ assert.equal(setouchi.coordinateQuality.officialMapReference.googleMapsPlaceId,"0x355042079326d21b:0x3526427e5fc188a6");
+ assert.equal(setouchi.coordinateQuality.weatherPointEligible,false);
+ const tosa=find("Tosa Country Club");
+ assert.equal(tosa.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
+ assert.equal(tosa.coordinateQuality.officialMapReference.distanceFromCandidateKm,0.010);
+ const phoenix=find("Phoenix Country Club");
+ assert.equal(phoenix.coordinateQuality.officialMapReference.coordinateType,"no-official-pin-extracted");
+ assert.equal(phoenix.coordinateQuality.weatherPointEligible,false);
+});
