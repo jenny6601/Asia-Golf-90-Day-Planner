@@ -3546,5 +3546,32 @@
     "enabled": true,
     "operationalStatus": "official_prefectural_directory_listed_current_operator_status_to_reconfirm",
     "regionId": "JP-REG-01"
+  },
+  {
+    "id": "jp-niseko-golf-course",
+    "countryCode": "JP",
+    "country": "日本",
+    "name": "Niseko Golf Course",
+    "nameLocal": "ニセコゴルフコース",
+    "prefecture": "Hokkaido",
+    "prefectureZh": "北海道",
+    "region": "二世谷／留壽都度假球場群",
+    "regionGroup": "北海道",
+    "subregionId": "JP-HKD-NISEKO",
+    "subregionLabel": "北海道・二世谷／留壽都度假球場群",
+    "golfClusterId": "JP-HKD-NISEKO",
+    "address": "Fukui, Niseko Town, Abuta District, Hokkaido 048-1561, Japan",
+    "timezone": "Asia/Tokyo",
+    "officialUrl": "https://niseko-golf.com/en/course/",
+    "sourceUrl": "https://niseko-golf.com/en/contact/",
+    "sourceEvidence": "Official Niseko Village Golf operator lists Niseko Golf Course at Fukui, Niseko Town, Abuta District, Hokkaido 048-1561, and states it is about 17 km / 20 minutes by car from Niseko Village Golf Course. Official 2026 course guide lists an 18-hole course and 2026 operating period April 24-November 8. Same destination-cluster membership is appropriate for shared regional climate analysis; this course inherits the Niseko Village representative point.",
+    "catalogStatus": "research_candidate",
+    "coordinateStatus": "pending",
+    "latitude": null,
+    "longitude": null,
+    "weatherEnabled": false,
+    "enabled": true,
+    "operationalStatus": "official_operator_listed_2026_season_closed_2026-11-08",
+    "regionId": "JP-REG-01"
   }
 ]
