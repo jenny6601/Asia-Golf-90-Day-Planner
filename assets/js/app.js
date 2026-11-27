@@ -875,7 +875,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const allPlayable=node("div",undefined,"monthly-playability-all-dates");
  allPlayable.append(node("strong","⛳ 本月適打日期（全部）"),node("span",allPlayableDatesText));
  const week=node("div",undefined,"monthly-playability-week");
- week.append(node("strong","🗓️ 優先週數"),node("span",dateRange));
+ week.append(node("strong","🗓️ 優先五天行程"),node("span",dateRange));
  summary.append(priority,allPlayable,week);
  const notes=node("div",undefined,"monthly-playability-notes");
  const noteRows=[
@@ -976,9 +976,9 @@ function renderEmptySevenDay(country,region,start){
 }
 
 async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAssessment=null){
- const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜本月推薦週次",backAction||(()=>renderRegionMonths(group.country||$("climate-country").value,group.rootRegion||group.region,group.months||monthOptions(),group.courses,group.subregion||"")));
+ const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜本月推薦五天行程",backAction||(()=>renderRegionMonths(group.country||$("climate-country").value,group.rootRegion||group.region,group.months||monthOptions(),group.courses,group.subregion||"")));
  const pageLoading=node("div",undefined,"monthly-page-loading");pageLoading.setAttribute("role","status");pageLoading.setAttribute("aria-live","polite");
- pageLoading.append(node("div",undefined,"monthly-page-spinner"),node("strong","正在開啟週分析…"),node("span","正在整理所選月份的推薦週次"));
+ pageLoading.append(node("div",undefined,"monthly-page-spinner"),node("strong","正在開啟週分析…"),node("span","正在整理所選月份的連續五天行程"));
  $("flow-nav").append(pageLoading);
  await new Promise(resolve=>requestAnimationFrame(resolve));
  const panel=node("section",undefined,"week-recommendations");
