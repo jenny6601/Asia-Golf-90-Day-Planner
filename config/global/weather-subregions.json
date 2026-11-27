@@ -78,7 +78,7 @@
           "candidateCourseName": "Niseko Village Golf Course",
           "candidateRationale": "以二世谷／留壽都度假球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
           "candidateSourceUrl": "https://niseko-golf.com/en/course/",
-          "candidateStatus": "research-candidate",
+          "candidateStatus": "identity-confirmed-coordinate-review-pending",
           "candidateCoordinates": {
             "latitude": 42.847109,
             "longitude": 140.685607,
@@ -99,11 +99,19 @@
             "weatherPointEligible": false,
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
-            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+            "reason": "球場身分與營運資訊已由官方營運商確認；座標仍為第三方候選點，尚未完成代表點座標核實，禁止啟用正式天氣資料擷取。"
           },
           "regionId": "JP-REG-01",
           "regionName": "北海道",
-          "subregionUnit": "golf-course-cluster"
+          "subregionUnit": "golf-course-cluster",
+          "courseIdentityVerification": {
+            "verificationLevel": "official-operator-course-identity-address-and-2026-operation-confirmed",
+            "officialSourceUrl": "https://niseko-golf.com/",
+            "officialAddress": "Niseko Village Golf Course: 〒048-1521 北海道虻田郡ニセコ町東山温泉；Niseko Golf Course: 〒048-1561 北海道虻田郡ニセコ町福井",
+            "operationalEvidence": "Official Niseko Village operator page lists both Niseko Village Golf Course and Niseko Golf Course, provides booking routes and 2026 season opening/closing notices. 2026 Niseko Village course season ended 2026-09-30; Niseko Golf Course season ended 2026-11-07. Candidate identity confirmed, but candidate coordinates remain third-party and are not approved for live weather ingestion.",
+            "checkedOn": "2026-11-27",
+            "scopeNote": "Official source confirms the named candidate course and destination cluster context; it also indicates a second nearby course exists, which should be reconciled against the fixed course directory before changing cluster membership."
+          }
         },
         {
           "id": "JP-HKD-HAKODATE",
