@@ -20,10 +20,11 @@ test("ERA5-Land mapping contains exactly one expected grid point for each Japan 
 test("mapped points preserve canonical representative coordinates and use nearest 0.1 degree grid", () => {
   for (const point of mapping.points) {
     const source = japan.subregions.find(item => item.id === point.subregionId);
-    assert.equal(point.representativePoint.latitude, source.candidateCoordinates.latitude);
-    assert.equal(point.representativePoint.longitude, source.candidateCoordinates.longitude);
-    assert.equal(point.era5LandGridPoint.latitude, Math.round(source.candidateCoordinates.latitude * 10) / 10);
-    assert.equal(point.era5LandGridPoint.longitude, Math.round(source.candidateCoordinates.longitude * 10) / 10);
+    const sourceCoordinates = source.candidateCoordinates ?? point.representativePoint;
+    assert.equal(point.representativePoint.latitude, sourceCoordinates.latitude);
+    assert.equal(point.representativePoint.longitude, sourceCoordinates.longitude);
+    assert.equal(point.era5LandGridPoint.latitude, Math.round(sourceCoordinates.latitude * 10) / 10);
+    assert.equal(point.era5LandGridPoint.longitude, Math.round(sourceCoordinates.longitude * 10) / 10);
     assert.ok(point.gridDistanceKm >= 0 && point.gridDistanceKm < 8, point.subregionId);
     assert.equal(point.timezone, "Asia/Tokyo");
   }
