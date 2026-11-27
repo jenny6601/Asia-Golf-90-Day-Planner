@@ -6,9 +6,10 @@ export async function mountValidationPanel(host){
  if(!host)return;
  host.replaceChildren();
  const heading=node("div",undefined,"validation-heading");
- heading.append(node("h2","90 天預報驗證"),node("span","獨立驗證資料","validation-tag"));
+ heading.append(node("h2","90 天預報驗證"),node("span","沖繩試點資料","validation-tag"));
+ const scopeNote=node("p","目前回測範圍僅包含沖繩北部、中部、南部三個次分區；不代表亞洲八國整體驗證。其他國家及次分區尚未納入本回測。","validation-scope-note");
  const body=node("div",undefined,"validation-body");
- host.append(heading,body);
+ host.append(heading,scopeNote,body);
  try{
   const response=await fetch("./assets/data/90day-validation.json",{cache:"no-store"});
   if(!response.ok)throw new Error("尚未發布驗證報告");
