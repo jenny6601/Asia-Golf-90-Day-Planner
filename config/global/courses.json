@@ -160,7 +160,7 @@
     "name": "The North Country Golf Club",
     "address": "26 Rankoshi, Chitose-shi, Hokkaido 066-0068, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "public-map-coordinate",
     "coordinateSource": "https://www.jgto.org/en/club/jgto",
     "candidateCoordinates": {
       "latitude": 42.82058,
@@ -174,7 +174,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-HKD-SAPPORO"
+    "golfClusterId": "JP-HKD-SAPPORO",
+    "latitude": 42.82058,
+    "longitude": 141.59652,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-hokkaido-country",
@@ -187,7 +190,7 @@
     "name": "Hokkaido Country Club",
     "address": "Nishionuma, Nanae-cho, Kameda-gun, Hokkaido 041-1392, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "official-operator-google-maps-place-pin",
     "coordinateSource": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
     "candidateCoordinates": {
       "latitude": 41.9892895,
@@ -201,7 +204,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-HKD-HAKODATE"
+    "golfClusterId": "JP-HKD-HAKODATE",
+    "latitude": 41.9892895,
+    "longitude": 140.6549955,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-appi-kogen",
@@ -214,7 +220,7 @@
     "name": "Appi Kogen Golf Club",
     "address": "180-1 Appikogen, Hachimantai-shi, Iwate 028-7306, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "third-party-course-map-coordinate",
     "coordinateSource": "https://elitegolfjapan.com/courses/appi-kogen-golf-club/",
     "candidateCoordinates": {
       "latitude": 40.01249,
@@ -228,7 +234,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-THK-IWATE-APPI"
+    "golfClusterId": "JP-THK-IWATE-APPI",
+    "latitude": 40.01249,
+    "longitude": 141.00652,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-rifu",
@@ -241,7 +250,7 @@
     "name": "Rifu Golf Club",
     "address": "3-25 Uchinome-kita, Morigo, Rifu-machi, Miyagi-gun, Miyagi 981-0103, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "course-list-coordinate",
     "coordinateSource": "https://fullgolf.com/en/golf-club/japan/miyagi/miyagi/rifu-golf-club",
     "candidateCoordinates": {
       "latitude": 38.35994,
@@ -255,7 +264,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-THK-MIYAGI-SENDAI"
+    "golfClusterId": "JP-THK-MIYAGI-SENDAI",
+    "latitude": 38.35994,
+    "longitude": 140.981828,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-seven-hundred",
@@ -268,7 +280,7 @@
     "name": "Seven Hundred Club",
     "address": "2370 Sotome, Sakura City, Tochigi Prefecture, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "course-list-coordinate",
     "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/tochigi/sakura/seven-hundred-club",
     "candidateCoordinates": {
       "latitude": 36.709629,
@@ -282,7 +294,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-KNT-TOCHIGI-NASU"
+    "golfClusterId": "JP-KNT-TOCHIGI-NASU",
+    "latitude": 36.709629,
+    "longitude": 140.004827,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-narita-hills",
@@ -295,7 +310,7 @@
     "name": "Narita Hills Country Club",
     "address": "1236-3, Ryukakuji, Sakae-machi, Inba-gun, Chiba-ken, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "osm-map-coordinate",
     "coordinateSource": "https://mapcarta.com/W426264339",
     "candidateCoordinates": {
       "latitude": 35.83503,
@@ -309,7 +324,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-KNT-CHIBA-NARITA"
+    "golfClusterId": "JP-KNT-CHIBA-NARITA",
+    "latitude": 35.83503,
+    "longitude": 140.27659,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-kawaguchiko",
@@ -322,7 +340,7 @@
     "name": "Kawaguchiko Country Club",
     "address": "6236 Funatsu, Fujikawaguchiko-machi, Minamitsuru-gun, Yamanashi 401-0301, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "official-operator-google-maps-place-pin",
     "coordinateSource": "https://kcc.tatemono-golf.com/access/",
     "candidateCoordinates": {
       "latitude": 35.4682136,
@@ -336,7 +354,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-CHB-FUJI-YAMANASHI"
+    "golfClusterId": "JP-CHB-FUJI-YAMANASHI",
+    "latitude": 35.4682136,
+    "longitude": 138.7517012,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-tsu",
@@ -349,7 +370,7 @@
     "name": "Tsu Country Club",
     "address": "30 Katada-Hasecho, Tsu-shi, Mie 514-0077, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "previously-researched-public-coordinate",
     "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/mie/tsu/tsu-country-club",
     "candidateCoordinates": {
       "latitude": 34.72587,
@@ -363,7 +384,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-CHB-MIE-ISE"
+    "golfClusterId": "JP-CHB-MIE-ISE",
+    "latitude": 34.72587,
+    "longitude": 136.42721,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-tokinodai",
@@ -376,7 +400,7 @@
     "name": "Tokinodai Country Club",
     "address": "8-8 Yanagida-machi, Hakui-shi, Ishikawa 925-0018, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "course-list-coordinate",
     "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/ishikawa/hakui/tokinodai-country-club",
     "candidateCoordinates": {
       "latitude": 36.91549,
@@ -390,7 +414,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-CHB-HOKURIKU"
+    "golfClusterId": "JP-CHB-HOKURIKU",
+    "latitude": 36.91549,
+    "longitude": 136.775147,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-arima-royal",
@@ -403,7 +430,7 @@
     "name": "Arima Royal Golf Club",
     "address": "571 Kitahata, Ogocho, Kita-ku, Kobe-shi, Hyogo 651-1616, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "third-party-course-map-coordinate",
     "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/hyogo/kobe/arima-royal-golf-club",
     "candidateCoordinates": {
       "latitude": 34.826383,
@@ -417,7 +444,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-KNS-OSAKA-HYOGO"
+    "golfClusterId": "JP-KNS-OSAKA-HYOGO",
+    "latitude": 34.826383,
+    "longitude": 135.123729,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-leograd",
@@ -430,7 +460,7 @@
     "name": "Leograd Golf Club",
     "address": "694 Sai, Hidaka-gawa-cho, Hidaka-gun, Wakayama 644-1164, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "approximate-official-map-viewport-center-not-course-pin",
     "coordinateSource": "https://www.leograd.jp/access_map/",
     "candidateCoordinates": {
       "latitude": 33.9232299832,
@@ -445,7 +475,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-KNS-WAKAYAMA"
+    "golfClusterId": "JP-KNS-WAKAYAMA",
+    "latitude": 33.9232299832,
+    "longitude": 135.2723593476,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-green-park-daisen",
@@ -458,7 +491,7 @@
     "name": "Green Park Daisen Golf Club",
     "address": "753 Ogina, Nanbu-cho, Saihaku-gun, Tottori 683-0215, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "course-list-coordinate",
     "coordinateSource": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club",
     "candidateCoordinates": {
       "latitude": 35.364639,
@@ -472,7 +505,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-CHG-SANIN"
+    "golfClusterId": "JP-CHG-SANIN",
+    "latitude": 35.364639,
+    "longitude": 133.397062,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-setouchi",
@@ -485,7 +521,7 @@
     "name": "Setouchi Golf Resort",
     "address": "831 Yoshina-cho, Takehara City, Hiroshima Prefecture 725-0013, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "official-operator-google-maps-place-pin",
     "coordinateSource": "https://www.resol-golf.jp/en/setouchi/",
     "candidateCoordinates": {
       "latitude": 34.3061999,
@@ -499,7 +535,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-CHG-SANYO"
+    "golfClusterId": "JP-CHG-SANYO",
+    "latitude": 34.3061999,
+    "longitude": 132.864325,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-tosa",
@@ -512,7 +551,7 @@
     "name": "Tosa Country Club",
     "address": "668 Yasucho Teiyama, Konan-shi, Kochi Prefecture, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "previously-researched-public-coordinate",
     "coordinateSource": "https://www.parscape.com/location/golf_clubs/tosacountryclubkamikochi",
     "candidateCoordinates": {
       "latitude": 33.5213,
@@ -526,7 +565,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-SHK-EHIME-KOCHI"
+    "golfClusterId": "JP-SHK-EHIME-KOCHI",
+    "latitude": 33.5213,
+    "longitude": 133.7758,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-the-classic",
@@ -539,7 +581,7 @@
     "name": "The Classic Golf Club",
     "address": "1-3 Kurahisa, Miyawaka-shi, Fukuoka 823-0017, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "course-list-coordinate",
     "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/fukuoka/kurate/classic-golf-club",
     "candidateCoordinates": {
       "latitude": 33.770453,
@@ -553,7 +595,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-KYS-FUKUOKA-SAGA"
+    "golfClusterId": "JP-KYS-FUKUOKA-SAGA",
+    "latitude": 33.770453,
+    "longitude": 130.644917,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "jp-phoenix",
@@ -566,7 +611,7 @@
     "name": "Phoenix Country Club",
     "address": "3083 Hamayama, Shioji, Miyazaki City, Miyazaki 880-0122, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "pending",
+    "coordinateStatus": "course-list-coordinate",
     "coordinateSource": "https://www.where2golf.com/japan/phoenix-country-club/",
     "candidateCoordinates": {
       "latitude": 31.974525,
@@ -580,7 +625,10 @@
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
     "enabled": true,
-    "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA"
+    "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
+    "latitude": 31.974525,
+    "longitude": 131.472898,
+    "coordinateUse": "regional_climate_representative_approximation"
   },
   {
     "id": "kr-kr-cap-01",
