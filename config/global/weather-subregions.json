@@ -26,7 +26,8 @@
             "coordinateSourceUrl": "https://www.jgto.org/en/club/jgto",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-north-country"
         },
         {
           "id": "JP-HKD-SOUTH",
@@ -45,7 +46,8 @@
             "coordinateSourceUrl": "https://mapcarta.com/36075708",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-hokkaido-country"
         },
         {
           "id": "JP-THK-NORTH",
@@ -65,7 +67,8 @@
             "coordinateSourceUrl": "https://elitegolfjapan.com/courses/appi-kogen-golf-club/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-appi-kogen"
         },
         {
           "id": "JP-THK-SOUTH",
@@ -85,7 +88,8 @@
             "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/miyagi/miyagi/rifu-golf-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-rifu"
         },
         {
           "id": "JP-KNT-NORTH",
@@ -105,7 +109,8 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/tochigi/sakura/seven-hundred-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-seven-hundred"
         },
         {
           "id": "JP-KNT-SOUTH",
@@ -125,7 +130,8 @@
             "coordinateSourceUrl": "https://mapcarta.com/W426264339",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-narita-hills"
         },
         {
           "id": "JP-CHB-KOSHIN",
@@ -145,7 +151,8 @@
             "coordinateSourceUrl": "https://mapcarta.com/33942390",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-kawaguchiko"
         },
         {
           "id": "JP-CHB-TOKAI",
@@ -165,7 +172,8 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/mie/tsu/tsu-country-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-tsu"
         },
         {
           "id": "JP-CHB-HOKURIKU",
@@ -185,7 +193,8 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/ishikawa/hakui/tokinodai-country-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-tokinodai"
         },
         {
           "id": "JP-KNS-CENTRAL",
@@ -205,7 +214,8 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hyogo/kobe/arima-royal-golf-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-arima-royal"
         },
         {
           "id": "JP-KNS-KII",
@@ -225,7 +235,8 @@
             "coordinateSourceUrl": "https://www.leograd.jp/access_map/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "needs-exact-course-pin-verification"
+          "coordinateReviewStatus": "needs-exact-course-pin-verification",
+          "candidateCourseId": "jp-leograd"
         },
         {
           "id": "JP-CHG-SANIN",
@@ -245,7 +256,8 @@
             "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-green-park-daisen"
         },
         {
           "id": "JP-CHG-SANYO",
@@ -265,7 +277,8 @@
             "coordinateSourceUrl": "https://steller.co/p/setouchi-golf-resort-3D4ngLMGn8HLJK2KMg2ACnt",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-setouchi"
         },
         {
           "id": "JP-SHK-01",
@@ -285,7 +298,8 @@
             "coordinateSourceUrl": "https://www.parscape.com/location/golf_clubs/tosacountryclubkamikochi",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-tosa"
         },
         {
           "id": "JP-KYS-NORTH",
@@ -305,7 +319,8 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/fukuoka/kurate/classic-golf-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-the-classic"
         },
         {
           "id": "JP-KYS-SOUTH",
@@ -325,7 +340,8 @@
             "coordinateSourceUrl": "https://www.where2golf.com/japan/phoenix-country-club/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "candidateCourseId": "jp-phoenix"
         },
         {
           "id": "JP-OKI-NORTH",
@@ -365,7 +381,8 @@
           "southern-links"
         ],
         "forecastEnabled": false
-      }
+      },
+      "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
     {
       "countryCode": "KR",
