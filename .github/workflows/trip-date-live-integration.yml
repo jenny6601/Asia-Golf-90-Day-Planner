@@ -13,6 +13,8 @@ name: Okinawa Trip Date Live Data Integration
       - "tests/trip-date-seasonal-verification.test.js"
       - "assets/js/trip-date-forecast-backtest.js"
       - "assets/js/trip-date-climatology-baseline.js"
+      - "assets/js/trip-date-ranking-verification.js"
+      - "tests/trip-date-ranking-verification.test.js"
       - "tests/trip-date-climatology-baseline.test.js"
       - "assets/js/trip-date-recommendation-engine.js"
       - "assets/js/trip-date-source-adapters.js"
