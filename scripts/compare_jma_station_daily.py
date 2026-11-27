@@ -51,6 +51,10 @@ def mae_bias(pairs, field):
     }
 
 
+def quality_flags_acceptable(row):
+    return all(flag == "trace_negative_precipitation_clamped" for flag in (row.get("qualityFlags") or []))
+
+
 def compare_region(region, era5_rows, station, max_distance_km=75.0, minimum_pairs=365):
     distance = haversine_km(region["representativePoint"], station)
     station_rows = {r.get("validDate"): r for r in station.get("records", []) if r.get("validDate")}
@@ -119,6 +123,7 @@ def main():
             daily_by_region.setdefault(row.get("subregionId"), []).append(row)
     station_by_region = {}
     for station in jma["stations"]:
+        station.setdefault("sourceId", jma.get("sourceId"))
         station_by_region.setdefault(station.get("regionId"), []).append(station)
     results = {}
     for region in mapping["points"]:
