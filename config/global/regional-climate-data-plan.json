@@ -223,23 +223,29 @@
       "tripDays": 5,
       "nights": 4,
       "golfRounds": 3,
-      "primaryPriority": "minimum-rainfall-risk"
+      "primaryPriority": "minimum-rainfall-risk",
+      "golfDayOffsetsZeroBased": [
+        1,
+        2,
+        3
+      ],
+      "calendarHorizonDays": 90,
+      "completeTripWindows": 86
     },
-    "tripWindowPolicy": "Evaluate every departure date in the requested horizon (up to 90 departure dates); each five-day trip may extend four calendar days beyond the final departure date in the horizon. Select three golf days from within the five-day window; the remaining two dates are rest or transfer days.",
+    "tripWindowPolicy": "The 90-day calendar horizon yields 86 complete rolling five-day trip windows. Day 1 is arrival/transfer, days 2-4 are the fixed three consecutive golf days, and day 5 is departure/transfer. Do not select the three lowest-risk dates from all five days.",
     "dailyRoundSelectionOrder": [
-      "wetDayFrequencyPct ascending",
-      "heavyRain10mmFrequencyPct ascending",
-      "heavyRain30mmFrequencyPct ascending",
-      "p90DailyRainMm ascending"
+      "fixed trip day 2",
+      "fixed trip day 3",
+      "fixed trip day 4"
     ],
     "tripStartRankingOrder": [
-      "average selected-day wetDayFrequencyPct ascending",
-      "average selected-day heavyRain10mmFrequencyPct ascending",
-      "average selected-day heavyRain30mmFrequencyPct ascending",
-      "average selected-day p90DailyRainMm ascending",
+      "average wetDayFrequencyPct across fixed golf days 2-4 ascending",
+      "average heavyRain10mmFrequencyPct across fixed golf days 2-4 ascending",
+      "average heavyRain30mmFrequencyPct across fixed golf days 2-4 ascending",
+      "average p90DailyRainMm across fixed golf days 2-4 ascending",
       "startDate ascending"
     ],
-    "minimumCoverage": "All five dates in a candidate trip must have usable historical precipitation climatology; otherwise the candidate is blocked, not imputed.",
+    "minimumCoverage": "All five trip dates require usable historical precipitation statistics; ranking metrics are calculated only from the fixed middle three golf dates. Missing metrics block the candidate; no zero-fill.",
     "interpretation": "Historical 1991-2020 seasonal climatology prior only; not a deterministic daily weather forecast or a guarantee.",
     "shortRangeForecastPolicy": "Do not alter the existing 1-16 day live forecast path in this stage. A later fusion stage must retain distinct forecast maturity labels and must not present climatology as daily forecast.",
     "activation": {
@@ -248,5 +254,33 @@
       "recommendationProductionEnabled": false
     },
     "leapDayPolicy": "For an actual February 29 departure/trip date, use the arithmetic midpoint of February 28 and March 1 historical rainfall statistics; both adjacent calendar-day climatology metrics must be usable."
+  },
+  "forecastMaturityEngine": {
+    "script": "assets/js/forecast-maturity.js",
+    "status": "implemented-not-yet-integrated-into-app",
+    "leadDayPolicy": [
+      {
+        "days": "1-16",
+        "source": "short-range daily forecast",
+        "dailyForecastEligible": true
+      },
+      {
+        "days": "17-18",
+        "source": "weekly trend only; no daily score",
+        "dailyForecastEligible": false
+      },
+      {
+        "days": "19-46",
+        "source": "historical same-day baseline plus seasonal trend estimate",
+        "dailyForecastEligible": false
+      },
+      {
+        "days": "47-90",
+        "source": "seasonal outlook and historical climate reference",
+        "dailyForecastEligible": false
+      }
+    ],
+    "confidencePolicy": "Keep data confidence/source coverage separate from rainfall and playability risk. Long-range wet-day frequency estimates must never be labelled as daily rain probability.",
+    "formalV1Scoring": "Do not change existing date-engine V1 weights or suitability thresholds in this stage."
   }
 }
