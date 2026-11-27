@@ -15,7 +15,7 @@ function enrichWindow(window,{stability,monthlyContext,courses}){
    const scale=zone.signal.efi!==undefined?"weekly":"monthly";
    const stable=stability.records.find(x=>x.region===zone.zone&&x.scale===scale&&x.targetTimeLabel===zone.signal.period&&x.field==="precipitation_anomaly");
    const era5=latestMonthlyContext(monthlyContext,zone.zone,round.date);
-   const options=courses.filter(c=>c.region===REGION_LABELS[zone.zone]).map(c=>({courseId:c.id,name:c.name,area:c.area,regionalProxyOnly:true}));
+   const options=courses.filter(c=>c.area===REGION_LABELS[zone.zone]).map(c=>({courseId:c.id,name:c.name,area:c.area,regionalProxyOnly:true}));
    return {...zone,scale,stability:stable?{status:stable.stabilityStatus,validSnapshots:stable.validValueCount,directionChanges:stable.directionChanges,descriptiveConsistencyRatio:stable.directionConsistencyRatio}: {status:"NO_MATCHING_ARCHIVED_VINTAGE",validSnapshots:0,directionChanges:null,descriptiveConsistencyRatio:null},historicalMonthlyContext:era5?{era5SampleYears:era5.era5Context?.sampleYears??0,p10Mm:era5.era5Context?.p10Mm??null,medianMm:era5.era5Context?.medianMm??null,p90Mm:era5.era5Context?.p90Mm??null,modelAnomalyMm:era5.modelAnomalyMm??null,modelSignal:era5.modelSignal?.code??"UNKNOWN"}:{status:"NO_MONTHLY_CONTEXT"},courseOptions:options};
   });
   const courseChoices=regional.flatMap(x=>x.courseOptions.map(c=>({...c,regionalTendencyRank:x.signal.rank,regionalTendency:x.signal.label,region:x.zone}))).sort((a,b)=>a.regionalTendencyRank-b.regionalTendencyRank||a.courseId.localeCompare(b.courseId));
