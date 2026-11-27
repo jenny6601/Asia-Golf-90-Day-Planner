@@ -30,8 +30,7 @@
         "temperatureMaxC"
       ],
       "approxDistanceToRepresentativePointKm": 14.74,
-      "stationHistoryStart": "1976-02-20",
-      "stationHistoryStartEvidence": "JMA station listing / station metadata; confirm continuity and element-specific availability from the historical CSV export before pairing.",
+      "stationHistoryStartEvidence": "Not confirmed from the official metadata reviewed; determine element-specific coverage and continuity from the historical CSV export before pairing.",
       "metadataEvidence": [
         "https://www.jma-net.go.jp/utsunomiya/kishou/nogyo/615_2026_04_3.pdf",
         "https://www.jma-net.go.jp/utsunomiya/kishou/nogyo/615_2024_01_3.pdf"
