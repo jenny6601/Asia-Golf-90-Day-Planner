@@ -115,7 +115,7 @@ export function groupCourseHistoricalNormals(courseResults=[]) {
   const grouped={north:new Map(),central:new Map(),south:new Map()};
   for(const result of courseResults){
     const region=COURSE_REGION[result?.course?.id];
-    if(!region)continue;
+    if(!region || REPRESENTATIVE_COURSE_BY_REGION[region]!==result?.course?.id)continue;
     for(const day of result.days||[]){
       if(!day?.date)continue;
       if(!grouped[region].has(day.date))grouped[region].set(day.date,[]);
