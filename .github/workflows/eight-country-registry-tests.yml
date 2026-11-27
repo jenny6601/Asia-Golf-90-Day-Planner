@@ -9,6 +9,8 @@ on:
       - "config/global/countries.json"
       - "config/global/weather-subregions.json"
       - "tests/test_eight_country_climate_registry.py"
+      - "scripts/build_eight_country_era5land_requests.py"
+      - "tests/test_eight_country_era5land_requests.py"
       - ".github/workflows/eight-country-registry-tests.yml"
   pull_request:
     branches:
@@ -36,6 +38,8 @@ jobs:
         run: |
           python scripts/build_eight_country_climate_registry.py --write
           python -m unittest tests/test_eight_country_climate_registry.py
+          python scripts/build_eight_country_era5land_requests.py --write
+          python -m unittest tests/test_eight_country_era5land_requests.py
       - name: Upload generated registry and acquisition plan
         uses: actions/upload-artifact@v4
         with:
@@ -43,5 +47,6 @@ jobs:
           path: |
             config/global/era5-land-eight-country-registry.json
             data/era5-land-eight-country-1991-2020/acquisition-plan.json
+            data/era5-land-eight-country-1991-2020/production-request-manifest.json
           if-no-files-found: error
           retention-days: 30
