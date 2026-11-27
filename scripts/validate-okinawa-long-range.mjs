@@ -3,7 +3,7 @@ import {fetchCourseSeasonalForecast,fetchCourseHistoricalWeekNormals} from "../a
 import {buildDailyClimateOutlook} from "../assets/js/daily-climate-outlook.js";
 
 const root=new URL("../",import.meta.url);
-const courses=JSON.parse(await fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8")).filter(x=>x.countryCode==="JP"&&x.region==="Okinawa"&&x.enabled);
+const courses=JSON.parse(await fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8")).filter(x=>x.countryCode==="JP"&&x.regionGroup==="沖繩"&&["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"].includes(x.id)&&x.enabled&&Number.isFinite(x.latitude)&&Number.isFinite(x.longitude));
 const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
 const add=(date,n)=>new Date(Date.parse(date+"T12:00:00Z")+n*86400000).toISOString().slice(0,10);
 const referenceDate=today();
