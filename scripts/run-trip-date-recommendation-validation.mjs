@@ -52,6 +52,8 @@ const currentSnapshot={
   // monthly forecasts can be verified only after their target periods finish.
   seasonal:Object.fromEntries(longRange.points.map(item=>[item.point.id,{
     place:item.point.place,
+    weeklyUnits:item.weeklyUnits||null,
+    monthlyUnits:item.monthlyUnits||null,
     weekly:{
       time:item.weekly?.time||[],
       precipitation_mean:item.weekly?.precipitation_mean||[],
