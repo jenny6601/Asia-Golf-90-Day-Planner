@@ -19,7 +19,7 @@ export async function fetchAsiaGolfCourseCatalog({countryCode, enabledOnly = tru
     ids.add(course.id);
     if (!/^[A-Z]{2}$/.test(course.countryCode || "")) throw new Error("球場國家代碼錯誤：" + course.id);
     if (!course.name || !course.timezone) throw new Error("球場名稱或時區缺漏：" + course.id);
-    if (!["verified", "provisional", "pending"].includes(course.coordinateStatus)) throw new Error("座標狀態錯誤：" + course.id);
+    if (!["verified", "provisional", "pending", "user_provided_google_maps"].includes(course.coordinateStatus)) throw new Error("座標狀態錯誤：" + course.id);
     const hasLat = Number.isFinite(course.latitude), hasLon = Number.isFinite(course.longitude);
     if (hasLat !== hasLon) throw new Error("球場經緯度必須同時存在或同時缺漏：" + course.id);
     if (course.coordinateStatus === "pending" && (hasLat || hasLon)) throw new Error("待核實座標不得填入推測值：" + course.id);
