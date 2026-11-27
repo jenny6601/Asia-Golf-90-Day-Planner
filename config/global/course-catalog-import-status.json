@@ -27,8 +27,8 @@
       "targetSubregions": 19,
       "seedRecords": 22,
       "knownSourceCoverage": "Golf in Japan national directory states 2,308 courses and provides prefecture-specific course counts/cards; 23 directory cards imported across two batches. Earlier rendered count of 2,138 remains a source-page discrepancy requiring reconciliation. JNTO curated list cross-checks selected courses.",
-      "next": "Continue extracting prefecture listings in manageable batches; reconcile possible duplicate facilities and multi-layout resorts; validate official operating status and addresses; only then geocode and enable weather.",
-      "importedDirectoryRecords": 23
+      "next": "Next: continue prefecture extraction across all 47 prefectures, identify Okinawa facilities beyond the six pilot records, reconcile facility-versus-layout duplicates, then verify current operation and official coordinates.",
+      "importedDirectoryRecords": 26
     },
     {
       "code": "KR",
