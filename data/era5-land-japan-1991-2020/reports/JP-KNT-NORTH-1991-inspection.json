@@ -17,8 +17,8 @@
     {
       "name": "reanalysis-era5-land-timeseries-sfc-2m-temperaturew2n0bl6d.nc",
       "variables": [
-        "2m_temperature",
-        "2m_dewpoint_temperature"
+        "2m_dewpoint_temperature",
+        "2m_temperature"
       ],
       "timeCount": 8808,
       "duplicateTimestamps": false
@@ -42,14 +42,6 @@
     }
   ],
   "variables": {
-    "2m_temperature": {
-      "file": "reanalysis-era5-land-timeseries-sfc-2m-temperaturew2n0bl6d.nc",
-      "units": "K",
-      "missingFraction": 0.0,
-      "validValueCount": 8808,
-      "min": 268.402587890625,
-      "max": 306.55377197265625
-    },
     "2m_dewpoint_temperature": {
       "file": "reanalysis-era5-land-timeseries-sfc-2m-temperaturew2n0bl6d.nc",
       "units": "K",
@@ -57,6 +49,14 @@
       "validValueCount": 8808,
       "min": 258.24285888671875,
       "max": 300.4456787109375
+    },
+    "2m_temperature": {
+      "file": "reanalysis-era5-land-timeseries-sfc-2m-temperaturew2n0bl6d.nc",
+      "units": "K",
+      "missingFraction": 0.0,
+      "validValueCount": 8808,
+      "min": 268.402587890625,
+      "max": 306.55377197265625
     },
     "total_precipitation": {
       "file": "reanalysis-era5-land-timeseries-sfc-pressure-precipitationu5ulwsvj.nc",
