@@ -1,0 +1,47 @@
+name: Okinawa Candidate Weight Shadow Backtest
+
+'on':
+  push:
+    branches:
+      - asia-eight-country-shared-engine
+    paths:
+      - "scripts/run-trip-date-forecast-backtest.mjs"
+      - "assets/js/trip-date-recommendation-engine.js"
+      - "assets/js/trip-date-ranking-verification.js"
+      - "assets/js/trip-date-candidate-models.js"
+      - "data/okinawa-forecast-snapshots/**"
+      - ".github/workflows/trip-date-shadow-backtest.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "45 21 * * *" # 06:45 Asia/Tokyo daily
+
+permissions:
+  contents: read
+
+concurrency:
+  group: okinawa-candidate-weight-shadow-backtest
+  cancel-in-progress: true
+
+jobs:
+  shadow-backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run unit tests
+        run: npm test
+      - name: Compare candidate models against archived ERA5 outcomes
+        run: node scripts/run-trip-date-forecast-backtest.mjs
+      - name: Upload shadow comparison report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-candidate-weight-shadow-backtest
+          path: |
+            artifacts/trip-date-backtest/backtest.json
+            artifacts/trip-date-backtest/backtest.md
+          if-no-files-found: warn
+          retention-days: 30
