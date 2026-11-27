@@ -64,7 +64,7 @@ class ExportRegionalClimateEvidenceTests(unittest.TestCase):
     def test_insufficient_metric_remains_null(self):
         payload = climate_fixture()
         payload["regions"]["JP-TEST"]["dailyCalendar"][2]["metrics"]["precipitationMm"] = metric(
-            status="insufficient-history", years=12, mean=None, median=None, p90=None, wet=None
+            status="insufficient-history", years=30, mean=2.0, median=1.0, p90=8.0, wet=40.0
         )
         row = MODULE.export_evidence(payload, date(2026, 6, 15), 1)["regions"]["JP-TEST"]["records"][0]
         self.assertIsNone(row["rainFrequency"])
