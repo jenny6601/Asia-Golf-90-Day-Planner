@@ -1053,7 +1053,25 @@
           "candidateCourseName": "Mission Hills Golf Club Haikou",
           "candidateRationale": "海南省政府旅遊資料列名球場，位於海口",
           "candidateSourceUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 19.913184,
+            "longitude": 110.322778,
+            "timezone": "Asia/Shanghai",
+            "coordinateStatus": "public-course-neighbourhood-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/china/mission-hills-haikou-blackstone-course/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Mission Hills Haikou, official resort address and course map coordinate",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "CN-HN-EAST",
@@ -1065,7 +1083,25 @@
           "candidateCourseName": "The Dunes at Shenzhou Peninsula Golf Club",
           "candidateRationale": "海南省政府列名萬寧海岸球場，36 洞",
           "candidateSourceUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 18.678566,
+            "longitude": 110.368412,
+            "timezone": "Asia/Shanghai",
+            "coordinateStatus": "public-course-neighbourhood-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/china/the-dunes-at-shenzhou-peninsula-west-course/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 The Dunes at Shenzhou Peninsula, course map coordinate",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "CN-HN-SOUTH",
@@ -1077,7 +1113,25 @@
           "candidateCourseName": "Yalong Bay Golf Club",
           "candidateRationale": "海南省政府列名三亞球場，代表南端熱帶海岸",
           "candidateSourceUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 18.231389,
+            "longitude": 109.627161,
+            "timezone": "Asia/Shanghai",
+            "coordinateStatus": "public-course-neighbourhood-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/china/yalong-bay-golf-club/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Yalong Bay Golf Club, course directory coordinate",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "CN-SH-01",
@@ -1089,7 +1143,25 @@
           "candidateCourseName": "Sheshan International Golf Club",
           "candidateRationale": "上海代表性錦標賽球場候選",
           "candidateSourceUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 31.105843,
+            "longitude": 121.217694,
+            "timezone": "Asia/Shanghai",
+            "coordinateStatus": "public-course-neighbourhood-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/china/sheshan-golf-club/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Sheshan International Golf Club, course directory coordinate",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "CN-BJ-01",
@@ -1101,7 +1173,25 @@
           "candidateCourseName": "Topwin Golf and Country Club",
           "candidateRationale": "北京懷柔區代表球場候選",
           "candidateSourceUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 40.4076639,
+            "longitude": 116.7039686,
+            "timezone": "Asia/Shanghai",
+            "coordinateStatus": "public-course-neighbourhood-coordinate",
+            "coordinateSourceUrl": "https://elevation.maplogs.com/poi/topwin_golf_and_country_club_huairou_beijing_china.306237.html"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Topwin Golf and Country Club, public map coordinate",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "CN-GD-01",
@@ -1113,7 +1203,25 @@
           "candidateCourseName": "Foison Golf Club (Dye Course)",
           "candidateRationale": "廣州／佛山珠三角候選代表",
           "candidateSourceUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 23.13171,
+            "longitude": 113.26627,
+            "timezone": "Asia/Shanghai",
+            "coordinateStatus": "public-course-neighbourhood-coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/china/guangdong/fengshen/guangzhou-foison-golf-club"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Guangzhou Foison Golf Club, course directory coordinate",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "CN-YN-01",
@@ -1125,7 +1233,25 @@
           "candidateCourseName": "Spring City Golf & Lake Resort",
           "candidateRationale": "昆明代表球場候選，具有高原湖區地理代表性",
           "candidateSourceUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 24.92756,
+            "longitude": 103.02897,
+            "timezone": "Asia/Shanghai",
+            "coordinateStatus": "public-course-neighbourhood-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/china/spring-city-golf-lake-resort-mountain-course/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Spring City Golf and Lake Resort, course directory coordinate",
+            "checkedOn": "2026-11-27"
+          }
         }
       ]
     },
