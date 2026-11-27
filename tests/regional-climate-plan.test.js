@@ -8,15 +8,18 @@ const japan = registry.countries.find(country => country.countryCode === "JP");
 const mainland = japan.subregions.filter(item => !item.id.startsWith("JP-OKI-"));
 
 test("ERA5-Land mapping contains exactly one expected grid point for each Japan mainland subregion", () => {
-  assert.equal(mapping.subregionCount, 16);
-  assert.equal(mapping.points.length, 16);
-  assert.deepEqual(mapping.points.map(point => point.subregionId).sort(), mainland.map(item => item.id).sort());
-  assert.equal(new Set(mapping.points.map(point => point.subregionId)).size, 16);
+  assert.equal(mapping.subregionCount, 19);
+  assert.equal(mapping.points.length, 19);
+  const mappedMainland = mapping.points.filter(point => !point.subregionId.startsWith("JP-OKI-"));
+  const mappedOkinawa = mapping.points.filter(point => point.subregionId.startsWith("JP-OKI-"));
+  assert.deepEqual(mappedMainland.map(point => point.subregionId).sort(), mainland.map(item => item.id).sort());
+  assert.equal(mappedOkinawa.length, 3);
+  assert.equal(new Set(mapping.points.map(point => point.subregionId)).size, 19);
 });
 
 test("mapped points preserve canonical representative coordinates and use nearest 0.1 degree grid", () => {
   for (const point of mapping.points) {
-    const source = mainland.find(item => item.id === point.subregionId);
+    const source = japan.subregions.find(item => item.id === point.subregionId);
     assert.equal(point.representativePoint.latitude, source.candidateCoordinates.latitude);
     assert.equal(point.representativePoint.longitude, source.candidateCoordinates.longitude);
     assert.equal(point.era5LandGridPoint.latitude, Math.round(source.candidateCoordinates.latitude * 10) / 10);
@@ -27,7 +30,7 @@ test("mapped points preserve canonical representative coordinates and use neares
 });
 
 test("grid mapping is explicitly provisional until actual CDS coordinates are read back", () => {
-  assert.equal(mapping.status, "grid-point-mapping-only-not-data-download");
+  assert.equal(mapping.status, "expected-grid-mapping-for-19-japan-subregions-not-yet-verified-by-CDS-download");
   assert.match(mapping.caveat, /actual latitude\/longitude coordinates/);
   assert.equal(mapping.gridResolutionDegrees, 0.1);
 });
@@ -35,7 +38,7 @@ test("grid mapping is explicitly provisional until actual CDS coordinates are re
 test("ERA5-Land daily aggregation uses Japan local dates and documented units", () => {
   const plan = JSON.parse(readFileSync(new URL("../config/global/regional-climate-data-plan.json", import.meta.url), "utf8"));
   assert.equal(plan.baseline.dailyBoundaryTimezone, "Asia/Tokyo");
-  assert.match(plan.baseline.dailyAggregationRule, /Convert each hourly valid_time from UTC to Asia\/Tokyo first/);
+  assert.match(plan.baseline.dailyAggregationRule, /Convert each hourly UTC valid_time to Asia\/Tokyo/);
   assert.match(plan.baseline.precipitationHandling, /de-accumulated hourly values/);
   assert.match(plan.baseline.precipitationHandling, /Convert each hourly value to millimetres/);
   assert.ok(plan.normalizedDailyRecord.requiredFields.includes("localDayTimezone"));
