@@ -17,6 +17,7 @@ const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const asOf=today();
 const dates=Array.from({length:90},(_,i)=>addDays(asOf,i+1));
 const courseIds=["southern-links","palm-hills","pgm-okinawa","kise","atta-terrace","chura-orchard"];
+const representativeIds=["kise","pgm-okinawa","southern-links"];
 const courses=JSON.parse(await fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8"))
   .filter(x=>courseIds.includes(x.id));
 if(courses.length!==6)throw new Error("Expected exactly six configured Okinawa courses");
@@ -51,7 +52,7 @@ const report={
   sources:{
     shortForecast:{provider:forecast.provider,days:forecast.forecastDays,regions:forecast.zones.length},
     ec46Seas5:{provider:longRange.provider,model:longRange.model,regions:longRange.points.length},
-    historical:{provider:"Open-Meteo Historical Weather API",model:"ERA5 reanalysis",courseCount:history.length,period:history[0]?{startYear:history[0].startYear,endYear:history[0].endYear}:null},
+    historical:{provider:"Open-Meteo Historical Weather API",model:"ERA5 reanalysis",representativeCourseCount:history.length,representativeCourseIds:representativeIds,period:history[0]?{startYear:history[0].startYear,endYear:history[0].endYear}:null},
     forecastDirectionStability:{status:"not-available",snapshotCount:0,handling:"not fabricated; missing evidence is penalized in score and confidence"}
   },
   sourceAvailability:input.sourceAvailability,
@@ -61,7 +62,7 @@ const report={
     "EC46 weekly EFI and SEAS5 monthly precipitation anomalies are normalized into comparative rain-risk indices, not probabilities.",
     "ERA5 historical same-calendar-day wet-day frequency and rainfall amount are climate references, not future weather.",
     "No forecast direction stability archive was supplied; its absence lowers evidence coverage and prevents a high-confidence label.",
-    "Regional scores use north/central/south once each; six course histories are aggregated within their assigned region to avoid treating nearby courses as independent regional forecasts.",
+    "Each Okinawa region uses exactly one representative course for historical climate context: north=Kise, central=PGM Okinawa, south=Southern Links. Other same-region courses inherit the representative regional assessment.",
     "No data is imputed. Missing source fields remain absent and reduce eligibility."
   ]
 };
@@ -76,7 +77,8 @@ const renderWindow=(x,i)=>[
   "- 資料覆蓋率："+Math.round(x.dataCoverage*100)+"%；完整資料日："+x.completeDays+"/5；完整打球日："+x.completeGolfDays+"/3",
   "- 信心："+x.confidence,
   ...x.reasons.map(reason=>"- "+reason)
-].join("\n");
+].join("
+");
 const lines=[
   "# Okinawa 5D4N / 3-round trip-date recommendations",
   "",
@@ -98,5 +100,7 @@ const lines=[
   "## Data-quality notes",
   ...report.qualityNotes.map(x=>"- "+x)
 ];
-await fs.writeFile(new URL("../artifacts/trip-date-recommendations/recommendations.md",import.meta.url),lines.join("\n"));
-console.log(lines.join("\n"));
+await fs.writeFile(new URL("../artifacts/trip-date-recommendations/recommendations.md",import.meta.url),lines.join("
+"));
+console.log(lines.join("
+"));
