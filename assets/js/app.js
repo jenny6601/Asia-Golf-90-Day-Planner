@@ -1008,9 +1008,9 @@ async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAss
   candidates.push({start,end:weekEnd,rank,signal:mean,coverage:signals.length,source:signals.every(x=>x.source==="weekly")?"weekly":"monthly"});
  }
  }
- candidates.sort((a,b)=>a.rank-b.rank||a.signal-b.signal||a.start.localeCompare(b.start));
+ if(!hasDailyAssessment)candidates.sort((a,b)=>a.rank-b.rank||a.signal-b.signal||a.start.localeCompare(b.start));
  const picked=hasDailyAssessment?candidates:pickTopNonOverlappingWindows(candidates,3);
- if(!picked.length){panel.append(node("div",hasDailyAssessment?"目前沒有完整的逐日適打資料可供七天週次比較；為避免與月分析標準不一致，暫不以其他尺度資料替代。":"目前沒有取得可用的逐日適打資料，因此暫時無法排序推薦週次。","risk-summary"))}
+ if(!picked.length){panel.append(node("div",hasDailyAssessment?"目前沒有完整的逐日適打資料可供連續五天行程比較；為避免與月分析標準不一致，暫不以其他尺度資料替代。":"目前沒有取得可用的逐日適打資料，因此暫時無法排序推薦週次。","risk-summary"))}
  else{
   const grid=node("div",undefined,"week-grid top-week-grid");
   picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");const heading=node("div",undefined,"week-card-heading");heading.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")));const summary=node("div",undefined,"week-card-summary");if(x.source==="daily"){summary.append(node("span","適打 "+x.suitable+" 天｜可打 "+x.possible+" 天","week-rain-summary"),node("span","連續5天行程；與月分析使用相同逐日評分","week-confidence"))}else{summary.append(node("span","降雨趨勢："+["偏乾","接近基準","偏濕","顯著偏濕"][x.rank],"week-rain-summary"),node("span","資料可信度："+(x.source==="weekly"?"週尺度":"月尺度參考")+"｜覆蓋 "+x.coverage+"/"+records.length,"week-confidence"))}card.append(heading,summary);const choose=node("button","查看起始日起 7 天天氣報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month,null,()=>renderRegionTopWeeks(group,records,month,backAction,dailyAssessment),dailyAssessment));card.append(choose);grid.append(card)});
