@@ -1,0 +1,44 @@
+name: Scheduled 90-day forecast verification
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/90day-validation-schedule.yml"
+  schedule:
+    - cron: "0 20 * * *"
+permissions:
+  contents: write
+concurrency:
+  group: scheduled-90day-validation
+  cancel-in-progress: false
+jobs:
+  verify-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout verified preview engine
+        uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Run unit tests
+        run: npm test
+      - name: Run archived forecast verification
+        run: node scripts/run-trip-date-forecast-backtest.mjs
+      - name: Publish app-readable verification JSON
+        run: |
+          mkdir -p assets/data
+          cp artifacts/trip-date-backtest/backtest.json assets/data/90day-validation.json
+      - name: Commit updated validation data to preview engine
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/90day-validation.json
+          if git diff --cached --quiet; then
+            echo "No validation data changes."
+          else
+            git commit -m "Publish rolling 90-day verification data"
+            git push origin HEAD:asia-eight-country-shared-engine
+          fi
