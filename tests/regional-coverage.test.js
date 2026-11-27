@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
 import {buildRegionalCoverage} from "../assets/js/regional-coverage.js";
 
 const countries=[
@@ -49,4 +50,23 @@ test("canonical registry retains planned countries and uses the designated repre
  assert.equal(japan.subregions.find(x=>x.area==="北部").representative.id,"north-b");
  assert.equal(japan.subregions.find(x=>x.area==="北部").coverageStatus,"ready");
  assert.equal(result.countries.find(x=>x.code==="KR").registryStatus,"planned");
+});
+
+test("eight-country subregion registry has unique IDs and only the verified Okinawa pilot enabled",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const courseCatalog=JSON.parse(readFileSync(new URL("../config/global/courses.json",import.meta.url),"utf8"));
+ assert.equal(registry.countries.length,8);
+ assert.deepEqual(registry.countries.map(x=>x.countryCode),["JP","KR","CN","VN","TH","MY","SG","ID"]);
+ const all=registry.countries.flatMap(x=>x.subregions.map(s=>({...s,countryCode:x.countryCode})));
+ assert.equal(all.length,54);
+ assert.equal(new Set(all.map(x=>x.id)).size,all.length);
+ const configured=all.filter(x=>x.coverageStatus==="configured");
+ assert.deepEqual(configured.map(x=>x.id).sort(),["JP-OKI-CENTRAL","JP-OKI-NORTH","JP-OKI-SOUTH"]);
+ for(const item of configured){
+  assert.ok(courseCatalog.some(course=>course.id===item.representativeCourseId&&course.countryCode===item.countryCode&&course.enabled&&Number.isFinite(course.latitude)&&Number.isFinite(course.longitude)));
+ }
+ for(const item of all.filter(x=>x.countryCode!=="JP"||!x.id.startsWith("JP-OKI-"))){
+  assert.equal(item.coverageStatus,"planned");
+  assert.equal(item.representativeCourseId,null);
+ }
 });
