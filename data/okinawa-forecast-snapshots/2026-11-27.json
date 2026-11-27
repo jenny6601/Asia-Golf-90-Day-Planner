@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-27T07:13:33.553Z",
+  "fetchedAt": "2026-11-27T12:18:42.503Z",
   "localDate": "2026-11-27",
   "provider": "Open-Meteo Forecast API",
   "seasonalProvider": "Open-Meteo Seasonal Forecast API",
@@ -359,9 +359,9 @@
       },
       {
         "date": "2026-11-28",
-        "riskScore": 11.700000000000001,
+        "riskScore": 22.75,
         "coverage": 1,
-        "probability": 18,
+        "probability": 35,
         "rainMm": 0
       },
       {
@@ -380,87 +380,87 @@
       },
       {
         "date": "2026-12-01",
-        "riskScore": 7.15,
+        "riskScore": 13,
         "coverage": 1,
-        "probability": 11,
+        "probability": 20,
         "rainMm": 0
       },
       {
         "date": "2026-12-02",
-        "riskScore": 44.75,
+        "riskScore": 48,
         "coverage": 1,
-        "probability": 43,
+        "probability": 48,
         "rainMm": 4.8
       },
       {
         "date": "2026-12-03",
-        "riskScore": 53.8,
+        "riskScore": 57.699999999999996,
         "coverage": 1,
-        "probability": 65,
+        "probability": 71,
         "rainMm": 3.3
       },
       {
         "date": "2026-12-04",
-        "riskScore": 46.55,
+        "riskScore": 36.15,
         "coverage": 1,
-        "probability": 49,
+        "probability": 33,
         "rainMm": 4.2
       },
       {
         "date": "2026-12-05",
+        "riskScore": 22.75,
+        "coverage": 1,
+        "probability": 35,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-06",
         "riskScore": 25.35,
         "coverage": 1,
         "probability": 39,
         "rainMm": 0
       },
       {
-        "date": "2026-12-06",
-        "riskScore": 20.150000000000002,
-        "coverage": 1,
-        "probability": 31,
-        "rainMm": 0
-      },
-      {
         "date": "2026-12-07",
-        "riskScore": 37.050000000000004,
+        "riskScore": 38.35,
         "coverage": 1,
-        "probability": 57,
+        "probability": 59,
         "rainMm": 0
       },
       {
         "date": "2026-12-08",
-        "riskScore": 43.050000000000004,
+        "riskScore": 48.25,
         "coverage": 1,
-        "probability": 63,
+        "probability": 71,
         "rainMm": 0.6
       },
       {
         "date": "2026-12-09",
-        "riskScore": 31.85,
+        "riskScore": 38.35,
         "coverage": 1,
-        "probability": 49,
+        "probability": 59,
         "rainMm": 0
       },
       {
         "date": "2026-12-10",
-        "riskScore": 28.75,
+        "riskScore": 31.35,
         "coverage": 1,
-        "probability": 41,
+        "probability": 45,
         "rainMm": 0.6
       },
       {
         "date": "2026-12-11",
-        "riskScore": 31.900000000000002,
+        "riskScore": 29.95,
         "coverage": 1,
-        "probability": 48,
+        "probability": 45,
         "rainMm": 0.2
       },
       {
         "date": "2026-12-12",
-        "riskScore": 54.45,
+        "riskScore": 38,
         "coverage": 1,
         "probability": 52,
-        "rainMm": 5.9
+        "rainMm": 1.2
       }
     ],
     "central": [
@@ -473,108 +473,108 @@
       },
       {
         "date": "2026-11-28",
-        "riskScore": 16.4,
+        "riskScore": 28.75,
         "coverage": 1,
-        "probability": 22,
+        "probability": 41,
         "rainMm": 0.6
       },
       {
         "date": "2026-11-29",
-        "riskScore": 0.65,
+        "riskScore": 1.3,
         "coverage": 1,
-        "probability": 1,
+        "probability": 2,
         "rainMm": 0
       },
       {
         "date": "2026-11-30",
-        "riskScore": 2.95,
+        "riskScore": 6.85,
         "coverage": 1,
-        "probability": 4,
+        "probability": 10,
         "rainMm": 0.1
       },
       {
         "date": "2026-12-01",
-        "riskScore": 11.05,
+        "riskScore": 15.600000000000001,
         "coverage": 1,
-        "probability": 10,
+        "probability": 17,
         "rainMm": 1.3
       },
       {
         "date": "2026-12-02",
-        "riskScore": 51.6,
+        "riskScore": 54.2,
         "coverage": 1,
-        "probability": 53,
+        "probability": 57,
         "rainMm": 4.9
       },
       {
         "date": "2026-12-03",
-        "riskScore": 52.5,
+        "riskScore": 59,
         "coverage": 1,
-        "probability": 63,
+        "probability": 73,
         "rainMm": 3.3
       },
       {
         "date": "2026-12-04",
-        "riskScore": 43.05,
+        "riskScore": 41.75,
         "coverage": 1,
-        "probability": 49,
+        "probability": 47,
         "rainMm": 3.2
       },
       {
         "date": "2026-12-05",
-        "riskScore": 20.25,
+        "riskScore": 18.95,
         "coverage": 1,
-        "probability": 29,
+        "probability": 27,
         "rainMm": 0.4
       },
       {
         "date": "2026-12-06",
-        "riskScore": 16.25,
+        "riskScore": 22.75,
         "coverage": 1,
-        "probability": 25,
+        "probability": 35,
         "rainMm": 0
       },
       {
         "date": "2026-12-07",
-        "riskScore": 30.55,
+        "riskScore": 29.25,
         "coverage": 1,
-        "probability": 47,
+        "probability": 45,
         "rainMm": 0
       },
       {
         "date": "2026-12-08",
-        "riskScore": 39.800000000000004,
+        "riskScore": 37.85,
         "coverage": 1,
-        "probability": 58,
+        "probability": 55,
         "rainMm": 0.6
       },
       {
         "date": "2026-12-09",
-        "riskScore": 31.85,
+        "riskScore": 35.75,
         "coverage": 1,
-        "probability": 49,
+        "probability": 55,
         "rainMm": 0
       },
       {
         "date": "2026-12-10",
-        "riskScore": 31.35,
+        "riskScore": 33.95,
         "coverage": 1,
-        "probability": 45,
+        "probability": 49,
         "rainMm": 0.6
       },
       {
         "date": "2026-12-11",
-        "riskScore": 34.05,
+        "riskScore": 23.650000000000002,
         "coverage": 1,
-        "probability": 47,
+        "probability": 31,
         "rainMm": 1
       },
       {
         "date": "2026-12-12",
-        "riskScore": 65.3,
+        "riskScore": 38.35,
         "coverage": 1,
         "probability": 52,
-        "rainMm": 9
+        "rainMm": 1.3
       }
     ],
     "south": [
@@ -587,108 +587,108 @@
       },
       {
         "date": "2026-11-28",
-        "riskScore": 18.15,
+        "riskScore": 30.5,
         "coverage": 1,
-        "probability": 22,
+        "probability": 41,
         "rainMm": 1.1
       },
       {
         "date": "2026-11-29",
-        "riskScore": 0.65,
+        "riskScore": 1.3,
         "coverage": 1,
-        "probability": 1,
+        "probability": 2,
         "rainMm": 0
       },
       {
         "date": "2026-11-30",
-        "riskScore": 2.95,
+        "riskScore": 6.85,
         "coverage": 1,
-        "probability": 4,
+        "probability": 10,
         "rainMm": 0.1
       },
       {
         "date": "2026-12-01",
-        "riskScore": 7.2,
+        "riskScore": 11.75,
         "coverage": 1,
-        "probability": 10,
+        "probability": 17,
         "rainMm": 0.2
       },
       {
         "date": "2026-12-02",
-        "riskScore": 44.25,
+        "riskScore": 46.85,
         "coverage": 1,
-        "probability": 53,
+        "probability": 57,
         "rainMm": 2.8
       },
       {
         "date": "2026-12-03",
-        "riskScore": 50.400000000000006,
+        "riskScore": 56.900000000000006,
         "coverage": 1,
-        "probability": 63,
+        "probability": 73,
         "rainMm": 2.7
       },
       {
         "date": "2026-12-04",
-        "riskScore": 44.45,
+        "riskScore": 43.15,
         "coverage": 1,
-        "probability": 49,
+        "probability": 47,
         "rainMm": 3.6
       },
       {
         "date": "2026-12-05",
-        "riskScore": 18.85,
+        "riskScore": 17.55,
         "coverage": 1,
-        "probability": 29,
+        "probability": 27,
         "rainMm": 0
       },
       {
         "date": "2026-12-06",
-        "riskScore": 16.25,
+        "riskScore": 22.75,
         "coverage": 1,
-        "probability": 25,
+        "probability": 35,
         "rainMm": 0
       },
       {
         "date": "2026-12-07",
-        "riskScore": 30.55,
+        "riskScore": 29.25,
         "coverage": 1,
-        "probability": 47,
+        "probability": 45,
         "rainMm": 0
       },
       {
         "date": "2026-12-08",
-        "riskScore": 44,
+        "riskScore": 42.05,
         "coverage": 1,
-        "probability": 58,
+        "probability": 55,
         "rainMm": 1.8
       },
       {
         "date": "2026-12-09",
-        "riskScore": 31.85,
+        "riskScore": 35.75,
         "coverage": 1,
-        "probability": 49,
+        "probability": 55,
         "rainMm": 0
       },
       {
         "date": "2026-12-10",
-        "riskScore": 35.55,
+        "riskScore": 38.15,
         "coverage": 1,
-        "probability": 45,
+        "probability": 49,
         "rainMm": 1.8
       },
       {
         "date": "2026-12-11",
-        "riskScore": 31.25,
+        "riskScore": 20.85,
         "coverage": 1,
-        "probability": 47,
+        "probability": 31,
         "rainMm": 0.2
       },
       {
         "date": "2026-12-12",
-        "riskScore": 61.3,
+        "riskScore": 25.9,
         "coverage": 1,
-        "probability": 48,
-        "rainMm": 8.6
+        "probability": 35,
+        "rainMm": 0.9
       }
     ]
   },
@@ -698,9 +698,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 11.700000000000001,
+            "riskScore": 22.75,
             "coverage": 1,
-            "probability": 18,
+            "probability": 35,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -717,9 +717,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 16.4,
+            "riskScore": 28.75,
             "coverage": 1,
-            "probability": 22,
+            "probability": 41,
             "rainMm": 0.6,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -736,9 +736,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 18.150000000000002,
+            "riskScore": 30.500000000000004,
             "coverage": 1,
-            "probability": 22,
+            "probability": 41,
             "rainMm": 1.1,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -779,9 +779,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 0.65,
+            "riskScore": 1.3,
             "coverage": 1,
-            "probability": 1,
+            "probability": 2,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -798,9 +798,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 0.65,
+            "riskScore": 1.3,
             "coverage": 1,
-            "probability": 1,
+            "probability": 2,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -841,9 +841,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 2.95,
+            "riskScore": 6.85,
             "coverage": 1,
-            "probability": 4,
+            "probability": 10,
             "rainMm": 0.1,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -860,9 +860,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 2.95,
+            "riskScore": 6.85,
             "coverage": 1,
-            "probability": 4,
+            "probability": 10,
             "rainMm": 0.1,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -884,9 +884,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 7.15,
+            "riskScore": 13,
             "coverage": 1,
-            "probability": 11,
+            "probability": 20,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -903,9 +903,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 11.05,
+            "riskScore": 15.600000000000001,
             "coverage": 1,
-            "probability": 10,
+            "probability": 17,
             "rainMm": 1.3,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -922,9 +922,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 7.2,
+            "riskScore": 11.75,
             "coverage": 1,
-            "probability": 10,
+            "probability": 17,
             "rainMm": 0.2,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -946,9 +946,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 44.75,
+            "riskScore": 48,
             "coverage": 1,
-            "probability": 43,
+            "probability": 48,
             "rainMm": 4.8,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -965,9 +965,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 51.60000000000001,
+            "riskScore": 54.2,
             "coverage": 1,
-            "probability": 53,
+            "probability": 57,
             "rainMm": 4.9,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -984,9 +984,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 44.25,
+            "riskScore": 46.85,
             "coverage": 1,
-            "probability": 53,
+            "probability": 57,
             "rainMm": 2.8,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1008,9 +1008,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 53.8,
+            "riskScore": 57.699999999999996,
             "coverage": 1,
-            "probability": 65,
+            "probability": 71,
             "rainMm": 3.3,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1027,9 +1027,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 52.5,
+            "riskScore": 59,
             "coverage": 1,
-            "probability": 63,
+            "probability": 73,
             "rainMm": 3.3,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1046,9 +1046,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 50.400000000000006,
+            "riskScore": 56.900000000000006,
             "coverage": 1,
-            "probability": 63,
+            "probability": 73,
             "rainMm": 2.7,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1070,9 +1070,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 46.550000000000004,
+            "riskScore": 36.15,
             "coverage": 1,
-            "probability": 49,
+            "probability": 33,
             "rainMm": 4.2,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1089,9 +1089,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 43.05,
+            "riskScore": 41.75,
             "coverage": 1,
-            "probability": 49,
+            "probability": 47,
             "rainMm": 3.2,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1108,9 +1108,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 44.45,
+            "riskScore": 43.15,
             "coverage": 1,
-            "probability": 49,
+            "probability": 47,
             "rainMm": 3.6,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1132,9 +1132,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 25.35,
+            "riskScore": 22.75,
             "coverage": 1,
-            "probability": 39,
+            "probability": 35,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1151,9 +1151,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 20.25,
+            "riskScore": 18.95,
             "coverage": 1,
-            "probability": 29,
+            "probability": 27,
             "rainMm": 0.4,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1170,9 +1170,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 18.85,
+            "riskScore": 17.55,
             "coverage": 1,
-            "probability": 29,
+            "probability": 27,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1194,9 +1194,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 20.150000000000002,
+            "riskScore": 25.35,
             "coverage": 1,
-            "probability": 31,
+            "probability": 39,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1213,9 +1213,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 16.25,
+            "riskScore": 22.75,
             "coverage": 1,
-            "probability": 25,
+            "probability": 35,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1232,9 +1232,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 16.25,
+            "riskScore": 22.75,
             "coverage": 1,
-            "probability": 25,
+            "probability": 35,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1256,9 +1256,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 37.050000000000004,
+            "riskScore": 38.35,
             "coverage": 1,
-            "probability": 57,
+            "probability": 59,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1275,9 +1275,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 30.55,
+            "riskScore": 29.25,
             "coverage": 1,
-            "probability": 47,
+            "probability": 45,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1294,9 +1294,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 30.55,
+            "riskScore": 29.25,
             "coverage": 1,
-            "probability": 47,
+            "probability": 45,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1318,9 +1318,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 43.050000000000004,
+            "riskScore": 48.25,
             "coverage": 1,
-            "probability": 63,
+            "probability": 71,
             "rainMm": 0.6,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1337,9 +1337,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 39.800000000000004,
+            "riskScore": 37.85,
             "coverage": 1,
-            "probability": 58,
+            "probability": 55,
             "rainMm": 0.6,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1356,9 +1356,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 44,
+            "riskScore": 42.05,
             "coverage": 1,
-            "probability": 58,
+            "probability": 55,
             "rainMm": 1.8,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1380,9 +1380,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 31.85,
+            "riskScore": 38.35,
             "coverage": 1,
-            "probability": 49,
+            "probability": 59,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1399,9 +1399,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 31.85,
+            "riskScore": 35.75,
             "coverage": 1,
-            "probability": 49,
+            "probability": 55,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1418,9 +1418,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 31.85,
+            "riskScore": 35.75,
             "coverage": 1,
-            "probability": 49,
+            "probability": 55,
             "rainMm": 0,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1442,9 +1442,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 28.75,
+            "riskScore": 31.35,
             "coverage": 1,
-            "probability": 41,
+            "probability": 45,
             "rainMm": 0.6,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1461,9 +1461,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 31.35,
+            "riskScore": 33.95,
             "coverage": 1,
-            "probability": 45,
+            "probability": 49,
             "rainMm": 0.6,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1480,9 +1480,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 35.55,
+            "riskScore": 38.15,
             "coverage": 1,
-            "probability": 45,
+            "probability": 49,
             "rainMm": 1.8,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1504,9 +1504,9 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 31.900000000000002,
+            "riskScore": 29.95,
             "coverage": 1,
-            "probability": 48,
+            "probability": 45,
             "rainMm": 0.2,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1523,9 +1523,9 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 34.05,
+            "riskScore": 23.650000000000002,
             "coverage": 1,
-            "probability": 47,
+            "probability": 31,
             "rainMm": 1,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1542,9 +1542,9 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 31.25,
+            "riskScore": 20.85,
             "coverage": 1,
-            "probability": 47,
+            "probability": 31,
             "rainMm": 0.2,
             "method": "daily-probability-and-amount-impact-index"
           },
@@ -1566,10 +1566,10 @@
       "regions": {
         "north": {
           "forecast": {
-            "riskScore": 54.45,
+            "riskScore": 38,
             "coverage": 1,
             "probability": 52,
-            "rainMm": 5.9,
+            "rainMm": 1.2,
             "method": "daily-probability-and-amount-impact-index"
           },
           "historical": {
@@ -1585,10 +1585,10 @@
         },
         "central": {
           "forecast": {
-            "riskScore": 65.3,
+            "riskScore": 38.35,
             "coverage": 1,
             "probability": 52,
-            "rainMm": 9,
+            "rainMm": 1.3,
             "method": "daily-probability-and-amount-impact-index"
           },
           "historical": {
@@ -1604,10 +1604,10 @@
         },
         "south": {
           "forecast": {
-            "riskScore": 61.3,
+            "riskScore": 25.9,
             "coverage": 1,
-            "probability": 48,
-            "rainMm": 8.6,
+            "probability": 35,
+            "rainMm": 0.9,
             "method": "daily-probability-and-amount-impact-index"
           },
           "historical": {
