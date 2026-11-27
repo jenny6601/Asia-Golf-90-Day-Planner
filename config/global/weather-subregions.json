@@ -1,24 +1,24 @@
 {
-  "schemaVersion": 1,
-  "purpose": "Weather analysis is performed once per subregion using one representative golf-course coordinate. Other courses in the same subregion inherit the regional weather assessment.",
+  "schemaVersion": 2,
+  "purpose": "All eight countries use golf-course-cluster subregions. Each cluster is a destination-oriented golf course group; one representative golf-course or nearby regional coordinate supplies climate analysis shared by all courses in that cluster.",
   "countries": [
     {
       "countryCode": "JP",
       "countryNameZh": "日本",
-      "coverageStatus": "partial",
+      "coverageStatus": "cluster-defined",
       "referenceUrl": "https://www.japan.travel/en/sports/golf/courses/",
       "subregions": [
         {
-          "id": "JP-HKD-CENTRAL",
-          "region": "Hokkaido",
-          "subregion": "道央／札幌近郊",
-          "label": "北海道・道央／札幌近郊",
+          "id": "JP-HKD-SAPPORO",
+          "region": "北海道",
+          "subregion": "札幌／千歲球場群",
+          "label": "北海道・札幌／千歲球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "The North Country Golf Club",
-          "candidateRationale": "千歲、札幌與新千歲機場周邊的道央代表候選。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以札幌／千歲球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.the-north.co.jp/en/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 42.82058,
             "longitude": 141.59652,
@@ -26,7 +26,7 @@
             "coordinateSourceUrl": "https://www.jgto.org/en/club/jgto",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-north-country",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-and-JGTO-identity-address-confirmed",
@@ -54,18 +54,52 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-HKD-SAPPORO",
+          "clusterCourseIds": [
+            "jp-north-country",
+            "jp-hokkaido-golf-club"
+          ],
+          "courseCount": 2,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-HKD-SOUTH",
-          "region": "Hokkaido",
-          "subregion": "道南／函館・大沼",
-          "label": "北海道・道南／函館・大沼",
+          "id": "JP-HKD-NISEKO",
+          "golfClusterId": "JP-HKD-NISEKO",
+          "region": "北海道",
+          "subregion": "二世谷／留壽都度假球場群",
+          "label": "北海道・二世谷／留壽都度假球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-niseko-village-golf",
+          "candidateCourseName": "Niseko Village Golf Course",
+          "candidateRationale": "以二世谷／留壽都度假球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://niseko-golf.com/en/course/",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 42.847109,
+            "longitude": 140.685607,
+            "coordinateStatus": "third_party_course_coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/japan/niseko-village-golf-course/",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-niseko-village-golf"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-HKD-HAKODATE",
+          "region": "北海道",
+          "subregion": "函館／大沼球場群",
+          "label": "北海道・函館／大沼球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Hokkaido Country Club",
-          "candidateRationale": "位於七飯町大沼地區，作為道南與函館周邊候選；營運與精確座標仍待正式核對。",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以函館／大沼球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 41.9892895,
             "longitude": 140.6549955,
@@ -73,7 +107,7 @@
             "coordinateSourceUrl": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-hokkaido-country",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-and-address-confirmed",
@@ -105,19 +139,55 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-HKD-HAKODATE",
+          "candidateSourceUrl": "https://www.princehotels.co.jp/golf/hokkaido/faq/",
+          "clusterCourseIds": [
+            "jp-hokkaido-country"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-THK-NORTH",
-          "region": "Tohoku",
-          "subregion": "北東北／岩手・青森",
-          "label": "東北・北東北",
+          "id": "JP-THK-AOMORI-AKITA",
+          "golfClusterId": "JP-THK-AOMORI-AKITA",
+          "region": "東北",
+          "subregion": "青森／秋田北部球場群",
+          "label": "東北・青森／秋田北部球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-aomori-cc",
+          "candidateCourseName": "Aomori Country Club",
+          "candidateRationale": "以青森／秋田北部球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 40.73722,
+            "longitude": 140.74876,
+            "coordinateStatus": "third_party_map_coordinate",
+            "coordinateSourceUrl": "https://mapcarta.com/29357608",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-akita-kita-kuko",
+            "jp-aomori-cc",
+            "jp-aomori-royal"
+          ],
+          "courseCount": 3,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-THK-IWATE-APPI",
+          "region": "東北",
+          "subregion": "岩手／安比高原球場群",
+          "label": "東北・岩手／安比高原球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Appi Kogen Golf Club",
-          "candidateRationale": "岩手縣安比高原球場，作為北東北高原氣候帶候選。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以岩手／安比高原球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.appi.co.jp/en/golf-club/agc-appi-kogen-golf-club/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 40.01249,
             "longitude": 141.00652,
@@ -125,7 +195,7 @@
             "coordinateSourceUrl": "https://elitegolfjapan.com/courses/appi-kogen-golf-club/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-appi-kogen",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-address-and-2026-season-confirmed",
@@ -154,19 +224,25 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-THK-IWATE-APPI",
+          "clusterCourseIds": [
+            "jp-appi-kogen"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-THK-SOUTH",
-          "region": "Tohoku",
-          "subregion": "南東北／宮城・仙台",
-          "label": "東北・南東北／仙台",
+          "id": "JP-THK-MIYAGI-SENDAI",
+          "region": "東北",
+          "subregion": "仙台／宮城球場群",
+          "label": "東北・仙台／宮城球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Rifu Golf Club",
-          "candidateRationale": "宮城縣利府町球場，位於仙台都會圈，作為南東北代表候選。",
-          "candidateSourceUrl": "https://ir.pacificgolf.co.jp/course/index.asp",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以仙台／宮城球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://ir.pacificgolf.co.jp/rifu/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 38.35994,
             "longitude": 140.981828,
@@ -174,7 +250,7 @@
             "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/miyagi/miyagi/rifu-golf-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-rifu",
           "courseIdentityVerification": {
             "verificationLevel": "official-PGM-operator-identity-address-booking-and-contact-confirmed",
@@ -205,19 +281,164 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-THK-MIYAGI-SENDAI",
+          "clusterCourseIds": [
+            "jp-rifu"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-KNT-NORTH",
-          "region": "Kanto",
-          "subregion": "北關東／栃木・群馬・茨城",
-          "label": "關東・北關東",
+          "id": "JP-THK-FUKUSHIMA-YAMAGATA",
+          "golfClusterId": "JP-THK-FUKUSHIMA-YAMAGATA",
+          "region": "東北",
+          "subregion": "福島／山形球場群",
+          "label": "東北・福島／山形球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-adatara",
+          "candidateCourseName": "Adatara Country Club",
+          "candidateRationale": "以福島／山形球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 37.57389,
+            "longitude": 140.362964,
+            "coordinateStatus": "third_party_area_coordinate",
+            "coordinateSourceUrl": "https://arealog.net/20900/",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-adatara"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-KNT-TOKYO-KANAGAWA",
+          "golfClusterId": "JP-KNT-TOKYO-KANAGAWA",
+          "region": "關東",
+          "subregion": "東京／神奈川球場群",
+          "label": "關東・東京／神奈川球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-hachioji-cc",
+          "candidateCourseName": "Hachioji Country Club",
+          "candidateRationale": "以東京／神奈川球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 35.695169,
+            "longitude": 139.279074,
+            "coordinateStatus": "third_party_course_coordinate",
+            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tokyo/hachioji/hachioji-country-club",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-hayama-kokusai",
+            "jp-fuchu-country",
+            "jp-gmg-hachioji",
+            "jp-hachioji-cc",
+            "jp-izu-oshima"
+          ],
+          "courseCount": 5,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-KNT-CHIBA-NARITA",
+          "region": "關東",
+          "subregion": "千葉／成田／市原球場群",
+          "label": "關東・千葉／成田／市原球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseName": "Narita Hills Country Club",
+          "candidateRationale": "以千葉／成田／市原球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/narita-hills-country-club/",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 35.83503,
+            "longitude": 140.27659,
+            "coordinateStatus": "osm-map-coordinate",
+            "coordinateSourceUrl": "https://mapcarta.com/W426264339",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "candidateCourseId": "jp-narita-hills",
+          "courseIdentityVerification": {
+            "verificationLevel": "JNTO-identity-address-confirmed",
+            "officialSourceUrl": "https://www.japan.travel/en/sports/golf/courses/narita-hills-country-club/",
+            "officialAddress": "1236-3, Ryukakuji, Sakae-machi, Inba-gun, Chiba-ken, Japan",
+            "operationalEvidence": "JNTO course profile and access details confirmed; current operator booking status not independently checked",
+            "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "官方地圖中心與公開球場點有差異",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
+            "officialMapReference": {
+              "type": "official-google-maps-embed-center",
+              "url": "https://narita-hills.co.jp/access/",
+              "latitude": 35.8339378,
+              "longitude": 140.2766322,
+              "coordinateType": "map-viewport-center-not-pin",
+              "distanceFromCandidateKm": 0.122,
+              "crossCheckResult": "official-map-center-is-nearby-but-not-identical-to-public-course-centroid;must-not-replace-until-pin-confirmed",
+              "checkedOn": "2026-11-27"
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
+          },
+          "golfClusterId": "JP-KNT-CHIBA-NARITA",
+          "clusterCourseIds": [
+            "jp-narita-hills",
+            "jp-manna-country"
+          ],
+          "courseCount": 2,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-KNT-IBARAKI-TSUKUBA",
+          "golfClusterId": "JP-KNT-IBARAKI-TSUKUBA",
+          "region": "關東",
+          "subregion": "茨城／筑波球場群",
+          "label": "關東・茨城／筑波球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-31-country",
+          "candidateCourseName": "31 Country Club",
+          "candidateRationale": "以茨城／筑波球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 36.07964324951172,
+            "longitude": 139.82562255859375,
+            "coordinateStatus": "third_party_booking_google_maps_place_coordinate",
+            "coordinateSourceUrl": "https://booking.gora.golf.rakuten.co.jp/guide/map/c_id/80122/",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-31-country"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-KNT-TOCHIGI-NASU",
+          "region": "關東",
+          "subregion": "栃木／那須球場群",
+          "label": "關東・栃木／那須球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Seven Hundred Club",
-          "candidateRationale": "栃木縣球場，代表北關東內陸區域候選。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以栃木／那須球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.visit-tochigi.com/plan-your-trip/things-to-do/25836/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 36.709629,
             "longitude": 140.004827,
@@ -225,7 +446,7 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/tochigi/sakura/seven-hundred-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-seven-hundred",
           "courseIdentityVerification": {
             "verificationLevel": "prefectural-tourism-directory-identity-address-and-operation-details-confirmed",
@@ -253,66 +474,85 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-KNT-TOCHIGI-NASU",
+          "clusterCourseIds": [
+            "jp-seven-hundred",
+            "jp-25-nasu",
+            "jp-mashiko-country",
+            "jp-murasakizuka"
+          ],
+          "courseCount": 4,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-KNT-SOUTH",
-          "region": "Kanto",
-          "subregion": "南關東／千葉・東京灣",
-          "label": "關東・南關東／千葉",
+          "id": "JP-KNT-GUNMA-SAITAMA",
+          "golfClusterId": "JP-KNT-GUNMA-SAITAMA",
+          "region": "關東",
+          "subregion": "群馬／埼玉球場群",
+          "label": "關東・群馬／埼玉球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
-          "candidateCourseName": "Narita Hills Country Club",
-          "candidateRationale": "千葉縣球場，作為南關東與成田周邊代表候選。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateCourseId": "jp-iruma-country",
+          "candidateCourseName": "Iruma Country Club",
+          "candidateRationale": "以群馬／埼玉球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
-            "latitude": 35.83503,
-            "longitude": 140.27659,
-            "coordinateStatus": "osm-map-coordinate",
-            "coordinateSourceUrl": "https://mapcarta.com/W426264339",
+            "latitude": 35.969597,
+            "longitude": 139.315163,
+            "coordinateStatus": "official_operator_google_maps_place_pin",
+            "coordinateSourceUrl": "https://www.resol-golf.jp/en/iruma/access/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-narita-hills",
-          "courseIdentityVerification": {
-            "verificationLevel": "JNTO-identity-address-confirmed",
-            "officialSourceUrl": "https://www.japan.travel/en/sports/golf/courses/narita-hills-country-club/",
-            "officialAddress": "1236-3, Ryukakuji, Sakae-machi, Inba-gun, Chiba-ken, Japan",
-            "operationalEvidence": "JNTO course profile and access details confirmed; current operator booking status not independently checked",
-            "checkedOn": "2026-11-27"
-          },
-          "coordinateQuality": {
-            "grade": "B",
-            "label": "官方地圖中心與公開球場點有差異",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
-            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
-            "officialMapReference": {
-              "type": "official-google-maps-embed-center",
-              "url": "https://narita-hills.co.jp/access/",
-              "latitude": 35.8339378,
-              "longitude": 140.2766322,
-              "coordinateType": "map-viewport-center-not-pin",
-              "distanceFromCandidateKm": 0.122,
-              "crossCheckResult": "official-map-center-is-nearby-but-not-identical-to-public-course-centroid;must-not-replace-until-pin-confirmed",
-              "checkedOn": "2026-11-27"
-            },
-            "regionalClimateEligible": true,
-            "coordinatePurpose": "regional-climate-representative-point"
-          }
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-iruma-country",
+            "jp-adonis-ogawa"
+          ],
+          "courseCount": 2,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-CHB-KOSHIN",
-          "region": "Chubu",
-          "subregion": "甲信／富士・山梨",
-          "label": "中部・甲信／富士",
+          "id": "JP-CHB-SHIZUOKA-FUJI-IZU",
+          "golfClusterId": "JP-CHB-SHIZUOKA-FUJI-IZU",
+          "region": "中部",
+          "subregion": "富士／御殿場／靜岡東部球場群",
+          "label": "中部・富士／御殿場／靜岡東部球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-dai-atami-kokusai",
+          "candidateCourseName": "Dai-Atami Kokusai Golf Club",
+          "candidateRationale": "以富士／御殿場／靜岡東部球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 35.016667,
+            "longitude": 139.033333,
+            "coordinateStatus": "official_operator_rounded_coordinate",
+            "coordinateSourceUrl": "https://www.resol-golf.jp/en/daiatami/",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-dai-atami-kokusai",
+            "jp-daifuji",
+            "jp-gora-kadan-fuji"
+          ],
+          "courseCount": 3,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-CHB-FUJI-YAMANASHI",
+          "region": "中部",
+          "subregion": "山梨／河口湖球場群",
+          "label": "中部・山梨／河口湖球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Kawaguchiko Country Club",
-          "candidateRationale": "山梨縣富士山周邊候選，代表內陸高地與富士山氣候帶。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以山梨／河口湖球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://kcc.tatemono-golf.com/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 35.4682136,
             "longitude": 138.7517012,
@@ -320,7 +560,7 @@
             "coordinateSourceUrl": "https://kcc.tatemono-golf.com/access/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-kawaguchiko",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-address-and-current-site-activity-confirmed",
@@ -356,19 +596,83 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-CHB-FUJI-YAMANASHI",
+          "clusterCourseIds": [
+            "jp-kawaguchiko",
+            "jp-green-valley",
+            "jp-fuji-classic",
+            "jp-fuji-golf-course"
+          ],
+          "courseCount": 4,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-CHB-TOKAI",
-          "region": "Chubu",
-          "subregion": "東海／三重・名古屋周邊",
-          "label": "中部・東海",
+          "id": "JP-CHB-NAGANO-KARUIZAWA",
+          "golfClusterId": "JP-CHB-NAGANO-KARUIZAWA",
+          "region": "中部",
+          "subregion": "長野／輕井澤球場群",
+          "label": "中部・長野／輕井澤球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-eau-sol-vert-karuizawa",
+          "candidateCourseName": "Eau Sol Vert Karuizawa Club",
+          "candidateRationale": "以長野／輕井澤球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 36.296969,
+            "longitude": 138.584117,
+            "coordinateStatus": "official_operator_google_maps_embed_center",
+            "coordinateSourceUrl": "https://esv-club.com/access/",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-eau-sol-vert-karuizawa"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-CHB-NAGOYA-GIFU",
+          "golfClusterId": "JP-CHB-NAGOYA-GIFU",
+          "region": "中部",
+          "subregion": "名古屋／岐阜球場群",
+          "label": "中部・名古屋／岐阜球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-adonis",
+          "candidateCourseName": "Adonis Golf Club",
+          "candidateRationale": "以名古屋／岐阜球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 35.31468298028144,
+            "longitude": 137.45991731575117,
+            "coordinateStatus": "official_operator_google_maps_embed_center",
+            "coordinateSourceUrl": "https://adonis-gc.com/access.html",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-14-hills",
+            "jp-adonis"
+          ],
+          "courseCount": 2,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-CHB-MIE-ISE",
+          "region": "中部",
+          "subregion": "三重／伊勢志摩球場群",
+          "label": "中部・三重／伊勢志摩球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Tsu Country Club",
-          "candidateRationale": "三重縣球場，代表東海沿岸與名古屋南側區域。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以三重／伊勢志摩球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://tsu.co.jp/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 34.72587,
             "longitude": 136.42721,
@@ -376,7 +680,7 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/mie/tsu/tsu-country-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-tsu",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-address-booking-and-course-details-confirmed",
@@ -403,19 +707,25 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-CHB-MIE-ISE",
+          "clusterCourseIds": [
+            "jp-tsu"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHB-HOKURIKU",
-          "region": "Chubu",
-          "subregion": "北陸／石川・能登",
-          "label": "中部・北陸／石川",
+          "region": "中部",
+          "subregion": "北陸／石川／富山／福井球場群",
+          "label": "中部・北陸／石川／富山／福井球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Tokinodai Country Club",
-          "candidateRationale": "石川縣能登半島球場，海側風場與地形具北陸代表性。",
-          "candidateSourceUrl": "https://www.apga-golf.org/golf-in-japan/tokinodai-country-club?lang=en",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以北陸／石川／富山／福井球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://tokinodai.co.jp/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 36.91549,
             "longitude": 136.775147,
@@ -423,7 +733,7 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/ishikawa/hakui/tokinodai-country-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-tokinodai",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-address-reservation-and-2026-calendar-confirmed",
@@ -453,19 +763,26 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-CHB-HOKURIKU",
+          "clusterCourseIds": [
+            "jp-tokinodai",
+            "jp-aga-kogen"
+          ],
+          "courseCount": 2,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-KNS-CENTRAL",
-          "region": "Kansai",
-          "subregion": "京阪神／兵庫・大阪・京都",
-          "label": "關西・京阪神",
+          "id": "JP-KNS-OSAKA-HYOGO",
+          "region": "關西",
+          "subregion": "大阪／神戶／兵庫球場群",
+          "label": "關西・大阪／神戶／兵庫球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Arima Royal Golf Club",
-          "candidateRationale": "兵庫縣球場，作為大阪、神戶與京都西側高爾夫活動圈候選。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以大阪／神戶／兵庫球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://arima-royal.com/access",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 34.826383,
             "longitude": 135.123729,
@@ -473,7 +790,7 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hyogo/kobe/arima-royal-golf-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-arima-royal",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-address-and-access-confirmed",
@@ -501,28 +818,61 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-KNS-OSAKA-HYOGO",
+          "clusterCourseIds": [
+            "jp-arima-royal",
+            "jp-hanna-country"
+          ],
+          "courseCount": 2,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-KNS-KII",
-          "region": "Kansai",
-          "subregion": "紀伊半島／和歌山",
-          "label": "關西・紀伊半島",
+          "id": "JP-KNS-KYOTO-SHIGA-NARA",
+          "golfClusterId": "JP-KNS-KYOTO-SHIGA-NARA",
+          "region": "關西",
+          "subregion": "京都／滋賀／奈良球場群",
+          "label": "關西・京都／滋賀／奈良球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-kyoto-golf-club",
+          "candidateCourseName": "Kyoto Golf Club",
+          "candidateRationale": "以京都／滋賀／奈良球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/kyoto-golf-club/",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 35.067014,
+            "longitude": 135.759207,
+            "coordinateStatus": "third_party_course_coordinate",
+            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/kyoto/kyoto/kyoto-golf-club-kamigamo-course",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-kyoto-golf-club"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-KNS-WAKAYAMA",
+          "region": "關西",
+          "subregion": "和歌山／紀伊半島球場群",
+          "label": "關西・和歌山／紀伊半島球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Leograd Golf Club",
-          "candidateRationale": "和歌山縣球場，補足紀伊半島南側海岸氣候帶。",
+          "candidateRationale": "以和歌山／紀伊半島球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
           "candidateSourceUrl": "https://www.leograd.jp/concept_outline/",
-          "candidateStatus": "address-confirmed-coordinate-approximate",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 33.9232299832,
             "longitude": 135.2723593476,
             "coordinateStatus": "approximate-official-map-viewport-center-not-course-pin",
             "coordinateSourceUrl": "https://www.leograd.jp/access_map/",
-            "timezone": "Asia/Tokyo",
-            "officialMapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52971.13157452712!2d135.2723593476244!3d33.92322998321186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60076b35d7ab2287:0x4076b246f1847477!2z44Os44Kq44Kw44Op44O844OJ44K044Or44OV44Kv44Op44OW!5e0!3m2!1sja!2sjp!4v1485138120905"
+            "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "official-address-and-map-confirmed-pin-coordinate-still-unverified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-leograd",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-address-and-current-activity-confirmed",
@@ -550,74 +900,34 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
-        },
-        {
-          "id": "JP-CHG-SANIN",
-          "region": "Chugoku",
-          "subregion": "山陰／鳥取・島根",
-          "label": "中國地方・山陰",
-          "coverageStatus": "planned",
-          "representativeCourseId": null,
-          "candidateCourseName": "Green Park Daisen Golf Club",
-          "candidateRationale": "鳥取縣大山周邊球場，代表日本海側山陰區域。",
-          "candidateSourceUrl": "https://www.jgto.org/en/club/jgto",
-          "candidateStatus": "identity-and-location-researched",
-          "candidateCoordinates": {
-            "latitude": 35.364639,
-            "longitude": 133.397062,
-            "coordinateStatus": "course-list-coordinate",
-            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club",
-            "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-green-park-daisen",
-          "courseIdentityVerification": {
-            "verificationLevel": "JGTO-identity-address-confirmed",
-            "officialSourceUrl": "https://www.jgto.org/en/club/jgto",
-            "operatorSourceUrl": "https://banryugolf.com/gpdaisen/",
-            "officialAddress": "753 Ogina, Nanbu-cho, Saihaku-gun, Tottori 683-0215, Japan",
-            "operationalEvidence": "JGTO partner-course listing confirmed; current tee-sheet/season status not independently checked",
-            "checkedOn": "2026-11-27"
-          },
-          "coordinateQuality": {
-            "grade": "B",
-            "label": "官方地址確認，嵌入地圖圖釘未提取",
-            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
-            "weatherPointEligible": true,
-            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
-            "officialMapReference": {
-              "type": "official-operator-access-page-with-user-created-google-my-map",
-              "url": "https://banryu-golf.sakura.ne.jp/gpdaisen/access/index.html",
-              "googleMyMapsUrl": "https://www.google.com/maps/d/viewer?mid=1yGrB_Wv3F-bsWOn_yBWved75n4c",
-              "officialAddress": "753 Ogina, Nanbu-cho, Saihaku-gun, Tottori 683-0215, Japan",
-              "coordinateType": "map-pin-not-extracted",
-              "crossCheckResult": "operator site embeds a Google My Maps map explicitly attributed to a user-created map; no independently verifiable pin coordinates extracted",
-              "checkedOn": "2026-11-27"
-            },
-            "regionalClimateEligible": true,
-            "coordinatePurpose": "regional-climate-representative-point"
-          }
+          "golfClusterId": "JP-KNS-WAKAYAMA",
+          "clusterCourseIds": [
+            "jp-leograd",
+            "jp-arita-resol"
+          ],
+          "courseCount": 2,
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "JP-CHG-SANYO",
-          "region": "Chugoku",
-          "subregion": "山陽／岡山・廣島",
-          "label": "中國地方・山陽",
+          "region": "中國地方",
+          "subregion": "廣島／岡山／山陽球場群",
+          "label": "中國地方・廣島／岡山／山陽球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Setouchi Golf Resort",
-          "candidateRationale": "廣島縣瀨戶內海側球場，代表山陽與瀨戶內海沿岸。",
+          "candidateRationale": "以廣島／岡山／山陽球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
           "candidateSourceUrl": "https://www.resol-golf.jp/en/setouchi/",
-          "candidateStatus": "official-course-identity-and-location-confirmed",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 34.3061999,
             "longitude": 132.864325,
-            "timezone": "Asia/Tokyo",
             "coordinateStatus": "official-operator-google-maps-place-pin",
-            "coordinateSourceUrl": "https://www.resol-golf.jp/en/setouchi/"
+            "coordinateSourceUrl": "https://www.resol-golf.jp/en/setouchi/",
+            "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "official-map-place-coordinate-found-course-identity-confirmed",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-setouchi",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-address-and-google-maps-link-confirmed",
@@ -646,19 +956,108 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-CHG-SANYO",
+          "clusterCourseIds": [
+            "jp-setouchi"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-SHK-01",
-          "region": "Shikoku",
-          "subregion": "四國／高知・瀨戶內南岸",
-          "label": "四國",
+          "id": "JP-CHG-SANIN",
+          "region": "中國地方",
+          "subregion": "鳥取／島根／山陰球場群",
+          "label": "中國地方・鳥取／島根／山陰球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseName": "Green Park Daisen Golf Club",
+          "candidateRationale": "以鳥取／島根／山陰球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.jgto.org/en/club/jgto",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 35.364639,
+            "longitude": 133.397062,
+            "coordinateStatus": "course-list-coordinate",
+            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "candidateCourseId": "jp-green-park-daisen",
+          "courseIdentityVerification": {
+            "verificationLevel": "JGTO-identity-address-confirmed",
+            "officialSourceUrl": "https://www.jgto.org/en/club/jgto",
+            "operatorSourceUrl": "https://banryugolf.com/gpdaisen/",
+            "officialAddress": "753 Ogina, Nanbu-cho, Saihaku-gun, Tottori 683-0215, Japan",
+            "operationalEvidence": "JGTO partner-course listing confirmed; current tee-sheet/season status not independently checked",
+            "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "官方地址確認，嵌入地圖圖釘未提取",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
+            "officialMapReference": {
+              "type": "official-operator-access-page-with-user-created-google-my-map",
+              "url": "https://banryu-golf.sakura.ne.jp/gpdaisen/access/index.html",
+              "googleMyMapsUrl": "https://www.google.com/maps/d/viewer?mid=1yGrB_Wv3F-bsWOn_yBWved75n4c",
+              "officialAddress": "753 Ogina, Nanbu-cho, Saihaku-gun, Tottori 683-0215, Japan",
+              "coordinateType": "map-pin-not-extracted",
+              "crossCheckResult": "operator site embeds a Google My Maps map explicitly attributed to a user-created map; no independently verifiable pin coordinates extracted",
+              "checkedOn": "2026-11-27"
+            },
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point"
+          },
+          "golfClusterId": "JP-CHG-SANIN",
+          "clusterCourseIds": [
+            "jp-green-park-daisen"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-SHK-KAGAWA-TOKUSHIMA",
+          "golfClusterId": "JP-SHK-KAGAWA-TOKUSHIMA",
+          "region": "四國",
+          "subregion": "高松／德島／瀨戶內球場群",
+          "label": "四國・高松／德島／瀨戶內球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-anan-cc",
+          "candidateCourseName": "Anan Country Club",
+          "candidateRationale": "以高松／德島／瀨戶內球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 33.875869,
+            "longitude": 134.65131,
+            "coordinateStatus": "third_party_course_coordinate",
+            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tokushima/anan/anan-country-club",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-anan-cc",
+            "jp-bizan-cc",
+            "jp-reomakogen",
+            "jp-shikoku-anabuki"
+          ],
+          "courseCount": 4,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-SHK-EHIME-KOCHI",
+          "region": "四國",
+          "subregion": "高知／愛媛球場群",
+          "label": "四國・高知／愛媛球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Tosa Country Club",
-          "candidateRationale": "高知縣海岸球場，作為四國代表候選。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以高知／愛媛球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/tosa-country-club/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 33.5213,
             "longitude": 133.7758,
@@ -666,7 +1065,7 @@
             "coordinateSourceUrl": "https://www.parscape.com/location/golf_clubs/tosacountryclubkamikochi",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-tosa",
           "courseIdentityVerification": {
             "verificationLevel": "JNTO-course-profile-identity-address-and-access-confirmed",
@@ -696,19 +1095,25 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-SHK-EHIME-KOCHI",
+          "clusterCourseIds": [
+            "jp-tosa"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-KYS-NORTH",
-          "region": "Kyushu",
-          "subregion": "北九州／福岡・佐賀・長崎",
-          "label": "九州・北九州",
+          "id": "JP-KYS-FUKUOKA-SAGA",
+          "region": "九州",
+          "subregion": "福岡／佐賀球場群",
+          "label": "九州・福岡／佐賀球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "The Classic Golf Club",
-          "candidateRationale": "福岡縣球場，作為北九州代表候選。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以福岡／佐賀球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://cm-g.co.jp/the-classic/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 33.770453,
             "longitude": 130.644917,
@@ -716,7 +1121,7 @@
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/fukuoka/kurate/classic-golf-club",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-the-classic",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-address-and-booking-confirmed",
@@ -750,19 +1155,79 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-KYS-FUKUOKA-SAGA",
+          "clusterCourseIds": [
+            "jp-the-classic"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-KYS-SOUTH",
-          "region": "Kyushu",
-          "subregion": "南九州／宮崎・鹿兒島",
-          "label": "九州・南九州",
+          "id": "JP-KYS-NAGASAKI-KUMAMOTO",
+          "golfClusterId": "JP-KYS-NAGASAKI-KUMAMOTO",
+          "region": "九州",
+          "subregion": "長崎／熊本球場群",
+          "label": "九州・長崎／熊本球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-aino-cc",
+          "candidateCourseName": "Aino Country Club",
+          "candidateRationale": "以長崎／熊本球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 32.8008,
+            "longitude": 130.1815,
+            "coordinateStatus": "third_party_course_coordinate",
+            "coordinateSourceUrl": "https://www.parscape.com/location/golf_clubs/ainocountryclubainonagasaki",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-aino-cc"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-KYS-OITA",
+          "golfClusterId": "JP-KYS-OITA",
+          "region": "九州",
+          "subregion": "大分／阿蘇球場群",
+          "label": "九州・大分／阿蘇球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-amagase-onsen",
+          "candidateCourseName": "Amagase Onsen Country Club",
+          "candidateRationale": "以大分／阿蘇球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 33.2442744,
+            "longitude": 131.0166391,
+            "coordinateStatus": "third_party_area_coordinate",
+            "coordinateSourceUrl": "https://arealog.net/670179/",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-amagase-onsen"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-KYS-MIYAZAKI-KAGOSHIMA",
+          "region": "九州",
+          "subregion": "宮崎／鹿兒島球場群",
+          "label": "九州・宮崎／鹿兒島球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Phoenix Country Club",
-          "candidateRationale": "宮崎縣球場，代表南九州太平洋沿岸氣候帶。",
-          "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "identity-and-location-researched",
+          "candidateRationale": "以宮崎／鹿兒島球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://en.seagaia.co.jp/hotel-facility/",
+          "candidateStatus": "research-candidate",
           "candidateCoordinates": {
             "latitude": 31.974525,
             "longitude": 131.472898,
@@ -770,7 +1235,7 @@
             "coordinateSourceUrl": "https://www.where2golf.com/japan/phoenix-country-club/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "candidateCourseId": "jp-phoenix",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-address-and-facility-details-confirmed",
@@ -804,31 +1269,115 @@
             },
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
-          }
+          },
+          "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
+          "clusterCourseIds": [
+            "jp-phoenix",
+            "jp-aiwa-miyazaki",
+            "jp-amami-cc"
+          ],
+          "courseCount": 3,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-OKI-NORTH",
-          "region": "Okinawa",
-          "subregion": "北部",
-          "label": "沖繩北部",
+          "id": "JP-OKI-MAIN-NORTH",
+          "region": "沖繩",
+          "subregion": "沖繩本島北部球場群",
+          "label": "沖繩・本島北部球場群",
           "coverageStatus": "configured",
-          "representativeCourseId": "kise"
+          "representativeCourseId": "kise",
+          "golfClusterId": "JP-OKI-MAIN-NORTH",
+          "candidateRationale": "以沖繩本島北部球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.kise-cc.jp/en/",
+          "candidateStatus": "active-representative",
+          "coordinateReviewStatus": "representative-active",
+          "clusterCourseIds": [
+            "kise",
+            "jp-bel-beach",
+            "jp-ginoza-cc",
+            "jp-kanucha-golf"
+          ],
+          "courseCount": 4,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-OKI-CENTRAL",
-          "region": "Okinawa",
-          "subregion": "中部",
-          "label": "沖繩中部",
+          "id": "JP-OKI-MAIN-CENTRAL",
+          "region": "沖繩",
+          "subregion": "沖繩本島中部球場群",
+          "label": "沖繩・本島中部球場群",
           "coverageStatus": "configured",
-          "representativeCourseId": "pgm-okinawa"
+          "representativeCourseId": "pgm-okinawa",
+          "golfClusterId": "JP-OKI-MAIN-CENTRAL",
+          "candidateRationale": "以沖繩本島中部球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.pacificgolf.co.jp/okinawa/information.asp",
+          "candidateStatus": "active-representative",
+          "coordinateReviewStatus": "representative-active",
+          "clusterCourseIds": [
+            "pgm-okinawa",
+            "atta-terrace",
+            "chura-orchard",
+            "jp-banyan-tree-okinawa",
+            "jp-ocean-castle",
+            "jp-okinawa-country",
+            "jp-okinawa-royal",
+            "jp-onishi-terrace"
+          ],
+          "courseCount": 8,
+          "climateUnit": "golf-course-cluster"
         },
         {
-          "id": "JP-OKI-SOUTH",
-          "region": "Okinawa",
-          "subregion": "南部",
-          "label": "沖繩南部",
+          "id": "JP-OKI-MAIN-SOUTH",
+          "region": "沖繩",
+          "subregion": "沖繩本島南部球場群",
+          "label": "沖繩・本島南部球場群",
           "coverageStatus": "configured",
-          "representativeCourseId": "southern-links"
+          "representativeCourseId": "southern-links",
+          "golfClusterId": "JP-OKI-MAIN-SOUTH",
+          "candidateRationale": "以沖繩本島南部球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://reserve.accordiagolf.com/en/global/golfCourse/okinawa/southernlinks",
+          "candidateStatus": "active-representative",
+          "coordinateReviewStatus": "representative-active",
+          "clusterCourseIds": [
+            "southern-links",
+            "palm-hills",
+            "jp-naha-golf",
+            "jp-nanzan-cc",
+            "jp-ryukyu-golf",
+            "jp-shurei-cc"
+          ],
+          "courseCount": 6,
+          "climateUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-OKI-OUTER-ISLANDS",
+          "golfClusterId": "JP-OKI-OUTER-ISLANDS",
+          "region": "沖繩",
+          "subregion": "宮古島／八重山群島球場群",
+          "label": "沖繩・離島球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-ocean-links-miyako",
+          "candidateCourseName": "Ocean Links Miyakojima",
+          "candidateRationale": "以宮古島／八重山群島球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 24.734437,
+            "longitude": 125.437101,
+            "coordinateStatus": "third_party_course_coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/okinawa/miyako/ocean-links-miyakojima",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-emerald-coast",
+            "jp-ocean-links-miyako",
+            "jp-risonare-kohamajima",
+            "jp-sashiba-links",
+            "jp-shigira-bay"
+          ],
+          "courseCount": 5,
+          "climateUnit": "golf-course-cluster"
         }
       ],
       "coordinateResearchSummary": {
@@ -847,7 +1396,8 @@
         "officialMapCrossChecks": 16,
         "regionalClimateEligible": 16
       },
-      "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
+      "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified.",
+      "subregionUnit": "golf-course-cluster"
     },
     {
       "countryCode": "KR",
@@ -883,7 +1433,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "KR-CAP-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "KR-GW-01",
@@ -913,7 +1465,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "KR-GW-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "KR-CC-01",
@@ -943,7 +1497,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "KR-CC-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "KR-YN-01",
@@ -973,7 +1529,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "KR-YN-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "KR-HN-01",
@@ -1003,7 +1561,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "KR-HN-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "KR-JJ-01",
@@ -1033,9 +1593,12 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "KR-JJ-01",
+          "climateUnit": "golf-course-cluster"
         }
-      ]
+      ],
+      "subregionUnit": "golf-course-cluster"
     },
     {
       "countryCode": "CN",
@@ -1071,7 +1634,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Mission Hills Haikou, official resort address and course map coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "CN-HN-NORTH",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "CN-HN-EAST",
@@ -1101,7 +1666,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 The Dunes at Shenzhou Peninsula, course map coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "CN-HN-EAST",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "CN-HN-SOUTH",
@@ -1131,7 +1698,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Yalong Bay Golf Club, course directory coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "CN-HN-SOUTH",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "CN-SH-01",
@@ -1161,7 +1730,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Sheshan International Golf Club, course directory coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "CN-SH-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "CN-BJ-01",
@@ -1191,7 +1762,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Topwin Golf and Country Club, public map coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "CN-BJ-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "CN-GD-01",
@@ -1221,7 +1794,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Guangzhou Foison Golf Club, course directory coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "CN-GD-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "CN-YN-01",
@@ -1251,9 +1826,12 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "座標位於代表球場或其鄰近區域，足以供次分區區域氣候評估；不要求精確球場圖釘。 Spring City Golf and Lake Resort, course directory coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "CN-YN-01",
+          "climateUnit": "golf-course-cluster"
         }
-      ]
+      ],
+      "subregionUnit": "golf-course-cluster"
     },
     {
       "countryCode": "VN",
@@ -1289,7 +1867,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 BRG Kings Island coordinates; Dong Mo/Son Tay, Hanoi region",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "VN-NORTH-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "VN-CENTRAL-01",
@@ -1319,7 +1899,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Hoiana Shores coordinates; coastal Hoi An/Da Nang region",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "VN-CENTRAL-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "VN-CENTRAL-02",
@@ -1349,7 +1931,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Laguna Lang Co coordinates; Hue-Da Nang coastal corridor",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "VN-CENTRAL-02",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "VN-SOUTH-01",
@@ -1379,7 +1963,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Tan Son Nhat Golf Course coordinates; Ho Chi Minh City",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "VN-SOUTH-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "VN-SOUTH-02",
@@ -1409,7 +1995,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Sea Links coordinates; Mui Ne/Phan Thiet coastal region",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "VN-SOUTH-02",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "VN-ISLAND-01",
@@ -1439,9 +2027,12 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Cua Can locality representative coordinate near Vung Bau, Phu Quoc; regional point rather than exact course pin",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "VN-ISLAND-01",
+          "climateUnit": "golf-course-cluster"
         }
-      ]
+      ],
+      "subregionUnit": "golf-course-cluster"
     },
     {
       "countryCode": "TH",
@@ -1477,7 +2068,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Lat Krabang nearby public map coordinate; official course address independently confirms Lat Krabang, Bangkok",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "TH-BKK-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "TH-EAST-01",
@@ -1507,7 +2100,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Siam Country Club Old Course OpenStreetMap-derived coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "TH-EAST-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "TH-WEST-01",
@@ -1537,7 +2132,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Black Mountain course coordinate; official club address confirms Hua Hin district",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "TH-WEST-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "TH-SOUTH-01",
@@ -1567,7 +2164,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Blue Canyon public map coordinate; official club and Phuket tourism sources confirm Mai Khao, Thalang",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "TH-SOUTH-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "TH-NORTH-01",
@@ -1597,7 +2196,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Alpine GPS coordinate converted from published DMS; official resort confirms Chiang Mai location",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "TH-NORTH-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "TH-NE-01",
@@ -1627,7 +2228,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Kirimaya Golf Resort course coordinate; official resort address confirms Khao Yai/Pak Chong",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "TH-NE-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "TH-ISLAND-01",
@@ -1657,9 +2260,12 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Santiburi Samui Country Club public map coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "TH-ISLAND-01",
+          "climateUnit": "golf-course-cluster"
         }
-      ]
+      ],
+      "subregionUnit": "golf-course-cluster"
     },
     {
       "countryCode": "MY",
@@ -1695,7 +2301,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 KGPA Bukit Kiara, Kuala Lumpur",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "MY-CENTRAL-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "MY-NORTH-01",
@@ -1725,7 +2333,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Penang Golf Club, Bayan Lepas",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "MY-NORTH-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "MY-SOUTH-01",
@@ -1755,7 +2365,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 The Els Club Desaru Coast Ocean Course",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "MY-SOUTH-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "MY-ISLAND-01",
@@ -1785,7 +2397,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 The Els Club Teluk Datai, Langkawi",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "MY-ISLAND-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "MY-BORNEO-01",
@@ -1815,7 +2429,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Dalit Bay Golf & Country Club, Tuaran",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "MY-BORNEO-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "MY-BORNEO-02",
@@ -1845,7 +2461,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Kelab Golf Sarawak, Petra Jaya Kuching",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "MY-BORNEO-02",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "MY-EAST-01",
@@ -1875,7 +2493,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Kuala Terengganu Golf Resort vicinity; published GPS coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "MY-EAST-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "MY-HIGHLAND-01",
@@ -1905,9 +2525,12 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Cameron Highlands/Tanah Rata regional vicinity; national gazetteer nearby location",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "MY-HIGHLAND-01",
+          "climateUnit": "golf-course-cluster"
         }
-      ]
+      ],
+      "subregionUnit": "golf-course-cluster"
     },
     {
       "countryCode": "SG",
@@ -1943,9 +2566,12 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Sentosa Golf Club Serapong; official club address at 27 Bukit Manis Road",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "SG-ISLAND-01",
+          "climateUnit": "golf-course-cluster"
         }
-      ]
+      ],
+      "subregionUnit": "golf-course-cluster"
     },
     {
       "countryCode": "ID",
@@ -1981,7 +2607,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Pondok Indah Golf Course, South Jakarta",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "ID-JKT-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "ID-WJAVA-01",
@@ -2011,7 +2639,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Klub Golf Bogor Raya, Bogor",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "ID-WJAVA-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "ID-CJAVA-01",
@@ -2041,7 +2671,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Merapi Golf Club, Cangkringan/Sleman, Yogyakarta region",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "ID-CJAVA-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "ID-EJAVA-01",
@@ -2071,7 +2703,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Taman Dayu Golf Club, Pandaan, Pasuruan",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "ID-EJAVA-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "ID-BALI-01",
@@ -2101,7 +2735,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 New Kuta Golf, Pecatu, Bali",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "ID-BALI-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "ID-RIAU-01",
@@ -2131,7 +2767,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Ria Bintan Golf Club, Lagoi, Bintan",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "ID-RIAU-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "ID-SUMATRA-01",
@@ -2161,7 +2799,9 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Graha Metropolitan Golf Course, Kp. Lalang/Sunggal, Medan vicinity; neighbourhood-level representative coordinate",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "ID-SUMATRA-01",
+          "climateUnit": "golf-course-cluster"
         },
         {
           "id": "ID-KAL-01",
@@ -2191,12 +2831,15 @@
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Pertamina Golf Club, Balikpapan",
             "checkedOn": "2026-11-27"
-          }
+          },
+          "golfClusterId": "ID-KAL-01",
+          "climateUnit": "golf-course-cluster"
         }
-      ]
+      ],
+      "subregionUnit": "golf-course-cluster"
     }
   ],
-  "planningNote": "Japan has been subdivided into 16 mainland climate/geographic subregions plus 3 configured Okinawa subregions. Candidate representatives remain research-only until exact identity, current operation, GPS coordinates, timezone, and regional fit are verified. Forecasts must not be enabled for research candidates.",
+  "planningNote": "Japan uses 33 destination-oriented golf clusters (3 Hokkaido, 4 Tohoku, 5 Kanto, 6 Chubu, 3 Kansai, 2 Chugoku, 2 Shikoku, 4 Kyushu, 4 Okinawa). Other seven countries retain their existing destination-oriented subregions, now explicitly typed as golf-course clusters. Candidate representatives are not operational forecast points until validated.",
   "candidatePolicy": "Candidate names are research selections only. They must not be used for weather ingestion or forecast generation until current operating status, exact official course identity, GPS coordinates, timezone, and subregion fit are verified. Candidate is not an enabled representative.",
-  "candidateCount": 59
+  "candidateCount": 73
 }
