@@ -11,9 +11,11 @@ const finite = value => typeof value === "number" && Number.isFinite(value);
 const validPoint = point => point && finite(point.latitude) && finite(point.longitude) &&
   point.latitude >= -90 && point.latitude <= 90 &&
   point.longitude >= -180 && point.longitude <= 180;
-const validDate = value => typeof value === "string" &&
-  /^\d{4}-\d{2}-\d{2}$/.test(value) &&
-  !Number.isNaN(Date.parse(value + "T12:00:00Z"));
+const validDate = value => {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(value + "T12:00:00Z");
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+};
 const pickFinite = (object, keys) => Object.fromEntries(
   keys.map(key => [key, finite(object?.[key]) ? object[key] : null])
 );
@@ -37,6 +39,7 @@ function normalizeHistorical(value) {
 function normalizeSeasonal(value) {
   if (!value || typeof value !== "object") return null;
   const metrics = pickFinite(value, SEASONAL_KEYS);
+  if (typeof value.confidence === "string") metrics.confidence = value.confidence;
   return Object.values(metrics).some(finite) ? metrics : null;
 }
 function normalizeWeekly(value) {
@@ -46,10 +49,6 @@ function normalizeWeekly(value) {
   return Object.keys(metrics).length ? metrics : null;
 }
 
-/**
- * Build one normalized evidence record for one regional representative point
- * and one local calendar date. It never creates per-course weather records.
- */
 export function buildRegionalDailyEvidence({
   subregionId,
   timezone = "Asia/Tokyo",
@@ -82,9 +81,7 @@ export function buildRegionalDailyEvidence({
   const normalizedSeasonal = normalizeSeasonal(seasonalOutlook);
   const normalizedWeekly = normalizeWeekly(weeklyTrend);
   const maturity = buildMaturityEvidence({
-    date,
-    today,
-    forecastDaily,
+    date, today, forecastDaily,
     weeklyTrend: normalizedWeekly,
     seasonalOutlook: normalizedSeasonal,
     historical: normalizedHistorical
