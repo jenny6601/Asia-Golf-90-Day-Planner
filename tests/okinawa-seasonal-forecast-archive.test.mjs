@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {validateSeasonalSnapshot} from "../scripts/okinawa-seasonal-forecast-schema.js";
-const point=id=>({point:{id},weekly:{time:["2026-12-01"],precipitation_efi:[0],precipitation_mean:[10]},monthly:{time:["2026-12-01"],precipitation_mean:[10],precipitation_anomaly:[0]}});
+const point=id=>({point:{id},weeklyUnits:{precipitation_mean:"mm",precipitation_anomaly:"mm"},monthlyUnits:{precipitation_mean:"mm",precipitation_anomaly:"mm"},weekly:{time:["2026-12-01"],precipitation_efi:[0],precipitation_mean:[10]},monthly:{time:["2026-12-01"],precipitation_mean:[10],precipitation_anomaly:[0]}});
 const snapshot=points=>({archiveType:"okinawa-ecmwf-seasonal-snapshot",points});
 test("seasonal archive requires all three Okinawa regions",()=>{
  assert.equal(validateSeasonalSnapshot(snapshot(["north","central","south"].map(point))).valid,true);
