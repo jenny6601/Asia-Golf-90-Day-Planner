@@ -9,34 +9,31 @@ Complete the Okinawa pilot before adding any other region. This phase is data an
 The six courses are:
 1. The Southern Links Golf Club — Yaese, south
 2. Palm Hills Golf Resort Club — Itoman, south
-3. PGM Golf Resort Okinawa — Onna, central; GPS pending
+3. PGM Golf Resort Okinawa — Onna, central
 4. The Atta Terrace Golf Resort — Onna, north
 5. Chura Orchard Golf Club — Onna, north
 6. Kanehide Kise Country Club — Nago, north
 
-The candidate-coordinate audit source is `config/okinawa/course-coordinate-candidates.json`. It is a validation input only; candidate coordinates do not automatically overwrite the runtime catalog.
+The current coordinate source is `config/okinawa/course-coordinate-candidates.json`; it is synchronized with `config/global/courses.json` and `assets/js/okinawa-courses.js`.
 
-## Coordinate audit status
+## Current course GPS — user-provided Google Maps coordinates
 
-| Course | Candidate latitude, longitude | Status | Coordinate provenance |
-|---|---:|---|---|
-| The Southern Links | 26.118019, 127.738385 | Provisional | FullGolf / OpenStreetMap listing; official Accordia address corroborated |
-| Palm Hills | 26.1220517, 127.7076402 | Provisional | MapFan; official Accordia map viewport centre differs by about 0.19 km |
-| PGM Golf Resort Okinawa | 26.458099, 127.814610 | Pending | Earlier manual Google Maps candidate; not independently promoted |
-| The Atta Terrace | 26.500916, 127.895049 | Verified official map destination | Official Atta Terrace Google Maps route link |
-| Chura Orchard | 26.5100539, 127.8927318 | Verified official map place | Official JGM website Google Maps place link |
-| Kanehide Kise | 26.5241373, 127.9393349 | Verified official map place | Official Kanehide Kise website Google Maps link |
+On 2026-11-27, the user supplied the following six Google Maps coordinates. These exact values now supersede earlier candidate coordinates and are synchronized across the candidate, global runtime and pilot JavaScript catalogs.
 
-Important coordinate reconciliation:
-- Palm Hills MapFan point (26.1220517, 127.7076402) is not identical to the FullGolf point (26.11934, 127.701172); the former is the current validation candidate. Keep provisional until map-pin/property review is complete.
-- Chura Orchard official Google Maps place link resolves to 26.5100539, 127.8927318. This supersedes the earlier manual candidate (26.499221, 127.893139), which is about 1.2 km away, and the older FullGolf point (26.496499, 127.891015).
-- Kanehide Kise official Google Maps link resolves to 26.5241373, 127.9393349. This supersedes the older approximate third-party coordinate and the earlier manual candidate.
-- Atta Terrace official map destination is 26.500916, 127.895049; use it rather than the older Where2Golf point.
-- PGM remains disabled in the runtime catalog until its manual candidate point is independently checked against the actual golf-course property/official map. The PGM Hotel Resort address is a separate hotel location and must not be substituted for the golf-course address.
+| Course | Latitude | Longitude | Coordinate source |
+|---|---:|---:|---|
+| The Southern Links | 26.113785 | 127.739021 | User-provided Google Maps |
+| Palm Hills | 26.120580 | 127.699640 | User-provided Google Maps |
+| PGM Golf Resort Okinawa | 26.455335 | 127.820344 | User-provided Google Maps |
+| Kanehide Kise | 26.524228 | 127.939192 | User-provided Google Maps |
+| The Atta Terrace | 26.499868 | 127.896002 | User-provided Google Maps |
+| Chura Orchard | 26.506260 | 127.895720 | User-provided Google Maps |
 
-## Runtime catalog safety correction
+All six records now have `coordinateStatus: user_provided_google_maps`, source attribution `User-provided Google Maps coordinate (2026-11-27)`, timezone `Asia/Tokyo`, and runtime `enabled: true`.
 
-The PGM record remains in `config/global/courses.json` with null runtime latitude/longitude and `coordinateStatus: pending`. Its `enabled` flag is now false so the App cannot offer a course with no runtime GPS. The candidate point is used only by the read-only acceptance probe.
+The previous PGM null-GPS safeguard is no longer applicable because the user supplied a PGM point. The older third-party coordinates and prior official map-link coordinates remain historical audit references only; they must not overwrite the current user-supplied points.
+
+This status accurately records the source of the values. It does not claim an independent land survey or course-boundary polygon validation.
 
 ## Existing meteorological work — what is already available
 
@@ -110,7 +107,7 @@ A successful availability gate means the provider data is technically available 
 ## Required next accuracy-validation gate
 
 After the six-course availability probe:
-1. Resolve every provisional/pending course coordinate against the official course property/map.
+1. Preserve the six user-supplied Google Maps coordinates as the operational course points; if a future discrepancy is found, compare it against the actual course property/map before changing any coordinate.
 2. Find the nearest suitable JMA AMeDAS/official observation stations for rainfall, temperature and wind. Record station ID, distance, elevation difference and exposure limitations.
 3. Collect archived forecast runs at fixed issue times and leads; do not use ERA5 as if it were the original forecast.
 4. Pair each forecast and observed value by course/zone, valid time, issue time and lead. Never pair by array index.
