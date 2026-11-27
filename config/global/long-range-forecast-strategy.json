@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "engineId": "ASIA_GOLF_LONG_RANGE_DECISION_ENGINE",
+  "status": "specification-v1-no-production-forecast-activation",
+  "scope": {
+    "countries": [
+      "JP",
+      "KR",
+      "CN",
+      "VN",
+      "TH",
+      "MY",
+      "SG",
+      "ID"
+    ],
+    "expectedSubregions": 80,
+    "representativePointPolicy": "one regional representative point per subregion; no per-course climate records",
+    "appBoundary": {
+      "d01D16Unchanged": true,
+      "uiChangesAllowed": false,
+      "interactionChangesAllowed": false
+    },
+    "observationPolicy": "No daily real-time observation ingestion, station discovery, station boundary work, or station-based operational dependency"
+  },
+  "horizons": [
+    {
+      "id": "D19_D46",
+      "leadDays": [
+        19,
+        46
+      ],
+      "primarySource": "ECMWF_IFS_SUBSEASONAL",
+      "temporalResolution": "weekly",
+      "updateCadence": "twice-weekly operational product",
+      "usableSignals": [
+        "weekly precipitation anomaly/probability",
+        "weekly temperature anomaly/probability",
+        "ensemble spread",
+        "forecast regime where available"
+      ],
+      "prohibitedClaims": [
+        "deterministic daily weather",
+        "daily rain probability without calibrated hindcast mapping",
+        "course-level precision"
+      ]
+    },
+    {
+      "id": "D47_D90",
+      "leadDays": [
+        47,
+        90
+      ],
+      "primarySource": "C3S_SEASONAL_MULTI_SYSTEM",
+      "temporalResolution": "monthly and seasonal aggregates",
+      "updateCadence": "monthly forecast cycle",
+      "usableSignals": [
+        "monthly precipitation anomaly/tercile probabilities",
+        "monthly 2m temperature anomaly/tercile probabilities",
+        "multi-model agreement",
+        "hindcast skill and reliability"
+      ],
+      "prohibitedClaims": [
+        "deterministic daily weather",
+        "specific-day rain forecast",
+        "daily precision derived from monthly anomaly"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "sourceId": "ERA5_LAND_CLIMATOLOGY",
+      "provider": "Copernicus Climate Change Service / ECMWF",
+      "dataset": "reanalysis-era5-land",
+      "role": "regional historical climate distribution and seasonal prior",
+      "referencePeriod": "1991-2020",
+      "status": "planned-existing-acquisition-manifest-not-yet-completed",
+      "variables": [
+        "daily precipitation",
+        "daily wet-day frequency",
+        "daily Tmin",
+        "daily Tmax",
+        "daily mean temperature"
+      ],
+      "refreshPolicy": "static baseline; refresh only when reference period or dataset version is intentionally revised"
+    },
+    {
+      "sourceId": "ECMWF_IFS_SUBSEASONAL",
+      "provider": "ECMWF",
+      "dataset": "IFS extended-range / sub-seasonal ensemble",
+      "role": "primary forecast anomaly signal for D19-D46",
+      "status": "source-selected-data-ingestion-not-yet-implemented",
+      "variables": [
+        "weekly precipitation anomaly and probabilities",
+        "weekly 2m temperature anomaly and probabilities",
+        "ensemble spread",
+        "hindcast verification metrics"
+      ],
+      "refreshPolicy": "use latest available operational cycle; no daily station observations"
+    },
+    {
+      "sourceId": "C3S_SEASONAL_MULTI_SYSTEM",
+      "provider": "Copernicus Climate Change Service",
+      "dataset": "C3S seasonal forecast multi-system",
+      "role": "primary multi-model climate anomaly signal for D47-D90",
+      "status": "source-selected-data-ingestion-not-yet-implemented",
+      "variables": [
+        "monthly precipitation anomaly and tercile probabilities",
+        "monthly 2m temperature anomaly and tercile probabilities",
+        "model agreement",
+        "hindcast skill and reliability"
+      ],
+      "refreshPolicy": "monthly cycle; retain model/system/version and matching hindcast provenance"
+    },
+    {
+      "sourceId": "OPEN_METEO_SEASONAL_EXPERIMENTAL",
+      "provider": "Open-Meteo",
+      "dataset": "Seasonal Forecast API",
+      "role": "optional secondary daily-shaped model signal for research and comparison only",
+      "status": "okinawa-field-availability-probed-not-validated-for-eight-country-decision-use",
+      "variables": [
+        "daily weather code",
+        "daily Tmin/Tmax/mean temperature",
+        "six-hourly precipitation estimates"
+      ],
+      "refreshPolicy": "not an operational dependency until per-region hindcast verification passes",
+      "restrictions": [
+        "daily-shaped output is not proof of daily forecast skill",
+        "no rain probability inferred from rainfall amount",
+        "do not use as sole D47-D90 forecast"
+      ]
+    }
+  ],
+  "decisionMethod": {
+    "unit": "one rolling seven-day destination window",
+    "tripPattern": "five days four nights with three golf rounds",
+    "coreOutput": "relative suitability ranking of departure windows within the same planning horizon",
+    "metrics": [
+      "historical wet-day probability and rainfall amount distribution",
+      "forecast-adjusted wet-weather risk by weekly/monthly anomaly signal",
+      "historical daily Tmin/Tmax comfort distribution adjusted by calibrated temperature anomaly",
+      "extreme heat and cold risk",
+      "probability of at least three playable days within the seven-day window",
+      "ensemble agreement and hindcast-derived confidence"
+    ],
+    "calibration": {
+      "method": "hindcast/reforecast-based quantile mapping and probability calibration, stratified by region, season and lead-time band",
+      "requiredLeadBands": [
+        "D19-D30",
+        "D31-D46",
+        "D47-D60",
+        "D61-D90"
+      ],
+      "requiredMetrics": [
+        "Brier score",
+        "reliability",
+        "ROC/AUC",
+        "CRPS where ensemble distributions support it",
+        "wet-day frequency bias",
+        "temperature anomaly error"
+      ],
+      "noArbitraryNumericWeights": true,
+      "noConfidenceUpgradeWithoutHindcastEvidence": true
+    },
+    "probabilityPolicy": "Do not publish numeric daily rain or playable-day probabilities until matching hindcast validation demonstrates calibration. Until then publish categorical regional tendencies and relative ranking with explicit uncertainty.",
+    "missingDataPolicy": "Missing forecast or historical inputs remain unavailable; do not substitute zero or silently fall back to an unrelated model."
+  },
+  "operations": {
+    "realTimeObservationIngestion": false,
+    "stationCandidateDiscovery": false,
+    "stationBoundaryAudit": false,
+    "dailyOperationalRefreshRequired": false,
+    "d19D46Refresh": "when new ECMWF extended-range cycle is available",
+    "d47D90Refresh": "when new C3S seasonal cycle is available",
+    "d01D16Source": "existing application forecast provider; unchanged"
+  },
+  "activationGates": [
+    "80 regional representative points remain structurally valid",
+    "1991-2020 regional historical climate distributions acquired and QA checked",
+    "ECMWF extended-range forecast and matching hindcasts are ingested with weekly valid periods",
+    "C3S multi-system forecast and matching hindcasts are ingested with model/version provenance",
+    "hindcast calibration and skill are reported separately for all four lead bands",
+    "seven-day / three-round ranking passes backtest without modifying D01-D16 or UI"
+  ]
+}
