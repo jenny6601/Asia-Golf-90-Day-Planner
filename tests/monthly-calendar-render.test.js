@@ -8,3 +8,10 @@ test("monthly calendar builds a date lookup before rendering each daily card",as
  assert.match(source,/const dayAssessment=byDate\.get\(date\)/);
  assert.ok(source.indexOf("const byDate=new Map(dailyAssessment.map(item=>[item.date,item]))")<source.indexOf("dates.forEach(date=>",source.indexOf("const byDate=new Map(dailyAssessment.map(item=>[item.date,item]))")));
 });
+test("clicking a monthly day routes to departure date and course selection with the selected subregion context",async()=>{
+ const source=await readFile(new URL("../assets/js/app.js",import.meta.url),"utf8");
+ assert.match(source,/card\.addEventListener\("click",\(\)=>showDepartureForm\(date,[\s\S]*?\{country:group\.country,region:group\.rootRegion,courses:group\.courses\}\)\)/);
+ assert.doesNotMatch(source,/card\.addEventListener\("click",\(\)=>openMonthlyDateSevenDayReport/);
+ assert.match(source,/departureCoursePriorityIds=Array\.isArray\(courseContext\?\.courses\)/);
+ assert.match(source,/fillCourses\(\)/);
+});
