@@ -3,7 +3,7 @@
     "id": "southern-links",
     "countryCode": "JP",
     "country": "Japan",
-    "region": "南部",
+    "region": "Okinawa",
     "name": "The Southern Links Golf Club",
     "nameLocal": "ザ・サザンリンクスゴルフクラブ",
     "area": "南部",
@@ -20,13 +20,14 @@
     "regionGroup": "Okinawa",
     "subregionId": "JP-OKI-SOUTH",
     "catalogStatus": "active",
-    "weatherEnabled": true
+    "weatherEnabled": true,
+    "subregionLabel": "沖繩南部"
   },
   {
     "id": "pgm-okinawa",
     "countryCode": "JP",
     "country": "Japan",
-    "region": "中部",
+    "region": "Okinawa",
     "name": "PGM Golf Resort Okinawa",
     "nameLocal": "ＰＧＭゴルフリゾート沖縄",
     "area": "中部",
@@ -43,13 +44,14 @@
     "regionGroup": "Okinawa",
     "subregionId": "JP-OKI-CENTRAL",
     "catalogStatus": "active",
-    "weatherEnabled": true
+    "weatherEnabled": true,
+    "subregionLabel": "沖繩中部"
   },
   {
     "id": "kise",
     "countryCode": "JP",
     "country": "Japan",
-    "region": "北部",
+    "region": "Okinawa",
     "name": "Kanehide Kise Country Club",
     "nameLocal": "かねひで喜瀬カントリークラブ",
     "area": "北部",
@@ -66,13 +68,14 @@
     "regionGroup": "Okinawa",
     "subregionId": "JP-OKI-NORTH",
     "catalogStatus": "active",
-    "weatherEnabled": true
+    "weatherEnabled": true,
+    "subregionLabel": "沖繩北部"
   },
   {
     "id": "atta-terrace",
     "countryCode": "JP",
     "country": "Japan",
-    "region": "北部",
+    "region": "Okinawa",
     "name": "The Atta Terrace Golf Resort",
     "nameLocal": "ジ・アッタテラス ゴルフリゾート",
     "area": "北部",
@@ -89,13 +92,14 @@
     "regionGroup": "Okinawa",
     "subregionId": "JP-OKI-NORTH",
     "catalogStatus": "active",
-    "weatherEnabled": true
+    "weatherEnabled": true,
+    "subregionLabel": "沖繩北部"
   },
   {
     "id": "palm-hills",
     "countryCode": "JP",
     "country": "Japan",
-    "region": "南部",
+    "region": "Okinawa",
     "name": "Palm Hills Golf Resort Club",
     "nameLocal": "パームヒルズゴルフリゾートクラブ",
     "area": "南部",
@@ -112,13 +116,14 @@
     "regionGroup": "Okinawa",
     "subregionId": "JP-OKI-SOUTH",
     "catalogStatus": "active",
-    "weatherEnabled": true
+    "weatherEnabled": true,
+    "subregionLabel": "沖繩南部"
   },
   {
     "id": "chura-orchard",
     "countryCode": "JP",
     "country": "Japan",
-    "region": "北部",
+    "region": "Okinawa",
     "name": "Chura Orchard Golf Club",
     "nameLocal": "美らオーチャードゴルフ倶楽部",
     "area": "北部",
@@ -135,7 +140,8 @@
     "regionGroup": "Okinawa",
     "subregionId": "JP-OKI-NORTH",
     "catalogStatus": "active",
-    "weatherEnabled": true
+    "weatherEnabled": true,
+    "subregionLabel": "沖繩北部"
   },
   {
     "id": "jp-north-country",
