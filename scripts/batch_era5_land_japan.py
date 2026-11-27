@@ -67,7 +67,7 @@ def _run(command: list[str]) -> subprocess.CompletedProcess:
 
 
 def run_task(task: dict, output_root: Path, retries: int = 3, retry_delay: int = 30,
-             sleep=time.sleep, runner=_run) -> dict:
+             sleep=time.sleep, runner=_run, force: bool = False) -> dict:
     raw_dir = output_root / "raw"
     report_dir = output_root / "reports"
     daily_dir = output_root / "daily"
@@ -79,7 +79,7 @@ def run_task(task: dict, output_root: Path, retries: int = 3, retry_delay: int =
     archive = raw_dir / f"{stem}.zip"
     report = report_dir / f"{sid}-{year}-inspection.json"
     daily = daily_dir / f"{sid}-{year}-daily.json"
-    if daily.exists() and daily.stat().st_size > 0:
+    if not force and daily.exists() and daily.stat().st_size > 0:
         try:
             existing = json.loads(daily.read_text(encoding="utf-8"))
             expected_days = (date(year, 12, 31) - date(year, 1, 1)).days + 1
@@ -185,7 +185,7 @@ def main() -> int:
     }]
     selected_tasks = pending[:args.limit]
     for task in selected_tasks:
-        result = run_task(task, root, args.retries, args.retry_delay)
+        result = run_task(task, root, args.retries, args.retry_delay, force=args.force)
         state["tasks"][task["taskId"]] = result
         state["updatedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         completed = sum(state["tasks"].get(t["taskId"], {}).get("status", "").startswith("daily-converted") for t in tasks)
