@@ -246,16 +246,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
       "address": "460 Modo, Sakaimachi, Sashima-gun, Ibaraki 306-0423, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 36.07964324951172,
+      "longitude": 139.82562255859375,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://booking.gora.golf.rakuten.co.jp/guide/map/c_id/80122/",
+      "coordinateEvidenceStatus": "third_party_booking_google_maps_place_coordinate",
+      "coordinateEvidence": "Rakuten GORA course map link redirects to Google Maps coordinates 36.07964324951172,139.82562255859375. Official 31 Country Club access page confirms matching address; official site and current booking listing confirm active course and 9-hole facility."
     },
     {
       "clusterId": "JP-KNT-TOCHIGI-NASU",
@@ -801,8 +804,8 @@
       "coordinateEvidence": "FullGolf course coordinate and address; separate golf travel directory confirms course address and current visitor information."
     }
   ],
-  "coordinateAvailableCount": 32,
-  "coordinatePendingCount": 1,
+  "coordinateAvailableCount": 33,
+  "coordinatePendingCount": 0,
   "coordinateResearchUpdatedOn": "2026-11-27",
-  "coordinateResearchNote": "Thirteen additional representative coordinates have been researched in this cycle (10 prior batch + 3 official map links/embeds); 32 of 33 now have sourced candidate points. All remain pending independent review and no weather point is activated."
+  "coordinateResearchNote": "All 33 Japan golf-cluster representative candidates now have sourced coordinate candidates. Coordinates include official operator map pins/centers and third-party course/map points; all remain pending a consolidated acceptance audit. No new weather points have been activated."
 }
