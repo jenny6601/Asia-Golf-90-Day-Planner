@@ -13,9 +13,11 @@ name: Okinawa Trip Date Live Data Integration
       - "config/global/courses.json"
       - ".github/workflows/trip-date-live-integration.yml"
   workflow_dispatch:
+  schedule:
+    - cron: "15 21 * * *" # 06:15 Asia/Tokyo daily
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: okinawa-trip-date-live-integration
@@ -32,6 +34,17 @@ jobs:
           node-version: 20
       - name: Retrieve live forecast, EC46/SEAS5 and ERA5 history and rank 5D4N windows
         run: node scripts/run-trip-date-recommendation-validation.mjs
+      - name: Persist one daily forecast snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/okinawa-forecast-snapshots/*.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive Okinawa daily forecast snapshot"
+            git push
+          else
+            echo "No forecast snapshot changes to persist."
+          fi
       - name: Upload recommendation report
         if: always()
         uses: actions/upload-artifact@v4
