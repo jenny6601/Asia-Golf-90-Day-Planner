@@ -5,11 +5,13 @@ Uses the complete station-information history (not the active-only list).
 Candidate discovery only: element capability flags do not prove daily record completeness.
 """
 import argparse, csv, io, json, math, urllib.request
+from datetime import date
 from collections import defaultdict
 from pathlib import Path
 
 STATION_CSV_URL="https://raw.githubusercontent.com/code4fukui/jma_station/main/jma_station.csv"
 START="1991-01-01"; END="2020-12-31"
+PERIOD_DAYS=(date.fromisoformat(END)-date.fromisoformat(START)).days+1
 
 def haversine_km(a,b,c,d):
     r=6371.0088
@@ -45,12 +47,28 @@ def parse_stations(text):
         if not overlapping: continue
         # Prefer the latest segment overlapping the target normal period for the representative location.
         rep=overlapping[-1]
+        intervals=[]
+        for seg in overlapping:
+            lo=max(date.fromisoformat(seg["startDate"]),date.fromisoformat(START))
+            hi=min(date.fromisoformat(seg["endDate"]) if seg["endDate"] and seg["endDate"]!="9999-99-99" else date.fromisoformat(END),date.fromisoformat(END))
+            if lo<=hi: intervals.append((lo,hi))
+        intervals.sort()
+        merged=[]
+        for lo,hi in intervals:
+            if not merged or lo>merged[-1][1]+date.resolution: merged.append([lo,hi])
+            elif hi>merged[-1][1]: merged[-1][1]=hi
+        covered=sum((hi-lo).days+1 for lo,hi in merged)
         stations.append({
           "stationId":sid,"name":None,"nameJa":None,
           "latitude":rep["latitude"],"longitude":rep["longitude"],"elevationM":rep["elevationM"],
           "historySegments":overlapping,
           "historyStart":min(s["startDate"] for s in overlapping),
           "historyEnd":max(s["endDate"] for s in overlapping),
+          "metadataOverlapDays1991_2020":covered,
+          "metadataOverlapPct1991_2020":round(covered/PERIOD_DAYS*100,1),
+          "metadataGapDays1991_2020":PERIOD_DAYS-covered,
+          "distinctCoordinatesDuringPeriod":len({(s["latitude"],s["longitude"]) for s in overlapping}),
+          "historySegmentCount":len(overlapping),
           "hasAnySegmentOverlapping1991_2020":True,
           "catalogSource":"JMA AMeDAS Station Information History File (complete history dataset mirror)"
         })
@@ -70,9 +88,9 @@ def build_candidates(queue, stations, limit=10):
                     best={"distanceKm":d,"segment":seg}
             if best is None: continue
             ranked.append({**s,"latitude":best["segment"]["latitude"],"longitude":best["segment"]["longitude"],"elevationM":best["segment"]["elevationM"],"distanceKm":round(best["distanceKm"],2),"nearestHistorySegment":best["segment"]})
-        ranked.sort(key=lambda x:(x["distanceKm"],x["stationId"]))
+        ranked.sort(key=lambda x:(-x["metadataOverlapPct1991_2020"],x["distanceKm"],x["stationId"]))
         out.append({"countryCode":"JP","subregionId":region["subregionId"],"subregionLabel":region["subregionLabel"],"representativeCourseId":region.get("representativeCourseId"),"candidateCountWithinRadius":len(ranked),"candidates":ranked[:limit],"status":"historical-metadata-candidates-only-daily-record-completeness-unverified","stationApproved":False,"weatherIngestionEnabled":False})
-    return {"schemaVersion":2,"status":"jma-full-history-metadata-candidate-discovery-only","period":{"start":START,"end":END},"stationCatalogUrl":STATION_CSV_URL,"stationCatalogProvenance":"Complete JMA AMeDAS station-information history dataset mirror. Metadata must be cross-checked with original JMA amdmaster.index before approval.","selectionNotes":["Use full station history, not active stations only.","Preserve each historical station configuration and discontinuity flag.","A station is only a candidate if at least one precipitation+temperature configuration overlaps 1991-2020.","Do not infer daily PRCP/TMAX/TMIN record completeness from capability flags."],"summary":{"japanSubregions":len(out),"regionsWithCandidates":sum(bool(x["candidates"]) for x in out),"regionsWithoutCandidates":sum(not x["candidates"] for x in out),"candidateRows":sum(len(x["candidates"]) for x in out),"uniqueStations":len(stations),"approvedStations":0,"dailyRecordsDownloaded":0},"regions":out}
+    return {"schemaVersion":2,"status":"jma-full-history-metadata-candidate-discovery-only","period":{"start":START,"end":END},"stationCatalogUrl":STATION_CSV_URL,"stationCatalogProvenance":"Complete JMA AMeDAS station-information history dataset mirror. Metadata must be cross-checked with original JMA amdmaster.index before approval.","selectionNotes":["Use full station history, not active stations only.","Preserve each historical station configuration and discontinuity flag.","A station is only a candidate if at least one precipitation+temperature configuration overlaps 1991-2020.","Do not infer daily PRCP/TMAX/TMIN record completeness from capability flags."],"summary":{"japanSubregions":len(out),"regionsWithCandidates":sum(bool(x["candidates"]) for x in out),"regionsWithoutCandidates":sum(not x["candidates"] for x in out),"candidateRows":sum(len(x["candidates"]) for x in out),"uniqueStations":len(stations),"approvedStations":0,"dailyRecordsDownloaded":0,"ranking":"metadata period-overlap first, then distance; does not imply observed daily-data completeness"},"regions":out}
 
 def main():
     ap=argparse.ArgumentParser()
