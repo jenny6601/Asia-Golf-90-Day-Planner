@@ -182,8 +182,8 @@ test("Japan mainland GPS candidates have explicit evidence grades and none is fo
  const japan=registry.countries.find(x=>x.countryCode==="JP");
  const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
  const count=grade=>mainland.filter(x=>x.coordinateQuality?.grade===grade).length;
- assert.equal(count("A"),3);
- assert.equal(count("B"),12);
+ assert.equal(count("A"),4);
+ assert.equal(count("B"),11);
  assert.equal(count("C"),1);
  assert.ok(mainland.every(x=>x.coordinateQuality.weatherPointEligible===false));
  assert.ok(mainland.every(x=>x.coordinateQuality.reviewStatus));
@@ -230,4 +230,24 @@ test("Japan official map cross-checks preserve pin versus viewport-center semant
  assert.equal(narita.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
  assert.equal(narita.coordinateQuality.officialMapReference.distanceFromCandidateKm,0.122);
  assert.ok([hokkaido,seven,narita].every(x=>x.coordinateQuality.weatherPointEligible===false));
+});
+
+
+test("Japan Kawaguchiko official place pin and low-zoom map centers are not conflated",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const find=name=>japan.subregions.find(x=>x.candidateCourseName===name);
+ const kawaguchiko=find("Kawaguchiko Country Club");
+ assert.equal(kawaguchiko.candidateCoordinates.coordinateStatus,"official-operator-google-maps-place-pin");
+ assert.equal(kawaguchiko.candidateCoordinates.latitude,35.4682136);
+ assert.equal(kawaguchiko.candidateCoordinates.longitude,138.7517012);
+ assert.equal(kawaguchiko.coordinateQuality.officialMapReference.coordinateType,"place-pin-coordinate");
+ assert.equal(kawaguchiko.coordinateQuality.officialMapReference.distanceFromPreviousCandidateKm,0.127);
+ const toki=find("Tokinodai Country Club");
+ assert.equal(toki.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
+ assert.equal(toki.coordinateQuality.officialMapReference.mapZoomScale,"approximately-42km-map-width");
+ assert.equal(toki.coordinateQuality.weatherPointEligible,false);
+ const appi=find("Appi Kogen Golf Club");
+ assert.equal(appi.coordinateQuality.officialMapReference.coordinateType,"no-official-pin-extracted");
+ assert.equal(appi.coordinateQuality.weatherPointEligible,false);
 });
