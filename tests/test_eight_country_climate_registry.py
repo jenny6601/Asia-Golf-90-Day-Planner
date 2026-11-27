@@ -31,7 +31,7 @@ class EightCountryRegistryTests(unittest.TestCase):
         self.assertFalse(result["activation"]["climateBaselineEnabled"])
 
     def test_task_plan_scales_by_year_and_region_and_is_plan_only(self):
-        registry = MODULE.compile_registry(self.countries, self.subregions)
+        registry = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         plan = MODULE.build_task_plan(registry, 1991, 1993)
         self.assertEqual(plan["readySubregions"], 19)
         self.assertEqual(plan["annualTaskCount"], 57)
@@ -39,16 +39,16 @@ class EightCountryRegistryTests(unittest.TestCase):
         self.assertFalse(plan["safety"]["decisionUseEligible"])
 
     def test_country_filter_and_unknown_country(self):
-        registry = MODULE.compile_registry(self.countries, self.subregions)
+        registry = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         plan = MODULE.build_task_plan(registry, 1991, 1991, ["JP"])
         self.assertEqual(plan["annualTaskCount"], 19)
         with self.assertRaises(ValueError):
             MODULE.build_task_plan(registry, 1991, 1991, ["XX"])
 
     def test_missing_coordinates_are_pending_not_zero_filled(self):
-        result = MODULE.compile_registry(self.countries, self.subregions)
+        result = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         pending_ids = {x["subregionId"] for x in result["pendingSubregions"]}
-        self.assertIn("KR-SEOUL", pending_ids)
+        self.assertIn("KR-CAP-01", pending_ids)
         self.assertTrue(all(p.get("subregionId") for p in result["pendingSubregions"]))
 
     def test_duplicate_subregion_ids_are_rejected(self):
