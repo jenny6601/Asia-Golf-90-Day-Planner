@@ -2,7 +2,7 @@
  * Five-day / three-round Okinawa golf-trip date recommendation engine.
  * Pure backend module; no network access and no UI dependencies.
  * Inputs are normalized source-audited regional rain-risk signals (0..100).
- * Missing signals are never imputed. Stability risk: 0=stable, 100=unstable.
+ * Missing signals are never imputed. Stability risk: 0=stable, 100=unstable; it adds an uncertainty penalty, not rain.
  *
  * day = { date, regions: { north|central|south: {
  *   forecast?, ec46?, seas5?, historical?, stability?
@@ -40,23 +40,30 @@ function validateSignal(signal, source, date) {
 }
 
 function weightedRegionSignal(regionData, weights, date) {
-  let weightedRisk = 0, weightedCoverage = 0, availableWeight = 0;
+  let weightedRainRisk = 0, availableRainWeight = 0, weightedCoverage = 0;
+  let stabilityPenalty = 0;
   const usedSources = [], missingSources = [];
   for (const [source, weight] of Object.entries(weights)) {
     const signal = validateSignal(regionData?.[source], source, date);
     if (!signal || signal.coverage <= 0) { missingSources.push(source); continue; }
-    weightedRisk += signal.riskScore * weight;
     weightedCoverage += signal.coverage * weight;
-    availableWeight += weight;
     usedSources.push(source);
+    if (source === "stability") {
+      // Stability is an uncertainty penalty, not another rainfall forecast.
+      stabilityPenalty += signal.riskScore * weight;
+      continue;
+    }
+    weightedRainRisk += signal.riskScore * weight;
+    availableRainWeight += weight;
   }
-  if (availableWeight === 0)
-    return { riskScore: null, evidenceCoverage: 0, usedSources, missingSources };
-  const rawRiskScore = weightedRisk / availableWeight;
-  const evidenceCoverage = availableWeight * (weightedCoverage / availableWeight);
+  if (availableRainWeight === 0)
+    return { riskScore: null, evidenceCoverage: weightedCoverage, usedSources, missingSources };
+  const rawRiskScore = weightedRainRisk / availableRainWeight;
+  const evidenceCoverage = weightedCoverage;
   return {
-    riskScore: clamp(rawRiskScore + MISSING_DATA_PENALTY * (1 - evidenceCoverage)),
-    rawRiskScore, evidenceCoverage, usedSources, missingSources
+    riskScore: clamp(rawRiskScore + stabilityPenalty
+      + MISSING_DATA_PENALTY * (1 - evidenceCoverage)),
+    rawRiskScore, stabilityPenalty, evidenceCoverage, usedSources, missingSources
   };
 }
 
