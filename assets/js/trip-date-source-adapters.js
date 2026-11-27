@@ -8,7 +8,7 @@
  * [{fetchedAt,regions:{north:[{date,riskScore}],central:[...],south:[...]}}]
  */
 const REGIONS = ["north","central","south"];
-const EXPECTED_COURSES = Object.freeze({north:3,central:1,south:2});
+const REPRESENTATIVE_COURSE_BY_REGION = Object.freeze({\n  north:"kise",\n  central:"pgm-okinawa",\n  south:"southern-links"\n});
 const finite = value => typeof value === "number" && Number.isFinite(value);
 const clamp = (value,min=0,max=100) => Math.max(min,Math.min(max,value));
 const addDays = (date,n) => new Date(Date.parse(date+"T00:00:00Z")+n*86400000).toISOString().slice(0,10);
@@ -89,11 +89,11 @@ function historicalSignal(regionRows,date,region) {
   const amount=average("rainMean");
   const risk=clamp(frequency*0.6+clamp(amount/5*100)*0.4);
   const sampleCoverage=valid.reduce((sum,x)=>sum+(finite(x.rainSampleYears)?clamp(x.rainSampleYears/10,0,1):0),0)/valid.length;
-  const regionCoverage=(valid.length/EXPECTED_COURSES[region])*sampleCoverage;
+  const regionCoverage=sampleCoverage;
   return {
     riskScore:risk,coverage:clamp(regionCoverage,0,1),
     rainFrequency:frequency,rainMean:amount,validCourseCount:valid.length,
-    expectedCourseCount:EXPECTED_COURSES[region],
+    representativeCourseId:valid[0].courseId??null,
     sampleYears:Math.min(...valid.map(x=>finite(x.rainSampleYears)?x.rainSampleYears:0)),
     method:"era5-same-calendar-day-wet-day-frequency-and-rain-amount-index"
   };
@@ -105,7 +105,7 @@ const COURSE_REGION = Object.freeze({
   "kise":"north","atta-terrace":"north","chura-orchard":"north"
 });
 
-/** Convert the six existing course-level ERA5 normals into three regional inputs. */
+/** Use exactly one representative course per region; other same-region courses inherit its regional assessment. */
 export function groupCourseHistoricalNormals(courseResults=[]) {
   if(!Array.isArray(courseResults))throw new TypeError("courseResults must be an array");
   const grouped={north:new Map(),central:new Map(),south:new Map()};
@@ -189,6 +189,6 @@ export function buildTripDateEngineInput({
 }
 
 export const TRIP_DATE_SOURCE_ADAPTERS = Object.freeze({
-  regions:REGIONS,expectedCourses:EXPECTED_COURSES,
+  regions:REGIONS,representativeCourseByRegion:REPRESENTATIVE_COURSE_BY_REGION,
   sourceHorizon:{forecast:[1,16],ec46:[17,46],seas5:[47,90],historical:[1,90],stability:[1,90]}
 });
