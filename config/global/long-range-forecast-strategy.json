@@ -165,7 +165,7 @@
     "metrics": [
       "daily estimated precipitation amount and uncertainty range",
       "daily precipitation risk category (numeric probability only after calibration)",
-      "daily estimated feels-like temperature and uncertainty; retain Tmin/Tmax as supporting air-temperature bounds",
+      "daily feels-like minimum/maximum range and uncertainty category; no mean air temperature",
       "daily wind/cloud/sunshine tendencies where source support exists",
       "daily golf-conditions advisory",
       "seven-day aggregation showing three-round planning suitability and risks",
@@ -235,8 +235,9 @@
       "precipitationRiskCategory",
       "temperatureMinEstimateC",
       "temperatureMaxEstimateC",
-      "feelsLikeTemperatureEstimateC",
-      "feelsLikeTemperatureUncertaintyC",
+      "feelsLikeMinEstimateC",
+      "feelsLikeMaxEstimateC",
+      "feelsLikeUncertaintyCategory",
       "windSpeedEstimateMs",
       "cloudCoverTendency",
       "sunshineTendency",
@@ -257,9 +258,12 @@
       "Use validated daily-shaped seasonal model outputs from independent model systems as additional daily structure only where hindcast skill is demonstrated.",
       "Generate date-specific estimates by conditional analog selection or a calibrated stochastic weather generator trained on historical daily sequences; condition on forecast anomalies and season.",
       "Preserve realistic multi-day weather persistence and cross-variable dependence by sampling complete historical weather sequences or calibrated ensemble trajectories, not independent random values for each date.",
-      "Summarize daily ensemble/analog distributions with median and prediction intervals; retain the full member/analog trace for audit."
+      "Summarize daily ensemble/analog distributions with median and prediction intervals; retain the full member/analog trace for audit.",
+      "Calculate a daily feels-like low/high range from daily Tmin/Tmax, daily mean dewpoint and vector-derived 10m wind speed; use a cold-regime wind-chill equation where applicable and an apparent-temperature equation in other regimes.",
+      "Because ERA5 daily dewpoint/wind aggregates are not time-paired with Tmin/Tmax, label the range as an approximation with an explicit uncertainty category; never describe it as hourly feels-like temperature.",
+      "The apparent-temperature calculation is shade-based and does not directly resolve solar radiation; cloud/sunshine tendency is a separate exposure context, not an exact solar correction."
     ],
-    "dailyVsPeriodSignalRule": "Weekly/monthly forecast anomalies adjust the distribution of each date in their valid period; they do not get copied as identical values to every day. Daily variability is supplied by historical analog sequences and validated daily model structure. If daily structure is not supported, expose broad uncertainty and lower confidence rather than fabricate detail. D17-D18 follow the same daily disaggregation discipline as D19-D46, but are explicitly labelled as a lower-confidence transition band.",
+    "dailyVsPeriodSignalRule": "Weekly/monthly forecast anomalies adjust the distribution of each date in their valid period; they do not get copied as identical values to every day. Daily variability is supplied by historical analog sequences and validated daily model structure. If daily structure is not supported, expose broad uncertainty and lower confidence rather than fabricate detail. D17-D18 follow the same daily disaggregation discipline as D19-D46, but are explicitly labelled as a lower-confidence transition band. Feels-like output is a daily low/high range, not a daily mean; mean air temperature is not required or published.",
     "userDecisionPolicy": {
       "appRole": "Display daily estimated weather and a separate advisory summary/ranking to help compare candidate departure windows.",
       "userRole": "User reviews the individual daily estimates and chooses the departure date; app must never imply the recommendation is a booking instruction or automatic decision.",
@@ -280,13 +284,33 @@
       "dailyMetrics": [
         "daily precipitation MAE and bias",
         "wet-day Brier score and reliability",
-        "feels-like temperature MAE and bias",
+        "feels-like low/high range MAE and bias",
         "prediction-interval coverage",
         "daily weather-category skill",
         "multi-day wet-spell duration and persistence"
       ],
       "sequenceValidation": "Validate seven-day sequence properties and at-least-three-playable-days estimates against hindcast windows; do not assume daily independence.",
       "sourceDiversityRule": "Count genuinely independent forecast systems only; do not treat multiple products derived from the same model family as independent votes."
+    },
+    "feelsLikeMethod": {
+      "outputs": [
+        "feelsLikeMinEstimateC",
+        "feelsLikeMaxEstimateC",
+        "feelsLikeUncertaintyCategory"
+      ],
+      "inputs": [
+        "temperatureMinEstimateC",
+        "temperatureMaxEstimateC",
+        "dailyMeanDewpointC",
+        "dailyMean10mUWindMs",
+        "dailyMean10mVWindMs"
+      ],
+      "windSpeed": "sqrt(u10^2 + v10^2)",
+      "coldRegime": "For air temperature <=10 C and wind speed >=4.8 km/h, use the standard wind-chill equation.",
+      "otherRegimes": "Use shade apparent temperature: AT = Ta + 0.33e - 0.70v - 4.00, where e is vapor pressure in hPa derived from dewpoint and v is wind speed in m/s; constrain vapor pressure not to exceed saturation at the evaluated air temperature.",
+      "dailyAggregateLimitation": "Tmin/Tmax, daily mean dewpoint and daily mean wind are not simultaneous observations; output is a broad daily estimate with uncertainty, not hourly apparent temperature.",
+      "solarLimitation": "No direct solar-radiation correction is applied. Shade apparent temperature and cloud/sunshine exposure context remain separate.",
+      "missingInput": "If Tmin, Tmax, dewpoint or either wind component is missing, both feels-like bounds remain unavailable."
     }
   }
 }
