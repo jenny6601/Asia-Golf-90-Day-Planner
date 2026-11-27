@@ -43,11 +43,15 @@ async function renderRegionalCoverage(host){
 export async function mountValidationPanel(host){
  if(!host)return;
  host.replaceChildren();
- const heading=node("div",undefined,"validation-heading");
+ const disclosure=node("details",undefined,"validation-disclosure");
+ const heading=node("summary",undefined,"validation-heading validation-summary");
  heading.append(node("h2","90 天預報驗證"),node("span","沖繩試點資料","validation-tag"));
+ const content=node("div",undefined,"validation-disclosure-content");
  const scopeNote=node("p","目前回測範圍僅包含沖繩北部、中部、南部三個次分區；不代表亞洲八國整體驗證。其他國家及次分區尚未納入本回測。","validation-scope-note");
  const body=node("div",undefined,"validation-body");
- host.append(heading,scopeNote,body);
+ content.append(scopeNote,body);
+ disclosure.append(heading,content);
+ host.append(disclosure);
  renderRegionalCoverage(body);
  try{
   const response=await fetch("./assets/data/90day-validation.json",{cache:"no-store"});
