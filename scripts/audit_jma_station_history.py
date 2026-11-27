@@ -53,8 +53,8 @@ def parse_index4(text):
         if temp_link not in {"0", "1", "4", "5"}:
             raise ValueError(f"amdmaster.index4 line {line_no}: unknown temperature continuity flag {temp_link!r}")
         stations[station_id].append({
-            "stationId": station_id, "nameRoman": row[3].strip(), "nameJa": row[4].strip(),
-            "latitude": row[9].strip(), "longitude": row[10].strip(), "elevationM": row[11].strip(),
+            "stationId": station_id, "nameRoman": row[3].strip(), "nameJa": row[1].strip(),
+            "latitude": row[7].strip(), "longitude": row[8].strip(), "elevationM": row[9].strip(),
             "startDate": start.isoformat(), "endDate": end.isoformat(),
             "oldStationId": row[25].strip(), "precipitationAvailable": precip == "1",
             "temperatureAvailable": temp == "1", "precipitationContinuityCode": precip_link,
@@ -124,6 +124,9 @@ def audit_candidate(candidate, official_segments):
     return {
         "stationId": sid, "candidateName": candidate.get("name") or candidate.get("nameJa"),
         "officialNameJa": period_segments[-1]["nameJa"] if period_segments else (segments[-1]["nameJa"] if segments else None),
+        "officialLatitude": period_segments[-1]["latitude"] if period_segments else (segments[-1]["latitude"] if segments else None),
+        "officialLongitude": period_segments[-1]["longitude"] if period_segments else (segments[-1]["longitude"] if segments else None),
+        "officialElevationM": period_segments[-1]["elevationM"] if period_segments else (segments[-1]["elevationM"] if segments else None),
         "officialHistoryMatch": bool(segments),
         "officialHistorySegmentCount": len(segments),
         "officialSegmentsOverlapping1991_2020": len(period_segments),
