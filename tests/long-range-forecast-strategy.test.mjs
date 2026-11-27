@@ -32,10 +32,18 @@ test("D17-D18 are a daily-estimate transition band, not a trend-only gap", () =>
   const transition = spec.horizons.find(x => x.id === "D17_D18");
   assert.deepEqual(transition.leadDays, [17,18]);
   assert.equal(transition.primarySource, "ECMWF_IFS_SUBSEASONAL");
-  assert.equal(transition.secondarySource, "ERA5_LAND_CLIMATOLOGY");
+  assert.equal(transition.secondarySource, "ERA5_DAILY_CLIMATOLOGY");
   assert.match(transition.dailyOutput, /each local date D17 and D18/);
   assert.equal(spec.operations.d17D18DailyOutputRequired, true);
   assert.match(spec.operations.d17D18Source, /no D16 carry-forward/);
+});
+
+test("historical climate source is ERA5 daily statistics only", () => {
+  const historical = spec.sources.find(x => x.sourceId === "ERA5_DAILY_CLIMATOLOGY");
+  assert.ok(historical);
+  assert.equal(historical.dataset, "derived-era5-single-levels-daily-statistics");
+  assert.equal(spec.horizons.find(x => x.id === "D17_D18").secondarySource, "ERA5_DAILY_CLIMATOLOGY");
+  assert.ok(!JSON.stringify(spec).includes("ERA5-Land"));
 });
 
 test("daily estimated weather records are required for every D17-D90 date", () => {
