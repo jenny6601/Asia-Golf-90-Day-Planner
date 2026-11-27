@@ -16,7 +16,7 @@ class DailyStatisticsPilotTests(unittest.TestCase):
    self.assertTrue(all("time" not in x["request"] for x in req))
    self.assertTrue(all(x["request"]["frequency"]=="1_hourly" for x in req))
    self.assertTrue(all(x["sourceId"]=="ERA5_DAILY_STATS" for x in req))
-   self.assertEqual(req[-1]["request"]["variable"],["total_precipitation"])
+   self.assertEqual(req[-1]["request"]["variable"],["total_precipitation"])\n   self.assertNotIn("2m_temperature",req[1]["request"]["variable"])
  def test_temperature_daily_min_and_max(self):
   req=M.build_requests(self.registry["points"][0],1991)
   self.assertEqual(req[0]["request"]["variable"],["2m_temperature"])
@@ -30,4 +30,22 @@ class DailyStatisticsPilotTests(unittest.TestCase):
   with self.assertRaises(ValueError): M.utc_offset("Pacific/Honolulu")
  def test_invalid_year_rejected(self):
   with self.assertRaises(ValueError): M.build_requests(self.registry["points"][0],1939)
+ def test_feels_like_range_uses_min_max_and_wind_chill(self):
+  result=M.calculate_feels_like_range(2.0,12.0,1.0,4.0,0.0)
+  self.assertIsNotNone(result["feelsLikeMinEstimateC"])
+  self.assertIsNotNone(result["feelsLikeMaxEstimateC"])
+  self.assertLess(result["feelsLikeMinEstimateC"],result["feelsLikeMaxEstimateC"])
+  self.assertEqual(result["lowMethod"],"wind-chill")
+  self.assertIn("daily-aggregate-inputs-not-time-paired",result["qualityFlags"])
+ def test_feels_like_warm_humid_method(self):
+  result=M.calculate_feels_like_range(25.0,33.0,24.0,1.0,1.0)
+  self.assertEqual(result["lowMethod"],"apparent-temperature")
+  self.assertEqual(result["highMethod"],"apparent-temperature")
+  self.assertLess(result["feelsLikeMaxEstimateC"],33.0)
+ def test_feels_like_missing_inputs_fail_closed(self):
+  result=M.calculate_feels_like_range(20.0,30.0,None,1.0,1.0)
+  self.assertIsNone(result["feelsLikeMinEstimateC"])
+  self.assertIsNone(result["feelsLikeMaxEstimateC"])
+ def test_feels_like_invalid_bounds_rejected(self):
+  with self.assertRaises(ValueError): M.calculate_feels_like_range(31.0,20.0,18.0,1.0,1.0)
 if __name__=="__main__": unittest.main()
