@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Weather analysis is performed once per subregion using one representative golf-course coordinate. Other courses in the same subregion inherit the regional weather assessment.",
+  "countries": [
+    {
+      "countryCode": "JP",
+      "countryNameZh": "日本",
+      "coverageStatus": "pilot",
+      "subregions": [
+        {
+          "id": "JP-OKI-NORTH",
+          "region": "Okinawa",
+          "subregion": "北部",
+          "label": "沖繩北部",
+          "coverageStatus": "configured",
+          "representativeCourseId": "kise"
+        },
+        {
+          "id": "JP-OKI-CENTRAL",
+          "region": "Okinawa",
+          "subregion": "中部",
+          "label": "沖繩中部",
+          "coverageStatus": "configured",
+          "representativeCourseId": "pgm-okinawa"
+        },
+        {
+          "id": "JP-OKI-SOUTH",
+          "region": "Okinawa",
+          "subregion": "南部",
+          "label": "沖繩南部",
+          "coverageStatus": "configured",
+          "representativeCourseId": "southern-links"
+        }
+      ]
+    },
+    {
+      "countryCode": "KR",
+      "countryNameZh": "韓國",
+      "coverageStatus": "planned",
+      "subregions": []
+    },
+    {
+      "countryCode": "CN",
+      "countryNameZh": "中國",
+      "coverageStatus": "planned",
+      "subregions": []
+    },
+    {
+      "countryCode": "VN",
+      "countryNameZh": "越南",
+      "coverageStatus": "planned",
+      "subregions": []
+    },
+    {
+      "countryCode": "TH",
+      "countryNameZh": "泰國",
+      "coverageStatus": "planned",
+      "subregions": []
+    },
+    {
+      "countryCode": "MY",
+      "countryNameZh": "馬來西亞",
+      "coverageStatus": "planned",
+      "subregions": []
+    },
+    {
+      "countryCode": "SG",
+      "countryNameZh": "新加坡",
+      "coverageStatus": "planned",
+      "subregions": []
+    },
+    {
+      "countryCode": "ID",
+      "countryNameZh": "印尼",
+      "coverageStatus": "planned",
+      "subregions": []
+    }
+  ]
+}
