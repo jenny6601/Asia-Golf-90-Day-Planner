@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 BASE="https://www.ncei.noaa.gov/pub/data/ghcn/daily/"
 FILES={"stations":"ghcnd-stations.txt","inventory":"ghcnd-inventory.txt","countries":"ghcnd-countries.txt"}
-ALIASES={"JP":["japan"],"KR":["south korea","republic of korea","korea, republic of"],"CN":["china"],"VN":["vietnam"],"TH":["thailand"],"MY":["malaysia"],"SG":["singapore"],"ID":["indonesia"]}
+ALIASES={"JP":["japan"],"KR":["south korea","republic of korea","korea, republic of","korea, south"],"CN":["china"],"VN":["vietnam"],"TH":["thailand"],"MY":["malaysia"],"SG":["singapore"],"ID":["indonesia"]}
 def fetch(name,timeout=90):
     req=urllib.request.Request(BASE+FILES[name],headers={"User-Agent":"Asia-Golf-Climate-Research/1.0"})
     with urllib.request.urlopen(req,timeout=timeout) as response:
