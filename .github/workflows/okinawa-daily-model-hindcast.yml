@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 20
       - name: Run JMA and model validation tests
-        run: node --test tests/jma-amedas-validation.test.js
+        run: node --test tests/jma-amedas-validation.test.js tests/okinawa-model-source-ranking.test.mjs tests/okinawa-course-source-reliability.test.mjs
       - name: Collect seven-day model hindcast verification
         id: verify
         continue-on-error: true
@@ -37,9 +37,6 @@ jobs:
       - name: Project station skill onto six golf courses
         if: steps.verify.outcome == 'success'
         run: node scripts/project-okinawa-course-source-reliability.mjs
-      - name: Run course reliability projection tests
-        if: steps.verify.outcome == 'success'
-        run: node --test tests/okinawa-course-source-reliability.test.mjs
       - name: Commit daily hindcast archive
         if: always()
         run: |
