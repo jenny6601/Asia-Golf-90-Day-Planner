@@ -50,10 +50,15 @@ class EightCountryRegistryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             MODULE.build_task_plan(registry, 1991, 1991, ["XX"])
 
-    def test_missing_coordinates_are_pending_not_zero_filled(self):
+    def test_all_62_subregions_have_regional_points_and_valid_timezones(self):
         result = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         pending_ids = {x["subregionId"] for x in result["pendingSubregions"]}
         self.assertEqual(pending_ids, set())
+        result_points = {p["subregionId"]: p for p in result["points"]}
+        self.assertEqual(len(result_points), 62)
+        self.assertEqual(result_points["ID-BALI-01"]["timezone"], "Asia/Makassar")
+        self.assertEqual(result_points["ID-KAL-01"]["timezone"], "Asia/Makassar")
+        self.assertEqual(result_points["SG-ISLAND-01"]["timezone"], "Asia/Singapore")
         self.assertTrue(all(p.get("subregionId") for p in result["pendingSubregions"]))
 
     def test_duplicate_subregion_ids_are_rejected(self):
