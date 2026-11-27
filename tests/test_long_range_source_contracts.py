@@ -6,8 +6,8 @@ def base(kind):
  src={"era5-daily":("ERA5_DAILY","derived-era5-single-levels-daily-statistics"),"ecmwf-extended-range":("ECMWF_IFS","IFS-EXTENDED-RANGE"),"c3s-seasonal":("C3S_MULTI_SYSTEM","C3S-SEASONAL-MULTI-SYSTEM")}[kind]
  return {"schemaVersion":1,"contractType":kind,"sourceId":src[0],"datasetId":src[1],"retrievedAt":"2026-11-27T00:00:00Z","sourceVersion":"test-v1","units":{},"records":[]}
 def historical():
- d=base("era5-daily"); d["units"]={"precipitationMm":"mm","temperatureMinC":"degC","temperatureMaxC":"degC","temperatureMeanC":"degC","dewpointMeanC":"degC","windDirectionDeg":"degrees","cloudCoverMeanPct":"%","windSpeedMs":"m/s","relativeHumidityPct":"%"}
- d["records"]=[{"dateLocal":"1991-01-01","subregionId":"JP-A","representativePointId":"point-a","timezone":"Asia/Tokyo","gridCell":{"latitude":35.0,"longitude":139.0},"values":{"precipitationMm":0.0,"temperatureMinC":2.0,"temperatureMaxC":9.0,"temperatureMeanC":5.5,"dewpointMeanC":3.0,"cloudCoverMeanPct":45.0,"windSpeedMs":2.0,"relativeHumidityPct":70},"qualityFlags":[]}]
+ d=base("era5-daily"); d["units"]={"precipitationMm":"mm","temperatureMinC":"degC","temperatureMaxC":"degC","dewpointMeanC":"degC","windDirectionDeg":"degrees","cloudCoverMeanPct":"%","windSpeedMs":"m/s","relativeHumidityPct":"%"}
+ d["records"]=[{"dateLocal":"1991-01-01","subregionId":"JP-A","representativePointId":"point-a","timezone":"Asia/Tokyo","gridCell":{"latitude":35.0,"longitude":139.0},"values":{"precipitationMm":0.0,"temperatureMinC":2.0,"temperatureMaxC":9.0,"dewpointMeanC":3.0,"cloudCoverMeanPct":45.0,"windSpeedMs":2.0,"relativeHumidityPct":70},"qualityFlags":[]}]
  return d
 def ecmwf():
  d=base("ecmwf-extended-range"); d["records"]=[{"subregionId":"JP-A","representativePointId":"point-a","timezone":"Asia/Tokyo","validStart":"2026-12-14","validEnd":"2026-12-20","leadDayStart":17,"leadDayEnd":23,"initializationTime":"2026-11-27T00:00:00Z","modelRunId":"ifs-2026112700","ensembleStatistics":{"precipitationAnomalyMm":4.2,"temperatureAnomalyC":1.1,"precipitationWetProbability":0.6,"temperatureAboveNormalProbability":0.7,"ensembleSpread":1.8}}]
