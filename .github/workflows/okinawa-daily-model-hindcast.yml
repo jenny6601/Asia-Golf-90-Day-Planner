@@ -31,13 +31,16 @@ jobs:
         id: verify
         continue-on-error: true
         run: node scripts/validate-okinawa-jma-observations.mjs
+      - name: Rebuild model source reliability ranking
+        if: steps.verify.outcome == 'success'
+        run: node scripts/rank-okinawa-model-sources.mjs
       - name: Commit daily hindcast archive
         if: always()
         run: |
-          if [ -d data/okinawa/model-hindcast-archive ] && [ -n "$(git status --porcelain data/okinawa/model-hindcast-archive)" ]; then
+          if [ -n "$(git status --porcelain data/okinawa/model-hindcast-archive data/okinawa/model-source-ranking)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/okinawa/model-hindcast-archive/
+            git add data/okinawa/model-hindcast-archive/ data/okinawa/model-source-ranking/
             git commit -m "Archive daily Okinawa model hindcast verification"
             git push
           else
@@ -50,6 +53,7 @@ jobs:
           name: okinawa-model-hindcast-verification
           path: |
             data/okinawa/model-hindcast-archive/
+            data/okinawa/model-source-ranking/
             artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.*
           if-no-files-found: warn
           retention-days: 90
