@@ -865,7 +865,25 @@
           "candidateCourseName": "Jack Nicklaus Golf Club Korea",
           "candidateRationale": "仁川松島首都圈候選；需再核對球場實際對外開放及座標",
           "candidateSourceUrl": "https://kgba.or.kr/03sub02",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 37.37985,
+            "longitude": 126.62439,
+            "coordinateStatus": "OpenStreetMap-derived public map coordinate",
+            "coordinateSourceUrl": "https://mapcarta.com/38817262",
+            "timezone": "Asia/Seoul"
+          },
+          "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開地圖／球場目錄候選座標",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "KR-GW-01",
@@ -877,7 +895,25 @@
           "candidateCourseName": "Whistling Rock Country Club",
           "candidateRationale": "江原道春川球場；韓國高爾夫球場經營協會地區名錄列於江原道區域。",
           "candidateSourceUrl": "https://kgba.or.kr/03sub02",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 37.7701,
+            "longitude": 127.6784,
+            "coordinateStatus": "third-party course map coordinate; official address cross-checked",
+            "coordinateSourceUrl": "https://www.whistlingrockcc.com/EN/Club/About",
+            "timezone": "Asia/Seoul"
+          },
+          "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開地圖／球場目錄候選座標",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "KR-CC-01",
@@ -889,7 +925,25 @@
           "candidateCourseName": "Woo Jeong Hills Country Club",
           "candidateRationale": "忠清南道天安候選代表，區域位置明確",
           "candidateSourceUrl": "https://kgba.or.kr/03sub02",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 36.766741,
+            "longitude": 127.224659,
+            "coordinateStatus": "third-party course directory coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/south-korea/south-chungcheong/cheonan/woo-jeong-hills-country-club",
+            "timezone": "Asia/Seoul"
+          },
+          "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開地圖／球場目錄候選座標",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "KR-YN-01",
@@ -901,7 +955,25 @@
           "candidateCourseName": "Haeundae Country Club",
           "candidateRationale": "釜山／嶺南候選代表，作為東南部氣候取樣點",
           "candidateSourceUrl": "https://kgba.or.kr/03sub02",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 35.36594,
+            "longitude": 129.19943,
+            "coordinateStatus": "OpenStreetMap-derived public map coordinate; official address cross-checked",
+            "coordinateSourceUrl": "https://mapcarta.com/34569928",
+            "timezone": "Asia/Seoul"
+          },
+          "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開地圖／球場目錄候選座標",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "KR-HN-01",
@@ -913,7 +985,25 @@
           "candidateCourseName": "Pine Beach Golf Links",
           "candidateRationale": "全羅南道海岸候選代表，對應湖南分區",
           "candidateSourceUrl": "https://kgba.or.kr/03sub02",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 34.6979,
+            "longitude": 126.26506,
+            "coordinateStatus": "OpenStreetMap-derived public map coordinate; national tourism address cross-checked",
+            "coordinateSourceUrl": "https://mapcarta.com/W390545752",
+            "timezone": "Asia/Seoul"
+          },
+          "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開地圖／球場目錄候選座標",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "KR-JJ-01",
@@ -925,7 +1015,25 @@
           "candidateCourseName": "Pinx Golf Club",
           "candidateRationale": "濟州西歸浦代表候選；27 洞球場，已有地點與營運資訊線索",
           "candidateSourceUrl": "https://kgba.or.kr/03sub02",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 33.3159979,
+            "longitude": 126.387643,
+            "coordinateStatus": "Jeju official tourism portal coordinate",
+            "coordinateSourceUrl": "https://www.visitjeju.net/en/detail/view?contentsid=CONT_000000000500672",
+            "timezone": "Asia/Seoul"
+          },
+          "coordinateReviewStatus": "public-coordinate-found;regional-climate-review-pending",
+          "coordinateQuality": {
+            "grade": "A",
+            "label": "官方觀光入口座標",
+            "reviewStatus": "accepted-for-regional-climate-assessment;not-a-surveyed-course-pin",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "依使用者確認，座標用於代表次分區區域氣候，不要求精確落在球場圖釘或球道範圍。",
+            "checkedOn": "2026-11-27"
+          }
         }
       ]
     },
