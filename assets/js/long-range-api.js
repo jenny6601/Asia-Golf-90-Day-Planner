@@ -53,22 +53,29 @@ export function interpretPrecipitationEfi(value){
 export async function fetchCourseSeasonalForecast(course,fetchImpl=fetch){
  if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足，無法讀取長期趨勢");
  const timezone=course.timezone||"Asia/Tokyo";
- const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),weekly:WEEKLY,monthly:MONTHLY,daily:DAILY,hourly:HOURLY,forecast_days:"90",timezone,wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius",models:"ecmwf_seasonal_seamless"});
+ const params=new URLSearchParams({latitude:String(latitude),longitude:String(longitude),weekly:WEEKLY,monthly:MONTHLY,daily:DAILY,hourly:HOURLY,forecast_days:"90",timezone,wind_speed_unit:"ms",precipitation_unit:"mm",temperature_unit:"celsius",models:"ecmwf_seasonal_seamless"});
  const response=await fetchImpl(ENDPOINT+"?"+params);if(!response.ok)throw new Error("長期趨勢 API HTTP "+response.status);
  const payload=await response.json();if(!payload.weekly?.time?.length&&!payload.monthly?.time?.length)throw new Error("未回傳長期趨勢資料");
  return {course,provider:"Open-Meteo Seasonal Forecast API",model:payload.model??"ECMWF seasonal seamless",timezone:payload.timezone||timezone,fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null,daily:payload.daily??null,hourly:payload.hourly??null};
 }
 
-// Share one ERA5 daily archive request between monthly and calendar-day climatology.
-// The two views use the same coordinates, date range, timezone and variables; fetching
-// them independently needlessly doubles traffic and can trigger upstream throttling.
+// Resolve every course to its subregion's single approved representative point.
+function historicalLocation(course){
+ const point=course?.regionalClimate?.representativePoint;
+ const latitude=Number.isFinite(point?.latitude)?point.latitude:course?.latitude;
+ const longitude=Number.isFinite(point?.longitude)?point.longitude:course?.longitude;
+ const timezone=course?.regionalClimate?.timezone||course?.timezone||"Asia/Tokyo";
+ if(!Number.isFinite(latitude)||!Number.isFinite(longitude))throw new TypeError("球場或分區代表座標不足");
+ return {latitude,longitude,timezone};
+}
+// Share one ERA5 daily archive request between all courses in the same subregion.
 const historicalArchiveCache=new WeakMap();
 async function loadHistoricalDailyArchive(course,fetchImpl,now){
  if(typeof fetchImpl!=="function")throw new TypeError("fetchImpl must be a function");
  let cache=historicalArchiveCache.get(fetchImpl);
  if(!cache){cache=new Map();historicalArchiveCache.set(fetchImpl,cache)}
- const startYear=1991,endYear=2020,timezone=course.timezone||"Asia/Tokyo";
- const key=[course.latitude,course.longitude,startYear,endYear,timezone].join("|");
+ const startYear=1991,endYear=2020,location=historicalLocation(course),{latitude,longitude,timezone}=location;
+ const key=[latitude,longitude,startYear,endYear,timezone].join("|");
  if(!cache.has(key)){
   const request=(async()=>{
    const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),
@@ -93,7 +100,8 @@ async function loadHistoricalDailyArchive(course,fetchImpl,now){
  * Maximum daily rainfall: maximum single-day total across the baseline years.
  */
 export async function fetchCourseHistoricalMonthlyClimate(course, fetchImpl=fetch, now=new Date()){
- if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足，無法讀取歷史氣候");
+ if(!course)throw new TypeError("球場資料不足，無法讀取歷史氣候");
+ historicalLocation(course);
  const {daily,startYear,endYear}=await loadHistoricalDailyArchive(course,fetchImpl,now);
  const buckets=Array.from({length:12},()=>({years:new Set(),rainTotals:[],rainDays:[],dailyMax:0,low:[],high:[]}));
  const annual=new Map();
@@ -168,7 +176,8 @@ const historicalCircularDistance=(a,b)=>{
  * Uses ERA5 daily aggregates for 1991-2020 only; no seasonal model adjustment.
  */
 export async function fetchCourseHistoricalWeekNormals(course,dates,fetchImpl=fetch,now=new Date()){
- if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足");
+ if(!course)throw new TypeError("球場資料不足");
+ historicalLocation(course);
  const {daily,startYear,endYear}=await loadHistoricalDailyArchive(course,fetchImpl,now);
  return {course,startYear,endYear,referencePeriod:"1991-2020",windowDays:31,source:"ERA5",days:dates.map(date=>{
   const targetDay=historicalDayNumber(date),byYear=new Map();
