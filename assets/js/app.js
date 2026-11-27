@@ -716,7 +716,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   });
   jumpNav.append(button);
  });
- const weekButton=node("button","本月週分析","monthly-jump-button");weekButton.type="button";
+ const weekButton=node("button","本月週分析","monthly-jump-button");weekButton.type="button";weekButton.disabled=true;
  weekButton.addEventListener("click",()=>{
   if((seasonalRecords||[]).length)renderRegionTopWeeks(group,seasonalRecords,month,()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords),monthlyDailyAssessmentForWeeks);
   else renderEmptyWeekAnalysis(group.country,group.region,month,()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords));
@@ -809,6 +809,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   return {date,valid:true,grade,status,playable:status==="適打",chance,amount,source:isForecast?"逐日預報":seasonal.length?"歷史＋季節模式估計":"歷史氣候參考"};
  }).filter(x=>x.valid);
  monthlyDailyAssessmentForWeeks=dailyAssessment;
+ weekButton.disabled=false;
  const playable=dailyAssessment.filter(x=>x.playable),watch=dailyAssessment.filter(x=>x.grade===2),wet=dailyAssessment.filter(x=>x.grade===3);
  const seasonBaseline=Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)?seasonRain-rainAnomaly:null;
  const seasonRatio=Number.isFinite(seasonBaseline)&&seasonBaseline>0?seasonRain/seasonBaseline:null;
@@ -1008,11 +1009,12 @@ async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAss
  await new Promise(resolve=>requestAnimationFrame(resolve));
  const panel=node("section",undefined,"week-recommendations");
  const monthStart=month+"-01",monthEnd=new Date(Date.parse(monthStart+"T12:00:00Z"));monthEnd.setUTCMonth(monthEnd.getUTCMonth()+1);monthEnd.setUTCDate(0);const last=monthEnd.toISOString().slice(0,10),todayDate=today(),first=monthStart>todayDate?monthStart:todayDate,candidates=[];
- const dailyGradeByDate=new Map((Array.isArray(dailyAssessment)?dailyAssessment:[]).map(x=>[x.date,x]));
+ const hasDailyAssessment=Array.isArray(dailyAssessment);
+ const dailyGradeByDate=new Map((hasDailyAssessment?dailyAssessment:[]).map(x=>[x.date,x]));
  for(let start=first;start<=last;start=add(start,7)){
   const weekEnd=add(start,6);if(weekEnd>last)continue;
   const days=Array.from({length:7},(_,i)=>add(start,i)),signals=[];
-  if(dailyGradeByDate.size){
+  if(hasDailyAssessment){
    const assessed=days.map(d=>dailyGradeByDate.get(d)).filter(x=>x&&x.valid);
    if(assessed.length===7){
     const meanGrade=assessed.reduce((sum,x)=>sum+x.grade,0)/7;
@@ -1036,7 +1038,7 @@ async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAss
  }
  candidates.sort((a,b)=>a.rank-b.rank||a.signal-b.signal||a.start.localeCompare(b.start));
  const picked=[];for(const item of candidates){if(picked.every(x=>Math.abs((Date.parse(item.start)-Date.parse(x.start))/86400000)>=7)){picked.push(item);if(picked.length===3)break}}
- if(!picked.length){panel.append(node("div","目前沒有取得可用的 2 月週／月尺度降雨資料，因此暫時無法排序推薦週次。請檢查球場季節資料覆蓋。","risk-summary"))}
+ if(!picked.length){panel.append(node("div",hasDailyAssessment?"目前沒有完整的逐日適打資料可供七天週次比較；為避免與月分析標準不一致，暫不以其他尺度資料替代。":"目前沒有取得可用的逐日適打資料，因此暫時無法排序推薦週次。","risk-summary"))}
  else{
   const grid=node("div",undefined,"week-grid top-week-grid");
   picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");const heading=node("div",undefined,"week-card-heading");heading.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")));const summary=node("div",undefined,"week-card-summary");if(x.source==="daily"){summary.append(node("span","適打 "+x.suitable+" 天｜可打 "+x.possible+" 天","week-rain-summary"),node("span","依全月逐日適打分級統計，與月曆標示一致","week-confidence"))}else{summary.append(node("span","降雨趨勢："+["偏乾","接近基準","偏濕","顯著偏濕"][x.rank],"week-rain-summary"),node("span","資料可信度："+(x.source==="weekly"?"週尺度":"月尺度參考")+"｜覆蓋 "+x.coverage+"/"+records.length,"week-confidence"))}card.append(heading,summary);const choose=node("button","查看此週 7 天報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month,null,()=>renderRegionTopWeeks(group,records,month,backAction,dailyAssessment),dailyAssessment));card.append(choose);grid.append(card)});
