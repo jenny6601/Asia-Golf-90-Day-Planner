@@ -81,11 +81,21 @@ Once a region has a computed 1991-2020 climatology JSON, run:
 python scripts/rank_golf_trip_dates.py --climatology data/processed/JP-KNT-NORTH-climatology-1991-2020.json --subregion JP-KNT-NORTH --from-date 2027-01-01 --horizon-days 90 --output data/processed/JP-KNT-NORTH-trip-date-ranking.json
 ```
 
-For each of the 90 departure dates in the requested horizon (the five-day trip may extend four days beyond the last departure date), the preview:
-- requires usable historical rainfall statistics for all five dates; February 29 uses the midpoint of the February 28 and March 1 climatology values;
-- selects the three dates with the lowest historical wet-day frequency as golf days;
-- tie-breaks by >=10 mm frequency, >=30 mm frequency, then P90 rainfall;
-- ranks trip starts by the average rainfall risk of the three selected golf dates;
-- labels the other two dates as rest/transfer days.
+For a 90-day calendar horizon, the preview evaluates 86 complete rolling five-day trip windows:
+- day 1 is arrival/transfer; days 2, 3 and 4 are the fixed consecutive golf days; day 5 is departure/transfer;
+- all five dates require usable historical rainfall statistics; February 29 uses the midpoint of the February 28 and March 1 climatology values;
+- ranking uses only the fixed three golf dates: average wet-day frequency, then >=10 mm frequency, >=30 mm frequency, then P90 rainfall;
+- missing rainfall metrics block a candidate; missing values are never filled with zero.
 
 This is a historical seasonal-climate prior, not a deterministic daily forecast or a guarantee of future conditions. It does not change the live 1-16 day forecast path. Production activation remains disabled until the historical source data and independent quality checks are complete.
+
+
+## 8. Forecast maturity and source separation
+
+The `assets/js/forecast-maturity.js` adapter establishes the lead-time contract:
+- D1-D16: short-range daily forecast, and no historical fallback if a forecast date is missing;
+- D17-D18: weekly trend only; no daily risk score;
+- D19-D46: historical same-calendar-day baseline plus seasonal trend estimate, not a deterministic daily forecast;
+- D47-D90: seasonal outlook and historical climate reference, not a deterministic daily forecast or daily rain probability.
+
+The adapter retains data confidence/source coverage separately from weather risk. It does not alter the formal V1 scoring weights and is not yet wired into the app UI.
