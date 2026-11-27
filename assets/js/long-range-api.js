@@ -191,8 +191,11 @@ export async function fetchCourseHistoricalWeekNormals(course,dates,fetchImpl=fe
   const validFor=key=>{
    const selected=[];
    for(const [year,rows] of years){
+    const leap=year%4===0&&(year%100!==0||year%400===0);
+    const includesLeapDay=leap&&targetDay>=44.5&&targetDay<=74.5;
+    const expectedDays=31+(includesLeapDay?1:0);
     const valid=rows.filter(row=>Number.isFinite(row[key]));
-    if(valid.length>=Math.ceil(rows.length*0.9))selected.push({year,values:valid.map(row=>row[key])});
+    if(valid.length>=Math.ceil(expectedDays*0.9))selected.push({year,values:valid.map(row=>row[key])});
    }
    return selected;
   };
