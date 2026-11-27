@@ -81,8 +81,8 @@ Once a region has a computed 1991-2020 climatology JSON, run:
 python scripts/rank_golf_trip_dates.py --climatology data/processed/JP-KNT-NORTH-climatology-1991-2020.json --subregion JP-KNT-NORTH --from-date 2027-01-01 --horizon-days 90 --output data/processed/JP-KNT-NORTH-trip-date-ranking.json
 ```
 
-For every possible five-day trip start in the requested horizon, the preview:
-- requires usable historical rainfall statistics for all five dates;
+For each of the 90 departure dates in the requested horizon (the five-day trip may extend four days beyond the last departure date), the preview:
+- requires usable historical rainfall statistics for all five dates; February 29 uses the midpoint of the February 28 and March 1 climatology values;
 - selects the three dates with the lowest historical wet-day frequency as golf days;
 - tie-breaks by >=10 mm frequency, >=30 mm frequency, then P90 rainfall;
 - ranks trip starts by the average rainfall risk of the three selected golf dates;
