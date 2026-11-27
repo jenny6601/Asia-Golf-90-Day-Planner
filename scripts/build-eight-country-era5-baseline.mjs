@@ -24,14 +24,27 @@ async function fetchBatch(batch){
     temperature_unit:"celsius",wind_speed_unit:"ms",precipitation_unit:"mm",models:"era5"
   });
   const url="https://archive-api.open-meteo.com/v1/archive?"+q;
-  for(let attempt=0;attempt<7;attempt++){
-    const response=await fetch(url,{signal:AbortSignal.timeout(120000)});
-    if(response.ok){const payload=await response.json();return Array.isArray(payload)?payload:[payload];}
-    if(response.status!==429&&response.status<500)throw new Error("ERA5 batch HTTP "+response.status);
-    const retryAfter=Number(response.headers.get("retry-after"));
-    await sleep(Number.isFinite(retryAfter)&&retryAfter>0?retryAfter*1000:Math.min(60000,5000*Math.pow(2,attempt)));
+  let lastError=null;
+  for(let attempt=0;attempt<9;attempt++){
+    try{
+      const response=await fetch(url,{signal:AbortSignal.timeout(180000)});
+      if(response.ok){
+        const payload=await response.json();
+        return Array.isArray(payload)?payload:[payload];
+      }
+      if(response.status!==429&&response.status<500)throw new Error("ERA5 batch HTTP "+response.status+": "+(await response.text()).slice(0,300));
+      const retryAfter=Number(response.headers.get("retry-after"));
+      lastError=new Error("ERA5 batch HTTP "+response.status);
+      await sleep(Number.isFinite(retryAfter)&&retryAfter>0?retryAfter*1000:Math.min(120000,10000*Math.pow(2,attempt)));
+    }catch(error){
+      lastError=error;
+      if(error.message?.startsWith("ERA5 batch HTTP ")&&!/429|5\\d\\d/.test(error.message))throw error;
+      const delay=Math.min(120000,10000*Math.pow(2,attempt));
+      console.warn("ERA5 batch attempt",attempt+1,"failed:",error.cause?.code||error.message,"retry in",delay,"ms");
+      if(attempt<8)await sleep(delay);
+    }
   }
-  throw new Error("ERA5 batch retry limit exceeded");
+  throw new Error("ERA5 batch retry limit exceeded: "+(lastError?.cause?.code||lastError?.message||"unknown"));
 }
 const dayNumber=date=>{
   const m=Number(date.slice(5,7)),d=Number(date.slice(8,10));
@@ -72,7 +85,7 @@ for(let offset=0;offset<regions.length;offset+=10){
     output.regions[region.id]={...region,status:"complete",daily:normals};
   }
   console.log("ERA5 baseline regions:",Math.min(offset+batch.length,80),"/ 80");
-  await sleep(2500);
+  await sleep(10000);
 }
 await fs.mkdir(new URL("../public/data/long-range/",import.meta.url),{recursive:true});
 await fs.writeFile(new URL("../public/data/long-range/era5-1991-2020-normals.json",import.meta.url),JSON.stringify(output));
