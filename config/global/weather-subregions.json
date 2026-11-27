@@ -4163,5 +4163,5 @@
   ],
   "planningNote": "Japan uses 36 destination-oriented golf clusters (3 Hokkaido, 5 Tohoku, 6 Kanto, 6 Chubu, 3 Kansai, 2 Chugoku, 2 Shikoku, 4 Kyushu, 5 Okinawa). Other seven countries retain their destination-oriented subregions, explicitly typed as golf-course clusters. Candidate representatives are not operational forecast points until validated. Hokkaido refinement: Sapporo city is separated from the Chitose/Tomakomai destination cluster; Sapporo Teine Golf Club is the identity-confirmed representative candidate, while The North Country remains the Chitose/Tomakomai candidate. Neither candidate point is enabled for live weather ingestion.",
   "candidatePolicy": "Candidate names are research selections only. They must not be used for weather ingestion or forecast generation until current operating status, exact official course identity, GPS coordinates, timezone, and subregion fit are verified. Candidate is not an enabled representative.",
-  "candidateCount": 75
+  "candidateCount": 73
 }
