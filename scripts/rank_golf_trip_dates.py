@@ -1,0 +1,199 @@
+#!/usr/bin/env python3
+"""Rank 5-day/4-night golf trip starts using the 1991-2020 regional climate prior.
+
+Rainfall is the primary ranking criterion. The engine chooses the three lowest
+historical rain-risk days within each five-day trip. This is not a deterministic
+weather forecast and does not use unvalidated data or fabricate missing values.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+from datetime import date, timedelta
+from pathlib import Path
+
+CLIMATE_STATUS = "historical-climatology-computed-not-activated"
+
+
+def load_climatology(path: Path, subregion: str) -> dict:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("status") not in {CLIMATE_STATUS, "historical-climatology-validated"}:
+        raise ValueError("Unsupported climatology status; expected computed historical climate output")
+    if payload.get("climateBaselineEnabled") is not False or payload.get("forecastEnabled") is not False:
+        raise ValueError("Climatology activation flags must remain false for this validation engine")
+    region = payload.get("regions", {}).get(subregion)
+    if not region:
+        raise ValueError(f"No climatology data for subregion {subregion}")
+    calendar = region.get("dailyCalendar")
+    if not isinstance(calendar, list) or len(calendar) != 365:
+        raise ValueError(f"{subregion}: expected 365 daily calendar entries")
+    by_month_day = {}
+    for item in calendar:
+        key = item.get("targetMonthDay")
+        if key in by_month_day:
+            raise ValueError(f"{subregion}: duplicate calendar day {key}")
+        by_month_day[key] = item
+    return {"metadata": region, "calendar": by_month_day, "source": payload}
+
+
+def day_rain_risk(day: date, calendar: dict) -> dict:
+    key = day.strftime("%m-%d")
+    item = calendar.get(key)
+    if not item:
+        return {"date": day.isoformat(), "usable": False, "reason": "missing_calendar_day"}
+    metrics = item.get("metrics", {})
+    rain = metrics.get("precipitationMm", {})
+    if rain.get("status") != "usable" or rain.get("wetDayFrequencyPct") is None:
+        return {"date": day.isoformat(), "usable": False, "reason": "insufficient_historical_rainfall"}
+    return {
+        "date": day.isoformat(),
+        "usable": True,
+        "wetDayFrequencyPct": float(rain["wetDayFrequencyPct"]),
+        "heavyRain10mmFrequencyPct": rain.get("heavyRain10mmFrequencyPct"),
+        "heavyRain30mmFrequencyPct": rain.get("heavyRain30mmFrequencyPct"),
+        "medianDailyRainMm": rain.get("median"),
+        "p90DailyRainMm": rain.get("p90"),
+        "validYears": rain.get("validYears"),
+        "sampleCount": rain.get("sampleCount"),
+        "status": "historical-climate-prior-not-daily-forecast",
+    }
+
+
+def _numeric(value, fallback=999999.0):
+    try:
+        return float(value) if value is not None else fallback
+    except (TypeError, ValueError):
+        return fallback
+
+
+def rank_trip_start(start: date, calendar: dict, trip_days: int = 5, rounds: int = 3) -> dict:
+    daily = [day_rain_risk(start + timedelta(days=i), calendar) for i in range(trip_days)]
+    if len(daily) != trip_days or not all(x["usable"] for x in daily):
+        return {
+            "startDate": start.isoformat(),
+            "endDate": (start + timedelta(days=trip_days - 1)).isoformat(),
+            "status": "insufficient-climate-coverage",
+            "reason": "All five trip dates require usable historical rainfall statistics",
+            "dailyPlan": daily,
+        }
+    selected = sorted(
+        daily,
+        key=lambda x: (
+            _numeric(x["wetDayFrequencyPct"]),
+            _numeric(x["heavyRain10mmFrequencyPct"]),
+            _numeric(x["heavyRain30mmFrequencyPct"]),
+            _numeric(x["p90DailyRainMm"]),
+            x["date"],
+        ),
+    )[:rounds]
+    selected_dates = {x["date"] for x in selected}
+    selected_sorted = sorted(selected, key=lambda x: x["date"])
+    return {
+        "startDate": start.isoformat(),
+        "endDate": (start + timedelta(days=trip_days - 1)).isoformat(),
+        "status": "ranked-by-historical-rainfall-prior",
+        "roundCount": rounds,
+        "playDates": [x["date"] for x in selected_sorted],
+        "restOrTransferDates": [x["date"] for x in daily if x["date"] not in selected_dates],
+        "rainRisk": {
+            "averageWetDayFrequencyPct": round(sum(x["wetDayFrequencyPct"] for x in selected) / rounds, 2),
+            "averageHeavyRain10mmFrequencyPct": round(sum(_numeric(x["heavyRain10mmFrequencyPct"], 0) for x in selected) / rounds, 2),
+            "averageHeavyRain30mmFrequencyPct": round(sum(_numeric(x["heavyRain30mmFrequencyPct"], 0) for x in selected) / rounds, 2),
+            "averageP90DailyRainMm": round(sum(_numeric(x["p90DailyRainMm"], 0) for x in selected) / rounds, 2),
+            "selectedRoundDays": rounds,
+            "interpretation": "Historical frequency across the 31-day seasonal window; not the probability that this specific future date will rain.",
+        },
+        "dailyPlan": [
+            {**x, "plannedActivity": "golf" if x["date"] in selected_dates else "rest-or-transfer"}
+            for x in daily
+        ],
+    }
+
+
+def rank_departures(climate_path: Path, subregion: str, from_date: date, horizon_days: int = 90,
+                    trip_days: int = 5, rounds: int = 3) -> dict:
+    if trip_days != 5 or rounds != 3:
+        raise ValueError("This planner is configured for exactly 5 days / 4 nights and 3 golf rounds")
+    if horizon_days < trip_days or horizon_days > 90:
+        raise ValueError("horizon_days must be between 5 and 90")
+    loaded = load_climatology(climate_path, subregion)
+    candidates = []
+    for offset in range(horizon_days - trip_days + 1):
+        start = from_date + timedelta(days=offset)
+        candidates.append(rank_trip_start(start, loaded["calendar"], trip_days, rounds))
+    eligible = [x for x in candidates if x["status"] == "ranked-by-historical-rainfall-prior"]
+    eligible.sort(key=lambda x: (
+        x["rainRisk"]["averageWetDayFrequencyPct"],
+        x["rainRisk"]["averageHeavyRain10mmFrequencyPct"],
+        x["rainRisk"]["averageHeavyRain30mmFrequencyPct"],
+        x["rainRisk"]["averageP90DailyRainMm"],
+        x["startDate"],
+    ))
+    for rank, item in enumerate(eligible, 1):
+        item["rank"] = rank
+    return {
+        "schemaVersion": 1,
+        "status": "historical-climate-date-ranking-preview",
+        "countryCode": "JP",
+        "subregionId": subregion,
+        "representativeCourseId": loaded["metadata"].get("representativeCourseId"),
+        "representativePoint": {
+            "latitude": loaded["metadata"].get("latitude"),
+            "longitude": loaded["metadata"].get("longitude"),
+        },
+        "planningParameters": {
+            "tripDays": trip_days,
+            "nights": trip_days - 1,
+            "golfRounds": rounds,
+            "primaryPriority": "minimum-rainfall-risk",
+            "candidateHorizonDays": horizon_days,
+            "fromDate": from_date.isoformat(),
+        },
+        "method": {
+            "source": "1991-2020 ERA5-Land regional climatology",
+            "dailySelection": "Select the three lowest historical wet-day frequency dates in each five-day trip; tie-break using >=10mm frequency, >=30mm frequency, then P90 rainfall.",
+            "tripRanking": "Lexicographic: average selected-day wet-day frequency, >=10mm frequency, >=30mm frequency, P90 rainfall.",
+            "forecastClaim": "No deterministic daily forecast is generated. Results are historical seasonal climate priors only.",
+            "shortRangeForecastIntegration": "Not included in this engine stage; keep 1-16 day live forecast path separate.",
+        },
+        "activation": {
+            "climateBaselineEnabled": False,
+            "forecastEnabled": False,
+            "recommendationProductionEnabled": False,
+            "requiresDataValidation": True,
+        },
+        "candidateCount": len(candidates),
+        "rankedCandidateCount": len(eligible),
+        "blockedCandidateCount": len(candidates) - len(eligible),
+        "recommendations": eligible,
+        "blockedCandidates": [x for x in candidates if x["status"] != "ranked-by-historical-rainfall-prior"],
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--climatology", type=Path, required=True)
+    parser.add_argument("--subregion", required=True)
+    parser.add_argument("--from-date", required=True)
+    parser.add_argument("--horizon-days", type=int, default=90)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    try:
+        result = rank_departures(args.climatology, args.subregion, date.fromisoformat(args.from_date), args.horizon_days)
+    except Exception as exc:
+        parser.exit(2, f"Date ranking blocked: {exc}\n")
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({
+        "status": result["status"],
+        "rankedCandidateCount": result["rankedCandidateCount"],
+        "blockedCandidateCount": result["blockedCandidateCount"],
+        "topThree": result["recommendations"][:3],
+        "productionEnabled": result["activation"]["recommendationProductionEnabled"],
+        "output": str(args.output),
+    }, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
