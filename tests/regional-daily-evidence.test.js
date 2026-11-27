@@ -59,7 +59,7 @@ test("long-range records keep wet-day frequency distinct from daily rain probabi
   const row = buildRegionalDailyEvidence({
     ...base,
     date: "2026-12-20",
-    seasonalOutlook: { rainChanceEstimate: 48, rainEstimate: 2.2, highEstimate: 19, lowEstimate: 12, confidenceScore: 42 },
+    seasonalOutlook: { rainChanceEstimate: 48, rainEstimate: 2.2, highEstimate: 19, lowEstimate: 12, confidenceScore: 42, confidence: "偏低" },
     historical: { rainFrequency: 40, rainMean: 1.8, highMean: 18, lowMean: 11, sampleYears: 24 }
   });
   assert.equal(row.forecastMaturity.band, "D19-D46");
@@ -67,6 +67,7 @@ test("long-range records keep wet-day frequency distinct from daily rain probabi
   assert.equal(row.weatherMetrics.wetDayFrequencyEstimatePct, 48);
   assert.match(row.weatherMetrics.wetDayFrequencyMeaning, /不是該日降雨機率/);
   assert.equal(row.weatherMetrics.rainfallAmountEstimateMm, 2.2);
+  assert.equal(row.confidence, "偏低");
   assert.equal(row.quality.historicalFrequencyIsNotDailyRainProbability, true);
   assert.equal(row.decisionPolicy.rankingInputEligible, false);
 });
@@ -89,4 +90,5 @@ test("rejects missing region identity, invalid representative point, and malform
   assert.throws(() => buildRegionalDailyEvidence({ ...base, subregionId: "", date: "2026-12-01" }), /subregionId/);
   assert.throws(() => buildRegionalDailyEvidence({ ...base, representativePoint: { latitude: 100, longitude: 140 }, date: "2026-12-01" }), /representativePoint/);
   assert.throws(() => buildRegionalDailyEvidence({ ...base, date: "not-a-date" }), /valid YYYY-MM-DD/);
+  assert.throws(() => buildRegionalDailyEvidence({ ...base, date: "2026-02-31" }), /valid YYYY-MM-DD/);
 });
