@@ -148,7 +148,7 @@
             "latitude": 34.72587,
             "longitude": 136.42721,
             "coordinateStatus": "previously-researched-public-coordinate",
-            "coordinateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/"
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/mie/tsu/tsu-country-club"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -241,7 +241,7 @@
             "latitude": 33.5213,
             "longitude": 133.7758,
             "coordinateStatus": "previously-researched-public-coordinate",
-            "coordinateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/"
+            "coordinateSourceUrl": "https://www.parscape.com/location/golf_clubs/tosacountryclubkamikochi"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
@@ -255,7 +255,14 @@
           "candidateCourseName": "The Classic Golf Club",
           "candidateRationale": "福岡縣球場，作為北九州代表候選。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 33.770453,
+            "longitude": 130.644917,
+            "coordinateStatus": "course-list-coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/fukuoka/kurate/classic-golf-club"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-KYS-SOUTH",
@@ -303,8 +310,9 @@
       ],
       "coordinateResearchSummary": {
         "totalSubregions": 19,
-        "coordinateFound": 11,
-        "stillNeedsCoordinate": 5,
+        "mainlandCandidates": 16,
+        "coordinateFound": 12,
+        "stillNeedsCoordinate": 4,
         "forecastEnabled": false
       }
     },
