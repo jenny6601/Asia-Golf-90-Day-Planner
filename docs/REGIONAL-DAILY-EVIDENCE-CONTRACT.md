@@ -49,4 +49,4 @@ The builder returns:
 
 ## Activation status
 
-The contract is implemented and unit-tested as a standalone module. It is not connected to the App and does not activate the historical baseline, 90-day outlook, or trip-date ranking. Actual ERA5-Land downloads, JMA cross-checks and regional coverage validation remain prerequisites.
+The contract and its automated test cases are implemented as a standalone module. Test execution/CI status must be checked separately; this file does not imply that tests have passed. The module is not connected to the App and does not activate the historical baseline, 90-day outlook, or trip-date ranking. Actual ERA5-Land downloads, JMA cross-checks and regional coverage validation remain prerequisites.
