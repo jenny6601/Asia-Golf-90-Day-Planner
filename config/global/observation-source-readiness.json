@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "global-and-malaysia-station-candidate-inventories-generated-awaiting-record-level-verification",
+  "status": "ghcnd-daily-record-pilot-completed-national-network-validation-required",
   "purpose": "Track independent historical station observation options for validating the ERA5-Land regional baseline. Accessible source pages do not imply all 80 subregions have matched stations or downloadable 1991-2020 records.",
   "rules": [
     "Station observations remain independent from ERA5/ERA5-Land reanalysis.",
@@ -70,9 +70,9 @@
     {
       "countryCode": "GLOBAL",
       "agency": "NOAA NCEI GHCN-Daily",
-      "status": "metadata-candidate-inventory-generated-awaiting-record-level-quality-review",
+      "status": "ghcnd-daily-record-pilot-completed-coverage-insufficient-for-station-approval",
       "portal": "https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily",
-      "notes": "NOAA GHCN-Daily station and element-inventory metadata were downloaded and ranked for all 80 regional points. Initial output: 791 top-10 candidate rows; all 80 regions have at least one station with PRCP/TMAX/TMIN inventory overlap during 1991-2020; 76 regions have a complete-element candidate within 75 km. Four Malaysia regions had no suitable NOAA candidate within 75 km; all four now have closer official MET Malaysia station-location candidates. Inventory overlap is not proof of daily completeness; no station is approved and no observation records were downloaded.",
+      "notes": "NOAA GHCN-Daily station and element-inventory metadata were downloaded and ranked for all 80 regional points. Initial output: 791 top-10 candidate rows; all 80 regions have at least one station with PRCP/TMAX/TMIN inventory overlap during 1991-2020; 76 regions have a complete-element candidate within 75 km. Four Malaysia regions had no suitable NOAA candidate within 75 km; all four now have closer official MET Malaysia station-location candidates. Inventory overlap is not proof of daily completeness; no station is approved and no observation records were downloaded. A bounded pilot downloaded actual NOAA .dly records for 238 candidates across all 80 regions (up to 3 per region), with zero download failures. All 238 stations had at least one valid record for each required element, but mean annual daily coverage across the pilot was PRCP 59.6%, TMAX 76.1%, TMIN 57.2%; only 6 of 80 regions had at least one sampled candidate with all three elements averaging at least 80% annual coverage and at least 80% coverage in 20 or more years. These screening metrics are not station approval; candidate choice is limited to top-3 distance-ranked candidates and requires national-network alternatives and station-history review.",
       "candidateDiscoveryScript": "scripts/discover_ghcnd_station_candidates.py",
       "candidateDiscoveryWorkflow": ".github/workflows/ghcnd-station-candidate-discovery.yml",
       "candidateOutput": "data/observation-stations/ghcnd-candidates-1991-2020.json",
@@ -85,11 +85,11 @@
     }
   ],
   "nextActions": [
-    "Verify daily record completeness, QC flags, station history, relocation, elevation and representativeness for the 76 NOAA candidate-ready regions.",
-    "Request MET Malaysia 1991-2020 daily PRCP, TMAX and TMIN availability and station history for the 8 regional candidate groups, prioritizing MY-SOUTH-01, MY-ISLAND-01, MY-EAST-01 and MY-HIGHLAND-01.",
-    "Use the official MET Malaysia station inventory to compare station type and location; do not treat station type as proof of climate-element availability.",
-    "Obtain official national station inventories and element availability for countries/regions where GHCN station history or climate representativeness is weak.",
-    "Download a multi-year independent station observation pilot only after explicit station approval; pair with ERA5-Land and calculate bias, MAE, wet-day hit/miss and seasonal performance by subregion."
+    "Expand candidate discovery beyond the nearest three NOAA stations per region, prioritizing PRCP and TMIN daily completeness; do not approve stations based on inventory overlap or this pilot.",
+    "Search official national meteorological station datasets for Japan, Korea, China, Vietnam, Thailand, Malaysia, Singapore and Indonesia where NOAA daily coverage is weak; request paid or restricted records only after documenting access terms and approval.",
+    "Correctly interpret station-day observation conventions, quality flags and duplicate/overlapping records; audit annual and seasonal completeness before matching.",
+    "Obtain station history, relocation, elevation and terrain/coastal representativeness for shortlisted stations.",
+    "After station review, pair approved station observations with ERA5-Land by date and calculate bias, MAE, precipitation wet-day hit/miss and seasonal metrics by subregion."
   ],
   "lastReviewed": "2026-11-27",
   "discoverySummary": {
@@ -98,8 +98,8 @@
     "globalFallbackFound": 1,
     "stationInventoriesDownloaded": 2,
     "stationMatches": 0,
-    "observationRecordsDownloaded": 0,
-    "interpretation": "NOAA GHCN-Daily candidates cover all 80 regions at inventory level for PRCP/TMAX/TMIN, with a complete-element candidate within 75 km for 76. The four remaining Malaysia regions are covered by official MET Malaysia station-location candidates within 75 km. No candidate is approved: daily completeness, station history, element availability, QC, observation-day convention and regional representativeness remain to be verified.",
+    "observationRecordsDownloaded": 238,
+    "interpretation": "The first actual-record pilot succeeded technically for 238 candidates across all 80 regions with zero download failures. However, coverage is insufficient for broad station approval: precipitation and especially minimum-temperature daily records are incomplete for many stations. Only 6 regions had a sampled candidate meeting the preliminary combined coverage screen. Expand national-network matching, validate station history and observation-day conventions, and compare daily values with ERA5-Land before any station is approved.",
     "globalMetadataCandidateWorkflow": "executed-successfully-candidate-inventory-generated",
     "ghcndRegionCount": 80,
     "ghcndCandidateStationRows": 791,
@@ -109,6 +109,16 @@
     "metMalaysiaRegionCount": 8,
     "metMalaysiaCandidateStationRows": 80,
     "metMalaysiaRegionsWithOfficialStationWithin75Km": 8,
-    "malaysiaNationalNetworkSearchStatus": "official-location-candidates-found-historical-elements-not-verified"
+    "malaysiaNationalNetworkSearchStatus": "official-location-candidates-found-historical-elements-not-verified",
+    "ghcndDailyAuditCandidates": 238,
+    "ghcndDailyAuditDownloadFailures": 0,
+    "ghcndDailyAuditRegionsRepresented": 80,
+    "ghcndDailyAuditMeanAnnualCoveragePct": {
+      "PRCP": 59.6,
+      "TMAX": 76.1,
+      "TMIN": 57.2
+    },
+    "ghcndDailyAuditRegionsWithStrongCandidate": 6,
+    "ghcndDailyAuditDefinition": "A region has a strong pilot candidate only if one of its sampled stations has all three elements with mean annual daily coverage >=80% and >=20 years at >=80%; this is a screening threshold, not approval."
   }
 }
