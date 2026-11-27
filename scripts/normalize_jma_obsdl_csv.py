@@ -106,7 +106,9 @@ def normalize_csv(path, station_id, station_name, latitude, longitude, region_id
         raise ValueError("CSV contains multiple station columns; export one station at a time")
 
     records, seen = [], set()
-    for row in rows[header_i + 2:]:
+    has_metadata_header = any(label in META_LABELS for label in subheaders)
+    data_start = header_i + 2 if has_metadata_header else header_i + 1
+    for row in rows[data_start:]:
         if not row or len(row) <= max(indexes.values(), default=-1):
             continue
         d = parse_date_row(row, indexes)
