@@ -1,0 +1,15 @@
+import fs from "node:fs/promises";
+import {summarizeSeasonalValidationReadiness} from "./okinawa-seasonal-validation-readiness.js";
+const pairDir="data/okinawa/seasonal-observation-pairs",contextDir="data/okinawa/seasonal-monthly-context",outDir="data/okinawa/seasonal-validation-readiness";
+const list=async dir=>(await fs.readdir(dir).catch(()=>[])).filter(x=>x.endsWith(".json")).sort();
+const read=async(dir,file)=>JSON.parse(await fs.readFile(dir+"/"+file,"utf8"));
+const [pairFiles,contextFiles]=await Promise.all([list(pairDir),list(contextDir)]);
+const [pairs,contexts]=await Promise.all([Promise.all(pairFiles.map(x=>read(pairDir,x))),Promise.all(contextFiles.map(x=>read(contextDir,x)))]);
+const summary=summarizeSeasonalValidationReadiness(pairs,contexts);
+const report={...summary,generatedAt:new Date().toISOString(),pairSnapshotsRead:pairFiles.length,contextSnapshotsRead:contextFiles.length};
+await fs.mkdir(outDir,{recursive:true});
+const date=report.generatedAt.slice(0,10);
+await fs.writeFile(outDir+"/"+date+".json",JSON.stringify(report,null,2));
+const md=["# Okinawa 17–90 Day Seasonal Validation Readiness","", "Generated: "+report.generatedAt,"Pair snapshots: "+pairFiles.length,"Monthly context snapshots: "+contextFiles.length,"","## Weekly / monthly validation gates","", "| Region | Scale | Pair rows | Coverage complete | Incomplete | Forecast values | Semantics verified | Scoring eligible | Readiness |","|---|---|---:|---:|---:|---:|---:|---:|---|",...report.groups.map(x=>"| "+x.region+" | "+x.temporalScale+" | "+x.pairRecords+" | "+x.coverageCompleteRecords+" | "+x.incompleteRecords+" | "+x.forecastValueRecords+" | "+x.semanticsVerifiedRecords+" | "+x.scoringEligibleRecords+" | "+x.readiness+" |"),"","## Regional monthly context","", "| Region | Records | Known ECMWF anomalies | ERA5 reference available | ERA5 reference missing |","|---|---:|---:|---:|---:|",...report.monthlyContext.map(x=>"| "+x.region+" | "+x.monthlyContextRecords+" | "+x.knownAnomalyRecords+" | "+x.era5ReferenceRecords+" | "+x.missingEra5ReferenceRecords+" |"),"","## Global gate","",report.globalReadiness,"","## Interpretation rules","",...Object.values(report.rules).map(x=>"- "+x)].join("\n");
+await fs.writeFile(outDir+"/"+date+".md",md);
+console.log(md);
