@@ -67,7 +67,7 @@ class RegionalClimatologyTests(unittest.TestCase):
             for offset in range(31):
                 d = date(year, 6, 1) + __import__("datetime").timedelta(days=offset)
                 row = make_record(d, rain=0.0)
-                if offset == 0:
+                if offset < 4:
                     row["precipitationMm"] = None
                 records.append(row)
         result = MODULE.summarize_window(records, date(2001, 6, 15), minimum_valid_years=24)
