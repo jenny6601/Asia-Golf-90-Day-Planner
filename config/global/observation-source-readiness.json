@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "NOAA-global-candidate-inventory-generated-national-source-review-pending",
+  "status": "global-and-malaysia-station-candidate-inventories-generated-awaiting-record-level-verification",
   "purpose": "Track independent historical station observation options for validating the ERA5-Land regional baseline. Accessible source pages do not imply all 80 subregions have matched stations or downloadable 1991-2020 records.",
   "rules": [
     "Station observations remain independent from ERA5/ERA5-Land reanalysis.",
@@ -47,9 +47,11 @@
     {
       "countryCode": "MY",
       "agency": "Malaysian Meteorological Department (MetMalaysia)",
-      "status": "official-data-request-portal-found-historical-climate-data-paid",
+      "status": "official-station-location-inventory-matched-awaiting-historical-data-verification",
       "portal": "https://mymetdata.met.gov.my/faq",
-      "notes": "MetMalaysia says hourly, daily and monthly climate data, including rain, temperature, humidity and wind, can be requested via myMETdata; supply is fee-based. Need request station inventory and 1991-2020 availability."
+      "notes": "Official MET Malaysia ArcGIS Stesen MET layer was queried and 80 location candidates were ranked across all 8 Malaysia golf subregions. Every subregion has at least one official station location within 75 km. Layer station types include AWS, AWS - VAISALA, CLIMATOLOGICAL and RAINFALL. The location layer does not establish historical element coverage or daily record availability; request station IDs, station history and 1991-2020 daily PRCP/TMAX/TMIN availability before approving.",
+      "stationInventoryUrl": "https://bpp1.met.gov.my/agssvr3/rest/services/Asas6/MapServer/2",
+      "candidateOutput": "data/observation-stations/metmalaysia-candidates.json"
     },
     {
       "countryCode": "SG",
@@ -70,7 +72,7 @@
       "agency": "NOAA NCEI GHCN-Daily",
       "status": "metadata-candidate-inventory-generated-awaiting-record-level-quality-review",
       "portal": "https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily",
-      "notes": "NOAA GHCN-Daily station and element-inventory metadata were downloaded and ranked for all 80 regional points. Initial output: 791 top-10 candidate rows; all 80 regions have at least one station with PRCP/TMAX/TMIN inventory overlap during 1991-2020; 76 regions have a complete-element candidate within 75 km. Four Malaysia regions need national-network alternatives. Inventory overlap is not proof of daily completeness; no station is approved and no observation records were downloaded.",
+      "notes": "NOAA GHCN-Daily station and element-inventory metadata were downloaded and ranked for all 80 regional points. Initial output: 791 top-10 candidate rows; all 80 regions have at least one station with PRCP/TMAX/TMIN inventory overlap during 1991-2020; 76 regions have a complete-element candidate within 75 km. Four Malaysia regions had no suitable NOAA candidate within 75 km; all four now have closer official MET Malaysia station-location candidates. Inventory overlap is not proof of daily completeness; no station is approved and no observation records were downloaded.",
       "candidateDiscoveryScript": "scripts/discover_ghcnd_station_candidates.py",
       "candidateDiscoveryWorkflow": ".github/workflows/ghcnd-station-candidate-discovery.yml",
       "candidateOutput": "data/observation-stations/ghcnd-candidates-1991-2020.json",
@@ -83,26 +85,30 @@
     }
   ],
   "nextActions": [
-    "Review the 76 candidate-ready regions using daily observation completeness, station history, relocation, elevation and climate representativeness before pairing.",
-    "Search MetMalaysia station inventory and official historical daily records for MY-SOUTH-01, MY-ISLAND-01, MY-EAST-01 and MY-HIGHLAND-01; do not accept distant NOAA stations as regional matches.",
-    "Review candidate stations in the remaining 76 regions for airport/military/coastal/mountain bias and element-specific daily coverage.",
-    "Download a small multi-year observation pilot only after station candidates are approved; preserve source QC flags and local observation-day conventions.",
-    "Pair the independent station pilot with ERA5-Land daily aggregates and calculate bias, MAE, wet-day hit/miss and seasonal performance by subregion."
+    "Verify daily record completeness, QC flags, station history, relocation, elevation and representativeness for the 76 NOAA candidate-ready regions.",
+    "Request MET Malaysia 1991-2020 daily PRCP, TMAX and TMIN availability and station history for the 8 regional candidate groups, prioritizing MY-SOUTH-01, MY-ISLAND-01, MY-EAST-01 and MY-HIGHLAND-01.",
+    "Use the official MET Malaysia station inventory to compare station type and location; do not treat station type as proof of climate-element availability.",
+    "Obtain official national station inventories and element availability for countries/regions where GHCN station history or climate representativeness is weak.",
+    "Download a multi-year independent station observation pilot only after explicit station approval; pair with ERA5-Land and calculate bias, MAE, wet-day hit/miss and seasonal performance by subregion."
   ],
   "lastReviewed": "2026-11-27",
   "discoverySummary": {
     "officialCountrySourcePathFound": 7,
     "officialCountrySourcePathPending": 1,
     "globalFallbackFound": 1,
-    "stationInventoriesDownloaded": 1,
+    "stationInventoriesDownloaded": 2,
     "stationMatches": 0,
     "observationRecordsDownloaded": 0,
-    "interpretation": "The NOAA GHCN-Daily metadata candidate inventory is generated for all 80 regional points. Complete PRCP/TMAX/TMIN inventory overlap is present for all 80, with a candidate within 75 km for 76. Inventory ranges do not establish daily completeness, station homogeneity or regional representativeness. No observations have been downloaded and no station is approved.",
+    "interpretation": "NOAA GHCN-Daily candidates cover all 80 regions at inventory level for PRCP/TMAX/TMIN, with a complete-element candidate within 75 km for 76. The four remaining Malaysia regions are covered by official MET Malaysia station-location candidates within 75 km. No candidate is approved: daily completeness, station history, element availability, QC, observation-day convention and regional representativeness remain to be verified.",
     "globalMetadataCandidateWorkflow": "executed-successfully-candidate-inventory-generated",
     "ghcndRegionCount": 80,
     "ghcndCandidateStationRows": 791,
     "ghcndRegionsWithCompleteClimateElements": 80,
     "ghcndRegionsWithCompleteCandidateWithin75Km": 76,
-    "ghcndRegionsNeedingNationalNetworkSearch": 4
+    "ghcndRegionsNeedingNationalNetworkSearch": 4,
+    "metMalaysiaRegionCount": 8,
+    "metMalaysiaCandidateStationRows": 80,
+    "metMalaysiaRegionsWithOfficialStationWithin75Km": 8,
+    "malaysiaNationalNetworkSearchStatus": "official-location-candidates-found-historical-elements-not-verified"
   }
 }
