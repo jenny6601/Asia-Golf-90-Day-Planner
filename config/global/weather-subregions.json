@@ -4035,7 +4035,7 @@
       "regionHierarchy": "region>subregion>golf-course"
     }
   ],
-  "planningNote": "Japan uses 33 destination-oriented golf clusters (3 Hokkaido, 4 Tohoku, 5 Kanto, 6 Chubu, 3 Kansai, 2 Chugoku, 2 Shikoku, 4 Kyushu, 4 Okinawa). Other seven countries retain their existing destination-oriented subregions, now explicitly typed as golf-course clusters. Candidate representatives are not operational forecast points until validated.",
+  "planningNote": "Japan uses 36 destination-oriented golf clusters (3 Hokkaido, 5 Tohoku, 6 Kanto, 6 Chubu, 3 Kansai, 2 Chugoku, 2 Shikoku, 4 Kyushu, 5 Okinawa). Other seven countries retain their destination-oriented subregions, explicitly typed as golf-course clusters. Candidate representatives are not operational forecast points until validated.",
   "candidatePolicy": "Candidate names are research selections only. They must not be used for weather ingestion or forecast generation until current operating status, exact official course identity, GPS coordinates, timezone, and subregion fit are verified. Candidate is not an enabled representative.",
-  "candidateCount": 73
+  "candidateCount": 76
 }
