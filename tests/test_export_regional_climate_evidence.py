@@ -69,7 +69,8 @@ class ExportRegionalClimateEvidenceTests(unittest.TestCase):
         row = MODULE.export_evidence(payload, date(2026, 6, 15), 1)["regions"]["JP-TEST"]["records"][0]
         self.assertIsNone(row["rainFrequency"])
         self.assertIsNone(row["rainMean"])
-        self.assertEqual(row["rainSampleYears"], 12)
+        self.assertEqual(row["rainSampleYears"], 30)
+        self.assertEqual(row["sampleYears"], 12)
 
     def test_february_29_uses_midpoint_but_withholds_percentiles(self):
         row = MODULE.export_evidence(climate_fixture(), date(2028, 2, 29), 1)["regions"]["JP-TEST"]["records"][0]
