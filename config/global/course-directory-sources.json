@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Source register for expanding the app course catalog to a verified eight-country inventory",
+  "checkedOn": "2026-11-27",
+  "countries": [
+    {
+      "code": "JP",
+      "nameZh": "日本",
+      "sourceName": "Japan National Tourism Organization (JNTO) golf course directory",
+      "url": "https://www.japan.travel/en/sports/golf/courses/",
+      "authority": "national_tourism_official",
+      "coverage": "curated national destination course list; not a complete national inventory",
+      "status": "discovery_source_verified",
+      "importedCount": 0,
+      "notes": "Contains selected courses across Hokkaido, Tohoku, Kanto, Tokai, Kansai, Chugoku, Shikoku, Kyushu and Okinawa. Use as a verified discovery source; supplement with prefectural/operator directories."
+    },
+    {
+      "code": "KR",
+      "nameZh": "韓國",
+      "sourceName": "Korea Golf Association member golf course directory",
+      "url": "https://www.kgagolf.or.kr/web/golfCourse/golfCourse",
+      "authority": "national_golf_association",
+      "coverage": "member course directory with regional details and addresses; pagination/filter coverage needs full extraction",
+      "status": "discovery_source_verified",
+      "importedCount": 0,
+      "notes": "Directory page exposes course names, addresses, telephone, hole counts and province. Extract all pages/records and confirm active operation."
+    },
+    {
+      "code": "CN",
+      "nameZh": "中國",
+      "sourceName": "2025 Asia's 100 Best China course list (BAIGOLF)",
+      "url": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
+      "authority": "industry_media_curated",
+      "coverage": "21 ranked/selected courses across China; not a complete national inventory",
+      "status": "discovery_source_verified",
+      "importedCount": 0,
+      "notes": "Use only as a curated discovery list, not a national registry. A complete mainland inventory requires further provincial/operator and golf association sources; Hong Kong/Macau scope must remain explicit."
+    },
+    {
+      "code": "VN",
+      "nameZh": "越南",
+      "sourceName": "Regional Golf Course List (Public Bank Vietnam PDF)",
+      "url": "https://publicbank.com.vn/Data/files/Golf%20course%20list.pdf",
+      "authority": "bank_published_regional_directory",
+      "coverage": "51 named courses grouped North/Central/South in the retrieved document; status and currency require verification",
+      "status": "discovery_source_verified",
+      "importedCount": 0,
+      "notes": "Use the PDF regional grouping as discovery metadata only. Map each course to one of the six configured subregions after checking city/address."
+    },
+    {
+      "code": "TH",
+      "nameZh": "泰國",
+      "sourceName": "Thailand Golf Association course/slope rating list",
+      "url": "https://www.tga.or.th/tga2024/course-slope-rating/",
+      "authority": "national_golf_association",
+      "coverage": "course/slope rating list; complete page extraction and regional mapping required",
+      "status": "discovery_source_verified",
+      "importedCount": 0,
+      "notes": "Association source lists course names and course layouts. Treat separately named layouts as one club/course record unless the user-facing choice requires separate playable courses."
+    },
+    {
+      "code": "MY",
+      "nameZh": "馬來西亞",
+      "sourceName": "Malaysian club affiliation and reciprocal directories (cross-reference)",
+      "url": "https://www.sigc.com.my/affiliation/",
+      "authority": "club_affiliation_directory",
+      "coverage": "club-network list, not a complete national inventory",
+      "status": "discovery_source_partial",
+      "importedCount": 0,
+      "notes": "Cross-check with reciprocal club lists and operator pages. mScorecard may be used only as secondary discovery evidence, not as sole verification."
+    },
+    {
+      "code": "SG",
+      "nameZh": "新加坡",
+      "sourceName": "Ministry of Law list of golf courses (7 July 2025)",
+      "url": "https://www.mlaw.gov.sg/files/Annex__List_of_Golf_Courses_in_Singapore__7_July_2025_.pdf",
+      "authority": "government_official",
+      "coverage": "11 listed golf course sites/clubs in the 2025 annex",
+      "status": "discovery_source_verified",
+      "importedCount": 1,
+      "notes": "Government list is the strongest current baseline. Distinguish club/site from course layout; Serapong and Tanjong are separate selectable layouts at Sentosa."
+    },
+    {
+      "code": "ID",
+      "nameZh": "印尼",
+      "sourceName": "Indonesian Junior Golf venue list",
+      "url": "https://ijg.or.id/venuelist",
+      "authority": "national_junior_golf_event_directory",
+      "coverage": "approximately 41 listed venues; not a complete national inventory",
+      "status": "discovery_source_verified",
+      "importedCount": 0,
+      "notes": "Use as a structured discovery source. Reconcile duplicate layouts, operator names, island/province and current operating status with official club sources."
+    }
+  ],
+  "rules": [
+    "A source list is a discovery source, not proof that every listed course is currently operating.",
+    "Do not invent coordinates. Every new course begins with coordinateStatus=pending and no top-level latitude/longitude until a location is verified.",
+    "Every course must map to exactly one existing weather subregion; multiple courses may map to the same subregion.",
+    "The app catalog may contain multiple actual courses per subregion, while the climate engine continues to use one representative point per subregion.",
+    "Do not count a curated top-course list or a reciprocal-club list as a complete national inventory.",
+    "Deduplicate club names, separately selectable 9/18-hole layouts, and course aliases before enabling records."
+  ]
+}
