@@ -85,3 +85,24 @@ test("courses in one subregion share the approved representative coordinate and 
  assert.equal(requestUrl.searchParams.get("longitude"),"127.8");
  assert.equal(requestUrl.searchParams.get("timezone"),"Asia/Tokyo");
 });
+
+
+test("historical archive retries a temporary rate limit without duplicating later reads",async()=>{
+ let calls=0;
+ const fetchImpl=async url=>{
+  calls++;
+  if(calls===1)return {ok:false,status:429};
+  return {ok:true,json:async()=>({daily:{
+   time:["2000-12-15"],temperature_2m_max:[22],temperature_2m_min:[15],
+   dew_point_2m_mean:[12],relative_humidity_2m_mean:[65],wind_speed_10m_mean:[2],
+   wind_speed_10m_max:[4],precipitation_sum:[0],precipitation_hours:[0],weather_code:[1]
+  }})};
+ };
+ const course={id:"retry-test",latitude:24.1,longitude:120.6,timezone:"Asia/Taipei"};
+ const result=await fetchCourseHistoricalWeekNormals(course,["2026-12-15"],fetchImpl);
+ assert.equal(calls,2);
+ assert.equal(result.startYear,1991);
+ assert.equal(result.days[0].rainMean,0);
+ await fetchCourseHistoricalMonthlyClimate(course,fetchImpl);
+ assert.equal(calls,2);
+});
