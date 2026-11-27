@@ -2063,13 +2063,15 @@
     "sourceUrl": "https://golf-in-japan.com/courses",
     "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
     "catalogStatus": "research_candidate",
-    "coordinateStatus": "pending",
-    "latitude": null,
-    "longitude": null,
+    "coordinateStatus": "third_party_booking_google_maps_place_coordinate",
+    "latitude": 36.07964324951172,
+    "longitude": 139.82562255859375,
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-KNT-IBARAKI-TSUKUBA"
+    "golfClusterId": "JP-KNT-IBARAKI-TSUKUBA",
+    "coordinateSource": "https://booking.gora.golf.rakuten.co.jp/guide/map/c_id/80122/",
+    "coordinateUse": "regional_climate_candidate_only"
   },
   {
     "id": "jp-adatara",
