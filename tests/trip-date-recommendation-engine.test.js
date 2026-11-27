@@ -47,7 +47,7 @@ test("lead horizons select short forecast, EC46, and SEAS5 source bands",()=>{
   const result=recommendGolfTripDates({asOf,horizonDays:90,days:buildDays()});
   const day1=result.dailyAssessment.find(x=>x.leadDays===1);
   assert.equal(day1.horizon,"short");
-  const days=result.topThree[0].daily;
+  const days=result.dailyAssessment;
   const d20=days.find(x=>x.leadDays===20);
   const d60=days.find(x=>x.leadDays===60);
   if(d20) assert.equal(d20.horizon,"ec46");
