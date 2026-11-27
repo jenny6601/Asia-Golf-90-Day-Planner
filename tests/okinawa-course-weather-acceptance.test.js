@@ -114,3 +114,10 @@ test("JMA AMeDAS station metadata records official station type and observed-ele
     assert.equal(station.officialStationTableUrl,"https://www.jma.go.jp/bosai/amedas/const/amedastable.json",id);
   }
 });
+
+test("all ten JMA reference stations are classified into Okinawa north-central-south areas",async()=>{
+ const stations=JSON.parse(await fs.readFile(new URL("config/okinawa/jma-amedas-stations.json",root),"utf8"));
+ assert.equal(stations.length,10);
+ assert.deepEqual([...new Set(stations.map(x=>x.area))].sort(),["中部","北部","南部"]);
+ assert.ok(stations.every(x=>["中部","北部","南部"].includes(x.area)));
+});
