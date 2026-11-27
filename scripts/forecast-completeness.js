@@ -20,6 +20,18 @@ export function assessForecastPayload(payload) {
   const daily=fieldCoverage(payload,"daily",dailyFields);
   const hourly=fieldCoverage(payload,"hourly",hourlyFields);
   const allFields=[...Object.values(daily),...Object.values(hourly)];
+  const dailyTimes=payload?.daily?.time||[];
+  const hourlyTimes=payload?.hourly?.time||[];
+  const isContinuous=(times,stepMs)=>times.length>0&&times.every((value,index)=>{
+    const current=Date.parse(value+(value.length===10?"T00:00:00Z":"Z"));
+    if(!Number.isFinite(current))return false;
+    if(index===0)return true;
+    const previous=Date.parse(times[index-1]+(times[index-1].length===10?"T00:00:00Z":"Z"));
+    return current-previous===stepMs;
+  });
+  const dailyDatesContinuous=isContinuous(dailyTimes,86400000);
+  const hourlyTimesContinuous=isContinuous(hourlyTimes,3600000);
+  const dailyHourlyDatesAligned=dailyTimes.length>0&&hourlyTimes.length>0&&dailyTimes[0]===hourlyTimes[0].slice(0,10)&&dailyTimes[dailyTimes.length-1]===hourlyTimes[hourlyTimes.length-1].slice(0,10);
   return {
     timezone:payload?.timezone??null,
     returnedCoordinate:{latitude:payload?.latitude??null,longitude:payload?.longitude??null},
@@ -30,6 +42,7 @@ export function assessForecastPayload(payload) {
     completeFieldCount:allFields.filter(x=>x.expected>0&&x.missing===0).length,
     totalExpectedValues:allFields.reduce((sum,x)=>sum+x.expected,0),
     totalValidValues:allFields.reduce((sum,x)=>sum+x.valid,0),
-    coreFieldsComplete:dailyCount===16&&hourlyCount===384&&allFields.every(x=>x.expected>0&&x.missing===0)
+    dailyDatesContinuous,hourlyTimesContinuous,dailyHourlyDatesAligned,
+    coreFieldsComplete:dailyCount===16&&hourlyCount===384&&dailyDatesContinuous&&hourlyTimesContinuous&&dailyHourlyDatesAligned&&allFields.every(x=>x.expected>0&&x.missing===0)
   };
 }
