@@ -25,7 +25,7 @@
       "SG": 1,
       "ID": 8
     },
-    "pointPolicy": "Exactly one regional-climate representative point per subregion. Other golf courses in that subregion inherit the regional assessment. Course-pin or fairway precision is not required.",
+    "pointPolicy": "Exactly one nearby regional-climate representative point per subregion. The point may be at or near the representative golf course, in a nearby town, or in the surrounding area, provided it represents the same local climate setting. Exact clubhouse, course-pin, fairway, or surveyed-coordinate precision is not required. Do not impose a universal fixed-radius cutoff; review regional proximity, coastal/inland exposure, terrain and elevation context.",
     "timezonePolicy": "Use the IANA timezone stored on each representative point; aggregate source timestamps into the subregion's local calendar day.",
     "doNotCreatePerCourseClimateRecords": true
   },
@@ -162,7 +162,10 @@
     "requireReturnedGridCoordinateAudit": true,
     "requireStationHistoryAndHomogeneityReview": true,
     "missingDataNeverZeroFilled": true,
-    "historicalClimateIsNotDeterministicDailyForecast": true
+    "historicalClimateIsNotDeterministicDailyForecast": true,
+    "nearbyRegionalRepresentativenessRequired": true,
+    "exactGolfCoursePinRequired": false,
+    "universalCoordinateRadiusLimitKm": null
   },
   "activationPolicy": {
     "climateBaselineEnabled": false,
