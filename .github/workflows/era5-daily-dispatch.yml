@@ -42,7 +42,7 @@ jobs:
           pip install -r requirements-data.txt
       - name: Configure CDS credentials
         env:
-          CDSAPI_KEY: \${{ secrets.CDS_API_KEY }}
+          CDSAPI_KEY: ${{ secrets.CDS_API_KEY }}
         run: |
           test -n "$CDSAPI_KEY" || { echo "Missing CDS_API_KEY; no request sent."; exit 1; }
           umask 077
@@ -50,14 +50,14 @@ jobs:
       - name: Retrieve ERA5 daily aggregates only
         run: |
           python scripts/acquire_daily_climate_statistics_pilot.py \
-            --subregion "\${{ inputs.subregion }}" \
-            --year "\${{ inputs.year }}" \
+            --subregion "${{ inputs.subregion }}" \
+            --year "${{ inputs.year }}" \
             --output-dir data/daily-statistics-pilot
       - name: Upload daily-statistics archive
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: era5-daily-stats-\${{ inputs.subregion }}-\${{ inputs.year }}
+          name: era5-daily-stats-${{ inputs.subregion }}-${{ inputs.year }}
           path: data/daily-statistics-pilot/
           if-no-files-found: warn
           retention-days: 90
