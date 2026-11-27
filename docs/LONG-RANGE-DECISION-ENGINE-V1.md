@@ -27,11 +27,11 @@ Multiple products from the same underlying model family are not counted as indep
 
 ## D17–D18 transition band
 
-D17 and D18 are not left blank and are not treated as deterministic extensions of D01–D16. For each date, use the overlapping ECMWF IFS extended-range weekly ensemble signal (precipitation/temperature anomaly or probability and ensemble spread where available) to condition the ERA5 same-calendar-day daily distribution and coherent historical analogue sequences. Generate a separate daily record for D17 and D18, retaining rainfall amount/range, Tmin/Tmax, supported wind/cloud tendencies, uncertainty and source provenance. Confidence is lower than D01–D16 and must be separately validated. If the relevant weekly signal or historical prior is missing, mark the date unavailable/low-evidence; never copy D16 forward, substitute zero, or fabricate daily rain probability. D17–D18 are included in the same date-by-date user decision dataset, but their transition-band provenance remains explicit.
+D17 and D18 are not left blank and are not treated as deterministic extensions of D01–D16. For each date, use the overlapping ECMWF IFS extended-range weekly ensemble signal (precipitation/temperature anomaly or probability and ensemble spread where available) to condition the ERA5 same-calendar-day daily distribution and coherent historical analogue sequences. Generate a separate daily record for D17 and D18, retaining rainfall amount/range, feels-like temperature estimate/range, supporting Tmin/Tmax bounds, wind/cloud tendencies, uncertainty and source provenance. Confidence is lower than D01–D16 and must be separately validated. If the relevant weekly signal or historical prior is missing, mark the date unavailable/low-evidence; never copy D16 forward, substitute zero, or fabricate daily rain probability. D17–D18 are included in the same date-by-date user decision dataset, but their transition-band provenance remains explicit.
 
 ## Daily generation method
 
-1. **Historical daily prior:** For each representative point, build 1991–2020 day-of-year distributions for precipitation, wet-day occurrence, Tmin, Tmax, mean temperature, wind and other available variables. Retain quantiles, year-to-year spread and multi-day sequences.
+1. **Historical daily prior:** For each representative point, build 1991–2020 day-of-year distributions for precipitation, wet-day occurrence, Tmin, Tmax, dewpoint, wind, cloud and other available variables. Do not require or publish mean air temperature. Retain quantiles, year-to-year spread and multi-day sequences.
 2. **Forecast conditioning:** For each date, map the overlapping ECMWF weekly or C3S monthly anomaly signal onto the date's historical distribution. Use calibrated hindcast relationships to estimate how the signal changes the distribution, not as a deterministic daily override.
 3. **Daily disaggregation:** Generate daily weather estimates using conditional historical analogue sequences or a calibrated stochastic weather generator. Analogue selection is conditioned on season, region, lead-time band and forecast anomaly regime. Where a validated daily-shaped model signal exists, it may contribute additional daily structure.
 4. **Sequence coherence:** Sample whole multi-day sequences or calibrated ensemble trajectories. Preserve wet/dry spell persistence and dependence among precipitation, temperature, cloud and wind. Do not independently randomize each day.
@@ -46,12 +46,12 @@ Each subregion/date record must include:
 - Weather tendency/category.
 - Estimated precipitation amount (mm) and uncertainty range.
 - Precipitation risk category; numeric probability only after date-level calibration passes.
-- Estimated Tmin, Tmax and mean temperature with uncertainty.
+- Estimated feels-like temperature with uncertainty as the user-facing thermal indicator; retain Tmin/Tmax only as supporting air-temperature bounds.
 - Wind estimate, cloud and sunshine tendency where supported by source data.
 - Daily golf-conditions advisory.
 - Confidence by variable, model/analogue contribution, valid period and model-run identifiers.
 
-If a variable is unsupported or missing, retain null/unknown and lower the relevant confidence. Never turn missing precipitation into zero. Do not infer a rain probability from a rainfall amount.
+Feels-like temperature is the primary thermal indicator. Estimate it from air-temperature bounds together with dewpoint/derived humidity and wind, applying a validated apparent-temperature method appropriate to the temperature regime. Daily aggregate inputs are not time-paired, so retain an uncertainty range and lower confidence; never imply hourly precision. Do not require or display mean air temperature as a product field. If a required feels-like input is missing, retain null/unknown rather than inventing a value. If any other variable is unsupported or missing, retain null/unknown and lower the relevant confidence. Never turn missing precipitation into zero. Do not infer a rain probability from a rainfall amount.
 
 ## Advisory and user decision policy
 
@@ -63,7 +63,7 @@ If a variable is unsupported or missing, retain null/unknown and lower the relev
 
 ## Calibration and validation
 
-Validate separately by region, season and lead band: D17–D18, D19–D30, D31–D46, D47–D60 and D61–D90. Required checks include daily precipitation MAE/bias, wet-day Brier score and reliability, Tmin/Tmax MAE/bias, prediction-interval coverage, weather-category skill, wet-spell duration/persistence and seven-day sequence skill. Only publish numeric daily precipitation or playable-day probabilities after relevant date-level hindcast calibration passes. Until then, show estimated amounts/ranges, categorical risk and explicit uncertainty.
+Validate separately by region, season and lead band: D17–D18, D19–D30, D31–D46, D47–D60 and D61–D90. Required checks include daily precipitation MAE/bias, wet-day Brier score and reliability, feels-like temperature MAE/bias, prediction-interval coverage, weather-category skill, wet-spell duration/persistence and seven-day sequence skill. Only publish numeric daily precipitation or playable-day probabilities after relevant date-level hindcast calibration passes. Until then, show estimated amounts/ranges, categorical risk and explicit uncertainty.
 
 Do not assume daily independence when estimating the chance of three playable days. Validate that statistic against complete hindcast seven-day windows or provide categorical guidance instead.
 
