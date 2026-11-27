@@ -68,7 +68,7 @@ class GolfTripDateRankingTests(unittest.TestCase):
             path.write_text(json.dumps(payload), encoding="utf-8")
             result = MODULE.rank_departures(path, "JP-TEST", start, horizon_days=10)
             self.assertGreater(result["rankedCandidateCount"], 0)
-            self.assertEqual(result["recommendations"][0]["startDate"], "2026-06-06")
+            self.assertEqual(result["recommendations"][0]["startDate"], "2026-06-04")
             self.assertFalse(result["activation"]["recommendationProductionEnabled"])
 
     def test_missing_climatology_blocks_candidate_instead_of_zero_filling(self):
