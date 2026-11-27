@@ -98,8 +98,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git stash push --include-untracked -m "preserve-pilot-generated-data"
           git fetch origin asia-eight-country-shared-engine
           git rebase origin/asia-eight-country-shared-engine
+          git stash pop
           git add data/era5-land-japan-1991-2020/daily/ data/era5-land-japan-1991-2020/reports/ data/era5-land-japan-1991-2020/batch-state.json
           if ! git diff --cached --quiet; then
             git commit -m "Archive validated Japan ERA5-Land regional pilot"
