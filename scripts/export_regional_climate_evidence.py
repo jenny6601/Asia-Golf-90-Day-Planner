@@ -15,8 +15,9 @@ from pathlib import Path
 def _metric(day: dict, key: str) -> dict:
     value = day.get("metrics", {}).get(key, {})
     if value.get("status") != "usable":
-        return {"validYears": value.get("validYears", 0), "mean": None, "median": None, "p90": None}
+        return {"status": value.get("status", "missing"), "validYears": value.get("validYears", 0), "mean": None, "median": None, "p90": None}
     return {
+        "status": "usable",
         "validYears": value.get("validYears", 0),
         "mean": value.get("mean"),
         "median": value.get("median"),
@@ -28,7 +29,7 @@ def _day_index(region: dict) -> dict[str, dict]:
     return {item["targetMonthDay"]: item for item in region.get("dailyCalendar", [])}
 
 
-def _lookup(index: dict[str, dict], target: date) -> tuple[dict, str]:
+def _lookup(index: dict[str, dict], target: date, minimum_valid_years: int) -> tuple[dict, str]:
     key = target.strftime("%m-%d")
     if key in index:
         return index[key], key
@@ -36,13 +37,14 @@ def _lookup(index: dict[str, dict], target: date) -> tuple[dict, str]:
         before = index.get("02-28")
         after = index.get("03-01")
         if before is not None and after is not None:
-            return _interpolate_feb29(before, after), "02-28|03-01"
+            return _interpolate_feb29(before, after, minimum_valid_years), "02-28|03-01"
     return {}, key
 
 
-def _interpolate_metric(a: dict, b: dict, include_p90: bool = False) -> dict:
+def _interpolate_metric(a: dict, b: dict, minimum_valid_years: int) -> dict:
     valid_years = min(a.get("validYears", 0), b.get("validYears", 0))
-    result = {"validYears": valid_years}
+    is_usable = a.get("status") == "usable" and b.get("status") == "usable" and valid_years >= minimum_valid_years
+    result = {"status": "usable" if is_usable else "insufficient-history", "validYears": valid_years}
     for field in ("mean", "median"):
         av, bv = a.get(field), b.get(field)
         result[field] = (av + bv) / 2 if isinstance(av, (int, float)) and isinstance(bv, (int, float)) else None
@@ -51,19 +53,22 @@ def _interpolate_metric(a: dict, b: dict, include_p90: bool = False) -> dict:
     return result
 
 
-def _interpolate_feb29(before: dict, after: dict) -> dict:
+def _interpolate_feb29(before: dict, after: dict, minimum_valid_years: int) -> dict:
     metrics = {}
     keys = set(before.get("metrics", {})) | set(after.get("metrics", {}))
     for key in keys:
         metrics[key] = _interpolate_metric(
-            _metric(before, key), _metric(after, key)
+            _metric(before, key), _metric(after, key), minimum_valid_years
         )
         if key == "precipitationMm":
             a = before.get("metrics", {}).get(key, {})
             b = after.get("metrics", {}).get(key, {})
             av, bv = a.get("wetDayFrequencyPct"), b.get("wetDayFrequencyPct")
             metrics[key]["wetDayFrequencyPct"] = (
-                (av + bv) / 2 if isinstance(av, (int, float)) and isinstance(bv, (int, float)) else None
+                (av + bv) / 2
+                if metrics[key]["status"] == "usable"
+                and isinstance(av, (int, float)) and isinstance(bv, (int, float))
+                else None
             )
             metrics[key]["heavyRain10mmFrequencyPct"] = None
             metrics[key]["heavyRain30mmFrequencyPct"] = None
@@ -72,7 +77,9 @@ def _interpolate_feb29(before: dict, after: dict) -> dict:
 
 
 def _usable_value(metric: dict, key: str, minimum_valid_years: int):
-    return metric.get(key) if metric.get("validYears", 0) >= minimum_valid_years else None
+    return metric.get(key) if (
+        metric.get("status") == "usable" and metric.get("validYears", 0) >= minimum_valid_years
+    ) else None
 
 
 def export_evidence(climatology: dict, start: date, days: int = 90) -> dict:
@@ -110,7 +117,7 @@ def export_evidence(climatology: dict, start: date, days: int = 90) -> dict:
         records = []
         for offset in range(days):
             target = start + timedelta(days=offset)
-            day, mapped_from = _lookup(index, target)
+            day, mapped_from = _lookup(index, target, minimum_valid_years)
             metrics = day.get("metrics", {})
             rain = metrics.get("precipitationMm", {})
             tmin = metrics.get("temperatureMinC", {})
