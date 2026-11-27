@@ -93,6 +93,12 @@ const input=buildTripDateEngineInput({
   historicalCourseResults:history,
   stabilitySnapshots
 });
+// Preserve the complete normalized daily model input for every lead day (1-90).
+// This is the auditable feature archive used by later out-of-sample ranking
+// tests; it does not alter the production recommendation weights or UI.
+currentSnapshot.normalizedDailySignals=input.days;
+currentSnapshot.normalizedSignalSchema="trip-date-engine-input-v1";
+await fs.writeFile(new URL(asOf+".json",SNAPSHOT_DIR),JSON.stringify(currentSnapshot,null,2));
 const result=recommendGolfTripDates(input);
 const report={
   generatedAt:new Date().toISOString(),
