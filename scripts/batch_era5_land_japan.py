@@ -154,6 +154,7 @@ def main() -> int:
     parser.add_argument("--retry-delay", type=int, default=30)
     parser.add_argument("--output-root", default="data/era5-japan-1991-2020")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--force", action="store_true", help="reprocess selected tasks even when a prior daily file is marked complete")
     args = parser.parse_args()
     if args.limit < 1 or args.retries < 1 or args.retry_delay < 0:
         parser.error("--limit and --retries must be positive; --retry-delay cannot be negative")
@@ -179,7 +180,7 @@ def main() -> int:
         }, ensure_ascii=False, indent=2))
         return 0
 
-    pending = [t for t in tasks if state["tasks"].get(t["taskId"], {}).get("status") not in {
+    pending = tasks if args.force else [t for t in tasks if state["tasks"].get(t["taskId"], {}).get("status") not in {
         "daily-converted-structurally-validated", "daily-converted-existing"
     }]
     selected_tasks = pending[:args.limit]
