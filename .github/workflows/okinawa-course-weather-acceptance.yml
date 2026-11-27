@@ -21,6 +21,8 @@ on:
       - "tests/okinawa-grid-analysis.test.js"
       - "assets/js/six-hour-playability.js"
       - "assets/js/taiwan-hourly-renderer.js"
+      - "assets/js/app.js"
+      - "tests/monthly-calendar-render.test.js"
       - "tests/six-hour-playability.test.js"
       - "tests/forecast-completeness.test.js"
       - "tests/okinawa-long-range-validation.test.js"
@@ -53,6 +55,7 @@ jobs:
           node --test tests/forecast-completeness.test.js
           node --test tests/okinawa-long-range-validation.test.js
           node --test tests/jma-amedas-validation.test.js
+          node --test tests/monthly-calendar-render.test.js
           node --test tests/six-hour-playability.test.js
           node --test tests/suitability-engine.test.js
           node --test tests/rain-risk.test.js
