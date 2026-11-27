@@ -132,6 +132,7 @@ def audit_candidate(candidate, official_segments):
     }
     return {
         "stationId": sid, "candidateName": candidate.get("name") or candidate.get("nameJa"),
+        "candidateDistanceKm": candidate.get("distanceKm"),
         "officialNameJa": period_segments[-1]["nameJa"] if period_segments else (segments[-1]["nameJa"] if segments else None),
         "officialLatitude": period_segments[-1]["latitude"] if period_segments else (segments[-1]["latitude"] if segments else None),
         "officialLongitude": period_segments[-1]["longitude"] if period_segments else (segments[-1]["longitude"] if segments else None),
