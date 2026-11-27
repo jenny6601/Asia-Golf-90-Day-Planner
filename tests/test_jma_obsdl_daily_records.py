@@ -42,7 +42,7 @@ class JmaObsdlAuditTests(unittest.TestCase):
             parse_obsdl_csv(text)
 
     def test_duplicate_dates_fail_closed(self):
-        text = CSV + "1991/1/1,火,0,8,1,2.1,8,1,-3.2,8,1\\n"
+        text = CSV + "1991/1/1,火,0,8,1,2.1,8,1,-3.2,8,1\n"
         with self.assertRaisesRegex(ValueError, "Duplicate date"):
             parse_obsdl_csv(text)
 
