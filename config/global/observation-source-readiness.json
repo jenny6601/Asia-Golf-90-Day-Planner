@@ -12,10 +12,13 @@
     {
       "countryCode": "JP",
       "agency": "Japan Meteorological Agency (JMA)",
-      "status": "official-daily-data-download-confirmed-station-matching-queue-generated",
+      "status": "official-daily-download-confirmed-jma-station-metadata-candidates-in-progress",
       "portal": "https://www.data.jma.go.jp/risk/obsdl/",
       "notes": "JMA official Past Weather Data Download provides daily values including daily precipitation total, daily maximum and minimum temperature. The portal exposes quality/insufficient-data handling and flags non-homogeneity due to station relocation, environmental or observation-method changes. It limits request volume and warns against excessive automated access. A bounded cluster-level acquisition queue is generated; station matching and 1991-2020 downloads remain pending. The generated queue contains 37 Japan golf-cluster representative points; no official JMA station has yet been matched or approved.",
-      "acquisitionQueue": "data/observation-stations/jp-kr-official-acquisition-queue.json"
+      "acquisitionQueue": "data/observation-stations/jp-kr-official-acquisition-queue.json",
+      "stationInventoryUrl": "https://www.jma.go.jp/jma/en/Activities/amedas/amedas.html",
+      "stationInventoryNotes": "JMA publishes an AMeDAS observation-site list as a ZIP/CSV. A machine-readable active-station mirror derived from the JMA AMeDAS station information history file is used only to rank candidates; every shortlisted station must be checked against JMA source metadata and daily records. Capability flags for precipitation and temperature are not proof of daily TMAX/TMIN/PRCP completeness over 1991-2020.",
+      "candidateOutput": "data/observation-stations/jma-station-candidates-1991-2020.json"
     },
     {
       "countryCode": "KR",
@@ -88,11 +91,11 @@
     }
   ],
   "nextActions": [
-    "Match the 37 Japan representative points to JMA stations using official station identifiers, station histories and element-specific 1991-2020 availability; acquire bounded daily CSV samples.",
-    "Match the 6 Korea representative points to KMA ASOS station IDs; use the annual file-set route for full-period daily data and preserve source QC/metadata.",
-    "Expand NOAA candidates beyond the nearest three per region, prioritizing precipitation and minimum-temperature completeness; keep all stations unapproved until representativeness review.",
-    "Proceed to China and Vietnam official station inventory/access research after the JP/KR matching pilot.",
-    "Pair only reviewed station records with ERA5-Land by observation date and calculate bias, MAE, wet-day hit/miss and seasonal metrics."
+    "Review JMA station candidates against the original JMA AMeDAS station history ZIP/CSV, including historical station periods and relocation records.",
+    "For the closest suitable JMA candidates, retrieve bounded daily PRCP/TMAX/TMIN records from JMA ObsDL while respecting request limits; preserve quality and homogeneity columns.",
+    "Match the 6 Korea golf-cluster points to KMA ASOS station IDs and obtain official station metadata before selecting any record series.",
+    "Expand NOAA candidate coverage and compare official national station records against ERA5-Land on matched local observation dates.",
+    "Proceed to official China and Vietnam station inventory/access research after Japan and Korea pilot."
   ],
   "lastReviewed": "2026-11-27",
   "discoverySummary": {
@@ -131,6 +134,9 @@
       "KR": 6
     },
     "jpKrStationMatches": 0,
-    "jpKrStationsApproved": 0
+    "jpKrStationsApproved": 0,
+    "jmaCandidateMethod": "rank-active-amedas-metadata-mirror-by-distance-and-precipitation-temperature-capability",
+    "jmaStationCandidatesApproved": 0,
+    "jmaDailyRecordsDownloaded": 0
   }
 }
