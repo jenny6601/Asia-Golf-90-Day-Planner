@@ -7,6 +7,7 @@ import {buildDailyClimateOutlook} from "./daily-climate-outlook.js";
 import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
+import {buildFiveDayWindows,pickTopNonOverlappingWindows} from "./recommendation-windows.js";
 import {renderTaiwanPwaHourly} from "./taiwan-hourly-renderer.js";
 const $=id=>document.getElementById(id),S={};
 let climateBackAction=null,departureFormReturnAction=null,exitConfirmed=false,exitDialogOpen=false;
@@ -810,20 +811,14 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
    modelType==="偏乾"?"偏乾季":historicalTypeLabel):
   historicalTypeLabel;
  // 「優先日期」是全月評分最高的前5天；「本月適打日期」則列出所有符合適打門檻的日期，兩者用途不同。
- const best=[...dailyAssessment].sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.date.localeCompare(b.date)).slice(0,5);
+ const best=[...dailyAssessment].filter(x=>x.date>=today()).sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.date.localeCompare(b.date)).slice(0,5);
  const datesText=best.length?best.map(x=>Number(x.date.slice(8,10))+"日").join("、"):"資料不足，暫無推薦日期";
  const playableDates=playable.map(x=>x.date);
  const playableDateSet=new Set(playableDates);
  const allPlayableDatesText=playableDates.length?playableDates.map(x=>Number(x.slice(8,10))+"日").join("、"):"目前沒有符合適打門檻的日期";
  // Recommend a continuous five-day travel window only when all five dates have usable data.
- const byDate=new Map(dailyAssessment.map(x=>[x.date,x]));
- const fiveDayWindows=[];
- for(let i=0;i<=dates.length-5;i++){
-  const window=dates.slice(i,i+5).map(d=>byDate.get(d));
-  if(window.some(x=>!x))continue;
-  fiveDayWindows.push({days:window,grade:window.reduce((s,x)=>s+x.grade,0)/5,chance:window.reduce((s,x)=>s+x.chance,0)/5,amount:window.reduce((s,x)=>s+x.amount,0)/5});
- }
- fiveDayWindows.sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.days[0].date.localeCompare(b.days[0].date));
+ const planningDates=dates.filter(d=>d>=today());
+ const fiveDayWindows=buildFiveDayWindows(dailyAssessment,planningDates);
  const preferredWindow=fiveDayWindows[0]||null;
  const dateRange=preferredWindow?Number(preferredWindow.days[0].date.slice(5,7))+"月"+Number(preferredWindow.days[0].date.slice(8,10))+"日 ～ "+Number(preferredWindow.days[4].date.slice(5,7))+"月"+Number(preferredWindow.days[4].date.slice(8,10))+"日":"資料不足，無法推薦連續5天";
  const modelDescription=Number.isFinite(seasonRatio)?
@@ -989,20 +984,17 @@ async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAss
  const panel=node("section",undefined,"week-recommendations");
  const monthStart=month+"-01",monthEnd=new Date(Date.parse(monthStart+"T12:00:00Z"));monthEnd.setUTCMonth(monthEnd.getUTCMonth()+1);monthEnd.setUTCDate(0);const last=monthEnd.toISOString().slice(0,10),todayDate=today(),first=monthStart>todayDate?monthStart:todayDate,candidates=[];
  const hasDailyAssessment=Array.isArray(dailyAssessment);
- const dailyGradeByDate=new Map((hasDailyAssessment?dailyAssessment:[]).map(x=>[x.date,x]));
+ if(hasDailyAssessment){
+  const planningDates=Array.from({length:Math.max(0,Math.floor((Date.parse(last+"T12:00:00Z")-Date.parse(first+"T12:00:00Z"))/86400000)+1)},(_,i)=>add(first,i));
+  const windows=buildFiveDayWindows(dailyAssessment,planningDates);
+  for(const window of pickTopNonOverlappingWindows(windows,3)){
+   candidates.push({...window,rank:window.grade<0.75?0:window.grade<1.5?1:window.grade<2.5?2:3,signal:window.grade,coverage:5,source:"daily"});
+  }
+ }
+ if(!hasDailyAssessment){
  for(let start=first;start<=last;start=add(start,7)){
   const weekEnd=add(start,6);if(weekEnd>last)continue;
   const days=Array.from({length:7},(_,i)=>add(start,i)),signals=[];
-  if(hasDailyAssessment){
-   const assessed=days.map(d=>dailyGradeByDate.get(d)).filter(x=>x&&x.valid);
-   if(assessed.length===7){
-    const meanGrade=assessed.reduce((sum,x)=>sum+x.grade,0)/7;
-    const suitable=assessed.filter(x=>x.status==="適打").length,possible=assessed.filter(x=>x.status==="可打").length;
-    const rank=meanGrade<0.75?0:meanGrade<1.5?1:meanGrade<2.5?2:3;
-    candidates.push({start,end:weekEnd,rank,signal:meanGrade,coverage:7,source:"daily",suitable,possible});
-   }
-   continue;
-  }
   for(const rec of records){
    const w=rec.weekly,m=rec.monthly;
    const efiValues=days.map(d=>{let idx=-1;(w?.time||[]).forEach((t,i)=>{if(t<=d)idx=i});return idx>=0?w.precipitation_efi?.[idx]:null}).filter(Number.isFinite);
@@ -1015,12 +1007,13 @@ async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAss
   const mean=signals.reduce((s,x)=>s+x.efi,0)/signals.length,rank=mean<=-.2?0:mean<=.05?1:mean<=.2?2:3;
   candidates.push({start,end:weekEnd,rank,signal:mean,coverage:signals.length,source:signals.every(x=>x.source==="weekly")?"weekly":"monthly"});
  }
+ }
  candidates.sort((a,b)=>a.rank-b.rank||a.signal-b.signal||a.start.localeCompare(b.start));
- const picked=[];for(const item of candidates){if(picked.every(x=>Math.abs((Date.parse(item.start)-Date.parse(x.start))/86400000)>=7)){picked.push(item);if(picked.length===3)break}}
+ const picked=hasDailyAssessment?candidates:pickTopNonOverlappingWindows(candidates,3);
  if(!picked.length){panel.append(node("div",hasDailyAssessment?"目前沒有完整的逐日適打資料可供七天週次比較；為避免與月分析標準不一致，暫不以其他尺度資料替代。":"目前沒有取得可用的逐日適打資料，因此暫時無法排序推薦週次。","risk-summary"))}
  else{
   const grid=node("div",undefined,"week-grid top-week-grid");
-  picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");const heading=node("div",undefined,"week-card-heading");heading.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")));const summary=node("div",undefined,"week-card-summary");if(x.source==="daily"){summary.append(node("span","適打 "+x.suitable+" 天｜可打 "+x.possible+" 天","week-rain-summary"),node("span","依全月逐日適打分級統計，與月曆標示一致","week-confidence"))}else{summary.append(node("span","降雨趨勢："+["偏乾","接近基準","偏濕","顯著偏濕"][x.rank],"week-rain-summary"),node("span","資料可信度："+(x.source==="weekly"?"週尺度":"月尺度參考")+"｜覆蓋 "+x.coverage+"/"+records.length,"week-confidence"))}card.append(heading,summary);const choose=node("button","查看此週 7 天報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month,null,()=>renderRegionTopWeeks(group,records,month,backAction,dailyAssessment),dailyAssessment));card.append(choose);grid.append(card)});
+  picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");const heading=node("div",undefined,"week-card-heading");heading.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")));const summary=node("div",undefined,"week-card-summary");if(x.source==="daily"){summary.append(node("span","適打 "+x.suitable+" 天｜可打 "+x.possible+" 天","week-rain-summary"),node("span","連續5天行程；與月分析使用相同逐日評分","week-confidence"))}else{summary.append(node("span","降雨趨勢："+["偏乾","接近基準","偏濕","顯著偏濕"][x.rank],"week-rain-summary"),node("span","資料可信度："+(x.source==="weekly"?"週尺度":"月尺度參考")+"｜覆蓋 "+x.coverage+"/"+records.length,"week-confidence"))}card.append(heading,summary);const choose=node("button","查看起始日起 7 天天氣報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month,null,()=>renderRegionTopWeeks(group,records,month,backAction,dailyAssessment),dailyAssessment));card.append(choose);grid.append(card)});
   panel.append(grid);
  }
  out.append(panel);
@@ -1093,7 +1086,7 @@ async function renderSelectedWeekReport(group,week,records,month,cachedForecasts
  const dates=Array.from({length:7},(_,i)=>add(week.start,i));
  const leadFor=date=>Math.floor((Date.parse(date+"T12:00:00Z")-Date.parse(today()+"T12:00:00Z"))/86400000);
  const courses=(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).slice(0,3);
- const report=section(host,(dates.some(date=>leadFor(date)>=0&&leadFor(date)<16)?"七天逐日天氣預報｜":"歷史同期七天天氣參考｜")+week.start+" ～ "+week.end);
+ const report=section(host,(dates.some(date=>leadFor(date)>=0&&leadFor(date)<16)?"七天逐日天氣預報｜":"歷史同期七天天氣參考｜")+week.start+" ～ "+add(week.start,6));
  const median=values=>{const a=values.filter(Number.isFinite).sort((x,y)=>x-y);if(!a.length)return null;const m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2};
  const wxLabel=code=>{if(!Number.isFinite(code))return "資料不足";if(code===0)return "晴朗";if(code<=2)return "晴時多雲";if(code===3)return "陰天";if(code>=51&&code<=57)return "毛毛雨";if(code>=61&&code<=67)return "降雨";if(code>=80&&code<=82)return "陣雨";if(code>=95)return "雷雨";return "多雲"};
  const wxIcon=code=>!Number.isFinite(code)?"—":code===0?"☀️":code<=2?"🌤️":code===3?"☁️":code>=51&&code<=67?"🌧️":code>=80&&code<=82?"🌦️":code>=95?"⛈️":"☁️";
