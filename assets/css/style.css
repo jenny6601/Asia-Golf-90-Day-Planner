@@ -1302,3 +1302,36 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 .selected-week-five-page .taiwan-seven-weather .monthly-day-playability{
   color:inherit;
 }
+
+
+/* Alignment correction: date, temperature chart, weather and rain share
+   the exact same seven equal-width tracks, regardless of mobile viewport. */
+.selected-week-five-page .taiwan-style-seven-day .taiwan-seven-row{
+  display:grid!important;
+  grid-template-columns:repeat(7,minmax(112px,1fr))!important;
+  width:max(140%,784px)!important;
+  min-width:max(140%,784px)!important;
+  max-width:none!important;
+  gap:0!important;
+  box-sizing:border-box!important;
+}
+.selected-week-five-page .taiwan-style-seven-day .seven-day-inline-graph{
+  display:block!important;
+  width:max(140%,784px)!important;
+  min-width:max(140%,784px)!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+  background:linear-gradient(90deg,
+    #f4f7f9 0 14.2857%,#e8eff4 14.2857% 28.5714%,
+    #f4f7f9 28.5714% 42.8571%,#e8eff4 42.8571% 57.1428%,
+    #f4f7f9 57.1428% 71.4285%,#e8eff4 71.4285% 85.7142%,
+    #f4f7f9 85.7142% 100%)!important;
+}
+.selected-week-five-page .taiwan-style-seven-day .seven-day-inline-graph svg{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:auto!important;
+}
