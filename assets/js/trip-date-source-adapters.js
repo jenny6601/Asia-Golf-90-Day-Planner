@@ -157,7 +157,8 @@ export function buildTripDateEngineInput({
   if(typeof asOf!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(asOf)
     ||new Date(asOf+"T00:00:00Z").toISOString().slice(0,10)!==asOf)
     throw new TypeError("asOf must be a valid YYYY-MM-DD date");
-  const regionalHistory=Object.keys(historicalByRegion).length?historicalByRegion:groupCourseHistoricalNormals(historicalCourseResults);\n  const forecastByRegion=new Map(forecastZones.map(x=>[x.zone?.id||x.id,x]));
+  const regionalHistory=Object.keys(historicalByRegion).length?historicalByRegion:groupCourseHistoricalNormals(historicalCourseResults);
+  const forecastByRegion=new Map(forecastZones.map(x=>[x.zone?.id||x.id,x]));
   const longRangeByRegion=new Map(longRangePoints.map(x=>[x.point?.id||x.id,x]));
   const days=Array.from({length:90},(_,i)=>{
     const date=addDays(asOf,i+1),lead=i+1,regions={};
