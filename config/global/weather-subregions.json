@@ -1925,7 +1925,25 @@
           "candidateCourseName": "Sentosa Golf Club - Serapong Course",
           "candidateRationale": "新加坡全島候選代表；World Golf Awards 2026 最佳球場名單列名",
           "candidateSourceUrl": "https://worldgolfawards.com/award/singapore-best-golf-course/2026",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 1.248855,
+            "longitude": 103.829331,
+            "timezone": "Asia/Singapore",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/singapore/sentosa-golf-club-serapong-course/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Sentosa Golf Club Serapong; official club address at 27 Bukit Manis Road",
+            "checkedOn": "2026-11-27"
+          }
         }
       ]
     },
@@ -1945,7 +1963,25 @@
           "candidateCourseName": "Pondok Indah Golf Course",
           "candidateRationale": "雅加達市區代表候選，印尼高爾夫協會區域名錄列名",
           "candidateSourceUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": -6.2734,
+            "longitude": 106.7883,
+            "timezone": "Asia/Jakarta",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.golfworldmap.org/it/indonesia"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Pondok Indah Golf Course, South Jakarta",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "ID-WJAVA-01",
@@ -1957,7 +1993,25 @@
           "candidateCourseName": "Klub Golf Bogor Raya",
           "candidateRationale": "茂物代表球場，位於大雅加達南部高地球場群",
           "candidateSourceUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": -6.601398,
+            "longitude": 106.835495,
+            "timezone": "Asia/Jakarta",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.golfworldmap.org/it/indonesia"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Klub Golf Bogor Raya, Bogor",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "ID-CJAVA-01",
@@ -1969,7 +2023,25 @@
           "candidateCourseName": "Merapi Golf Yogyakarta",
           "candidateRationale": "日惹代表球場候選，印尼青少年高爾夫賽事場地名錄列名",
           "candidateSourceUrl": "https://ijg.or.id/venuelist",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": -7.62108,
+            "longitude": 110.445324,
+            "timezone": "Asia/Jakarta",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/indonesia/merapi-golf-club/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Merapi Golf Club, Cangkringan/Sleman, Yogyakarta region",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "ID-EJAVA-01",
@@ -1981,7 +2053,25 @@
           "candidateCourseName": "Taman Dayu Golf Club",
           "candidateRationale": "東爪哇泗水／瑪琅周邊代表球場候選，賽事場地名錄列名",
           "candidateSourceUrl": "https://ijg.or.id/venuelist",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": -7.703039,
+            "longitude": 112.674623,
+            "timezone": "Asia/Jakarta",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/indonesia/taman-dayu-golf-club-resort/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Taman Dayu Golf Club, Pandaan, Pasuruan",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "ID-BALI-01",
@@ -1993,7 +2083,25 @@
           "candidateCourseName": "New Kuta Golf Bali",
           "candidateRationale": "峇里島代表性海岸球場候選，賽事場地名錄列名",
           "candidateSourceUrl": "https://ijg.or.id/venuelist",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": -8.804651,
+            "longitude": 115.127245,
+            "timezone": "Asia/Makassar",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/indonesia/new-kuta-golf/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 New Kuta Golf, Pecatu, Bali",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "ID-RIAU-01",
@@ -2005,7 +2113,25 @@
           "candidateCourseName": "Ria Bintan Golf Club",
           "candidateRationale": "民丹島官方球場資料列有 Ocean Course 與 Forest Course；目前候選代表民丹島，建議將次分區名稱收斂為民丹島，或拆分巴淡與民丹。",
           "candidateSourceUrl": "https://www.riabintan.com/golf/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 1.195277,
+            "longitude": 104.405221,
+            "timezone": "Asia/Jakarta",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/indonesia/ria-bintan-golf-club-ocean-course/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Ria Bintan Golf Club, Lagoi, Bintan",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "ID-SUMATRA-01",
@@ -2017,7 +2143,25 @@
           "candidateCourseName": "Graha Metropolitan Golf Course",
           "candidateRationale": "棉蘭代表球場候選，印尼青少年高爾夫場地名錄列名",
           "candidateSourceUrl": "https://ijg.or.id/venuelist",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 3.61,
+            "longitude": 98.62,
+            "timezone": "Asia/Jakarta",
+            "coordinateStatus": "nearby-district-representative-coordinate",
+            "coordinateSourceUrl": "https://playgolf.id/golf_courses/graha-metropolitan-golf-course/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "球場鄰近行政區代表座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Graha Metropolitan Golf Course, Kp. Lalang/Sunggal, Medan vicinity; neighbourhood-level representative coordinate",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "ID-KAL-01",
@@ -2029,7 +2173,25 @@
           "candidateCourseName": "Pertamina Golf Club Balikpapan",
           "candidateRationale": "巴厘巴板代表球場候選，印尼青少年高爾夫場地名錄列名",
           "candidateSourceUrl": "https://ijg.or.id/venuelist",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": -1.2706,
+            "longitude": 116.8693,
+            "timezone": "Asia/Makassar",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.golfworldmap.org/it/indonesia"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Pertamina Golf Club, Balikpapan",
+            "checkedOn": "2026-11-27"
+          }
         }
       ]
     }
