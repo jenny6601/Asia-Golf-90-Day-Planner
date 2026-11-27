@@ -28,7 +28,7 @@ def parse_date(value, allow_open=False):
     raise ValueError(f"Invalid JMA history date: {value!r}")
 
 def parse_index4(text):
-    rows = csv.reader(text.lstrip("\\ufeff").splitlines())
+    rows = csv.reader(text.lstrip("\ufeff").splitlines())
     stations = defaultdict(list)
     for line_no, row in enumerate(rows, 1):
         if not row or not row[0].strip():
@@ -169,7 +169,7 @@ def main():
     args = ap.parse_args()
     report = build_report(json.loads(Path(args.candidates).read_text(encoding="utf-8")), parse_index4(load_text(args.catalog)))
     p = Path(args.output); p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    p.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report["summary"], ensure_ascii=False))
 
 if __name__ == "__main__":
