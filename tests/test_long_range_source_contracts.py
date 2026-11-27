@@ -3,10 +3,10 @@ from pathlib import Path
 from scripts.validate_long_range_source_contracts import validate_document, validate_root
 REGIONS={"JP-A","KR-A"}
 def base(kind):
- src={"era5-land-daily":("ERA5_LAND","reanalysis-era5-land"),"ecmwf-extended-range":("ECMWF_IFS","IFS-EXTENDED-RANGE"),"c3s-seasonal":("C3S_MULTI_SYSTEM","C3S-SEASONAL-MULTI-SYSTEM")}[kind]
+ src={"era5-daily":("ERA5_DAILY","derived-era5-single-levels-daily-statistics"),"ecmwf-extended-range":("ECMWF_IFS","IFS-EXTENDED-RANGE"),"c3s-seasonal":("C3S_MULTI_SYSTEM","C3S-SEASONAL-MULTI-SYSTEM")}[kind]
  return {"schemaVersion":1,"contractType":kind,"sourceId":src[0],"datasetId":src[1],"retrievedAt":"2026-11-27T00:00:00Z","sourceVersion":"test-v1","units":{},"records":[]}
 def historical():
- d=base("era5-land-daily"); d["units"]={"precipitationMm":"mm","temperatureMinC":"degC","temperatureMaxC":"degC","temperatureMeanC":"degC","windSpeedMs":"m/s","relativeHumidityPct":"%"}
+ d=base("era5-daily"); d["units"]={"precipitationMm":"mm","temperatureMinC":"degC","temperatureMaxC":"degC","temperatureMeanC":"degC","windSpeedMs":"m/s","relativeHumidityPct":"%"}
  d["records"]=[{"dateLocal":"1991-01-01","subregionId":"JP-A","representativePointId":"point-a","timezone":"Asia/Tokyo","gridCell":{"latitude":35.0,"longitude":139.0},"values":{"precipitationMm":0.0,"temperatureMinC":2.0,"temperatureMaxC":9.0,"temperatureMeanC":5.5,"windSpeedMs":2.0,"relativeHumidityPct":70},"qualityFlags":[]}]
  return d
 def ecmwf():
@@ -18,12 +18,15 @@ def c3s():
 class SourceContractTests(unittest.TestCase):
  def errors(self,d,k): return validate_document(d,k,REGIONS)[0]
  def test_valid_contract_examples(self):
-  for k,d in (("era5-land-daily",historical()),("ecmwf-extended-range",ecmwf()),("c3s-seasonal",c3s())): self.assertEqual(self.errors(d,k),[])
+  for k,d in (("era5-daily",historical()),("ecmwf-extended-range",ecmwf()),("c3s-seasonal",c3s())): self.assertEqual(self.errors(d,k),[])
+ def test_era5_land_contract_is_not_accepted(self):
+  d=historical(); d["datasetId"]="reanalysis-era5-land"
+  self.assertTrue(any("datasetId must equal" in x for x in self.errors(d,"era5-daily")))
  def test_historical_rejects_missing_provenance_and_bad_units(self):
-  d=historical(); d.pop("sourceVersion"); d["units"]["precipitationMm"]="inch"; e=self.errors(d,"era5-land-daily")
+  d=historical(); d.pop("sourceVersion"); d["units"]["precipitationMm"]="inch"; e=self.errors(d,"era5-daily")
   self.assertTrue(any("sourceVersion" in x for x in e)); self.assertTrue(any("units.precipitationMm" in x for x in e))
  def test_historical_rejects_duplicate_date_and_bad_timezone(self):
-  d=historical(); d["records"].append(dict(d["records"][0])); d["records"][1]["timezone"]="UTC+8"; e=self.errors(d,"era5-land-daily")
+  d=historical(); d["records"].append(dict(d["records"][0])); d["records"][1]["timezone"]="UTC+8"; e=self.errors(d,"era5-daily")
   self.assertTrue(any("duplicate" in x for x in e)); self.assertTrue(any("IANA" in x for x in e))
  def test_ecmwf_rejects_invalid_period_and_probability(self):
   d=ecmwf(); d["records"][0]["validEnd"]="2026-12-01"; d["records"][0]["ensembleStatistics"]["precipitationWetProbability"]=1.4; e=self.errors(d,"ecmwf-extended-range")
@@ -33,11 +36,11 @@ class SourceContractTests(unittest.TestCase):
   self.assertTrue(any("sum to 1" in x for x in self.errors(d,"c3s-seasonal")))
  def test_unknown_region_rejected(self):
   d=historical(); d["records"][0]["subregionId"]="JP-UNKNOWN"
-  self.assertTrue(any("unknown subregionId" in x for x in self.errors(d,"era5-land-daily")))
+  self.assertTrue(any("unknown subregionId" in x for x in self.errors(d,"era5-daily")))
  def test_empty_input_never_marks_production_ready(self):
   with tempfile.TemporaryDirectory() as t:
    root=Path(t); (root/"config/global").mkdir(parents=True)
    (root/"config/global/weather-subregions.json").write_text(json.dumps({"countries":[{"subregions":[{"id":"JP-A"}]}]}))
    r=validate_root(root)
-  self.assertFalse(r["productionReady"]); self.assertEqual(r["contracts"]["era5-land-daily"]["fileCount"],0)
+  self.assertFalse(r["productionReady"]); self.assertEqual(r["contracts"]["era5-daily"]["fileCount"],0)
 if __name__=="__main__": unittest.main()
