@@ -732,7 +732,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  title.append(coverage);
  const narrative=node("div",undefined,"monthly-analysis-narrative");
  narrative.append(node("p","正在彙整本月逐日天氣、降雨風險及歷史／季節模式訊號，完成後將計算適合打球的日期與建議時段。","monthly-analysis-note"));
- title.append(narrative,node("p","季節預報來源：Open-Meteo Seasonal Forecast API｜ECMWF seasonal seamless（EC46 + SEAS5）。歷史氣候來源：Open-Meteo Historical Weather API｜ERA5 reanalysis，使用最近十個完整年度。","monthly-source-note"));
+ title.append(narrative,node("p","季節預報來源：Open-Meteo Seasonal Forecast API｜ECMWF seasonal seamless（EC46 + SEAS5）。歷史氣候來源：Open-Meteo Historical Weather API｜ERA5 reanalysis，使用 1991–2020 三十年逐日資料。","monthly-source-note"));
  const dailySection=section(host,"② "+month+"｜全月逐日天氣簡表");dailySection.id="monthly-section-2";dailySection.classList.add("monthly-calendar-section");
  const daysInMonth=new Date(Date.UTC(Number(month.slice(0,4)),monthIndex,0)).getUTCDate(),dates=Array.from({length:daysInMonth},(_,i)=>month+"-"+String(i+1).padStart(2,"0"));
  const sampleCourses=(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).slice(0,3),startForecast=today(),endForecast=add(startForecast,15),overlaps=dates.some(d=>d>=startForecast&&d<=endForecast);
