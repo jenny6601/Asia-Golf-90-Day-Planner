@@ -56,3 +56,18 @@ The converter reruns structural inspection and refuses conversion if inspection 
 - keeps incomplete-day metrics null (never zero-fills missing precipitation).
 
 A successful conversion is a **pilot daily file only**. `climatologyEligible` remains false until 30-year completeness and independent JMA QA are complete.
+
+
+## 6. Build rolling 1991-2020 regional climatology
+
+After daily files have been generated for the complete reference period, run:
+
+```bash
+python scripts/build_regional_climatology.py data/processed/JP-KNT-NORTH-*-daily.json --start-year 1991 --end-year 2020 --window-days 15 --minimum-valid-years 24 --minimum-completeness 0.90 --output data/processed/JP-KNT-NORTH-climatology-1991-2020.json
+```
+
+The builder creates a 365-day month/day calendar for each subregion. Each target date uses a rolling 31-calendar-day window (15 days before and after). February 29 is positioned midway between February 28 and March 1 and contributes to adjacent windows.
+
+For each metric independently, a baseline year qualifies only when at least 90% of the 31 calendar-day records have a valid value (at least 28 days). At least 24 qualifying years are required. Rainfall statistics include dry days; missing rainfall is excluded rather than converted to zero. Output includes median, mean, P90, wet-day frequency and 10/30 mm heavy-rain frequencies, plus temperature, humidity and wind summaries.
+
+The output is explicitly marked `historical-climatology-computed-not-activated`; both `climateBaselineEnabled` and `forecastEnabled` remain false. This is historical context only, not a deterministic 19-90 day forecast.
