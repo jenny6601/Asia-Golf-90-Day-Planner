@@ -14,6 +14,10 @@ on:
       - "scripts/validate-okinawa-long-range.mjs"
       - "scripts/jma-amedas-validation.js"
       - "scripts/validate-okinawa-jma-observations.mjs"
+      - "scripts/validate-okinawa-six-hour-playability.mjs"
+      - "assets/js/six-hour-playability.js"
+      - "assets/js/taiwan-hourly-renderer.js"
+      - "tests/six-hour-playability.test.js"
       - "tests/forecast-completeness.test.js"
       - "tests/okinawa-long-range-validation.test.js"
       - "tests/jma-amedas-validation.test.js"
@@ -45,6 +49,10 @@ jobs:
           node --test tests/forecast-completeness.test.js
           node --test tests/okinawa-long-range-validation.test.js
           node --test tests/jma-amedas-validation.test.js
+          node --test tests/six-hour-playability.test.js
+          node --test tests/suitability-engine.test.js
+          node --test tests/rain-risk.test.js
+          node --test tests/pwa-playability.test.js
           node --test tests/okinawa-course-weather-acceptance.test.js
           node --test tests/global-catalog.test.js
       - name: Recheck 16-day course-point forecast and 90-day seasonal data
@@ -54,6 +62,8 @@ jobs:
         run: node scripts/validate-okinawa-long-range.mjs
       - name: Compare archived forecasts with JMA AMeDAS observations
         run: node scripts/validate-okinawa-jma-observations.mjs
+      - name: Validate six-hour tee-time suitability for all six courses
+        run: node scripts/validate-okinawa-six-hour-playability.mjs
       - name: Upload Okinawa acceptance report
         if: always()
         uses: actions/upload-artifact@v4
@@ -66,5 +76,7 @@ jobs:
             artifacts/okinawa-acceptance/okinawa-long-range-validation.md
             artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.json
             artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.md
+            artifacts/okinawa-acceptance/okinawa-six-hour-playability-validation.json
+            artifacts/okinawa-acceptance/okinawa-six-hour-playability-validation.md
           if-no-files-found: warn
           retention-days: 30
