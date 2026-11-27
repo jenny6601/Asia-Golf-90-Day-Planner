@@ -1,5 +1,5 @@
 /**
- * Daily climate outlook engine for forecast days D19–D90 (day 1 is today).
+ * Daily climate outlook engine for forecast days D17–D90 (day 1 is today).
  *
  * Combines ERA5 same-calendar-day normals with weekly/monthly seasonal anomalies.
  * It deliberately does not claim deterministic daily weather or calibrated rain
@@ -141,17 +141,17 @@ function confidence(sampleYears, seasonalEvidence, hasTemperature, hasRain) {
 }
 
 /**
- * Returns one record for each requested date in D19–D90, counting today as D1.
+ * Returns one record for each requested date in D17–D90, counting today as D1.
  * Historical input is expected to come from fetchCourseHistoricalWeekNormals().
  */
 export function buildDailyClimateOutlook(seasonalPayload, historicalDays = [], today, days = 90) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(today || "")) throw new TypeError("today must be YYYY-MM-DD");
-  if (!Number.isInteger(days) || days < 19 || days > 120) throw new TypeError("days must be between 19 and 120");
+  if (!Number.isInteger(days) || days < 17 || days > 120) throw new TypeError("days must be between 17 and 120");
   const history = new Map((historicalDays || []).map(row => [row.date, row]));
   const weekly = seasonalPayload?.weekly || null;
   const monthly = seasonalPayload?.monthly || null;
   const output = [];
-  for (let day = 19; day <= Math.min(days, 90); day++) {
+  for (let day = 17; day <= Math.min(days, 90); day++) {
     const lead = day - 1;
     const date = addDays(today, lead);
     const h = history.get(date) || {};
@@ -201,7 +201,7 @@ export function buildDailyClimateOutlook(seasonalPayload, historicalDays = [], t
       feelsLike: finite(feelsLikeMin) && finite(feelsLikeMax) ? "historical-apparent-temperature-plus-seasonal-temperature-adjustment" : "missing"
     };
     output.push({
-      date, lead: day, band: day <= 46 ? "D19–D46" : day <= 60 ? "D47–D60" : "D61–D90",
+      date, lead: day, band: day <= 18 ? "D17–D18" : day <= 46 ? "D19–D46" : day <= 60 ? "D47–D60" : "D61–D90",
       highEstimate: finite(high) ? Math.round(high * 10) / 10 : null,
       lowEstimate: finite(low) ? Math.round(low * 10) / 10 : null,
       feelsLikeMinEstimateC: finite(feelsLikeMin) ? Math.round(feelsLikeMin * 10) / 10 : null,

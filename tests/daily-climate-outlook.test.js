@@ -9,13 +9,14 @@ const history=(date,overrides={})=>({
  highMean:24,lowMean:17,feelsLikeMinMeanC:14,feelsLikeMaxMeanC:22,highStd:1.5,lowStd:1.2,...overrides
 });
 
-test("builds every daily estimate from D19 through D90 with explicit horizon bands",()=>{
+test("builds every daily estimate from D17 through D90 with explicit horizon bands",()=>{
  const rows=buildDailyClimateOutlook({},[history("2026-12-14")],today,90);
- assert.equal(rows.length,72);
- assert.equal(rows[0].date,"2026-12-14");
- assert.equal(rows[0].lead,19);
- assert.equal(rows[0].band,"D19–D46");
- assert.equal(rows[28].band,"D47–D60");
+ assert.equal(rows.length,74);
+ assert.equal(rows[0].date,"2026-12-12");
+ assert.equal(rows[0].lead,17);
+ assert.equal(rows[0].band,"D17–D18");
+ assert.equal(rows[2].band,"D19–D46");
+ assert.equal(rows[30].band,"D47–D60");
  assert.equal(rows.at(-1).lead,90);
  assert.equal(rows.at(-1).band,"D61–D90");
  assert.equal(rows[0].rainProbability,null);
@@ -26,7 +27,7 @@ test("seasonal weekly and monthly signals adjust historical rain frequency and t
   weekly:{time:["2026-12-14"],precipitation_efi:[0.9],precipitation_anomaly_gt0:[80],precipitation_mean:[9],precipitation_anomaly:[4],temperature_2m_anomaly:[1.2],wind_speed_10m_mean:[6]},
   monthly:{time:["2026-12-01"],precipitation_mean:[180],precipitation_anomaly:[30],temperature_2m_anomaly:[0.8],wind_speed_10m_mean:[4]}
  };
- const [row]=buildDailyClimateOutlook(payload,[history("2026-12-14")],today,90);
+ const row=buildDailyClimateOutlook(payload,[history("2026-12-14")],today,90).find(x=>x.date==="2026-12-14");
  assert.ok(row.rainChanceEstimate>30);
  assert.ok(row.highEstimate>24);
  assert.ok(row.lowEstimate>17);
@@ -48,20 +49,20 @@ test("missing historical observations stay missing instead of becoming dry weath
 });
 
 test("does not label estimated wet-day frequency as deterministic rain probability",()=>{
- const [row]=buildDailyClimateOutlook({},[history("2026-12-14")],today,90);
+ const row=buildDailyClimateOutlook({},[history("2026-12-14")],today,90).find(x=>x.date==="2026-12-14");
  assert.match(row.rainChanceLabel,/非逐日降雨機率/);
  assert.equal(row.rainProbability,null);
 });
 
 test("validates date and requested horizon",()=>{
  assert.throws(()=>buildDailyClimateOutlook({},[],"bad-date",90),/YYYY-MM-DD/);
- assert.throws(()=>buildDailyClimateOutlook({},[],today,16),/between 19 and 120/);
+ assert.throws(()=>buildDailyClimateOutlook({},[],today,16),/between 17 and 120/);
 });
 
 
 test("historical feels-like low and high ranges receive the seasonal temperature adjustment",()=>{
  const payload={weekly:{time:["2026-12-14"],temperature_2m_anomaly:[1.2]}};
- const [row]=buildDailyClimateOutlook(payload,[history("2026-12-14")],today,90);
+ const row=buildDailyClimateOutlook(payload,[history("2026-12-14")],today,90).find(x=>x.date==="2026-12-14");
  assert.equal(row.feelsLikeMinEstimateC,15.2);
  assert.equal(row.feelsLikeMaxEstimateC,23.2);
  assert.equal(row.fieldQuality.feelsLike,"historical-apparent-temperature-plus-seasonal-temperature-adjustment");
