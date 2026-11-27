@@ -1,0 +1,508 @@
+{
+  "schemaVersion": 1,
+  "updatedOn": "2026-11-27",
+  "countryCode": "JP",
+  "scope": "Structural pre-acceptance audit of Japan's 33 golf clusters and 78 course records. This does not certify current operation, facility identity or coordinate pin accuracy.",
+  "summary": {
+    "japanCourseRecords": 78,
+    "clusterCount": 33,
+    "representativeCount": 33,
+    "coordinatesWithDocumentedProvenance": 33,
+    "validatedRepresentatives": 0,
+    "newClusterWeatherEnabled": 0
+  },
+  "checks": {
+    "taxonomyAndRegistryCountMatch": true,
+    "everyClusterHasExactlyOneRepresentative": true,
+    "representativeCourseIdsUnique": true,
+    "allRepresentativeCoursesExist": true,
+    "allJapaneseCoursesHaveClusterMapping": true,
+    "allRepresentativeCoordsWithinJapanBounds": true,
+    "allRepresentativeCoordinatesHaveDocumentedProvenance": true,
+    "allRepresentativeWeatherDisabledInNewClusterLayer": true,
+    "allResearchCandidatesWeatherDisabled": true
+  },
+  "coordinateEvidenceTypes": {
+    "public-map-coordinate": 1,
+    "third_party_course_coordinate": 6,
+    "official-operator-google-maps-place-pin": 3,
+    "third_party_map_coordinate": 1,
+    "third-party-course-map-coordinate": 2,
+    "course-list-coordinate": 6,
+    "third_party_area_coordinate": 2,
+    "osm-map-coordinate": 1,
+    "third_party_booking_google_maps_place_coordinate": 1,
+    "official_operator_google_maps_place_pin": 1,
+    "official_operator_rounded_coordinate": 1,
+    "official_operator_google_maps_embed_center": 2,
+    "previously-researched-public-coordinate": 2,
+    "approximate-official-map-viewport-center-not-course-pin": 1,
+    "user_provided_google_maps_coordinate": 3
+  },
+  "manualReviewRequired": [
+    {
+      "clusterId": "JP-HKD-SAPPORO",
+      "courseId": "jp-north-country",
+      "courseName": "The North Country Golf Club",
+      "coordinateSource": "https://www.jgto.org/en/club/jgto",
+      "coordinateEvidenceStatus": "public-map-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-HKD-NISEKO",
+      "courseId": "jp-niseko-village-golf",
+      "courseName": "Niseko Village Golf Course",
+      "coordinateSource": "https://www.where2golf.com/japan/niseko-village-golf-course/",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-HKD-HAKODATE",
+      "courseId": "jp-hokkaido-country",
+      "courseName": "Hokkaido Country Club",
+      "coordinateSource": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
+      "coordinateEvidenceStatus": "official-operator-google-maps-place-pin",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-THK-AOMORI-AKITA",
+      "courseId": "jp-aomori-cc",
+      "courseName": "Aomori Country Club",
+      "coordinateSource": "https://mapcarta.com/29357608",
+      "coordinateEvidenceStatus": "third_party_map_coordinate",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-THK-IWATE-APPI",
+      "courseId": "jp-appi-kogen",
+      "courseName": "Appi Kogen Golf Club",
+      "coordinateSource": "https://elitegolfjapan.com/courses/appi-kogen-golf-club/",
+      "coordinateEvidenceStatus": "third-party-course-map-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-THK-MIYAGI-SENDAI",
+      "courseId": "jp-rifu",
+      "courseName": "Rifu Golf Club",
+      "coordinateSource": "https://fullgolf.com/en/golf-club/japan/miyagi/miyagi/rifu-golf-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-THK-FUKUSHIMA-YAMAGATA",
+      "courseId": "jp-adatara",
+      "courseName": "Adatara Country Club",
+      "coordinateSource": "https://arealog.net/20900/",
+      "coordinateEvidenceStatus": "third_party_area_coordinate",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KNT-TOKYO-KANAGAWA",
+      "courseId": "jp-hachioji-cc",
+      "courseName": "Hachioji Country Club",
+      "coordinateSource": "https://fullgolf.com/en/golf-club/japan/tokyo/hachioji/hachioji-country-club",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KNT-CHIBA-NARITA",
+      "courseId": "jp-narita-hills",
+      "courseName": "Narita Hills Country Club",
+      "coordinateSource": "https://mapcarta.com/W426264339",
+      "coordinateEvidenceStatus": "osm-map-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KNT-IBARAKI-TSUKUBA",
+      "courseId": "jp-31-country",
+      "courseName": "31 Country Club",
+      "coordinateSource": "https://booking.gora.golf.rakuten.co.jp/guide/map/c_id/80122/",
+      "coordinateEvidenceStatus": "third_party_booking_google_maps_place_coordinate",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KNT-TOCHIGI-NASU",
+      "courseId": "jp-seven-hundred",
+      "courseName": "Seven Hundred Club",
+      "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/tochigi/sakura/seven-hundred-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KNT-GUNMA-SAITAMA",
+      "courseId": "jp-iruma-country",
+      "courseName": "Iruma Country Club",
+      "coordinateSource": "https://www.resol-golf.jp/en/iruma/access/",
+      "coordinateEvidenceStatus": "official_operator_google_maps_place_pin",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-CHB-FUJI-YAMANASHI",
+      "courseId": "jp-kawaguchiko",
+      "courseName": "Kawaguchiko Country Club",
+      "coordinateSource": "https://kcc.tatemono-golf.com/access/",
+      "coordinateEvidenceStatus": "official-operator-google-maps-place-pin",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-CHB-SHIZUOKA-FUJI-IZU",
+      "courseId": "jp-dai-atami-kokusai",
+      "courseName": "Dai-Atami Kokusai Golf Club",
+      "coordinateSource": "https://www.resol-golf.jp/en/daiatami/",
+      "coordinateEvidenceStatus": "official_operator_rounded_coordinate",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-CHB-NAGANO-KARUIZAWA",
+      "courseId": "jp-eau-sol-vert-karuizawa",
+      "courseName": "Eau Sol Vert Karuizawa Club",
+      "coordinateSource": "https://esv-club.com/access/",
+      "coordinateEvidenceStatus": "official_operator_google_maps_embed_center",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-CHB-NAGOYA-GIFU",
+      "courseId": "jp-adonis",
+      "courseName": "Adonis Golf Club",
+      "coordinateSource": "https://adonis-gc.com/access.html",
+      "coordinateEvidenceStatus": "official_operator_google_maps_embed_center",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-CHB-MIE-ISE",
+      "courseId": "jp-tsu",
+      "courseName": "Tsu Country Club",
+      "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/mie/tsu/tsu-country-club",
+      "coordinateEvidenceStatus": "previously-researched-public-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-CHB-HOKURIKU",
+      "courseId": "jp-tokinodai",
+      "courseName": "Tokinodai Country Club",
+      "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/ishikawa/hakui/tokinodai-country-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KNS-OSAKA-HYOGO",
+      "courseId": "jp-arima-royal",
+      "courseName": "Arima Royal Golf Club",
+      "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/hyogo/kobe/arima-royal-golf-club",
+      "coordinateEvidenceStatus": "third-party-course-map-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KNS-KYOTO-SHIGA-NARA",
+      "courseId": "jp-kyoto-golf-club",
+      "courseName": "Kyoto Golf Club",
+      "coordinateSource": "https://fullgolf.com/en/golf-club/japan/kyoto/kyoto/kyoto-golf-club-kamigamo-course",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KNS-WAKAYAMA",
+      "courseId": "jp-leograd",
+      "courseName": "Leograd Golf Club",
+      "coordinateSource": "https://www.leograd.jp/access_map/",
+      "coordinateEvidenceStatus": "approximate-official-map-viewport-center-not-course-pin",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-CHG-SANYO",
+      "courseId": "jp-setouchi",
+      "courseName": "Setouchi Golf Resort",
+      "coordinateSource": "https://www.resol-golf.jp/en/setouchi/",
+      "coordinateEvidenceStatus": "official-operator-google-maps-place-pin",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-CHG-SANIN",
+      "courseId": "jp-green-park-daisen",
+      "courseName": "Green Park Daisen Golf Club",
+      "coordinateSource": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-SHK-KAGAWA-TOKUSHIMA",
+      "courseId": "jp-anan-cc",
+      "courseName": "Anan Country Club",
+      "coordinateSource": "https://fullgolf.com/en/golf-club/japan/tokushima/anan/anan-country-club",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-SHK-EHIME-KOCHI",
+      "courseId": "jp-tosa",
+      "courseName": "Tosa Country Club",
+      "coordinateSource": "https://www.parscape.com/location/golf_clubs/tosacountryclubkamikochi",
+      "coordinateEvidenceStatus": "previously-researched-public-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KYS-FUKUOKA-SAGA",
+      "courseId": "jp-the-classic",
+      "courseName": "The Classic Golf Club",
+      "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/fukuoka/kurate/classic-golf-club",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KYS-NAGASAKI-KUMAMOTO",
+      "courseId": "jp-aino-cc",
+      "courseName": "Aino Country Club",
+      "coordinateSource": "https://www.parscape.com/location/golf_clubs/ainocountryclubainonagasaki",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KYS-OITA",
+      "courseId": "jp-amagase-onsen",
+      "courseName": "Amagase Onsen Country Club",
+      "coordinateSource": "https://arealog.net/670179/",
+      "coordinateEvidenceStatus": "third_party_area_coordinate",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
+      "courseId": "jp-phoenix",
+      "courseName": "Phoenix Country Club",
+      "coordinateSource": "https://www.where2golf.com/japan/phoenix-country-club/",
+      "coordinateEvidenceStatus": "course-list-coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-OKI-MAIN-NORTH",
+      "courseId": "kise",
+      "courseName": "Kanehide Kise Country Club",
+      "coordinateSource": "User-provided Google Maps coordinate (2026-11-27)",
+      "coordinateEvidenceStatus": "user_provided_google_maps_coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-OKI-MAIN-CENTRAL",
+      "courseId": "pgm-okinawa",
+      "courseName": "PGM Golf Resort Okinawa",
+      "coordinateSource": "User-provided Google Maps coordinate (2026-11-27)",
+      "coordinateEvidenceStatus": "user_provided_google_maps_coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-OKI-MAIN-SOUTH",
+      "courseId": "southern-links",
+      "courseName": "The Southern Links Golf Club",
+      "coordinateSource": "User-provided Google Maps coordinate (2026-11-27)",
+      "coordinateEvidenceStatus": "user_provided_google_maps_coordinate",
+      "identityEvidenceStatus": "official_course_or_operator_page_recorded",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    },
+    {
+      "clusterId": "JP-OKI-OUTER-ISLANDS",
+      "courseId": "jp-ocean-links-miyako",
+      "courseName": "Ocean Links Miyakojima",
+      "coordinateSource": "https://www.fullgolf.com/en/golf-club/japan/okinawa/miyako/ocean-links-miyakojima",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "identityEvidenceStatus": "directory_listing_only",
+      "validationTasks": [
+        "confirm facility identity and current operation",
+        "confirm full address and municipality",
+        "verify representative coordinate against facility entrance or course centroid",
+        "check cluster fit and avoid duplicate facility/layout records"
+      ]
+    }
+  ],
+  "acceptanceDecision": "structural_checks_pass_manual_acceptance_still_required",
+  "nextGate": "Manual 33-cluster acceptance: confirm course identity, current operation/season, official address and municipality, cluster fit, and coordinate evidence quality. Keep all new cluster weatherEnabled flags false until acceptance."
+}
