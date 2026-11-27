@@ -326,5 +326,78 @@
       "forecastEnabled": false
     },
     "caveat": "Grid coordinates are expected nearest-neighbour points only; each downloaded file must pass returned-coordinate, variable, units and hourly-coverage inspection."
+  },
+  "qualityAssurance": {
+    "dailyAuditScript": "scripts/audit_japan_era5_daily.py",
+    "status": "implemented-not-run-no-local-era5-daily-files",
+    "reportPath": "data/processed/japan-era5-1991-2020-qa.json",
+    "annualCoverageThreshold": 0.9,
+    "metricRanges": {
+      "precipitationMm": [
+        0,
+        1000
+      ],
+      "temperatureMinC": [
+        -60,
+        55
+      ],
+      "temperatureMeanC": [
+        -60,
+        55
+      ],
+      "temperatureMaxC": [
+        -60,
+        55
+      ],
+      "relativeHumidityMeanPct": [
+        0,
+        100
+      ],
+      "windSpeedMeanMs": [
+        0,
+        100
+      ],
+      "windSpeedMaxMs": [
+        0,
+        120
+      ]
+    },
+    "rollingCalendarWindow": {
+      "days": 31,
+      "validDailyCompleteness": 0.9,
+      "minimumValidYears": 24,
+      "calendarDays": 365
+    },
+    "reportFields": [
+      "missingDates",
+      "annualCoverage",
+      "metricCoverage",
+      "monthlyCoverage",
+      "calendarWindowReadiness"
+    ],
+    "activationPolicy": {
+      "climateBaselineEnabled": false,
+      "forecastEnabled": false,
+      "decisionUseEligible": false
+    }
+  },
+  "independentObservationValidation": {
+    "script": "scripts/compare_jma_station_daily.py",
+    "status": "interface-implemented-awaiting-JMA-observation-file",
+    "sourceId": "JMA_DAILY_OBSERVATION",
+    "reportPath": "data/processed/japan-jma-crosscheck.json",
+    "matching": {
+      "stationAssignment": "one or more station candidates assigned to each regional ID",
+      "selection": "nearest supplied station to representative regional point",
+      "maximumDistanceKm": 75,
+      "minimumPairedRainDays": 365
+    },
+    "diagnostics": [
+      "rainfall MAE and bias",
+      "wet-day contingency at 1 mm",
+      "Tmin MAE and bias",
+      "Tmax MAE and bias"
+    ],
+    "note": "No automatic bias correction. Station history, relocation and homogeneity must be assessed independently."
   }
 }
