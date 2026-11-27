@@ -45,6 +45,17 @@ class RegionalClimatologyTests(unittest.TestCase):
         self.assertEqual(result["metrics"]["precipitationMm"]["validYears"], 24)
         self.assertEqual(result["metrics"]["precipitationMm"]["wetDayFrequencyPct"], 100.0)
 
+    def test_january_window_assigns_previous_december_to_following_season_year(self):
+        records = []
+        for season_year in range(1991, 2015):
+            day = date(season_year - 1, 12, 17)
+            while day <= date(season_year, 1, 16):
+                records.append(make_record(day, rain=3.0))
+                day += __import__("datetime").timedelta(days=1)
+        result = MODULE.summarize_window(records, date(2001, 1, 1), minimum_valid_years=24)
+        self.assertEqual(result["metrics"]["precipitationMm"]["status"], "usable")
+        self.assertEqual(result["metrics"]["precipitationMm"]["validYears"], 24)
+
     def test_missing_rain_is_not_dry_day_and_blocks_year(self):
         records = []
         for year in range(1991, 2015):
