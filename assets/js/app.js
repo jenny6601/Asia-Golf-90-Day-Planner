@@ -687,7 +687,7 @@ async function openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,hi
 async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords){
  const host=$("region-report");host.replaceChildren();
  const back=()=>renderRegionMonths(group.country,group.rootRegion,group.months||monthOptions(),group.courses,group.subregion||"");
- showClimateScreen(month+"月 "+group.region+"天氣分析",back);
+ showClimateScreen(month+"｜"+group.region+"天氣分析",back);
  const jumpNav=node("nav",undefined,"monthly-jump-nav");
  jumpNav.setAttribute("aria-label","月分析區塊快速跳轉");
  [
