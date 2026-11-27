@@ -34,8 +34,8 @@
     {
       "name": "reanalysis-era5-land-timeseries-sfc-windjvu91qh8.nc",
       "variables": [
-        "10m_v_component_of_wind",
-        "10m_u_component_of_wind"
+        "10m_u_component_of_wind",
+        "10m_v_component_of_wind"
       ],
       "timeCount": 8808,
       "duplicateTimestamps": false
@@ -66,14 +66,6 @@
       "min": -1.996522769331932e-08,
       "max": 0.00948610994964838
     },
-    "10m_v_component_of_wind": {
-      "file": "reanalysis-era5-land-timeseries-sfc-windjvu91qh8.nc",
-      "units": "m s**-1",
-      "missingFraction": 0.0,
-      "validValueCount": 8808,
-      "min": -5.3554840087890625,
-      "max": 9.323623657226562
-    },
     "10m_u_component_of_wind": {
       "file": "reanalysis-era5-land-timeseries-sfc-windjvu91qh8.nc",
       "units": "m s**-1",
@@ -81,6 +73,14 @@
       "validValueCount": 8808,
       "min": -4.5617828369140625,
       "max": 4.9093475341796875
+    },
+    "10m_v_component_of_wind": {
+      "file": "reanalysis-era5-land-timeseries-sfc-windjvu91qh8.nc",
+      "units": "m s**-1",
+      "missingFraction": 0.0,
+      "validValueCount": 8808,
+      "min": -5.3554840087890625,
+      "max": 9.323623657226562
     }
   },
   "checks": {
