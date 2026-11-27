@@ -26,9 +26,9 @@
     {
       "countryCode": "CN",
       "agency": "China Meteorological Administration (CMA)",
-      "status": "discovery-required",
-      "portal": null,
-      "notes": "Official historical station archive endpoint, record length, access method and licensing need confirmation."
+      "status": "official-open-data-catalog-found-access-terms-and-station-matching-pending",
+      "portal": "https://www.cma.gov.cn/zfxxgk/gknr/wjgk/qtwj/202302/P020230224377864419023.pdf",
+      "notes": "CMA open data catalogue lists national ground basic observations and a 1991-2020 ground climate normal dataset; historical international exchange station data also listed. Need identify the correct access portal, station inventory, download terms and usable elements before matching."
     },
     {
       "countryCode": "VN",
@@ -40,16 +40,16 @@
     {
       "countryCode": "TH",
       "agency": "Thai Meteorological Department (TMD)",
-      "status": "discovery-required",
-      "portal": null,
-      "notes": "Official historical station archive endpoint, record length, access method and licensing need confirmation."
+      "status": "official-service-and-data-portal-found-historical-statistics-paid-station-matching-pending",
+      "portal": "https://www.tmd.go.th/service/tmdData",
+      "notes": "TMD states about 1,200 stations and 127 WMO-standard observing stations; historical climate statistics require paid service. Its data portal lists station metadata, daily/monthly rainfall statistics and observations. Need confirm downloadable historical station data, terms and record lengths."
     },
     {
       "countryCode": "MY",
       "agency": "Malaysian Meteorological Department (MetMalaysia)",
-      "status": "discovery-required",
-      "portal": null,
-      "notes": "Official historical station archive endpoint, record length, access method and licensing need confirmation."
+      "status": "official-data-request-portal-found-historical-climate-data-paid",
+      "portal": "https://mymetdata.met.gov.my/faq",
+      "notes": "MetMalaysia says hourly, daily and monthly climate data, including rain, temperature, humidity and wind, can be requested via myMETdata; supply is fee-based. Need request station inventory and 1991-2020 availability."
     },
     {
       "countryCode": "SG",
@@ -79,5 +79,15 @@
     "Match candidate stations to 80 regional points using distance, elevation and coastal/mountain exposure.",
     "Select overlapping 1991-2020 observation records by element and publish coverage before comparison.",
     "Run independent ERA5-Land versus station diagnostics; do not apply bias correction before validation design approval."
-  ]
+  ],
+  "lastReviewed": "2026-11-27",
+  "discoverySummary": {
+    "officialCountrySourcePathFound": 7,
+    "officialCountrySourcePathPending": 1,
+    "globalFallbackFound": 1,
+    "stationInventoriesDownloaded": 0,
+    "stationMatches": 0,
+    "observationRecordsDownloaded": 0,
+    "interpretation": "Official source/service paths are identified for seven countries, but data availability, licensing and station-level 1991-2020 coverage still require station inventory and access checks. China is a catalogue reference rather than a verified programmatic endpoint."
+  }
 }
