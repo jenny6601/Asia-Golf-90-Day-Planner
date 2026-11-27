@@ -590,8 +590,8 @@
             "latitude": 34.3061999,
             "longitude": 132.864325,
             "timezone": "Asia/Tokyo",
-            "coordinateStatus": "official-google-maps-place-coordinate",
-            "coordinateSourceUrl": "https://maps.app.goo.gl/HkTraVHtr3VWRQPg9"
+            "coordinateStatus": "official-operator-google-maps-place-pin",
+            "coordinateSourceUrl": "https://www.resol-golf.jp/en/setouchi/"
           },
           "coordinateReviewStatus": "official-map-place-coordinate-found-course-identity-confirmed",
           "candidateCourseId": "jp-setouchi",
@@ -605,10 +605,21 @@
           },
           "coordinateQuality": {
             "grade": "A",
-            "label": "官方 Google Maps 地點連結",
-            "reviewStatus": "official-place-reference-found-pin-to-course-address-crosscheck-pending",
+            "label": "官方營運商 Google Maps 地點圖釘",
+            "reviewStatus": "official-operator-google-maps-place-pin-confirmed",
             "weatherPointEligible": false,
-            "reason": "官方球場網站提供 Google Maps 地點連結；仍需確認座標精確落在球場會館或球場範圍內。"
+            "reason": "營運商官方網站 Google Map 連結解析出明確地點圖釘，座標與原候選點完全一致；仍需獨立確認點位是否為氣象代表點。",
+            "officialMapReference": {
+              "type": "official-google-maps-place-pin",
+              "url": "https://www.resol-golf.jp/en/setouchi/",
+              "latitude": 34.3061999,
+              "longitude": 132.864325,
+              "coordinateType": "place-pin-coordinate",
+              "googleMapsPlaceId": "0x355042079326d21b:0x3526427e5fc188a6",
+              "googleMapsResolvedUrl": "https://www.google.com/maps/place/Setouchi+Golf+Resort/@34.3062,132.864325,16z/",
+              "crossCheckResult": "official-operator-google-map-place-pin-matches-existing-candidate-coordinate-exactly",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -640,10 +651,23 @@
           },
           "coordinateQuality": {
             "grade": "B",
-            "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "label": "官方旅遊地圖中心，非球場圖釘",
+            "reviewStatus": "official-tourism-map-center-nearby;pin-level-confirmation-pending",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "高知官方旅遊網站的 Google Maps 連結中心與候選點相差約 10 公尺，但縮放層級 15 的中心點仍非球場圖釘，不能據此升級。",
+            "officialMapReference": {
+              "type": "official-tourism-google-maps-viewport-center",
+              "url": "https://visitkochijapan.com/en/activities/10466",
+              "latitude": 33.5212123,
+              "longitude": 133.7758646,
+              "coordinateType": "map-viewport-center-not-pin",
+              "googleMapsUrl": "https://www.google.co.jp/maps/@33.5212123,133.7758646,15z",
+              "distanceFromCandidateKm": 0.01,
+              "zoom": 15,
+              "crossCheckResult": "official-tourism-map-opens-at-zoom-15-center-about-10m-from-existing-course-list-coordinate;center-not-pin",
+              "mapCode": "335 363 132*07",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -713,9 +737,25 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "reviewStatus": "JNTO-official-course-address-and-layout-confirmed;pin-pending",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "JNTO 官方球場資料確認地址及 27 洞三球道配置，但未取得可核實的官方圖釘座標。",
+            "officialMapReference": {
+              "type": "official-tourism-course-address-only",
+              "url": "https://www.japan.travel/en/sports/golf/courses/phoenix-country-club/",
+              "officialAddress": "3083 Aza-Hamayama, Oaza-Shioji, Miyazaki-shi, Miyazaki-ken, Japan",
+              "courseFacts": {
+                "holes": 27,
+                "threeCourses": [
+                  "Takachiho",
+                  "Sumiyoshi",
+                  "Nichinan"
+                ]
+              },
+              "coordinateType": "no-official-pin-extracted",
+              "crossCheckResult": "JNTO course profile confirms address and course configuration; official pin coordinate not extracted",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -756,7 +796,7 @@
         "coordinateQualityB": 11,
         "coordinateQualityC": 1,
         "weatherPointEligible": 0,
-        "officialMapCrossChecks": 11
+        "officialMapCrossChecks": 14
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
