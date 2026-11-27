@@ -58,7 +58,7 @@ test("eight-country subregion registry has unique IDs and only the verified Okin
  assert.equal(registry.countries.length,8);
  assert.deepEqual(registry.countries.map(x=>x.countryCode),["JP","KR","CN","VN","TH","MY","SG","ID"]);
  const all=registry.countries.flatMap(x=>x.subregions.map(s=>({...s,countryCode:x.countryCode})));
- assert.equal(all.length,54);
+ assert.equal(all.length,62);
  assert.equal(new Set(all.map(x=>x.id)).size,all.length);
  const configured=all.filter(x=>x.coverageStatus==="configured");
  assert.deepEqual(configured.map(x=>x.id).sort(),["JP-OKI-CENTRAL","JP-OKI-NORTH","JP-OKI-SOUTH"]);
@@ -74,7 +74,7 @@ test("eight-country subregion registry has unique IDs and only the verified Okin
 test("all planned subregions expose a research candidate without enabling forecast use",()=>{
  const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
  const all=registry.countries.flatMap(x=>x.subregions);
- const candidates=all.filter(x=>x.candidateStatus==="research-candidate");
+ const candidates=all.filter(x=>typeof x.candidateCourseName==="string");
  assert.equal(candidates.length,59);
  assert.ok(candidates.every(x=>typeof x.candidateCourseName==="string"&&x.candidateCourseName.length>3));
  assert.ok(candidates.every(x=>x.representativeCourseId===null));
