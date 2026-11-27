@@ -7,7 +7,7 @@ import {buildDailyClimateOutlook} from "./daily-climate-outlook.js";
 import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
-import {buildFiveDayWindows,pickTopNonOverlappingWindows,pickRecommendedFiveDayWindows} from "./recommendation-windows.js";
+import {buildFiveDayWindows,pickRecommendedFiveDayWindows} from "./recommendation-windows.js";
 import {renderTaiwanPwaHourly} from "./taiwan-hourly-renderer.js";
 const $=id=>document.getElementById(id),S={};
 let climateBackAction=null,departureFormReturnAction=null,exitConfirmed=false,exitDialogOpen=false;
