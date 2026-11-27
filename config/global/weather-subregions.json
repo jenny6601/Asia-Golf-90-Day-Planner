@@ -55,7 +55,14 @@
           "candidateCourseName": "Appi Kogen Golf Club",
           "candidateRationale": "岩手縣安比高原球場，作為北東北高原氣候帶候選。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 40.01249,
+            "longitude": 141.00652,
+            "coordinateStatus": "third-party-course-map-coordinate",
+            "coordinateSourceUrl": "https://elitegolfjapan.com/courses/appi-kogen-golf-club/"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-THK-SOUTH",
@@ -181,7 +188,14 @@
           "candidateCourseName": "Arima Royal Golf Club",
           "candidateRationale": "兵庫縣球場，作為大阪、神戶與京都西側高爾夫活動圈候選。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 34.826383,
+            "longitude": 135.123729,
+            "coordinateStatus": "third-party-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hyogo/kobe/arima-royal-golf-club"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-KNS-KII",
@@ -193,7 +207,14 @@
           "candidateCourseName": "Leograd Golf Club",
           "candidateRationale": "和歌山縣球場，補足紀伊半島南側海岸氣候帶。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "address-confirmed-coordinate-approximate",
+          "candidateCoordinates": {
+            "latitude": 33.9232299832,
+            "longitude": 135.2723593476,
+            "coordinateStatus": "approximate-official-map-viewport-center-not-course-pin",
+            "coordinateSourceUrl": "https://www.leograd.jp/access_map/"
+          },
+          "coordinateReviewStatus": "needs-exact-course-pin-verification"
         },
         {
           "id": "JP-CHG-SANIN",
@@ -224,7 +245,14 @@
           "candidateCourseName": "Setouchi Golf Resort",
           "candidateRationale": "廣島縣瀨戶內海側球場，代表山陽與瀨戶內海沿岸。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 34.3061999,
+            "longitude": 132.864325,
+            "coordinateStatus": "third-party-place-coordinate",
+            "coordinateSourceUrl": "https://steller.co/p/setouchi-golf-resort-3D4ngLMGn8HLJK2KMg2ACnt"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-SHK-01",
@@ -311,8 +339,9 @@
       "coordinateResearchSummary": {
         "totalSubregions": 19,
         "mainlandCandidates": 16,
-        "coordinateFound": 12,
-        "stillNeedsCoordinate": 4,
+        "coordinateRecords": 16,
+        "exactOrThirdPartyCoordinates": 15,
+        "approximateOnly": 1,
         "forecastEnabled": false
       }
     },
