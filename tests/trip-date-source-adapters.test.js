@@ -80,11 +80,15 @@ test("uses exactly one representative course per region; other same-region cours
     course:{id:courseId},
     days:[{date:addDays(asOf,60),rainFrequency:30,rainMean:2,rainSampleYears:10}]
   }));
-  const grouped=groupCourseHistoricalNormals(results);\n  assert.deepEqual(grouped.north[0].courseNormals.map(x=>x.courseId),["kise"]);\n  assert.deepEqual(grouped.central[0].courseNormals.map(x=>x.courseId),["pgm-okinawa"]);\n  assert.deepEqual(grouped.south[0].courseNormals.map(x=>x.courseId),["southern-links"]);
+  const grouped=groupCourseHistoricalNormals(results);
+  assert.deepEqual(grouped.north[0].courseNormals.map(x=>x.courseId),["kise"]);
+  assert.deepEqual(grouped.central[0].courseNormals.map(x=>x.courseId),["pgm-okinawa"]);
+  assert.deepEqual(grouped.south[0].courseNormals.map(x=>x.courseId),["southern-links"]);
   assert.equal(grouped.north[0].courseNormals.length,3);
   assert.equal(grouped.central[0].courseNormals.length,1);
   assert.equal(grouped.south[0].courseNormals.length,2);
   const input=buildTripDateEngineInput({asOf,forecastZones,longRangePoints,historicalCourseResults:results});
-  assert.equal(input.days[59].regions.north.historical.validCourseCount,1);\n  assert.equal(input.days[59].regions.north.historical.representativeCourseId,"kise");
+  assert.equal(input.days[59].regions.north.historical.validCourseCount,1);
+  assert.equal(input.days[59].regions.north.historical.representativeCourseId,"kise");
   assert.equal(input.days[59].regions.north.historical.coverage,1);
 });
