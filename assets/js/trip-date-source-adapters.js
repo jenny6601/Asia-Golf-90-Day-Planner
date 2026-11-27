@@ -8,7 +8,11 @@
  * [{fetchedAt,regions:{north:[{date,riskScore}],central:[...],south:[...]}}]
  */
 const REGIONS = ["north","central","south"];
-const REPRESENTATIVE_COURSE_BY_REGION = Object.freeze({\n  north:"kise",\n  central:"pgm-okinawa",\n  south:"southern-links"\n});
+const REPRESENTATIVE_COURSE_BY_REGION = Object.freeze({
+  north:"kise",
+  central:"pgm-okinawa",
+  south:"southern-links"
+});
 const finite = value => typeof value === "number" && Number.isFinite(value);
 const clamp = (value,min=0,max=100) => Math.max(min,Math.min(max,value));
 const addDays = (date,n) => new Date(Date.parse(date+"T00:00:00Z")+n*86400000).toISOString().slice(0,10);
