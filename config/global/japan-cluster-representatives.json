@@ -735,7 +735,10 @@
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSource": "User-provided Google Maps coordinate (2026-11-27)",
+      "coordinateEvidenceStatus": "user_provided_google_maps_coordinate",
+      "coordinateEvidence": "Coordinate was explicitly supplied by the user from Google Maps in the earlier course-coordinate verification workflow; official operator URL retained separately for facility identity."
     },
     {
       "clusterId": "JP-OKI-MAIN-CENTRAL",
@@ -756,7 +759,10 @@
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSource": "User-provided Google Maps coordinate (2026-11-27)",
+      "coordinateEvidenceStatus": "user_provided_google_maps_coordinate",
+      "coordinateEvidence": "Coordinate was explicitly supplied by the user from Google Maps in the earlier course-coordinate verification workflow; official operator URL retained separately for facility identity."
     },
     {
       "clusterId": "JP-OKI-MAIN-SOUTH",
@@ -777,7 +783,10 @@
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSource": "User-provided Google Maps coordinate (2026-11-27)",
+      "coordinateEvidenceStatus": "user_provided_google_maps_coordinate",
+      "coordinateEvidence": "Coordinate was explicitly supplied by the user from Google Maps in the earlier course-coordinate verification workflow; official operator URL retained separately for facility identity."
     },
     {
       "clusterId": "JP-OKI-OUTER-ISLANDS",
