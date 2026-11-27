@@ -1,0 +1,44 @@
+name: Okinawa Trip Date Live Data Integration
+
+'on':
+  push:
+    branches:
+      - asia-eight-country-shared-engine
+    paths:
+      - "scripts/run-trip-date-recommendation-validation.mjs"
+      - "assets/js/trip-date-recommendation-engine.js"
+      - "assets/js/trip-date-source-adapters.js"
+      - "assets/js/weather-api.js"
+      - "assets/js/long-range-api.js"
+      - "config/global/courses.json"
+      - ".github/workflows/trip-date-live-integration.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: okinawa-trip-date-live-integration
+  cancel-in-progress: true
+
+jobs:
+  live-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Retrieve live forecast, EC46/SEAS5 and ERA5 history and rank 5D4N windows
+        run: node scripts/run-trip-date-recommendation-validation.mjs
+      - name: Upload recommendation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-trip-date-recommendations
+          path: |
+            artifacts/trip-date-recommendations/recommendations.json
+            artifacts/trip-date-recommendations/recommendations.md
+          if-no-files-found: warn
+          retention-days: 30
