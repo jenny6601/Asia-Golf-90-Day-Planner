@@ -3,26 +3,33 @@
   "generatedOn": "2026-11-27",
   "countryCode": "JP",
   "countryName": "Japan",
-  "purpose": "One representative course per weather subregion; GPS evidence gate before regional forecast activation.",
+  "purpose": "Regional climate representative points for 16 Japan mainland subregions; exact course-pin precision is not required.",
   "policy": {
     "representativeCountPerSubregion": 1,
-    "forecastActivationRequires": [
-      "official course place pin or independently verified equivalent",
-      "pin spatially checked against course footprint",
-      "coordinates and timezone validated",
-      "source and verification date recorded"
+    "coordinateUse": "regional-climate-representative-point",
+    "precisionRequirement": "Coordinates need only locate the representative golf course or its immediate vicinity well enough to represent the subregion climate; exact property boundary, clubhouse pin, or fairway-level precision is not required.",
+    "qualityGradeMeaning": "A/B/C describes source traceability and evidence quality only; it is not a regional climate eligibility gate.",
+    "viewportCenterPolicy": "A map viewport center may be retained as an approximate regional representative coordinate when it is near the representative course; do not describe it as an exact course pin.",
+    "regionalClimateActivationRequires": [
+      "representative course identity and subregion assignment confirmed",
+      "coordinate is in or near the representative course locality and suitable for the subregion climate",
+      "timezone validated",
+      "coordinate source and caveats recorded"
     ],
-    "mapViewportCenterIsNotCoursePin": true,
-    "addressOrCourseIdentityConfirmationIsNotGpsConfirmation": true,
-    "gradeIsNotActivationAuthorization": true,
-    "allForecastPointsRemainDisabled": true
+    "forecastActivationRequires": [
+      "regional climate point registered in the active course/subregion catalog",
+      "weather data source coverage and response validated",
+      "regional forecast output and uncertainty labels validated"
+    ],
+    "allRegionalPointsRemainForecastDisabled": true
   },
   "summary": {
     "mainlandSubregions": 16,
+    "regionalClimateEligible": 16,
     "officialPlacePins": 3,
     "officialMapViewportCenters": 8,
     "officialAccessOrAddressReferences": 5,
-    "legacyGrades": {
+    "provenanceGrades": {
       "A": 3,
       "B": 12,
       "C": 1
@@ -43,7 +50,7 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-map-viewport-center-only",
-      "decision": "not-a-course-pin",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-embed-center",
       "officialReferenceUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2926.6358546078563!2d141.6011047!3d42.8171806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f75272b7ab3191d:0x709047ead59e4467!2sThe+-+North+Country+Golf+Club!5e0!3m2!1sen!2sjp!4v1708072517450!5m2!1sen!2sjp",
       "officialReferenceCoordinate": {
@@ -52,8 +59,10 @@
         "coordinateType": "map-viewport-center-not-pin"
       },
       "offsetFromCandidateKm": 0.532,
-      "weatherPointEligible": false,
-      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-HKD-SOUTH",
@@ -68,7 +77,7 @@
       },
       "legacyGrade": "A",
       "evidenceClass": "official-place-pin",
-      "decision": "pin-identified-boundary-check-required",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-place-pin",
       "officialReferenceUrl": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
       "officialReferenceCoordinate": {
@@ -77,8 +86,10 @@
         "coordinateType": "place-pin-coordinate"
       },
       "offsetFromCandidateKm": 0.583,
-      "weatherPointEligible": false,
-      "nextAction": "Verify the place pin against satellite imagery and course property footprint; retain disabled status until boundary check"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-THK-NORTH",
@@ -93,13 +104,15 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-address-or-map-reference-only",
-      "decision": "coordinate-not-independently-confirmed",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-operator-address-only",
       "officialReferenceUrl": "https://www.appi.co.jp/golf-club/agc-appi-kogen-golf-club/",
       "officialReferenceCoordinate": null,
       "offsetFromCandidateKm": null,
-      "weatherPointEligible": false,
-      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-THK-SOUTH",
@@ -114,13 +127,15 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-address-or-map-reference-only",
-      "decision": "coordinate-not-independently-confirmed",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-operator-address-only",
       "officialReferenceUrl": "https://www.pacificgolf.co.jp/rifu/information.asp",
       "officialReferenceCoordinate": null,
       "offsetFromCandidateKm": null,
-      "weatherPointEligible": false,
-      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-KNT-NORTH",
@@ -135,7 +150,7 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-map-viewport-center-only",
-      "decision": "not-a-course-pin",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-embed-center",
       "officialReferenceUrl": "https://www.700c.jp/access/",
       "officialReferenceCoordinate": {
@@ -144,8 +159,10 @@
         "coordinateType": "map-viewport-center-not-pin"
       },
       "offsetFromCandidateKm": 0.001,
-      "weatherPointEligible": false,
-      "nextAction": "Official map center matches the public candidate coordinate, but obtain the actual course place pin before boundary validation"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-KNT-SOUTH",
@@ -160,7 +177,7 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-map-viewport-center-only",
-      "decision": "not-a-course-pin",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-embed-center",
       "officialReferenceUrl": "https://narita-hills.co.jp/access/",
       "officialReferenceCoordinate": {
@@ -169,8 +186,10 @@
         "coordinateType": "map-viewport-center-not-pin"
       },
       "offsetFromCandidateKm": 0.122,
-      "weatherPointEligible": false,
-      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-CHB-KOSHIN",
@@ -185,7 +204,7 @@
       },
       "legacyGrade": "A",
       "evidenceClass": "official-place-pin",
-      "decision": "pin-identified-boundary-check-required",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-place-pin",
       "officialReferenceUrl": "https://kcc.tatemono-golf.com/access/",
       "officialReferenceCoordinate": {
@@ -194,8 +213,10 @@
         "coordinateType": "place-pin-coordinate"
       },
       "offsetFromCandidateKm": 0.127,
-      "weatherPointEligible": false,
-      "nextAction": "Verify the place pin against satellite imagery and course property footprint; retain disabled status until boundary check"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-CHB-TOKAI",
@@ -210,13 +231,15 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-address-or-map-reference-only",
-      "decision": "coordinate-not-independently-confirmed",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-operator-access-page-reference",
       "officialReferenceUrl": "https://tsu.co.jp/pages/access",
       "officialReferenceCoordinate": null,
       "offsetFromCandidateKm": null,
-      "weatherPointEligible": false,
-      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-CHB-HOKURIKU",
@@ -231,7 +254,7 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-map-viewport-center-only",
-      "decision": "not-a-course-pin",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-embed-center",
       "officialReferenceUrl": "https://tokinodai.co.jp/access/",
       "officialReferenceCoordinate": {
@@ -240,8 +263,10 @@
         "coordinateType": "map-viewport-center-not-pin"
       },
       "offsetFromCandidateKm": 0.751,
-      "weatherPointEligible": false,
-      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-KNS-CENTRAL",
@@ -256,7 +281,7 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-map-viewport-center-only",
-      "decision": "not-a-course-pin",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-embed-center",
       "officialReferenceUrl": "https://arima-royal.com/access",
       "officialReferenceCoordinate": {
@@ -265,8 +290,10 @@
         "coordinateType": "map-viewport-center-not-pin"
       },
       "offsetFromCandidateKm": 1.724,
-      "weatherPointEligible": false,
-      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-KNS-KII",
@@ -281,7 +308,7 @@
       },
       "legacyGrade": "C",
       "evidenceClass": "official-map-viewport-center-only",
-      "decision": "not-a-course-pin",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-embed-center",
       "officialReferenceUrl": "https://www.leograd.jp/access_map/",
       "officialReferenceCoordinate": {
@@ -290,8 +317,10 @@
         "coordinateType": "map-viewport-center-not-pin"
       },
       "offsetFromCandidateKm": null,
-      "weatherPointEligible": false,
-      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-CHG-SANIN",
@@ -306,13 +335,15 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-address-or-map-reference-only",
-      "decision": "coordinate-not-independently-confirmed",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-operator-access-page-with-user-created-google-my-map",
       "officialReferenceUrl": "https://banryu-golf.sakura.ne.jp/gpdaisen/access/index.html",
       "officialReferenceCoordinate": null,
       "offsetFromCandidateKm": null,
-      "weatherPointEligible": false,
-      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-CHG-SANYO",
@@ -327,7 +358,7 @@
       },
       "legacyGrade": "A",
       "evidenceClass": "official-place-pin",
-      "decision": "pin-identified-boundary-check-required",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-place-pin",
       "officialReferenceUrl": "https://www.resol-golf.jp/en/setouchi/",
       "officialReferenceCoordinate": {
@@ -336,8 +367,10 @@
         "coordinateType": "place-pin-coordinate"
       },
       "offsetFromCandidateKm": null,
-      "weatherPointEligible": false,
-      "nextAction": "Verify the place pin against satellite imagery and course property footprint; retain disabled status until boundary check"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-SHK-01",
@@ -352,7 +385,7 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-map-viewport-center-only",
-      "decision": "not-a-course-pin",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-tourism-google-maps-viewport-center",
       "officialReferenceUrl": "https://visitkochijapan.com/en/activities/10466",
       "officialReferenceCoordinate": {
@@ -361,8 +394,10 @@
         "coordinateType": "map-viewport-center-not-pin"
       },
       "offsetFromCandidateKm": 0.01,
-      "weatherPointEligible": false,
-      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-KYS-NORTH",
@@ -377,7 +412,7 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-map-viewport-center-only",
-      "decision": "not-a-course-pin",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-google-maps-embed-center",
       "officialReferenceUrl": "https://cm-g.co.jp/the-classic/access/",
       "officialReferenceCoordinate": {
@@ -386,8 +421,10 @@
         "coordinateType": "map-viewport-center-not-pin"
       },
       "offsetFromCandidateKm": 0.202,
-      "weatherPointEligible": false,
-      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     },
     {
       "subregionId": "JP-KYS-SOUTH",
@@ -402,13 +439,15 @@
       },
       "legacyGrade": "B",
       "evidenceClass": "official-address-or-map-reference-only",
-      "decision": "coordinate-not-independently-confirmed",
+      "decision": "accepted-for-regional-climate-assessment",
       "officialReferenceType": "official-tourism-course-address-only",
       "officialReferenceUrl": "https://www.japan.travel/en/sports/golf/courses/phoenix-country-club/",
       "officialReferenceCoordinate": null,
       "offsetFromCandidateKm": null,
-      "weatherPointEligible": false,
-      "nextAction": "Obtain an operator-issued Google Maps place link or a verifiable course pin; third-party candidate remains provisional"
+      "weatherPointEligible": true,
+      "nextAction": "Proceed to regional weather-source coverage, historical climate baseline, and forecast validation; no further exact course-pin search required",
+      "regionalClimateEligible": true,
+      "coordinatePurpose": "regional-climate-representative-point"
     }
   ]
 }
