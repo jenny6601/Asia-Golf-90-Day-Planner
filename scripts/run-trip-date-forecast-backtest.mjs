@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import {scoreForecastSamples} from "../assets/js/trip-date-forecast-backtest.js";
-import {scoreRiskRankingSamples} from "../assets/js/trip-date-ranking-verification.js";
+import {scoreRiskRankingSamples,scoreTripWindowRankingSamples} from "../assets/js/trip-date-ranking-verification.js";
+import {TRIP_DATE_CANDIDATE_MODELS} from "../assets/js/trip-date-candidate-models.js";
 import {recommendGolfTripDates} from "../assets/js/trip-date-recommendation-engine.js";
 import {buildDailyClimatology,compareForecastToClimatology} from "../assets/js/trip-date-climatology-baseline.js";
 import {summarizeSeasonalArchive} from "../assets/js/trip-date-seasonal-backtest.js";
@@ -81,32 +82,33 @@ for(const [region,point] of Object.entries(regions)){
     climatologyByRegion[region]=buildDailyClimatology(daily);
   }catch(error){climatologyErrors[region]=error.message}
 }
-// Long-horizon out-of-sample ranking verification. Each archived issue date is
-// paired with ERA5 only after its target date has matured. Multiple issue dates
-// for one valid date are retained because they represent different lead times.
-const rankingTargets=[];
+// Long-horizon out-of-sample ranking verification. Candidate models run in shadow
+// mode on identical archived snapshots; production V1 weights are never mutated.
+const rankingTargets=[],windowPredictions=[];
 for(const snapshot of snapshots){
   const issueDate=snapshot.localDate;
   if(typeof issueDate!=="string"||!Array.isArray(snapshot.normalizedDailySignals))continue;
-  let compositeByDate=new Map();
-  try{
-    const assessed=recommendGolfTripDates({asOf:issueDate,horizonDays:90,days:snapshot.normalizedDailySignals},{horizonDays:90,alternateCount:0});
-    compositeByDate=new Map(assessed.dailyAssessment.map(x=>[x.date,x]));
-  }catch(error){console.warn("Skipping invalid normalized signal snapshot",issueDate,error.message);continue;}
-  for(const day of snapshot.normalizedDailySignals){
-    const leadDays=dayNumber(day.date)-dayNumber(issueDate);
-    if(day.date>=today||leadDays<1||leadDays>90)continue;
-    for(const region of Object.keys(regions)){
-      const signals=day.regions?.[region]||{};
-      for(const source of ["forecast","ec46","seas5","historical"]){
-        const signal=signals[source];
-        if(typeof signal?.riskScore==="number"&&Number.isFinite(signal.riskScore))
-          rankingTargets.push({issueDate,targetDate:day.date,leadDays,region,source,riskScore:signal.riskScore});
+  for(const [modelId,model] of Object.entries(TRIP_DATE_CANDIDATE_MODELS)){
+    try{
+      const assessed=recommendGolfTripDates(
+        {asOf:issueDate,horizonDays:90,days:snapshot.normalizedDailySignals},
+        {horizonDays:90,alternateCount:0,sourceWeights:model.sourceWeights,includeAllWindows:true}
+      );
+      const compositeByDate=new Map(assessed.dailyAssessment.map(x=>[x.date,x]));
+      for(const day of snapshot.normalizedDailySignals){
+        const leadDays=dayNumber(day.date)-dayNumber(issueDate);
+        if(day.date>=today||leadDays<1||leadDays>90)continue;
+        for(const region of Object.keys(regions)){
+          const composite=compositeByDate.get(day.date)?.regions?.find(x=>x.region===region);
+          if(typeof composite?.riskScore==="number"&&Number.isFinite(composite.riskScore))
+            rankingTargets.push({issueDate,targetDate:day.date,leadDays,region,source:"composite-"+modelId,riskScore:composite.riskScore});
+        }
       }
-      const composite=compositeByDate.get(day.date)?.regions?.find(x=>x.region===region);
-      if(typeof composite?.riskScore==="number"&&Number.isFinite(composite.riskScore))
-        rankingTargets.push({issueDate,targetDate:day.date,leadDays,region,source:"composite",riskScore:composite.riskScore});
-    }
+      for(const window of assessed.allWindows||[]){
+        windowPredictions.push({issueDate,model:modelId,startDate:window.startDate,endDate:window.endDate,predictedScore:window.score,
+          golfDates:window.recommendedGolfDates.map(x=>x.date)});
+      }
+    }catch(error){console.warn("Skipping candidate model snapshot",issueDate,modelId,error.message);}
   }
 }
 const rankingObservations={north:{},central:{},south:{}};
@@ -133,6 +135,19 @@ const rankingSamples=rankingTargets.flatMap(target=>{
     ?[{...target,observedRainMm:observed}]:[];
 });
 const rankingVerification=scoreRiskRankingSamples(rankingSamples);
+const tripWindowSamples=[];
+for(const prediction of windowPredictions){
+  const values=prediction.golfDates.flatMap(date=>Object.keys(regions).map(region=>rankingObservations[region]?.[date]));
+  if(values.length===9&&values.every(value=>typeof value==="number"&&Number.isFinite(value)&&value>=0)){
+    tripWindowSamples.push({model:prediction.model,predictedScore:prediction.predictedScore,
+      observedGolfRainMm:values.reduce((sum,value)=>sum+value,0)/values.length,
+      issueDate:prediction.issueDate,startDate:prediction.startDate});
+  }
+}
+const tripWindowRanking=scoreTripWindowRankingSamples(tripWindowSamples);
+const tripWindowSummary={candidateWindows:windowPredictions.length,completeObservedWindows:tripWindowSamples.length,
+  excludedIncompleteWindows:windowPredictions.length-tripWindowSamples.length};
+
 const rankingArchiveSummary={
   normalizedSnapshots:snapshots.filter(x=>Array.isArray(x.normalizedDailySignals)).length,
   maturedSignalPairs:rankingSamples.length,
@@ -210,7 +225,7 @@ const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
   method:"Short forecasts: daily probability/amount versus ERA5. EC46/SEAS5: archived weekly/monthly precipitation means versus the sum of ERA5 daily precipitation over the exact same valid period.",
-  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
+  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,tripWindowSummary,tripWindowRanking,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
   caveats:[
     "ERA5 reanalysis is a model-reference dataset, not an independent rain-gauge observation.",
@@ -269,6 +284,14 @@ const lines=[
   "- Excluded immature or unavailable observations: "+rankingArchiveSummary.excludedUnmaturedOrMissingObservations,
   "- Metric: AUC; higher is better. Risk scores are not probabilities.",
   ...Object.entries(rankingVerification.groups).filter(([key])=>key.split(".").length===3).map(([key,x])=>"- "+key+": n="+x.sampleCount+", wet="+x.wetDays+", dry="+x.dryDays+", AUC="+(x.auc??"資料不足")+", gate="+(x.ready?"ready":"locked")),
+  "",
+  "## Candidate model 5D4N window ranking (shadow comparison)",
+  "- Candidate windows generated: "+tripWindowSummary.candidateWindows,
+  "- Complete ERA5-observed windows (9 region-days): "+tripWindowSummary.completeObservedWindows,
+  "- Excluded incomplete windows: "+tripWindowSummary.excludedIncompleteWindows,
+  "- Metric: Spearman correlation; higher positive values mean predicted high-risk windows also had more observed golf-day rain.",
+  ...Object.entries(tripWindowRanking.groups).map(([model,x])=>"- "+model+": n="+x.sampleCount+", Spearman="+(x.spearman??"資料不足")+", gate="+(x.ready?"ready":"locked")),
+  "- Candidate weights are provisional and shadow-only; no production weights were changed.",
   "",
   "## Calibration gate",
   "- Status: "+calibrationGate.status,

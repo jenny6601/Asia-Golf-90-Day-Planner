@@ -67,11 +67,29 @@ function weightedRegionSignal(regionData, weights, date) {
   };
 }
 
-function evaluateDay(day, asOf) {
+function validateSourceWeights(sourceWeights) {
+  if (sourceWeights == null) return SOURCE_WEIGHTS;
+  const required = {
+    short: ["forecast", "historical", "stability"],
+    ec46: ["ec46", "seas5", "historical", "stability"],
+    seas5: ["seas5", "historical", "stability"]
+  };
+  for (const [horizon, keys] of Object.entries(required)) {
+    const weights = sourceWeights[horizon];
+    if (!weights || Object.keys(weights).length !== keys.length
+        || keys.some(key => !isFiniteNumber(weights[key]) || weights[key] < 0)
+        || keys.reduce((sum, key) => sum + weights[key], 0) < 0.999999
+        || keys.reduce((sum, key) => sum + weights[key], 0) > 1.000001)
+      throw new TypeError("Invalid sourceWeights for " + horizon + "; expected exact non-negative weights summing to 1");
+  }
+  return sourceWeights;
+}
+
+function evaluateDay(day, asOf, sourceWeights) {
   if (!isIsoDate(day?.date)) throw new TypeError("Invalid day date");
   const lead = leadDays(asOf, day.date), horizon = horizonFor(lead);
   const regionResults = REGIONS.map(region => ({
-    region, ...weightedRegionSignal(day.regions?.[region], SOURCE_WEIGHTS[horizon], day.date)
+    region, ...weightedRegionSignal(day.regions?.[region], sourceWeights[horizon], day.date)
   }));
   const available = regionResults.filter(x => x.riskScore !== null);
   if (!available.length) return {
@@ -143,6 +161,7 @@ export function recommendGolfTripDates(input, options = {}) {
   const { asOf, days } = input || {};
   const horizonDays = options.horizonDays ?? input?.horizonDays ?? 90;
   const alternateCount = options.alternateCount ?? 5;
+  const sourceWeights = validateSourceWeights(options.sourceWeights);
   if (!isIsoDate(asOf)) throw new TypeError("asOf must be YYYY-MM-DD");
   if (!Array.isArray(days)) throw new TypeError("days must be an array");
   if (!Number.isInteger(horizonDays) || horizonDays < 5 || horizonDays > 90)
@@ -159,7 +178,7 @@ export function recommendGolfTripDates(input, options = {}) {
   for (let offset = 1; offset <= horizonDays; offset++) {
     const date = new Date((dayNumber(asOf) + offset) * 86400000).toISOString().slice(0, 10);
     const sourceDay = byDate.get(date);
-    evaluated.push(sourceDay ? evaluateDay(sourceDay, asOf) : {
+    evaluated.push(sourceDay ? evaluateDay(sourceDay, asOf, sourceWeights) : {
       date, leadDays: offset, horizon: horizonFor(offset), riskScore: null,
       evidenceCoverage: 0, golfEligible: false, reason: "缺少該日資料"
     });
@@ -187,11 +206,12 @@ export function recommendGolfTripDates(input, options = {}) {
     tripLengthDays: WINDOW_DAYS, golfRounds: GOLF_ROUNDS,
     priority: "minimize rainfall risk on three golf days",
     scoring: {
-      lowerIsBetter: true, horizonWeights: SOURCE_WEIGHTS,
+      lowerIsBetter: true, horizonWeights: sourceWeights,
       missingDataPenalty: MISSING_DATA_PENALTY,
       windowFormula: "0.85 * mean(middle 3 golf-day risk) + 0.15 * mean(5 daily risk) + missing-data penalties"
     },
     evaluatedDays: evaluated.length, dailyAssessment: evaluated, validWindows: ranked.length,
+    ...(options.includeAllWindows === true ? { allWindows: ranked } : {}),
     topThree: distinctRanked.slice(0, 3), alternates: distinctRanked.slice(3, 3 + alternateCount),
     excludedWindows: evaluated.length - WINDOW_DAYS + 1 - ranked.length,
     limitations: [

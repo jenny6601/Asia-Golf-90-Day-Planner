@@ -27,3 +27,16 @@ test("invalid lead or region is rejected",()=>{
  assert.throws(()=>scoreRiskRankingSamples([{region:"east",source:"x",leadDays:1}]),/region/);
  assert.throws(()=>scoreRiskRankingSamples([{region:"north",source:"x",leadDays:91}]),/leadDays/);
 });
+
+import {scoreTripWindowRankingSamples} from "../assets/js/trip-date-ranking-verification.js";
+test("trip-window ranking reports positive Spearman for correctly ordered risk",()=>{
+ const rows=Array.from({length:40},(_,i)=>({model:"baseline",predictedScore:i,observedGolfRainMm:i*0.5}));
+ const result=scoreTripWindowRankingSamples(rows);
+ assert.equal(result.groups.baseline.spearman,1);
+ assert.equal(result.groups.baseline.ready,true);
+});
+test("trip-window ranking rejects invalid scores and requires sample gate",()=>{
+ assert.throws(()=>scoreTripWindowRankingSamples([{model:"x",predictedScore:120,observedGolfRainMm:2}]),/predictedScore/);
+ const result=scoreTripWindowRankingSamples([{model:"x",predictedScore:10,observedGolfRainMm:0},{model:"x",predictedScore:20,observedGolfRainMm:1}]);
+ assert.equal(result.groups.x.ready,false);
+});

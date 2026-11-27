@@ -31,3 +31,34 @@ export function scoreRiskRankingSamples(samples=[]){
  }
  return {reference:"ERA5 daily precipitation >=1.0 mm/day",metric:"AUC; higher is better; riskScore is not a probability",minimumGate:{samples:30,wetDays:5,dryDays:5},groups};
 }
+
+function averageRanks(values) {
+ const sorted=values.map((value,index)=>({value,index})).sort((a,b)=>a.value-b.value);
+ const ranks=Array(values.length);let i=0;
+ while(i<sorted.length){let j=i+1;while(j<sorted.length&&sorted[j].value===sorted[i].value)j++;
+  const rank=((i+1)+j)/2;for(let k=i;k<j;k++)ranks[sorted[k].index]=rank;i=j;}
+ return ranks;
+}
+function spearman(rows) {
+ if(rows.length<2)return null;
+ const x=averageRanks(rows.map(r=>r.predictedScore)),y=averageRanks(rows.map(r=>r.observedGolfRainMm));
+ const mx=x.reduce((a,b)=>a+b,0)/x.length,my=y.reduce((a,b)=>a+b,0)/y.length;
+ let numerator=0,dx=0,dy=0;
+ for(let i=0;i<x.length;i++){const a=x[i]-mx,b=y[i]-my;numerator+=a*b;dx+=a*a;dy+=b*b;}
+ return dx===0||dy===0?null:numerator/Math.sqrt(dx*dy);
+}
+export function scoreTripWindowRankingSamples(samples=[]) {
+ if(!Array.isArray(samples))throw new TypeError("samples must be an array");
+ for(const x of samples){
+  if(typeof x.model!=="string"||!x.model)throw new TypeError("model is required");
+  if(!finite(x.predictedScore)||x.predictedScore<0||x.predictedScore>100)throw new TypeError("predictedScore must be 0..100");
+  if(!finite(x.observedGolfRainMm)||x.observedGolfRainMm<0)throw new TypeError("observedGolfRainMm must be non-negative");
+ }
+ const models=[...new Set(samples.map(x=>x.model))].sort(),groups={};
+ for(const model of models){
+  const rows=samples.filter(x=>x.model===model),correlation=spearman(rows);
+  groups[model]={sampleCount:rows.length,spearman:correlation===null?null:Number(correlation.toFixed(4)),
+   ready:rows.length>=30&&correlation!==null};
+ }
+ return {reference:"Mean ERA5 precipitation across 3 golf days and 3 regional representative points (9 region-days)",metric:"Spearman correlation between predicted window risk score and observed golf-day rainfall; positive is better",minimumGate:{windows:30},groups};
+}
