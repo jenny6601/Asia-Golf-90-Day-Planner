@@ -101,17 +101,94 @@ This seven-day sample is a first observed-skill pilot, not a multi-season calibr
 
 The JMA point JSON feed is an undocumented internal feed used by the JMA website, not a formally documented public API. The validation report records this dependency and its schema-change risk.
 
-## Test and workflow references
+## Stage 5 — Six-hour tee-time suitability
 
-- Node test suite: 108/108 passing, 0 failures.
+**Result: PASS — data completeness and scoring execution; thresholds remain uncalibrated**
+
+The existing hourly report now includes a six-hour overall suitability summary inside the current report section. Navigation and page architecture are unchanged.
+
+For each of the six courses, the validator evaluated all future tee windows for tee hours 06:00-13:00, using six consecutive hours from tee-off through tee-off +5h. Past tee windows on the current day were excluded.
+
+- 120 future windows per course; 720/720 scored.
+- All seven required hourly inputs had 100% numeric coverage at every course: precipitation probability, precipitation amount, air temperature, apparent temperature, wind speed, wind gust and weather code.
+- Missing hours or missing required values fail closed; no interpolation or partial-field score is allowed.
+- Thunderstorm and high-wind/heavy-rain safety overrides are evaluated separately from the A-E score.
+
+| Course | A | B | C | D | E | Average score |
+|---|---:|---:|---:|---:|---:|---:|
+| Southern Links | 4 | 30 | 40 | 45 | 1 | 76.5 |
+| Palm Hills | 5 | 31 | 39 | 44 | 1 | 76.7 |
+| PGM | 16 | 13 | 36 | 52 | 3 | 76.0 |
+| Atta Terrace | 17 | 13 | 35 | 52 | 3 | 76.1 |
+| Chura Orchard | 16 | 14 | 35 | 52 | 3 | 76.1 |
+| Kanehide Kise | 11 | 22 | 43 | 37 | 7 | 75.9 |
+
+The A-E grading and rain/environment risk thresholds are transparent prototype rules, not calibrated probabilities of cancellation, injury, or successful play. This stage validates complete input and deterministic execution, not actual play outcomes.
+
+## Stage 6 — North/central/south grid and regional observation contrast
+
+**Result: forecast-grid comparison PASS; regional station observation comparison PASS; microclimate conclusion remains provisional**
+
+### Open-Meteo forecast grids
+
+All six course points returned 16 daily and 384 hourly rows. They map to three unique provider grid cells:
+
+| Grid cell | Courses | Area labels |
+|---|---|---|
+| 26.18629, 127.69737 | Southern Links, Palm Hills | South |
+| 26.467485, 127.863434 | PGM, Atta Terrace, Chura Orchard | Central + North |
+| 26.537785, 128.00441 | Kanehide Kise | North |
+
+The requested course point to returned grid offset ranges from 4.50 km to 9.07 km. Same-grid comparisons show:
+- Rain probability, wind speed and gust series are identical for courses sharing the same grid.
+- Temperature differs by up to 0.30 °C and apparent temperature by up to 0.50 °C in same-grid pairs.
+- Returned grid elevations differ between courses sharing a grid (for example, the PGM/Atta/Chura group returns 63 m, 68 m and 41 m). These small temperature differences may reflect provider elevation/downscaling adjustments, not independent microclimate modelling.
+
+Sixteen-day model-grid regional averages:
+
+| Area | Mean temperature | Mean feels-like | Mean rain probability | Mean wind | Mean gust |
+|---|---:|---:|---:|---:|---:|
+| South | 21.78 °C | 22.65 °C | 22.03% | 4.30 m/s | 9.26 m/s |
+| Central | 22.03 °C | 22.98 °C | 23.72% | 4.25 m/s | 9.54 m/s |
+| North | 21.70 °C | 22.65 °C | 23.72% | 4.08 m/s | 9.34 m/s |
+
+These are descriptive model-grid averages, not independent regional samples: several courses share a grid cell.
+
+### Ten-station JMA AMeDAS regional observations
+
+The official station table metadata matched for all ten configured Okinawa reference stations. All 560 station/block files were retrieved for 2026-11-20 through 2026-11-26. Each station supplied 156 valid hourly samples out of 168 possible in this run.
+
+| Area | Stations | Mean station rain total | Mean temperature | Mean wind |
+|---|---:|---:|---:|---:|
+| South | 3 | 20.67 mm | 19.87 °C | 5.72 m/s |
+| Central | 3 | 38.50 mm | 19.83 °C | 5.31 m/s |
+| North | 4 | 60.00 mm | 18.41 °C | 3.60 m/s |
+
+This one-week sample was wetter and cooler at the northern station group, while the southern station group had higher mean wind. It is an observed weather contrast for this particular week, not a stable microclimate climatology. North includes Oku at 232 m elevation; regional station means are affected by station elevation and exposure.
+
+Course reference station distances remain material: Southern Links 5.11 km, Palm Hills 7.47 km, PGM rain reference 10.22 km and temperature/wind reference 18.21 km, Atta 12.45 km, Chura 11.88 km, and Kise 8.10 km. No station is an on-course sensor.
+
+**Microclimate status:** provisional. The model-grid comparison and seven-day station contrast are complete, but they do not prove fairway-scale sea-breeze, slope, coastal-exposure or localized rainfall differences. A longer seasonal observation record and/or on-course sensors would be needed for that conclusion.
+
+## Current test, deployment and report references
+
+- Node test suite: 120/120 passing, 0 failures.
 - Date engine tests: passing.
-- Okinawa six-course acceptance workflow: [GitHub Actions run 45939563902](https://github.com/jenny6601/Asia-Golf-90-Day-Planner/actions/runs/45939563902).
-- Code branch: `asia-eight-country-shared-engine`.
-- Stage 4 report artifact is attached to the workflow run above.
+- Latest six-stage acceptance workflow: [GitHub Actions run 45940448320](https://github.com/jenny6601/Asia-Golf-90-Day-Planner/actions/runs/45940448320).
+- Latest Cloudflare preview deployment: [85ae1a67 preview](https://85ae1a67.asia-golf-climate.pages.dev).
+- Stable preview alias: [Asia Golf Climate Preview](https://asia-eight-country-shared-en.asia-golf-climate.pages.dev).
+- Full acceptance artifacts: [workflow artifact 15172238668](https://github.com/jenny6601/Asia-Golf-90-Day-Planner/actions/runs/45940448320/artifacts/15172238668).
+- Development branch: `asia-eight-country-shared-engine`.
+- Current code commit at this report: `74f47b080e3a304ee8f727c6554be1f6cc17c898`.
 
-## Remaining stages
+## Final acceptance interpretation
 
-- Stage 5: verify six-hour tee windows, rainfall, temperature, apparent temperature, wind, gust, and suitability grade calculations.
-- Stage 6: compare the north, central, and south forecast grid cells and distinguish grid-cell differences from actual microclimate differences.
+All six planned stages have been executed. GPS, 16-day data completeness, D19-D90 estimate availability, JMA observation pairing, six-hour scoring data, and forecast-grid comparison have passed their stated data/processing gates.
 
-No production scoring thresholds, model weights, or App UI have been changed as a result of this validation.
+This is not a blanket declaration that forecast accuracy or golf-course microclimate has been fully calibrated. The remaining scientific limitations are:
+1. JMA forecast skill comparison currently covers seven complete days and is preliminary.
+2. D47-D90 February 2027 has historical-only estimates where the seasonal provider supplies no February monthly signal; seasonal wind is left blank there.
+3. Six-hour A-E suitability thresholds are not yet calibrated against a multi-season observed playability dataset.
+4. Regional microclimate differences remain provisional because station proxies are several kilometres from courses and the observation sample is only one week.
+
+No global model weights or long-range estimate formulas were changed during acceptance. The only report UI addition is the six-hour summary inside the existing hourly report; page navigation and overall architecture remain unchanged.
