@@ -19,7 +19,7 @@ test("near-term missing forecast is not replaced by historical climate", () => {
     date: "2027-01-10", today: "2027-01-01",
     historical: { rainFrequency: 65, rainMean: 4, sampleYears: 10 }
   });
-  assert.equal(result.sourceType, "short-range-daily-forecast");
+  assert.equal(result.sourceType, "missing-short-range-forecast");
   // Jan 10 is within the 16-day forecast band, so no actual daily forecast means unavailable.
   assert.equal(result.status, "insufficient-data");
   assert.equal(result.weatherEvidence, null);
