@@ -6,13 +6,13 @@ hourly time-series files are downloaded. CDS computes daily aggregates before
 returning NetCDF files.
 """
 from __future__ import annotations
-import argparse, importlib.util, json, os, sys, zipfile
+import argparse, importlib.util, json, math, os, sys, zipfile
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 DATASET="derived-era5-single-levels-daily-statistics"
 TEMPERATURE=["2m_temperature"]
-DAILY_MEAN=["2m_temperature","2m_dewpoint_temperature","10m_u_component_of_wind","10m_v_component_of_wind","total_cloud_cover","mean_sea_level_pressure"]
+DAILY_MEAN=["2m_dewpoint_temperature","10m_u_component_of_wind","10m_v_component_of_wind","total_cloud_cover","mean_sea_level_pressure"]
 PRECIPITATION=["total_precipitation"]
 
 def compile_registry():
@@ -25,6 +25,44 @@ def utc_offset(timezone):
     offsets={"Asia/Tokyo":"utc+09:00","Asia/Seoul":"utc+09:00","Asia/Shanghai":"utc+08:00","Asia/Ho_Chi_Minh":"utc+07:00","Asia/Bangkok":"utc+07:00","Asia/Kuala_Lumpur":"utc+08:00","Asia/Singapore":"utc+08:00","Asia/Jakarta":"utc+07:00","Asia/Makassar":"utc+08:00","Asia/Jayapura":"utc+09:00"}
     if timezone not in offsets: raise ValueError(f"Unsupported or unreviewed fixed UTC offset for {timezone}")
     return offsets[timezone]
+
+def _saturation_vapor_pressure_hpa(temp_c):
+    return 6.105 * math.exp(17.27 * temp_c / (237.7 + temp_c))
+
+def _apparent_temperature_c(air_temp_c, dewpoint_c, wind_speed_ms):
+    """Shade apparent temperature; daily aggregate inputs are not time-paired."""
+    if air_temp_c <= 10.0 and wind_speed_ms * 3.6 >= 4.8:
+        wind_kmh=wind_speed_ms * 3.6
+        v16=wind_kmh ** 0.16
+        return 13.12 + 0.6215*air_temp_c - 11.37*v16 + 0.3965*air_temp_c*v16, "wind-chill"
+    vapor_pressure=min(_saturation_vapor_pressure_hpa(dewpoint_c),
+                       _saturation_vapor_pressure_hpa(air_temp_c))
+    return air_temp_c + 0.33*vapor_pressure - 0.70*wind_speed_ms - 4.0, "apparent-temperature"
+
+def calculate_feels_like_range(tmin_c, tmax_c, dewpoint_c, wind_u_ms, wind_v_ms):
+    """Return a daily feels-like low/high estimate, never a mean temperature.
+
+    Daily dewpoint and wind aggregates are not coincident with Tmin/Tmax.
+    The output is therefore a broad daily estimate, not an hourly or observed
+    apparent temperature. Solar radiation is not represented by this shade
+    formula and must remain an explicit limitation.
+    """
+    values=(tmin_c,tmax_c,dewpoint_c,wind_u_ms,wind_v_ms)
+    if any(v is None or isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) for v in values):
+        return {"feelsLikeMinEstimateC":None,"feelsLikeMaxEstimateC":None,
+                "method":"unavailable-missing-input","qualityFlags":["missing-required-input"]}
+    if tmin_c>tmax_c or wind_u_ms < -100 or wind_u_ms > 100 or wind_v_ms < -100 or wind_v_ms > 100:
+        raise ValueError("invalid temperature bounds or wind components")
+    wind_speed=math.hypot(wind_u_ms,wind_v_ms)
+    low,low_method=_apparent_temperature_c(float(tmin_c),float(dewpoint_c),wind_speed)
+    high,high_method=_apparent_temperature_c(float(tmax_c),float(dewpoint_c),wind_speed)
+    flags=["daily-aggregate-inputs-not-time-paired","shade-apparent-temperature-no-direct-solar-load"]
+    if dewpoint_c>tmin_c:
+        flags.append("dewpoint-exceeds-daily-min-temperature-after-aggregation")
+    return {"feelsLikeMinEstimateC":round(low,1),"feelsLikeMaxEstimateC":round(high,1),
+            "method":"daily-apparent-temperature-range","lowMethod":low_method,
+            "highMethod":high_method,"windSpeedUsedMs":round(wind_speed,2),
+            "qualityFlags":flags}
 
 def build_requests(point,year,frequency="1_hourly"):
     if not 1940<=year<=2025: raise ValueError("pilot year must be between 1940 and 2025")
@@ -54,7 +92,7 @@ def main():
       "representativePoint":point["representativePoint"],"year":a.year,"sourceId":"ERA5_DAILY_STATS","dataset":DATASET,
       "gridResolutionDegrees":0.25,"requests":requests,"downloadedHourlyData":False,"dailyOutputOnly":True,
       "era5LandUsed":False,"productionEligible":False,
-      "notes":["ERA5 is the only reanalysis source in this plan.","CDS computes daily aggregates from its underlying hourly ERA5 fields; the returned files contain daily records, not hourly time series.","Daily min/max temperature, daily mean meteorological fields and daily accumulated precipitation are requested separately.","ERA5 daily-statistics sampling frequency is configurable; 1_hourly is used to retain daily extrema, but no hourly output is downloaded."]}
+      "notes":["ERA5 is the only reanalysis source in this plan.","CDS computes daily aggregates from its underlying hourly ERA5 fields; the returned files contain daily records, not hourly time series.","Daily Tmin/Tmax, daily mean dewpoint/wind/cloud inputs and daily accumulated precipitation are requested separately; daily mean air temperature is not requested.","ERA5 daily-statistics sampling frequency is configurable; 1_hourly is used to retain daily extrema, but no hourly output is downloaded."]}
     if a.dry_run:
         print(json.dumps({"status":"dry-run-no-network","requestCount":len(requests),"dailyOutputOnly":True,"era5LandUsed":False,"manifest":manifest},ensure_ascii=False)); return 0
     if not os.environ.get("CDSAPI_KEY") and not Path.home().joinpath(".cdsapirc").exists():
