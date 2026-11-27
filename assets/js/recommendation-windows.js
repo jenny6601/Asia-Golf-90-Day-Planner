@@ -23,7 +23,8 @@ export function pickRecommendedFiveDayWindows(windows, limit = 3) {
   const picked = [];
   const addSeparated = list => { for (const item of list) { if (picked.length >= limit) break; if (!picked.some(x => dateGap(item.start, x.start) < 5)) picked.push(item); } };
   addSeparated(qualified);
-  if (picked.length < limit) for (const item of qualified) { if (picked.length >= limit) break; if (!picked.includes(item)) picked.push(item); }
+  // Fill remaining distinct trip slots with the closest non-qualifying windows
+  // before considering overlapping qualifying windows.
   addSeparated(fallback);
   if (picked.length < limit) for (const item of fallback) { if (picked.length >= limit) break; if (!picked.includes(item)) picked.push(item); }
   return picked.map(item => ({ ...item, recommendationType: item.qualifies ? "符合核心條件" : "接近條件（替代推薦）", explanation: item.qualifies ? "中間連續3天均達到適打或可打，符合主要打球日條件。" : "中間連續3天有" + item.coreEligible + "天達到適打或可打；已依核心日適打程度及五天整體條件，選出最接近的替代日期。" }));
