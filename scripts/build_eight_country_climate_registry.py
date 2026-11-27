@@ -18,6 +18,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 ROOT = Path(__file__).resolve().parents[1]
 COUNTRY_PATH = ROOT / "config/global/countries.json"
 SUBREGION_PATH = ROOT / "config/global/weather-subregions.json"
+COURSE_PATH = ROOT / "config/global/courses.json"
 ENGINE_PATH = ROOT / "config/global/eight-country-climate-engine.json"
 EXPECTED_COUNTRIES = ("JP", "KR", "CN", "VN", "TH", "MY", "SG", "ID")
 DATASET = "reanalysis-era5-land"
@@ -33,7 +34,7 @@ def _valid_coordinate(value, lower, upper):
     return isinstance(value, (int, float)) and math.isfinite(value) and lower <= value <= upper
 
 
-def compile_registry(countries: list[dict], subregions: dict) -> dict:
+def compile_registry(countries: list[dict], subregions: dict, courses: list[dict] | None = None) -> dict:
     country_by_code = {item.get("code"): item for item in countries}
     if len(country_by_code) != len(countries):
         raise ValueError("country registry contains duplicate country codes")
@@ -51,6 +52,7 @@ def compile_registry(countries: list[dict], subregions: dict) -> dict:
             raise ValueError(f"duplicate country subregion group: {code}")
         group_by_code[code] = group
 
+    course_by_id = {item.get("id"): item for item in (courses or []) if item.get("id")}
     points, pending = [], []
     for code in EXPECTED_COUNTRIES:
         group = group_by_code.get(code)
@@ -62,6 +64,17 @@ def compile_registry(countries: list[dict], subregions: dict) -> dict:
             coords = region.get("candidateCoordinates") or {}
             lat, lon = coords.get("latitude"), coords.get("longitude")
             tz = coords.get("timezone")
+            coordinate_source = coords.get("coordinateSourceUrl")
+            coordinate_status = coords.get("coordinateStatus", "unspecified")
+            # Existing configured course coordinates are a valid fallback for configured
+            # subregions (currently Okinawa); they are still treated as regional points.
+            course = course_by_id.get(region.get("representativeCourseId") or region.get("candidateCourseId"))
+            if (not _valid_coordinate(lat, -90, 90) or not _valid_coordinate(lon, -180, 180)) and course:
+                if course.get("countryCode") == code:
+                    lat, lon = course.get("latitude"), course.get("longitude")
+                    tz = tz or course.get("timezone")
+                    coordinate_source = course.get("coordinateSource")
+                    coordinate_status = course.get("coordinateStatus", "course-catalog-coordinate")
             reasons = []
             if not isinstance(sid, str) or not sid.strip():
                 reasons.append("subregion_id_missing")
@@ -94,8 +107,8 @@ def compile_registry(countries: list[dict], subregions: dict) -> dict:
                 "representativeCourseName": region.get("candidateCourseName"),
                 "representativePoint": {"latitude": float(lat), "longitude": float(lon)},
                 "timezone": tz,
-                "coordinateStatus": coords.get("coordinateStatus", "unspecified"),
-                "coordinateSourceUrl": coords.get("coordinateSourceUrl"),
+                "coordinateStatus": coordinate_status,
+                "coordinateSourceUrl": coordinate_source,
                 "coordinateReviewStatus": region.get("coordinateReviewStatus"),
                 "regionalClimateEligible": True,
                 "gridMapping": {
@@ -199,7 +212,8 @@ def main() -> int:
     try:
         countries = json.loads(COUNTRY_PATH.read_text(encoding="utf-8"))
         subregions = json.loads(SUBREGION_PATH.read_text(encoding="utf-8"))
-        registry = compile_registry(countries, subregions)
+        courses = json.loads(COURSE_PATH.read_text(encoding="utf-8"))
+        registry = compile_registry(countries, subregions, courses)
         selected = [x.strip().upper() for x in args.countries.split(",") if x.strip()] if args.countries else None
         plan = build_task_plan(registry, args.start_year, args.end_year, selected)
     except Exception as exc:
