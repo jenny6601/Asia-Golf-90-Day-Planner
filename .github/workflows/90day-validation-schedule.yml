@@ -43,6 +43,7 @@ jobs:
           else
             git commit -m "Publish rolling 90-day verification data"
             git push origin HEAD:asia-eight-country-shared-engine
+          fi
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload verified preview site
@@ -52,4 +53,3 @@ jobs:
       - name: Deploy verified preview site
         id: deployment
         uses: actions/deploy-pages@v4
-          fi
