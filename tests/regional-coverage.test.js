@@ -148,3 +148,23 @@ test("an invalid explicitly designated representative never silently falls back 
  assert.equal(north.coverageStatus,"invalid-representative-course-id");
  assert.equal(result.countries.find(x=>x.code==="JP").readySubregionCount,1);
 });
+
+
+test("Japan official identity and address verification is recorded without enabling forecast coordinates",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
+ const verified=mainland.filter(x=>x.courseIdentityVerification?.verificationLevel);
+ assert.equal(verified.length,6);
+ for(const item of verified){
+  assert.ok(item.courseIdentityVerification.officialSourceUrl.startsWith("https://"));
+  assert.ok(item.courseIdentityVerification.officialAddress.length>15);
+  assert.equal(item.representativeCourseId,null);
+  assert.equal(item.coverageStatus,"planned");
+ }
+ const appi=mainland.find(x=>x.candidateCourseName==="Appi Kogen Golf Club");
+ assert.match(appi.courseIdentityVerification.verificationLevel,/2026-season-confirmed/);
+ const setouchi=mainland.find(x=>x.candidateCourseName==="Setouchi Golf Resort");
+ assert.equal(setouchi.courseIdentityVerification.verificationLevel,"official-operator-identity-address-and-google-maps-link-confirmed");
+ assert.equal(japan.coordinateResearchSummary.forecastEnabled,false);
+});
