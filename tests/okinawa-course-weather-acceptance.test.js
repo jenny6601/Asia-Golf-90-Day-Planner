@@ -15,6 +15,8 @@ const expected = {
   "chura-orchard":[26.506260,127.895720]
 };
 const pilot = (await import("../assets/js/okinawa-courses.js")).OKINAWA_COURSES;
+const {fetchAsiaGolfDirectory} = await import("../assets/js/course-catalog.js");
+const {fetchCourseForecast} = await import("../assets/js/weather-api.js");
 
 test("Okinawa acceptance scope contains exactly the six requested main-island courses", () => {
   assert.deepEqual(candidates.map(x => x.id).sort(), [...ids].sort());
@@ -63,4 +65,40 @@ test("JMA AMeDAS station metadata includes rainfall and full-weather references"
   assert.ok(stations.every(x => Number.isFinite(x.latitude) && Number.isFinite(x.longitude) && Number.isFinite(x.elevationM)));
   assert.ok(stations.some(x => x.id === "91241" && x.observedElements.includes("temperature") && x.observedElements.includes("wind")));
   assert.ok(stations.some(x => x.id === "91121" && x.observedElements.length === 1 && x.observedElements[0] === "precipitation"));
+});
+
+test("App runtime directory loads all six GPS points and sends exact points to Open-Meteo", async () => {
+  const requests = [];
+  const days = Array.from({length:16}, (_,i) => "2026-12-" + String(i+1).padStart(2,"0"));
+  const fetchMock = async input => {
+    const url = new URL(input);
+    if (url.pathname.endsWith("/countries.json")) {
+      return {ok:true,json:async()=>[{code:"JP",nameZh:"日本"}]};
+    }
+    if (url.pathname.endsWith("/courses.json")) {
+      return {ok:true,json:async()=>runtime};
+    }
+    if (url.hostname === "api.open-meteo.com") {
+      requests.push(url);
+      return {ok:true,json:async()=>({
+        timezone:"Asia/Tokyo",latitude:Number(url.searchParams.get("latitude")),
+        longitude:Number(url.searchParams.get("longitude")),
+        daily:{time:days,precipitation_sum:Array(16).fill(0)},
+        hourly:{time:["2026-12-01T06:00"],precipitation:[0]}
+      })};
+    }
+    throw new Error("Unexpected URL: " + url.href);
+  };
+  const directory = await fetchAsiaGolfDirectory({fetchImpl:fetchMock});
+  const appCourses = directory.courses.filter(x=>ids.includes(x.id));
+  assert.equal(appCourses.length,6);
+  for (let i=0;i<appCourses.length;i+=3) {
+    await fetchCourseForecast(appCourses.slice(i,i+3),fetchMock);
+  }
+  assert.equal(requests.length,6);
+  for (const id of ids) {
+    const expectedPoint=expected[id];
+    const request=requests.find(url=>Number(url.searchParams.get("latitude"))===expectedPoint[0]&&Number(url.searchParams.get("longitude"))===expectedPoint[1]);
+    assert.ok(request,"Open-Meteo request missing exact App GPS for "+id);
+  }
 });
