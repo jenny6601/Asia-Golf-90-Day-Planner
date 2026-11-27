@@ -71,7 +71,7 @@ async function getJson(url,label) {
   let last;
   for(let attempt=1;attempt<=3;attempt++){
     try{
-      const response=await fetch(url,{headers:{"User-Agent":"Asia-Golf-90-Day-Planner-Okinawa-Acceptance/1.0"}});
+      const response=await fetch(url,{headers:{"User-Agent":"Asia-Golf-90-Day-Planner-Okinawa-Acceptance/1.0"},signal:AbortSignal.timeout(45000)});
       const body=await response.json().catch(()=>({}));
       if(!response.ok)throw new Error(label+" HTTP "+response.status+" "+(body.reason??body.error??""));
       return body;
