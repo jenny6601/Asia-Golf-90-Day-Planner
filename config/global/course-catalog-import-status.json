@@ -26,9 +26,9 @@
       "status": "in_progress",
       "targetSubregions": 19,
       "seedRecords": 22,
-      "knownSourceCoverage": "Golf in Japan: headline claims 2,308 courses, while directory result count shows 2,138; 12 course cards imported in batch 1. JNTO curated list used as independent identity cross-check.",
-      "next": "Continue prefecture-by-prefecture extraction from the paginated directory; reconcile directory counts and existing seed records; then verify operation/address/coordinates before activation.",
-      "importedDirectoryRecords": 12
+      "knownSourceCoverage": "Golf in Japan national directory states 2,308 courses and provides prefecture-specific course counts/cards; 23 directory cards imported across two batches. Earlier rendered count of 2,138 remains a source-page discrepancy requiring reconciliation. JNTO curated list cross-checks selected courses.",
+      "next": "Continue extracting prefecture listings in manageable batches; reconcile possible duplicate facilities and multi-layout resorts; validate official operating status and addresses; only then geocode and enable weather.",
+      "importedDirectoryRecords": 23
     },
     {
       "code": "KR",
