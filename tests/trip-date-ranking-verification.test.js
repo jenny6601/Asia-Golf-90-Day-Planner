@@ -114,3 +114,36 @@ test("maturity report retains all expected model buckets before observations mat
  assert.equal(result.tripWindows.readyModels,0);
  assert.equal(result.daily.groups["composite-baseline.north.1-16"].uniqueValidDates,0);
 });
+
+import {evaluateRecommendationQuality} from "../assets/js/trip-date-recommendation-quality.js";
+test("recommendation quality compares top-three non-overlapping portfolios with historical and random controls",()=>{
+ const rows=[];
+ for(let i=0;i<9;i++){
+  const startDate=new Date(Date.parse("2026-01-01T00:00:00Z")+i*5*86400000).toISOString().slice(0,10);
+  const rain=i<3?0:i<6?2:5;
+  const common={issueDate:"2025-12-01",startDate,endDate:new Date(Date.parse(startDate+"T00:00:00Z")+4*86400000).toISOString().slice(0,10),
+   historicalScore:i,predictedScore:8-i,observedGolfRainMm:rain,observedWetRegionDays:rain===0?0:rain===2?5:9,observedRegionDays:9};
+  rows.push({...common,model:"baseline"});
+  rows.push({...common,model:"historyEnhanced"});
+ }
+ const result=evaluateRecommendationQuality(rows,200);
+ assert.equal(result.issueDatesWithThreeMaturedWindows,1);
+ assert.equal(result.candidates.historyEnhanced.portfolioCount,1);
+ assert.equal(result.historicalClimatology.portfolioCount,1);
+ assert.equal(result.randomControl.portfolioCount,200);
+ assert.equal(result.candidates.historyEnhanced.meanRainMmPerRegionDay,0);
+ assert.equal(result.candidates.historyEnhanced.meanRainDeltaVsHistorical,-3.5);
+ assert.equal(result.candidates.historyEnhanced.ready,false);
+});
+test("recommendation quality excludes incomplete observed windows and is deterministic",()=>{
+ const rows=[];
+ for(let i=0;i<4;i++){
+  const startDate=new Date(Date.parse("2026-01-01T00:00:00Z")+i*5*86400000).toISOString().slice(0,10);
+  rows.push({issueDate:"2025-12-01",model:"baseline",startDate,endDate:startDate,
+   historicalScore:i,predictedScore:i,observedGolfRainMm:i,observedWetRegionDays:0,observedRegionDays:8});
+ }
+ const a=evaluateRecommendationQuality(rows,100),b=evaluateRecommendationQuality(rows,100);
+ assert.equal(a.issueDatesWithThreeMaturedWindows,0);
+ assert.equal(a.randomControl.portfolioCount,0);
+ assert.deepEqual(a,b);
+});

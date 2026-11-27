@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import {scoreForecastSamples} from "../assets/js/trip-date-forecast-backtest.js";
 import {scoreRiskRankingSamples,scoreTripWindowRankingSamples,compareCandidateRankingSamples,compareTripWindowModels,buildVerificationMaturity} from "../assets/js/trip-date-ranking-verification.js";
+import {evaluateRecommendationQuality} from "../assets/js/trip-date-recommendation-quality.js";
 import {TRIP_DATE_CANDIDATE_MODELS} from "../assets/js/trip-date-candidate-models.js";
 import {recommendGolfTripDates} from "../assets/js/trip-date-recommendation-engine.js";
 import {buildDailyClimatology,compareForecastToClimatology} from "../assets/js/trip-date-climatology-baseline.js";
@@ -95,6 +96,11 @@ for(const snapshot of snapshots){
         {horizonDays:90,alternateCount:0,sourceWeights:model.sourceWeights,includeAllWindows:true}
       );
       const compositeByDate=new Map(assessed.dailyAssessment.map(x=>[x.date,x]));
+      const historicalByDate=new Map(snapshot.normalizedDailySignals.map(day=>{
+        const values=Object.keys(regions).map(region=>day.regions?.[region]?.historical?.riskScore);
+        return [day.date,values.length===3&&values.every(value=>typeof value==="number"&&Number.isFinite(value))
+          ?values.reduce((sum,value)=>sum+value,0)/values.length:null];
+      }));
       for(const day of snapshot.normalizedDailySignals){
         const leadDays=dayNumber(day.date)-dayNumber(issueDate);
         if(day.date>=today||leadDays<1||leadDays>90)continue;
@@ -105,8 +111,12 @@ for(const snapshot of snapshots){
         }
       }
       for(const window of assessed.allWindows||[]){
+        const golfDates=window.recommendedGolfDates.map(x=>x.date);
+        const historicalValues=golfDates.map(date=>historicalByDate.get(date));
+        const historicalScore=historicalValues.length===3&&historicalValues.every(value=>typeof value==="number")
+          ?historicalValues.reduce((sum,value)=>sum+value,0)/historicalValues.length:null;
         windowPredictions.push({issueDate,model:modelId,startDate:window.startDate,endDate:window.endDate,predictedScore:window.score,
-          golfDates:window.recommendedGolfDates.map(x=>x.date)});
+          historicalScore,golfDates});
       }
     }catch(error){console.warn("Skipping candidate model snapshot",issueDate,modelId,error.message);}
   }
@@ -139,14 +149,16 @@ const tripWindowSamples=[];
 for(const prediction of windowPredictions){
   const values=prediction.golfDates.flatMap(date=>Object.keys(regions).map(region=>rankingObservations[region]?.[date]));
   if(values.length===9&&values.every(value=>typeof value==="number"&&Number.isFinite(value)&&value>=0)){
-    tripWindowSamples.push({model:prediction.model,predictedScore:prediction.predictedScore,
+    tripWindowSamples.push({model:prediction.model,predictedScore:prediction.predictedScore,historicalScore:prediction.historicalScore,
       observedGolfRainMm:values.reduce((sum,value)=>sum+value,0)/values.length,
+      observedWetRegionDays:values.filter(value=>value>=1).length,observedRegionDays:values.length,
       issueDate:prediction.issueDate,startDate:prediction.startDate,endDate:prediction.endDate});
   }
 }
 const tripWindowRanking=scoreTripWindowRankingSamples(tripWindowSamples);
 const pairedDailyComparison=compareCandidateRankingSamples(rankingSamples);
 const pairedTripWindowComparison=compareTripWindowModels(tripWindowSamples);
+const recommendationQuality=evaluateRecommendationQuality(tripWindowSamples,500);
 const verificationMaturity=buildVerificationMaturity(rankingSamples,tripWindowSamples,30,
   Object.keys(TRIP_DATE_CANDIDATE_MODELS).map(id=>"composite-"+id),Object.keys(TRIP_DATE_CANDIDATE_MODELS));
 for(const modelId of Object.keys(TRIP_DATE_CANDIDATE_MODELS)){
@@ -235,7 +247,7 @@ const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
   method:"Short forecasts: daily probability/amount versus ERA5. EC46/SEAS5: archived weekly/monthly precipitation means versus the sum of ERA5 daily precipitation over the exact same valid period.",
-  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,pairedDailyComparison,pairedTripWindowComparison,verificationMaturity,candidateModelDefinitions,tripWindowSummary,tripWindowRanking,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
+  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,pairedDailyComparison,pairedTripWindowComparison,verificationMaturity,recommendationQuality,candidateModelDefinitions,tripWindowSummary,tripWindowRanking,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
   caveats:[
     "ERA5 reanalysis is a model-reference dataset, not an independent rain-gauge observation.",
@@ -309,6 +321,14 @@ const lines=[
   "## Paired daily model comparison (same observations)",
   ...Object.entries(pairedDailyComparison.groups).filter(([key])=>key.endsWith(".overall")||key.endsWith(".1-16")||key.endsWith(".17-46")||key.endsWith(".47-90")).map(([key,x])=>"- "+key+": matched="+x.matchedSamples+", baseline AUC="+(x.baselineAuc??"資料不足")+", candidate AUC="+(x.candidateAuc??"資料不足")+", delta="+(x.deltaAuc??"資料不足")+", gate="+(x.ready?"ready":"locked")),
   "- Positive delta means the candidate discriminates wet days better than V1 on identical observations.",
+  "",
+  "## Recommendation quality: top-three portfolios vs historical and random controls",
+  "- Matured issue dates with three eligible non-overlapping windows: "+recommendationQuality.issueDatesWithThreeMaturedWindows,
+  "- Metric: mean observed ERA5 rainfall per regional golf-day; lower is better.",
+  "- Historical-climate top three: portfolios="+recommendationQuality.historicalClimatology.portfolioCount+", mean rain="+(recommendationQuality.historicalClimatology.meanRainMmPerRegionDay??"資料不足")+" mm, wet-region-day rate="+(recommendationQuality.historicalClimatology.wetRegionDayRate??"資料不足"),
+  "- Random control: "+recommendationQuality.randomControl.drawsPerIssueDate+" deterministic draws/issue date, mean rain="+(recommendationQuality.randomControl.meanRainMmPerRegionDay??"資料不足")+" mm, 5-95% portfolio range="+(recommendationQuality.randomControl.portfolioRainP05??"資料不足")+"–"+(recommendationQuality.randomControl.portfolioRainP95??"資料不足")+" mm",
+  ...Object.entries(recommendationQuality.candidates).map(([model,x])=>"- "+model+": portfolios="+x.portfolioCount+", mean rain="+(x.meanRainMmPerRegionDay??"資料不足")+" mm, wet-region-day rate="+(x.wetRegionDayRate??"資料不足")+", delta vs history="+(x.meanRainDeltaVsHistorical??"資料不足")+" mm, delta vs random="+(x.meanRainDeltaVsRandom??"資料不足")+" mm, paired issue dates="+x.issueDatesCompared+", gate="+(x.ready?"ready":"locked")),
+  ...recommendationQuality.caveats.map(x=>"- "+x),
   "",
   "## Verification maturity (unique outcome dates)",
   "- Daily groups ready: "+verificationMaturity.daily.readyGroups+"/"+verificationMaturity.daily.requiredGroups,
