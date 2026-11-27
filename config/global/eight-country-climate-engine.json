@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "engineId": "ASIA_EIGHT_COUNTRY_SHARED_CLIMATE_ENGINE",
-  "status": "all-80-regional-points-registered-app-region-data-integrated-production-request-manifest-prepared-no-historical-data-acquired",
+  "status": "all-80-regional-points-registered-app-region-data-integrated-historical-era5-daily-data-fetched-on-demand-not-bulk-downloaded",
   "scope": {
     "countryRegistryPath": "config/global/countries.json",
     "subregionRegistryPath": "config/global/weather-subregions.json",
@@ -38,63 +38,58 @@
     }
   },
   "commonHistoricalBaseline": {
-    "sourceId": "ERA5_LAND_HOURLY",
-    "provider": "Copernicus Climate Change Service / ECMWF",
-    "dataset": "reanalysis-era5-land",
-    "role": "shared-global-gridded-historical-baseline",
+    "sourceId": "ERA5_DAILY_ARCHIVE",
+    "provider": "Open-Meteo Historical Weather API (ERA5 reanalysis)",
+    "dataset": "ERA5",
+    "role": "shared-global-gridded-historical-climate-baseline",
     "referencePeriod": {
       "start": "1991-01-01",
       "end": "2020-12-31"
     },
-    "temporalResolution": "hourly",
-    "spatialCoverage": "global-land",
-    "nativeResolution": "approximately 9 km; distributed on 0.1-degree grid",
-    "productionStatus": "full-ERA5-Land production request manifest prepared; historical data not yet acquired",
-    "productionRule": "Use the full ERA5-Land hourly dataset for repeatable production acquisition. The single-point time-series endpoint may be used for schema/pilot work only and must not be the production dependency.",
+    "temporalResolution": "daily aggregates",
+    "spatialCoverage": "one existing representative coordinate per each of the 80 subregions",
+    "productionStatus": "available on demand through the App historical archive adapter; complete regional archives are not stored as repository files",
+    "productionRule": "Use the existing daily archive API adapter. Reuse the same subregion representative coordinate for all courses in that subregion. No CDS download, ERA5-Land, hourly bulk files, or station ingestion.",
     "variables": [
-      "2m_temperature",
-      "2m_dewpoint_temperature",
-      "total_precipitation",
-      "10m_u_component_of_wind",
-      "10m_v_component_of_wind"
+      "daily minimum 2m temperature",
+      "daily maximum 2m temperature",
+      "daily mean 2m dewpoint",
+      "daily mean relative humidity",
+      "daily mean 10m wind speed",
+      "daily maximum 10m wind speed",
+      "daily precipitation sum",
+      "daily precipitation hours",
+      "daily weather code"
     ],
     "aggregation": {
       "dailyBoundary": "local calendar day in the representative point's IANA timezone",
-      "temperature": "derive daily minimum, mean and maximum from valid hourly 2m temperature; convert Kelvin to Celsius",
-      "precipitation": "apply the selected ERA5-Land product's documented accumulation semantics exactly once, convert metres to millimetres, then sum local-day values",
-      "humidity": "derive hourly relative humidity from 2m temperature and dewpoint; aggregate to daily mean",
-      "wind": "derive hourly speed and direction from U/V components; retain components and aggregate daily mean/max speed",
+      "temperature": "retain daily minimum and maximum air temperature; no daily mean air temperature required for the long-range display",
+      "feelsLike": "derive apparent-temperature low/high from daily Tmin/Tmax, daily mean dewpoint and daily mean wind; clearly mark as an estimate because inputs are daily aggregates and not time-paired",
+      "precipitation": "use daily precipitation sum in millimetres; historical wet-day frequency threshold is >=1 mm",
+      "humidity": "retain daily mean relative humidity",
+      "wind": "retain daily mean and maximum wind speed in metres per second",
       "missingValues": "remain null; never replace missing precipitation with zero"
     },
     "provenanceRequired": [
       "provider",
       "dataset",
-      "datasetVersionOrRetrievalRevision",
+      "referencePeriod",
       "retrievedAt",
-      "validTime",
       "representativePoint",
-      "returnedGridCoordinates",
-      "gridDistanceKm",
       "timezone",
-      "unitConversions",
+      "units",
       "aggregationMethod",
+      "sampleYears",
       "qualityFlags"
     ],
-    "productionRequestPlan": {
-      "script": "scripts/build_eight_country_era5land_requests.py",
-      "test": "tests/test_eight_country_era5land_requests.py",
-      "dataset": "reanalysis-era5-land",
-      "format": "GRIB in ZIP",
-      "requestsPerSubregion": 3,
-      "totalRequests": 240,
-      "segments": [
-        "1991-2020 core reference period",
-        "previous UTC boundary day",
-        "following UTC boundary day"
-      ],
-      "spatialExtraction": "tight area around nearest 0.1-degree candidate; actual returned GRIB coordinates must be inspected and nearest valid land grid point selected",
-      "submissionStatus": "prepared-not-submitted",
-      "note": "This manifest does not submit CDS requests. Full dataset terms must be accepted and CDS credentials configured before any download."
+    "acquisition": {
+      "mode": "on-demand API retrieval when a region/monthly or long-range report is requested",
+      "cache": "share one archive request per representative coordinate and timezone within the current App session",
+      "staticRepositoryFiles": "not required for initial use",
+      "bulkDownloads": false,
+      "cdsCredentialsRequired": false,
+      "era5LandRequired": false,
+      "stationDiscoveryOrIngestion": false
     }
   },
   "independentValidation": {
