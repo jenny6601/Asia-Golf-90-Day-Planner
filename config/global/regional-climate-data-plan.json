@@ -33,7 +33,10 @@
     ],
     "pointPolicy": "Use the existing accepted regional representative point. Exact course pin/fairway precision is not required. Do not create per-course weather records within a subregion.",
     "era5LandGridMappingPath": "config/global/era5-land-grid-points-japan.json",
-    "gridMappingStatus": "expected nearest-neighbour mapping; pilot download must verify actual returned coordinates"
+    "gridMappingStatus": "expected nearest-neighbour mapping; pilot download must verify actual returned coordinates",
+    "expectedJapanSubregionCount": 19,
+    "mainlandSubregionCount": 16,
+    "okinawaSubregionCount": 3
   },
   "baseline": {
     "startDate": "1991-01-01",
@@ -295,5 +298,33 @@
       "forecastEnabled": false,
       "decisionUseEligible": false
     }
+  },
+  "acquisition": {
+    "script": "scripts/batch_era5_land_japan.py",
+    "status": "batch-runner-implemented-not-executed",
+    "referencePeriod": [
+      1991,
+      2020
+    ],
+    "subregionCount": 19,
+    "annualTasksPerSubregion": 30,
+    "totalAnnualTasks": 570,
+    "taskGranularity": "one subregion per calendar year",
+    "defaultTasksPerInvocation": 1,
+    "retryPolicy": {
+      "attempts": 3,
+      "waitSeconds": "linear backoff"
+    },
+    "resumeState": "data/era5-japan-1991-2020/batch-state.json",
+    "outputFolders": [
+      "raw",
+      "reports",
+      "daily"
+    ],
+    "activationPolicy": {
+      "climateBaselineEnabled": false,
+      "forecastEnabled": false
+    },
+    "caveat": "Grid coordinates are expected nearest-neighbour points only; each downloaded file must pass returned-coordinate, variable, units and hourly-coverage inspection."
   }
 }
