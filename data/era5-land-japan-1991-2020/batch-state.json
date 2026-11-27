@@ -27,14 +27,11 @@
         "longitude": 140
       },
       "timezone": "Asia/Tokyo",
-      "status": "daily-converted-structurally-validated",
-      "attempts": 1,
+      "status": "daily-converted-existing",
+      "attempts": 0,
       "archive": "/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/data/era5-land-japan-1991-2020/raw/JP-KNT-NORTH_1991-01-01_1991-12-31.zip",
-      "inspection": "/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/data/era5-land-japan-1991-2020/reports/JP-KNT-NORTH-1991-inspection.json",
-      "daily": "/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/data/era5-land-japan-1991-2020/daily/JP-KNT-NORTH-1991-daily.json",
-      "dailyRecordCount": 365,
-      "climatologyEligible": false
+      "daily": "/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/data/era5-land-japan-1991-2020/daily/JP-KNT-NORTH-1991-daily.json"
     }
   },
-  "updatedAt": "2026-11-27T09:40:42Z"
+  "updatedAt": "2026-11-27T09:50:10Z"
 }
