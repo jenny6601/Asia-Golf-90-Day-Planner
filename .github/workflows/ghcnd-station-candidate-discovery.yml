@@ -95,8 +95,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/observation-stations/ghcnd-candidates-1991-2020.json data/observation-stations/metmalaysia-candidates.json data/observation-stations/ghcnd-daily-record-audit-1991-2020.json data/observation-stations/ghcnd-daily-record-quality-1991-2020.json data/observation-stations/jp-kr-official-acquisition-queue.json data/observation-stations/jma-station-candidates-1991-2020.json\n          if [ -f data/observation-stations/jma-daily-record-quality-1991-2020.json ]; then git add data/observation-stations/jma-daily-record-quality-1991-2020.json; fi
-          for optional_file in data/observation-stations/jma-daily-record-quality-1991-2020.json data/observation-stations/jma-official-history-crosscheck-1991-2020.json; do\n            if [ -f "$optional_file" ]; then git add "$optional_file"; fi\n          done\n          if ! git diff --cached --quiet; then
+          git add data/observation-stations/ghcnd-candidates-1991-2020.json data/observation-stations/metmalaysia-candidates.json data/observation-stations/ghcnd-daily-record-audit-1991-2020.json data/observation-stations/ghcnd-daily-record-quality-1991-2020.json data/observation-stations/jp-kr-official-acquisition-queue.json data/observation-stations/jma-station-candidates-1991-2020.json
+          if [ -f data/observation-stations/jma-daily-record-quality-1991-2020.json ]; then git add data/observation-stations/jma-daily-record-quality-1991-2020.json; fi
+          for optional_file in data/observation-stations/jma-daily-record-quality-1991-2020.json data/observation-stations/jma-official-history-crosscheck-1991-2020.json; do
+            if [ -f "$optional_file" ]; then git add "$optional_file"; fi
+          done
+          if ! git diff --cached --quiet; then
             git commit -m "Archive GHCN station candidates for eight-country regions"
             git pull --rebase origin asia-eight-country-shared-engine
             git push origin asia-eight-country-shared-engine
@@ -118,4 +122,14 @@ jobs:
             data/observation-stations/kma-asos-candidates-1991-2020.json
           if-no-files-found: error
           retention-days: 90
-\n      - name: Upload JMA official history and daily quality reports\n        if: always()\n        uses: actions/upload-artifact@v4\n        with:\n          name: jma-station-history-quality-audits\n          path: |\n            data/observation-stations/jma-official-history-crosscheck-1991-2020.json\n            data/observation-stations/jma-daily-record-quality-1991-2020.json\n          if-no-files-found: ignore\n          retention-days: 90\n
+
+      - name: Upload JMA official history and daily quality reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jma-station-history-quality-audits
+          path: |
+            data/observation-stations/jma-official-history-crosscheck-1991-2020.json
+            data/observation-stations/jma-daily-record-quality-1991-2020.json
+          if-no-files-found: ignore
+          retention-days: 90
