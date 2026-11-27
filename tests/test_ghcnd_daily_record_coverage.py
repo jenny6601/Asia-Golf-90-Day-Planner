@@ -12,7 +12,7 @@ class RecordAuditTests(unittest.TestCase):
     def test_parses_valid_missing_and_quality_flagged(self):
         text="\n".join([
             row(1991,1,"PRCP",100,days=2),
-            row(1991,1,"TMAX",200,days=1)[:21] + f"{200:5d}  " + f"{200:5d}X " + "".join(f"{-9999:5d}  " for _ in range(29)),
+            row(1991,1,"TMAX",200,days=1)[:21] + f"{200:5d}  " + f"{200:5d} X " + "".join(f"{-9999:5d}  " for _ in range(29)),
             row(1991,1,"TMIN",50,days=1)
         ])
         result=parse_dly(text)
