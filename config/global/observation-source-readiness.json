@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "source-discovery-initialized-not-yet-station-matched",
+  "status": "NOAA-global-candidate-inventory-generated-national-source-review-pending",
   "purpose": "Track independent historical station observation options for validating the ERA5-Land regional baseline. Accessible source pages do not imply all 80 subregions have matched stations or downloadable 1991-2020 records.",
   "rules": [
     "Station observations remain independent from ERA5/ERA5-Land reanalysis.",
@@ -68,30 +68,41 @@
     {
       "countryCode": "GLOBAL",
       "agency": "NOAA NCEI GHCN-Daily",
-      "status": "official-metadata-inventory-and-automated-candidate-workflow-added",
+      "status": "metadata-candidate-inventory-generated-awaiting-record-level-quality-review",
       "portal": "https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily",
-      "notes": "NOAA provides public station and element-inventory metadata. The development workflow downloads these metadata files, ranks up to 10 stations per regional point with 1991-2020 element overlap, and outputs candidates only. It does not download observation records or auto-approve stations.",
+      "notes": "NOAA GHCN-Daily station and element-inventory metadata were downloaded and ranked for all 80 regional points. Initial output: 791 top-10 candidate rows; all 80 regions have at least one station with PRCP/TMAX/TMIN inventory overlap during 1991-2020; 76 regions have a complete-element candidate within 75 km. Four Malaysia regions need national-network alternatives. Inventory overlap is not proof of daily completeness; no station is approved and no observation records were downloaded.",
       "candidateDiscoveryScript": "scripts/discover_ghcnd_station_candidates.py",
       "candidateDiscoveryWorkflow": ".github/workflows/ghcnd-station-candidate-discovery.yml",
-      "candidateOutput": "data/observation-stations/ghcnd-candidates-1991-2020.json"
+      "candidateOutput": "data/observation-stations/ghcnd-candidates-1991-2020.json",
+      "candidateDistanceReviewThresholdKm": 75,
+      "requiredClimateElements": [
+        "PRCP",
+        "TMAX",
+        "TMIN"
+      ]
     }
   ],
   "nextActions": [
-    "Run NOAA GHCN-Daily station metadata discovery and review country-code mapping and candidate coverage.",
-    "Review candidate station distance, element-specific overlap, station history, elevation and coastal/mountain representativeness.",
-    "Download official national station inventories for countries with better local networks and compare them with NOAA candidates.",
-    "Request paid or permission-controlled national datasets only after station IDs and target elements are specified.",
-    "Acquire a multi-year ERA5-Land and independent station pilot after station candidate review."
+    "Review the 76 candidate-ready regions using daily observation completeness, station history, relocation, elevation and climate representativeness before pairing.",
+    "Search MetMalaysia station inventory and official historical daily records for MY-SOUTH-01, MY-ISLAND-01, MY-EAST-01 and MY-HIGHLAND-01; do not accept distant NOAA stations as regional matches.",
+    "Review candidate stations in the remaining 76 regions for airport/military/coastal/mountain bias and element-specific daily coverage.",
+    "Download a small multi-year observation pilot only after station candidates are approved; preserve source QC flags and local observation-day conventions.",
+    "Pair the independent station pilot with ERA5-Land daily aggregates and calculate bias, MAE, wet-day hit/miss and seasonal performance by subregion."
   ],
   "lastReviewed": "2026-11-27",
   "discoverySummary": {
     "officialCountrySourcePathFound": 7,
     "officialCountrySourcePathPending": 1,
     "globalFallbackFound": 1,
-    "stationInventoriesDownloaded": 0,
+    "stationInventoriesDownloaded": 1,
     "stationMatches": 0,
     "observationRecordsDownloaded": 0,
-    "interpretation": "A repeatable NOAA metadata candidate workflow is now implemented. It produces ranked station candidates only; no station is approved and no observations have been acquired.",
-    "globalMetadataCandidateWorkflow": "implemented-awaiting-run"
+    "interpretation": "The NOAA GHCN-Daily metadata candidate inventory is generated for all 80 regional points. Complete PRCP/TMAX/TMIN inventory overlap is present for all 80, with a candidate within 75 km for 76. Inventory ranges do not establish daily completeness, station homogeneity or regional representativeness. No observations have been downloaded and no station is approved.",
+    "globalMetadataCandidateWorkflow": "executed-successfully-candidate-inventory-generated",
+    "ghcndRegionCount": 80,
+    "ghcndCandidateStationRows": 791,
+    "ghcndRegionsWithCompleteClimateElements": 80,
+    "ghcndRegionsWithCompleteCandidateWithin75Km": 76,
+    "ghcndRegionsNeedingNationalNetworkSearch": 4
   }
 }
