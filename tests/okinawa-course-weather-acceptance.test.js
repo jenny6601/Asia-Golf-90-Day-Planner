@@ -1,0 +1,48 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs/promises";
+
+const root = new URL("../", import.meta.url);
+const candidates = JSON.parse(await fs.readFile(new URL("config/okinawa/course-coordinate-candidates.json", root), "utf8"));
+const runtime = JSON.parse(await fs.readFile(new URL("config/global/courses.json", root), "utf8"));
+const ids = ["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"];
+
+test("Okinawa acceptance scope contains exactly the six requested main-island courses", () => {
+  assert.deepEqual(candidates.map(x => x.id).sort(), [...ids].sort());
+  assert.equal(new Set(candidates.map(x => x.id)).size, 6);
+});
+
+test("all Okinawa candidate coordinates are valid and use Japan local time", () => {
+  for (const course of candidates) {
+    assert.ok(Number.isFinite(course.latitude) && course.latitude >= 24 && course.latitude <= 28, course.id);
+    assert.ok(Number.isFinite(course.longitude) && course.longitude >= 122 && course.longitude <= 130, course.id);
+    assert.equal(course.timezone, "Asia/Tokyo", course.id);
+    assert.ok(course.officialSourceUrl, course.id);
+    assert.ok(course.coordinateSource, course.id);
+  }
+});
+
+test("PGM manual point remains pending and is not promoted into runtime coordinates", () => {
+  const candidate = candidates.find(x => x.id === "pgm-okinawa");
+  const runtimeCourse = runtime.find(x => x.id === "pgm-okinawa");
+  assert.equal(candidate.coordinateStatus, "pending");
+  assert.equal(candidate.coordinateSource, "User_Google_Maps_Manual");
+  assert.equal(runtimeCourse.coordinateStatus, "pending");
+  assert.equal(runtimeCourse.latitude, null);
+  assert.equal(runtimeCourse.longitude, null);
+  assert.equal(runtimeCourse.enabled, false);
+});
+
+test("official map coordinates are explicitly distinguished from provisional candidates", () => {
+  for (const id of ["atta-terrace","chura-orchard","kise"]) {
+    assert.equal(candidates.find(x => x.id === id).coordinateStatus, "verified", id);
+  }
+  for (const id of ["southern-links","palm-hills"]) {
+    assert.equal(candidates.find(x => x.id === id).coordinateStatus, "provisional", id);
+  }
+});
+
+test("runtime course catalogue still preserves all six records and does not activate pending PGM", () => {
+  assert.deepEqual(runtime.map(x => x.id), ids);
+  assert.equal(runtime.find(x => x.id === "pgm-okinawa").enabled, false);
+});
