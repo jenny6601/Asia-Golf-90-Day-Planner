@@ -70,13 +70,17 @@ test("missing source evidence is not imputed and lowers confidence/eligibility",
 });
 
 test("a fully missing day remains null and windows with fewer than three valid days are excluded",()=>{
-  const days=buildDays(10);
+  const days=buildDays(5);
   const missing=days[2];
   missing.regions={};
-  const result=recommendGolfTripDates({asOf,horizonDays:10,days});
-  const day=result.topThree.flatMap(x=>x.daily).find(x=>x.date===missing.date);
+  days[3].regions={};
+  days[4].regions={};
+  const result=recommendGolfTripDates({asOf,horizonDays:5,days});
+  const day=result.dailyAssessment.find(x=>x.date===missing.date);
   assert.equal(day.riskScore,null);
   assert.equal(day.golfEligible,false);
+  assert.equal(result.validWindows,0);
+  assert.equal(result.excludedWindows,1);
 });
 
 test("invalid risk scores and duplicate dates fail closed",()=>{
@@ -104,7 +108,7 @@ test("three golf rounds stay on the middle three consecutive days, not the trave
       const score=day.date===days[0].date||day.date===days[4].date?1:75;
       region.forecast=signal(score);
       region.historical=signal(score,1,{sampleYears:20});
-      region.stability=signal(score);
+      region.stability=signal(0);
     }
   }
   const result=recommendGolfTripDates({asOf,horizonDays:5,days});
