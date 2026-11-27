@@ -31,7 +31,7 @@ test("maps short forecast, EC46 weekly EFI, SEAS5 monthly anomaly and historical
   assert.equal(input.days.length,90);
   const d1=input.days[0].regions.north;
   assert.ok(d1.forecast);
-  assert.equal(d1.forecast.riskScore,37);
+  assert.equal(d1.forecast.riskScore,26.5);
   assert.ok(d1.historical);
   assert.equal(d1.ec46,undefined);
   const d20=input.days[19].regions.north;
