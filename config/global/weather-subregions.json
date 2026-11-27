@@ -95,7 +95,7 @@
           "subregion": "二世谷／留壽都度假球場群",
           "label": "北海道・二世谷／留壽都度假球場群",
           "coverageStatus": "planned",
-          "representativeCourseId": null,
+          "representativeCourseId": "jp-niseko-village-golf",
           "candidateCourseId": "jp-niseko-village-golf",
           "candidateCourseName": "Niseko Village Golf Course",
           "candidateRationale": "以二世谷／留壽都度假球場群作為目的地單位，納入 Niseko Village Golf Course 與 Niseko Golf Course；兩座球場共用一個代表點進行區域氣候分析。",
@@ -108,7 +108,7 @@
             "coordinateSourceUrl": "https://www.where2golf.com/japan/niseko-village-golf-course/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "coordinateReviewStatus": "third-party-coordinate-cross-check-pending",
           "clusterCourseIds": [
             "jp-niseko-village-golf",
             "jp-niseko-golf-course"
@@ -122,7 +122,7 @@
             "weatherPointEligible": false,
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
-            "reason": "球場身分與營運資訊已由官方營運商確認；座標仍為第三方候選點，尚未完成代表點座標核實，禁止啟用正式天氣資料擷取。"
+            "reason": "Official operator confirms course identity, address, 18 holes and 2026 seasonal operation. Published third-party candidate coordinate is retained for now; official map-pin extraction and independent coordinate reconciliation remain pending. No live weather ingestion."
           },
           "regionId": "JP-REG-01",
           "regionName": "北海道",
@@ -142,7 +142,7 @@
           "subregion": "函館／大沼球場群",
           "label": "北海道・函館／大沼球場群",
           "coverageStatus": "planned",
-          "representativeCourseId": null,
+          "representativeCourseId": "jp-hokkaido-country",
           "candidateCourseName": "Hokkaido Country Club",
           "candidateRationale": "以函館／大沼球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
           "candidateStatus": "research-candidate",
@@ -153,7 +153,7 @@
             "coordinateSourceUrl": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "coordinateReviewStatus": "official-operator-map-pin-confirmed-regional-climate-review",
           "candidateCourseId": "jp-hokkaido-country",
           "courseIdentityVerification": {
             "verificationLevel": "official-operator-identity-and-address-confirmed",
@@ -165,9 +165,9 @@
           "coordinateQuality": {
             "grade": "A",
             "label": "官方營運商 Google Maps 地點圖釘",
-            "reviewStatus": "candidate-only-not-enabled",
+            "reviewStatus": "regional-climate-approved-live-weather-ingestion-not-yet-enabled",
             "weatherPointEligible": false,
-            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
+            "reason": "Prince Hotels official course map provides the Google Maps place pin 41.9892895,140.6549955. Course identity/address and official map point are confirmed. Approved for regional climate analysis; formal live weather ingestion remains disabled pending data-engine connection and validation.",
             "officialMapReference": {
               "type": "official-google-maps-place-pin",
               "url": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
@@ -183,7 +183,7 @@
               "crossCheckResult": "official-operator-place-pin-coordinate-replaces-older-third-party-point",
               "checkedOn": "2026-11-27"
             },
-            "regionalClimateEligible": false,
+            "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point"
           },
           "golfClusterId": "JP-HKD-HAKODATE",
