@@ -226,7 +226,7 @@
     "name": "The North Country Golf Club",
     "address": "26 Rankoshi, Chitose-shi, Hokkaido 066-0068, Japan",
     "timezone": "Asia/Tokyo",
-    "coordinateStatus": "public-map-coordinate",
+    "coordinateStatus": "provisional",
     "coordinateSource": "https://www.jgto.org/en/club/jgto",
     "candidateCoordinates": {
       "latitude": 42.82058,
@@ -2621,7 +2621,8 @@
       "latitude": 33.9232299832,
       "longitude": 135.2723593476
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-green-valley",
@@ -2654,7 +2655,8 @@
       "latitude": 35.4682136,
       "longitude": 138.7517012
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-dai-atami-kokusai",
@@ -2725,7 +2727,8 @@
       "latitude": 35.016667,
       "longitude": 139.033333
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-eau-sol-vert-karuizawa",
@@ -2796,7 +2799,8 @@
       "latitude": 35.4682136,
       "longitude": 138.7517012
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-fuji-golf-course",
@@ -2829,7 +2833,8 @@
       "latitude": 35.4682136,
       "longitude": 138.7517012
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-gora-kadan-fuji",
@@ -2862,7 +2867,8 @@
       "latitude": 35.016667,
       "longitude": 139.033333
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-hanna-country",
@@ -2895,7 +2901,8 @@
       "latitude": 34.826383,
       "longitude": 135.123729
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-hayama-kokusai",
@@ -2928,7 +2935,8 @@
       "latitude": 35.695169,
       "longitude": 139.279074
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-hokkaido-golf-club",
@@ -2961,7 +2969,8 @@
       "latitude": 42.716198,
       "longitude": 141.655636
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-iruma-country",
@@ -3033,7 +3042,8 @@
       "latitude": 35.31468298028144,
       "longitude": 137.45991731575117
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-25-nasu",
@@ -3067,7 +3077,8 @@
       "latitude": 36.709629,
       "longitude": 140.004827
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-31-country",
@@ -3218,7 +3229,8 @@
       "latitude": 35.969597,
       "longitude": 139.315163
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-aga-kogen",
@@ -3252,7 +3264,8 @@
       "latitude": 36.91549,
       "longitude": 136.775147
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-fuchu-country",
@@ -3286,7 +3299,8 @@
       "latitude": 35.695169,
       "longitude": 139.279074
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/tokyo"
   },
   {
     "id": "jp-gmg-hachioji",
@@ -3320,7 +3334,8 @@
       "latitude": 35.695169,
       "longitude": 139.279074
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/tokyo"
   },
   {
     "id": "jp-hachioji-cc",
@@ -3432,7 +3447,8 @@
       "latitude": 35.83503,
       "longitude": 140.27659
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-mashiko-country",
@@ -3466,7 +3482,8 @@
       "latitude": 36.709629,
       "longitude": 140.004827
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-murasakizuka",
@@ -3500,7 +3517,8 @@
       "latitude": 36.709629,
       "longitude": 140.004827
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses"
   },
   {
     "id": "jp-anan-cc",
@@ -3573,7 +3591,8 @@
       "latitude": 33.875869,
       "longitude": 134.65131
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/region/Shikoku"
   },
   {
     "id": "jp-reomakogen",
@@ -3607,7 +3626,8 @@
       "latitude": 33.875869,
       "longitude": 134.65131
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/region/Shikoku"
   },
   {
     "id": "jp-shikoku-anabuki",
@@ -3641,7 +3661,8 @@
       "latitude": 33.875869,
       "longitude": 134.65131
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/region/Shikoku"
   },
   {
     "id": "jp-akita-kita-kuko",
@@ -3753,7 +3774,8 @@
       "latitude": 40.73722,
       "longitude": 140.74876
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/region/Tohoku"
   },
   {
     "id": "jp-banyan-tree-okinawa",
@@ -3787,7 +3809,8 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-bel-beach",
@@ -3821,7 +3844,8 @@
       "latitude": 26.524228,
       "longitude": 127.939192
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-emerald-coast",
@@ -3855,7 +3879,8 @@
       "latitude": 24.734437,
       "longitude": 125.437101
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-ginoza-cc",
@@ -3889,7 +3914,8 @@
       "latitude": 26.524228,
       "longitude": 127.939192
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-kanucha-golf",
@@ -3923,7 +3949,8 @@
       "latitude": 26.524228,
       "longitude": 127.939192
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-naha-golf",
@@ -3957,7 +3984,8 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-nanzan-cc",
@@ -3991,7 +4019,8 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-ocean-castle",
@@ -4025,7 +4054,8 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-ocean-links-miyako",
@@ -4098,7 +4128,8 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-okinawa-royal",
@@ -4132,7 +4163,8 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-onishi-terrace",
@@ -4166,7 +4198,8 @@
       "latitude": 26.455335,
       "longitude": 127.820344
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-risonare-kohamajima",
@@ -4239,7 +4272,8 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-sashiba-links",
@@ -4273,7 +4307,8 @@
       "latitude": 24.734437,
       "longitude": 125.437101
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-shigira-bay",
@@ -4307,7 +4342,8 @@
       "latitude": 24.734437,
       "longitude": 125.437101
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-shurei-cc",
@@ -4341,7 +4377,8 @@
       "latitude": 26.113785,
       "longitude": 127.739021
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/okinawa"
   },
   {
     "id": "jp-aino-cc",
@@ -4414,7 +4451,8 @@
       "latitude": 31.974525,
       "longitude": 131.472898
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/region/Kyushu-Island"
   },
   {
     "id": "jp-amagase-onsen",
@@ -4487,7 +4525,8 @@
       "latitude": 31.974525,
       "longitude": 131.472898
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://golf-in-japan.com/courses/region/Kyushu-Island"
   },
   {
     "id": "jp-niseko-village-golf",
@@ -4694,7 +4733,8 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
   },
   {
     "id": "jp-takino-cc",
@@ -4729,7 +4769,8 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
   },
   {
     "id": "jp-hitsujigaoka-cc",
@@ -4764,7 +4805,8 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
   },
   {
     "id": "jp-sapporo-fuyo-cc",
@@ -4799,7 +4841,8 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
   },
   {
     "id": "jp-tsukisappu-gc",
@@ -4834,7 +4877,8 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
   },
   {
     "id": "jp-jozankei-komagaoka",
@@ -4868,7 +4912,8 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
   },
   {
     "id": "jp-rembrandt-sapporo",
@@ -4903,7 +4948,8 @@
       "latitude": 43.1039996,
       "longitude": 141.2091466
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://www.pref.hokkaido.lg.jp/fs/1/3/1/2/9/4/5/5/_/r8itiran.pdf"
   },
   {
     "id": "jp-niseko-golf-course",
@@ -4938,6 +4984,7 @@
       "latitude": 42.847109,
       "longitude": 140.685607
     },
-    "regionalClimateTimezone": "Asia/Tokyo"
+    "regionalClimateTimezone": "Asia/Tokyo",
+    "coordinateSource": "https://niseko-golf.com/en/contact/"
   }
 ]
