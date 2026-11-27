@@ -70,6 +70,7 @@ function historicalLocation(course){
 }
 // Share one ERA5 daily archive request between all courses in the same subregion.
 const historicalArchiveCache=new WeakMap();
+let historicalRequestQueue=Promise.resolve();
 async function loadHistoricalDailyArchive(course,fetchImpl,now){
  if(typeof fetchImpl!=="function")throw new TypeError("fetchImpl must be a function");
  let cache=historicalArchiveCache.get(fetchImpl);
@@ -77,17 +78,25 @@ async function loadHistoricalDailyArchive(course,fetchImpl,now){
  const startYear=1991,endYear=2020,location=historicalLocation(course),{latitude,longitude,timezone}=location;
  const key=[latitude,longitude,startYear,endYear,timezone].join("|");
  if(!cache.has(key)){
-  const request=(async()=>{
+  const request=historicalRequestQueue.then(async()=>{
    const params=new URLSearchParams({latitude:String(latitude),longitude:String(longitude),
     start_date:startYear+"-01-01",end_date:endYear+"-12-31",
     daily:"temperature_2m_max,temperature_2m_min,dew_point_2m_mean,relative_humidity_2m_mean,wind_speed_10m_mean,wind_speed_10m_max,precipitation_sum,precipitation_hours,weather_code",
     timezone,temperature_unit:"celsius",wind_speed_unit:"ms",precipitation_unit:"mm",models:"era5"});
-   const response=await fetchImpl("https://archive-api.open-meteo.com/v1/archive?"+params);
-   if(!response.ok)throw new Error("歷史逐日資料 API HTTP "+response.status);
+   const url="https://archive-api.open-meteo.com/v1/archive?"+params;
+   let response=null;
+   for(let attempt=0;attempt<3;attempt++){
+    response=await fetchImpl(url);
+    if(response.ok)break;
+    const retryable=response.status===429||response.status>=500;
+    if(!retryable||attempt===2)throw new Error("歷史逐日資料 API HTTP "+response.status);
+    await new Promise(resolve=>setTimeout(resolve,1000*(attempt+1)));
+   }
    const payload=await response.json(),daily=payload.daily;
    if(!daily?.time?.length)throw new Error("歷史逐日資料 API 未回傳有效逐日樣本");
    return {daily,startYear,endYear};
-  })();
+  });
+  historicalRequestQueue=request.catch(()=>undefined);
   cache.set(key,request);
   request.catch(()=>{if(cache.get(key)===request)cache.delete(key)});
  }
