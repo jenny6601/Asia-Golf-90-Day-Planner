@@ -51,8 +51,8 @@
           "label": "中部・名古屋／富士",
           "coverageStatus": "planned",
           "representativeCourseId": null,
-          "candidateCourseName": "Kawaguchiko Country Club",
-          "candidateRationale": "山梨縣富士山周邊高原候選代表；中部區域仍需確認代表點是否應改為名古屋近郊",
+          "candidateCourseName": "Tsu Country Club",
+          "candidateRationale": "三重縣東海／中部地區球場，較符合名古屋—東海氣候帶；仍需核對實際代表點是否應設於愛知縣近郊。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
           "candidateStatus": "research-candidate"
         },
@@ -155,8 +155,8 @@
           "label": "江原道／春川",
           "coverageStatus": "planned",
           "representativeCourseId": null,
-          "candidateCourseName": "Pine Ridge Country Club",
-          "candidateRationale": "江原道東海岸候選代表；需確認球場現行營運資訊",
+          "candidateCourseName": "Whistling Rock Country Club",
+          "candidateRationale": "江原道春川球場；韓國高爾夫球場經營協會地區名錄列於江原道區域。",
           "candidateSourceUrl": "https://kgba.or.kr/03sub02",
           "candidateStatus": "research-candidate"
         },
@@ -468,8 +468,8 @@
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Santiburi Samui Country Club",
-          "candidateRationale": "蘇梅島高地代表球場候選",
-          "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
+          "candidateRationale": "蘇梅島北部山坡18洞錦標賽球場，官方資料可確認其地形及島嶼位置。",
+          "candidateSourceUrl": "https://www.santiburigolfsamui.com/infomation/",
           "candidateStatus": "research-candidate"
         }
       ]
@@ -524,8 +524,8 @@
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "The Els Club Teluk Datai",
-          "candidateRationale": "蘭卡威候選代表球場；座標與現行營運狀態待核",
-          "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
+          "candidateRationale": "The Els Club 官方網站確認蘭卡威 Teluk Datai Rainforest Course 為其馬來西亞目的地之一。",
+          "candidateSourceUrl": "https://www.elsclubmalaysia.com/",
           "candidateStatus": "research-candidate"
         },
         {
@@ -560,8 +560,8 @@
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Kuala Terengganu Golf Resort",
-          "candidateRationale": "登嘉樓東海岸候選代表；需再核對目前營運及座標",
-          "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
+          "candidateRationale": "目前暫以東海岸高爾夫區候選；名錄有彭亨州 Mahkota Golf & Country Club，但與登嘉樓距離較遠，需再核對後決定是否調整分區中心。",
+          "candidateSourceUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
           "candidateStatus": "research-candidate"
         },
         {
@@ -572,7 +572,7 @@
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Cameron Highlands Golf Course",
-          "candidateRationale": "金馬崙高原候選代表；需再核對目前球場營運狀態",
+          "candidateRationale": "金馬崙高原地形與其他低海拔分區差異明顯；此球場僅列研究候選，營運狀態及可取得座標尚待查證。",
           "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
           "candidateStatus": "research-candidate"
         }
@@ -672,8 +672,8 @@
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseName": "Ria Bintan Golf Club",
-          "candidateRationale": "民丹島代表性海岸球場候選；此分區需再確認是否改以巴淡或民丹單一代表",
-          "candidateSourceUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
+          "candidateRationale": "民丹島官方球場資料列有 Ocean Course 與 Forest Course；目前候選代表民丹島，建議將次分區名稱收斂為民丹島，或拆分巴淡與民丹。",
+          "candidateSourceUrl": "https://www.riabintan.com/golf/",
           "candidateStatus": "research-candidate"
         },
         {
