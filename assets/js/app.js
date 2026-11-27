@@ -828,8 +828,12 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   (modelType==="明顯偏濕"||modelType==="偏濕"?"偏濕季":
    modelType==="偏乾"?"偏乾季":historicalTypeLabel):
   historicalTypeLabel;
+ // 「優先日期」是全月評分最高的前5天；「本月適打日期」則列出所有符合適打門檻的日期，兩者用途不同。
  const best=[...dailyAssessment].sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.date.localeCompare(b.date)).slice(0,5);
  const datesText=best.length?best.map(x=>Number(x.date.slice(8,10))+"日").join("、"):"資料不足，暫無推薦日期";
+ const playableDates=playable.map(x=>x.date);
+ const playableDateSet=new Set(playableDates);
+ const allPlayableDatesText=playableDates.length?playableDates.map(x=>Number(x.slice(8,10))+"日").join("、"):"目前沒有符合適打門檻的日期";
  // Recommend a continuous five-day travel window only when all five dates have usable data.
  const byDate=new Map(dailyAssessment.map(x=>[x.date,x]));
  const fiveDayWindows=[];
@@ -891,10 +895,12 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  countItems.forEach(item=>{const card=node("div",undefined,"monthly-playability-count "+item.tone);card.append(node("span",item.icon,"monthly-playability-icon"),node("strong",item.label),node("b","約 "+item.count+" 天"),node("small",item.desc));counts.append(card)});
  summary.append(counts);
  const priority=node("div",undefined,"monthly-playability-priority");
- priority.append(node("strong","📅 優先日期"),node("span",datesText));
+ priority.append(node("strong","📅 優先日期（前5天）"),node("span",datesText));
+ const allPlayable=node("div",undefined,"monthly-playability-all-dates");
+ allPlayable.append(node("strong","⛳ 本月適打日期（全部）"),node("span",allPlayableDatesText));
  const week=node("div",undefined,"monthly-playability-week");
  week.append(node("strong","🗓️ 優先週數"),node("span",dateRange));
- summary.append(priority,week);
+ summary.append(priority,allPlayable,week);
  const notes=node("div",undefined,"monthly-playability-notes");
  const noteRows=[
   ["🎯 日期評估","依降雨頻率及估計雨量排序，並非保證晴天。"],
@@ -929,7 +935,8 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const seasonalEntries=seasonalDailyRows.filter(x=>x.date===date);
   const useSeasonal=!isForecast&&lead>=18&&lead<=89&&seasonalEntries.length>0;
   const dayOfWeek=new Date(date+"T12:00:00Z").getUTCDay(),isWeekend=dayOfWeek===0||dayOfWeek===6;
-  const card=node("button",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":useSeasonal?"monthly-day-seasonal":"monthly-day-history")+(isWeekend?" monthly-weekend":""));
+  const isPlayable=playableDateSet.has(date);
+  const card=node("button",undefined,"monthly-calendar-day "+(isForecast?"monthly-day-forecast":useSeasonal?"monthly-day-seasonal":"monthly-day-history")+(isWeekend?" monthly-weekend":"")+(isPlayable?" monthly-day-playable":""));
   card.type="button";
   // Apply the non-forecast date fills directly to each card. This bypasses
   // inherited .panel button theme rules that previously painted seasonal
@@ -948,7 +955,8 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   card.addEventListener("click",()=>openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,sampleCourses[0],date,{forecastCourses,historicalNormals,seasonalDailyRows}))
   const code=mode(isForecast?actualEntries.map(x=>x.code):useSeasonal?seasonalEntries.map(x=>x.code):[]),highValue=isForecast?avg(actualEntries,"high"):useSeasonal?avg(seasonalEntries,"highEstimate"):avg(historicalEntries,"highMean"),lowValue=isForecast?avg(actualEntries,"low"):useSeasonal?avg(seasonalEntries,"lowEstimate"):avg(historicalEntries,"lowMean"),rainProb=isForecast?avg(actualEntries,"prob"):useSeasonal?avg(seasonalEntries,"rainChanceEstimate"):avg(historicalEntries,"rainFrequency"),rainValue=useSeasonal?avg(seasonalEntries,"rainEstimate"):null,confidenceLabel=useSeasonal?seasonalEntries.map(x=>x.confidence).filter(Boolean).sort((a,b)=>({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[b]??4)-({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[a]??4))[0]:null;
   const icon=createWeatherIcon(code,!isForecast&&!useSeasonal,rainProb);icon.classList.add("monthly-day-icon");
-  card.append(node("strong",String(Number(date.slice(8,10))),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):useSeasonal?(modeText(seasonalEntries.map(x=>x.weather))||"長期氣候估計"):(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
+  card.append(node("strong",String(Number(date.slice(8,10)))+(isPlayable?" ✓":""),"monthly-day-date"),icon,node("span",isForecast?weatherLabel(code):useSeasonal?(modeText(seasonalEntries.map(x=>x.weather))||"長期氣候估計"):(Number.isFinite(rainProb)?rainProb>=60?"歷史常有雨":rainProb>=30?"歷史偶有雨":"歷史較少雨":"歷史資料不足"),"monthly-day-condition"));
+  if(isPlayable)card.append(node("small","適打","monthly-day-playable-label"));
   card.append(node("b",Number.isFinite(highValue)?highValue.toFixed(0)+"°":"—","monthly-day-high"),node("span",Number.isFinite(lowValue)?lowValue.toFixed(0)+"°":"—","monthly-day-low"));
   card.append(node("small",isForecast?"雨機率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):useSeasonal?"雨日頻率 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"):"歷史雨頻 "+(Number.isFinite(rainProb)?rainProb.toFixed(0)+"%":"—"),"monthly-day-rain"));
   if(useSeasonal){
