@@ -30,7 +30,7 @@ export function buildRegionalCoverage(countries,courses,registry=[]){
    return {id:null,countryCode,region,area,label:region+" "+area,candidateCount:rows.length,coverageStatus:"unregistered-subregion",representative:{id:representative.id,name:representative.name,nameLocal:representative.nameLocal||"",latitude:representative.latitude,longitude:representative.longitude,coordinateStatus:representative.coordinateStatus}};
   }).filter(Boolean);
   const subregions=[...planned,...extra].sort((a,b)=>a.region.localeCompare(b.region)||a.area.localeCompare(b.area));
-  return {code:country.code,name:country.name,nameZh:country.nameZh||country.name,enabled:country.enabled===true,registryStatus:configured?.coverageStatus||"not-registered",subregionCount:subregions.length,readySubregionCount:subregions.filter(x=>x.coverageStatus==="ready").length,candidateCourseCount:subregions.reduce((n,x)=>n+x.candidateCount,0),subregions};
+  return {code:country.code,name:country.name,nameZh:country.nameZh||country.name,enabled:country.enabled===true,registryStatus:configured?.coverageStatus||"not-registered",subregionCount:subregions.length,readySubregionCount:subregions.filter(x=>Boolean(x.representative)).length,candidateCourseCount:subregions.reduce((n,x)=>n+x.candidateCount,0),subregions};
  });
  return {countryCount:countryRows.length,enabledCountryCount:countryRows.filter(x=>x.enabled).length,countriesWithCoverage:countryRows.filter(x=>x.readySubregionCount>0).length,subregionCount:countryRows.reduce((n,x)=>n+x.subregionCount,0),readySubregionCount:countryRows.reduce((n,x)=>n+x.readySubregionCount,0),representativeCount:countryRows.reduce((n,x)=>n+x.readySubregionCount,0),countries:countryRows};
 }
