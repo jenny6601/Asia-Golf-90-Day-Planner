@@ -4,7 +4,7 @@
 Inventory only source data files physically present in the repository checkout. This is a read-only audit; it does not download, infer, synthesize or activate weather data.
 
 ## What counts as acquired data
-- ERA5-Land daily JSON with actual dated regional records counts as historical daily input.
+- ERA5 daily JSON with actual dated regional records counts as historical daily input.
 - A manifest, representative-point audit, station list or station metadata does not count as acquired historical weather.
 - A forecast snapshot counts only for variables and valid periods physically present in that snapshot.
 - Weekly/monthly forecast arrays do not count as daily-shaped forecasts or hindcasts.
