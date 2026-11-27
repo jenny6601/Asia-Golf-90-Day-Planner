@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "status": "source-discovery-initialized-not-yet-station-matched",
+  "purpose": "Track independent historical station observation options for validating the ERA5-Land regional baseline. Accessible source pages do not imply all 80 subregions have matched stations or downloadable 1991-2020 records.",
+  "rules": [
+    "Station observations remain independent from ERA5/ERA5-Land reanalysis.",
+    "Match station ID and valid observation date; preserve local observation-day definition, QC flags, station relocation/history, elevation and distance.",
+    "Do not claim station validation until records are downloaded, paired and quality checked.",
+    "Record fees, licensing and access limits before acquisition."
+  ],
+  "sources": [
+    {
+      "countryCode": "JP",
+      "agency": "Japan Meteorological Agency (JMA)",
+      "status": "documented-in-engine-plan-station-matching-not-started",
+      "portal": "https://www.data.jma.go.jp/obd/stats/etrn/index.php",
+      "notes": "Select nearby long-running stations and inspect element coverage, station history and observation-day definitions."
+    },
+    {
+      "countryCode": "KR",
+      "agency": "Korea Meteorological Administration (KMA)",
+      "status": "official-portal-found-station-matching-not-started",
+      "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
+      "notes": "ASOS offers minute/hour/day/month/year data; records begin in 1904 for some station/element combinations; 105 listed stations; QC flags exist for selected elements; long spans may require file-set download."
+    },
+    {
+      "countryCode": "CN",
+      "agency": "China Meteorological Administration (CMA)",
+      "status": "discovery-required",
+      "portal": null,
+      "notes": "Official historical station archive endpoint, record length, access method and licensing need confirmation."
+    },
+    {
+      "countryCode": "VN",
+      "agency": "Vietnam National Hydro-Meteorological Service",
+      "status": "official-response-confirms-data-by-request-fee-based",
+      "portal": "https://vnmha.mae.gov.vn/chi-tiet-hoi-dap-12.htm",
+      "notes": "Official response says stations are available, records generally begin 1977 onward, hourly or daily formats; access is fee-based and requires contacting the data center."
+    },
+    {
+      "countryCode": "TH",
+      "agency": "Thai Meteorological Department (TMD)",
+      "status": "discovery-required",
+      "portal": null,
+      "notes": "Official historical station archive endpoint, record length, access method and licensing need confirmation."
+    },
+    {
+      "countryCode": "MY",
+      "agency": "Malaysian Meteorological Department (MetMalaysia)",
+      "status": "discovery-required",
+      "portal": null,
+      "notes": "Official historical station archive endpoint, record length, access method and licensing need confirmation."
+    },
+    {
+      "countryCode": "SG",
+      "agency": "Meteorological Service Singapore / NEA",
+      "status": "official-daily-records-found-record-length-varies",
+      "portal": "https://www.weather.gov.sg/climate-historical-daily",
+      "notes": "Official portal provides daily station records; coverage and record duration vary by station. Some additional climate data requires paid extraction."
+    },
+    {
+      "countryCode": "ID",
+      "agency": "BMKG / Southeast Asian Climate Assessment (SACA&D)",
+      "status": "public-research-dataset-found-usage-restrictions",
+      "portal": "https://sacad.bmkg.go.id/dailydata/index.php",
+      "notes": "SACA&D daily station series partly free for non-commercial research; availability varies. BMKG Data Online has access limits for some data products; confirm terms before commercial use."
+    },
+    {
+      "countryCode": "GLOBAL",
+      "agency": "NOAA NCEI GHCN-Daily",
+      "status": "global-fallback-found-station-and-element-coverage-varies",
+      "portal": "https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily",
+      "notes": "Global daily station data with common QA review; record lengths and variables vary, and many stations report precipitation only. Assess per subregion and element."
+    }
+  ],
+  "nextActions": [
+    "Confirm official archive access and terms for China, Thailand and Malaysia.",
+    "Download station inventories and metadata for all eight countries where possible.",
+    "Match candidate stations to 80 regional points using distance, elevation and coastal/mountain exposure.",
+    "Select overlapping 1991-2020 observation records by element and publish coverage before comparison.",
+    "Run independent ERA5-Land versus station diagnostics; do not apply bias correction before validation design approval."
+  ]
+}
