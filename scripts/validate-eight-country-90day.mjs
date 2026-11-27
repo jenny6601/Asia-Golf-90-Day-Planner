@@ -1,5 +1,4 @@
 import fs from "node:fs/promises";
-import {fetchAsiaGolfDirectory} from "../assets/js/course-catalog.js";
 import {fetchCourseSeasonalForecast,fetchCourseHistoricalWeekNormals} from "../assets/js/long-range-api.js";
 import {buildDailyClimateOutlook} from "../assets/js/daily-climate-outlook.js";
 import {classifyMonthlyDay,summarizeMonthlyWeather,firstAvailableMetric} from "../assets/js/monthly-weather-summary.js";
@@ -11,9 +10,22 @@ const finite=x=>typeof x==="number"&&Number.isFinite(x);
 const referenceDate=today();
 const dates=Array.from({length:74},(_,i)=>add(referenceDate,16+i)); // D17-D90
 const fetchWithTimeout=(url,options={})=>fetch(url,{...options,signal:AbortSignal.timeout(60000)});
-const directory=await fetchAsiaGolfDirectory({fetchImpl:fetchWithTimeout});
-const byCourse=new Map(directory.courses.map(c=>[c.id,c]));
-const subregions=[...directory.subregions].sort((a,b)=>countryOrder.indexOf(a.countryCode)-countryOrder.indexOf(b.countryCode)||a.id.localeCompare(b.id));
+const [countries,courses,registry]=await Promise.all([
+ fs.readFile(new URL("../config/global/countries.json",import.meta.url),"utf8").then(JSON.parse),
+ fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8").then(JSON.parse),
+ fs.readFile(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8").then(JSON.parse)
+]);
+const subregions=registry.countries.flatMap(group=>(group.subregions||[]).map(s=>({...s,countryCode:group.countryCode,countryNameZh:group.countryNameZh})))
+ .sort((a,b)=>countryOrder.indexOf(a.countryCode)-countryOrder.indexOf(b.countryCode)||a.id.localeCompare(b.id));
+const byCourse=new Map(courses.map(course=>[course.id,course]));
+for(const s of subregions){
+ const c=byCourse.get(s.representativeCourseId);
+ if(!c||c.countryCode!==s.countryCode||c.subregionId!==s.id||!Number.isFinite(s.candidateCoordinates?.latitude)||!Number.isFinite(s.candidateCoordinates?.longitude)||!s.candidateCoordinates?.timezone){
+  throw new Error("Invalid regional representative configuration: "+s.id);
+ }
+ c.regionalClimate={representativePoint:{latitude:s.candidateCoordinates.latitude,longitude:s.candidateCoordinates.longitude},timezone:s.candidateCoordinates.timezone};
+}
+if(countries.length!==8||subregions.length!==80)throw new Error("Expected eight countries and 80 subregions");
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const results=[];
 for(const subregion of subregions){
