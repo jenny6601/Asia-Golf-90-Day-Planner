@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {evaluateSixHourPlayability,SIX_HOUR_REQUIRED_FIELDS} from "../assets/js/six-hour-playability.js";
+import {evaluateSixHourPlayability,evaluateSixHourPlayabilityFromRecords,SIX_HOUR_REQUIRED_FIELDS} from "../assets/js/six-hour-playability.js";
 
 function hourly(overrides={}){
  const time=Array.from({length:24},(_,i)=>"2026-11-27T"+String(i).padStart(2,"0")+":00");
@@ -53,4 +53,18 @@ test("strong gusts trigger the environment caution and safety overlay",()=>{
  const h=hourly();for(let i=7;i<13;i++)h.wind_gusts_10m[i]=16;
  const r=evaluateSixHourPlayability(h,"2026-11-27",7);
  assert.equal(r.environment.severity,3);assert.equal(r.playability.grade,"D");
+});
+test("renderer records adapter produces the same six-hour grade from km/h inputs",()=>{
+ const records=Array.from({length:6},(_,i)=>({time:String(7+i).padStart(2,"0")+":00",rain:5,mm:0,temp:24,feel:24,wind:3*3.6,gust:5*3.6,code:1}));
+ const result=evaluateSixHourPlayabilityFromRecords(records,"2026-11-27");
+ assert.equal(result.status,"scored");
+ assert.equal(result.playability.grade,"A");
+ assert.equal(result.inputs.averageWindMs,3);
+ assert.equal(result.inputs.peakGustMs,5);
+});
+test("renderer records adapter rejects non-consecutive hours and incomplete records",()=>{
+ const records=Array.from({length:6},(_,i)=>({time:String(7+i).padStart(2,"0")+":00",rain:5,mm:0,temp:24,feel:24,wind:10,gust:15,code:1}));
+ records[3].time="11:30";
+ assert.equal(evaluateSixHourPlayabilityFromRecords(records,"2026-11-27").status,"insufficient-data");
+ assert.equal(evaluateSixHourPlayabilityFromRecords(records.slice(0,5),"2026-11-27").status,"insufficient-data");
 });
