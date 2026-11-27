@@ -39,16 +39,21 @@ jobs:
         run: node scripts/project-okinawa-course-source-reliability.mjs
       - name: Archive ECMWF 17-90 day seasonal forecast snapshot
         run: node scripts/archive-okinawa-seasonal-forecast.mjs
+      - name: Pair seasonal forecasts with JMA regional observations
+        run: node scripts/pair-okinawa-seasonal-forecasts-with-jma.mjs
+      - name: Run seasonal observation pairing tests
+        run: node --test tests/okinawa-seasonal-observation-pairing.test.mjs
       - name: Commit daily hindcast archive
         if: always()
         run: |
-          if [ -n "$(git status --porcelain data/okinawa/model-hindcast-archive data/okinawa/model-source-ranking data/okinawa/course-source-reliability data/okinawa/seasonal-forecast-archive)" ]; then
+          if [ -n "$(git status --porcelain data/okinawa/model-hindcast-archive data/okinawa/model-source-ranking data/okinawa/course-source-reliability data/okinawa/seasonal-forecast-archive data/okinawa/seasonal-observation-pairs)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             if [ -d data/okinawa/model-hindcast-archive ]; then git add data/okinawa/model-hindcast-archive/; fi
             if [ -d data/okinawa/model-source-ranking ]; then git add data/okinawa/model-source-ranking/; fi
             if [ -d data/okinawa/course-source-reliability ]; then git add data/okinawa/course-source-reliability/; fi
             if [ -d data/okinawa/seasonal-forecast-archive ]; then git add data/okinawa/seasonal-forecast-archive/; fi
+            if [ -d data/okinawa/seasonal-observation-pairs ]; then git add data/okinawa/seasonal-observation-pairs/; fi
             git commit -m "Archive daily Okinawa model hindcast verification"
             git push
           else
@@ -64,6 +69,7 @@ jobs:
             data/okinawa/model-source-ranking/
             data/okinawa/course-source-reliability/
             data/okinawa/seasonal-forecast-archive/
+            data/okinawa/seasonal-observation-pairs/
             artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.*
           if-no-files-found: warn
           retention-days: 90
