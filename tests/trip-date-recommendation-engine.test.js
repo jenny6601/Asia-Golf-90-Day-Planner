@@ -40,7 +40,10 @@ test("90-day input returns ranked 5-day windows, three rounds, and alternates",(
     assert.ok(window.score>=0&&window.score<=100);
   }
   assert.ok(result.topThree[0].score<=result.topThree[1].score);
-  assert.ok(result.topThree[1].score<=result.topThree[2].score);\n  const selected=[...result.topThree,...result.alternates];\n  for(let i=1;i<selected.length;i++)assert.ok((Date.parse(selected[i].startDate)-Date.parse(selected[i-1].startDate))/86400000>=5);\n  assert.deepEqual(result.topThree.map(x=>x.rank),[1,2,3]);
+  assert.ok(result.topThree[1].score<=result.topThree[2].score);
+  const selected=[...result.topThree,...result.alternates];
+  for(let i=1;i<selected.length;i++)assert.ok((Date.parse(selected[i].startDate)-Date.parse(selected[i-1].startDate))/86400000>=5);
+  assert.deepEqual(result.topThree.map(x=>x.rank),[1,2,3]);
 });
 
 test("lead horizons select short forecast, EC46, and SEAS5 source bands",()=>{
