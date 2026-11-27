@@ -5,6 +5,7 @@ import {fetchCourseForecast} from "./weather-api.js";
 import {fetchCourseSeasonalForecast,fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals} from "./long-range-api.js?v=era5-history-1991-2020-r6";
 import {buildDailyClimateOutlook} from "./daily-climate-outlook.js";
 import {buildFiveDayWindows,pickRecommendedFiveDayWindows} from "./recommendation-windows.js";
+import {classifyMonthlyDay,summarizeMonthlyWeather} from "./monthly-weather-summary.js";
 import {renderTaiwanPwaHourly} from "./taiwan-hourly-renderer.js";
 import {orderCoursesByPriority,normalizeDepartureRegion} from "./departure-course-order.js";
 const $=id=>document.getElementById(id),S={};
@@ -779,16 +780,16 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const rainAmount=isForecast?mean(actual,"rain"):seasonal.length?mean(seasonal,"rainEstimate"):mean(historical,"rainMean");
   const highTemp=isForecast?mean(actual,"high"):seasonal.length?mean(seasonal,"feelsLikeMaxEstimateC"):mean(historical,"feelsLikeMaxMeanC");
   if(!Number.isFinite(rainChance)&&!Number.isFinite(rainAmount))return {date,valid:false};
-  const chance=Number.isFinite(rainChance)?rainChance:100,amount=Number.isFinite(rainAmount)?rainAmount:0;
-  const grade=chance<30&&amount<1?0:chance<45&&amount<2?1:chance<60&&amount<4?2:3;
-  const tooHot=Number.isFinite(highTemp)&&highTemp>33;
-  const status=tooHot||grade===3?"不適":grade===2?"可打":"適打";
-  return {date,valid:true,grade,status,playable:status==="適打",chance,amount,source:isForecast?"逐日預報":seasonal.length?"歷史＋季節模式估計":"歷史氣候參考"};
+  const classification=classifyMonthlyDay({rainFrequency:rainChance,rainAmount:rainAmount,highTemp});
+  if(!classification)return {date,valid:false};
+  return {date,valid:true,...classification,chance:rainChance,amount:rainAmount,source:isForecast?"逐日預報":seasonal.length?"歷史＋季節模式估計":"歷史氣候參考"};
  }).filter(x=>x.valid);
- monthlyDailyAssessmentForWeeks=dailyAssessment;
+ const assessmentDays=dailyAssessment.filter(x=>x.date>=today());
+ monthlyDailyAssessmentForWeeks=assessmentDays;
  const byDate=new Map(dailyAssessment.map(item=>[item.date,item]));
  weekButton.disabled=false;
- const playable=dailyAssessment.filter(x=>x.playable),watch=dailyAssessment.filter(x=>x.grade===2),wet=dailyAssessment.filter(x=>x.grade===3);
+ const monthlySummary=summarizeMonthlyWeather(dailyAssessment,today(),dates);
+ const playable=assessmentDays.filter(x=>x.grade<=1),watch=assessmentDays.filter(x=>x.grade===2),wet=assessmentDays.filter(x=>x.grade===3);
  const seasonBaseline=Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)?seasonRain-rainAnomaly:null;
  const seasonRatio=Number.isFinite(seasonBaseline)&&seasonBaseline>0?seasonRain/seasonBaseline:null;
  // Historical seasonal character and current model tendency are described separately.
@@ -812,7 +813,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  // relative to normal, not evidence that the location has entered a wet/dry season.
  const seasonLabel=historicalTypeLabel;
  // 「優先日期」是全月評分最高的前5天；「本月適打日期」則列出所有符合適打門檻的日期，兩者用途不同。
- const best=[...dailyAssessment].filter(x=>x.date>=today()).sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.date.localeCompare(b.date)).slice(0,5);
+ const best=[...assessmentDays].sort((a,b)=>a.grade-b.grade||a.chance-b.chance||a.amount-b.amount||a.date.localeCompare(b.date)).slice(0,5);
  const datesText=best.length?best.map(x=>Number(x.date.slice(8,10))+"日").join("、"):"資料不足，暫無推薦日期";
  const playableDates=playable.map(x=>x.date);
  const playableDateSet=new Set(playableDates);
@@ -828,11 +829,9 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
    modelType==="偏乾"?"模式估計月雨量低於常年約 "+Math.round((1-seasonRatio)*100)+"%。":
    "模式訊號接近常年，未見明顯偏濕或偏乾。"):
   "季節模式資料不足，暫以歷史同期型態作參考。";
- const playableRatio=dailyAssessment.length?playable.length/dailyAssessment.length:null;
+ const playableRatio=assessmentDays.length?playable.length/assessmentDays.length:null;
  const playableDescription=Number.isFinite(playableRatio)?
-  (playableRatio>=.5?"適打天數：偏多（本月較多日期具較佳打球條件）":
-   playableRatio>=.3?"適打天數：普通（仍有部分日期適合安排）":
-   "適打天數：偏少（較容易受降雨影響）"):
+  ("適打天數："+playable.length+" 天／"+assessmentDays.length+" 個可評估日（"+Math.round(playableRatio*100)+"%）"):
   "適打天數：資料不足，暫無法判定";
  const historyDescription=historicalMonthType==="歷史同期資料不足，無法判定"?
   "資料不足，無法判定季節型態。":
@@ -853,11 +852,12 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  summary.append(reportHeader);
  const seasonBanner=node("div",undefined,"monthly-playability-season");
  const seasonMain=node("div",undefined,"monthly-playability-season-main");
- seasonMain.append(node("div","🌦️ 本月型態","monthly-playability-kicker"),node("strong",seasonLabel,"monthly-playability-season-label"));
+ seasonMain.append(node("div","🌦️ 本月天氣總評","monthly-playability-kicker"),node("strong",monthlySummary.label,"monthly-playability-season-label"));
  const seasonPoints=node("div",undefined,"monthly-playability-season-points");
  const pointRows=[
   ["歷史同期",historyDescription,"history"],
   ["模式推估",modelDescription,"model"],
+  ["整體判讀",monthlySummary.description,"playable"],
   ["✓",playableDescription,"playable"]
  ];
  pointRows.forEach(([label,detail,tone])=>{const row=node("div",undefined,"monthly-playability-season-point "+tone);row.append(node("strong",label),node("span",detail));seasonPoints.append(row)});
