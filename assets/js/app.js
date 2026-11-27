@@ -2,7 +2,7 @@ import {mountValidationPanel} from "./validation-panel.js";
 import {fetchAsiaGolfDirectory} from "./course-catalog.js";
 import {formatCourseDate} from "./course-time.js";
 import {fetchCourseForecast} from "./weather-api.js";
-import {fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals} from "./long-range-api.js?v=era5-history-1991-2020-r2";
+import {fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals} from "./long-range-api.js?v=era5-history-1991-2020-r3";
 import {buildDailyClimateOutlook} from "./daily-climate-outlook.js";
 import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
