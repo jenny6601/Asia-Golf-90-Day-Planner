@@ -75,9 +75,39 @@ test("all planned subregions expose a research candidate without enabling foreca
  const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
  const all=registry.countries.flatMap(x=>x.subregions);
  const candidates=all.filter(x=>x.candidateStatus==="research-candidate");
- assert.equal(candidates.length,51);
+ assert.equal(candidates.length,59);
  assert.ok(candidates.every(x=>typeof x.candidateCourseName==="string"&&x.candidateCourseName.length>3));
  assert.ok(candidates.every(x=>x.representativeCourseId===null));
  assert.ok(candidates.every(x=>x.coverageStatus==="planned"));
- assert.equal(registry.candidateCount,51);
+ assert.equal(registry.candidateCount,59);
+});
+
+
+test("Japan has 16 mainland subregions with researched coordinates and no premature forecast enablement",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
+ assert.equal(japan.subregions.length,19);
+ assert.equal(mainland.length,16);
+ assert.ok(mainland.every(x=>x.candidateCourseName&&x.candidateCoordinates));
+ assert.ok(mainland.every(x=>x.candidateCoordinates.timezone==="Asia/Tokyo"));
+ assert.ok(mainland.every(x=>x.representativeCourseId===null&&x.coverageStatus==="planned"));
+ const approximate=mainland.filter(x=>x.candidateCoordinates.coordinateStatus.includes("approximate"));
+ assert.equal(approximate.length,1);
+ assert.equal(approximate[0].candidateCourseName,"Leograd Golf Club");
+ assert.equal(japan.coordinateResearchSummary.forecastEnabled,false);
+});
+
+test("Japan configured Okinawa representatives map to enabled course catalog records",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const courseCatalog=JSON.parse(readFileSync(new URL("../config/global/courses.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ for(const item of japan.subregions.filter(x=>x.id.startsWith("JP-OKI-"))){
+  const course=courseCatalog.find(x=>x.id===item.representativeCourseId);
+  assert.ok(course&&course.enabled);
+  assert.equal(course.countryCode,"JP");
+  assert.equal(course.region,"Okinawa");
+  assert.equal(course.timezone,"Asia/Tokyo");
+  assert.ok(Number.isFinite(course.latitude)&&Number.isFinite(course.longitude));
+ }
 });
