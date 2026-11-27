@@ -21,7 +21,8 @@ const GOLF_ROUNDS = 3;
 const isFiniteNumber = value => typeof value === "number" && Number.isFinite(value);
 const clamp = (value, min = 0, max = 100) => Math.min(max, Math.max(min, value));
 const isIsoDate = value => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)
-  && !Number.isNaN(Date.parse(value + "T00:00:00Z"))\n  && new Date(value + "T00:00:00Z").toISOString().slice(0, 10) === value;
+  && !Number.isNaN(Date.parse(value + "T00:00:00Z"))
+  && new Date(value + "T00:00:00Z").toISOString().slice(0, 10) === value;
 const dayNumber = value => Date.parse(value + "T00:00:00Z") / 86400000;
 const leadDays = (asOf, date) => Math.round(dayNumber(date) - dayNumber(asOf));
 const horizonFor = lead => lead <= 16 ? "short" : lead <= 46 ? "ec46" : "seas5";
