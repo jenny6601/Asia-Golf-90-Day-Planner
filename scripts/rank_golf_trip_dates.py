@@ -59,8 +59,9 @@ def day_rain_risk(day: date, calendar: dict) -> dict:
         return {"date": day.isoformat(), "usable": False, "reason": "missing_calendar_day"}
     metrics = item.get("metrics", {})
     rain = metrics.get("precipitationMm", {})
-    if rain.get("status") != "usable" or rain.get("wetDayFrequencyPct") is None:
-        return {"date": day.isoformat(), "usable": False, "reason": "insufficient_historical_rainfall"}
+    required = ("wetDayFrequencyPct", "heavyRain10mmFrequencyPct", "heavyRain30mmFrequencyPct", "p90")
+    if rain.get("status") != "usable" or any(not isinstance(rain.get(k), (int, float)) for k in required):
+        return {"date": day.isoformat(), "usable": False, "reason": "incomplete_historical_rainfall_metrics"}
     return {
         "date": day.isoformat(),
         "usable": True,
@@ -107,9 +108,9 @@ def rank_trip_start(start: date, calendar: dict, trip_days: int = 5, rounds: int
         "travelDates": [x["date"] for x in travel_days],
         "rainRisk": {
             "averageWetDayFrequencyPct": round(sum(x["wetDayFrequencyPct"] for x in golf_days) / 3, 2),
-            "averageHeavyRain10mmFrequencyPct": round(sum(_numeric(x["heavyRain10mmFrequencyPct"], 0) for x in golf_days) / 3, 2),
-            "averageHeavyRain30mmFrequencyPct": round(sum(_numeric(x["heavyRain30mmFrequencyPct"], 0) for x in golf_days) / 3, 2),
-            "averageP90DailyRainMm": round(sum(_numeric(x["p90DailyRainMm"], 0) for x in golf_days) / 3, 2),
+            "averageHeavyRain10mmFrequencyPct": round(sum(x["heavyRain10mmFrequencyPct"] for x in golf_days) / 3, 2),
+            "averageHeavyRain30mmFrequencyPct": round(sum(x["heavyRain30mmFrequencyPct"] for x in golf_days) / 3, 2),
+            "averageP90DailyRainMm": round(sum(x["p90DailyRainMm"] for x in golf_days) / 3, 2),
             "selectedRoundDays": 3,
             "interpretation": "Average historical frequency across the fixed middle three golf days; not the probability that this specific future trip will rain.",
         },
