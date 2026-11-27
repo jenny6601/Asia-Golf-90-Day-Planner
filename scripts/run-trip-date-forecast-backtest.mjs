@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import {scoreForecastSamples} from "../assets/js/trip-date-forecast-backtest.js";
 import {summarizeSeasonalArchive} from "../assets/js/trip-date-seasonal-backtest.js";
+import {buildSeasonalVerificationTargets,scoreSeasonalVerification} from "../assets/js/trip-date-seasonal-verification.js";
 
 const snapshotDir=new URL("../data/okinawa-forecast-snapshots/",import.meta.url);
 const outDir=new URL("../artifacts/trip-date-backtest/",import.meta.url);
@@ -14,12 +15,14 @@ const dayNumber=date=>Date.parse(date+"T00:00:00Z")/86400000;
 const addDays=(date,n)=>new Date((dayNumber(date)+n)*86400000).toISOString().slice(0,10);
 await fs.mkdir(outDir,{recursive:true});
 let names=[];
-try{names=(await fs.readdir(snapshotDir)).filter(x=>/^\d{4}-\d{2}-\d{2}\.json$/.test(x)).sort()}catch{}
+try{names=(await fs.readdir(snapshotDir)).filter(x=>/^\\d{4}-\\d{2}-\\d{2}\\.json$/.test(x)).sort()}catch{}
 const snapshots=[];
 for(const name of names){
   try{snapshots.push(JSON.parse(await fs.readFile(new URL(name,snapshotDir),"utf8")))}
   catch(error){console.warn("Skipping invalid snapshot",name,error.message)}
 }
+
+// Short-range verification: daily probability and amount versus ERA5.
 const rowsByRegion={north:[],central:[],south:[]};
 const regionErrors={};
 for(const [region,point] of Object.entries(regions)){
@@ -29,9 +32,8 @@ for(const [region,point] of Object.entries(regions)){
     if(typeof issueDate!=="string")continue;
     for(const item of snapshot.regions?.[region]||[]){
       const leadDays=dayNumber(item.date)-dayNumber(issueDate);
-      if(item.date<today&&leadDays>=1&&leadDays<=16){
+      if(item.date<today&&leadDays>=1&&leadDays<=16)
         targets.push({issueDate,targetDate:item.date,leadDays,probability:item.probability,forecastRainMm:item.rainMm});
-      }
     }
   }
   if(!targets.length)continue;
@@ -39,91 +41,134 @@ for(const [region,point] of Object.entries(regions)){
   const params=new URLSearchParams({
     latitude:String(point.latitude),longitude:String(point.longitude),
     start_date:dates[0],end_date:dates[dates.length-1],
-    daily:"precipitation_sum",timezone:"Asia/Tokyo",
-    precipitation_unit:"mm",models:"era5"
+    daily:"precipitation_sum",timezone:"Asia/Tokyo",precipitation_unit:"mm",models:"era5"
   });
   try{
     const response=await fetch("https://archive-api.open-meteo.com/v1/archive?"+params);
     if(!response.ok)throw new Error("ERA5 archive HTTP "+response.status);
     const payload=await response.json();
-    const times=payload.daily?.time||[],values=payload.daily?.precipitation_sum||[];
-    const observed=new Map(times.map((date,i)=>[date,values[i]]));
+    const observed=new Map((payload.daily?.time||[]).map((date,i)=>[date,payload.daily?.precipitation_sum?.[i]]));
     for(const target of targets){
       const actual=observed.get(target.targetDate);
-      if(typeof actual!=="number"||!Number.isFinite(actual)||actual<0)continue;
-      rowsByRegion[region].push({...target,observedRainMm:actual});
+      if(typeof actual==="number"&&Number.isFinite(actual)&&actual>=0)
+        rowsByRegion[region].push({...target,observedRainMm:actual});
     }
   }catch(error){regionErrors[region]=error.message}
 }
 const byRegion=Object.fromEntries(Object.entries(rowsByRegion).map(([region,rows])=>[region,scoreForecastSamples(rows)]));
-const allRows=Object.values(rowsByRegion).flat();
-const overall=scoreForecastSamples(allRows);
+const overall=scoreForecastSamples(Object.values(rowsByRegion).flat());
 const sampleCount=overall.overall.probabilitySampleCount;
+
+// Seasonal verification: aggregate ERA5 daily rain over each forecast's exact
+// valid week/month. Only complete periods with explicit mm units are eligible.
+const seasonalTargets=buildSeasonalVerificationTargets(snapshots,today);
+const seasonalObservations={north:{},central:{},south:{}};
+const seasonalErrors={};
+for(const [region,point] of Object.entries(regions)){
+  const targets=seasonalTargets.filter(x=>x.region===region);
+  if(!targets.length)continue;
+  const start=targets.map(x=>x.periodStart).sort()[0];
+  const end=targets.map(x=>x.periodEnd).sort().at(-1);
+  const params=new URLSearchParams({
+    latitude:String(point.latitude),longitude:String(point.longitude),
+    start_date:start,end_date:end,daily:"precipitation_sum",
+    timezone:"Asia/Tokyo",precipitation_unit:"mm",models:"era5"
+  });
+  try{
+    const response=await fetch("https://archive-api.open-meteo.com/v1/archive?"+params);
+    if(!response.ok)throw new Error("ERA5 seasonal archive HTTP "+response.status);
+    const payload=await response.json();
+    for(let i=0;i<(payload.daily?.time||[]).length;i++){
+      const value=payload.daily.precipitation_sum?.[i];
+      if(typeof value==="number"&&Number.isFinite(value)&&value>=0)
+        seasonalObservations[region][payload.daily.time[i]]=value;
+    }
+  }catch(error){seasonalErrors[region]=error.message}
+}
+const seasonalVerification=scoreSeasonalVerification(seasonalTargets,seasonalObservations);
 const seasonalArchive=summarizeSeasonalArchive(snapshots,today);
+const sourceGate=(source)=>{
+  const regionsStatus={};
+  for(const region of Object.keys(regions)){
+    const result=seasonalVerification.bySourceRegion[region]?.[source];
+    const count=result?.sampleCount||0;
+    const wet=result?.wetDry?.hits+result?.wetDry?.misses||0;
+    const dry=result?.wetDry?.falseAlarms+result?.wetDry?.correctNegatives||0;
+    regionsStatus[region]={verifiedPeriods:count,wetOutcomes:wet,dryOutcomes:dry,
+      ready:count>=30&&wet>=5&&dry>=5};
+  }
+  return {requiredPerRegion:30,wetAndDryOutcomeMinimum:5,byRegion:regionsStatus,
+    ready:Object.values(regionsStatus).every(x=>x.ready)};
+};
+const ec46Gate=sourceGate("EC46"),seas5Gate=sourceGate("SEAS5");
 const calibrationGate={
-  status:"locked-awaiting-observations",
-  weightsUpdated:false,
+  status:"locked-awaiting-observations",weightsUpdated:false,
   currentModelWeights:"Provisional v1 weights remain unchanged; no empirical fitting is allowed yet.",
-  shortForecast:{
-    observedPairs:sampleCount,
-    requiredPerRegionAndLeadBucket:30,
-    wetAndDryOutcomeMinimum:5
-  },
-  ec46:{
-    maturedUnitVerifiedPeriods:seasonalArchive.totals.ec46.unitVerifiedPeriods,
-    requiredPerRegion:30,
-    wetAndDryOutcomeMinimum:5
-  },
-  seas5:{
-    maturedUnitVerifiedPeriods:seasonalArchive.totals.seas5.unitVerifiedPeriods,
-    requiredPerRegion:30,
-    wetAndDryOutcomeMinimum:5
-  },
-  rule:"Do not change source weights until each region/source has enough completed, unit-verified outcomes and both wet and dry cases. Keep uncertainty/stability separate from rain-risk predictors."
+  shortForecast:{observedPairs:sampleCount,requiredPerRegionAndLeadBucket:30,wetAndDryOutcomeMinimum:5},
+  ec46:ec46Gate,seas5:seas5Gate,
+  rule:"Do not change source weights until every region/source has at least 30 completed, unit-verified outcomes and at least five wet plus five dry outcomes. Keep uncertainty/stability separate from rain-risk predictors."
 };
 const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
-  method:"Archived Open-Meteo daily precipitation probability and amount compared with ERA5 reanalysis precipitation at the same three regional coordinates.",
-  overall,byRegion,regionErrors,seasonalArchive,calibrationGate,
+  method:"Short forecasts: daily probability/amount versus ERA5. EC46/SEAS5: archived weekly/monthly precipitation means versus the sum of ERA5 daily precipitation over the exact same valid period.",
+  overall,byRegion,regionErrors,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
-  minimumSampleGuidance:"Do not interpret as calibrated skill until at least 30 probability samples per lead bucket and per region are available; 90 total is only a minimum descriptive threshold.",
   caveats:[
-    "ERA5 reanalysis is not an independent rain-gauge observation; this is a model-reference comparison.",
-    "Probability verification uses wet day >=1.0 mm and Brier score. Forecast rainfall amount is evaluated separately by MAE.",
+    "ERA5 reanalysis is a model-reference dataset, not an independent rain-gauge observation.",
+    "Short-range Brier score uses wet day >=1.0 mm; rainfall amount MAE is reported separately.",
+    "Seasonal precipitation means are compared with accumulated ERA5 precipitation over the exact forecast week/month; only explicit mm units and fully complete periods are eligible.",
+    "Seasonal wet/dry classification uses period-average precipitation >=1.0 mm/day. It is categorical verification, not a probability score.",
     "Snapshots are one per Okinawa-local issue date; reruns on the same date replace the prior snapshot.",
-    "Unavailable observed dates and missing forecast fields are excluded, never imputed."
+    "Unavailable observed dates and incomplete seasonal periods are excluded, never imputed."
   ]
 };
 await fs.writeFile(new URL("backtest.json",outDir),JSON.stringify(report,null,2));
 const lines=[
-  "# Okinawa archived rain forecast backtest",
+  "# Okinawa archived forecast verification",
   "",
   "As of: "+today,
   "Archived daily snapshots: "+snapshots.length,
-  "Forecast rows with ERA5 reference: "+sampleCount,
+  "Short forecast matched daily rows: "+sampleCount,
   "Status: "+report.validationStatus,
   "",
-  "## Seasonal source archive readiness",
-  "- EC46 weekly archived periods: "+seasonalArchive.totals.ec46.archivedPeriods,
-  "- EC46 completed and unit-verified periods: "+seasonalArchive.totals.ec46.unitVerifiedPeriods,
-  "- SEAS5 monthly archived periods: "+seasonalArchive.totals.seas5.archivedPeriods,
-  "- SEAS5 completed and unit-verified periods: "+seasonalArchive.totals.seas5.unitVerifiedPeriods,
-  "- Weight calibration: "+seasonalArchive.readiness,
+  "## Seasonal archive and verification",
+  "- EC46 archived periods: "+seasonalArchive.totals.ec46.archivedPeriods,
+  "- EC46 completed, unit-verified periods: "+seasonalArchive.totals.ec46.unitVerifiedPeriods,
+  "- SEAS5 archived periods: "+seasonalArchive.totals.seas5.archivedPeriods,
+  "- SEAS5 completed, unit-verified periods: "+seasonalArchive.totals.seas5.unitVerifiedPeriods,
+  "- Eligible seasonal targets: "+seasonalTargets.length,
+  "- Excluded incomplete observed periods: "+seasonalVerification.excluded.incompleteObservedPeriods,
+  "- Excluded periods with no observed daily data: "+seasonalVerification.excluded.missingObservedDays,
   "",
-  "## Weight calibration gate",
+  "### Seasonal source skill (ERA5 reference)",
+  ...["EC46","SEAS5"].flatMap(source=>{
+    const x=seasonalVerification.bySource[source];
+    return ["#### "+source,"- Samples: "+x.sampleCount,
+      "- Rainfall total MAE: "+(x.maeMm??"資料不足")+" mm/period",
+      "- Mean bias: "+(x.meanBiasMm??"資料不足")+" mm/period",
+      "- RMSE: "+(x.rmseMm??"資料不足")+" mm/period",
+      "- Wet/dry accuracy: "+(x.wetDry.accuracy??"資料不足")].concat(
+        Object.entries(seasonalVerification.bySourceRegion).map(([region,bySource])=>
+          bySource[source]?"- "+region+": n="+bySource[source].sampleCount+", MAE="+bySource[source].maeMm+" mm, bias="+bySource[source].meanBiasMm+" mm":"- "+region+": 尚無完整驗證樣本"));
+  }),
+  "",
+  "## Calibration gate",
   "- Status: "+calibrationGate.status,
   "- Weights updated: "+calibrationGate.weightsUpdated,
-  "- Short forecast matched observations: "+calibrationGate.shortForecast.observedPairs,
-  "- EC46 completed, unit-verified periods: "+calibrationGate.ec46.maturedUnitVerifiedPeriods,
-  "- SEAS5 completed, unit-verified periods: "+calibrationGate.seas5.maturedUnitVerifiedPeriods,
+  "- Short forecast daily pairs: "+sampleCount,
+  ...["EC46","SEAS5"].flatMap(source=>{
+    const gate=source==="EC46"?ec46Gate:seas5Gate;
+    return ["- "+source+" gate: "+(gate.ready?"ready":"not ready"),
+      ...Object.entries(gate.byRegion).map(([region,x])=>"-   "+region+": n="+x.verifiedPeriods+", wet="+x.wetOutcomes+", dry="+x.dryOutcomes+", ready="+x.ready)];
+  }),
   "- "+calibrationGate.rule,
   "",
-  "## Overall",
+  "## Short forecast overall",
   "- Brier score: "+(overall.overall.brierScore??"資料不足"),
-  "- Rainfall amount MAE: "+(overall.overall.rainfallAmountMaeMm==null?"資料不足":overall.overall.rainfallAmountMaeMm+" mm/day"),
+  "- Daily rainfall amount MAE: "+(overall.overall.rainfallAmountMaeMm==null?"資料不足":overall.overall.rainfallAmountMaeMm+" mm/day"),
   "",
-  "## By region",
+  "## Short forecast by region",
   ...Object.entries(byRegion).flatMap(([region,result])=>[
     "### "+region,
     "- Probability samples: "+result.overall.probabilitySampleCount,
@@ -131,13 +176,11 @@ const lines=[
     "- Rainfall amount MAE: "+(result.overall.rainfallAmountMaeMm==null?"資料不足":result.overall.rainfallAmountMaeMm+" mm/day")
   ]),
   "",
-  "## By forecast lead",
-  ...overall.byLeadBucket.map(x=>"- "+x.label+": n="+x.probabilitySampleCount+", Brier="+(x.brierScore??"資料不足")+", amount MAE="+(x.rainfallAmountMaeMm==null?"資料不足":x.rainfallAmountMaeMm+" mm")),
-  "",
   "## Limitations",
   ...report.caveats.map(x=>"- "+x),
   "- "+seasonalArchive.guidance,
-  ...Object.entries(regionErrors).map(([region,error])=>"- "+region+" ERA5 reference unavailable: "+error)
+  ...Object.entries(regionErrors).map(([region,error])=>"- "+region+" short ERA5 reference unavailable: "+error),
+  ...Object.entries(seasonalErrors).map(([region,error])=>"- "+region+" seasonal ERA5 reference unavailable: "+error)
 ];
 await fs.writeFile(new URL("backtest.md",outDir),lines.join("\n"));
 console.log(lines.join("\n"));
