@@ -181,9 +181,22 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "reviewStatus": "official-PGM-identity-address-confirmed;pin-not-extracted",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "PGM 官方資料確認球場地址與營運資訊，但尚未取得可獨立驗證的官方球場圖釘。",
+            "officialMapReference": {
+              "type": "official-operator-address-only",
+              "url": "https://www.pacificgolf.co.jp/rifu/information.asp",
+              "officialAddress": "3-25 Uchinome-kita, Morigo, Rifu-machi, Miyagi-gun, Miyagi 981-0103, Japan",
+              "publicCandidateCoordinate": {
+                "latitude": 38.35994,
+                "longitude": 140.981828,
+                "source": "FullGolf"
+              },
+              "coordinateType": "no-official-pin-extracted",
+              "crossCheckResult": "PGM official page confirms course identity, address and access but map link could not be independently extracted; retain third-party candidate without promotion",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -363,9 +376,17 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "reviewStatus": "official-access-page-known;pin-not-extracted",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方交通頁已登錄，但本次無法擷取可核實的地圖圖釘；保留原公開座標。",
+            "officialMapReference": {
+              "type": "official-operator-access-page-reference",
+              "url": "https://tsu.co.jp/pages/access",
+              "officialAddress": "30 Katada-Hasecho, Tsu-shi, Mie 514-0077, Japan",
+              "coordinateType": "no-official-pin-extracted",
+              "crossCheckResult": "operator access page is registered in identity record; map pin or usable coordinate could not be independently retrieved in this pass",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -446,9 +467,20 @@
           "coordinateQuality": {
             "grade": "B",
             "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "reviewStatus": "official-map-embed-found;26km-viewport-center-not-pin",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方交通頁嵌入 Google Maps，但中心點屬約 26 公里寬的區域視野，與球場候選座標相差約 1.75 公里，不可當成球場圖釘。",
+            "officialMapReference": {
+              "type": "official-google-maps-embed-center",
+              "url": "https://arima-royal.com/access",
+              "latitude": 34.831779606232836,
+              "longitude": 135.10602074886864,
+              "coordinateType": "map-viewport-center-not-pin",
+              "distanceFromCandidateKm": 1.724,
+              "approximateViewportWidthKm": 26,
+              "crossCheckResult": "official-map-center-is-approximately-26km-wide-view;not-course-pin;do-not-replace-candidate",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -482,10 +514,20 @@
           },
           "coordinateQuality": {
             "grade": "C",
-            "label": "近似地圖中心",
-            "reviewStatus": "not-a-course-pin",
+            "label": "官方低倍率地圖中心，非球場圖釘",
+            "reviewStatus": "official-map-center-reconfirmed-not-a-course-pin",
             "weatherPointEligible": false,
-            "reason": "官方嵌入地圖的中心點，不等於球場標記；不得用於正式天氣座標。"
+            "reason": "官方嵌入地圖中心與既有近似座標一致，但視野寬度約 53 公里，不能用於正式天氣定位。",
+            "officialMapReference": {
+              "type": "official-google-maps-embed-center",
+              "url": "https://www.leograd.jp/access_map/",
+              "latitude": 33.92322998321186,
+              "longitude": 135.2723593476244,
+              "coordinateType": "map-viewport-center-not-pin",
+              "approximateViewportWidthKm": 53,
+              "crossCheckResult": "official-embed center exactly matches stored approximate center; map viewport is approximately 53km wide and confirms it is not a course pin",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -518,10 +560,19 @@
           },
           "coordinateQuality": {
             "grade": "B",
-            "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "label": "官方地址確認，嵌入地圖圖釘未提取",
+            "reviewStatus": "official-access-address-confirmed;embedded-user-created-map-pin-not-extracted",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方交通頁有 Google My Maps，但該地圖標示為使用者建立，且未取得可獨立驗證的球場圖釘座標。",
+            "officialMapReference": {
+              "type": "official-operator-access-page-with-user-created-google-my-map",
+              "url": "https://banryu-golf.sakura.ne.jp/gpdaisen/access/index.html",
+              "googleMyMapsUrl": "https://www.google.com/maps/d/viewer?mid=1yGrB_Wv3F-bsWOn_yBWved75n4c",
+              "officialAddress": "753 Ogina, Nanbu-cho, Saihaku-gun, Tottori 683-0215, Japan",
+              "coordinateType": "map-pin-not-extracted",
+              "crossCheckResult": "operator site embeds a Google My Maps map explicitly attributed to a user-created map; no independently verifiable pin coordinates extracted",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -705,7 +756,7 @@
         "coordinateQualityB": 11,
         "coordinateQualityC": 1,
         "weatherPointEligible": 0,
-        "officialMapCrossChecks": 6
+        "officialMapCrossChecks": 11
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
