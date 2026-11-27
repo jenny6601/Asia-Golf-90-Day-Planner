@@ -12,6 +12,8 @@ ROOT=Path(__file__).resolve().parents[1]
 BASE="https://www.ncei.noaa.gov/pub/data/ghcn/daily/"
 FILES={"stations":"ghcnd-stations.txt","inventory":"ghcnd-inventory.txt","countries":"ghcnd-countries.txt"}
 ALIASES={"JP":["japan"],"KR":["south korea","republic of korea","korea, republic of","korea, south"],"CN":["china"],"VN":["vietnam"],"TH":["thailand"],"MY":["malaysia"],"SG":["singapore"],"ID":["indonesia"]}
+REQUIRED_CLIMATE_ELEMENTS=("PRCP","TMAX","TMIN")
+MAX_CANDIDATE_DISTANCE_KM=75.0
 def fetch(name,timeout=90):
     req=urllib.request.Request(BASE+FILES[name],headers={"User-Agent":"Asia-Golf-Climate-Research/1.0"})
     with urllib.request.urlopen(req,timeout=timeout) as response:
@@ -66,20 +68,37 @@ def build_candidates(points,countries,stations,inventory,top_n=10):
             elems=inventory.get(sid,{})
             overlap={e:v for e,v in elems.items() if v["overlap1991_2020Years"]>0}
             if not overlap:continue
+            distance=round(haversine_km(point["representativePoint"],st),2)
+            required_present=all(e in overlap for e in REQUIRED_CLIMATE_ELEMENTS)
             ranked.append({"stationId":sid,"name":st["name"],"latitude":st["latitude"],"longitude":st["longitude"],
-              "elevationM":st["elevationM"],"distanceKm":round(haversine_km(point["representativePoint"],st),2),
+              "elevationM":st["elevationM"],"distanceKm":distance,
               "gsnFlag":st["gsnFlag"],"hcnFlag":st["hcnFlag"],"wmoId":st["wmoId"],
-              "elements":overlap,"stationHistoryReview":"required","representativenessReview":"required","autoSelected":False})
+              "elements":overlap,"requiredClimateElementsPresent":required_present,
+              "distanceBand":"0-50km" if distance<=50 else "50-75km" if distance<=MAX_CANDIDATE_DISTANCE_KM else "over-75km",
+              "stationHistoryReview":"required","representativenessReview":"required","autoSelected":False})
         ranked.sort(key=lambda x:x["distanceKm"])
+        complete=[x for x in ranked if x["requiredClimateElementsPresent"]]
+        complete_within=[x for x in complete if x["distanceKm"]<=MAX_CANDIDATE_DISTANCE_KM]
+        nearest_complete=complete[0] if complete else None
+        nearest_usable=complete_within[0] if complete_within else None
+        status="candidate-ready-for-record-level-quality-review" if nearest_usable else "national-network-search-needed"
         out.append({"countryCode":point["countryCode"],"subregionId":point["subregionId"],
           "representativePoint":point["representativePoint"],"candidateCount":len(ranked),
-          "nearestCandidates":ranked[:top_n],"status":"candidates-only-not-validated" if ranked else "no-ghcnd-candidate-with-1991-2020-overlap"})
-    return {"schemaVersion":1,"status":"ghcnd-station-candidate-discovery-not-validation",
+          "completeClimateElementCandidateCount":len(complete),
+          "nearestCompleteClimateCandidate":nearest_complete,
+          "nearestCompleteWithin75Km":nearest_usable,
+          "nearestCandidates":ranked[:top_n],"status":status})
+    return {"schemaVersion":2,"status":"ghcnd-station-candidate-discovery-not-validation",
       "sourceId":"NOAA_GHCN_DAILY_METADATA","sourceBaseUrl":BASE,"referencePeriod":{"startYear":1991,"endYear":2020},
-      "rules":["NOAA country code mapping is used; do not infer country from station name.","Rank nearest candidates but do not auto-select the nearest station.","Only stations with at least one inventory element overlapping 1991-2020 are listed.","Review per-element coverage, station history, elevation and coastal/mountain representativeness before pairing.","No fixed distance cutoff is applied; distance is a ranking signal, not an automatic rejection."],
+      "requiredClimateElements":list(REQUIRED_CLIMATE_ELEMENTS),
+      "candidateDistanceReviewThresholdKm":MAX_CANDIDATE_DISTANCE_KM,
+      "rules":["NOAA country code mapping is used; do not infer country from station name.","Rank nearest candidates but do not auto-select the nearest station.","Only stations with at least one inventory element overlapping 1991-2020 are listed.","A climate candidate must have PRCP, TMAX and TMIN inventory overlap in 1991-2020; this is only an inventory screen, not proof of daily completeness.","Candidates beyond 75 km are flagged for national-network alternatives rather than silently accepted.","Review per-element daily coverage, station history, elevation and coastal/mountain representativeness before pairing."],
       "stationCount":len(stations),"inventoryStationCount":len(inventory),"regions":out,
       "summary":{"regionCount":len(out),"regionsWithCandidates":sum(bool(x["nearestCandidates"]) for x in out),
-        "regionsWithoutCandidates":sum(not x["nearestCandidates"] for x in out),"candidateStationRows":sum(len(x["nearestCandidates"]) for x in out)}}
+        "regionsWithoutCandidates":sum(not x["nearestCandidates"] for x in out),"candidateStationRows":sum(len(x["nearestCandidates"]) for x in out),
+        "regionsWithCompleteClimateElements":sum(x["completeClimateElementCandidateCount"]>0 for x in out),
+        "regionsWithCompleteCandidateWithin75Km":sum(x["nearestCompleteWithin75Km"] is not None for x in out),
+        "regionsNeedingNationalNetworkSearch":sum(x["nearestCompleteWithin75Km"] is None for x in out)}}
 def main():
     ap=argparse.ArgumentParser();ap.add_argument("--output",default="data/observation-stations/ghcnd-candidates-1991-2020.json");ap.add_argument("--top-n",type=int,default=10);ap.add_argument("--input-dir",type=Path);args=ap.parse_args()
     if args.top_n<1:ap.error("--top-n must be >= 1")
