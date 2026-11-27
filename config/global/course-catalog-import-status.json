@@ -27,20 +27,20 @@
       "targetSubregions": 19,
       "seedRecords": 22,
       "knownSourceCoverage": "Golf in Japan regional pages used for Tohoku (148 listed), Shikoku (64 listed), Okinawa (23 listed), and Kyushu prefecture listings. 54 Japan directory records imported in four batches (plus 22 original regional seed/pilot records; total Japan catalog now 78). Counts represent directory listings, not confirmed currently operating facilities; regional page scope and duplicates require reconciliation.",
-      "next": "Validate the 33 provisional representative facilities (identity, operating status, address, coordinates and cluster fit), then start Korea directory extraction using the same one-representative-per-cluster climate model.",
+      "next": "Complete coordinates and identity/address/operating-status checks for the remaining four Japan representative clusters, then audit all 33 cluster assignments before beginning Korea.",
       "importedDirectoryRecords": 54,
       "clusterTaxonomy": {
         "status": "drafted_and_mapped",
         "clusterCount": 33,
         "courseRecordsMapped": 78,
         "weatherActivation": "blocked_pending_full_validation",
-        "note": "33 provisional representative candidates selected. Coordinates reused only where an existing legacy weather-subregion candidate already has a sourced regional point; these remain pending validation for the new cluster layer. No weather points activated. Two additional official-source-backed candidates (Niseko Village Golf Course and Kyoto Golf Club) were added; both remain disabled research candidates until full review.",
+        "note": "33 provisional representative candidates selected. 29 now have sourced coordinate candidates (including legacy regional points and 10 new researched points); 4 still need coordinates. All remain pending full validation; no new weather points activated.",
         "representativeRegistry": "config/global/japan-cluster-representatives.json",
         "representativeCandidateCount": 33,
         "validatedRepresentatives": 0,
         "weatherEnabledRepresentatives": 0,
-        "representativeCoordinateAvailable": 19,
-        "representativeCoordinatePending": 14
+        "representativeCoordinateAvailable": 29,
+        "representativeCoordinatePending": 4
       }
     },
     {
