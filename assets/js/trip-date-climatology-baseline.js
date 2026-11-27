@@ -8,7 +8,7 @@ export function buildDailyClimatology(dailyRows=[]){
  if(!Array.isArray(dailyRows))throw new TypeError("dailyRows must be an array");
  const groups=new Map();
  for(const row of dailyRows){
-  if(typeof row.date!=="string"||!/^\\d{4}-\\d{2}-\\d{2}$/.test(row.date)||!finite(row.rainMm)||row.rainMm<0)continue;
+  if(typeof row.date!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(row.date)||!finite(row.rainMm)||row.rainMm<0)continue;
   const key=keyOf(row.date);
   if(!groups.has(key))groups.set(key,[]);
   groups.get(key).push(row.rainMm);
