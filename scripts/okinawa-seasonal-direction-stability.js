@@ -34,10 +34,14 @@ export function buildSeasonalDirectionStability(snapshots){
  const keys=new Set(records.filter(x=>x.field==="precipitation_anomaly").map(x=>x.scale+"|"+x.targetTimeLabel));
  for(const key of keys){
   const [scale,label]=key.split("|");
-  const latest=REGIONS.map(region=>records.filter(x=>x.region===region&&x.scale===scale&&x.targetTimeLabel===label&&x.field==="precipitation_anomaly").at(-1)).filter(Boolean);
-  const known=latest.filter(x=>x.validValueCount).map(x=>({region:x.region,direction:x.series.at(-1)?.direction}));
-  const dirs=[...new Set(known.map(x=>x.direction))];
-  regionalAgreement.push({scale,targetTimeLabel:label,regionCount:known.length,directions:known,agreementStatus:known.length<3?"INCOMPLETE_REGIONAL_COVERAGE":dirs.length===1?"THREE_REGION_DIRECTION_AGREEMENT":"REGIONS_DISAGREE_OR_UNKNOWN"});
+  const latestSnapshot=[...ordered].reverse().find(snapshot=>REGIONS.some(region=>snapshot.points?.find(p=>p.point?.id===region)?.[scale]?.time?.includes(label)));
+  const directions=REGIONS.map(region=>{
+   const point=latestSnapshot?.points?.find(p=>p.point?.id===region),block=point?.[scale],index=block?.time?.indexOf(label)??-1;
+   const value=index>=0&&Array.isArray(block.precipitation_anomaly)?block.precipitation_anomaly[index]:null;
+   return {region,direction:sign(value)};
+  }).filter(x=>x.direction!=="UNKNOWN");
+  const dirs=[...new Set(directions.map(x=>x.direction))];
+  regionalAgreement.push({scale,targetTimeLabel:label,snapshotDate:latestSnapshot?.archiveDate??null,regionCount:directions.length,directions,agreementStatus:directions.length<3?"INCOMPLETE_REGIONAL_COVERAGE":dirs.length===1?"THREE_REGION_DIRECTION_AGREEMENT":"REGIONS_DISAGREE_OR_UNKNOWN"});
  }
  return {schemaVersion:1,archiveType:"okinawa-seasonal-direction-stability",snapshotCount:ordered.length,firstSnapshot:ordered[0]?.retrievedAt??null,lastSnapshot:ordered.at(-1)?.retrievedAt??null,recordCount:records.length,records,regionalAgreement,gate:{minimumSnapshotsForStableClassification:3,anomalyDirectionUsesRawSignOnly:true,efiReportedSeparately:true,periodBoundaryVerified:false,issueTimeKnown:false,calibratedStabilityScore:false,forecastSkillClaimed:false},notes:["Direction stability is based on the sign of provider precipitation anomaly, not on an invented threshold.","EFI is shown as a separate numeric trend series and is not converted into a probability.","At least three valid snapshots are required before a direction can be called consistent or changed.","The consistency ratio is descriptive snapshot frequency, not forecast confidence or calibrated probability.","Regional agreement compares the latest archived direction for the same exact provider label; no aggregation period is inferred.","No daily rainfall, rain probability, accuracy, or forecast skill is calculated."]};
 }
