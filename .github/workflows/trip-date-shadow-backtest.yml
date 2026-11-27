@@ -9,6 +9,8 @@ name: Okinawa Candidate Weight Shadow Backtest
       - "assets/js/trip-date-recommendation-engine.js"
       - "assets/js/trip-date-ranking-verification.js"
       - "assets/js/trip-date-candidate-models.js"
+      - "assets/js/trip-date-recommendation-quality.js"
+      - "tests/trip-date-ranking-verification.test.js"
       - "data/okinawa-forecast-snapshots/**"
       - ".github/workflows/trip-date-shadow-backtest.yml"
   workflow_dispatch:
