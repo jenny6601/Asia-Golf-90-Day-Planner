@@ -1,39 +1,45 @@
-# Daily-Only Historical Climate Acquisition Plan
+# Daily-Only Historical Climate Acquisition Plan — ERA5 Only
 
 ## Decision
-The eight-country engine requires daily climate records, not downloadable hourly time series. The former full ERA5-Land hourly/GRIB acquisition pilot is retired for operational acquisition. Its manual download entry point has been disabled. Keep the script only as legacy research code; do not dispatch it.
+ERA5-Land is removed from the operational source architecture. The eight-country historical daily climate pipeline uses **ERA5 single-level post-processed daily statistics only**. No ERA5-Land dataset is requested, downloaded, blended or used as a fallback.
 
-## Daily source architecture
-1. **ERA5-Land post-processed daily statistics** — daily minimum, mean and maximum for 2 m temperature, 2 m dewpoint and 10 m wind components. The CDS service computes daily statistics during retrieval; returned NetCDF files contain daily aggregates. The request uses 1-hourly internal sampling to preserve daily extrema, but the application does not download or store hourly time series.
-2. **ERA5 single-level post-processed daily statistics** — daily sum of total precipitation. ERA5-Land's daily-statistics catalogue omits accumulated variables, so precipitation is sourced separately from ERA5. Preserve the source distinction and grid resolution in every normalized record.
-3. **Optional daytime-specific statistics** — consider only if a documented source can provide a consistent local daytime window (for example 06:00–18:00) for all eight countries. Do not infer daytime maxima from a full-day statistic.
+## Sole source
+Dataset: derived-era5-single-levels-daily-statistics (Copernicus CDS / ECMWF).
 
-## Important scientific distinction
-- ERA5-Land daily statistics are on a 0.1-degree grid; ERA5 atmospheric daily statistics are on a 0.25-degree grid.
-- ERA5-Land daily statistics do not include accumulated precipitation. The separate ERA5 daily-sum request is deliberate, not a missing-field workaround.
-- The CDS daily-statistics service computes daily aggregates at retrieval time. The selected timezone aligns the daily boundary to the fixed local UTC offset.
-- The frequency setting of 1-hourly controls the source samples used internally by CDS; it does not mean hourly time-series files are downloaded.
-- Country time zones in this project use fixed offsets. Any unsupported or daylight-saving timezone must fail closed until explicitly mapped and tested.
+ERA5 daily statistics provide daily minimum, mean, maximum and sum, with configurable local UTC offset and sub-daily sampling frequency. Daily aggregation is performed by CDS during retrieval; the returned NetCDF archives contain daily aggregates, not hourly time-series output. The dataset is global, has 0.25-degree atmospheric resolution and coverage from 1940 onward. See the official CDS dataset description and ERA5 family daily-statistics documentation:
+- https://cds.climate.copernicus.eu/datasets/derived-era5-single-levels-daily-statistics
+- https://confluence.ecmwf.int/spaces/CKB/pages/462888259/ERA5%2Bfamily%2Bpost-processed%2Bdaily%2Bstatistics%2Bdocumentation
 
-## Pilot workflow
-Use .github/workflows/daily-climate-statistics-pilot.yml:
+## Daily request design
+For each regional representative point and year, request four daily-statistic groups:
+1. daily_min: 2 m air temperature.
+2. daily_mean: 2 m air temperature, 2 m dewpoint, 10 m U/V wind components, total cloud cover and mean sea-level pressure.
+3. daily_max: 2 m air temperature.
+4. daily_sum: total precipitation.
+
+The request uses the point's local fixed UTC offset. The CDS frequency=1_hourly option controls the samples used internally to compute daily aggregates; it does not request or return hourly time-series files. No hourly data is stored by this project.
+
+## Pilot
+Workflow: .github/workflows/daily-climate-statistics-pilot.yml.
 - First pilot: JP-OKI-MAIN-NORTH, year 1991.
-- Four daily-only requests: ERA5-Land daily min, mean, max; ERA5 daily precipitation sum.
-- The workflow stores zipped NetCDF daily-statistics archives and a request manifest as an artifact.
-- Current pilot performs ZIP/NetCDF structural checks only. It does not yet validate daily date coverage, returned grid selection, units, or cross-source alignment.
+- Four requests, all against the same ERA5 daily-statistics dataset.
+- API credentials continue to use the existing CDS_API_KEY repository secret.
+- The current pilot checks ZIP integrity and presence of NetCDF files only.
+- It does not yet prove complete daily coverage, correct units, correct returned grid, or climate skill.
 - productionEligible remains false.
 
-## Acceptance gates before scaling
-1. Confirm CDS request forms and returned NetCDF schemas for both datasets.
-2. Verify one output record per requested local calendar day, including leap day and year boundaries.
-3. Verify each variable name, units, missing values, daily statistic and timezone alignment.
-4. Inspect returned coordinates and regional representativeness independently for the 0.1-degree ERA5-Land and 0.25-degree ERA5 grids.
-5. Confirm ERA5 daily precipitation sum semantics and compare selected days with independent gauges where available.
-6. Normalize into separate source contributions without pretending the two grids are identical.
-7. Run completeness, bias, MAE/RMSE, wet-day contingency and 30-year calendar-window checks before baseline activation.
+## Quality gates before 80-region scale-up
+1. Confirm returned NetCDF schemas and variable names for all four statistic groups.
+2. Verify exactly one record per requested local calendar day, including leap days and year boundaries.
+3. Validate units, missing values, daily statistic and timezone alignment.
+4. Inspect returned 0.25-degree coordinates and regional representativeness for each region.
+5. Validate precipitation daily-sum semantics and compare selected periods with independent gauge observations where available.
+6. Normalize all daily records with source, dataset, grid, timezone, run and quality provenance.
+7. Run completeness, bias, MAE/RMSE, wet-day contingency and 30-year calendar-window checks before enabling the historical baseline.
 
 ## Scope protection
-- No full hourly ERA5-Land download.
+- ERA5-Land is not used anywhere in the operational pipeline.
+- No full hourly time-series download.
 - No App UI, navigation, interaction or D01–D16 changes.
-- No automatic date recommendation or booking.
+- No automatic date selection or booking.
 - D17–D90 daily estimates remain disabled until historical inputs and forecast-source hindcast calibration pass.
