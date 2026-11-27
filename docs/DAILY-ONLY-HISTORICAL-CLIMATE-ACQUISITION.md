@@ -1,50 +1,50 @@
-# Historical Climate Data — Simplified ERA5 Approach
+# Long-Range Daily Outlook — Seasonal Forecast + Historical Climate
 
-## Decision
-Use the existing Open-Meteo Historical Weather API with the explicit **ERA5** model. Do not use ERA5-Land, CDS credentials, NetCDF downloads, station discovery, or hourly time-series files.
+## Purpose
+Keep the original multi-source forecast design. Historical climate is the regional baseline; available weekly and monthly seasonal forecast signals adjust that baseline. Historical records alone must not be presented as a deterministic forecast.
 
-## Reference period
-- Fixed baseline: 1991-01-01 through 2020-12-31.
-- Geography: the existing 80 representative points in \`config/global/weather-subregions.json\`.
-- Each golf-course cluster inherits the climate assessment of its regional representative point.
-- Timezone: each representative point's existing IANA timezone.
+## Horizon
+- D01-D16: existing daily forecast, unchanged.
+- D17-D18: transition/reference period; use available extended-range signal and historical context only where supported.
+- D19-D46: weekly extended-range forecast signals combined with historical daily climate.
+- D47-D90: monthly/seasonal forecast signals combined with historical daily climate.
 
-## Data retrieval
-The existing \`fetchCourseHistoricalWeekNormals()\` and \`fetchCourseHistoricalMonthlyClimate()\` functions share one cached daily archive request per coordinate/timezone.
+## Historical baseline
+- Source: Open-Meteo Historical Weather API, ERA5 reanalysis.
+- Reference period: 1991-01-01 to 2020-12-31.
+- Spatial scope: one existing representative coordinate per each of the 80 subregions.
+- All courses in the same subregion share that representative point.
+- Daily aggregates only; no ERA5-Land, CDS credentials, hourly bulk files, or station discovery/ingestion.
 
-The request returns daily aggregates only:
-- Daily minimum and maximum 2 m temperature
+## Historical daily fields
+- Daily minimum and maximum 2 m air temperature
 - Daily mean 2 m dewpoint
 - Daily mean relative humidity
 - Daily mean and maximum 10 m wind speed
-- Daily precipitation sum and precipitation hours
-- Daily weather code
+- Daily precipitation sum, precipitation hours and weather code
 
-No daily mean air temperature is required for the long-range display. Minimum/maximum air temperature are retained as inputs for the apparent-temperature estimate.
+The historical adapter caches one archive request per representative coordinate and timezone within the current App session. It retrieves historical data when the user opens a region/monthly or long-range report; the full 80-region archive is not currently stored as static repository files.
 
-## Daily historical estimate
-For D19-D90, use a 31-day rolling calendar window centred on each target month/day, pooled across the 1991-2020 reference period. This provides a stable historical climate tendency rather than pretending to know the exact weather on a future date.
+## Feels-like range
+Calculate an apparent-temperature low/high estimate from historical daily Tmin/Tmax, mean dewpoint and mean wind. Apply the available seasonal temperature anomaly as a broad adjustment to the historical feels-like range. These daily aggregate inputs are not time-paired and do not include direct solar load; display as an estimate, not an observed or hourly value.
 
-Outputs:
-- Historical wet-day frequency (daily precipitation >= 1 mm), explicitly not a future daily rain probability
-- Mean daily precipitation and 90th-percentile daily precipitation
-- Historical minimum/maximum air-temperature context
-- Estimated apparent-temperature low/high range, calculated from daily Tmin/Tmax, mean dewpoint and mean wind
-- Historical mean wind and relative humidity
-- Valid sample-year counts and data-quality flags
+## Combining seasonal and historical evidence
+- D19-D46: use the available weekly precipitation and temperature anomalies/probability signals to adjust historical wet-day frequency, rainfall amount and temperature context.
+- D47-D90: use the available monthly/seasonal precipitation and temperature anomalies to adjust the same historical baseline.
+- Do not invent daily rain probabilities from weekly/monthly aggregates. Historical wet-day frequency adjusted by a seasonal signal remains a long-range tendency indicator, not a calibrated daily probability.
+- If a seasonal signal is unavailable, retain historical context and lower confidence. If historical fields are unavailable, leave them null; do not substitute zero or fabricate values.
+- Confidence must remain low/medium-low for long-range daily estimates and must not be upgraded without hindcast validation.
 
-The apparent-temperature calculation uses daily aggregate inputs that are not time-paired and does not include direct solar load. It is a regional estimate, not an hourly golf-course heat-stress measurement.
-
-## Missing data and confidence
-- Missing values remain null; missing precipitation is never converted to zero.
-- A calendar window is considered usable only when at least 90% of its daily samples are present in a year.
-- Confidence is based on valid historical sample years and field completeness.
-- Long-range outputs are always labelled as historical estimates, never deterministic daily forecasts.
+## Golf-use outputs
+- Regional daily rain tendency and rainfall amount
+- Feels-like temperature high/low range
+- Wind context where available
+- Historical sample-year counts, source provenance and per-field quality
+- Advisory playability wording; no automatic date selection or booking
 
 ## Scope protection
-- No CDS download workflow or credentials.
-- No ERA5-Land.
-- No station discovery or station observation ingestion.
-- No hourly historical time-series download or storage.
-- No changes to the App layout, navigation, interactions, or D01-D16 forecast.
-- No automatic date selection or booking.
+- Keep the App UI and navigation unchanged.
+- Keep D01-D16 unchanged.
+- Do not add new download workflows or credentials.
+- Do not use ERA5-Land or station discovery/ingestion.
+- No per-course microclimate; use one representative point per subregion.
