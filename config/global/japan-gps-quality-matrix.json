@@ -23,8 +23,8 @@
     "officialMapViewportCenters": 8,
     "officialAccessOrAddressReferences": 5,
     "legacyGrades": {
-      "A": 4,
-      "B": 11,
+      "A": 3,
+      "B": 12,
       "C": 1
     },
     "forecastEnabled": 0
@@ -133,7 +133,7 @@
         "timezone": "Asia/Tokyo",
         "sourceStatus": "course-list-coordinate"
       },
-      "legacyGrade": "A",
+      "legacyGrade": "B",
       "evidenceClass": "official-map-viewport-center-only",
       "decision": "not-a-course-pin",
       "officialReferenceType": "official-google-maps-embed-center",
@@ -145,7 +145,7 @@
       },
       "offsetFromCandidateKm": 0.001,
       "weatherPointEligible": false,
-      "nextAction": "Resolve the official map place marker or extract a true course place pin; never use viewport center as the final point"
+      "nextAction": "Official map center matches the public candidate coordinate, but obtain the actual course place pin before boundary validation"
     },
     {
       "subregionId": "JP-KNT-SOUTH",
