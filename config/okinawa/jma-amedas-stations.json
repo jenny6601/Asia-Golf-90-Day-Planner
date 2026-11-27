@@ -16,7 +16,8 @@
     ],
     "jmaType": "B",
     "jmaElementsCode": "11111011",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "北部"
   },
   {
     "id": "91197",
@@ -35,7 +36,8 @@
     ],
     "jmaType": "A",
     "jmaElementsCode": "11111011",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "南部"
   },
   {
     "id": "91236",
@@ -51,7 +53,8 @@
     ],
     "jmaType": "C",
     "jmaElementsCode": "11110000",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "南部"
   },
   {
     "id": "91241",
@@ -68,7 +71,8 @@
     ],
     "jmaType": "C",
     "jmaElementsCode": "11112010",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "南部"
   },
   {
     "id": "91121",
@@ -82,7 +86,8 @@
     ],
     "jmaType": "C",
     "jmaElementsCode": "01000000",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "中部"
   },
   {
     "id": "91161",
@@ -96,7 +101,8 @@
     ],
     "jmaType": "C",
     "jmaElementsCode": "01000000",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "中部"
   },
   {
     "id": "91166",
@@ -113,7 +119,8 @@
     ],
     "jmaType": "C",
     "jmaElementsCode": "11112010",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "中部"
   },
   {
     "id": "91021",
@@ -130,7 +137,8 @@
     ],
     "jmaType": "C",
     "jmaElementsCode": "11112010",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "北部"
   },
   {
     "id": "91066",
@@ -144,7 +152,8 @@
     ],
     "jmaType": "C",
     "jmaElementsCode": "01000000",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "北部"
   },
   {
     "id": "91046",
@@ -158,6 +167,7 @@
     ],
     "jmaType": "C",
     "jmaElementsCode": "01000000",
-    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json"
+    "officialStationTableUrl": "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+    "area": "北部"
   }
 ]
