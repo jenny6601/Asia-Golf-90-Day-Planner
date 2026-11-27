@@ -14,7 +14,7 @@
       "agency": "Japan Meteorological Agency (JMA)",
       "status": "official-daily-data-download-confirmed-station-matching-queue-generated",
       "portal": "https://www.data.jma.go.jp/risk/obsdl/",
-      "notes": "JMA official Past Weather Data Download provides daily values including daily precipitation total, daily maximum and minimum temperature. The portal exposes quality/insufficient-data handling and flags non-homogeneity due to station relocation, environmental or observation-method changes. It limits request volume and warns against excessive automated access. A bounded cluster-level acquisition queue is generated; station matching and 1991-2020 downloads remain pending.",
+      "notes": "JMA official Past Weather Data Download provides daily values including daily precipitation total, daily maximum and minimum temperature. The portal exposes quality/insufficient-data handling and flags non-homogeneity due to station relocation, environmental or observation-method changes. It limits request volume and warns against excessive automated access. A bounded cluster-level acquisition queue is generated; station matching and 1991-2020 downloads remain pending. The generated queue contains 37 Japan golf-cluster representative points; no official JMA station has yet been matched or approved.",
       "acquisitionQueue": "data/observation-stations/jp-kr-official-acquisition-queue.json"
     },
     {
@@ -22,7 +22,7 @@
       "agency": "Korea Meteorological Administration (KMA)",
       "status": "official-asos-daily-and-annual-fileset-confirmed-station-matching-queue-generated",
       "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
-      "notes": "KMA official ASOS portal provides daily records from 1904 onward depending on station and element, with 105 ASOS stations listed. Daily query window is limited to 10 years; long historical periods are directed to annual file-set downloads. A bounded cluster-level acquisition queue is generated; station matching and 1991-2020 downloads remain pending.",
+      "notes": "KMA official ASOS portal provides daily records from 1904 onward depending on station and element, with 105 ASOS stations listed. Daily query window is limited to 10 years; long historical periods are directed to annual file-set downloads. A bounded cluster-level acquisition queue is generated; station matching and 1991-2020 downloads remain pending. The generated queue contains 6 Korea golf-cluster representative points; no official KMA ASOS station has yet been matched or approved.",
       "fileSetPortal": "https://data.kma.go.kr/data/grnd/selectAsosList.do?pgmNo=34",
       "acquisitionQueue": "data/observation-stations/jp-kr-official-acquisition-queue.json"
     },
@@ -88,11 +88,11 @@
     }
   ],
   "nextActions": [
-    "Generate the Japan and Korea cluster-level station acquisition queue from representative-point coordinates, then match official station inventories to each cluster.",
-    "Acquire bounded 1991-2020 daily JMA and KMA records for shortlisted stations; preserve source QC, insufficient-data and non-homogeneity flags.",
-    "Expand NOAA candidate discovery beyond the nearest three stations per region, prioritizing PRCP and TMIN daily completeness; no station approval from inventory overlap alone.",
-    "Search official national meteorological station datasets for China, Vietnam, Thailand, Malaysia, Singapore and Indonesia, documenting access terms and data fees.",
-    "Obtain station history, relocation, elevation and terrain/coastal representativeness before pairing station observations with ERA5-Land."
+    "Match the 37 Japan representative points to JMA stations using official station identifiers, station histories and element-specific 1991-2020 availability; acquire bounded daily CSV samples.",
+    "Match the 6 Korea representative points to KMA ASOS station IDs; use the annual file-set route for full-period daily data and preserve source QC/metadata.",
+    "Expand NOAA candidates beyond the nearest three per region, prioritizing precipitation and minimum-temperature completeness; keep all stations unapproved until representativeness review.",
+    "Proceed to China and Vietnam official station inventory/access research after the JP/KR matching pilot.",
+    "Pair only reviewed station records with ERA5-Land by observation date and calculate bias, MAE, wet-day hit/miss and seasonal metrics."
   ],
   "lastReviewed": "2026-11-27",
   "discoverySummary": {
@@ -103,7 +103,7 @@
     "stationMatches": 0,
     "observationRecordsDownloaded": 238,
     "interpretation": "The first actual-record pilot succeeded technically for 238 candidates across all 80 regions with zero download failures. However, coverage is insufficient for broad station approval: precipitation and especially minimum-temperature daily records are incomplete for many stations. Only 6 regions had a sampled candidate meeting the preliminary combined coverage screen. Expand national-network matching, validate station history and observation-day conventions, and compare daily values with ERA5-Land before any station is approved.",
-    "globalMetadataCandidateWorkflow": "executed-successfully-candidate-inventory-generated",
+    "globalMetadataCandidateWorkflow": "successful-with-daily-record-audit-and-jp-kr-queue",
     "ghcndRegionCount": 80,
     "ghcndCandidateStationRows": 791,
     "ghcndRegionsWithCompleteClimateElements": 80,
@@ -125,6 +125,12 @@
     "ghcndDailyAuditDefinition": "A region has a strong pilot candidate only if one of its sampled stations has all three elements with mean annual daily coverage >=80% and >=20 years at >=80%; this is a screening threshold, not approval.",
     "jpOfficialDailyData": "confirmed-manual-csv-download-and-data-quality-flags",
     "krOfficialAsosDailyData": "confirmed-daily-query-and-annual-file-set-download",
-    "jpKrAcquisitionQueueItems": 0
+    "jpKrAcquisitionQueueItems": 43,
+    "jpKrAcquisitionQueueByCountry": {
+      "JP": 37,
+      "KR": 6
+    },
+    "jpKrStationMatches": 0,
+    "jpKrStationsApproved": 0
   }
 }
