@@ -196,3 +196,18 @@ test("Japan mainland GPS candidates have explicit evidence grades and none is fo
  assert.equal(japan.coordinateResearchSummary.weatherPointEligible,0);
  assert.equal(japan.coordinateResearchSummary.forecastEnabled,false);
 });
+
+
+test("The North Country official map viewport center is stored as evidence, never as a course pin",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const north=japan.subregions.find(x=>x.candidateCourseName==="The North Country Golf Club");
+ const map=north.coordinateQuality.officialMapReference;
+ assert.equal(map.coordinateType,"map-viewport-center-not-pin");
+ assert.equal(map.latitude,42.8171806);
+ assert.equal(map.longitude,141.6011047);
+ assert.equal(map.distanceFromCandidateKm,0.532);
+ assert.equal(north.coordinateQuality.grade,"B");
+ assert.equal(north.coordinateQuality.weatherPointEligible,false);
+ assert.equal(north.candidateCoordinates.latitude,42.82058);
+});
