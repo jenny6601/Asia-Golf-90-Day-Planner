@@ -192,5 +192,28 @@
       "regional baseline summaries are independently inspected",
       "ERA5-Land grid resolution, nearest-cell coordinates and elevation/coastal representativeness are recorded for every subregion."
     ]
+  },
+  "climatologyEngine": {
+    "script": "scripts/build_regional_climatology.py",
+    "status": "implemented-not-yet-run-on-observations",
+    "calendarWindow": {
+      "daysEachSide": 15,
+      "totalNominalDays": 31,
+      "calendar": "365-day month/day calendar"
+    },
+    "seasonYearAssignment": "For windows crossing December/January, December observations are assigned to the following January target season year; January observations are assigned to the preceding December target season year.",
+    "leapDayHandling": "February 29 maps to calendar ordinal 59.5, midway between February 28 and March 1. It is included in both adjacent rolling windows when within 15 calendar days. Leap-year windows that include February 29 have 32 expected daily records and require at least 29 valid days at 90% completeness.",
+    "annualCompleteness": "Each metric is qualified independently. A season year is valid when at least 90% of the expected calendar-window daily values for that metric are present. At least 24 valid season years are required.",
+    "statistics": [
+      "median",
+      "mean",
+      "p90",
+      "wetDayFrequencyPct",
+      "heavyRain10mmFrequencyPct",
+      "heavyRain30mmFrequencyPct"
+    ],
+    "outputStatus": "historical-climatology-computed-not-activated",
+    "climateBaselineEnabled": false,
+    "forecastEnabled": false
   }
 }
