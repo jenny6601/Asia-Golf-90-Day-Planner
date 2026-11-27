@@ -38,6 +38,12 @@ def valid_number(value, bounds):
     return math.isfinite(number) and bounds[0] <= number <= bounds[1]
 
 
+def quality_flags_acceptable(row) -> bool:
+    """Allow only documented trace-negative precipitation noise after clamping."""
+    flags = row.get("qualityFlags") or []
+    return all(flag == "trace_negative_precipitation_clamped" for flag in flags)
+
+
 def calendar_ordinal(day: date) -> float:
     if day.month == 2 and day.day == 29:
         return 59.5
@@ -149,6 +155,10 @@ def audit_region_year(region, year, rows):
         "missingDates": missing,
         "completeAllMetricDays": len(complete_days),
         "completeAllMetricCoveragePct": round(100 * len(complete_days) / expected, 2),
+        "qualityFlagCounts": {
+            flag: sum(flag in (row.get("qualityFlags") or []) for row in dates.values())
+            for flag in sorted({flag for row in dates.values() for flag in (row.get("qualityFlags") or [])})
+        },
         "metricCoverage": metric_summary,
         "monthlyCoverage": month_summary,
     }
@@ -179,7 +189,7 @@ def audit_climate_windows(region_rows, start_year=1991, end_year=2020,
                 valid_year_list = []
                 for year in range(start_year, end_year + 1):
                     year_rows = by_year.get(year, [])
-                    vals = [r for r in year_rows if r.get("validHourCount") == 24 and not r.get("qualityFlags") and valid_number(r.get(metric), bounds)]
+                    vals = [r for r in year_rows if r.get("validHourCount") == 24 and quality_flags_acceptable(r) and valid_number(r.get(metric), bounds)]
                     needed = math.ceil(expected_days(year, target) * completeness)
                     if len(vals) >= needed:
                         valid_year_list.append(year)
