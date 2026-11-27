@@ -5,6 +5,7 @@ on:
     branches:
       - feature/daily-climate-forecast-v2
       - asia-eight-country-shared-engine
+      - 90-day-daily-output-simplification
   pull_request:
     branches:
       - asia-eight-country-shared-engine
