@@ -1698,15 +1698,15 @@
           "candidateCourseName": "Nidom Classic Course",
           "candidateRationale": "使用者指定以 Nidom Classic Course 作為千歲／苫小牧球場群的區域氣候代表球場；區內其他球場共用此代表點進行區域氣候分析。",
           "candidateSourceUrl": "https://www.nidomcc.jp/english/",
-          "candidateStatus": "official-operator-identity-address-confirmed-coordinate-third-party-pending",
+          "candidateStatus": "official-identity-address-confirmed-three-source-coordinate-cross-check-complete",
           "candidateCoordinates": {
-            "latitude": 42.715142,
-            "longitude": 141.655496,
-            "coordinateStatus": "third_party_course_coordinate",
-            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hokkaido/tomakomai/nidom-classic-course",
+            "latitude": 42.716198,
+            "longitude": 141.655636,
+            "coordinateStatus": "cross_checked_third_party_regional_representative_point",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/hokkaido/tomakomai/nidom-classic-course;https://www.navitime.co.jp/poi?spot=02301-1503591n;https://14golf.com/course/nidomukurasshikkukosu/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "third-party-coordinate-candidate-pending-final-review",
+          "coordinateReviewStatus": "regional-climate-representative-coordinate-cross-checked",
           "clusterCourseIds": [
             "jp-north-country",
             "jp-hokkaido-golf-club",
@@ -1727,12 +1727,55 @@
           },
           "coordinateQuality": {
             "grade": "B",
-            "label": "第三方球場座標，區域代表點候選",
-            "reviewStatus": "candidate-only-not-enabled",
+            "label": "三來源交叉核對之區域代表座標",
+            "reviewStatus": "regional-climate-approved-live-weather-ingestion-not-yet-enabled",
             "weatherPointEligible": false,
-            "regionalClimateEligible": false,
+            "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point",
-            "reason": "球場身分、地址及45洞規模已由官方營運商與苫小牧市官方資料交叉確認；座標來自第三方球場資料庫，尚未完成最終位置核對，因此不啟用正式天氣資料擷取。"
+            "reason": "Nidom Classic 官方地址與球場身分已確認；FullGolf、NAVITIME、14Golf 三個獨立來源座標最大相互距離約0.366公里。採三來源平均座標作為區域尺度氣候代表點，符合不需精確落在球場圖釘的設計原則。正式逐時天氣擷取仍待資料引擎接線與驗收。",
+            "coordinateCrossCheck": {
+              "method": "arithmetic-mean-of-three-independent-published-course-coordinates",
+              "sources": [
+                {
+                  "name": "FullGolf",
+                  "latitude": 42.715142,
+                  "longitude": 141.655496,
+                  "url": "https://www.fullgolf.com/en/golf-club/japan/hokkaido/tomakomai/nidom-classic-course"
+                },
+                {
+                  "name": "NAVITIME",
+                  "latitude": 42.717879,
+                  "longitude": 141.654109,
+                  "url": "https://www.navitime.co.jp/poi?spot=02301-1503591n"
+                },
+                {
+                  "name": "14Golf",
+                  "latitude": 42.7155724,
+                  "longitude": 141.6573029,
+                  "url": "https://14golf.com/course/nidomukurasshikkukosu/"
+                }
+              ],
+              "representativePoint": {
+                "latitude": 42.716198,
+                "longitude": 141.655636
+              },
+              "distancesFromMeanKm": [
+                {
+                  "source": "FullGolf",
+                  "distanceFromMeanKm": 0.118
+                },
+                {
+                  "source": "NAVITIME",
+                  "distanceFromMeanKm": 0.225
+                },
+                {
+                  "source": "14Golf",
+                  "distanceFromMeanKm": 0.153
+                }
+              ],
+              "maximumPairwiseDistanceKm": 0.366,
+              "checkedOn": "2026-11-27"
+            }
           }
         }
       ],
