@@ -10,9 +10,12 @@ on:
       - "scripts/inspect_era5_land_pilot.py"
       - "scripts/aggregate_era5_land_daily.py"
       - "scripts/batch_era5_land_japan.py"
+      - "scripts/audit_japan_era5_daily.py"
       - "config/global/era5-land-grid-points-japan.json"
       - "tests/test_era5_land_pilot.py"
       - "tests/test_era5_land_inspector.py"
+      - "tests/test_era5_land_daily_aggregation.py"
+      - "tests/test_audit_japan_era5_daily.py"
   workflow_dispatch:
 
 permissions:
@@ -47,6 +50,8 @@ jobs:
           python -m unittest tests/test_era5_land_pilot.py
           python -m unittest tests/test_era5_land_inspector.py
           python -m unittest tests/test_era5_land_daily_aggregation.py
+          python -m unittest tests/test_audit_japan_era5_daily.py
+          python -m unittest tests/test_era5_land_daily_aggregation.py
           python -m unittest tests/test_batch_era5_land_japan.py
           python -m unittest tests/test_compare_jma_station_daily.py
 
@@ -76,6 +81,7 @@ jobs:
             --end-year 1991 \
             --limit 1 \
             --retries 3 \
+            --force \
             --output-root data/era5-land-japan-1991-2020
 
       - name: Print pilot failure diagnostics
