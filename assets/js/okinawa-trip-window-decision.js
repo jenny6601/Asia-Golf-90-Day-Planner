@@ -1,5 +1,5 @@
 import {recommendLongRangeWindows} from "./long-range-engine.js";
-import {buildSeasonalDirectionStability} from "./okinawa-seasonal-direction-stability.js";
+import {buildSeasonalDirectionStability} from "../../scripts/okinawa-seasonal-direction-stability.js";
 const REGIONS=["north","central","south"];
 const REGION_LABELS={north:"北部",central:"中部",south:"南部"};
 const addDays=(date,n)=>new Date(Date.parse(date+"T00:00:00Z")+n*86400000).toISOString().slice(0,10);
