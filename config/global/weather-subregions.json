@@ -27,7 +27,15 @@
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-north-country"
+          "candidateCourseId": "jp-north-country",
+          "courseIdentityVerification": {
+            "verificationLevel": "official-operator-and-JGTO-identity-address-confirmed",
+            "officialSourceUrl": "https://www.the-north.co.jp/en/",
+            "independentOfficialDirectoryUrl": "https://www.jgto.org/en/club/jgto",
+            "officialAddress": "26 Rankoshi, Chitose-shi, Hokkaido 066-0068, Japan",
+            "operationalEvidence": "official-website-present; JNTO notes seasonal winter closure; current play dates must be checked before trip planning",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "JP-HKD-SOUTH",
@@ -68,7 +76,14 @@
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-appi-kogen"
+          "candidateCourseId": "jp-appi-kogen",
+          "courseIdentityVerification": {
+            "verificationLevel": "official-operator-identity-address-and-2026-season-confirmed",
+            "officialSourceUrl": "https://www.appi.co.jp/en/golf-club/agc-appi-kogen-golf-club/",
+            "officialAddress": "180-1 Appikogen, Hachimantai-shi, Iwate 028-7306, Japan",
+            "operationalEvidence": "operator states 2026 season is open; seasonal operation, published season April-mid-November",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "JP-THK-SOUTH",
@@ -131,7 +146,14 @@
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-narita-hills"
+          "candidateCourseId": "jp-narita-hills",
+          "courseIdentityVerification": {
+            "verificationLevel": "JNTO-identity-address-confirmed",
+            "officialSourceUrl": "https://www.japan.travel/en/sports/golf/courses/narita-hills-country-club/",
+            "officialAddress": "1236-3, Ryukakuji, Sakae-machi, Inba-gun, Chiba-ken, Japan",
+            "operationalEvidence": "JNTO course profile and access details confirmed; current operator booking status not independently checked",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "JP-CHB-KOSHIN",
@@ -152,7 +174,14 @@
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-kawaguchiko"
+          "candidateCourseId": "jp-kawaguchiko",
+          "courseIdentityVerification": {
+            "verificationLevel": "official-operator-identity-address-and-current-site-activity-confirmed",
+            "officialSourceUrl": "https://kcc.tatemono-golf.com/",
+            "officialAddress": "6236 Funatsu, Fujikawaguchiko-machi, Minamitsuru-gun, Yamanashi 401-0301, Japan",
+            "operationalEvidence": "operator site displays 2026 notices and reservation/access information",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "JP-CHB-TOKAI",
@@ -257,7 +286,15 @@
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
-          "candidateCourseId": "jp-green-park-daisen"
+          "candidateCourseId": "jp-green-park-daisen",
+          "courseIdentityVerification": {
+            "verificationLevel": "JGTO-identity-address-confirmed",
+            "officialSourceUrl": "https://www.jgto.org/en/club/jgto",
+            "operatorSourceUrl": "https://banryugolf.com/gpdaisen/",
+            "officialAddress": "753 Ogina, Nanbu-cho, Saihaku-gun, Tottori 683-0215, Japan",
+            "operationalEvidence": "JGTO partner-course listing confirmed; current tee-sheet/season status not independently checked",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "JP-CHG-SANYO",
@@ -278,7 +315,15 @@
             "coordinateSourceUrl": "https://maps.app.goo.gl/HkTraVHtr3VWRQPg9"
           },
           "coordinateReviewStatus": "official-map-place-coordinate-found-course-identity-confirmed",
-          "candidateCourseId": "jp-setouchi"
+          "candidateCourseId": "jp-setouchi",
+          "courseIdentityVerification": {
+            "verificationLevel": "official-operator-identity-address-and-google-maps-link-confirmed",
+            "officialSourceUrl": "https://www.resol-golf.jp/en/setouchi/",
+            "officialAccessUrl": "https://www.resol-golf.jp/en/setouchi/access/",
+            "officialAddress": "831 Yoshina-cho, Takehara City, Hiroshima Prefecture 725-0013, Japan",
+            "operationalEvidence": "operator site lists golf course, access, contact and booking link",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "JP-SHK-01",
@@ -375,7 +420,8 @@
         "officialMapCoordinates": 1,
         "thirdPartyOrPublicMapCoordinates": 14,
         "approximateCoordinates": 1,
-        "forecastEnabled": false
+        "forecastEnabled": false,
+        "officialIdentityAddressVerified": 6
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
