@@ -6,7 +6,9 @@ name: Trip Date Recommendation Engine Tests
       - asia-eight-country-shared-engine
     paths:
       - "assets/js/trip-date-recommendation-engine.js"
-      - "tests/trip-date-recommendation-engine.test.js"\n      - "assets/js/trip-date-source-adapters.js"\n      - "tests/trip-date-source-adapters.test.js"
+      - "tests/trip-date-recommendation-engine.test.js"
+      - "assets/js/trip-date-source-adapters.js"
+      - "tests/trip-date-source-adapters.test.js"
       - ".github/workflows/trip-date-engine-tests.yml"
   workflow_dispatch:
 
@@ -22,4 +24,6 @@ jobs:
         with:
           node-version: 20
       - name: Run trip date engine unit tests
-        run: |\n          node --test tests/trip-date-recommendation-engine.test.js\n          node --test tests/trip-date-source-adapters.test.js
+        run: |
+          node --test tests/trip-date-recommendation-engine.test.js
+          node --test tests/trip-date-source-adapters.test.js
