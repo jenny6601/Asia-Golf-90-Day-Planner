@@ -13,11 +13,12 @@ test("global country registry contains the eight planned launch markets", () => 
 
 test("global course catalog preserves the six Okinawa pilot courses as its active prefix and adds the eight-country seed", () => {
   assert.deepEqual(courses.slice(0,6).map(x => x.id), ["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"]);
-  assert.equal(courses.length,65);
+  assert.equal(courses.length,131);
   assert.ok(courses.slice(0,6).every(x => x.countryCode === "JP" && x.timezone === "Asia/Tokyo" && x.region === "Okinawa"));
   assert.equal(new Set(courses.map(x => x.id)).size,65);
-  assert.ok(courses.slice(6).every(x => x.catalogStatus === "research_candidate" && x.coordinateStatus === "pending" && x.weatherEnabled === false));
-  assert.ok(courses.slice(6).every(x => !Number.isFinite(x.latitude) && !Number.isFinite(x.longitude)));
+  assert.ok(courses.slice(6).every(x => x.catalogStatus === "research_candidate" && x.weatherEnabled === false));
+  assert.ok(courses.slice(6).every(x => x.regionalRepresentativeCourseId && x.regionalSubregionId));
+  assert.ok(courses.slice(6).filter(x => x.regionalRepresentative).every(x => Number.isFinite(x.latitude) && Number.isFinite(x.longitude)));
   assert.deepEqual([...new Set(courses.map(x => x.countryCode))].sort(), ["CN","ID","JP","KR","MY","SG","TH","VN"]);
 });
 
