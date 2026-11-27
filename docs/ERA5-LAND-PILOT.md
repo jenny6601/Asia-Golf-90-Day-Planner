@@ -99,3 +99,16 @@ The `assets/js/forecast-maturity.js` adapter establishes the lead-time contract:
 - D47-D90: seasonal outlook and historical climate reference, not a deterministic daily forecast or daily rain probability.
 
 The adapter retains data confidence/source coverage separately from weather risk. It does not alter the formal V1 scoring weights and is not yet wired into the app UI.
+
+
+## 9. Export the 365-day climatology into date-addressable regional evidence
+
+After the historical climatology JSON has been built, export a rolling date range for the downstream Asia Golf Climate evidence contract:
+
+```bash
+python scripts/export_regional_climate_evidence.py data/processed/JP-KNT-NORTH-climatology-1991-2020.json --start-date 2027-01-01 --days 90 --output data/processed/JP-KNT-NORTH-historical-evidence-90d.json
+```
+
+The exporter maps each target date to its month/day climatology record and emits the normalized historical fields used by the regional daily evidence contract: wet-day frequency, mean/P90 rainfall, mean daily high/low temperature and metric-specific valid-year counts. Metrics below the climatology minimum-valid-year threshold remain null. February 29 uses the midpoint of February 28 and March 1 for means/frequency, but withholds P90 and heavy-rain frequencies because those percentiles cannot be reconstructed by averaging adjacent percentiles.
+
+The exported records remain explicitly non-activated: `climateBaselineEnabled=false`, `forecastEnabled=false`, and `decisionUseEligible=false`. The exporter does not make a forecast or rank travel dates.
