@@ -79,6 +79,8 @@ def compare_region(region, era5_rows, station, max_distance_km=75.0, minimum_pai
     station_issues = []
     if station.get("sourceId") != JMA_SOURCE:
         station_issues.append("unsupported_or_missing_jma_source_id")
+    if station.get("qualityPolicyStatus") != "validated":
+        station_issues.append("jma_quality_and_homogeneity_metadata_not_validated")
     if distance > max_distance_km:
         station_issues.append("station_outside_maximum_distance")
     if len(rain_pairs) < minimum_pairs:
@@ -124,6 +126,7 @@ def main():
     station_by_region = {}
     for station in jma["stations"]:
         station.setdefault("sourceId", jma.get("sourceId"))
+        station.setdefault("qualityPolicyStatus", (jma.get("qualityPolicy") or {}).get("status", "missing"))
         station_by_region.setdefault(station.get("regionId"), []).append(station)
     results = {}
     for region in mapping["points"]:
