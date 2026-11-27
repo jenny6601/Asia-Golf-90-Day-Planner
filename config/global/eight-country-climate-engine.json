@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "engineId": "ASIA_EIGHT_COUNTRY_SHARED_CLIMATE_ENGINE",
-  "status": "all-62-regional-points-registered-production-request-manifest-under-validation-no-historical-data-acquired",
+  "status": "all-80-regional-points-registered-app-region-data-integrated-production-request-manifest-prepared-no-historical-data-acquired",
   "scope": {
     "countryRegistryPath": "config/global/countries.json",
     "subregionRegistryPath": "config/global/weather-subregions.json",
@@ -16,7 +16,7 @@
       "ID"
     ],
     "subregionCountsAtSpecificationTime": {
-      "JP": 19,
+      "JP": 37,
       "KR": 6,
       "CN": 7,
       "VN": 6,
@@ -29,8 +29,8 @@
     "timezonePolicy": "Use the IANA timezone stored on each representative point; aggregate source timestamps into the subregion's local calendar day.",
     "doNotCreatePerCourseClimateRecords": true,
     "geographicReadiness": {
-      "totalSubregions": 62,
-      "representativePointsRegistered": 62,
+      "totalSubregions": 80,
+      "representativePointsRegistered": 80,
       "pendingRepresentativePoints": 0,
       "registryPreflightStatus": "passed",
       "timezoneValidation": "IANA timezone validation passed during registry preflight",
@@ -86,7 +86,7 @@
       "dataset": "reanalysis-era5-land",
       "format": "GRIB in ZIP",
       "requestsPerSubregion": 3,
-      "totalRequests": 186,
+      "totalRequests": 240,
       "segments": [
         "1991-2020 core reference period",
         "previous UTC boundary day",
@@ -213,9 +213,14 @@
     "rule": "JMA-specific CSV parsing, quality codes and station metadata must remain inside the Japan adapter. They must not become shared-core requirements for the other seven countries."
   },
   "appBoundary": {
-    "appUiChangesAllowed": false,
-    "appInteractionChangesAllowed": false,
+    "appVisualLayoutChangesAllowed": false,
+    "regionalClimateNavigatorDataDriven": true,
+    "oneRepresentativeCoursePerSubregion": true,
+    "appInteractionChangesAllowed": true,
+    "appInteractionChangeScope": "Regional climate navigation now follows the approved country → macro-region → golf-cluster hierarchy; visual layout and departure-course flow remain unchanged.",
+    "departureCourseSelectionUnchanged": true,
+    "d01D16LiveForecastUnchanged": true,
     "formalV1ScoringWeightsMayChange": false,
-    "engineLayerOnly": true
+    "engineLayerOnly": false
   }
 }
