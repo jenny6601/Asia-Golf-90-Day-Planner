@@ -5,14 +5,14 @@ def row(year, month, element, value=100, qflag=" ", days=31):
     slots=[]
     for day in range(1,32):
         v=value if day<=days else -9999
-        slots.append(f"{v:5d}  ")
-    return f"TESTSTATION{year:04d}{month:02d}{element}" + "".join(slots)
+        slots.append(f"{v:5d}   ")
+    return f"TESTSTAT001{year:04d}{month:02d}{element}" + "".join(slots)
 
 class RecordAuditTests(unittest.TestCase):
     def test_parses_valid_missing_and_quality_flagged(self):
         text="\n".join([
             row(1991,1,"PRCP",100,days=2),
-            row(1991,1,"TMAX",200,days=1)[:21] + f"{200:5d}  " + f"{200:5d} X " + "".join(f"{-9999:5d}  " for _ in range(29)),
+            row(1991,1,"TMAX",200,days=1)[:21] + f"{200:5d}   " + f"{200:5d} X " + "".join(f"{-9999:5d}   " for _ in range(29)),
             row(1991,1,"TMIN",50,days=1)
         ])
         result=parse_dly(text)
