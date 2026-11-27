@@ -90,7 +90,7 @@ test("regional representative approval preserves existing official coordinate ev
  const sapporo=find("Sapporo Teine Golf Club");
  assert.equal(sapporo.coordinateQuality.coordinateCrossCheck.officialOperatorMap.mapCode,"493 385 165*66");
  const hakodate=find("Hokkaido Country Club");
- assert.equal(hakodate.coordinateQuality.officialMapReference.coordinateType,"official-google-maps-place-pin");
+ assert.equal(hakodate.coordinateQuality.officialMapReference.coordinateType,"place-pin-coordinate");
  const setouchi=find("Setouchi Golf Resort");
  assert.equal(setouchi.coordinateQuality.officialMapReference.coordinateType,"place-pin-coordinate");
  assert.equal(setouchi.courseIdentityVerification.verificationLevel,"official-operator-identity-address-and-google-maps-link-confirmed");
