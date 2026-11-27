@@ -140,7 +140,7 @@ def compile_registry(countries: list[dict], subregions: dict, courses: list[dict
         "dataset": DATASET,
         "status": "registry-preflight-only-not-downloaded",
         "referencePeriod": {"startYear": 1991, "endYear": 2020},
-        "pointPolicy": "one regional representative point per subregion; no per-course climate points",
+        "pointPolicy": "one nearby regional-climate representative point per subregion; exact course pin not required; assess local climate setting rather than a universal radius",
         "gridPolicy": "rounded 0.1-degree values are planning estimates only; never accepted until actual downloaded coordinates are inspected",
         "countsByCountry": counts,
         "totalSubregions": sum(x["totalSubregions"] for x in counts.values()),
