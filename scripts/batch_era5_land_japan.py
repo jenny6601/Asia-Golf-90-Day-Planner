@@ -198,9 +198,9 @@ def main() -> int:
         }, ensure_ascii=False))
     print(json.dumps({
         "status": state["status"], "totalPlanned": len(tasks),
-        "completedRecorded": sum(v.get("status", "").startswith("daily-converted") for v in state["tasks"].values()),
-        "failedRecorded": sum(v.get("status") == "failed" for v in state["tasks"].values()),
-        "remaining": max(0, len(tasks) - sum(v.get("status", "").startswith("daily-converted") for v in state["tasks"].values())),
+        "completedRecorded": sum(state["tasks"].get(t["taskId"], {}).get("status", "").startswith("daily-converted") for t in tasks),
+        "failedRecorded": sum(state["tasks"].get(t["taskId"], {}).get("status") == "failed" for t in tasks),
+        "remaining": max(0, len(tasks) - sum(state["tasks"].get(t["taskId"], {}).get("status", "").startswith("daily-converted") for t in tasks)),
         "stateFile": str(state_path)
     }, ensure_ascii=False, indent=2))
     return 0 if all(state["tasks"].get(t["taskId"], {}).get("status") != "failed" for t in selected_tasks) else 1
