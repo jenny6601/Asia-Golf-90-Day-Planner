@@ -98,6 +98,36 @@ function historicalSignal(regionRows,date,region) {
     method:"era5-same-calendar-day-wet-day-frequency-and-rain-amount-index"
   };
 }
+
+const COURSE_REGION = Object.freeze({
+  "southern-links":"south","palm-hills":"south",
+  "pgm-okinawa":"central",
+  "kise":"north","atta-terrace":"north","chura-orchard":"north"
+});
+
+/** Convert the six existing course-level ERA5 normals into three regional inputs. */
+export function groupCourseHistoricalNormals(courseResults=[]) {
+  if(!Array.isArray(courseResults))throw new TypeError("courseResults must be an array");
+  const grouped={north:new Map(),central:new Map(),south:new Map()};
+  for(const result of courseResults){
+    const region=COURSE_REGION[result?.course?.id];
+    if(!region)continue;
+    for(const day of result.days||[]){
+      if(!day?.date)continue;
+      if(!grouped[region].has(day.date))grouped[region].set(day.date,[]);
+      grouped[region].get(day.date).push({
+        courseId:result.course.id,
+        rainFrequency:finite(day.rainFrequency)?day.rainFrequency:null,
+        rainMean:finite(day.rainMean)?day.rainMean:null,
+        rainSampleYears:finite(day.rainSampleYears)?day.rainSampleYears:0
+      });
+    }
+  }
+  return Object.fromEntries(REGIONS.map(region=>[
+    region,[...grouped[region].entries()].map(([date,courseNormals])=>({date,courseNormals}))
+  ]));
+}
+
 function stabilitySignal(snapshots,region,date) {
   const points=(snapshots||[]).map(snapshot=>{
     const rows=snapshot?.regions?.[region]||[];
@@ -122,12 +152,12 @@ function stabilitySignal(snapshots,region,date) {
  * Regional data uses the established north/central/south weather zones.
  */
 export function buildTripDateEngineInput({
-  asOf,forecastZones=[],longRangePoints=[],historicalByRegion={},stabilitySnapshots=[]
+  asOf,forecastZones=[],longRangePoints=[],historicalByRegion={},historicalCourseResults=[],stabilitySnapshots=[]
 }={}) {
   if(typeof asOf!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(asOf)
     ||new Date(asOf+"T00:00:00Z").toISOString().slice(0,10)!==asOf)
     throw new TypeError("asOf must be a valid YYYY-MM-DD date");
-  const forecastByRegion=new Map(forecastZones.map(x=>[x.zone?.id||x.id,x]));
+  const regionalHistory=Object.keys(historicalByRegion).length?historicalByRegion:groupCourseHistoricalNormals(historicalCourseResults);\n  const forecastByRegion=new Map(forecastZones.map(x=>[x.zone?.id||x.id,x]));
   const longRangeByRegion=new Map(longRangePoints.map(x=>[x.point?.id||x.id,x]));
   const days=Array.from({length:90},(_,i)=>{
     const date=addDays(asOf,i+1),lead=i+1,regions={};
@@ -135,7 +165,7 @@ export function buildTripDateEngineInput({
       const forecast=lead<=16?forecastSignal(forecastByRegion.get(region),date):null;
       const ec46=lead>=17&&lead<=46?ec46Signal(longRangeByRegion.get(region),date):null;
       const seas5=lead>=47?seas5Signal(longRangeByRegion.get(region),date):null;
-      const historical=historicalSignal(historicalByRegion[region],date,region);
+      const historical=historicalSignal(regionalHistory[region],date,region);
       const stability=stabilitySignal(stabilitySnapshots,region,date);
       regions[region]={};
       if(forecast)regions[region].forecast=forecast;
@@ -151,7 +181,7 @@ export function buildTripDateEngineInput({
     sourceAvailability:{
       forecastZones:REGIONS.filter(x=>forecastByRegion.has(x)).length,
       longRangeRegions:REGIONS.filter(x=>longRangeByRegion.has(x)).length,
-      historicalRegions:REGIONS.filter(x=>(historicalByRegion[x]||[]).length>0).length,
+      historicalRegions:REGIONS.filter(x=>(regionalHistory[x]||[]).length>0).length,
       stabilityRuns:stabilitySnapshots.length
     }
   };
