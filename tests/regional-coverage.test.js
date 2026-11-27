@@ -123,3 +123,15 @@ test("Japan mainland candidate IDs are stable, unique, and cannot be mistaken fo
  assert.equal(new Set(ids).size,16);
  assert.ok(mainland.every(x=>x.representativeCourseId===null));
 });
+
+
+test("Japan Setouchi representative candidate uses official Google Maps place coordinates",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const setouchi=japan.subregions.find(x=>x.candidateCourseName==="Setouchi Golf Resort");
+ assert.equal(setouchi.candidateCoordinates.latitude,34.3061999);
+ assert.equal(setouchi.candidateCoordinates.longitude,132.864325);
+ assert.equal(setouchi.candidateCoordinates.coordinateStatus,"official-google-maps-place-coordinate");
+ assert.match(setouchi.candidateCoordinates.coordinateSourceUrl,/maps\.app\.goo\.gl/);
+ assert.equal(setouchi.representativeCourseId,null);
+});
