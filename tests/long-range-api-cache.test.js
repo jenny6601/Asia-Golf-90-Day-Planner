@@ -92,7 +92,7 @@ test("historical archive retries a temporary rate limit without duplicating late
  const fetchImpl=async url=>{
   calls++;
   if(calls===1)return {ok:false,status:429};
-  const dates=Array.from({length:31},(_,i)=>"2000-12-"+String(i+1).padStart(2,"0"));
+  const dates=Array.from({length:31},(_,i)=>new Date(Date.UTC(2000,10,30+i)).toISOString().slice(0,10));
   return {ok:true,json:async()=>({daily:{
    time:dates,temperature_2m_max:dates.map(()=>22),temperature_2m_min:dates.map(()=>15),
    dew_point_2m_mean:dates.map(()=>12),relative_humidity_2m_mean:dates.map(()=>65),wind_speed_10m_mean:dates.map(()=>2),
