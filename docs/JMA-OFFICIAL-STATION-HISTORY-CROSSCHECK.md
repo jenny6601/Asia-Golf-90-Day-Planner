@@ -15,8 +15,8 @@ The parser accepts UTF-8 or CP932 and requires exactly 33 CSV fields for each nu
 
 ## Fields used (1-based)
 - 1: station ID
-- 5: Japanese station name
-- 10–12: representative latitude, longitude, elevation
+- 2: Japanese station name
+- 8–10: representative latitude, longitude, elevation
 - 17: precipitation availability
 - 19: temperature availability
 - 24–25: segment start/end dates
