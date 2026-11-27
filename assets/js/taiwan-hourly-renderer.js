@@ -1,3 +1,4 @@
+import {evaluateSixHourPlayabilityFromRecords} from "./six-hour-playability.js";
 const $=id=>document.getElementById(id);
 function dailyWeatherIcon(kind){
  const bgRain="#e5e9ef",blue="#123fbd",cloud="#aeb9c8",cloudDark="#68778c",sun="#ffc928";
@@ -264,11 +265,31 @@ export function renderTaiwanPwaHourly(host,course,date,records){
  const startTime=records[0]?.time||"—",lastTime=records[records.length-1]?.time||"—",rangeLabel=startTime+"–"+lastTime;
  const heading=(n,label)=>{const h=document.createElement("h3");h.className="forecast-heading forecast-heading-"+n;h.textContent=label+"｜"+courseName+"｜"+date+"（"+rangeLabel+"）";return h};
  const note=document.createElement("p");note.className="data-note";note.textContent="資料範圍："+rangeLabel+"｜開球時間後六小時逐時預報資料。";card.append(note);
+ const sixHour=evaluateSixHourPlayabilityFromRecords(records,date);
+ const suitability=document.createElement("section");suitability.className="card pwa-hourly-chart-card six-hour-playability-summary";
+ const suitabilityTitle=document.createElement("h3");suitabilityTitle.className="forecast-heading";suitabilityTitle.textContent="六小時整體適打評估";suitability.append(suitabilityTitle);
+ if(sixHour.status==="scored"){
+  const headline=document.createElement("p");headline.className="data-note";
+  headline.textContent="適打等級："+sixHour.playability.grade+"｜"+sixHour.playability.label+"｜分數 "+sixHour.playability.score+"/100";
+  suitability.append(headline);
+  const facts=[
+   "降雨機率最高 "+sixHour.inputs.maximumRainProbability+"%｜六小時雨量 "+sixHour.inputs.rainfallTotalMm.toFixed(1)+" mm",
+   "氣溫 "+sixHour.inputs.temperatureMinC.toFixed(1)+"–"+sixHour.inputs.temperatureMaxC.toFixed(1)+"°C｜體感 "+sixHour.inputs.feelsLikeMinC.toFixed(1)+"–"+sixHour.inputs.feelsLikeMaxC.toFixed(1)+"°C",
+   "平均風速 "+(sixHour.inputs.averageWindMs*3.6).toFixed(1)+" km/h｜最大陣風 "+(sixHour.inputs.peakGustMs*3.6).toFixed(1)+" km/h",
+   "降雨風險："+sixHour.rain.label+"｜環境警示："+sixHour.environment.grade
+  ];
+  facts.forEach(value=>{const p=document.createElement("p");p.className="muted";p.textContent=value;suitability.append(p)});
+  const alerts=document.createElement("p");alerts.className="data-note";alerts.textContent=sixHour.playability.alerts.join(" ");suitability.append(alerts);
+  const caveat=document.createElement("p");caveat.className="muted";caveat.textContent="此分級為透明門檻式參考，尚未完成長期實測校準；雷雨與安全警示優先於分數。";suitability.append(caveat);
+ }else{
+  const incomplete=document.createElement("p");incomplete.className="risk-summary";incomplete.textContent="六小時資料不完整，無法評定適打等級："+(sixHour.missingFields?.join("、")||sixHour.missingHour||sixHour.reason||"資料不足");suitability.append(incomplete);
+ }
+ card.append(suitability);
  const title=heading(1,"① 逐時天氣預報");
  card.append(title);
  const tableWrap=document.createElement("div");tableWrap.className="hourly-table-wrap";
  const table=document.createElement("table");table.id="pwaHourlyTable";table.className="pwa-hourly-table";
- const headers=["🕒 時間","🌤️ 天氣","☔ 機率 %","🌧️ 雨量 mm","☔ 降雨判讀","🌡️ 氣溫 °C","🥵 體感 °C","風速 km/h","陣風 km/h","風向","濕度","雲量","UV","打球參考分數"];
+ const headers=["🕒 時間","🌤️ 天氣","☔ 機率 %","🌧️ 雨量 mm","☔ 降雨判讀","🌡️ 氣溫 °C","🥵 體感 °C","風速 km/h","陣風 km/h","風向","濕度","雲量","UV","逐時參考分數"];
  const thead=document.createElement("thead"),trh=document.createElement("tr");
  headers.forEach(v=>{const th=document.createElement("th");th.textContent=v;trh.append(th)});thead.append(trh);table.append(thead);
  const tbody=document.createElement("tbody");
