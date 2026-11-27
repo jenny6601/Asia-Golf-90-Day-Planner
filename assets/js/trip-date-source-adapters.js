@@ -165,7 +165,7 @@ export function buildTripDateEngineInput({
     for(const region of REGIONS){
       const forecast=lead<=16?forecastSignal(forecastByRegion.get(region),date):null;
       const ec46=lead>=17&&lead<=46?ec46Signal(longRangeByRegion.get(region),date):null;
-      const seas5=lead>=47?seas5Signal(longRangeByRegion.get(region),date):null;
+      const seas5=lead>=17?seas5Signal(longRangeByRegion.get(region),date):null;
       const historical=historicalSignal(regionalHistory[region],date,region);
       const stability=stabilitySignal(stabilitySnapshots,region,date);
       regions[region]={};
