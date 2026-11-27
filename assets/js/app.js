@@ -987,7 +987,7 @@ async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAss
  if(hasDailyAssessment){
   const planningDates=Array.from({length:Math.max(0,Math.floor((Date.parse(last+"T12:00:00Z")-Date.parse(first+"T12:00:00Z"))/86400000)+1)},(_,i)=>add(first,i));
   const windows=buildFiveDayWindows(dailyAssessment,planningDates);
-  for(const window of pickTopNonOverlappingWindows(windows,3)){
+  for(const window of windows){
    candidates.push({...window,rank:window.grade<0.75?0:window.grade<1.5?1:window.grade<2.5?2:3,signal:window.grade,coverage:5,source:"daily"});
   }
  }
