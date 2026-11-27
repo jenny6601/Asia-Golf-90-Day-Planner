@@ -24,7 +24,7 @@ The parser accepts UTF-8 or CP932 and requires exactly 33 CSV fields for each nu
 - 27: precipitation statistical continuity
 - 29: temperature statistical continuity
 
-Continuity codes are interpreted separately by element. Precipitation: 0 connected, 1 disconnected. Temperature: 0 connected, 1 disconnected, 4 connected with correction, 5 disconnected due to relocation. The report counts metadata coverage and discontinuities; it does not claim actual daily observations exist.
+Continuity codes are interpreted separately by element. Precipitation: 0 connected, 1 disconnected. Temperature: 0 connected, 1 disconnected, 4 connected with correction, 5 disconnected due to relocation. JMA notes that the first-ever station segment may carry a 1 or 5 marker despite having no predecessor; that initial marker is excluded from discontinuity counts. The report counts metadata coverage and discontinuities; it does not claim actual daily observations exist.
 
 ## Run
 ```bash
