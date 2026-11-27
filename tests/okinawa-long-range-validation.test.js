@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import {buildDailyClimateOutlook} from "../assets/js/daily-climate-outlook.js";
 
-const courses=JSON.parse(await fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8")).filter(x=>x.countryCode==="JP"&&(/Okinawa|沖繩/.test(x.region||"")));
+const courses=JSON.parse(await fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8")).filter(x=>["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"].includes(x.id));
 const today="2026-11-27";
 const add=(date,n)=>new Date(Date.parse(date+"T12:00:00Z")+n*86400000).toISOString().slice(0,10);
 const dates=Array.from({length:72},(_,i)=>add(today,18+i));
