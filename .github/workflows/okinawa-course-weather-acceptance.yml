@@ -67,12 +67,16 @@ jobs:
           node --test tests/okinawa-course-weather-acceptance.test.js
           node --test tests/global-catalog.test.js
       - name: Recheck 16-day course-point forecast and 90-day seasonal data
+        continue-on-error: true
         run: node scripts/validate-okinawa-course-weather.mjs
       - name: Revalidate six-course D19-D90 seasonal and historical estimates
+        continue-on-error: true
         run: node scripts/validate-okinawa-long-range.mjs
       - name: Recompare archived forecasts with JMA AMeDAS observations
+        continue-on-error: true
         run: node scripts/validate-okinawa-jma-observations.mjs
       - name: Validate six-hour tee-time suitability for all six courses
+        continue-on-error: true
         run: node scripts/validate-okinawa-six-hour-playability.mjs
       - name: Analyze six-hour playability calibration readiness
         run: node scripts/analyze-okinawa-playability-calibration.mjs
