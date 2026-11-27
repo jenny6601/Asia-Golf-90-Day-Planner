@@ -950,7 +950,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   calendar.append(card);
  });
  const legend=node("div",undefined,"monthly-calendar-legend");legend.append(node("span","● 逐日預報（前16天）","monthly-legend-forecast"),node("span","● 歷史＋季節訊號估計（第19–90天）","monthly-legend-seasonal"));dailySection.append(legend);
- dailySection.append(node("p","全表說明：前16天優先採逐日預報；第17–18天若無季節估計則以歷史同期參考；第19–90天採 ERA5 歷史同期統計結合可取得的週／月季節訊號估計。卡片中的雨日頻率是長期風險指標，不等同當日實際降雨機率；雨量為日均估計量。信心等級及歷史樣本年數不逐日重複顯示，統一由本說明交代：信心反映歷史樣本與季節訊號覆蓋，不是預報命中率；歷史樣本以最近十個完整年度為基礎。","monthly-source-note"));
+ dailySection.append(node("p","全表說明：前16天維持逐日預報；第17–18天為延伸預報與歷史參考過渡區；第19–46天結合週預報訊號與 ERA5 1991–2020 歷史同期統計；第47–90天結合月／季節預報訊號與同一歷史基準。雨日頻率是歷史雨日比例經季節訊號調整後的趨勢指標，不等同未來逐日降雨機率；體感溫度為高低範圍估計。信心反映歷史樣本與季節訊號覆蓋，不是預報命中率。","monthly-source-note"));
  if(!sampleCourses.length)dailySection.append(node("p","此分區尚無具有效 GPS 座標的球場，無法產生逐日天氣簡表。","risk-summary"));
  // Do not scroll to the report body after loading; keep the destination page header at the top.
  if(openWeekAnalysis){
