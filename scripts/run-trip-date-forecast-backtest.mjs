@@ -100,5 +100,5 @@ const lines=[
   ...report.caveats.map(x=>"- "+x),
   ...Object.entries(regionErrors).map(([region,error])=>"- "+region+" ERA5 reference unavailable: "+error)
 ];
-await fs.writeFile(new URL("backtest.md",outDir),lines.join("\\n"));
-console.log(lines.join("\\n"));
+await fs.writeFile(new URL("backtest.md",outDir),lines.join("\n"));
+console.log(lines.join("\n"));
