@@ -65,10 +65,10 @@
           "candidateRationale": "位於七飯町大沼地區，作為道南與函館周邊候選；營運與精確座標仍待正式核對。",
           "candidateStatus": "identity-and-location-researched",
           "candidateCoordinates": {
-            "latitude": 41.98934,
-            "longitude": 140.64794,
-            "coordinateStatus": "public-map-coordinate",
-            "coordinateSourceUrl": "https://mapcarta.com/36075708",
+            "latitude": 41.9892895,
+            "longitude": 140.6549955,
+            "coordinateStatus": "official-operator-google-maps-place-pin",
+            "coordinateSourceUrl": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
             "timezone": "Asia/Tokyo"
           },
           "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified",
@@ -81,11 +81,26 @@
             "checkedOn": "2026-11-27"
           },
           "coordinateQuality": {
-            "grade": "B",
-            "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "grade": "A",
+            "label": "官方營運商 Google Maps 地點圖釘",
+            "reviewStatus": "official-operator-google-maps-place-pin-confirmed;course-boundary-not-independently-surveyed",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "營運商官方大沼球場交通頁的 Google Maps 連結含明確 place pin 座標；以官方圖釘更新候選點。",
+            "officialMapReference": {
+              "type": "official-google-maps-place-pin",
+              "url": "https://www.princehotels.co.jp/golf/hokkaido/onuma/map/",
+              "latitude": 41.9892895,
+              "longitude": 140.6549955,
+              "coordinateType": "place-pin-coordinate",
+              "previousCandidateCoordinate": {
+                "latitude": 41.98934,
+                "longitude": 140.64794,
+                "source": "https://mapcarta.com/36075708"
+              },
+              "distanceFromPreviousCandidateKm": 0.583,
+              "crossCheckResult": "official-operator-place-pin-coordinate-replaces-older-third-party-point",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -188,11 +203,21 @@
             "checkedOn": "2026-11-27"
           },
           "coordinateQuality": {
-            "grade": "B",
-            "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "grade": "A",
+            "label": "官方 Google Maps 嵌入地圖座標一致",
+            "reviewStatus": "official-google-map-embed-found-center-matches-public-coordinate;pin-level-check-pending",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方交通頁嵌入 Google Maps，地圖中心與現有候選座標相差不到 1 公尺；但中心點並非可獨立辨識的球場圖釘。",
+            "officialMapReference": {
+              "type": "official-google-maps-embed-center",
+              "url": "https://www.700c.jp/access/",
+              "latitude": 36.709635,
+              "longitude": 140.004828,
+              "coordinateType": "map-viewport-center-not-pin",
+              "distanceFromCandidateKm": 0.001,
+              "crossCheckResult": "official-map-center-matches-existing-public-coordinate-within-one-metre;still-not-independent-pin-confirmation",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -224,10 +249,20 @@
           },
           "coordinateQuality": {
             "grade": "B",
-            "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "label": "官方地圖中心與公開球場點有差異",
+            "reviewStatus": "official-google-map-embed-found;center-121m-from-public-course-point;pin-level-check-pending",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方地圖中心與現有公開球場座標相距約 121 公尺；地圖中心不是球場圖釘，暫不替換候選座標。",
+            "officialMapReference": {
+              "type": "official-google-maps-embed-center",
+              "url": "https://narita-hills.co.jp/access/",
+              "latitude": 35.8339378,
+              "longitude": 140.2766322,
+              "coordinateType": "map-viewport-center-not-pin",
+              "distanceFromCandidateKm": 0.122,
+              "crossCheckResult": "official-map-center-is-nearby-but-not-identical-to-public-course-centroid;must-not-replace-until-pin-confirmed",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -624,10 +659,11 @@
         "approximateCoordinates": 1,
         "forecastEnabled": false,
         "officialIdentityAddressVerified": 16,
-        "coordinateQualityA": 1,
-        "coordinateQualityB": 14,
+        "coordinateQualityA": 3,
+        "coordinateQualityB": 12,
         "coordinateQualityC": 1,
-        "weatherPointEligible": 0
+        "weatherPointEligible": 0,
+        "officialMapCrossChecks": 3
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
