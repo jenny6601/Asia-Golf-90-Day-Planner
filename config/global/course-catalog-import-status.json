@@ -33,12 +33,14 @@
         "status": "drafted_and_mapped",
         "clusterCount": 33,
         "courseRecordsMapped": 76,
-        "weatherActivation": "blocked_pending_identity_address_coordinate_and_cluster_validation",
-        "note": "33 provisional representative candidates selected. Two previously empty clusters are now covered by official-source-backed candidate records (Niseko Village Golf Course; Kyoto Golf Club). No new cluster weather point has been activated; legacy weather config remains untouched.",
+        "weatherActivation": "blocked_pending_full_validation",
+        "note": "33 provisional representative candidates selected. Coordinates reused only where an existing legacy weather-subregion candidate already has a sourced regional point; these remain pending validation for the new cluster layer. No weather points activated.",
         "representativeRegistry": "config/global/japan-cluster-representatives.json",
         "representativeCandidateCount": 33,
         "validatedRepresentatives": 0,
-        "weatherEnabledRepresentatives": 0
+        "weatherEnabledRepresentatives": 0,
+        "representativeCoordinateAvailable": 19,
+        "representativeCoordinatePending": 14
       }
     },
     {
