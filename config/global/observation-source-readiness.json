@@ -12,16 +12,19 @@
     {
       "countryCode": "JP",
       "agency": "Japan Meteorological Agency (JMA)",
-      "status": "documented-in-engine-plan-station-matching-not-started",
-      "portal": "https://www.data.jma.go.jp/obd/stats/etrn/index.php",
-      "notes": "Select nearby long-running stations and inspect element coverage, station history and observation-day definitions."
+      "status": "official-daily-data-download-confirmed-station-matching-queue-generated",
+      "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+      "notes": "JMA official Past Weather Data Download provides daily values including daily precipitation total, daily maximum and minimum temperature. The portal exposes quality/insufficient-data handling and flags non-homogeneity due to station relocation, environmental or observation-method changes. It limits request volume and warns against excessive automated access. A bounded cluster-level acquisition queue is generated; station matching and 1991-2020 downloads remain pending.",
+      "acquisitionQueue": "data/observation-stations/jp-kr-official-acquisition-queue.json"
     },
     {
       "countryCode": "KR",
       "agency": "Korea Meteorological Administration (KMA)",
-      "status": "official-portal-found-station-matching-not-started",
+      "status": "official-asos-daily-and-annual-fileset-confirmed-station-matching-queue-generated",
       "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
-      "notes": "ASOS offers minute/hour/day/month/year data; records begin in 1904 for some station/element combinations; 105 listed stations; QC flags exist for selected elements; long spans may require file-set download."
+      "notes": "KMA official ASOS portal provides daily records from 1904 onward depending on station and element, with 105 ASOS stations listed. Daily query window is limited to 10 years; long historical periods are directed to annual file-set downloads. A bounded cluster-level acquisition queue is generated; station matching and 1991-2020 downloads remain pending.",
+      "fileSetPortal": "https://data.kma.go.kr/data/grnd/selectAsosList.do?pgmNo=34",
+      "acquisitionQueue": "data/observation-stations/jp-kr-official-acquisition-queue.json"
     },
     {
       "countryCode": "CN",
@@ -85,15 +88,15 @@
     }
   ],
   "nextActions": [
-    "Expand candidate discovery beyond the nearest three NOAA stations per region, prioritizing PRCP and TMIN daily completeness; do not approve stations based on inventory overlap or this pilot.",
-    "Search official national meteorological station datasets for Japan, Korea, China, Vietnam, Thailand, Malaysia, Singapore and Indonesia where NOAA daily coverage is weak; request paid or restricted records only after documenting access terms and approval.",
-    "Correctly interpret station-day observation conventions, quality flags and duplicate/overlapping records; audit annual and seasonal completeness before matching.",
-    "Obtain station history, relocation, elevation and terrain/coastal representativeness for shortlisted stations.",
-    "After station review, pair approved station observations with ERA5-Land by date and calculate bias, MAE, precipitation wet-day hit/miss and seasonal metrics by subregion."
+    "Generate the Japan and Korea cluster-level station acquisition queue from representative-point coordinates, then match official station inventories to each cluster.",
+    "Acquire bounded 1991-2020 daily JMA and KMA records for shortlisted stations; preserve source QC, insufficient-data and non-homogeneity flags.",
+    "Expand NOAA candidate discovery beyond the nearest three stations per region, prioritizing PRCP and TMIN daily completeness; no station approval from inventory overlap alone.",
+    "Search official national meteorological station datasets for China, Vietnam, Thailand, Malaysia, Singapore and Indonesia, documenting access terms and data fees.",
+    "Obtain station history, relocation, elevation and terrain/coastal representativeness before pairing station observations with ERA5-Land."
   ],
   "lastReviewed": "2026-11-27",
   "discoverySummary": {
-    "officialCountrySourcePathFound": 7,
+    "officialCountrySourcePathFound": 8,
     "officialCountrySourcePathPending": 1,
     "globalFallbackFound": 1,
     "stationInventoriesDownloaded": 2,
@@ -119,6 +122,9 @@
       "TMIN": 57.2
     },
     "ghcndDailyAuditRegionsWithStrongCandidate": 6,
-    "ghcndDailyAuditDefinition": "A region has a strong pilot candidate only if one of its sampled stations has all three elements with mean annual daily coverage >=80% and >=20 years at >=80%; this is a screening threshold, not approval."
+    "ghcndDailyAuditDefinition": "A region has a strong pilot candidate only if one of its sampled stations has all three elements with mean annual daily coverage >=80% and >=20 years at >=80%; this is a screening threshold, not approval.",
+    "jpOfficialDailyData": "confirmed-manual-csv-download-and-data-quality-flags",
+    "krOfficialAsosDailyData": "confirmed-daily-query-and-annual-file-set-download",
+    "jpKrAcquisitionQueueItems": 0
   }
 }
