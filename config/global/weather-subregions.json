@@ -1459,7 +1459,25 @@
           "candidateCourseName": "The Royal Golf & Country Club",
           "candidateRationale": "曼谷近機場代表球場候選，交通與區域代表性兼具",
           "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 13.6971,
+            "longitude": 100.8086,
+            "timezone": "Asia/Bangkok",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://thailand.worldplaces.me/parks-in-lat-krabang/37645268-the-royal-golf-and-country-club.html"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Lat Krabang nearby public map coordinate; official course address independently confirms Lat Krabang, Bangkok",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "TH-EAST-01",
@@ -1471,7 +1489,25 @@
           "candidateCourseName": "Siam Country Club Old Course",
           "candidateRationale": "芭達雅／春武里代表性錦標賽球場",
           "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 12.91061,
+            "longitude": 100.98388,
+            "timezone": "Asia/Bangkok",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://mapcarta.com/W132473847"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Siam Country Club Old Course OpenStreetMap-derived coordinate",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "TH-WEST-01",
@@ -1483,7 +1519,25 @@
           "candidateCourseName": "Black Mountain Golf Club",
           "candidateRationale": "華欣代表性高原球場，為泰國主要高爾夫旅遊區之一",
           "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 12.6144,
+            "longitude": 99.8917,
+            "timezone": "Asia/Bangkok",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://playgolfglobal.com/thailand/courses/black-mountain-golf-club-hua-hin"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Black Mountain course coordinate; official club address confirms Hua Hin district",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "TH-SOUTH-01",
@@ -1495,7 +1549,25 @@
           "candidateCourseName": "Blue Canyon Country Club",
           "candidateRationale": "普吉島代表性錦標賽球場，兩座18洞球場",
           "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 8.103,
+            "longitude": 98.328,
+            "timezone": "Asia/Bangkok",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://en.wikipedia.org/wiki/Blue_Canyon_Country_Club"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Blue Canyon public map coordinate; official club and Phuket tourism sources confirm Mai Khao, Thalang",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "TH-NORTH-01",
@@ -1507,7 +1579,25 @@
           "candidateCourseName": "Alpine Golf Resort Chiang Mai",
           "candidateRationale": "清邁代表性山區球場",
           "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 18.69188,
+            "longitude": 99.17359,
+            "timezone": "Asia/Bangkok",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://www.chiangmaigolfclub.com/alpine-golf-resort"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Alpine GPS coordinate converted from published DMS; official resort confirms Chiang Mai location",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "TH-NE-01",
@@ -1519,7 +1609,25 @@
           "candidateCourseName": "Kirimaya Golf Resort Spa",
           "candidateRationale": "考艾山區代表性度假球場",
           "candidateSourceUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 14.512665,
+            "longitude": 101.432599,
+            "timezone": "Asia/Bangkok",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/thailand/kirimaya-golf-resort-spa/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Kirimaya Golf Resort course coordinate; official resort address confirms Khao Yai/Pak Chong",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "TH-ISLAND-01",
@@ -1531,7 +1639,25 @@
           "candidateCourseName": "Santiburi Samui Country Club",
           "candidateRationale": "蘇梅島北部山坡18洞錦標賽球場，官方資料可確認其地形及島嶼位置。",
           "candidateSourceUrl": "https://www.santiburigolfsamui.com/infomation/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 9.56001,
+            "longitude": 99.97647,
+            "timezone": "Asia/Bangkok",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://mapcarta.com/33098524"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Santiburi Samui Country Club public map coordinate",
+            "checkedOn": "2026-11-27"
+          }
         }
       ]
     },
