@@ -1677,7 +1677,25 @@
           "candidateCourseName": "Kelab Golf Perkhidmatan Awam (KGPA)",
           "candidateRationale": "吉隆坡市區候選代表，已列入核對官方資料的馬來西亞球場名錄",
           "candidateSourceUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 3.13449,
+            "longitude": 101.632646,
+            "timezone": "Asia/Kuala_Lumpur",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/malaysia/kuala-lumpur/kuala-lumpur/kelab-golf-perkhidmatan-awam"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 KGPA Bukit Kiara, Kuala Lumpur",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "MY-NORTH-01",
@@ -1689,7 +1707,25 @@
           "candidateCourseName": "Penang Golf Club",
           "candidateRationale": "檳城代表球場，位於 Bayan Lepas",
           "candidateSourceUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 5.336035,
+            "longitude": 100.283686,
+            "timezone": "Asia/Kuala_Lumpur",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/malaysia/penang-golf-club/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Penang Golf Club, Bayan Lepas",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "MY-SOUTH-01",
@@ -1701,7 +1737,25 @@
           "candidateCourseName": "The Els Club Desaru Coast - Ocean Course",
           "candidateRationale": "柔佛迪沙魯海岸代表球場，具度假與海岸地理代表性",
           "candidateSourceUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 1.526621,
+            "longitude": 104.267824,
+            "timezone": "Asia/Kuala_Lumpur",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/malaysia/johor/desaru/els-club-desaru-coast-ocean-course"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 The Els Club Desaru Coast Ocean Course",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "MY-ISLAND-01",
@@ -1713,7 +1767,25 @@
           "candidateCourseName": "The Els Club Teluk Datai",
           "candidateRationale": "The Els Club 官方網站確認蘭卡威 Teluk Datai Rainforest Course 為其馬來西亞目的地之一。",
           "candidateSourceUrl": "https://www.elsclubmalaysia.com/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 6.426397,
+            "longitude": 99.683912,
+            "timezone": "Asia/Kuala_Lumpur",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/malaysia/the-els-club-teluk-datai/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 The Els Club Teluk Datai, Langkawi",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "MY-BORNEO-01",
@@ -1725,7 +1797,25 @@
           "candidateCourseName": "Dalit Bay Golf & Country Club",
           "candidateRationale": "沙巴亞庇周邊海岸度假球場候選",
           "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 6.155901,
+            "longitude": 116.151667,
+            "timezone": "Asia/Kuala_Lumpur",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/malaysia/dalit-bay-golf-country-club/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Dalit Bay Golf & Country Club, Tuaran",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "MY-BORNEO-02",
@@ -1737,7 +1827,25 @@
           "candidateCourseName": "Kelab Golf Sarawak",
           "candidateRationale": "古晉城市代表球場候選",
           "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 1.583633,
+            "longitude": 110.33254,
+            "timezone": "Asia/Kuala_Lumpur",
+            "coordinateStatus": "public-course-map-coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/malaysia/sarawak/kuching/kelab-golf-sarawak"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Kelab Golf Sarawak, Petra Jaya Kuching",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "MY-EAST-01",
@@ -1749,7 +1857,25 @@
           "candidateCourseName": "Kuala Terengganu Golf Resort",
           "candidateRationale": "目前暫以東海岸高爾夫區候選；名錄有彭亨州 Mahkota Golf & Country Club，但與登嘉樓距離較遠，需再核對後決定是否調整分區中心。",
           "candidateSourceUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 5.3862,
+            "longitude": 103.0898,
+            "timezone": "Asia/Kuala_Lumpur",
+            "coordinateStatus": "nearby-regional-public-coordinate",
+            "coordinateSourceUrl": "https://www.ancasahotels.com.my/sites/default/files/2023-07/fact%20sheet%20KTGR-01.pdf"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Kuala Terengganu Golf Resort vicinity; published GPS coordinate",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "MY-HIGHLAND-01",
@@ -1761,7 +1887,25 @@
           "candidateCourseName": "Cameron Highlands Golf Course",
           "candidateRationale": "金馬崙高原地形與其他低海拔分區差異明顯；此球場僅列研究候選，營運狀態及可取得座標尚待查證。",
           "candidateSourceUrl": "https://www.malaysiagolfholiday.com/destinations/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 4.4716,
+            "longitude": 101.379,
+            "timezone": "Asia/Kuala_Lumpur",
+            "coordinateStatus": "nearby-regional-public-coordinate",
+            "coordinateSourceUrl": "https://mygeoname.mygeoportal.gov.my/exportpdf00.jsp?kodnegeri=06"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "高原鄰近區域代表座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則，不要求精確球場圖釘。 Cameron Highlands/Tanah Rata regional vicinity; national gazetteer nearby location",
+            "checkedOn": "2026-11-27"
+          }
         }
       ]
     },
