@@ -78,7 +78,7 @@ async function loadHistoricalDailyArchive(course,fetchImpl,now){
  const key=[latitude,longitude,startYear,endYear,timezone].join("|");
  if(!cache.has(key)){
   const request=(async()=>{
-   const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),
+   const params=new URLSearchParams({latitude:String(latitude),longitude:String(longitude),
     start_date:startYear+"-01-01",end_date:endYear+"-12-31",
     daily:"temperature_2m_max,temperature_2m_min,dew_point_2m_mean,relative_humidity_2m_mean,wind_speed_10m_mean,wind_speed_10m_max,precipitation_sum,precipitation_hours,weather_code",
     timezone,temperature_unit:"celsius",wind_speed_unit:"ms",precipitation_unit:"mm",models:"era5"});
@@ -95,7 +95,7 @@ async function loadHistoricalDailyArchive(course,fetchImpl,now){
 }
 
 /**
- * Ten-complete-year same-month climate baseline from ERA5 reanalysis.
+ * Thirty-year monthly climate baseline from ERA5 reanalysis.
  * Rain day threshold: daily precipitation >= 1.0 mm.
  * Maximum daily rainfall: maximum single-day total across the baseline years.
  */
