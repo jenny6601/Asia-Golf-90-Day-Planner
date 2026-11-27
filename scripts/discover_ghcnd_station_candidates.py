@@ -9,7 +9,7 @@ from __future__ import annotations
 import argparse,csv,json,math,urllib.request
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-BASE="https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/doc/"
+BASE="https://www.ncei.noaa.gov/pub/data/ghcn/daily/"
 FILES={"stations":"ghcnd-stations.txt","inventory":"ghcnd-inventory.txt","countries":"ghcnd-countries.txt"}
 ALIASES={"JP":["japan"],"KR":["south korea","republic of korea","korea, republic of"],"CN":["china"],"VN":["vietnam"],"TH":["thailand"],"MY":["malaysia"],"SG":["singapore"],"ID":["indonesia"]}
 def fetch(name,timeout=90):
