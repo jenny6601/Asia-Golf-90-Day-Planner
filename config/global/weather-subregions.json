@@ -228,11 +228,11 @@
             "checkedOn": "2026-11-27"
           },
           "coordinateQuality": {
-            "grade": "A",
-            "label": "官方 Google Maps 嵌入地圖座標一致",
-            "reviewStatus": "official-google-map-embed-found-center-matches-public-coordinate;pin-level-check-pending",
+            "grade": "B",
+            "label": "官方地圖中心與候選座標一致，但非圖釘",
+            "reviewStatus": "official-map-viewport-center-matches-candidate;not-a-course-pin",
             "weatherPointEligible": false,
-            "reason": "官方交通頁嵌入 Google Maps，地圖中心與現有候選座標相差不到 1 公尺；但中心點並非可獨立辨識的球場圖釘。",
+            "reason": "官方 Google Maps 中心與原候選座標相差約 1 公尺，但仍是地圖中心而非球場圖釘，因此不得列為 A 級定位。",
             "officialMapReference": {
               "type": "official-google-maps-embed-center",
               "url": "https://www.700c.jp/access/",
@@ -808,8 +808,8 @@
         "approximateCoordinates": 1,
         "forecastEnabled": false,
         "officialIdentityAddressVerified": 16,
-        "coordinateQualityA": 4,
-        "coordinateQualityB": 11,
+        "coordinateQualityA": 3,
+        "coordinateQualityB": 12,
         "coordinateQualityC": 1,
         "weatherPointEligible": 0,
         "officialMapCrossChecks": 16
