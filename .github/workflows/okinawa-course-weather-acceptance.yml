@@ -14,6 +14,7 @@ on:
       - "scripts/validate-okinawa-long-range.mjs"
       - "scripts/jma-amedas-validation.js"
       - "scripts/validate-okinawa-jma-observations.mjs"
+      - "scripts/analyze-okinawa-playability-calibration.mjs"
       - "scripts/validate-okinawa-six-hour-playability.mjs"
       - "scripts/validate-okinawa-regional-grid.mjs"
       - "scripts/validate-okinawa-regional-observations.mjs"
@@ -73,6 +74,8 @@ jobs:
         run: node scripts/validate-okinawa-jma-observations.mjs
       - name: Validate six-hour tee-time suitability for all six courses
         run: node scripts/validate-okinawa-six-hour-playability.mjs
+      - name: Analyze six-hour playability calibration readiness
+        run: node scripts/analyze-okinawa-playability-calibration.mjs
       - name: Compare north, central and south forecast grids for all six courses
         run: node scripts/validate-okinawa-regional-grid.mjs
       - name: Compare north-central-south weather across ten JMA AMeDAS stations
@@ -89,6 +92,8 @@ jobs:
             artifacts/okinawa-acceptance/okinawa-long-range-validation.md
             artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.json
             artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.md
+            artifacts/okinawa-acceptance/okinawa-playability-calibration-readiness.json
+            artifacts/okinawa-acceptance/okinawa-playability-calibration-readiness.md
             artifacts/okinawa-acceptance/okinawa-six-hour-playability-validation.json
             artifacts/okinawa-acceptance/okinawa-six-hour-playability-validation.md
             artifacts/okinawa-acceptance/okinawa-regional-grid-analysis.json
