@@ -67,13 +67,13 @@ async function loadHistoricalDailyArchive(course,fetchImpl,now){
  if(typeof fetchImpl!=="function")throw new TypeError("fetchImpl must be a function");
  let cache=historicalArchiveCache.get(fetchImpl);
  if(!cache){cache=new Map();historicalArchiveCache.set(fetchImpl,cache)}
- const endYear=now.getUTCFullYear()-1,startYear=endYear-9,timezone=course.timezone||"Asia/Tokyo";
+ const startYear=1991,endYear=2020,timezone=course.timezone||"Asia/Tokyo";
  const key=[course.latitude,course.longitude,startYear,endYear,timezone].join("|");
  if(!cache.has(key)){
   const request=(async()=>{
    const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),
     start_date:startYear+"-01-01",end_date:endYear+"-12-31",
-    daily:"temperature_2m_max,temperature_2m_min,precipitation_sum",
+    daily:"temperature_2m_max,temperature_2m_min,dew_point_2m_mean,relative_humidity_2m_mean,wind_speed_10m_mean,wind_speed_10m_max,precipitation_sum,precipitation_hours,weather_code",
     timezone,temperature_unit:"celsius",precipitation_unit:"mm",models:"era5"});
    const response=await fetchImpl("https://archive-api.open-meteo.com/v1/archive?"+params);
    if(!response.ok)throw new Error("歷史逐日資料 API HTTP "+response.status);
@@ -127,25 +127,100 @@ export async function fetchCourseHistoricalMonthlyClimate(course, fetchImpl=fetc
  * Rain frequency is the share of matching calendar dates with >=1 mm,
  * not a forecast probability.
  */
-export async function fetchCourseHistoricalWeekNormals(course, dates, fetchImpl=fetch, now=new Date()){
+function historicalApparentTemperatureC(airC,dewpointC,windMs){
+ if(!Number.isFinite(airC)||!Number.isFinite(dewpointC)||!Number.isFinite(windMs)||windMs<0)return null;
+ const saturation= t => 6.112*Math.exp((17.67*t)/(t+243.5));
+ const vapor=Math.min(saturation(airC),saturation(dewpointC));
+ const windKmh=windMs*3.6;
+ if(airC<=10&&windKmh>=4.8){
+  return 13.12+0.6215*airC-11.37*Math.pow(windKmh,0.16)+0.3965*airC*Math.pow(windKmh,0.16);
+ }
+ return airC+0.33*vapor-0.70*windMs-4.00;
+}
+const historicalQuantile=(values,q)=>{
+ const sorted=values.filter(Number.isFinite).sort((a,b)=>a-b);
+ if(!sorted.length)return null;
+ const p=(sorted.length-1)*q,lo=Math.floor(p),hi=Math.ceil(p);
+ return sorted[lo]+(sorted[hi]-sorted[lo])*(p-lo);
+};
+const historicalMean=values=>{
+ const valid=values.filter(Number.isFinite);
+ return valid.length?valid.reduce((sum,value)=>sum+value,0)/valid.length:null;
+};
+const historicalStd=values=>{
+ const valid=values.filter(Number.isFinite);
+ if(valid.length<2)return null;
+ const avg=historicalMean(valid);
+ return Math.sqrt(valid.reduce((sum,value)=>sum+(value-avg)**2,0)/(valid.length-1));
+};
+const historicalDayNumber=date=>{
+ const month=Number(date.slice(5,7)),day=Number(date.slice(8,10));
+ if(month===2&&day===29)return 59.5;
+ return Math.floor((Date.UTC(2001,month-1,day)-Date.UTC(2001,0,1))/86400000)+1;
+};
+const historicalCircularDistance=(a,b)=>{
+ const delta=Math.abs(a-b);
+ return Math.min(delta,365-delta);
+};
+
+/**
+ * Historical 31-day rolling climate normals around each target calendar date.
+ * Uses ERA5 daily aggregates for 1991-2020 only; no seasonal model adjustment.
+ */
+export async function fetchCourseHistoricalWeekNormals(course,dates,fetchImpl=fetch,now=new Date()){
  if(!course||!Number.isFinite(course.latitude)||!Number.isFinite(course.longitude))throw new TypeError("球場座標不足");
  const {daily,startYear,endYear}=await loadHistoricalDailyArchive(course,fetchImpl,now);
- return {course,startYear,endYear,days:dates.map(date=>{
-  const md=date.slice(5),samples=[];
-  for(let i=0;i<daily.time.length;i++)if(daily.time[i].slice(5)===md){
-   const rain=daily.precipitation_sum?.[i],high=daily.temperature_2m_max?.[i],low=daily.temperature_2m_min?.[i];
-   if(Number.isFinite(rain)||Number.isFinite(high)||Number.isFinite(low))samples.push({rain,high,low});
+ return {course,startYear,endYear,referencePeriod:"1991-2020",windowDays:31,source:"ERA5",days:dates.map(date=>{
+  const targetDay=historicalDayNumber(date),byYear=new Map();
+  for(let i=0;i<daily.time.length;i++){
+   const sourceDate=daily.time[i];
+   if(historicalCircularDistance(historicalDayNumber(sourceDate),targetDay)>15)continue;
+   const year=Number(sourceDate.slice(0,4));
+   if(!byYear.has(year))byYear.set(year,[]);
+   const dew=daily.dew_point_2m_mean?.[i],wind=daily.wind_speed_10m_mean?.[i];
+   const low=daily.temperature_2m_min?.[i],high=daily.temperature_2m_max?.[i];
+   byYear.get(year).push({
+    rain:daily.precipitation_sum?.[i],low,high,
+    humidity:daily.relative_humidity_2m_mean?.[i],wind,
+    feelLow:historicalApparentTemperatureC(low,dew,wind),
+    feelHigh:historicalApparentTemperatureC(high,dew,wind)
+   });
   }
-  const vals=key=>samples.map(x=>x[key]).filter(Number.isFinite);
-  const avg=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:null;
-  const std=a=>{if(a.length<2)return null;const m=avg(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-1))};
-  const quantile=(a,q)=>{if(!a.length)return null;const sorted=[...a].sort((x,y)=>x-y),p=(sorted.length-1)*q,lo=Math.floor(p),hi=Math.ceil(p);return sorted[lo]+(sorted[hi]-sorted[lo])*(p-lo)};
-  const rain=vals("rain"),high=vals("high"),low=vals("low");
-  return {date,sampleYears:samples.length,rainSampleYears:rain.length,temperatureSampleYears:Math.min(high.length,low.length),
-   rainFrequency:rain.length?rain.filter(v=>v>=1).length/rain.length*100:null,
-   rainMean:avg(rain),rainMin:rain.length?Math.min(...rain):null,rainMax:rain.length?Math.max(...rain):null,
-   rainP10:quantile(rain,.1),rainP50:quantile(rain,.5),rainP90:quantile(rain,.9),
-   rainStd:std(rain),highMean:avg(high),lowMean:avg(low),highStd:std(high),lowStd:std(low),
-   highMax:high.length?Math.max(...high):null,lowMin:low.length?Math.min(...low):null};
+  const years=[...byYear.entries()];
+  const validFor=key=>{
+   const selected=[];
+   for(const [year,rows] of years){
+    const valid=rows.filter(row=>Number.isFinite(row[key]));
+    if(valid.length>=Math.ceil(rows.length*0.9))selected.push({year,values:valid.map(row=>row[key])});
+   }
+   return selected;
+  };
+  const flatten=groups=>groups.flatMap(group=>group.values);
+  const rainGroups=validFor("rain"),lowGroups=validFor("low"),highGroups=validFor("high");
+  const feelLowGroups=validFor("feelLow"),feelHighGroups=validFor("feelHigh");
+  const humidityGroups=validFor("humidity"),windGroups=validFor("wind");
+  const rain=flatten(rainGroups),low=flatten(lowGroups),high=flatten(highGroups);
+  const feelLow=flatten(feelLowGroups),feelHigh=flatten(feelHighGroups);
+  const humidity=flatten(humidityGroups),wind=flatten(windGroups);
+  const wetDays=rain.filter(value=>value>=1);
+  return {
+   date,sampleYears:Math.min(rainGroups.length,lowGroups.length,highGroups.length),
+   rainSampleYears:rainGroups.length,temperatureSampleYears:Math.min(lowGroups.length,highGroups.length),
+   feelsLikeSampleYears:Math.min(feelLowGroups.length,feelHighGroups.length),
+   sampleDays:{rain:rain.length,temperature:Math.min(low.length,high.length),feelsLike:Math.min(feelLow.length,feelHigh.length)},
+   rainFrequency:rain.length?wetDays.length/rain.length*100:null,
+   rainMean:historicalMean(rain),rainMin:rain.length?Math.min(...rain):null,rainMax:rain.length?Math.max(...rain):null,
+   rainP10:historicalQuantile(rain,.1),rainP50:historicalQuantile(rain,.5),rainP90:historicalQuantile(rain,.9),
+   rainStd:historicalStd(rain),highMean:historicalMean(high),lowMean:historicalMean(low),
+   highStd:historicalStd(high),lowStd:historicalStd(low),
+   highMax:high.length?Math.max(...high):null,lowMin:low.length?Math.min(...low):null,
+   humidityMean:historicalMean(humidity),windMean:historicalMean(wind),
+   windMax:wind.length?Math.max(...wind):null,
+   feelsLikeMinMeanC:historicalMean(feelLow),feelsLikeMaxMeanC:historicalMean(feelHigh),
+   feelsLikeMinP10C:historicalQuantile(feelLow,.1),feelsLikeMinP90C:historicalQuantile(feelLow,.9),
+   feelsLikeMaxP10C:historicalQuantile(feelHigh,.1),feelsLikeMaxP90C:historicalQuantile(feelHigh,.9),
+   feelsLikeMethod:"daily apparent-temperature estimate from Tmin/Tmax, mean dewpoint and mean wind; inputs are daily aggregates and not time-paired",
+   qualityFlags:["31-day rolling calendar window","feels-like uses daily aggregate inputs; no direct solar load"]
+  };
  })};
 }
