@@ -54,16 +54,19 @@
       "sourceUrl": "https://niseko-golf.com/en/course/",
       "sourceEvidence": "Official course page lists the 18-hole Niseko Village Golf Course and its location at Higashiyama Onsen, Niseko Town, Abuta District, Hokkaido; identity/address source verified, current seasonal operating dates require annual confirmation.",
       "address": "Higashiyama Onsen, Niseko Town, Abuta District, Hokkaido 048-1592, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 42.847109,
+      "longitude": 140.685607,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.where2golf.com/japan/niseko-village-golf-course/",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "coordinateEvidence": "Where2Golf lists a course-specific latitude/longitude; official operator confirms facility identity, location and 2026 season dates."
     },
     {
       "clusterId": "JP-HKD-HAKODATE",
@@ -99,16 +102,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses/region/Tohoku",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "Kuzuno-229 Obetsunai, Aomori 030-0144, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 40.73722,
+      "longitude": 140.74876,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://mapcarta.com/29357608",
+      "coordinateEvidenceStatus": "third_party_map_coordinate",
+      "coordinateEvidence": "Mapcarta/OSM coordinate candidate; official Aomori tourism listing independently confirms the course address and seasonal closure."
     },
     {
       "clusterId": "JP-THK-IWATE-APPI",
@@ -168,16 +174,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
       "address": "15 Yuheidai, Nihonmatsu-shi, Fukushima 964-8691, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 37.57389,
+      "longitude": 140.362964,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://arealog.net/20900/",
+      "coordinateEvidenceStatus": "third_party_area_coordinate",
+      "coordinateEvidence": "AreaNote GO gives a mapped golf-course location coordinate and address; management company listing independently confirms operator and address."
     },
     {
       "clusterId": "JP-KNT-TOKYO-KANAGAWA",
@@ -189,16 +198,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses/tokyo",
       "sourceEvidence": "Golf in Japan published course directory card; listing provides course name, local name, prefecture and address",
       "address": "2352 Kawaguchimachi, Hachioji, Tokyo 192-0001, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 35.695169,
+      "longitude": 139.279074,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tokyo/hachioji/hachioji-country-club",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "coordinateEvidence": "FullGolf course profile coordinate and address; current official course identity remains to be cross-checked."
     },
     {
       "clusterId": "JP-KNT-CHIBA-NARITA",
@@ -324,16 +336,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses",
       "sourceEvidence": "Golf in Japan directory course card; name, local name, prefecture and address captured from published listing",
       "address": "1240 Chojagahara, Izunokuni-shi, Shizuoka 410-2312, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 35.016667,
+      "longitude": 139.033333,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.resol-golf.jp/en/daiatami/",
+      "coordinateEvidenceStatus": "official_operator_rounded_coordinate",
+      "coordinateEvidence": "Official operator publishes lat.35°01'N lon.139°02'E; converted to decimal-minute midpoint for regional climate only, not a surveyed course pin."
     },
     {
       "clusterId": "JP-CHB-NAGANO-KARUIZAWA",
@@ -459,16 +474,19 @@
       "sourceUrl": "https://www.japan.travel/en/sports/golf/courses/kyoto-golf-club/",
       "sourceEvidence": "JNTO official Japan tourism golf course profile lists Kyoto Golf Club, its Kamigamo address, 18-hole Kamigamo and 18-hole Funayama layouts; facility identity/address source verified, current operating status to reconfirm.",
       "address": "Kamigamo-Motoyama, Kita-ku, Kyoto-shi, Kyoto-fu, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 35.067014,
+      "longitude": 135.759207,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/kyoto/kyoto/kyoto-golf-club-kamigamo-course",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "coordinateEvidence": "FullGolf gives Kamigamo layout coordinate and address; JNTO independently confirms Kyoto Golf Club facility and Kamigamo/Funayama layouts."
     },
     {
       "clusterId": "JP-KNS-WAKAYAMA",
@@ -552,16 +570,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses/region/Shikoku",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "Miyadani-36 Uchiwaracho, Anan, Tokushima 779-1401, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 33.875869,
+      "longitude": 134.65131,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tokushima/anan/anan-country-club",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "coordinateEvidence": "FullGolf course coordinate and address; official Anan Country Club access and club profile independently confirm facility/address."
     },
     {
       "clusterId": "JP-SHK-EHIME-KOCHI",
@@ -621,16 +642,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses/region/Kyushu-Island",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "2789 Ainomachiko, Unzen, Nagasaki 854-0301, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 32.8008,
+      "longitude": 130.1815,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.parscape.com/location/golf_clubs/ainocountryclubainonagasaki",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "coordinateEvidence": "Parscape coordinate candidate; official Aino Country Club website confirms address and recent 2026 club activity."
     },
     {
       "clusterId": "JP-KYS-OITA",
@@ -642,16 +666,19 @@
       "sourceUrl": "https://golf-in-japan.com/courses/region/Kyushu-Island",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "841-21 Sakuradake, Amagase-machi, Hita-shi, Oita 879-4201, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 33.2442744,
+      "longitude": 131.0166391,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://arealog.net/670179/",
+      "coordinateEvidenceStatus": "third_party_area_coordinate",
+      "coordinateEvidence": "AreaNote GO lists a bounded mapped golf-course area and the matching address; Accordia official access page independently confirms facility and address."
     },
     {
       "clusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
@@ -750,18 +777,23 @@
       "sourceUrl": "https://golf-in-japan.com/courses/okinawa",
       "sourceEvidence": "Golf in Japan regional directory listing; name, local name and address captured from course card; operation not yet independently confirmed",
       "address": "Bora-940-1 Gusukube, Miyakojima, Okinawa 906-0101, Japan",
-      "coordinateStatus": "pending_coordinate_research",
-      "latitude": null,
-      "longitude": null,
+      "coordinateStatus": "coordinate_available_pending_independent_review",
+      "latitude": 24.734437,
+      "longitude": 125.437101,
       "weatherEnabled": false,
       "validationTasks": [
         "confirm facility identity and current operation",
         "confirm full address and municipality",
         "verify representative coordinate against facility entrance or course centroid",
         "check cluster fit and avoid duplicate facility/layout records"
-      ]
+      ],
+      "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/okinawa/miyako/ocean-links-miyakojima",
+      "coordinateEvidenceStatus": "third_party_course_coordinate",
+      "coordinateEvidence": "FullGolf course coordinate and address; separate golf travel directory confirms course address and current visitor information."
     }
   ],
-  "coordinateAvailableCount": 19,
-  "coordinatePendingCount": 14
+  "coordinateAvailableCount": 29,
+  "coordinatePendingCount": 4,
+  "coordinateResearchUpdatedOn": "2026-11-27",
+  "coordinateResearchNote": "Ten additional representative coordinates were added from official operator published rounded coordinates or third-party map/course directories, with source and evidence recorded. They remain pending review and do not activate weather."
 }
