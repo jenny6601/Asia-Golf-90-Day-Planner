@@ -1409,3 +1409,9 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 @media(max-width:520px){.validation-panel{padding:12px}.validation-metrics,.validation-horizon-grid,.validation-model-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.validation-metric,.validation-horizon-card,.validation-model-card{padding:8px}}
 
 .validation-scope-note{margin:8px 0;padding:9px 11px;border-left:3px solid #b7791f;background:#fff8e9;color:#72521e;font-size:.82rem;line-height:1.55;border-radius:4px}
+
+.regional-coverage{margin-top:14px}
+.coverage-country-card{margin:8px 0;padding:10px;border:1px solid #e0e9e4;border-radius:10px;background:#fff}
+.coverage-country-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.88rem}
+.coverage-state{font-size:.75rem;color:#68776f}
+.coverage-region-row{margin:7px 0 0;padding-top:7px;border-top:1px solid #edf1ee;font-size:.8rem;line-height:1.5;color:#42534a}
