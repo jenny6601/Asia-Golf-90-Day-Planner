@@ -90,6 +90,20 @@ class JapanDailyQATests(unittest.TestCase):
         self.assertEqual(report["completedTasks"], 0)
         self.assertEqual(report["pendingOrMissingTasks"], 2)
 
+    def test_single_year_report_can_skip_multi_year_climate_windows(self):
+        mapping = {"points": [{
+            "subregionId": "JP-TEST", "subregion": "Test",
+            "representativeCourseId": "test-course",
+            "representativePoint": {"latitude": 35.0, "longitude": 139.0},
+            "era5LandGridPoint": {"latitude": 35.0, "longitude": 139.0},
+        }]}
+        report = MODULE.build_report(mapping, {"JP-TEST": {}}, [], 1991, 1991,
+                                     include_climate_windows=False)
+        self.assertEqual(
+            report["regions"]["JP-TEST"]["climateWindowReadiness"]["status"],
+            "not-assessed-single-year-pilot",
+        )
+
     def test_empty_region_is_not_eligible(self):
         qa = MODULE.audit_climate_windows([], 1991, 2020)
         self.assertEqual(qa["metricReadiness"]["precipitationMm"]["usableCalendarDays"], 0)
