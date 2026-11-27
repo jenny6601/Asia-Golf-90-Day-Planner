@@ -27,7 +27,7 @@ async function renderRegionalCoverage(host){
     for(const region of country.subregions){
      const row=node("p",undefined,"coverage-region-row");
      const representative=region.representative;
-     row.textContent=region.label+"｜"+(representative?"候選 "+region.candidateCount+" 座｜代表："+(representative.nameLocal||representative.name):"尚待球場座標")+(region.coverageStatus==="unregistered-subregion"?"｜未登錄":"");
+     row.textContent=region.label+"｜"+(representative?"候選 "+region.candidateCount+" 座｜代表："+(representative.nameLocal||representative.name):region.candidateCourseName?"代表球場候選："+region.candidateCourseName+"｜待核座標與營運狀態":"尚待選定代表球場")+(region.coverageStatus==="unregistered-subregion"?"｜未登錄":"");
      card.append(row);
     }
    }else{
