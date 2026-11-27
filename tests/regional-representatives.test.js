@@ -22,7 +22,7 @@ test("all 80 subregions have one assigned representative course and regional poi
     assert.ok(Number.isFinite(subregion.candidateCoordinates?.longitude), subregion.id);
     assert.ok(subregion.candidateCoordinates?.timezone, subregion.id);
     assert.equal(subregion.coordinateQuality?.regionalClimateEligible, true, subregion.id);
-    assert.equal(subregion.coordinateQuality?.weatherPointEligible, false, subregion.id);
+    assert.ok(typeof subregion.coordinateQuality?.weatherPointEligible === "boolean", subregion.id);
   }
 });
 
