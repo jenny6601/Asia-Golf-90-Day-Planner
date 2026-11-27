@@ -128,9 +128,11 @@ test("recommendation quality compares top-three non-overlapping portfolios with 
  }
  const result=evaluateRecommendationQuality(rows,200);
  assert.equal(result.issueDatesWithThreeMaturedWindows,1);
+ assert.equal(result.candidates.baseline.portfolioCount,1);
  assert.equal(result.candidates.historyEnhanced.portfolioCount,1);
  assert.equal(result.historicalClimatology.portfolioCount,1);
  assert.equal(result.randomControl.portfolioCount,200);
+ assert.equal(result.candidates.baseline.meanRainMmPerRegionDay,0);
  assert.equal(result.candidates.historyEnhanced.meanRainMmPerRegionDay,0);
  assert.equal(result.candidates.historyEnhanced.meanRainDeltaVsHistorical,-5);
  assert.equal(result.candidates.historyEnhanced.ready,false);

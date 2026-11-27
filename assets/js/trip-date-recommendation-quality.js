@@ -31,7 +31,9 @@ function metrics(rows){
  const rain=windows.map(x=>x.observedGolfRainMm);
  const wet=windows.reduce((sum,x)=>sum+x.observedWetRegionDays,0);
  const regionDays=windows.reduce((sum,x)=>sum+x.observedRegionDays,0);
- return {portfolioCount:rows.length,selectedWindows:windows.length,
+ const wetWindows=windows.filter(x=>x.observedGolfRainMm>=1).length;
+ const dryWindows=windows.length-wetWindows;
+ return {portfolioCount:rows.length,selectedWindows:windows.length,wetWindows,dryWindows,
   meanRainMmPerRegionDay:rain.length?Number((rain.reduce((a,b)=>a+b,0)/rain.length).toFixed(3)):null,
   wetRegionDayRate:regionDays?Number((wet/regionDays).toFixed(4)):null,
   meanWetRegionDaysPerWindow:rain.length?Number((wet/rain.length).toFixed(3)):null};
@@ -56,7 +58,7 @@ export function evaluateRecommendationQuality(samples=[],randomDraws=500){
   &&Number.isInteger(x.observedWetRegionDays)&&x.observedWetRegionDays>=0
   &&x.observedWetRegionDays<=9&&x.observedRegionDays===9);
  const issues=[...new Set(valid.map(x=>x.issueDate))].sort();
- const models=[...new Set(valid.map(x=>x.model).filter(x=>x!=="baseline"))].sort();
+ const models=[...new Set(valid.map(x=>x.model))].sort();
  const candidatePortfolios=Object.fromEntries(models.map(x=>[x,[]]));
  const historyPortfolios=[],randomPortfolios=[];
  const paired={};
@@ -93,14 +95,14 @@ export function evaluateRecommendationQuality(samples=[],randomDraws=500){
   result.meanRainDeltaVsHistorical= deltas.length?Number((deltas.reduce((s,x)=>s+x.deltaVsHistory,0)/deltas.length).toFixed(3)):null;
   const randomDeltas=deltas.filter(x=>finite(x.deltaVsRandom)).map(x=>x.deltaVsRandom);
   result.meanRainDeltaVsRandom=randomDeltas.length?Number((randomDeltas.reduce((s,x)=>s+x,0)/randomDeltas.length).toFixed(3)):null;
-  result.ready=deltas.length>=30;
+  result.ready=deltas.length>=30&&result.wetWindows>=5&&result.dryWindows>=5;
   candidates[model]=result;
  }
  const randomRain= randomPortfolios.map(rows=>rows.reduce((s,x)=>s+x.observedGolfRainMm,0)/rows.length);
  return {reference:"ERA5 daily precipitation at three regional representative points; wet region-day >=1.0 mm",
   strategy:"Three non-overlapping 5-day windows per issue date; only middle three golf days counted; all strategies use the same fully observed eligible window pool.",
-  randomControl:{drawsPerIssueDate:randomDraws,...random,portfolioRainP05:percentile(randomRain,.05),portfolioRainP95:percentile(randomRain,.95)},
-  historicalClimatology:history,
-  candidates,minimumGate:{issueDates:30},issueDatesWithThreeMaturedWindows:history.portfolioCount,
+  randomControl:{drawsPerIssueDate:randomDraws,...random,ready:history.portfolioCount>=30&&random.wetWindows>=5&&random.dryWindows>=5,portfolioRainP05:percentile(randomRain,.05),portfolioRainP95:percentile(randomRain,.95)},
+  historicalClimatology:{...history,ready:history.portfolioCount>=30&&history.wetWindows>=5&&history.dryWindows>=5},
+  candidates,minimumGate:{issueDates:30,wetWindows:5,dryWindows:5},issueDatesWithThreeMaturedWindows:history.portfolioCount,
   caveats:["ERA5 is a reanalysis reference, not an independent rain-gauge observation.","Historical-climate strategy ranks windows using the historical risk signals supplied in each archived snapshot.","Random control is deterministic Monte Carlo sampling from the same matured, eligible window pool; it is a benchmark, not a real travel strategy.","Lower mean rainfall and lower wet-region-day rate are better; results are comparative and not probabilities."]};
 }
