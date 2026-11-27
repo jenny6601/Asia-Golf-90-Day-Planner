@@ -16,7 +16,8 @@ class DailyStatisticsPilotTests(unittest.TestCase):
    self.assertTrue(all("time" not in x["request"] for x in req))
    self.assertTrue(all(x["request"]["frequency"]=="1_hourly" for x in req))
    self.assertTrue(all(x["sourceId"]=="ERA5_DAILY_STATS" for x in req))
-   self.assertEqual(req[-1]["request"]["variable"],["total_precipitation"])\n   self.assertNotIn("2m_temperature",req[1]["request"]["variable"])
+   self.assertEqual(req[-1]["request"]["variable"],["total_precipitation"])
+   self.assertNotIn("2m_temperature",req[1]["request"]["variable"])
  def test_temperature_daily_min_and_max(self):
   req=M.build_requests(self.registry["points"][0],1991)
   self.assertEqual(req[0]["request"]["variable"],["2m_temperature"])
