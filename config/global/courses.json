@@ -3244,7 +3244,7 @@
     "address": "Higashiyama Onsen, Niseko Town, Abuta District, Hokkaido 048-1592, Japan",
     "timezone": "Asia/Tokyo",
     "officialUrl": "https://niseko-golf.com/en/course/",
-    "sourceEvidence": "Official course page lists the 18-hole Niseko Village Golf Course and its location at Higashiyama Onsen, Niseko Town, Abuta District, Hokkaido; identity/address source verified, current seasonal operating dates require annual confirmation.",
+    "sourceEvidence": "Official course page lists the 18-hole Niseko Village Golf Course and its location at Higashiyama Onsen, Niseko Town, Abuta District, Hokkaido; identity/address source verified, current seasonal operating dates require annual confirmation. User-approved regional representative coordinate; exact course-center precision is not required for cluster-level climate analysis.",
     "catalogStatus": "research_candidate",
     "coordinateStatus": "third_party_course_coordinate",
     "latitude": 42.847109,
@@ -3253,10 +3253,10 @@
     "enabled": false,
     "operationalStatus": "official_site_listed_seasonal_operation_to_reconfirm",
     "coordinateSource": "https://www.where2golf.com/japan/niseko-village-golf-course/",
-    "coordinateUse": "regional_climate_candidate_only",
+    "coordinateUse": "regional_climate_representative_point_approved_live_ingestion_pending",
     "subregionLabel": "北海道・二世谷／留壽都度假球場群",
     "regionId": "JP-REG-01",
-    "coordinateReviewStatus": "third-party-coordinate-cross-check-pending"
+    "coordinateReviewStatus": "regional-climate-representative-coordinate-approved"
   },
   {
     "id": "jp-kyoto-golf-club",
