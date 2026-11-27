@@ -1636,7 +1636,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "已依地理隔離或氣候差異拆分次分區；代表球場座標尚未核實，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-03",
+          "regionName": "關東",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-THK-AKITA",
@@ -1665,7 +1668,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "已依地理隔離或氣候差異拆分次分區；代表球場座標尚未核實，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-02",
+          "regionName": "東北",
+          "subregionUnit": "golf-course-cluster"
         },
         {
           "id": "JP-OKI-YAEYAMA",
@@ -1694,7 +1700,10 @@
             "regionalClimateEligible": false,
             "coordinatePurpose": "regional-climate-representative-point",
             "reason": "已依地理隔離或氣候差異拆分次分區；代表球場座標尚未核實，不可啟用正式天氣資料擷取。"
-          }
+          },
+          "regionId": "JP-REG-09",
+          "regionName": "沖繩",
+          "subregionUnit": "golf-course-cluster"
         }
       ],
       "coordinateResearchSummary": {
