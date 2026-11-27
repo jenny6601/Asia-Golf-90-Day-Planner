@@ -666,7 +666,7 @@ async function renderRegionMonths(country,region,months,courses,subregion=""){
  }
  const statusRow=node("tr");statusRow.append(node("th","資料狀態"));for(const item of monthData)statusRow.append(node("td",item.status));body.append(statusRow);
  const group={region:scopeName,rootRegion:region,subregion,country,courses:valid,months};
- const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"週分析","region-select");btn.type="button";btn.addEventListener("click",()=>{if(records.length){renderRegionTopWeeks(group,records,item.month)}else{renderEmptyWeekAnalysis(country,scopeName,item.month,()=>renderRegionMonths(country,region,months,valid,subregion))}});td.append(btn);actionRow.append(td)}body.append(actionRow);
+ const actionRow=node("tr");actionRow.append(node("th","下一步"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"週分析","region-select");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults));td.append(btn);actionRow.append(td)}body.append(actionRow);
  const monthlyAnalysisRow=node("tr");monthlyAnalysisRow.append(node("th","本月分析"));for(const item of monthData){const td=node("td"),monthLabel=Number(item.month.slice(5,7))+"月",btn=node("button",monthLabel+"分析","monthly-analysis-open");btn.type="button";btn.addEventListener("click",()=>renderMonthlyClimateAnalysis(group,item.month,records,historicalResults));td.append(btn);monthlyAnalysisRow.append(td)}body.append(monthlyAnalysisRow);
  tbl.append(body);table.append(tbl);out.append(table);
  status.textContent=valid.length?"已選擇 "+scopeName+"｜球場 "+courses.length+" 個，其中 "+valid.length+" 個具有效座標，成功取得季節資料 "+records.length+" 組。":"已選擇 "+scopeName+"。此次分區尚無球場／天氣資料，但月份及週分析操作仍可使用。";
@@ -1048,7 +1048,7 @@ async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAss
  coursePanel.append(node("h3","選擇出發日期及球場"));
  const choose=node("button","前往選擇出發日期及球場","cluster-course-use");
  choose.type="button";
- choose.addEventListener("click",()=>showDepartureForm($("departure").value||today(),()=>renderRegionTopWeeks(group,records,month)));
+ choose.addEventListener("click",()=>showDepartureForm($("departure").value||today(),()=>renderRegionTopWeeks(group,records,month,backAction,dailyAssessment)));
  coursePanel.append(choose);out.append(coursePanel);
 }
 
