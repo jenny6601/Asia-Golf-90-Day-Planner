@@ -93,17 +93,17 @@ function createWeatherIcon(code, historical=false, probability=null){
 function renderSevenDayVisual(host,rows,historical=false,onSelectDate=null){
  const pages=node("div",undefined,"selected-week-five-pages");let pageIndex=0;
  const renderPage=()=>{
-  pages.replaceChildren();const pageRows=rows.slice(pageIndex*5,pageIndex*5+5);
+  pages.replaceChildren();const pageRows=rows;
   const strip=node("div",undefined,"taiwan-style-seven-day unified-seven-day");
   const makeRow=cls=>node("div",undefined,"taiwan-seven-row "+cls);
   const dates=makeRow("taiwan-seven-dates"),weather=makeRow("taiwan-seven-weather"),rain=makeRow("taiwan-seven-rain");
   pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),clickable=!!onSelectDate&&r.clickable===true;const d=node(clickable?"button":"div",undefined,"taiwan-seven-cell"+([0,6].includes(wd)?" weekend":"")+(clickable?" seven-day-date-button seven-day-hourly-cell":""));if(clickable){d.type="button";d.dataset.hourlyDate=r.date;d.setAttribute("aria-label",r.date+" 點選查看逐時天氣");d.title="點選此日期查看逐時天氣";d.style.width="100%";d.style.border="0";d.style.borderRadius="0";d.style.font="inherit";d.style.cursor="pointer";d.style.pointerEvents="auto";d.style.touchAction="manipulation"}d.append(node("strong",r.date.slice(5).replace("-","/")),node("small",["日","一","二","三","四","五","六"][wd]));if(clickable)d.addEventListener("click",()=>onSelectDate(r.date));dates.append(d)});
   strip.append(dates);
   const graph=node("div",undefined,"seven-day-inline-graph"),svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
-  svg.setAttribute("viewBox","0 0 700 220");svg.setAttribute("role","img");svg.setAttribute("aria-label","每日最高最低氣溫及體感");svg.style.width="100%";svg.style.display="block";
+  svg.setAttribute("viewBox","0 0 980 220");svg.setAttribute("role","img");svg.setAttribute("aria-label","每日最高最低氣溫及體感");svg.style.width="100%";svg.style.display="block";
   const vals=pageRows.flatMap(r=>[r.high,r.low,r.feel].filter(Number.isFinite));
   if(vals.length){const lo=Math.min(...vals)-2,hi=Math.max(...vals)+2,x=i=>70+i*140,y=v=>150-(v-lo)/(hi-lo||1)*80;
-   [20,82,144].forEach(yy=>{const l=document.createElementNS(svg.namespaceURI,"line");l.setAttribute("x1",35);l.setAttribute("x2",670);l.setAttribute("y1",yy);l.setAttribute("y2",yy);l.setAttribute("stroke","#dce5e9");svg.append(l)});
+   [20,82,144].forEach(yy=>{const l=document.createElementNS(svg.namespaceURI,"line");l.setAttribute("x1",35);l.setAttribute("x2",950);l.setAttribute("y1",yy);l.setAttribute("y2",yy);l.setAttribute("stroke","#dce5e9");svg.append(l)});
    [{key:"high",color:"#ef6b54"},{key:"low",color:"#3198dc"},{key:"feel",color:"#d49b22"}].filter(s=>pageRows.some(r=>Number.isFinite(r[s.key]))).forEach(s=>{const pts=pageRows.map((r,i)=>Number.isFinite(r[s.key])?[x(i),y(r[s.key])]:null);const valid=pts.filter(Boolean);if(valid.length>1){const p=document.createElementNS(svg.namespaceURI,"polyline");p.setAttribute("points",valid.map(p=>p.join(",")).join(" "));p.setAttribute("fill","none");p.setAttribute("stroke",s.color);p.setAttribute("stroke-width","3.5");p.setAttribute("stroke-linecap","round");p.setAttribute("stroke-linejoin","round");svg.append(p)}pts.forEach((p,i)=>{if(!p)return;const dot=document.createElementNS(svg.namespaceURI,"circle");dot.setAttribute("cx",p[0]);dot.setAttribute("cy",p[1]);dot.setAttribute("r","4.5");dot.setAttribute("fill",s.color);svg.append(dot);const tx=document.createElementNS(svg.namespaceURI,"text");tx.setAttribute("x",p[0]);tx.setAttribute("y",p[1]+(s.key==="high"?-22:s.key==="low"?26:(Number.isFinite(pageRows[i].high)&&Number.isFinite(pageRows[i].low)&&pageRows[i].feel>=pageRows[i].high?-54:Number.isFinite(pageRows[i].low)&&pageRows[i].feel<pageRows[i].low?58:-12)));tx.setAttribute("text-anchor","middle");tx.setAttribute("font-size","30");tx.setAttribute("font-weight","800");tx.setAttribute("fill",s.color);tx.textContent=pageRows[i][s.key].toFixed(0)+"°";svg.append(tx)})});
   }
   graph.append(svg);const legend=node("div",undefined,"seven-day-legend");legend.append(node("span",historical?"● 歷史平均最高溫":"● 最高溫","legend-high"),node("span",historical?"● 歷史平均最低溫":"● 最低溫","legend-low"));if(!historical)legend.append(node("span","● 體感溫度","legend-feel"));graph.append(legend);strip.append(graph);
@@ -181,11 +181,11 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
   const tooHot=Number.isFinite(r.high)&&r.high>33;
   r.playabilityStatus=tooHot||grade===3?"不適":grade===2?"可打":"適打";
  });
- const pages=node("div",undefined,"departure-week-pages");let pageIndex=0;
+ const pages=node("div",undefined,"departure-week-pages");
  const renderPage=()=>{
   pages.replaceChildren();const pageRows=rows.slice(pageIndex*5,pageIndex*5+5);
   const page=node("section",undefined,"departure-five-day-page");
-  page.append(node("h4","第 "+(pageIndex+1)+" 頁｜"+pageRows[0].date+" ～ "+pageRows[pageRows.length-1].date));
+  page.append(node("h4","七天逐日天氣｜"+pageRows[0].date+" ～ "+pageRows[pageRows.length-1].date));
   const datesRow=node("div",undefined,"departure-five-dates");
   pageRows.forEach(r=>{const wd=new Date(r.date+"T12:00:00Z").getUTCDay(),canOpen=!!r.actual,d=node(canOpen?"button":"div",undefined,"departure-five-date"+([0,6].includes(wd)?" weekend-red":"")+(canOpen?" departure-hourly-target":""));if(canOpen){d.type="button";d.dataset.hourlyDate=r.date;d.setAttribute("aria-label",r.date+" 點選查看逐時天氣");d.title="點選查看"+r.date+"逐時天氣";d.addEventListener("click",()=>renderDepartureDayPage(host,course,r,onBack))}d.append(node("strong",r.date.slice(5).replace("-","/")),node("small","週"+["日","一","二","三","四","五","六"][wd]));datesRow.append(d)});
   page.append(datesRow);
@@ -245,13 +245,9 @@ async function renderCourseSevenDayReport(host,course,startDate,onBack=null,mont
   }
   pages.append(page);
  };
- let touchStartX=0,touchStartY=0;
- pages.addEventListener("touchstart",e=>{const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY},{passive:true});
- pages.addEventListener("touchend",e=>{const t=e.changedTouches[0],dx=t.clientX-touchStartX,dy=t.clientY-touchStartY;if(Math.abs(dx)<45||Math.abs(dx)<Math.abs(dy)*1.25)return;const maxPage=Math.ceil(rows.length/5)-1;if(dx<0&&pageIndex<maxPage){pageIndex++;renderPage()}else if(dx>0&&pageIndex>0){pageIndex--;renderPage()}},{passive:true});
- pages.addEventListener("keydown",e=>{if(e.key==="ArrowLeft"&&pageIndex>0){pageIndex--;renderPage()}else if(e.key==="ArrowRight"&&pageIndex<Math.ceil(rows.length/5)-1){pageIndex++;renderPage()}});
  pages.tabIndex=0;renderPage();
  report.append(pages);
- report.append(node("p","每頁最多顯示 5 天；左右滑動切換日期，點選任一天即可展開逐時預報或歷史資料。前 16 天使用逐日預報，超出範圍以歷史同期資料補充。","long-range-note"));
+ report.append(node("p","七天日期、溫度曲線及天氣卡片可左右滑動查看；點選任一天即可展開逐時預報或歷史資料。前 16 天使用逐日預報，超出範圍以歷史同期資料補充。","long-range-note"));
 }
 async function renderDepartureDayPage(host,course,row,onBack=null){
  host.replaceChildren();
