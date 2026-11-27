@@ -10,7 +10,7 @@ const course = {
 const countries = [{code:"JP",nameZh:"日本"}];
 
 function mockFetch(url) {
-  const value = String(url).includes("countries.json") ? countries : [course];
+  const value = String(url).includes("weather-subregions.json") ? {countries:[]} : String(url).includes("countries.json") ? countries : [course];
   return Promise.resolve({ok:true,json:async()=>value});
 }
 
