@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import {scoreForecastSamples} from "../assets/js/trip-date-forecast-backtest.js";
-import {scoreRiskRankingSamples,scoreTripWindowRankingSamples} from "../assets/js/trip-date-ranking-verification.js";
+import {scoreRiskRankingSamples,scoreTripWindowRankingSamples,compareCandidateRankingSamples,compareTripWindowModels} from "../assets/js/trip-date-ranking-verification.js";
 import {TRIP_DATE_CANDIDATE_MODELS} from "../assets/js/trip-date-candidate-models.js";
 import {recommendGolfTripDates} from "../assets/js/trip-date-recommendation-engine.js";
 import {buildDailyClimatology,compareForecastToClimatology} from "../assets/js/trip-date-climatology-baseline.js";
@@ -145,6 +145,8 @@ for(const prediction of windowPredictions){
   }
 }
 const tripWindowRanking=scoreTripWindowRankingSamples(tripWindowSamples);
+const pairedDailyComparison=compareCandidateRankingSamples(rankingSamples);
+const pairedTripWindowComparison=compareTripWindowModels(tripWindowSamples);
 for(const modelId of Object.keys(TRIP_DATE_CANDIDATE_MODELS)){
   if(!tripWindowRanking.groups[modelId])
     tripWindowRanking.groups[modelId]={sampleCount:0,spearman:null,ready:false};
@@ -231,7 +233,7 @@ const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
   method:"Short forecasts: daily probability/amount versus ERA5. EC46/SEAS5: archived weekly/monthly precipitation means versus the sum of ERA5 daily precipitation over the exact same valid period.",
-  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,candidateModelDefinitions,tripWindowSummary,tripWindowRanking,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
+  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,pairedDailyComparison,pairedTripWindowComparison,candidateModelDefinitions,tripWindowSummary,tripWindowRanking,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
   caveats:[
     "ERA5 reanalysis is a model-reference dataset, not an independent rain-gauge observation.",
@@ -298,7 +300,13 @@ const lines=[
   "- Metric: Spearman correlation; higher positive values mean predicted high-risk windows also had more observed golf-day rain.",
   ...Object.entries(TRIP_DATE_CANDIDATE_MODELS).map(([id,model])=>"- "+id+": "+model.label+" — "+model.description),
   ...Object.entries(tripWindowRanking.groups).map(([model,x])=>"- "+model+": n="+x.sampleCount+", Spearman="+(x.spearman??"資料不足")+", gate="+(x.ready?"ready":"locked")),
+  ...Object.entries(pairedTripWindowComparison.groups).map(([model,x])=>"- Paired "+model+": n="+x.matchedWindows+", baseline="+(x.baselineSpearman??"資料不足")+", candidate="+(x.candidateSpearman??"資料不足")+", delta="+(x.deltaSpearman??"資料不足")+", gate="+(x.ready?"ready":"locked")),
+  "- Paired window comparison uses only identical issue dates and 5-day trip windows.",
   "- Candidate weights are provisional and shadow-only; no production weights were changed.",
+  "",
+  "## Paired daily model comparison (same observations)",
+  ...Object.entries(pairedDailyComparison.groups).filter(([key])=>key.endsWith(".overall")||key.endsWith(".1-16")||key.endsWith(".17-46")||key.endsWith(".47-90")).map(([key,x])=>"- "+key+": matched="+x.matchedSamples+", baseline AUC="+(x.baselineAuc??"資料不足")+", candidate AUC="+(x.candidateAuc??"資料不足")+", delta="+(x.deltaAuc??"資料不足")+", gate="+(x.ready?"ready":"locked")),
+  "- Positive delta means the candidate discriminates wet days better than V1 on identical observations.",
   "",
   "## Calibration gate",
   "- Status: "+calibrationGate.status,

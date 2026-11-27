@@ -40,3 +40,37 @@ test("trip-window ranking rejects invalid scores and requires sample gate",()=>{
  const result=scoreTripWindowRankingSamples([{model:"x",predictedScore:10,observedGolfRainMm:0},{model:"x",predictedScore:20,observedGolfRainMm:1}]);
  assert.equal(result.groups.x.ready,false);
 });
+
+import {compareCandidateRankingSamples,compareTripWindowModels} from "../assets/js/trip-date-ranking-verification.js";
+test("paired daily comparison uses identical outcomes and reports candidate AUC delta",()=>{
+ const samples=[];
+ for(let i=0;i<40;i++){
+  const wet=i>=20,observedRainMm=wet?2:0,issueDate="2026-01-01",targetDate=new Date(Date.parse("2026-01-01T00:00:00Z")+(i+1)*86400000).toISOString().slice(0,10);
+  samples.push({source:"composite-baseline",issueDate,targetDate,region:"north",leadDays:10,riskScore:wet?80:20,observedRainMm});
+  samples.push({source:"composite-historyEnhanced",issueDate,targetDate,region:"north",leadDays:10,riskScore:wet?90:10,observedRainMm});
+ }
+ const r=compareCandidateRankingSamples(samples);
+ assert.equal(r.groups["composite-historyEnhanced.overall"].matchedSamples,40);
+ assert.equal(r.groups["composite-historyEnhanced.overall"].deltaAuc,0);
+ assert.equal(r.groups["composite-historyEnhanced.overall"].ready,true);
+});
+test("paired daily comparison does not compare mismatched target outcomes",()=>{
+ const r=compareCandidateRankingSamples([
+  {source:"composite-baseline",issueDate:"a",targetDate:"b",region:"north",leadDays:2,riskScore:20,observedRainMm:0},
+  {source:"composite-x",issueDate:"different",targetDate:"b",region:"north",leadDays:2,riskScore:90,observedRainMm:5}
+ ]);
+ assert.equal(r.groups["composite-x.overall"].matchedSamples,0);
+});
+test("paired trip window comparison compares only matching windows",()=>{
+ const rows=[];
+ for(let i=0;i<40;i++){
+  const issueDate="2026-01-01",startDate=new Date(Date.parse("2026-01-01T00:00:00Z")+i*86400000).toISOString().slice(0,10);
+  const observedGolfRainMm=i;
+  rows.push({model:"baseline",issueDate,startDate,endDate:startDate,predictedScore:i,observedGolfRainMm});
+  rows.push({model:"history",issueDate,startDate,endDate:startDate,predictedScore:i,observedGolfRainMm});
+ }
+ const r=compareTripWindowModels(rows);
+ assert.equal(r.groups.history.matchedWindows,40);
+ assert.equal(r.groups.history.deltaSpearman,0);
+ assert.equal(r.groups.history.ready,true);
+});
