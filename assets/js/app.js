@@ -9,8 +9,9 @@ import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
 import {scorePwaStylePlayability} from "./pwa-playability.js";
 import {buildFiveDayWindows,pickRecommendedFiveDayWindows} from "./recommendation-windows.js";
 import {renderTaiwanPwaHourly} from "./taiwan-hourly-renderer.js";
+import {orderCoursesByPriority,normalizeDepartureRegion} from "./departure-course-order.js";
 const $=id=>document.getElementById(id),S={};
-let climateBackAction=null,departureFormReturnAction=null,exitConfirmed=false,exitDialogOpen=false;
+let climateBackAction=null,departureFormReturnAction=null,departureCoursePriorityIds=[],exitConfirmed=false,exitDialogOpen=false;
 function ensureHomeExitGuard(){
  // Maintain one same-document entry. This is a browser-history guard, not a way to prevent Chrome itself from closing.
  if(history.state?.asiaGolfHomeGuard!==true)history.pushState({asiaGolfHomeGuard:true},"",location.href);
@@ -43,7 +44,7 @@ const today=()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"nu
 const add=(s,n)=>{const d=new Date(s+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
 const val=(x,u="")=>x==null?"—":x+u;
 function setStatus(x){$("status").textContent=x}
-function fillCourses(){const country=$("country").value,region=$("region").value,el=$("course");el.replaceChildren();const list=S.directory.courses.filter(c=>c.countryCode===country&&c.region===region&&c.enabled);for(const c of list){const o=new Option(c.name,c.id);o.disabled=c.coordinateStatus==="pending"||!Number.isFinite(c.latitude)||!Number.isFinite(c.longitude);el.add(o)}const usable=list.find(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));S.course=usable||null;if(usable)el.value=usable.id;el.disabled=!list.length;$("run").disabled=!S.course;$("course-note").textContent=usable?"座標："+usable.latitude.toFixed(4)+", "+usable.longitude.toFixed(4)+"｜"+usable.coordinateStatus+"｜"+usable.timezone:list.length?"此分區球場座標尚待核實，暫不能查詢逐點天氣。":"此分區尚無已建檔球場。"}
+function fillCourses(){const country=$("country").value,region=$("region").value,el=$("course");el.replaceChildren();const list=orderCoursesByPriority(S.directory.courses.filter(c=>c.countryCode===country&&c.region===region&&c.enabled),departureCoursePriorityIds);for(const c of list){const o=new Option(c.name,c.id);o.disabled=c.coordinateStatus==="pending"||!Number.isFinite(c.latitude)||!Number.isFinite(c.longitude);el.add(o)}const usable=list.find(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude));S.course=usable||null;if(usable)el.value=usable.id;el.disabled=!list.length;$("run").disabled=!S.course;$("course-note").textContent=usable?"座標："+usable.latitude.toFixed(4)+", "+usable.longitude.toFixed(4)+"｜"+usable.coordinateStatus+"｜"+usable.timezone:list.length?"此分區球場座標尚待核實，暫不能查詢逐點天氣。":"此分區尚無已建檔球場。"}
 function fillRegions(){const country=$("country").value,el=$("region");el.replaceChildren();const regions=[...new Set(S.directory.courses.filter(c=>c.countryCode===country&&c.enabled).map(c=>c.region).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"zh-Hant"));for(const region of regions)el.add(new Option(region==="Okinawa"?"沖繩（獨立分區）":region,region));el.disabled=!regions.length;if(regions.length)el.value=regions.includes("Okinawa")?"Okinawa":regions[0];fillCourses()}
 function fillCountries(){const el=$("country");el.replaceChildren();for(const c of S.directory.countries){const has=S.directory.courses.some(x=>x.countryCode===c.code&&x.enabled);const o=new Option(c.nameZh+(has?"":"（建置中）"),c.code);o.disabled=!has;el.add(o)}const first=S.directory.countries.find(c=>S.directory.courses.some(x=>x.countryCode===c.code&&x.enabled));if(first)el.value=first.code;fillRegions()}
 function node(tag,text,className){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el}
@@ -929,7 +930,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   }
   card.setAttribute("aria-label",date+" 天氣摘要，點選查看出發日七天天氣摘要");
   card.title="點選查看 "+date+" 出發日七天天氣摘要";
-  card.addEventListener("click",()=>openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,historicalRecords,sampleCourses[0],date,{forecastCourses,historicalNormals,seasonalDailyRows}))
+  card.addEventListener("click",()=>showDepartureForm(date,()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords),{country:group.country,region:group.rootRegion,courses:group.courses}))
   const code=mode(isForecast?actualEntries.map(x=>x.code):useSeasonal?seasonalEntries.map(x=>x.code):[]),highValue=isForecast?avg(actualEntries,"high"):useSeasonal?avg(seasonalEntries,"highEstimate"):avg(historicalEntries,"highMean"),lowValue=isForecast?avg(actualEntries,"low"):useSeasonal?avg(seasonalEntries,"lowEstimate"):avg(historicalEntries,"lowMean"),rainProb=isForecast?avg(actualEntries,"prob"):useSeasonal?avg(seasonalEntries,"rainChanceEstimate"):avg(historicalEntries,"rainFrequency"),rainValue=useSeasonal?avg(seasonalEntries,"rainEstimate"):null,confidenceLabel=useSeasonal?seasonalEntries.map(x=>x.confidence).filter(Boolean).sort((a,b)=>({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[b]??4)-({ "中低":0,"偏低":1,"低":2,"資料不足":3 }[a]??4))[0]:null;
   const icon=createWeatherIcon(code,!isForecast&&!useSeasonal,rainProb);icon.classList.add("monthly-day-icon");
   const dayAssessment=byDate.get(date),playabilityStatus=dayAssessment?.status||"資料不足";
@@ -1005,7 +1006,7 @@ async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAss
  coursePanel.append(node("h3","選擇出發日期及球場"));
  const choose=node("button","前往選擇出發日期及球場","cluster-course-use");
  choose.type="button";
- choose.addEventListener("click",()=>showDepartureForm($("departure").value||today(),()=>renderRegionTopWeeks(group,records,month,backAction,dailyAssessment)));
+ choose.addEventListener("click",()=>showDepartureForm($("departure").value||today(),()=>renderRegionTopWeeks(group,records,month,backAction,dailyAssessment),{country:group.country,region:group.rootRegion,courses:group.courses}));
  coursePanel.append(choose);out.append(coursePanel);
 }
 
@@ -1104,7 +1105,7 @@ async function renderSelectedWeekReport(group,week,records,month,cachedForecasts
  if(!rows.some(r=>r.actual))report.append(node("p","以下為過去十年相同月日的 ERA5 歷史同期統計；降雨頻率不是未來降雨機率，氣溫與雨量不是該週預報。","long-range-note"));
  report.append(node("p","點選未來16天內的日期，可查看該日逐時天氣。","data-note"));
   renderSevenDayVisual(report,rows,!rows.some(r=>r.actual),date=>renderSelectedWeekHourlyPage(host,group,week,records,month,date,forecasts));
- const choose=node("button","選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>showDepartureForm(week.start,()=>renderSelectedWeekReport(group,week,records,month,forecasts)));host.append(choose);host.scrollIntoView({behavior:"smooth",block:"start"});
+ const choose=node("button","選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>showDepartureForm(week.start,()=>renderSelectedWeekReport(group,week,records,month,forecasts),{country:group.country,region:group.rootRegion,courses:group.courses}));host.append(choose);host.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 function returnFromDepartureForm(){
@@ -1113,13 +1114,15 @@ function returnFromDepartureForm(){
  form.hidden=true;
  const report=$("report");report.replaceChildren();report.hidden=true;
  $("climate-explorer").hidden=false;
- const action=departureFormReturnAction;departureFormReturnAction=null;
+ const action=departureFormReturnAction;departureFormReturnAction=null;departureCoursePriorityIds=[];
  if(action)action();
  else{const fallback=climateBackAction;climateBackAction=null;if(fallback)fallback();else showCountryOverview()}
  return true;
 }
-function showDepartureForm(startDate,returnAction=null){
+function showDepartureForm(startDate,returnAction=null,courseContext=null){
  departureFormReturnAction=returnAction;
+ departureCoursePriorityIds=Array.isArray(courseContext?.courses)?courseContext.courses.map(c=>c.id).filter(Boolean):[];
+ if(courseContext?.country){$("country").value=courseContext.country;fillRegions();const targetRegion=normalizeDepartureRegion(courseContext.country,courseContext.region||"");if(targetRegion&&[...$("region").options].some(option=>option.value===targetRegion))$("region").value=targetRegion;fillCourses();}
  const previousReport=$("report");previousReport.replaceChildren();previousReport.hidden=true;
  $("departure").value=startDate;$("departure").min=today();$("departure").max=add(today(),89);
  $("course-note").textContent="已帶入所選週次起始日；請選擇球場及開球時間。";
