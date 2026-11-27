@@ -112,3 +112,38 @@ python scripts/export_regional_climate_evidence.py data/processed/JP-KNT-NORTH-c
 The exporter maps each target date to its month/day climatology record and emits the normalized historical fields used by the regional daily evidence contract: wet-day frequency, mean/P90 rainfall, mean daily high/low temperature and metric-specific valid-year counts. Metrics below the climatology minimum-valid-year threshold remain null. February 29 uses the midpoint of February 28 and March 1 for means/frequency, but withholds P90 and heavy-rain frequencies because those percentiles cannot be reconstructed by averaging adjacent percentiles.
 
 The exported records remain explicitly non-activated: `climateBaselineEnabled=false`, `forecastEnabled=false`, and `decisionUseEligible=false`. The exporter does not make a forecast or rank travel dates.
+
+
+## 10. Resumable Japan 19-subregion / 1991-2020 acquisition
+
+The mapping now contains 16 mainland and 3 Okinawa representative points (19 total). These remain expected grid mappings until each returned NetCDF coordinate is checked by the inspector.
+
+The batch runner creates one CDS request per subregion/year: 19 regions x 30 years = 570 annual tasks. Each request is intentionally limited to one calendar year and includes UTC boundary padding to build complete JST days. The runner defaults to **one task per execution**; this prevents accidentally launching hundreds of CDS requests at once.
+
+Preview the first task without downloading:
+
+```bash
+python scripts/batch_era5_land_japan.py --start-year 1991 --end-year 2020 --limit 1 --dry-run
+```
+
+Run one region/year at a time (first recommended pilot: north Kanto, 1991):
+
+```bash
+python scripts/batch_era5_land_japan.py --subregions JP-KNT-NORTH --start-year 1991 --end-year 1991 --limit 1
+```
+
+After validating the pilot and confirming the CDS endpoint is stable, expand to a region across 30 years:
+
+```bash
+python scripts/batch_era5_land_japan.py --subregions JP-KNT-NORTH --start-year 1991 --end-year 2020 --limit 1
+```
+
+Then process all Japan regions gradually:
+
+```bash
+python scripts/batch_era5_land_japan.py --start-year 1991 --end-year 2020 --limit 1
+```
+
+Repeat the command to advance to the next pending task. The runner writes an atomic `batch-state.json` after each task and resumes by skipping validated daily outputs. Failed tasks remain recorded and are retried on a later invocation. Per task, it retries transient errors up to three times with increasing wait intervals, then runs structural inspection and daily JST aggregation. Raw archives, inspection reports and normalized daily JSON are stored separately under `data/era5-japan-1991-2020/`.
+
+The batch runner never sets `climatologyEligible=true`. It only records successful structural validation and daily conversion. Full 30-year completeness, JMA cross-check, station consistency and regional QA are separate gates before climatology activation.
