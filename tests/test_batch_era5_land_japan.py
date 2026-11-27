@@ -45,6 +45,35 @@ class JapanEra5BatchTests(unittest.TestCase):
         self.assertEqual(len(tasks), 570)
         self.assertEqual(len({t["subregionId"] for t in tasks}), 19)
 
+    def test_force_reprocess_bypasses_existing_daily_cache(self):
+        import json
+        import subprocess
+        import tempfile
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "raw").mkdir()
+            (root / "daily").mkdir()
+            (root / "reports").mkdir()
+            (root / "raw" / "JP-A_1991-01-01_1991-12-31.zip").write_bytes(b"cached-archive")
+            rows = [{"subregionId": "JP-A", "localDayTimezone": "Asia/Tokyo",
+                     "validDate": f"1991-01-{day:02d}"} for day in range(1, 32)]
+            payload = {"status": "pilot-daily-aggregation-complete",
+                       "climatologyEligible": False, "recordCount": 365,
+                       "records": rows + [{"subregionId": "JP-A", "localDayTimezone": "Asia/Tokyo",
+                                          "validDate": "1991-02-01"} for _ in range(334)]}
+            (root / "daily" / "JP-A-1991-daily.json").write_text(json.dumps(payload), encoding="utf-8")
+            calls = []
+            def fail_runner(command):
+                calls.append(command)
+                return subprocess.CompletedProcess(command, 1, "", "forced reprocessing reached inspector")
+            task = {"taskId": "JP-A-1991", "subregionId": "JP-A", "year": 1991,
+                    "start": "1991-01-01", "end": "1991-12-31"}
+            result = MODULE.run_task(task, root, retries=1, retry_delay=0,
+                                     sleep=lambda _: None, runner=fail_runner, force=True)
+            self.assertEqual(result["status"], "failed")
+            self.assertEqual(len(calls), 1)
+            self.assertIn("forced reprocessing", result["error"])
+
     def test_february_29_leap_year_record_count_is_allowed(self):
         # Year-length policy is exercised by the runner's post-conversion guard.
         import inspect
