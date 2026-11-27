@@ -1,5 +1,7 @@
 import fs from "node:fs/promises";
 import {scoreForecastSamples} from "../assets/js/trip-date-forecast-backtest.js";
+import {scoreRiskRankingSamples} from "../assets/js/trip-date-ranking-verification.js";
+import {recommendGolfTripDates} from "../assets/js/trip-date-recommendation-engine.js";
 import {buildDailyClimatology,compareForecastToClimatology} from "../assets/js/trip-date-climatology-baseline.js";
 import {summarizeSeasonalArchive} from "../assets/js/trip-date-seasonal-backtest.js";
 import {buildSeasonalVerificationTargets,scoreSeasonalVerification} from "../assets/js/trip-date-seasonal-verification.js";
@@ -79,7 +81,65 @@ for(const [region,point] of Object.entries(regions)){
     climatologyByRegion[region]=buildDailyClimatology(daily);
   }catch(error){climatologyErrors[region]=error.message}
 }
-const allShortRows=Object.values(rowsByRegion).flat();
+// Long-horizon out-of-sample ranking verification. Each archived issue date is
+// paired with ERA5 only after its target date has matured. Multiple issue dates
+// for one valid date are retained because they represent different lead times.
+const rankingTargets=[];
+for(const snapshot of snapshots){
+  const issueDate=snapshot.localDate;
+  if(typeof issueDate!=="string"||!Array.isArray(snapshot.normalizedDailySignals))continue;
+  let compositeByDate=new Map();
+  try{
+    const assessed=recommendGolfTripDates({asOf:issueDate,horizonDays:90,days:snapshot.normalizedDailySignals},{horizonDays:90,alternateCount:0});
+    compositeByDate=new Map(assessed.dailyAssessment.map(x=>[x.date,x]));
+  }catch(error){console.warn("Skipping invalid normalized signal snapshot",issueDate,error.message);continue;}
+  for(const day of snapshot.normalizedDailySignals){
+    const leadDays=dayNumber(day.date)-dayNumber(issueDate);
+    if(day.date>=today||leadDays<1||leadDays>90)continue;
+    for(const region of Object.keys(regions)){
+      const signals=day.regions?.[region]||{};
+      for(const source of ["forecast","ec46","seas5","historical"]){
+        const signal=signals[source];
+        if(typeof signal?.riskScore==="number"&&Number.isFinite(signal.riskScore))
+          rankingTargets.push({issueDate,targetDate:day.date,leadDays,region,source,riskScore:signal.riskScore});
+      }
+      const composite=compositeByDate.get(day.date)?.regions?.find(x=>x.region===region);
+      if(typeof composite?.riskScore==="number"&&Number.isFinite(composite.riskScore))
+        rankingTargets.push({issueDate,targetDate:day.date,leadDays,region,source:"composite",riskScore:composite.riskScore});
+    }
+  }
+}
+const rankingObservations={north:{},central:{},south:{}};
+const rankingObservationErrors={};
+for(const [region,point] of Object.entries(regions)){
+  const targets=rankingTargets.filter(x=>x.region===region);
+  if(!targets.length)continue;
+  const dates=targets.map(x=>x.targetDate).sort();
+  const params=new URLSearchParams({
+    latitude:String(point.latitude),longitude:String(point.longitude),
+    start_date:dates[0],end_date:dates.at(-1),daily:"precipitation_sum",
+    timezone:"Asia/Tokyo",precipitation_unit:"mm",models:"era5"
+  });
+  try{
+    const response=await fetch("https://archive-api.open-meteo.com/v1/archive?"+params);
+    if(!response.ok)throw new Error("ERA5 ranking archive HTTP "+response.status);
+    const payload=await response.json();
+    rankingObservations[region]=Object.fromEntries((payload.daily?.time||[]).map((date,i)=>[date,payload.daily?.precipitation_sum?.[i]]));
+  }catch(error){rankingObservationErrors[region]=error.message;}
+}
+const rankingSamples=rankingTargets.flatMap(target=>{
+  const observed=rankingObservations[target.region]?.[target.targetDate];
+  return typeof observed==="number"&&Number.isFinite(observed)&&observed>=0
+    ?[{...target,observedRainMm:observed}]:[];
+});
+const rankingVerification=scoreRiskRankingSamples(rankingSamples);
+const rankingArchiveSummary={
+  normalizedSnapshots:snapshots.filter(x=>Array.isArray(x.normalizedDailySignals)).length,
+  maturedSignalPairs:rankingSamples.length,
+  excludedUnmaturedOrMissingObservations:rankingTargets.length-rankingSamples.length,
+  observationErrors:rankingObservationErrors
+};
+\nconst allShortRows=Object.values(rowsByRegion).flat();
 const climatologyComparison=compareForecastToClimatology(allShortRows,climatologyByRegion);
 const shortForecastGate={
   requiredPairsPerRegionAndLeadBucket:30,requiredWetAndDryCases:5,byRegion:{}
@@ -150,7 +210,7 @@ const report={
   generatedAt:new Date().toISOString(),asOf:today,
   archive:{snapshotCount:snapshots.length,firstSnapshot:snapshots[0]?.localDate??null,lastSnapshot:snapshots.at(-1)?.localDate??null},
   method:"Short forecasts: daily probability/amount versus ERA5. EC46/SEAS5: archived weekly/monthly precipitation means versus the sum of ERA5 daily precipitation over the exact same valid period.",
-  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
+  overall,byRegion,regionErrors,climatologyComparison,climatologyErrors,rankingArchiveSummary,rankingVerification,seasonalArchive,seasonalVerification,seasonalErrors,calibrationGate,
   validationStatus:sampleCount>=90?"descriptive-sample-available":"collecting-insufficient-samples",
   caveats:[
     "ERA5 reanalysis is a model-reference dataset, not an independent rain-gauge observation.",
@@ -202,6 +262,13 @@ const lines=[
   "- Climatology rainfall MAE: "+(climatologyComparison.overall.climatologyAmountMaeMm??"資料不足")+" mm/day",
   "- Rainfall amount MAE skill score: "+(climatologyComparison.overall.amountMaeSkillScore??"資料不足"),
   ...Object.entries(climatologyComparison.byLeadBucket).map(([bucket,x])=>"- "+bucket+" days: n="+x.sampleCount+", Brier skill="+(x.brierSkillScore??"資料不足")+", amount MAE skill="+(x.amountMaeSkillScore??"資料不足")),
+  "",
+  "## 1-90 day rain-risk ranking verification (ERA5 reference)",
+  "- Normalized snapshots: "+rankingArchiveSummary.normalizedSnapshots,
+  "- Matured signal/outcome pairs: "+rankingArchiveSummary.maturedSignalPairs,
+  "- Excluded immature or unavailable observations: "+rankingArchiveSummary.excludedUnmaturedOrMissingObservations,
+  "- Metric: AUC; higher is better. Risk scores are not probabilities.",
+  ...Object.entries(rankingVerification.groups).filter(([key])=>key.split(".").length===3).map(([key,x])=>"- "+key+": n="+x.sampleCount+", wet="+x.wetDays+", dry="+x.dryDays+", AUC="+(x.auc??"資料不足")+", gate="+(x.ready?"ready":"locked")),
   "",
   "## Calibration gate",
   "- Status: "+calibrationGate.status,
