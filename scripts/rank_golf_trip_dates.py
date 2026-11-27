@@ -84,48 +84,40 @@ def _numeric(value, fallback=999999.0):
 
 
 def rank_trip_start(start: date, calendar: dict, trip_days: int = 5, rounds: int = 3) -> dict:
+    # Confirmed itinerary: day 1 arrival/transfer, days 2-4 golf, day 5 departure.
+    if trip_days != 5 or rounds != 3:
+        raise ValueError("This planner requires 5 days / 4 nights with golf on trip days 2, 3 and 4")
     daily = [day_rain_risk(start + timedelta(days=i), calendar) for i in range(trip_days)]
-    if len(daily) != trip_days or not all(x["usable"] for x in daily):
+    if len(daily) != 5 or not all(x["usable"] for x in daily):
         return {
             "startDate": start.isoformat(),
-            "endDate": (start + timedelta(days=trip_days - 1)).isoformat(),
+            "endDate": (start + timedelta(days=4)).isoformat(),
             "status": "insufficient-climate-coverage",
-            "reason": "All five trip dates require usable historical rainfall statistics",
+            "reason": "All five trip dates require usable historical climate statistics; golf days are fixed to trip days 2-4",
             "dailyPlan": daily,
         }
-    selected = sorted(
-        daily,
-        key=lambda x: (
-            _numeric(x["wetDayFrequencyPct"]),
-            _numeric(x["heavyRain10mmFrequencyPct"]),
-            _numeric(x["heavyRain30mmFrequencyPct"]),
-            _numeric(x["p90DailyRainMm"]),
-            x["date"],
-        ),
-    )[:rounds]
-    selected_dates = {x["date"] for x in selected}
-    selected_sorted = sorted(selected, key=lambda x: x["date"])
+    golf_days = daily[1:4]
+    travel_days = [daily[0], daily[4]]
     return {
         "startDate": start.isoformat(),
-        "endDate": (start + timedelta(days=trip_days - 1)).isoformat(),
+        "endDate": (start + timedelta(days=4)).isoformat(),
         "status": "ranked-by-historical-rainfall-prior",
-        "roundCount": rounds,
-        "playDates": [x["date"] for x in selected_sorted],
-        "restOrTransferDates": [x["date"] for x in daily if x["date"] not in selected_dates],
+        "roundCount": 3,
+        "playDates": [x["date"] for x in golf_days],
+        "travelDates": [x["date"] for x in travel_days],
         "rainRisk": {
-            "averageWetDayFrequencyPct": round(sum(x["wetDayFrequencyPct"] for x in selected) / rounds, 2),
-            "averageHeavyRain10mmFrequencyPct": round(sum(_numeric(x["heavyRain10mmFrequencyPct"], 0) for x in selected) / rounds, 2),
-            "averageHeavyRain30mmFrequencyPct": round(sum(_numeric(x["heavyRain30mmFrequencyPct"], 0) for x in selected) / rounds, 2),
-            "averageP90DailyRainMm": round(sum(_numeric(x["p90DailyRainMm"], 0) for x in selected) / rounds, 2),
-            "selectedRoundDays": rounds,
-            "interpretation": "Historical frequency across the 31-day seasonal window; not the probability that this specific future date will rain.",
+            "averageWetDayFrequencyPct": round(sum(x["wetDayFrequencyPct"] for x in golf_days) / 3, 2),
+            "averageHeavyRain10mmFrequencyPct": round(sum(_numeric(x["heavyRain10mmFrequencyPct"], 0) for x in golf_days) / 3, 2),
+            "averageHeavyRain30mmFrequencyPct": round(sum(_numeric(x["heavyRain30mmFrequencyPct"], 0) for x in golf_days) / 3, 2),
+            "averageP90DailyRainMm": round(sum(_numeric(x["p90DailyRainMm"], 0) for x in golf_days) / 3, 2),
+            "selectedRoundDays": 3,
+            "interpretation": "Average historical frequency across the fixed middle three golf days; not the probability that this specific future trip will rain.",
         },
         "dailyPlan": [
-            {**x, "plannedActivity": "golf" if x["date"] in selected_dates else "rest-or-transfer"}
-            for x in daily
+            {**x, "plannedActivity": "arrival-or-transfer" if i == 0 else "golf" if i in (1, 2, 3) else "departure-or-transfer"}
+            for i, x in enumerate(daily)
         ],
     }
-
 
 def rank_departures(climate_path: Path, subregion: str, from_date: date, horizon_days: int = 90,
                     trip_days: int = 5, rounds: int = 3) -> dict:
@@ -135,7 +127,7 @@ def rank_departures(climate_path: Path, subregion: str, from_date: date, horizon
         raise ValueError("horizon_days must be between 1 and 90 departure dates")
     loaded = load_climatology(climate_path, subregion)
     candidates = []
-    for offset in range(horizon_days):
+    for offset in range(horizon_days - trip_days + 1):
         start = from_date + timedelta(days=offset)
         candidates.append(rank_trip_start(start, loaded["calendar"], trip_days, rounds))
     eligible = [x for x in candidates if x["status"] == "ranked-by-historical-rainfall-prior"]
@@ -169,8 +161,8 @@ def rank_departures(climate_path: Path, subregion: str, from_date: date, horizon
         },
         "method": {
             "source": "1991-2020 ERA5-Land regional climatology",
-            "dailySelection": "Select the three lowest historical wet-day frequency dates in each five-day trip; tie-break using >=10mm frequency, >=30mm frequency, then P90 rainfall.",
-            "tripRanking": "Lexicographic: average selected-day wet-day frequency, >=10mm frequency, >=30mm frequency, P90 rainfall.",
+            "dailySelection": "Golf dates are fixed to trip days 2, 3 and 4 (zero-based offsets 1, 2 and 3); days 1 and 5 are arrival/departure or transfer days.",
+            "tripRanking": "Lexicographic across the fixed middle three golf dates: average wet-day frequency, >=10mm frequency, >=30mm frequency, P90 rainfall. No golf-date optimization inside the trip window.",
             "forecastClaim": "No deterministic daily forecast is generated. Results are historical seasonal climate priors only.",
             "shortRangeForecastIntegration": "Not included in this engine stage; keep 1-16 day live forecast path separate.",
         },
@@ -193,7 +185,7 @@ def main() -> int:
     parser.add_argument("--climatology", type=Path, required=True)
     parser.add_argument("--subregion", required=True)
     parser.add_argument("--from-date", required=True)
-    parser.add_argument("--horizon-days", type=int, default=90)
+    parser.add_argument("--horizon-days", type=int, default=90, help="Calendar horizon; returns horizon_days - 4 complete trip windows")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     try:
