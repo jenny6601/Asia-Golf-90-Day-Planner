@@ -3,8 +3,8 @@ from scripts.audit_jma_station_history import parse_index4, audit_candidate, bui
 
 def row(sid="47412", start="1991-01-01", end="2020-12-31", p="1", t="1", pc="0", tc="0", old=None):
     x = [""] * 33
-    x[0] = sid; x[3] = "SAPPORO"; x[4] = "札幌"
-    x[9] = "43.05"; x[10] = "141.33"; x[11] = "17"
+    x[0] = sid; x[1] = "札幌"; x[3] = "SAPPORO"
+    x[7] = "43.050"; x[8] = "141.330"; x[9] = "17"
     x[16] = p; x[18] = t; x[23] = start; x[24] = end
     x[25] = old or sid; x[26] = pc; x[28] = tc
     return ",".join(x)
@@ -14,6 +14,9 @@ class JmaStationHistoryTests(unittest.TestCase):
         data = parse_index4(row())
         self.assertEqual(len(data["47412"]), 1)
         self.assertEqual(data["47412"][0]["nameJa"], "札幌")
+        self.assertEqual(data["47412"][0]["latitude"], "43.050")
+        self.assertEqual(data["47412"][0]["longitude"], "141.330")
+        self.assertEqual(data["47412"][0]["elevationM"], "17")
         self.assertTrue(data["47412"][0]["temperatureAvailable"])
 
     def test_counts_coverage_and_continuity_breaks_separately(self):
