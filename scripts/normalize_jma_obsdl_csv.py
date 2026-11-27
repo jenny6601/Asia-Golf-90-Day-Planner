@@ -11,7 +11,7 @@ import argparse
 import csv
 import json
 import re
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 
@@ -43,7 +43,7 @@ def parse_date_row(row, indexes):
         raw = str(row[indexes["date"]]).strip()
         for fmt in ("%Y/%m/%d", "%Y-%m-%d", "%Y年%m月%d日", "%Y/%m/%d %H:%M"):
             try:
-                return date.fromisoformat(raw) if fmt == "iso" else __import__("datetime").datetime.strptime(raw, fmt).date()
+                return date.fromisoformat(raw) if fmt == "iso" else datetime.strptime(raw, fmt).date()
             except ValueError:
                 pass
     if all(k in indexes for k in ("year", "month", "day")):
@@ -100,7 +100,7 @@ def normalize_csv(path, station_id, station_name, latitude, longitude, region_id
         if key in seen:
             raise ValueError(f"Duplicate daily date in JMA CSV: {key}")
         seen.add(key)
-        record = {"validDate": key}
+        record = {"validDate": key, "sourceColumnHeaders": headers, "sourceRawCells": row}
         for field, col in metric_indexes.items():
             raw_value = row[col] if col < len(row) else ""
             record[field] = parse_number(raw_value)
