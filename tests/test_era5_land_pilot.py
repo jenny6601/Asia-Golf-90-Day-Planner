@@ -11,17 +11,17 @@ SPEC.loader.exec_module(MODULE)
 
 
 class Era5LandPilotTests(unittest.TestCase):
-    def test_mapping_has_19_unique_japan_regions(self):
+    def test_mapping_has_37_unique_japan_regions(self):
         mapping = MODULE.load_mapping()
         ids = {p["subregionId"] for p in mapping["points"]}
-        self.assertEqual(mapping["subregionCount"], 19)
-        self.assertEqual(len(ids), 19)
-        self.assertEqual(sum(x.startswith("JP-OKI-") for x in ids), 3)
-        self.assertEqual(sum(not x.startswith("JP-OKI-") for x in ids), 16)
+        self.assertEqual(mapping["subregionCount"], 37)
+        self.assertEqual(len(ids), 37)
+        self.assertEqual(sum(x.startswith("JP-OKI-") for x in ids), 5)
+        self.assertEqual(sum(not x.startswith("JP-OKI-") for x in ids), 32)
 
     def test_request_uses_cds_timeseries_and_five_required_variables(self):
         mapping = MODULE.load_mapping()
-        point = next(p for p in mapping["points"] if p["subregionId"] == "JP-KNT-NORTH")
+        point = next(p for p in mapping["points"] if p["subregionId"] == "JP-KNT-TOCHIGI-NASU")
         request = MODULE.build_request(point, date(1991, 1, 1), date(1991, 12, 31))
         self.assertEqual(request["location"]["latitude"], 36.709629)
         self.assertEqual(request["location"]["longitude"], 140.004827)
