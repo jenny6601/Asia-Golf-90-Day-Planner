@@ -6,7 +6,7 @@ const REQUIRED_FIELDS=["precipitation_probability","precipitation","temperature_
 const finite=x=>typeof x==="number"&&Number.isFinite(x);
 
 export function evaluateSixHourPlayability(hourly,date,teeHour,durationHours=6){
- if(!hourly||!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)||!Number.isInteger(teeHour)||teeHour<0||teeHour>23||!Number.isInteger(durationHours)||durationHours<1||durationHours>12)throw new TypeError("Invalid hourly data, date, teeHour or durationHours");
+ if(!hourly||!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isInteger(teeHour)||teeHour<0||teeHour>23||!Number.isInteger(durationHours)||durationHours<1||durationHours>12)throw new TypeError("Invalid hourly data, date, teeHour or durationHours");
  const indexes=[];
  for(let h=0;h<durationHours;h++){const target=date+"T"+String(teeHour+h).padStart(2,"0")+":00";const i=(hourly.time||[]).indexOf(target);if(i<0)return {status:"insufficient-data",reason:"missing-hour",missingHour:target};indexes.push(i);}
  const missingFields=REQUIRED_FIELDS.filter(field=>indexes.some(i=>!finite(hourly[field]?.[i])));
