@@ -1,0 +1,30 @@
+name: Long-Range Forecast Strategy Contract
+
+on:
+  push:
+    branches: [asia-eight-country-shared-engine]
+    paths:
+      - "config/global/long-range-forecast-strategy.json"
+      - "tests/long-range-forecast-strategy.test.mjs"
+      - ".github/workflows/long-range-strategy-contract.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: long-range-strategy-contract
+  cancel-in-progress: false
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate long-range forecast strategy contract
+        run: node --test tests/long-range-forecast-strategy.test.mjs
