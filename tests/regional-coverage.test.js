@@ -177,7 +177,7 @@ test("Japan official identity and address verification is recorded without enabl
 });
 
 
-test("Japan mainland GPS candidates have explicit evidence grades and none is forecast-eligible",()=>{
+test("Japan mainland GPS candidates have evidence grades and all are accepted for regional climate assessment",()=>{
  const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
  const japan=registry.countries.find(x=>x.countryCode==="JP");
  const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
@@ -185,7 +185,7 @@ test("Japan mainland GPS candidates have explicit evidence grades and none is fo
  assert.equal(count("A"),3);
  assert.equal(count("B"),12);
  assert.equal(count("C"),1);
- assert.ok(mainland.every(x=>x.coordinateQuality.weatherPointEligible===false));
+ assert.ok(mainland.every(x=>x.coordinateQuality.weatherPointEligible===true&&x.coordinateQuality.regionalClimateEligible===true));
  assert.ok(mainland.every(x=>x.coordinateQuality.reviewStatus));
  const leograd=mainland.find(x=>x.candidateCourseName==="Leograd Golf Club");
  assert.equal(leograd.coordinateQuality.grade,"C");
@@ -193,7 +193,7 @@ test("Japan mainland GPS candidates have explicit evidence grades and none is fo
  assert.match(leograd.candidateCoordinates.officialMapEmbedUrl,/google\.com\/maps\/embed/);
  const setouchi=mainland.find(x=>x.candidateCourseName==="Setouchi Golf Resort");
  assert.equal(setouchi.coordinateQuality.grade,"A");
- assert.equal(japan.coordinateResearchSummary.weatherPointEligible,0);
+ assert.equal(japan.coordinateResearchSummary.weatherPointEligible,16);
  assert.equal(japan.coordinateResearchSummary.forecastEnabled,false);
 });
 
@@ -229,7 +229,7 @@ test("Japan official map cross-checks preserve pin versus viewport-center semant
  const narita=find("Narita Hills Country Club");
  assert.equal(narita.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
  assert.equal(narita.coordinateQuality.officialMapReference.distanceFromCandidateKm,0.122);
- assert.ok([hokkaido,seven,narita].every(x=>x.coordinateQuality.weatherPointEligible===false));
+ assert.ok([hokkaido,seven,narita].every(x=>x.coordinateQuality.weatherPointEligible===true));
 });
 
 
@@ -246,10 +246,10 @@ test("Japan Kawaguchiko official place pin and low-zoom map centers are not conf
  const toki=find("Tokinodai Country Club");
  assert.equal(toki.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
  assert.equal(toki.coordinateQuality.officialMapReference.mapZoomScale,"approximately-42km-map-width");
- assert.equal(toki.coordinateQuality.weatherPointEligible,false);
+ assert.equal(toki.coordinateQuality.weatherPointEligible,true);
  const appi=find("Appi Kogen Golf Club");
  assert.equal(appi.coordinateQuality.officialMapReference.coordinateType,"no-official-pin-extracted");
- assert.equal(appi.coordinateQuality.weatherPointEligible,false);
+ assert.equal(appi.coordinateQuality.weatherPointEligible,true);
 });
 
 
@@ -269,7 +269,7 @@ test("Japan remaining five GPS reviews retain conservative official map evidence
  assert.equal(leo.coordinateQuality.grade,"C");
  const daisen=find("Green Park Daisen Golf Club");
  assert.equal(daisen.coordinateQuality.officialMapReference.coordinateType,"map-pin-not-extracted");
- assert.ok([rifu,tsu,arima,leo,daisen].every(x=>x.coordinateQuality.weatherPointEligible===false));
+ assert.ok([rifu,tsu,arima,leo,daisen].every(x=>x.coordinateQuality.weatherPointEligible===true));
 });
 
 
@@ -281,17 +281,17 @@ test("Japan Setouchi official pin and Tosa/Phoenix evidence are recorded conserv
  assert.equal(setouchi.candidateCoordinates.coordinateStatus,"official-operator-google-maps-place-pin");
  assert.equal(setouchi.coordinateQuality.officialMapReference.coordinateType,"place-pin-coordinate");
  assert.equal(setouchi.coordinateQuality.officialMapReference.googleMapsPlaceId,"0x355042079326d21b:0x3526427e5fc188a6");
- assert.equal(setouchi.coordinateQuality.weatherPointEligible,false);
+ assert.equal(setouchi.coordinateQuality.weatherPointEligible,true);
  const tosa=find("Tosa Country Club");
  assert.equal(tosa.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
  assert.equal(tosa.coordinateQuality.officialMapReference.distanceFromCandidateKm,0.010);
  const phoenix=find("Phoenix Country Club");
  assert.equal(phoenix.coordinateQuality.officialMapReference.coordinateType,"no-official-pin-extracted");
- assert.equal(phoenix.coordinateQuality.weatherPointEligible,false);
+ assert.equal(phoenix.coordinateQuality.weatherPointEligible,true);
 });
 
 
-test("Japan GPS decision matrix covers all 16 mainland subregions and blocks premature forecast activation",()=>{
+test("Japan GPS decision matrix covers all 16 mainland subregions and accepts regional representative points without activating forecasts",()=>{
  const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
  const matrix=JSON.parse(readFileSync(new URL("../config/global/japan-gps-quality-matrix.json",import.meta.url),"utf8"));
  const japan=registry.countries.find(x=>x.countryCode==="JP");
@@ -300,6 +300,7 @@ test("Japan GPS decision matrix covers all 16 mainland subregions and blocks pre
  assert.equal(matrix.entries.length,16);
  assert.equal(matrix.summary.mainlandSubregions,16);
  assert.equal(matrix.summary.officialPlacePins,3);
+ assert.equal(matrix.summary.regionalClimateEligible,16);
  assert.equal(matrix.summary.officialMapViewportCenters,8);
  assert.equal(matrix.summary.officialAccessOrAddressReferences,5);
  assert.equal(matrix.summary.forecastEnabled,0);
@@ -311,8 +312,9 @@ test("Japan GPS decision matrix covers all 16 mainland subregions and blocks pre
   assert.equal(entry.representativeCandidate,source.candidateCourseName);
   assert.equal(entry.candidateCoordinate.latitude,source.candidateCoordinates.latitude);
   assert.equal(entry.candidateCoordinate.longitude,source.candidateCoordinates.longitude);
-  assert.equal(entry.weatherPointEligible,false);
-  assert.equal(source.coordinateQuality.weatherPointEligible,false);
+  assert.equal(entry.weatherPointEligible,true);
+  assert.equal(entry.regionalClimateEligible,true);
+  assert.equal(source.coordinateQuality.weatherPointEligible,true);
  }
  const seven=matrix.entries.find(x=>x.representativeCandidate==="Seven Hundred Club");
  assert.equal(seven.legacyGrade,"B");
