@@ -38,7 +38,7 @@ def sample_calendar(wet_frequency_by_day=None):
 
 
 class GolfTripDateRankingTests(unittest.TestCase):
-    def test_selects_three_lowest_rain_risk_days(self):
+    def test_golf_dates_are_fixed_to_trip_days_two_three_four(self):
         start = date(2026, 6, 1)
         frequencies = {
             (start + timedelta(days=i)).strftime("%m-%d"): value
@@ -74,7 +74,7 @@ class GolfTripDateRankingTests(unittest.TestCase):
             }
             path.write_text(json.dumps(payload), encoding="utf-8")
             result = MODULE.rank_departures(path, "JP-TEST", start, horizon_days=10)
-            self.assertEqual(result["candidateCount"], 10)
+            self.assertEqual(result["candidateCount"], 6)
             self.assertGreater(result["rankedCandidateCount"], 0)
             self.assertEqual(result["recommendations"][0]["startDate"], "2026-06-04")
             self.assertFalse(result["activation"]["recommendationProductionEnabled"])
