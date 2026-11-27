@@ -700,10 +700,26 @@
           },
           "coordinateQuality": {
             "grade": "B",
-            "label": "公開／第三方候選座標",
-            "reviewStatus": "official-pin-crosscheck-pending",
+            "label": "官方高倍率地圖中心，非球場圖釘",
+            "reviewStatus": "official-operator-google-map-embed-found;center-not-pin",
             "weatherPointEligible": false,
-            "reason": "已有公開地圖或球場名錄座標，但尚未與官方球場地圖標記及地址逐點交叉核對。"
+            "reason": "官方營運商交通頁提供 Google Maps 嵌入地圖，中心與既有候選點相差約 202 公尺；地圖中心仍非可驗證的球場圖釘。",
+            "officialMapReference": {
+              "type": "official-google-maps-embed-center",
+              "url": "https://cm-g.co.jp/the-classic/access/",
+              "latitude": 33.7704748,
+              "longitude": 130.6427107,
+              "coordinateType": "map-viewport-center-not-pin",
+              "googleMapsPlaceId": "0x3543d33a9e3fe671:0x719b687d537f03c",
+              "previousCandidateCoordinate": {
+                "latitude": 33.770453,
+                "longitude": 130.644917
+              },
+              "distanceFromCandidateKm": 0.202,
+              "approximateViewportWidthKm": 3.317,
+              "crossCheckResult": "official-operator-access-page-embed-identifies-The-Classic-Golf-Club;embedded-center-is-nearby-but-not-pin",
+              "checkedOn": "2026-11-27"
+            }
           }
         },
         {
@@ -796,7 +812,7 @@
         "coordinateQualityB": 11,
         "coordinateQualityC": 1,
         "weatherPointEligible": 0,
-        "officialMapCrossChecks": 14
+        "officialMapCrossChecks": 16
       },
       "candidateIdPolicy": "candidateCourseId is a stable research identifier only. It is not a course catalog ID and must not be used as representativeCourseId or forecast key until identity, official course location and GPS are verified."
     },
