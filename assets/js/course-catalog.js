@@ -8,6 +8,18 @@ export async function fetchAsiaCountryRegistry(fetchImpl = fetch) {
   return countries;
 }
 
+export async function fetchAsiaWeatherSubregionRegistry(fetchImpl = fetch) {
+  const response = await fetchImpl(new URL("weather-subregions.json", base));
+  if (!response.ok) throw new Error("亞洲次分區代表球場清單讀取失敗：" + response.status);
+  const registry = await response.json();
+  if (!Array.isArray(registry.countries)) throw new TypeError("weather-subregions.json countries 必須是陣列");
+  return registry.countries.flatMap(group => (group.subregions || []).map(subregion => ({
+    ...subregion,
+    countryCode: group.countryCode,
+    countryNameZh: group.countryNameZh
+  })));
+}
+
 export async function fetchAsiaGolfCourseCatalog({countryCode, enabledOnly = true, fetchImpl = fetch} = {}) {
   const response = await fetchImpl(new URL("courses.json", base));
   if (!response.ok) throw new Error("亞洲球場清單讀取失敗：" + response.status);
@@ -29,12 +41,59 @@ export async function fetchAsiaGolfCourseCatalog({countryCode, enabledOnly = tru
 }
 
 export async function fetchAsiaGolfDirectory({fetchImpl = fetch} = {}) {
-  const [countries, courses] = await Promise.all([
+  const [countries, courses, subregions] = await Promise.all([
     fetchAsiaCountryRegistry(fetchImpl),
-    fetchAsiaGolfCourseCatalog({enabledOnly: false, fetchImpl})
+    fetchAsiaGolfCourseCatalog({enabledOnly: false, fetchImpl}),
+    fetchAsiaWeatherSubregionRegistry(fetchImpl)
   ]);
   const countryCodes = new Set(countries.map(country => country.code));
   const unknown = courses.filter(course => !countryCodes.has(course.countryCode));
   if (unknown.length) throw new Error("球場使用未登錄國家代碼：" + unknown.map(x => x.id).join(", "));
-  return {countries, courses, countryCount:countries.length, courseCount:courses.length};
+
+  const courseById = new Map(courses.map(course => [course.id, course]));
+  const subregionById = new Map(subregions.map(subregion => [subregion.id, subregion]));
+  if (subregionById.size !== subregions.length) throw new Error("次分區 ID 重複");
+  for (const subregion of subregions) {
+    const representative = courseById.get(subregion.representativeCourseId);
+    if (!representative) throw new Error("次分區缺少代表球場：" + subregion.id);
+    if (representative.countryCode !== subregion.countryCode || representative.subregionId !== subregion.id) {
+      throw new Error("代表球場與次分區歸屬不一致：" + subregion.id + " → " + subregion.representativeCourseId);
+    }
+    const point = subregion.candidateCoordinates;
+    if (!Number.isFinite(point?.latitude) || !Number.isFinite(point?.longitude) || !point?.timezone) {
+      throw new Error("次分區缺少有效區域代表座標或時區：" + subregion.id);
+    }
+  }
+
+  const enrichedCourses = courses.map(course => {
+    const subregion = subregionById.get(course.subregionId);
+    if (!subregion) return course;
+    return {
+      ...course,
+      regionalRepresentativeCourseId: subregion.representativeCourseId,
+      regionalSubregionId: subregion.id,
+      regionalSubregionLabel: subregion.label || subregion.subregion || subregion.id,
+      regionalClimate: {
+        subregionId: subregion.id,
+        label: subregion.label || subregion.subregion || subregion.id,
+        representativeCourseId: subregion.representativeCourseId,
+        representativeCourseName: courseById.get(subregion.representativeCourseId)?.name || subregion.candidateCourseName,
+        representativePoint: {
+          latitude: subregion.candidateCoordinates.latitude,
+          longitude: subregion.candidateCoordinates.longitude
+        },
+        timezone: subregion.candidateCoordinates.timezone,
+        isRepresentative: course.id === subregion.representativeCourseId,
+        weatherPointEligible: false
+      }
+    };
+  });
+  return {
+    countries,
+    courses: enrichedCourses,
+    subregions,
+    countryCount: countries.length,
+    courseCount: enrichedCourses.length,
+    subregionCount: subregions.length
+  };
 }
