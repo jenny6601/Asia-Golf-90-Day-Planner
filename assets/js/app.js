@@ -882,7 +882,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   ["🎯 日期評估","依降雨頻率及估計雨量排序，並非保證晴天。"],
   ["📊 資料來源","優先使用前16天逐日預報；其他日期採 ERA5 歷史同期統計與可取得的週／月季節模式訊號。"],
   ["⛳ 適打天數","僅列入資料完整且可評估的日期；出發前仍須確認最新降雨、風勢及雷雨警示。"],
-  ["ⓘ 說明","推薦優先日期為全月條件較佳的5天；優先週數為連續5天的建議出發時段，適合安排五天四夜行程。資料不足的日期不列入評估。"]
+  ["ⓘ 說明","月分析的優先五天行程依整段5天的降雨條件排序；週分析 Top 1–3 則優先要求中間連續3天均為適打或可打，供安排主要球敘。若合格組數不足，會以最接近條件的日期補足並註明。資料不足的日期不列入評估。"]
  ];
  noteRows.forEach(([label,detail])=>{const row=node("div",undefined,"monthly-playability-note-row");row.append(node("strong",label),node("span",detail));notes.append(row)});
  summary.append(notes);
