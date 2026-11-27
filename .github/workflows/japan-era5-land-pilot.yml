@@ -55,8 +55,8 @@ jobs:
           test -n "$CDSAPI_KEY" || { echo "Missing repository secret CDS_API_KEY; no data request was sent."; exit 1; }
           umask 077
           {
-            printf '%s\\n' 'url: https://cds.climate.copernicus.eu/api'
-            printf 'key: %s\\n' "$CDSAPI_KEY"
+            printf '%s\n' 'url: https://cds.climate.copernicus.eu/api'
+            printf 'key: %s\n' "$CDSAPI_KEY"
           } > "$HOME/.cdsapirc"
 
       - name: Print the exact one-region pilot request
@@ -67,12 +67,12 @@ jobs:
         env:
           CDSAPI_KEY: ${{ secrets.CDS_API_KEY }}
         run: |
-          python scripts/batch_era5_land_japan.py \\
-            --subregions JP-KNT-NORTH \\
-            --start-year 1991 \\
-            --end-year 1991 \\
-            --limit 1 \\
-            --retries 3 \\
+          python scripts/batch_era5_land_japan.py \
+            --subregions JP-KNT-NORTH \
+            --start-year 1991 \
+            --end-year 1991 \
+            --limit 1 \
+            --retries 3 \
             --output-root data/era5-land-japan-1991-2020
 
       - name: Commit structurally validated daily pilot and manifest
