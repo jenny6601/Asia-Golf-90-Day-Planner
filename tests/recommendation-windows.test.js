@@ -44,3 +44,12 @@ test("incomplete daily data is excluded instead of being interpolated",()=>{
  const windows=buildFiveDayWindows(assessment,dates);
  assert.equal(windows.some(x=>x.start<="2026-12-03"&&x.end>="2026-12-03"),false);
 });
+test("the three core days may mix suitable and playable statuses",()=>{
+ const assessment=makeAssessment(["2026-12-02","2026-12-04"]);
+ assessment.find(x=>x.date==="2026-12-03").status="可打";
+ const windows=buildFiveDayWindows(assessment,dates);
+ const match=windows.find(x=>x.start==="2026-12-01");
+ assert.equal(match.coreEligible,3);
+ assert.equal(match.qualifies,true);
+ assert.deepEqual(match.coreDays.map(x=>x.status),["適打","可打","適打"]);
+});
