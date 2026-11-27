@@ -1,0 +1,38 @@
+name: Long-Range Data Readiness Inventory
+on:
+  push:
+    branches: [asia-eight-country-shared-engine]
+    paths:
+      - "config/global/weather-subregions.json"
+      - "data/era5-land-japan-1991-2020/**"
+      - "data/okinawa-forecast-snapshots/**"
+      - "scripts/build_long_range_data_inventory.py"
+      - "tests/test_build_long_range_data_inventory.py"
+      - ".github/workflows/long-range-data-inventory.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: long-range-data-inventory
+  cancel-in-progress: false
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run inventory tests
+        run: python -m unittest tests/test_build_long_range_data_inventory.py
+      - name: Inventory actual source files
+        run: python scripts/build_long_range_data_inventory.py
+      - name: Upload readiness report
+        uses: actions/upload-artifact@v4
+        with:
+          name: long-range-data-readiness
+          path: |
+            data/long-range-readiness/long-range-data-inventory.json
+            data/long-range-readiness/long-range-data-inventory.md
