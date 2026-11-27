@@ -13,6 +13,13 @@ class Era5LandDailyAggregationTests(unittest.TestCase):
     def test_temperature_conversion(self):
         self.assertAlmostEqual(MODULE.celsius(273.15), 0.0)
 
+    def test_resolves_cds_short_grib_variable_names(self):
+        self.assertEqual(MODULE.resolve_source_variable({"t2m"}, "2m_temperature"), "t2m")
+        self.assertEqual(MODULE.resolve_source_variable({"d2m"}, "2m_dewpoint_temperature"), "d2m")
+        self.assertEqual(MODULE.resolve_source_variable({"tp"}, "total_precipitation"), "tp")
+        self.assertEqual(MODULE.resolve_source_variable({"u10", "v10"}, "10m_u_component_of_wind"), "u10")
+        self.assertIsNone(MODULE.resolve_source_variable({"u10"}, "10m_v_component_of_wind"))
+
     def test_relative_humidity_is_bounded(self):
         rh = MODULE.relative_humidity_pct(20.0, 10.0)
         self.assertGreater(rh, 0)
