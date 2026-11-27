@@ -1,0 +1,3579 @@
+{
+  "schemaVersion": 1,
+  "status": "jma-daily-audit-priority-queue-not-yet-observed",
+  "source": "JMA official amdmaster.index4 cross-check report",
+  "period": {
+    "start": "1991-01-01",
+    "end": "2020-12-31",
+    "calendarDays": 10958
+  },
+  "selectionPolicy": [
+    "Official station identity match first",
+    "Higher minimum of PRCP/TEMP metadata coverage over 1991-2020",
+    "Fewer in-period statistical discontinuities",
+    "Shorter distance to the regional representative point"
+  ],
+  "dailyAuditRequirements": [
+    "daily precipitation total",
+    "daily maximum temperature",
+    "daily minimum temperature",
+    "per-element JMA quality codes"
+  ],
+  "summary": {
+    "japanSubregions": 37,
+    "candidateRowsConsidered": 366,
+    "priorityRowsAcrossRegions": 111,
+    "uniqueStationsToAudit": 103,
+    "regionsWithPrimaryStation": 37,
+    "dailyDataVerifiedStations": 0,
+    "approvedStations": 0,
+    "weatherIngestionEnabled": 0
+  },
+  "uniqueStationQueue": [
+    {
+      "stationId": "14116",
+      "officialNameJa": "山口",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-SAPPORO"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "16206",
+      "officialNameJa": "蘭越",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-NISEKO"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "21187",
+      "officialNameJa": "苫小牧",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-CHITOSE-TOMAKOMAI"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "23226",
+      "officialNameJa": "北斗",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-HAKODATE"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "31312",
+      "officialNameJa": "青森",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-AOMORI-AKITA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "32126",
+      "officialNameJa": "鷹巣",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-AKITA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "33226",
+      "officialNameJa": "岩手松尾",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-IWATE-APPI"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "34331",
+      "officialNameJa": "塩釜",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-MIYAGI-SENDAI"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "36291",
+      "officialNameJa": "二本松",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-FUKUSHIMA-YAMAGATA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "40281",
+      "officialNameJa": "下妻",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-IBARAKI-TSUKUBA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "40426",
+      "officialNameJa": "龍ケ崎",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-CHIBA-NARITA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "41181",
+      "officialNameJa": "塩谷",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-TOCHIGI-NASU"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "43171",
+      "officialNameJa": "鳩山",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-GUNMA-SAITAMA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "44112",
+      "officialNameJa": "八王子",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-TOKYO-KANAGAWA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "48331",
+      "officialNameJa": "軽井沢",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-NAGANO-KARUIZAWA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "49251",
+      "officialNameJa": "河口湖",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-FUJI-YAMANASHI"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "50281",
+      "officialNameJa": "網代",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-SHIZUOKA-FUJI-IZU",
+        "JP-KNT-IZU-OSHIMA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "50506",
+      "officialNameJa": "稲取",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-SHIZUOKA-FUJI-IZU",
+        "JP-KNT-IZU-OSHIMA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "51071",
+      "officialNameJa": "稲武",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-NAGOYA-GIFU"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "53091",
+      "officialNameJa": "亀山",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-MIE-ISE"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "56176",
+      "officialNameJa": "羽咋",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-HOKURIKU"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "61286",
+      "officialNameJa": "京都",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNS-KYOTO-SHIGA-NARA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "63411",
+      "officialNameJa": "三田",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNS-OSAKA-HYOGO"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "65121",
+      "officialNameJa": "清水",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNS-WAKAYAMA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "67461",
+      "officialNameJa": "竹原",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHG-SANYO"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "69076",
+      "officialNameJa": "米子",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHG-SANIN"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "71231",
+      "officialNameJa": "蒲生田",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-SHK-KAGAWA-TOKUSHIMA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "74187",
+      "officialNameJa": "後免",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-SHK-EHIME-KOCHI"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "82046",
+      "officialNameJa": "宗像",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-FUKUOKA-SAGA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "83137",
+      "officialNameJa": "日田",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-OITA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "84561",
+      "officialNameJa": "口之津",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-NAGASAKI-KUMAMOTO"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "87376",
+      "officialNameJa": "宮崎",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-MIYAZAKI-KAGOSHIMA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "91107",
+      "officialNameJa": "名護",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-MAIN-NORTH",
+        "JP-OKI-MAIN-CENTRAL"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "91241",
+      "officialNameJa": "糸数",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-MAIN-NORTH",
+        "JP-OKI-MAIN-CENTRAL",
+        "JP-OKI-MAIN-SOUTH"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "93041",
+      "officialNameJa": "宮古島",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-OUTER-ISLANDS"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "94101",
+      "officialNameJa": "大原",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-YAEYAMA"
+      ],
+      "bestPriorityRank": 1,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "14121",
+      "officialNameJa": "石狩",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-SAPPORO"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "16156",
+      "officialNameJa": "共和",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-NISEKO"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "21111",
+      "officialNameJa": "厚真",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-CHITOSE-TOMAKOMAI"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "23206",
+      "officialNameJa": "川汲",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-HAKODATE"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "31482",
+      "officialNameJa": "酸ケ湯",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-AOMORI-AKITA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "32136",
+      "officialNameJa": "大館",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-AKITA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "33166",
+      "officialNameJa": "荒屋",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-IWATE-APPI"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "34392",
+      "officialNameJa": "仙台",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-MIYAGI-SENDAI"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "36196",
+      "officialNameJa": "鷲倉",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-FUKUSHIMA-YAMAGATA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "40221",
+      "officialNameJa": "古河",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-IBARAKI-TSUKUBA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "41141",
+      "officialNameJa": "大田原",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-TOCHIGI-NASU"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "43051",
+      "officialNameJa": "寄居",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-GUNMA-SAITAMA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "44056",
+      "officialNameJa": "青梅",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-TOKYO-KANAGAWA",
+        "JP-KNT-GUNMA-SAITAMA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "45116",
+      "officialNameJa": "佐倉",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-CHIBA-NARITA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "48386",
+      "officialNameJa": "佐久",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-NAGANO-KARUIZAWA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "49256",
+      "officialNameJa": "山中",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-FUJI-YAMANASHI"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "50206",
+      "officialNameJa": "三島",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-SHIZUOKA-FUJI-IZU"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "52556",
+      "officialNameJa": "恵那",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-NAGOYA-GIFU"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "55041",
+      "officialNameJa": "氷見",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-HOKURIKU"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "60216",
+      "officialNameJa": "大津",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNS-KYOTO-SHIGA-NARA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "60236",
+      "officialNameJa": "土山",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-MIE-ISE"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "63461",
+      "officialNameJa": "三木",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNS-OSAKA-HYOGO"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "65256",
+      "officialNameJa": "栗栖川",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNS-WAKAYAMA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "69021",
+      "officialNameJa": "塩津",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHG-SANIN"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "71266",
+      "officialNameJa": "日和佐",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-SHK-KAGAWA-TOKUSHIMA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "73001",
+      "officialNameJa": "大三島",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHG-SANYO"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "74271",
+      "officialNameJa": "安芸",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-SHK-EHIME-KOCHI"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "82056",
+      "officialNameJa": "八幡",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-FUKUOKA-SAGA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "83191",
+      "officialNameJa": "玖珠",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-OITA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "84496",
+      "officialNameJa": "長崎",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-NAGASAKI-KUMAMOTO"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "87331",
+      "officialNameJa": "西都",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-MIYAZAKI-KAGOSHIMA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "91197",
+      "officialNameJa": "那覇",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-MAIN-NORTH",
+        "JP-OKI-MAIN-CENTRAL",
+        "JP-OKI-MAIN-SOUTH"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "93011",
+      "officialNameJa": "伊良部",
+      "metadataStatus": "metadata-partial-period",
+      "precipitationMetadataCoveragePct": 62.36,
+      "temperatureMetadataCoveragePct": 62.36,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-OUTER-ISLANDS"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "94081",
+      "officialNameJa": "石垣島",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-YAEYAMA"
+      ],
+      "bestPriorityRank": 2,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "14286",
+      "officialNameJa": "支笏湖畔",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-CHITOSE-TOMAKOMAI"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "16091",
+      "officialNameJa": "小樽",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-SAPPORO"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "16281",
+      "officialNameJa": "真狩",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-NISEKO"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "24201",
+      "officialNameJa": "鶉",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-HKD-HAKODATE"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "31466",
+      "officialNameJa": "黒石",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-AOMORI-AKITA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "32266",
+      "officialNameJa": "八幡平",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-IWATE-APPI"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "32311",
+      "officialNameJa": "阿仁合",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-AKITA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "34276",
+      "officialNameJa": "鹿島台",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-MIYAGI-SENDAI"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "36476",
+      "officialNameJa": "郡山",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-THK-FUKUSHIMA-YAMAGATA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "41277",
+      "officialNameJa": "宇都宮",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-TOCHIGI-NASU"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "42326",
+      "officialNameJa": "西野牧",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-NAGANO-KARUIZAWA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "43126",
+      "officialNameJa": "久喜",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-IBARAKI-TSUKUBA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "43266",
+      "officialNameJa": "所沢",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-TOKYO-KANAGAWA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "45181",
+      "officialNameJa": "横芝光",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-CHIBA-NARITA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "46211",
+      "officialNameJa": "三浦",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNT-IZU-OSHIMA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "48826",
+      "officialNameJa": "浪合",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-NAGOYA-GIFU"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "49196",
+      "officialNameJa": "古関",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-FUJI-YAMANASHI"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "53112",
+      "officialNameJa": "上野",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-MIE-ISE"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "56146",
+      "officialNameJa": "七尾",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHB-HOKURIKU"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "60116",
+      "officialNameJa": "南小松",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNS-KYOTO-SHIGA-NARA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "63331",
+      "officialNameJa": "西脇",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNS-OSAKA-HYOGO"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "65061",
+      "officialNameJa": "高野山",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KNS-WAKAYAMA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "67376",
+      "officialNameJa": "東広島",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHG-SANYO"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "69006",
+      "officialNameJa": "境",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-CHG-SANIN"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "71106",
+      "officialNameJa": "徳島",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-SHK-KAGAWA-TOKUSHIMA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "74136",
+      "officialNameJa": "大栃",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-SHK-EHIME-KOCHI"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "82136",
+      "officialNameJa": "飯塚",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-FUKUOKA-SAGA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "86066",
+      "officialNameJa": "南小国",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-OITA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "86086",
+      "officialNameJa": "岱明",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-NAGASAKI-KUMAMOTO"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "87231",
+      "officialNameJa": "西米良",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-KYS-MIYAZAKI-KAGOSHIMA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "91181",
+      "officialNameJa": "渡嘉敷",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-MAIN-SOUTH"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "93061",
+      "officialNameJa": "多良間",
+      "metadataStatus": "metadata-partial-period",
+      "precipitationMetadataCoveragePct": 62.36,
+      "temperatureMetadataCoveragePct": 62.36,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-OUTER-ISLANDS"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    },
+    {
+      "stationId": "94001",
+      "officialNameJa": "伊原間",
+      "metadataStatus": "metadata-full-period",
+      "precipitationMetadataCoveragePct": 100.0,
+      "temperatureMetadataCoveragePct": 100.0,
+      "precipitationStatisticalBreakCount": 0,
+      "temperatureStatisticalBreakCount": 0,
+      "historyIntervalMismatch": false,
+      "assignedSubregions": [
+        "JP-OKI-YAEYAMA"
+      ],
+      "bestPriorityRank": 3,
+      "dailyDataVerified": false,
+      "stationApproved": false
+    }
+  ],
+  "regions": [
+    {
+      "subregionId": "JP-HKD-SAPPORO",
+      "subregionLabel": "北海道・札幌市球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "14116",
+          "officialNameJa": "山口",
+          "candidateDistanceKm": 5.0,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "14121",
+          "officialNameJa": "石狩",
+          "candidateDistanceKm": 16.38,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "16091",
+          "officialNameJa": "小樽",
+          "candidateDistanceKm": 17.98,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "14116",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-HKD-NISEKO",
+      "subregionLabel": "北海道・二世谷／留壽都度假球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "16206",
+          "officialNameJa": "蘭越",
+          "candidateDistanceKm": 12.42,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "16156",
+          "officialNameJa": "共和",
+          "candidateDistanceKm": 16.24,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "16281",
+          "officialNameJa": "真狩",
+          "candidateDistanceKm": 17.77,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "16206",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-HKD-HAKODATE",
+      "subregionLabel": "北海道・函館／大沼球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "23226",
+          "officialNameJa": "北斗",
+          "candidateDistanceKm": 11.38,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "23206",
+          "officialNameJa": "川汲",
+          "candidateDistanceKm": 27.69,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "24201",
+          "officialNameJa": "鶉",
+          "candidateDistanceKm": 28.51,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "23226",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-THK-AOMORI-AKITA",
+      "subregionLabel": "東北・青森球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "31312",
+          "officialNameJa": "青森",
+          "candidateDistanceKm": 9.57,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "31482",
+          "officialNameJa": "酸ケ湯",
+          "candidateDistanceKm": 12.98,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "31466",
+          "officialNameJa": "黒石",
+          "candidateDistanceKm": 15.86,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "31312",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-THK-IWATE-APPI",
+      "subregionLabel": "東北・岩手／安比高原球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "33226",
+          "officialNameJa": "岩手松尾",
+          "candidateDistanceKm": 8.37,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "33166",
+          "officialNameJa": "荒屋",
+          "candidateDistanceKm": 10.72,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "32266",
+          "officialNameJa": "八幡平",
+          "candidateDistanceKm": 16.91,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "33226",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-THK-MIYAGI-SENDAI",
+      "subregionLabel": "東北・仙台／宮城球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "34331",
+          "officialNameJa": "塩釜",
+          "candidateDistanceKm": 3.65,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "34392",
+          "officialNameJa": "仙台",
+          "candidateDistanceKm": 13.17,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "34276",
+          "officialNameJa": "鹿島台",
+          "candidateDistanceKm": 14.69,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "34331",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-THK-FUKUSHIMA-YAMAGATA",
+      "subregionLabel": "東北・福島／山形球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "36291",
+          "officialNameJa": "二本松",
+          "candidateDistanceKm": 5.99,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "36196",
+          "officialNameJa": "鷲倉",
+          "candidateDistanceKm": 13.85,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "36476",
+          "officialNameJa": "郡山",
+          "candidateDistanceKm": 17.45,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "36291",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KNT-TOKYO-KANAGAWA",
+      "subregionLabel": "關東・東京／神奈川球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "44112",
+          "officialNameJa": "八王子",
+          "candidateDistanceKm": 4.64,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "44056",
+          "officialNameJa": "青梅",
+          "candidateDistanceKm": 10.74,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "43266",
+          "officialNameJa": "所沢",
+          "candidateDistanceKm": 14.87,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "44112",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KNT-CHIBA-NARITA",
+      "subregionLabel": "關東・千葉／成田／市原球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "40426",
+          "officialNameJa": "龍ケ崎",
+          "candidateDistanceKm": 8.44,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "45116",
+          "officialNameJa": "佐倉",
+          "candidateDistanceKm": 13.25,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "45181",
+          "officialNameJa": "横芝光",
+          "candidateDistanceKm": 27.0,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "40426",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KNT-IBARAKI-TSUKUBA",
+      "subregionLabel": "關東・茨城／筑波球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "40281",
+          "officialNameJa": "下妻",
+          "candidateDistanceKm": 14.54,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "40221",
+          "officialNameJa": "古河",
+          "candidateDistanceKm": 16.74,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "43126",
+          "officialNameJa": "久喜",
+          "candidateDistanceKm": 17.15,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "40281",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KNT-TOCHIGI-NASU",
+      "subregionLabel": "關東・栃木／那須球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "41181",
+          "officialNameJa": "塩谷",
+          "candidateDistanceKm": 12.07,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "41141",
+          "officialNameJa": "大田原",
+          "candidateDistanceKm": 14.74,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "41277",
+          "officialNameJa": "宇都宮",
+          "candidateDistanceKm": 21.73,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "41181",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KNT-GUNMA-SAITAMA",
+      "subregionLabel": "關東・群馬／埼玉球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "43171",
+          "officialNameJa": "鳩山",
+          "candidateDistanceKm": 2.47,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "43051",
+          "officialNameJa": "寄居",
+          "candidateDistanceKm": 19.18,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "44056",
+          "officialNameJa": "青梅",
+          "candidateDistanceKm": 20.19,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "43171",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-CHB-SHIZUOKA-FUJI-IZU",
+      "subregionLabel": "中部・富士／御殿場／靜岡東部球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "50281",
+          "officialNameJa": "網代",
+          "candidateDistanceKm": 6.2,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "50206",
+          "officialNameJa": "三島",
+          "candidateDistanceKm": 14.56,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "50506",
+          "officialNameJa": "稲取",
+          "candidateDistanceKm": 26.13,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "50281",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-CHB-FUJI-YAMANASHI",
+      "subregionLabel": "中部・山梨／河口湖球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "49251",
+          "officialNameJa": "河口湖",
+          "candidateDistanceKm": 3.61,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "49256",
+          "officialNameJa": "山中",
+          "candidateDistanceKm": 8.47,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "49196",
+          "officialNameJa": "古関",
+          "candidateDistanceKm": 14.05,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "49251",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-CHB-NAGANO-KARUIZAWA",
+      "subregionLabel": "中部・長野／輕井澤球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "48331",
+          "officialNameJa": "軽井沢",
+          "candidateDistanceKm": 6.01,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "48386",
+          "officialNameJa": "佐久",
+          "candidateDistanceKm": 11.09,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "42326",
+          "officialNameJa": "西野牧",
+          "candidateDistanceKm": 12.44,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "48331",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-CHB-NAGOYA-GIFU",
+      "subregionLabel": "中部・名古屋／岐阜球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "51071",
+          "officialNameJa": "稲武",
+          "candidateDistanceKm": 12.19,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "52556",
+          "officialNameJa": "恵那",
+          "candidateDistanceKm": 15.59,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "48826",
+          "officialNameJa": "浪合",
+          "candidateDistanceKm": 22.03,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "51071",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-CHB-MIE-ISE",
+      "subregionLabel": "中部・三重／伊勢志摩球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "53091",
+          "officialNameJa": "亀山",
+          "candidateDistanceKm": 16.2,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "60236",
+          "officialNameJa": "土山",
+          "candidateDistanceKm": 25.71,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "53112",
+          "officialNameJa": "上野",
+          "candidateDistanceKm": 26.37,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "53091",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-CHB-HOKURIKU",
+      "subregionLabel": "中部・北陸／石川／富山／福井球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "56176",
+          "officialNameJa": "羽咋",
+          "candidateDistanceKm": 2.51,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "55041",
+          "officialNameJa": "氷見",
+          "candidateDistanceKm": 17.44,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "56146",
+          "officialNameJa": "七尾",
+          "candidateDistanceKm": 21.48,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "56176",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KNS-OSAKA-HYOGO",
+      "subregionLabel": "關西・大阪／神戶／兵庫球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "63411",
+          "officialNameJa": "三田",
+          "candidateDistanceKm": 11.09,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "63461",
+          "officialNameJa": "三木",
+          "candidateDistanceKm": 11.51,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "63331",
+          "officialNameJa": "西脇",
+          "candidateDistanceKm": 22.31,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "63411",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KNS-KYOTO-SHIGA-NARA",
+      "subregionLabel": "關西・京都／滋賀／奈良球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "61286",
+          "officialNameJa": "京都",
+          "candidateDistanceKm": 6.29,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "60216",
+          "officialNameJa": "大津",
+          "candidateDistanceKm": 16.22,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "60116",
+          "officialNameJa": "南小松",
+          "candidateDistanceKm": 25.93,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "61286",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KNS-WAKAYAMA",
+      "subregionLabel": "關西・和歌山／紀伊半島球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "65121",
+          "officialNameJa": "清水",
+          "candidateDistanceKm": 22.84,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "65256",
+          "officialNameJa": "栗栖川",
+          "candidateDistanceKm": 26.58,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "65061",
+          "officialNameJa": "高野山",
+          "candidateDistanceKm": 44.27,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "65121",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-CHG-SANYO",
+      "subregionLabel": "中國地方・廣島／岡山／山陽球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "67461",
+          "officialNameJa": "竹原",
+          "candidateDistanceKm": 11.13,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "73001",
+          "officialNameJa": "大三島",
+          "candidateDistanceKm": 13.48,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "67376",
+          "officialNameJa": "東広島",
+          "candidateDistanceKm": 19.48,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "67461",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-CHG-SANIN",
+      "subregionLabel": "中國地方・鳥取／島根／山陰球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "69076",
+          "officialNameJa": "米子",
+          "candidateDistanceKm": 9.3,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "69021",
+          "officialNameJa": "塩津",
+          "candidateDistanceKm": 23.39,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "69006",
+          "officialNameJa": "境",
+          "candidateDistanceKm": 24.67,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "69076",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-SHK-KAGAWA-TOKUSHIMA",
+      "subregionLabel": "四國・高松／德島／瀨戶內球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "71231",
+          "officialNameJa": "蒲生田",
+          "candidateDistanceKm": 9.42,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "71266",
+          "officialNameJa": "日和佐",
+          "candidateDistanceKm": 19.12,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "71106",
+          "officialNameJa": "徳島",
+          "candidateDistanceKm": 22.45,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "71231",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-SHK-EHIME-KOCHI",
+      "subregionLabel": "四國・高知／愛媛球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "74187",
+          "officialNameJa": "後免",
+          "candidateDistanceKm": 14.48,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "74271",
+          "officialNameJa": "安芸",
+          "candidateDistanceKm": 15.04,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "74136",
+          "officialNameJa": "大栃",
+          "candidateDistanceKm": 21.69,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "74187",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KYS-FUKUOKA-SAGA",
+      "subregionLabel": "九州・福岡／佐賀球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "82046",
+          "officialNameJa": "宗像",
+          "candidateDistanceKm": 10.73,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "82056",
+          "officialNameJa": "八幡",
+          "candidateDistanceKm": 12.82,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "82136",
+          "officialNameJa": "飯塚",
+          "candidateDistanceKm": 13.9,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "82046",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KYS-NAGASAKI-KUMAMOTO",
+      "subregionLabel": "九州・長崎／熊本球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "84561",
+          "officialNameJa": "口之津",
+          "candidateDistanceKm": 21.0,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "84496",
+          "officialNameJa": "長崎",
+          "candidateDistanceKm": 30.36,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "86086",
+          "officialNameJa": "岱明",
+          "candidateDistanceKm": 33.38,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "84561",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KYS-OITA",
+      "subregionLabel": "九州・大分／阿蘇球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "83137",
+          "officialNameJa": "日田",
+          "candidateDistanceKm": 11.94,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "83191",
+          "officialNameJa": "玖珠",
+          "candidateDistanceKm": 13.86,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "86066",
+          "officialNameJa": "南小国",
+          "candidateDistanceKm": 16.39,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "83137",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
+      "subregionLabel": "九州・宮崎／鹿兒島球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "87376",
+          "officialNameJa": "宮崎",
+          "candidateDistanceKm": 6.96,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "87331",
+          "officialNameJa": "西都",
+          "candidateDistanceKm": 11.34,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "87231",
+          "officialNameJa": "西米良",
+          "candidateDistanceKm": 41.48,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "87376",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-OKI-MAIN-NORTH",
+      "subregionLabel": "沖繩・本島北部球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "91107",
+          "officialNameJa": "名護",
+          "candidateDistanceKm": 8.07,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "91197",
+          "officialNameJa": "那覇",
+          "candidateDistanceKm": 43.31,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "91241",
+          "officialNameJa": "糸数",
+          "candidateDistanceKm": 44.78,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "91107",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-OKI-MAIN-CENTRAL",
+      "subregionLabel": "沖繩・本島中部球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "91107",
+          "officialNameJa": "名護",
+          "candidateDistanceKm": 21.01,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "91197",
+          "officialNameJa": "那覇",
+          "candidateDistanceKm": 30.64,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "91241",
+          "officialNameJa": "糸数",
+          "candidateDistanceKm": 34.07,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "91107",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-OKI-MAIN-SOUTH",
+      "subregionLabel": "沖繩・本島南部球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "91241",
+          "officialNameJa": "糸数",
+          "candidateDistanceKm": 4.97,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "91197",
+          "officialNameJa": "那覇",
+          "candidateDistanceKm": 11.59,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "91181",
+          "officialNameJa": "渡嘉敷",
+          "candidateDistanceKm": 39.02,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "91241",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-OKI-OUTER-ISLANDS",
+      "subregionLabel": "沖繩・宮古島球場群",
+      "candidateRows": 6,
+      "priorityStations": [
+        {
+          "stationId": "93041",
+          "officialNameJa": "宮古島",
+          "candidateDistanceKm": 17.33,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "93011",
+          "officialNameJa": "伊良部",
+          "candidateDistanceKm": 28.67,
+          "precipitationMetadataCoveragePct": 62.36,
+          "temperatureMetadataCoveragePct": 62.36,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-partial-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "93061",
+          "officialNameJa": "多良間",
+          "candidateDistanceKm": 75.14,
+          "precipitationMetadataCoveragePct": 62.36,
+          "temperatureMetadataCoveragePct": 62.36,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-partial-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "93041",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-KNT-IZU-OSHIMA",
+      "subregionLabel": "關東・伊豆大島球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "50506",
+          "officialNameJa": "稲取",
+          "candidateDistanceKm": 31.52,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "50281",
+          "officialNameJa": "網代",
+          "candidateDistanceKm": 39.54,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "46211",
+          "officialNameJa": "三浦",
+          "candidateDistanceKm": 48.34,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "50506",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-THK-AKITA",
+      "subregionLabel": "東北・秋田球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "32126",
+          "officialNameJa": "鷹巣",
+          "candidateDistanceKm": 6.34,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "32136",
+          "officialNameJa": "大館",
+          "candidateDistanceKm": 14.65,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "32311",
+          "officialNameJa": "阿仁合",
+          "candidateDistanceKm": 19.88,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "32126",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-OKI-YAEYAMA",
+      "subregionLabel": "沖繩・八重山／小濱島球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "94101",
+          "officialNameJa": "大原",
+          "candidateDistanceKm": 14.26,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "94081",
+          "officialNameJa": "石垣島",
+          "candidateDistanceKm": 18.51,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "94001",
+          "officialNameJa": "伊原間",
+          "candidateDistanceKm": 35.17,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "94101",
+      "status": "daily-observation-audit-pending"
+    },
+    {
+      "subregionId": "JP-HKD-CHITOSE-TOMAKOMAI",
+      "subregionLabel": "北海道・千歲／苫小牧球場群",
+      "candidateRows": 10,
+      "priorityStations": [
+        {
+          "stationId": "21187",
+          "officialNameJa": "苫小牧",
+          "candidateDistanceKm": 13.65,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 1,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "21111",
+          "officialNameJa": "厚真",
+          "candidateDistanceKm": 19.04,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 2,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        },
+        {
+          "stationId": "14286",
+          "officialNameJa": "支笏湖畔",
+          "candidateDistanceKm": 21.23,
+          "precipitationMetadataCoveragePct": 100.0,
+          "temperatureMetadataCoveragePct": 100.0,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
+          "historyIntervalMismatch": false,
+          "metadataStatus": "metadata-full-period",
+          "dailyAuditPriority": 3,
+          "dailyDataVerified": false,
+          "stationApproved": false
+        }
+      ],
+      "primaryStationId": "21187",
+      "status": "daily-observation-audit-pending"
+    }
+  ]
+}
