@@ -48,7 +48,7 @@ function percentile(values,p){
  * portfolios. Only fully ERA5-observed windows enter all three strategies.
  * This is a comparative backtest, not a forecast probability or causal claim.
  */
-export function evaluateRecommendationQuality(samples=[],randomDraws=500){
+export function evaluateRecommendationQuality(samples=[],randomDraws=500,expectedModels=[]){
  if(!Array.isArray(samples))throw new TypeError("samples must be an array");
  if(!Number.isInteger(randomDraws)||randomDraws<100)throw new TypeError("randomDraws must be at least 100");
  const valid=samples.filter(x=>typeof x.issueDate==="string"&&typeof x.model==="string"
@@ -58,7 +58,7 @@ export function evaluateRecommendationQuality(samples=[],randomDraws=500){
   &&Number.isInteger(x.observedWetRegionDays)&&x.observedWetRegionDays>=0
   &&x.observedWetRegionDays<=9&&x.observedRegionDays===9);
  const issues=[...new Set(valid.map(x=>x.issueDate))].sort();
- const models=[...new Set(valid.map(x=>x.model))].sort();
+ const models=[...new Set([...valid.map(x=>x.model),...expectedModels].filter(x=>typeof x==="string"))].sort();
  const candidatePortfolios=Object.fromEntries(models.map(x=>[x,[]]));
  const historyPortfolios=[],randomPortfolios=[];
  const paired={};

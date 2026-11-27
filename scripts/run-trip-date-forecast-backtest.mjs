@@ -158,7 +158,7 @@ for(const prediction of windowPredictions){
 const tripWindowRanking=scoreTripWindowRankingSamples(tripWindowSamples);
 const pairedDailyComparison=compareCandidateRankingSamples(rankingSamples);
 const pairedTripWindowComparison=compareTripWindowModels(tripWindowSamples);
-const recommendationQuality=evaluateRecommendationQuality(tripWindowSamples,500);
+const recommendationQuality=evaluateRecommendationQuality(tripWindowSamples,500,Object.keys(TRIP_DATE_CANDIDATE_MODELS));
 const verificationMaturity=buildVerificationMaturity(rankingSamples,tripWindowSamples,30,
   Object.keys(TRIP_DATE_CANDIDATE_MODELS).map(id=>"composite-"+id),Object.keys(TRIP_DATE_CANDIDATE_MODELS));
 for(const modelId of Object.keys(TRIP_DATE_CANDIDATE_MODELS)){

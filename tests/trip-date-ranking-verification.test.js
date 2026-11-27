@@ -149,3 +149,13 @@ test("recommendation quality excludes incomplete observed windows and is determi
  assert.equal(a.randomControl.portfolioCount,0);
  assert.deepEqual(a,b);
 });
+
+test("quality report keeps all expected candidate models visible while no outcomes have matured",()=>{
+ const result=evaluateRecommendationQuality([],100,["baseline","historyEnhanced","longRangeEnhanced"]);
+ assert.deepEqual(Object.keys(result.candidates),["baseline","historyEnhanced","longRangeEnhanced"]);
+ for(const model of Object.values(result.candidates)){
+  assert.equal(model.portfolioCount,0);
+  assert.equal(model.ready,false);
+  assert.equal(model.meanRainMmPerRegionDay,null);
+ }
+});
