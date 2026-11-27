@@ -22,6 +22,13 @@ REQUIRED_VARIABLES = {
     "10m_u_component_of_wind",
     "10m_v_component_of_wind",
 }
+VARIABLE_ALIASES = {
+    "2m_temperature": ("2m_temperature", "t2m"),
+    "2m_dewpoint_temperature": ("2m_dewpoint_temperature", "d2m"),
+    "total_precipitation": ("total_precipitation", "tp"),
+    "10m_u_component_of_wind": ("10m_u_component_of_wind", "u10"),
+    "10m_v_component_of_wind": ("10m_v_component_of_wind", "v10"),
+}
 JST = timezone(timedelta(hours=9))
 
 
@@ -35,6 +42,11 @@ def expected_utc_bounds(start: date, end: date) -> tuple[datetime, datetime]:
 
 def coordinate_matches(actual: float, expected: float, tolerance: float = 0.001) -> bool:
     return math.isfinite(actual) and abs(actual - expected) <= tolerance
+
+
+def resolve_variable_name(available_names, canonical_name: str) -> str | None:
+    """Resolve CDS long names or the short GRIB names used in returned NetCDF files."""
+    return next((name for name in VARIABLE_ALIASES[canonical_name] if name in available_names), None)
 
 
 def _scalar_coordinate(ds, name: str) -> float | None:
@@ -125,16 +137,19 @@ def inspect_archive(archive: Path, subregion: str, start: date, end: date, mappi
                 times = _time_values(ds)
                 all_times.update(times)
                 file_info = {"name": path.name, "variables": [], "timeCount": len(times), "duplicateTimestamps": len(times) != len(set(times))}
-                for name in REQUIRED_VARIABLES.intersection(ds.data_vars):
+                for canonical_name in REQUIRED_VARIABLES:
+                    name = resolve_variable_name(ds.data_vars, canonical_name)
+                    if name is None:
+                        continue
                     da = ds[name]
                     values = np.asarray(da.values, dtype="float64")
                     finite = values[np.isfinite(values)]
                     attrs = dict(da.attrs)
                     units = attrs.get("units") or attrs.get("unit")
-                    file_info["variables"].append(name)
-                    variable_times[name].extend(times)
-                    variable_duplicates[name] = variable_duplicates[name] or (len(times) != len(set(times)))
-                    report["variables"][name] = {
+                    file_info["variables"].append(canonical_name)
+                    variable_times[canonical_name].extend(times)
+                    variable_duplicates[canonical_name] = variable_duplicates[canonical_name] or (len(times) != len(set(times)))
+                    report["variables"][canonical_name] = {
                         "file": path.name,
                         "units": units,
                         "missingFraction": float(np.isnan(values).mean()) if values.size else 1.0,
