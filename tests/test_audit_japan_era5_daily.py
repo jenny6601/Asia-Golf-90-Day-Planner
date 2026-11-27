@@ -38,6 +38,7 @@ class JapanDailyQATests(unittest.TestCase):
         self.assertTrue(MODULE.quality_flags_acceptable(value))
         report = MODULE.audit_region_year("JP-TEST", 1991, [value])
         self.assertEqual(report["metricCoverage"]["precipitationMm"]["validDays"], 1)
+        self.assertEqual(report["completeAllMetricDays"], 1)
         self.assertEqual(report["qualityFlagCounts"]["trace_negative_precipitation_clamped"], 1)
 
     def test_material_negative_precipitation_flag_remains_unacceptable(self):
