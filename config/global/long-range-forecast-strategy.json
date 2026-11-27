@@ -102,11 +102,10 @@
       "status": "planned-ERA5-daily-acquisition-not-yet-completed",
       "variables": [
         "daily minimum 2m temperature",
-        "daily mean 2m temperature",
         "daily maximum 2m temperature",
         "daily total precipitation",
-        "daily mean 2m dewpoint",
-        "daily mean 10m U/V wind components",
+        "daily mean 2m dewpoint (humidity input for apparent-temperature estimation)",
+        "daily mean 10m U/V wind components (wind-chill/apparent-temperature input)",
         "daily mean total cloud cover",
         "daily mean sea-level pressure"
       ],
@@ -148,7 +147,7 @@
       "status": "okinawa-field-availability-probed-not-validated-for-eight-country-decision-use",
       "variables": [
         "daily weather code",
-        "daily Tmin/Tmax/mean temperature",
+        "daily Tmin/Tmax temperature; apparent/feels-like temperature is derived and shown instead of mean air temperature",
         "six-hourly precipitation estimates"
       ],
       "refreshPolicy": "not an operational dependency until per-region hindcast verification passes",
@@ -166,7 +165,7 @@
     "metrics": [
       "daily estimated precipitation amount and uncertainty range",
       "daily precipitation risk category (numeric probability only after calibration)",
-      "daily estimated Tmin/Tmax/mean temperature and uncertainty",
+      "daily estimated feels-like temperature and uncertainty; retain Tmin/Tmax as supporting air-temperature bounds",
       "daily wind/cloud/sunshine tendencies where source support exists",
       "daily golf-conditions advisory",
       "seven-day aggregation showing three-round planning suitability and risks",
@@ -236,7 +235,8 @@
       "precipitationRiskCategory",
       "temperatureMinEstimateC",
       "temperatureMaxEstimateC",
-      "temperatureMeanEstimateC",
+      "feelsLikeTemperatureEstimateC",
+      "feelsLikeTemperatureUncertaintyC",
       "windSpeedEstimateMs",
       "cloudCoverTendency",
       "sunshineTendency",
@@ -280,7 +280,7 @@
       "dailyMetrics": [
         "daily precipitation MAE and bias",
         "wet-day Brier score and reliability",
-        "Tmin/Tmax MAE and bias",
+        "feels-like temperature MAE and bias",
         "prediction-interval coverage",
         "daily weather-category skill",
         "multi-day wet-spell duration and persistence"
