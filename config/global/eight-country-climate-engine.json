@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "engineId": "ASIA_EIGHT_COUNTRY_SHARED_CLIMATE_ENGINE",
-  "status": "architecture-defined-data-acquisition-and-validation-not-yet-complete",
+  "status": "all-62-regional-points-registered-production-request-manifest-under-validation-no-historical-data-acquired",
   "scope": {
     "countryRegistryPath": "config/global/countries.json",
     "subregionRegistryPath": "config/global/weather-subregions.json",
@@ -27,7 +27,15 @@
     },
     "pointPolicy": "Exactly one nearby regional-climate representative point per subregion. The point may be at or near the representative golf course, in a nearby town, or in the surrounding area, provided it represents the same local climate setting. Exact clubhouse, course-pin, fairway, or surveyed-coordinate precision is not required. Do not impose a universal fixed-radius cutoff; review regional proximity, coastal/inland exposure, terrain and elevation context.",
     "timezonePolicy": "Use the IANA timezone stored on each representative point; aggregate source timestamps into the subregion's local calendar day.",
-    "doNotCreatePerCourseClimateRecords": true
+    "doNotCreatePerCourseClimateRecords": true,
+    "geographicReadiness": {
+      "totalSubregions": 62,
+      "representativePointsRegistered": 62,
+      "pendingRepresentativePoints": 0,
+      "registryPreflightStatus": "passed",
+      "timezoneValidation": "IANA timezone validation passed during registry preflight",
+      "coordinateAcceptance": "nearby regional point is sufficient; exact golf-course pin is not required"
+    }
   },
   "commonHistoricalBaseline": {
     "sourceId": "ERA5_LAND_HOURLY",
@@ -41,7 +49,7 @@
     "temporalResolution": "hourly",
     "spatialCoverage": "global-land",
     "nativeResolution": "approximately 9 km; distributed on 0.1-degree grid",
-    "productionStatus": "selected-common-baseline-not-yet-acquired-for-all-subregions",
+    "productionStatus": "full-ERA5-Land production request manifest prepared; historical data not yet acquired",
     "productionRule": "Use the full ERA5-Land hourly dataset for repeatable production acquisition. The single-point time-series endpoint may be used for schema/pilot work only and must not be the production dependency.",
     "variables": [
       "2m_temperature",
@@ -71,7 +79,23 @@
       "unitConversions",
       "aggregationMethod",
       "qualityFlags"
-    ]
+    ],
+    "productionRequestPlan": {
+      "script": "scripts/build_eight_country_era5land_requests.py",
+      "test": "tests/test_eight_country_era5land_requests.py",
+      "dataset": "reanalysis-era5-land",
+      "format": "GRIB in ZIP",
+      "requestsPerSubregion": 3,
+      "totalRequests": 186,
+      "segments": [
+        "1991-2020 core reference period",
+        "previous UTC boundary day",
+        "following UTC boundary day"
+      ],
+      "spatialExtraction": "tight area around nearest 0.1-degree candidate; actual returned GRIB coordinates must be inspected and nearest valid land grid point selected",
+      "submissionStatus": "prepared-not-submitted",
+      "note": "This manifest does not submit CDS requests. Full dataset terms must be accepted and CDS credentials configured before any download."
+    }
   },
   "independentValidation": {
     "purpose": "Validate the common reanalysis baseline against station observations; station observations must remain separate from reanalysis records.",
