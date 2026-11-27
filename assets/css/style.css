@@ -1428,3 +1428,19 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 .coverage-country-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.88rem}
 .coverage-state{font-size:.75rem;color:#68776f}
 .coverage-region-row{margin:7px 0 0;padding-top:7px;border-top:1px solid #edf1ee;font-size:.8rem;line-height:1.5;color:#42534a}
+
+
+/* Monthly calendar weekend emphasis: red date numerals and a distinct soft-rose card fill.
+   Keep weather icons, temperatures, rain values and playability colors unchanged. */
+.panel button.monthly-calendar-day.monthly-weekend{
+  background:#fff0ed!important;
+  border-color:#d98b8b!important;
+}
+.panel button.monthly-calendar-day.monthly-weekend .monthly-day-date{
+  color:#c43d3d!important;
+  font-weight:900!important;
+}
+.monthly-calendar-weekday.monthly-weekend{
+  color:#c43d3d!important;
+  background:#f8e9e6!important;
+}
