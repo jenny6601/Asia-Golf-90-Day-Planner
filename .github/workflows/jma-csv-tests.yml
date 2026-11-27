@@ -1,0 +1,31 @@
+name: JMA CSV Normalizer Tests
+
+on:
+  push:
+    branches:
+      - asia-eight-country-shared-engine
+    paths:
+      - "scripts/normalize_jma_obsdl_csv.py"
+      - "scripts/compare_jma_station_daily.py"
+      - "tests/test_normalize_jma_obsdl_csv.py"
+      - "tests/test_compare_jma_station_daily.py"
+      - ".github/workflows/jma-csv-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-jma-ingestion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run JMA CSV and cross-check unit tests
+        run: |
+          python -m unittest tests/test_normalize_jma_obsdl_csv.py
+          python -m unittest tests/test_compare_jma_station_daily.py
