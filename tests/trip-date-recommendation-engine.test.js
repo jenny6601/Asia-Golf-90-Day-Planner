@@ -35,7 +35,7 @@ test("90-day input returns ranked 5-day windows, three rounds, and alternates",(
   assert.equal(result.alternates.length,5);
   for(const window of [...result.topThree,...result.alternates]){
     assert.equal((Date.parse(window.endDate)-Date.parse(window.startDate))/86400000,4);
-    assert.equal(window.recommendedGolfDates.length,3);
+    assert.equal(window.recommendedGolfDates.length,3);\n    assert.deepEqual(window.recommendedGolfDates.map(x=>x.date),window.daily.slice(1,4).map(x=>x.date));
     assert.ok(window.score>=0&&window.score<=100);
   }
   assert.ok(result.topThree[0].score<=result.topThree[1].score);
@@ -94,4 +94,20 @@ test("only dates after asOf are considered; date windows are contiguous",()=>{
     assert.ok(window.startDate>asOf);
     assert.equal((Date.parse(window.endDate)-Date.parse(window.startDate))/86400000,4);
   }
+});
+
+test("three golf rounds stay on the middle three consecutive days, not the travel days",()=>{
+  const days=buildDays(5);
+  for(const day of days){
+    for(const region of Object.values(day.regions)){
+      region.forecast=signal(day.date===days[0].date||day.date===days[4].date?1:75);
+    }
+  }
+  const result=recommendGolfTripDates({asOf,horizonDays:5,days});
+  assert.equal(result.topThree.length,1);
+  assert.deepEqual(
+    result.topThree[0].recommendedGolfDates.map(x=>x.date),
+    days.slice(1,4).map(x=>x.date)
+  );
+  assert.equal(result.topThree[0].golfRiskScore,75);
 });
