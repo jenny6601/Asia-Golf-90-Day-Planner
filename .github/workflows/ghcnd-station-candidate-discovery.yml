@@ -67,7 +67,15 @@ jobs:
           fi
       - name: Discover JMA AMeDAS candidates for Japan regional points
         run: python scripts/discover_jma_station_candidates.py
-      - name: Audit official JMA ObsDL daily exports when supplied\n        shell: bash\n        run: |\n          if compgen -G "data/observation-stations/input/jma-daily/*.csv" > /dev/null; then\n            python scripts/audit_jma_obsdl_daily_records.py --input-dir data/observation-stations/input/jma-daily\n          else\n            echo "JMA daily audit skipped: no official station CSV exports supplied; no observations are fabricated."\n          fi\n      - name: Audit actual NOAA daily records for bounded regional shortlist
+      - name: Audit official JMA ObsDL daily exports when supplied
+        shell: bash
+        run: |
+          if compgen -G "data/observation-stations/input/jma-daily/*.csv" > /dev/null; then
+            python scripts/audit_jma_obsdl_daily_records.py --input-dir data/observation-stations/input/jma-daily
+          else
+            echo "JMA daily audit skipped: no official station CSV exports supplied; no observations are fabricated."
+          fi
+      - name: Audit actual NOAA daily records for bounded regional shortlist
         run: python scripts/validate_ghcnd_daily_record_coverage.py --per-region 3 --workers 8
       - name: Score actual daily-record completeness by element and region
         run: python scripts/score_ghcnd_daily_record_quality.py
@@ -76,7 +84,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/observation-stations/ghcnd-candidates-1991-2020.json data/observation-stations/metmalaysia-candidates.json data/observation-stations/ghcnd-daily-record-audit-1991-2020.json data/observation-stations/ghcnd-daily-record-quality-1991-2020.json data/observation-stations/jp-kr-official-acquisition-queue.json data/observation-stations/jma-station-candidates-1991-2020.json
+          git add data/observation-stations/ghcnd-candidates-1991-2020.json data/observation-stations/metmalaysia-candidates.json data/observation-stations/ghcnd-daily-record-audit-1991-2020.json data/observation-stations/ghcnd-daily-record-quality-1991-2020.json data/observation-stations/jp-kr-official-acquisition-queue.json data/observation-stations/jma-station-candidates-1991-2020.json data/observation-stations/jma-daily-record-quality-1991-2020.json
           if ! git diff --cached --quiet; then
             git commit -m "Archive GHCN station candidates for eight-country regions"
             git pull --rebase origin asia-eight-country-shared-engine
@@ -94,7 +102,8 @@ jobs:
             data/observation-stations/ghcnd-daily-record-audit-1991-2020.json
             data/observation-stations/ghcnd-daily-record-quality-1991-2020.json
             data/observation-stations/jp-kr-official-acquisition-queue.json
-            data/observation-stations/jma-station-candidates-1991-2020.json\n            data/observation-stations/jma-daily-record-quality-1991-2020.json
+            data/observation-stations/jma-station-candidates-1991-2020.json
+            data/observation-stations/jma-daily-record-quality-1991-2020.json
             data/observation-stations/kma-asos-candidates-1991-2020.json
           if-no-files-found: error
           retention-days: 90
