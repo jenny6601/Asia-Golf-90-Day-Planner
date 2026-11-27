@@ -1,0 +1,53 @@
+name: Okinawa Daily JMA Observation Archive
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 18 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: okinawa-daily-jma-observation-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout archive branch
+        uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run archive schema tests
+        run: npm test
+      - name: Collect seven-day JMA observations from ten stations
+        id: collect
+        continue-on-error: true
+        run: node scripts/archive-okinawa-jma-observations.mjs
+      - name: Commit daily observation snapshot
+        if: always()
+        run: |
+          if [ -d data/okinawa/jma-observation-archive ] && [ -n "$(git status --porcelain data/okinawa/jma-observation-archive)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/okinawa/jma-observation-archive/
+            git commit -m "Archive daily Okinawa JMA AMeDAS observations"
+            git push
+          else
+            echo "No new observation archive files to commit."
+          fi
+      - name: Upload observation snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-daily-jma-observations
+          path: data/okinawa/jma-observation-archive/
+          if-no-files-found: warn
+          retention-days: 90
