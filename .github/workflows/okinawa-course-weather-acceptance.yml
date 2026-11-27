@@ -15,6 +15,9 @@ on:
       - "scripts/jma-amedas-validation.js"
       - "scripts/validate-okinawa-jma-observations.mjs"
       - "scripts/validate-okinawa-six-hour-playability.mjs"
+      - "scripts/validate-okinawa-regional-grid.mjs"
+      - "assets/js/okinawa-grid-analysis.js"
+      - "tests/okinawa-grid-analysis.test.js"
       - "assets/js/six-hour-playability.js"
       - "assets/js/taiwan-hourly-renderer.js"
       - "tests/six-hour-playability.test.js"
@@ -53,6 +56,7 @@ jobs:
           node --test tests/suitability-engine.test.js
           node --test tests/rain-risk.test.js
           node --test tests/pwa-playability.test.js
+          node --test tests/okinawa-grid-analysis.test.js
           node --test tests/okinawa-course-weather-acceptance.test.js
           node --test tests/global-catalog.test.js
       - name: Recheck 16-day course-point forecast and 90-day seasonal data
@@ -66,6 +70,8 @@ jobs:
         run: node scripts/validate-okinawa-jma-observations.mjs
       - name: Validate six-hour tee-time suitability for all six courses
         run: node scripts/validate-okinawa-six-hour-playability.mjs
+      - name: Compare north, central and south forecast grids for all six courses
+        run: node scripts/validate-okinawa-regional-grid.mjs
       - name: Upload Okinawa acceptance report
         if: always()
         uses: actions/upload-artifact@v4
@@ -80,5 +86,7 @@ jobs:
             artifacts/okinawa-acceptance/okinawa-jma-amedas-validation.md
             artifacts/okinawa-acceptance/okinawa-six-hour-playability-validation.json
             artifacts/okinawa-acceptance/okinawa-six-hour-playability-validation.md
+            artifacts/okinawa-acceptance/okinawa-regional-grid-analysis.json
+            artifacts/okinawa-acceptance/okinawa-regional-grid-analysis.md
           if-no-files-found: warn
           retention-days: 30
