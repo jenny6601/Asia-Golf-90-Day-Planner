@@ -75,18 +75,37 @@ jobs:
             --retries 3 \
             --output-root data/era5-land-japan-1991-2020
 
-      - name: Commit structurally validated daily pilot and manifest
+      - name: Print pilot failure diagnostics
         if: always()
+        shell: bash
+        run: |
+          STATE="data/era5-land-japan-1991-2020/batch-state.json"
+          if [ -f "$STATE" ]; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path("data/era5-land-japan-1991-2020/batch-state.json").read_text(encoding="utf-8"))
+          for task_id, task in p.get("tasks", {}).items():
+              print(json.dumps({"taskId": task_id, "status": task.get("status"), "attempts": task.get("attempts"), "error": task.get("error")}, ensure_ascii=False, indent=2))
+          PY
+          else
+            echo "No batch-state.json was produced."
+          fi
+
+      - name: Commit structurally validated daily pilot and manifest
+        if: success()
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/era5-land-japan-1991-2020/daily/ data/era5-land-japan-1991-2020/reports/ data/era5-land-japan-1991-2020/batch-state.json 2>/dev/null || true
+          git fetch origin asia-eight-country-shared-engine
+          git rebase origin/asia-eight-country-shared-engine
+          git add data/era5-land-japan-1991-2020/daily/ data/era5-land-japan-1991-2020/reports/ data/era5-land-japan-1991-2020/batch-state.json
           if ! git diff --cached --quiet; then
             git commit -m "Archive validated Japan ERA5-Land regional pilot"
             git push origin asia-eight-country-shared-engine
           else
-            echo "No structurally validated daily pilot data to commit."
+            echo "No new validated pilot data to commit."
           fi
 
       - name: Upload pilot raw data and validation reports
