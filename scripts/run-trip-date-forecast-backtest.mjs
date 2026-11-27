@@ -141,7 +141,7 @@ for(const prediction of windowPredictions){
   if(values.length===9&&values.every(value=>typeof value==="number"&&Number.isFinite(value)&&value>=0)){
     tripWindowSamples.push({model:prediction.model,predictedScore:prediction.predictedScore,
       observedGolfRainMm:values.reduce((sum,value)=>sum+value,0)/values.length,
-      issueDate:prediction.issueDate,startDate:prediction.startDate});
+      issueDate:prediction.issueDate,startDate:prediction.startDate,endDate:prediction.endDate});
   }
 }
 const tripWindowRanking=scoreTripWindowRankingSamples(tripWindowSamples);
