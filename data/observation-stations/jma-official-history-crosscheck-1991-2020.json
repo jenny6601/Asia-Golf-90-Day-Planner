@@ -30,8 +30,8 @@
     "japanSubregionsAudited": 37,
     "candidateRowsAudited": 366,
     "officialMatchedCandidateRows": 366,
-    "candidateRowsWithPrecipitationBreaks": 18,
-    "candidateRowsWithTemperatureBreaks": 18,
+    "candidateRowsWithPrecipitationBreaks": 1,
+    "candidateRowsWithTemperatureBreaks": 1,
     "candidateRowsWithMirrorHistoryMismatch": 0,
     "approvedStations": 0,
     "weatherIngestionEnabled": 0
@@ -25048,8 +25048,8 @@
           "officialPrecipitationMetadataCoveragePct": 100.0,
           "officialTemperatureCoverageDays": 7596,
           "officialTemperatureMetadataCoveragePct": 69.32,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "88986"
@@ -25134,8 +25134,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6575,
           "officialTemperatureMetadataCoveragePct": 60.0,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "91236"
@@ -25220,8 +25220,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6294,
           "officialTemperatureMetadataCoveragePct": 57.44,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "91096"
@@ -25321,8 +25321,8 @@
           "officialPrecipitationMetadataCoveragePct": 56.67,
           "officialTemperatureCoverageDays": 6210,
           "officialTemperatureMetadataCoveragePct": 56.67,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "91216"
@@ -25857,8 +25857,8 @@
           "officialPrecipitationMetadataCoveragePct": 100.0,
           "officialTemperatureCoverageDays": 7596,
           "officialTemperatureMetadataCoveragePct": 69.32,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "88986"
@@ -25943,8 +25943,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6575,
           "officialTemperatureMetadataCoveragePct": 60.0,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "91236"
@@ -26029,8 +26029,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6294,
           "officialTemperatureMetadataCoveragePct": 57.44,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "91096"
@@ -26130,8 +26130,8 @@
           "officialPrecipitationMetadataCoveragePct": 56.67,
           "officialTemperatureCoverageDays": 6210,
           "officialTemperatureMetadataCoveragePct": 56.67,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "91216"
@@ -26752,8 +26752,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6575,
           "officialTemperatureMetadataCoveragePct": 60.0,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "91236"
@@ -26838,8 +26838,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6294,
           "officialTemperatureMetadataCoveragePct": 57.44,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "91096"
@@ -26939,8 +26939,8 @@
           "officialPrecipitationMetadataCoveragePct": 56.67,
           "officialTemperatureCoverageDays": 6210,
           "officialTemperatureMetadataCoveragePct": 56.67,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "91216"
@@ -27186,8 +27186,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6575,
           "officialTemperatureMetadataCoveragePct": 60.0,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "93042"
@@ -27242,8 +27242,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6575,
           "officialTemperatureMetadataCoveragePct": 60.0,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "93012"
@@ -27328,8 +27328,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6575,
           "officialTemperatureMetadataCoveragePct": 60.0,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "93062"
@@ -29434,8 +29434,8 @@
           "officialPrecipitationMetadataCoveragePct": 60.0,
           "officialTemperatureCoverageDays": 6575,
           "officialTemperatureMetadataCoveragePct": 60.0,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "93062"
@@ -29505,8 +29505,8 @@
           "officialPrecipitationMetadataCoveragePct": 59.36,
           "officialTemperatureCoverageDays": 6505,
           "officialTemperatureMetadataCoveragePct": 59.36,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "94062"
@@ -29561,8 +29561,8 @@
           "officialPrecipitationMetadataCoveragePct": 56.67,
           "officialTemperatureCoverageDays": 6210,
           "officialTemperatureMetadataCoveragePct": 56.67,
-          "precipitationStatisticalBreakCount": 1,
-          "temperatureStatisticalBreakCount": 1,
+          "precipitationStatisticalBreakCount": 0,
+          "temperatureStatisticalBreakCount": 0,
           "temperatureAdjustedContinuityCount": 1,
           "oldStationIds": [
             "94121"
