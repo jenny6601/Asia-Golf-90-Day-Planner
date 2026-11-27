@@ -28,8 +28,6 @@ pip install -r requirements-data.txt
 python scripts/era5_land_pilot.py --subregion JP-KNT-NORTH --start 1991-01-01 --end 1991-12-31 --print-request
 ```
 
-The request includes one extra UTC day before and after the selected JST period so the first and last local calendar days can be assembled completely.
-
 ## 4. Download one pilot year
 
 ```bash
@@ -38,13 +36,22 @@ python scripts/era5_land_pilot.py --subregion JP-KNT-NORTH --start 1991-01-01 --
 
 Default output: `data/raw/era5-land-pilot/`. The downloaded file is marked `downloaded-unvalidated`; do not use it in date recommendations until inspection and quality checks are complete.
 
-## 5. Next validation
+## 5. Inspect and validate the ZIP
 
-Inspect the archive for:
-- actual returned latitude/longitude versus the expected 0.1-degree grid point;
-- variable names and units;
-- UTC timestamp coverage, duplicates and missing hours;
-- precipitation metadata confirming hourly de-accumulated values;
-- full 24-hour coverage after conversion to Asia/Tokyo local dates.
+```bash
+python scripts/inspect_era5_land_pilot.py data/raw/era5-land-pilot/JP-KNT-NORTH_1991-01-01_1991-12-31.zip --subregion JP-KNT-NORTH --start 1991-01-01 --end 1991-12-31 --report data/reports/JP-KNT-NORTH-1991-inspection.json
+```
 
-No credentials, downloaded weather values, or fabricated climate statistics belong in Git.
+The inspector verifies:
+- ZIP integrity and presence of NetCDF files;
+- actual returned latitude/longitude against the expected 0.1-degree grid point (0.001-degree tolerance);
+- all five required variables and their reported units;
+- complete hourly UTC coverage for every requested JST date, including all 24 hourly samples per local date;
+- duplicate or missing timestamps;
+- total precipitation units are metres.
+
+The CDS time-series product documents total precipitation as hourly de-accumulated values. The inspector therefore does not de-accumulate or transform precipitation. A successful result is only **structural validation**, not proof of climate quality or permission to activate the 30-year baseline.
+
+## 6. Next validation
+
+After structural validation, independently review variable ranges, missing-value fractions, physical plausibility and agreement with JMA station/monthly normals. Keep the production climate baseline disabled until that QA is complete.
