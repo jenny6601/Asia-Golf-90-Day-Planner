@@ -42,7 +42,7 @@ test("90-day input returns ranked 5-day windows, three rounds, and alternates",(
   assert.ok(result.topThree[0].score<=result.topThree[1].score);
   assert.ok(result.topThree[1].score<=result.topThree[2].score);
   const selected=[...result.topThree,...result.alternates];
-  for(let i=1;i<selected.length;i++)assert.ok((Date.parse(selected[i].startDate)-Date.parse(selected[i-1].startDate))/86400000>=5);
+  for(let i=0;i<selected.length;i++)for(let j=i+1;j<selected.length;j++)assert.ok(Math.abs((Date.parse(selected[i].startDate)-Date.parse(selected[j].startDate))/86400000)>=5);
   assert.deepEqual(result.topThree.map(x=>x.rank),[1,2,3]);
 });
 
