@@ -88,7 +88,16 @@
             "jp-niseko-village-golf"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-HKD-HAKODATE",
@@ -175,7 +184,16 @@
             "jp-aomori-royal"
           ],
           "courseCount": 3,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-THK-IWATE-APPI",
@@ -314,7 +332,16 @@
             "jp-adatara"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-KNT-TOKYO-KANAGAWA",
@@ -345,7 +372,16 @@
             "jp-izu-oshima"
           ],
           "courseCount": 5,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-KNT-CHIBA-NARITA",
@@ -426,7 +462,16 @@
             "jp-31-country"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "A",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-KNT-TOCHIGI-NASU",
@@ -511,7 +556,16 @@
             "jp-adonis-ogawa"
           ],
           "courseCount": 2,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "A",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-CHB-SHIZUOKA-FUJI-IZU",
@@ -540,7 +594,16 @@
             "jp-gora-kadan-fuji"
           ],
           "courseCount": 3,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "A",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-CHB-FUJI-YAMANASHI",
@@ -632,7 +695,16 @@
             "jp-eau-sol-vert-karuizawa"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "A",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-CHB-NAGOYA-GIFU",
@@ -660,7 +732,16 @@
             "jp-adonis"
           ],
           "courseCount": 2,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "A",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-CHB-MIE-ISE",
@@ -852,7 +933,16 @@
             "jp-kyoto-golf-club"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-KNS-WAKAYAMA",
@@ -1045,7 +1135,16 @@
             "jp-shikoku-anabuki"
           ],
           "courseCount": 4,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-SHK-EHIME-KOCHI",
@@ -1188,7 +1287,16 @@
             "jp-aino-cc"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-KYS-OITA",
@@ -1215,7 +1323,16 @@
             "jp-amagase-onsen"
           ],
           "courseCount": 1,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         },
         {
           "id": "JP-KYS-MIYAZAKI-KAGOSHIMA",
@@ -1377,7 +1494,16 @@
             "jp-shigira-bay"
           ],
           "courseCount": 5,
-          "climateUnit": "golf-course-cluster"
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "區域氣候代表點候選座標",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "此座標只作為次分區代表點候選；完成球場身分、區域適配與座標來源核實前，不可啟用正式天氣資料擷取。"
+          }
         }
       ],
       "coordinateResearchSummary": {
