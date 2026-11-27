@@ -52,7 +52,7 @@ def build(points,stations,top_n=10):
         if p.get("countryCode")!="MY":continue
         ranked=[]
         for s in stations:
-            row=dict(s);row["distanceKm"]=round(haversine_km(p["representativePoint"],s),2)
+            row=dict(s);row.setdefault("autoSelected",False);row.setdefault("historicalElementsVerified",False);row.setdefault("observationPeriodVerified",False);row["distanceKm"]=round(haversine_km(p["representativePoint"],s),2)
             ranked.append(row)
         ranked.sort(key=lambda x:x["distanceKm"])
         within75=sum(x["distanceKm"]<=75 for x in ranked)
