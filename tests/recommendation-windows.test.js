@@ -53,3 +53,12 @@ test("the three core days may mix suitable and playable statuses",()=>{
  assert.equal(match.qualifies,true);
  assert.deepEqual(match.coreDays.map(x=>x.status),["適打","可打","適打"]);
 });
+
+test("a distinct near-match fallback is preferred over a second overlapping qualifying window",()=>{
+ const eligible=["2026-12-02","2026-12-03","2026-12-04","2026-12-05","2026-12-12","2026-12-13"];
+ const top=pickRecommendedFiveDayWindows(buildFiveDayWindows(makeAssessment(eligible),dates),3);
+ assert.equal(top[0].qualifies,true);
+ assert.equal(top[1].qualifies,false);
+ assert.equal(top[1].coreEligible,2);
+ assert.ok((Date.parse(top[1].start+"T12:00:00Z")-Date.parse(top[0].start+"T12:00:00Z"))/86400000>=5);
+});
