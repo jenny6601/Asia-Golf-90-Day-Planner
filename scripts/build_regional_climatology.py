@@ -40,6 +40,13 @@ def _calendar_distance(a: date, b: date) -> float:
     return min(delta, 365.0 - delta)
 
 
+def _expected_window_days(year: int, target: date, window_days: int) -> int:
+    anchor = date(year, target.month, target.day)
+    return sum(1 for offset in range(-window_days, window_days + 1)
+               if date(anchor.year, 1, 1) <= anchor + timedelta(days=offset) <= date(anchor.year, 12, 31)
+               or (anchor + timedelta(days=offset)).year in {year - 1, year + 1})
+
+
 def _percentile(values: list[float], p: float) -> float | None:
     if not values:
         return None
@@ -110,8 +117,7 @@ def summarize_window(records: list[dict], target: date, window_days: int = WINDO
                 season_year -= 1
             selected.append((season_year, record))
 
-    expected_days = window_days * 2 + 1
-    required_days_per_year = math.ceil(expected_days * minimum_completeness)
+    nominal_expected_days = window_days * 2 + 1
     by_year: dict[int, list[dict]] = defaultdict(list)
     for season_year, record in selected:
         by_year[season_year].append(record)
@@ -126,7 +132,9 @@ def summarize_window(records: list[dict], target: date, window_days: int = WINDO
                 _metric_value(r, field) for r in year_records
                 if _valid_day(r) and _metric_value(r, field) is not None
             ]
-            if len(valid_values) >= required_days_per_year:
+            expected_for_year = _expected_window_days(year, target, window_days)
+            required_days_for_year = math.ceil(expected_for_year * minimum_completeness)
+            if len(valid_values) >= required_days_for_year:
                 valid_years.append(year)
                 samples.extend(valid_values)
 
@@ -136,8 +144,15 @@ def summarize_window(records: list[dict], target: date, window_days: int = WINDO
             "validYears": len(valid_years),
             "validYearList": valid_years,
             "sampleCount": len(samples),
-            "expectedDaysPerYear": expected_days,
-            "minimumValidDaysPerYear": required_days_per_year,
+            "nominalExpectedDaysPerYear": nominal_expected_days,
+            "expectedDaysPerYearRange": [
+                min(_expected_window_days(y, target, window_days) for y in range(start_year, end_year + 1)),
+                max(_expected_window_days(y, target, window_days) for y in range(start_year, end_year + 1)),
+            ],
+            "minimumValidDaysPerYearRange": [
+                min(math.ceil(_expected_window_days(y, target, window_days) * minimum_completeness) for y in range(start_year, end_year + 1)),
+                max(math.ceil(_expected_window_days(y, target, window_days) * minimum_completeness) for y in range(start_year, end_year + 1)),
+            ],
             "minimumValidYears": minimum_valid_years,
             "completenessThreshold": minimum_completeness,
         }
