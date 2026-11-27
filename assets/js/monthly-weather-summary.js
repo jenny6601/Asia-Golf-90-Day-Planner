@@ -57,3 +57,8 @@ export function summarizeMonthlyWeather(days, today, expectedDates = []) {
   }
   return { label, description, counts, validDays: valid.length, expectedDays: expected, coverage };
 }
+
+/** Select the first source that actually contains a finite value for a metric. */
+export function firstAvailableMetric(...values) {
+  return values.find(Number.isFinite) ?? null;
+}

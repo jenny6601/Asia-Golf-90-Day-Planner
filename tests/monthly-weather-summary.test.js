@@ -38,3 +38,10 @@ test("uses air temperature consistently and applies the heat threshold above 33 
   assert.equal(classifyMonthlyDay({rainFrequency:20,rainAmount:0.4,highTemp:33}).status,"適打");
   assert.equal(classifyMonthlyDay({rainFrequency:20,rainAmount:0.4,highTemp:33.1}).status,"不適");
 });
+
+test("falls back per metric when a higher-priority source has a missing value", async () => {
+  const {firstAvailableMetric}=await import("../assets/js/monthly-weather-summary.js");
+  assert.equal(firstAvailableMetric(null,42,35),42);
+  assert.equal(firstAvailableMetric(undefined,NaN,28),28);
+  assert.equal(firstAvailableMetric(null,undefined),null);
+});
