@@ -222,5 +222,28 @@
     "d01D16LiveForecastUnchanged": true,
     "formalV1ScoringWeightsMayChange": false,
     "engineLayerOnly": false
+  },
+  "phase1QualityPreflight": {
+    "status": "representative-point-audit-committed-source-readiness-initially-reviewed",
+    "auditPath": "data/era5-land-eight-country-1991-2020/representative-point-quality-audit.json",
+    "auditBuilder": "scripts/build_representative_point_quality_audit.py",
+    "auditTest": "tests/test_representative_point_quality_audit.py",
+    "observationSourceReadinessPath": "config/global/observation-source-readiness.json",
+    "summary": {
+      "countryCount": 8,
+      "subregionCount": 80,
+      "representativePoints": 80,
+      "missingCoordinates": 0,
+      "missingTimezones": 0,
+      "expectedGridPointsActuallyVerified": 0,
+      "stationMatches": 0,
+      "historicalRecordsAcquired": 0
+    },
+    "interpretation": "All 80 representative points have coordinates and IANA timezones in the registry. Nearest 0.1-degree grid values are candidate mappings only. Actual returned grid coordinates, valid land-cell selection, station matching and historical acquisition remain pending.",
+    "sourceDiscovery": "Official archive discovery has begun; KMA, Vietnam national service, Singapore NEA and Indonesia SACA&D have documented access pathways or limitations. China, Thailand and Malaysia still require official archive discovery. NOAA GHCN-Daily is a fallback subject to per-station and per-element coverage review.",
+    "nextGate": "Complete station archive access and station inventory discovery, then run a one-subregion multi-year acquisition pilot before scaling to all 80 points.",
+    "noDownloadPerformed": true,
+    "noAppChanges": true,
+    "noForecastActivation": true
   }
 }
