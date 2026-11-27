@@ -786,6 +786,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   return {date,valid:true,grade,status,playable:status==="適打",chance,amount,source:isForecast?"逐日預報":seasonal.length?"歷史＋季節模式估計":"歷史氣候參考"};
  }).filter(x=>x.valid);
  monthlyDailyAssessmentForWeeks=dailyAssessment;
+ const byDate=new Map(dailyAssessment.map(item=>[item.date,item]));
  weekButton.disabled=false;
  const playable=dailyAssessment.filter(x=>x.playable),watch=dailyAssessment.filter(x=>x.grade===2),wet=dailyAssessment.filter(x=>x.grade===3);
  const seasonBaseline=Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)?seasonRain-rainAnomaly:null;
