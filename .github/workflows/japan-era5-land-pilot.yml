@@ -16,6 +16,8 @@ on:
       - "tests/test_era5_land_inspector.py"
       - "tests/test_era5_land_daily_aggregation.py"
       - "tests/test_audit_japan_era5_daily.py"
+      - "tests/test_batch_era5_land_japan.py"
+      - "tests/test_compare_jma_station_daily.py"
   workflow_dispatch:
 
 permissions:
@@ -51,7 +53,6 @@ jobs:
           python -m unittest tests/test_era5_land_inspector.py
           python -m unittest tests/test_era5_land_daily_aggregation.py
           python -m unittest tests/test_audit_japan_era5_daily.py
-          python -m unittest tests/test_era5_land_daily_aggregation.py
           python -m unittest tests/test_batch_era5_land_japan.py
           python -m unittest tests/test_compare_jma_station_daily.py
 
