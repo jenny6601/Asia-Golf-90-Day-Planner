@@ -5,7 +5,7 @@ SPEC=importlib.util.spec_from_file_location("ghcnd_discovery",ROOT/"scripts/disc
 M=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(M)
 class GhcnStationDiscoveryTests(unittest.TestCase):
  def test_country_mapping_uses_noaa_country_codes(self):
-  self.assertEqual(M.country_codes({"JP":"Japan","KR":"South Korea","CH":"China","VM":"Vietnam","TH":"Thailand","MY":"Malaysia","SN":"Singapore","ID":"Indonesia"}),{"JP":"JP","KR":"KR","CN":"CH","VN":"VM","TH":"TH","MY":"MY","SG":"SN","ID":"ID"})
+  self.assertEqual(M.country_codes({"JP":"Japan","KR":"South Korea","CH":"China","VM":"Vietnam","TH":"Thailand","MY":"Malaysia","SN":"Singapore","ID":"Indonesia"}),{"JP":"JA","KR":"KS","CN":"CH","VN":"VM","TH":"TH","MY":"MY","SG":"SN","ID":"ID"})
  def test_inventory_overlap_is_element_specific(self):
   raw="USC00000001"+" "*20+"PRCP"+" 1980 2020\n"
   parsed=M.parse_inventory(raw)
