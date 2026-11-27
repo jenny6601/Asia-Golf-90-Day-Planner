@@ -88,31 +88,42 @@ function evaluateDay(day, asOf) {
 function summarizeWindow(windowDays) {
   const usable = windowDays.filter(x => x.riskScore !== null);
   if (usable.length < GOLF_ROUNDS) return null;
-  const golfDays = [...usable].sort((a, b) => a.riskScore - b.riskScore
-    || b.evidenceCoverage - a.evidenceCoverage).slice(0, GOLF_ROUNDS);
-  const golfRisk = golfDays.reduce((sum, x) => sum + x.riskScore, 0) / GOLF_ROUNDS;
+  // Match the existing planner convention: arrival day, three consecutive golf
+  // days in the middle, then departure day. Never move a golf round onto travel days.
+  const golfDays = windowDays.slice(1, 4);
+  const usableGolfDays = golfDays.filter(x => x.riskScore !== null);
+  const golfRisk = usableGolfDays.length
+    ? usableGolfDays.reduce((sum, x) => sum + x.riskScore, 0) / usableGolfDays.length
+    : null;
   const allDayRisk = usable.reduce((sum, x) => sum + x.riskScore, 0) / usable.length;
   const dataCoverage = windowDays.reduce((sum, x) => sum + x.evidenceCoverage, 0) / WINDOW_DAYS;
   const completeDays = windowDays.filter(x => x.golfEligible).length;
+  const completeGolfDays = golfDays.filter(x => x.golfEligible).length;
   const missingDays = WINDOW_DAYS - usable.length;
-  const finalScore = clamp(golfRisk * 0.85 + allDayRisk * 0.15
-    + (1 - dataCoverage) * 20 + missingDays * 8
-    + (GOLF_ROUNDS - Math.min(GOLF_ROUNDS, completeDays)) * 3);
-  const confidence = dataCoverage >= 0.85 && completeDays >= 4 ? "high"
-    : dataCoverage >= 0.60 && completeDays >= 3 ? "medium" : "low";
+  const missingGolfDays = GOLF_ROUNDS - usableGolfDays.length;
+  // Unknown golf-day weather is a ranking penalty only; its weather risk stays null.
+  const rankingGolfRisk = golfRisk === null ? 100 : golfRisk;
+  const finalScore = clamp(rankingGolfRisk * 0.85 + allDayRisk * 0.15
+    + (1 - dataCoverage) * 20 + missingDays * 8 + missingGolfDays * 20
+    + (GOLF_ROUNDS - completeGolfDays) * 3);
+  const confidence = dataCoverage >= 0.85 && completeGolfDays === 3 && completeDays >= 4 ? "high"
+    : dataCoverage >= 0.60 && completeGolfDays >= 2 ? "medium" : "low";
   return {
     startDate: windowDays[0].date, endDate: windowDays[WINDOW_DAYS - 1].date,
-    score: Number(finalScore.toFixed(2)), golfRiskScore: Number(golfRisk.toFixed(2)),
+    score: Number(finalScore.toFixed(2)),
+    golfRiskScore: golfRisk === null || missingGolfDays > 0 ? null : Number(golfRisk.toFixed(2)),
+    knownGolfRiskScore: golfRisk === null ? null : Number(golfRisk.toFixed(2)),
     fiveDayRiskScore: Number(allDayRisk.toFixed(2)),
-    dataCoverage: Number(dataCoverage.toFixed(3)), completeDays, confidence,
+    dataCoverage: Number(dataCoverage.toFixed(3)), completeDays, completeGolfDays, confidence,
     recommendedGolfDates: golfDays.map(x => ({
-      date: x.date, riskScore: Number(x.riskScore.toFixed(2)),
+      date: x.date, riskScore: x.riskScore === null ? null : Number(x.riskScore.toFixed(2)),
       evidenceCoverage: Number(x.evidenceCoverage.toFixed(3)),
       horizon: x.horizon, eligible: x.golfEligible
     })),
     reasons: [
-      "三場建議打球日：" + golfDays.map(x => x.date).join("、"),
-      "三場平均降雨風險指數 " + golfRisk.toFixed(1) + "/100",
+      "三場固定打球日：" + golfDays.map(x => x.date).join("、"),
+      missingGolfDays ? "其中 " + missingGolfDays + " 個打球日缺少有效降雨資料，已降低推薦資格" : "三個連續打球日均有有效降雨評估",
+      golfRisk === null ? "三場降雨風險無法完整計算" : "已知打球日平均降雨風險指數 " + golfRisk.toFixed(1) + "/100",
       "五天資料覆蓋率 " + Math.round(dataCoverage * 100) + "%",
       "完整三區資料日 " + completeDays + "/5",
       confidence === "low" ? "資料不足，推薦順位下調" : "資料完整度：" + confidence
@@ -161,7 +172,7 @@ export function recommendGolfTripDates(input, options = {}) {
     scoring: {
       lowerIsBetter: true, horizonWeights: SOURCE_WEIGHTS,
       missingDataPenalty: MISSING_DATA_PENALTY,
-      windowFormula: "0.85 * mean(best 3 daily risk) + 0.15 * mean(5 daily risk) + data penalties"
+      windowFormula: "0.85 * mean(middle 3 golf-day risk) + 0.15 * mean(5 daily risk) + missing-data penalties"
     },
     evaluatedDays: evaluated.length, dailyAssessment: evaluated, validWindows: ranked.length,
     topThree: ranked.slice(0, 3), alternates: ranked.slice(3, 3 + alternateCount),
@@ -170,7 +181,7 @@ export function recommendGolfTripDates(input, options = {}) {
       "Risk scores must be normalized by audited source adapters; EFI, anomalies and historical observations are not treated as probabilities.",
       "EC46, SEAS5 and historical signals are used only when supplied with valid coverage; missing values are never imputed.",
       "North, central and south are treated as three regional signals, not six independent course observations.",
-      "The three golf dates are selected as the lowest-risk three days within each five-day window; booking availability is not evaluated."
+      "The middle three consecutive dates are the golf days; arrival and departure days are not counted as rounds. Booking availability is not evaluated."
     ]
   };
 }
