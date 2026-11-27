@@ -49,7 +49,8 @@ class JmaCrosscheckTests(unittest.TestCase):
         self.assertEqual(result["pairedDays"], 0)
         self.assertEqual(result["jmaQualityRejectedDays"], 1)
         self.assertIn("jma_homogeneity_number_changes_within_period", result["issues"])
-\n    def test_distance_and_insufficient_pairs_block_comparison_status(self):
+
+    def test_distance_and_insufficient_pairs_block_comparison_status(self):
         region = {"subregionId": "JP-TEST", "representativePoint": {"latitude": 35, "longitude": 139}}
         station = {"sourceId": MODULE.JMA_SOURCE, "stationId": "FAR", "latitude": 36, "longitude": 140, "records": []}
         result = MODULE.compare_region(region, [], station, max_distance_km=10, minimum_pairs=1)
