@@ -1,7 +1,44 @@
+import {buildRegionalCoverage} from "./regional-coverage.js";
 const finite=value=>typeof value==="number"&&Number.isFinite(value);
 const fmt=value=>finite(value)?value.toFixed(3):"資料累積中";
 const node=(tag,text,className)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el;};
 function metric(label,value){const item=node("article",undefined,"validation-metric");item.append(node("span",label),node("strong",value));return item;}
+async function renderRegionalCoverage(host){
+ const section=node("section",undefined,"validation-section regional-coverage");
+ section.append(node("h3","亞洲八國次分區資料覆蓋"));
+ host.append(section);
+ try{
+  const [countryResponse,courseResponse]=await Promise.all([
+   fetch("./config/global/countries.json",{cache:"no-store"}),
+   fetch("./config/global/courses.json",{cache:"no-store"})
+  ]);
+  if(!countryResponse.ok||!courseResponse.ok)throw new Error("國家或球場目錄讀取失敗");
+  const coverage=buildRegionalCoverage(await countryResponse.json(),await courseResponse.json());
+  const summary=node("div",undefined,"validation-metrics");
+  summary.append(metric("國家資料",coverage.countryCount+" 國"),metric("已有球場分區",coverage.countriesWithCoverage+"/"+coverage.countryCount+" 國"),metric("可用次分區",coverage.subregionCount+" 區"));
+  section.append(summary);
+  for(const country of coverage.countries){
+   const card=node("article",undefined,"coverage-country-card");
+   const title=node("div",undefined,"coverage-country-heading");
+   title.append(node("strong",country.nameZh),node("span",country.subregionCount?country.subregionCount+" 個次分區":"尚無球場資料","coverage-state"));
+   card.append(title);
+   if(country.subregions.length){
+    for(const region of country.subregions){
+     const row=node("p",undefined,"coverage-region-row");
+     const representative=region.representative;
+     row.textContent=region.region+" · "+region.area+"｜候選 "+region.candidateCount+" 座｜暫定代表："+(representative.nameLocal||representative.name);
+     card.append(row);
+    }
+   }else{
+    card.append(node("p","尚未建立可用球場座標及氣象次分區。","validation-note"));
+   }
+   section.append(card);
+  }
+  section.append(node("p","代表球場暫以同一氣象次分區內，距離球場群地理中心最近的可用球場選定；同區其他球場共用該代表點的天氣資料。這是資料配置盤點，並不代表該國已完成預報回測。","validation-note"));
+ }catch(error){
+  section.append(node("p","分區覆蓋盤點尚未完成："+(error?.message||String(error)),"validation-empty"));
+ }
+}
 export async function mountValidationPanel(host){
  if(!host)return;
  host.replaceChildren();
@@ -10,6 +47,7 @@ export async function mountValidationPanel(host){
  const scopeNote=node("p","目前回測範圍僅包含沖繩北部、中部、南部三個次分區；不代表亞洲八國整體驗證。其他國家及次分區尚未納入本回測。","validation-scope-note");
  const body=node("div",undefined,"validation-body");
  host.append(heading,scopeNote,body);
+ renderRegionalCoverage(body);
  try{
   const response=await fetch("./assets/data/90day-validation.json",{cache:"no-store"});
   if(!response.ok)throw new Error("尚未發布驗證報告");
