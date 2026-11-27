@@ -98,9 +98,9 @@
           "representativeCourseId": null,
           "candidateCourseId": "jp-niseko-village-golf",
           "candidateCourseName": "Niseko Village Golf Course",
-          "candidateRationale": "以二世谷／留壽都度假球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateRationale": "以二世谷／留壽都度假球場群作為目的地單位，納入 Niseko Village Golf Course 與 Niseko Golf Course；兩座球場共用一個代表點進行區域氣候分析。",
           "candidateSourceUrl": "https://niseko-golf.com/en/course/",
-          "candidateStatus": "identity-confirmed-coordinate-review-pending",
+          "candidateStatus": "official-operator-identity-and-two-course-cluster-confirmed-coordinate-review-pending",
           "candidateCoordinates": {
             "latitude": 42.847109,
             "longitude": 140.685607,
@@ -110,9 +110,10 @@
           },
           "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "clusterCourseIds": [
-            "jp-niseko-village-golf"
+            "jp-niseko-village-golf",
+            "jp-niseko-golf-course"
           ],
-          "courseCount": 1,
+          "courseCount": 2,
           "climateUnit": "golf-course-cluster",
           "coordinateQuality": {
             "grade": "B",
@@ -127,12 +128,12 @@
           "regionName": "北海道",
           "subregionUnit": "golf-course-cluster",
           "courseIdentityVerification": {
-            "verificationLevel": "official-operator-course-identity-address-and-2026-operation-confirmed",
-            "officialSourceUrl": "https://niseko-golf.com/",
-            "officialAddress": "Niseko Village Golf Course: 〒048-1521 北海道虻田郡ニセコ町東山温泉；Niseko Golf Course: 〒048-1561 北海道虻田郡ニセコ町福井",
-            "operationalEvidence": "Official Niseko Village operator page lists both Niseko Village Golf Course and Niseko Golf Course, provides booking routes and 2026 season opening/closing notices. 2026 Niseko Village course season ended 2026-09-30; Niseko Golf Course season ended 2026-11-07. Candidate identity confirmed, but candidate coordinates remain third-party and are not approved for live weather ingestion.",
-            "checkedOn": "2026-11-27",
-            "scopeNote": "Official source confirms the named candidate course and destination cluster context; it also indicates a second nearby course exists, which should be reconciled against the fixed course directory before changing cluster membership."
+            "verificationLevel": "official-operator-confirms-two-course-destination-cluster",
+            "officialSourceUrl": "https://niseko-golf.com/en/course/",
+            "officialAccessUrl": "https://niseko-golf.com/en/contact/",
+            "officialAddress": "Niseko Village Golf Course: Higashiyama Onsen, Niseko Town, Abuta District, Hokkaido 048-1521; Niseko Golf Course: Fukui, Niseko Town, Abuta District, Hokkaido 048-1561",
+            "operationalEvidence": "Official operator lists both courses, their addresses and reservation paths; Niseko Golf Course is about 17 km / 20 minutes by car from Niseko Village. 2026 operation: Niseko Village course May 15-Sep 30; Niseko Golf Course Apr 24-Nov 8. Both are within the same Niseko destination cluster and share regional climate assessment.",
+            "checkedOn": "2026-11-27"
           }
         },
         {
@@ -1863,9 +1864,10 @@
             "jp-sapporo-fuyo-cc",
             "jp-tsukisappu-gc",
             "jp-jozankei-komagaoka",
-            "jp-rembrandt-sapporo"
+            "jp-rembrandt-sapporo",
+            "jp-niseko-golf-course"
           ],
-          "courseCount": 13
+          "courseCount": 14
         },
         {
           "id": "JP-REG-02",
