@@ -47,12 +47,12 @@
       "years": [
         {
           "year": 1991,
-          "status": "annual-coverage-insufficient",
+          "status": "annual-coverage-usable",
           "expectedDays": 365,
           "presentDays": 365,
           "missingDates": [],
-          "completeAllMetricDays": 281,
-          "completeAllMetricCoveragePct": 76.99,
+          "completeAllMetricDays": 365,
+          "completeAllMetricCoveragePct": 100.0,
           "qualityFlagCounts": {
             "trace_negative_precipitation_clamped": 84
           },
@@ -111,68 +111,70 @@
             "01": {
               "expectedDays": 31,
               "presentDays": 31,
-              "completeDays": 28
+              "completeDays": 31
             },
             "02": {
               "expectedDays": 28,
               "presentDays": 28,
-              "completeDays": 23
+              "completeDays": 28
             },
             "03": {
               "expectedDays": 31,
               "presentDays": 31,
-              "completeDays": 26
+              "completeDays": 31
             },
             "04": {
               "expectedDays": 30,
               "presentDays": 30,
-              "completeDays": 15
+              "completeDays": 30
             },
             "05": {
               "expectedDays": 31,
               "presentDays": 31,
-              "completeDays": 22
+              "completeDays": 31
             },
             "06": {
               "expectedDays": 30,
               "presentDays": 30,
-              "completeDays": 26
+              "completeDays": 30
             },
             "07": {
               "expectedDays": 31,
               "presentDays": 31,
-              "completeDays": 20
+              "completeDays": 31
             },
             "08": {
               "expectedDays": 31,
               "presentDays": 31,
-              "completeDays": 27
+              "completeDays": 31
             },
             "09": {
               "expectedDays": 30,
               "presentDays": 30,
-              "completeDays": 25
+              "completeDays": 30
             },
             "10": {
               "expectedDays": 31,
               "presentDays": 31,
-              "completeDays": 27
+              "completeDays": 31
             },
             "11": {
               "expectedDays": 30,
               "presentDays": 30,
-              "completeDays": 18
+              "completeDays": 30
             },
             "12": {
               "expectedDays": 31,
               "presentDays": 31,
-              "completeDays": 24
+              "completeDays": 31
             }
           }
         }
       ],
-      "annualCoverageUsableYears": 0,
-      "annualCoverageUsableYearList": [],
+      "annualCoverageUsableYears": 1,
+      "annualCoverageUsableYearList": [
+        1991
+      ],
       "climateWindowReadiness": {
         "status": "not-assessed-single-year-pilot",
         "reason": "Calendar-window climatology readiness requires a multi-year reference period."
