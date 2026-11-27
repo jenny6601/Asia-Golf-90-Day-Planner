@@ -27,14 +27,18 @@
       "targetSubregions": 19,
       "seedRecords": 22,
       "knownSourceCoverage": "Golf in Japan regional pages used for Tohoku (148 listed), Shikoku (64 listed), Okinawa (23 listed), and Kyushu prefecture listings. 54 Japan directory records imported in four batches (plus 22 original regional seed/pilot records; total Japan catalog now 76). Counts represent directory listings, not confirmed currently operating facilities; regional page scope and duplicates require reconciliation.",
-      "next": "Continue expanding Japan course inventory; validate each facility and choose one representative course per cluster. After Japan cluster coverage is reviewed, apply the same practical golf-cluster methodology to Korea, China, Vietnam, Thailand, Malaysia, Singapore and Indonesia.",
+      "next": "Validate the 33 provisional representative facilities (identity, operating status, address, coordinates and cluster fit), then start Korea directory extraction using the same one-representative-per-cluster climate model.",
       "importedDirectoryRecords": 54,
       "clusterTaxonomy": {
         "status": "drafted_and_mapped",
         "clusterCount": 33,
         "courseRecordsMapped": 76,
-        "weatherActivation": "pending_representative_course_and_coordinate_validation",
-        "note": "New golfClusterId is a separate backend travel-cluster layer. Existing weather subregion IDs and weather engine configuration are preserved until representative points for the new clusters are validated."
+        "weatherActivation": "blocked_pending_identity_address_coordinate_and_cluster_validation",
+        "note": "33 provisional representative candidates selected. Two previously empty clusters are now covered by official-source-backed candidate records (Niseko Village Golf Course; Kyoto Golf Club). No new cluster weather point has been activated; legacy weather config remains untouched.",
+        "representativeRegistry": "config/global/japan-cluster-representatives.json",
+        "representativeCandidateCount": 33,
+        "validatedRepresentatives": 0,
+        "weatherEnabledRepresentatives": 0
       }
     },
     {
