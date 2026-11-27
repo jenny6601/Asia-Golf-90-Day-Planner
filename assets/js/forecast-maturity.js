@@ -8,8 +8,9 @@ const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const finite = value => typeof value === "number" && Number.isFinite(value);
 
 function validDate(value) {
-  return typeof value === "string" && DATE_RE.test(value) &&
-    !Number.isNaN(Date.parse(value + "T12:00:00Z"));
+  if (typeof value !== "string" || !DATE_RE.test(value)) return false;
+  const parsed = new Date(value + "T12:00:00Z");
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
 }
 
 export function classifyLeadDay(leadDaysAhead) {
@@ -67,7 +68,6 @@ export function buildMaturityEvidence({ date, today, forecastDaily = null, weekl
   const forecast = forecastEvidence(forecastDaily);
 
   if (maturity.band === "D01-D16") {
-    // Do not silently substitute historical normals when the actual forecast is absent.
     return {
       date, ...maturity,
       sourceType: forecast ? "short-range-daily-forecast" : "missing-short-range-forecast",
