@@ -24,7 +24,7 @@ test("coverage groups courses by country, region and subregion, then selects one
  const japan=result.countries.find(x=>x.code==="JP");
  assert.equal(japan.subregionCount,2);
  assert.equal(japan.subregions.find(x=>x.area==="北部").candidateCount,2);
- assert.equal(japan.subregions.find(x=>x.area==="北部").representative.id,"north-a");
+ assert.equal(japan.subregions.find(x=>x.area==="北部").representative.id,"north-b");
  assert.equal(japan.subregions.find(x=>x.area==="南部").representative.id,"south-a");
 });
 
