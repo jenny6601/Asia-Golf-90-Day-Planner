@@ -25,8 +25,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Run JMA and model validation tests
-        run: node --test tests/jma-amedas-validation.test.js tests/okinawa-model-source-ranking.test.mjs tests/okinawa-course-source-reliability.test.mjs
+      - name: Run validation and archive schema tests
+        run: node --test tests/jma-amedas-validation.test.js tests/okinawa-model-source-ranking.test.mjs tests/okinawa-course-source-reliability.test.mjs tests/okinawa-seasonal-forecast-archive.test.mjs
       - name: Collect seven-day model hindcast verification
         id: verify
         continue-on-error: true
@@ -39,8 +39,6 @@ jobs:
         run: node scripts/project-okinawa-course-source-reliability.mjs
       - name: Archive ECMWF 17-90 day seasonal forecast snapshot
         run: node scripts/archive-okinawa-seasonal-forecast.mjs
-      - name: Run seasonal archive schema tests
-        run: node --test tests/okinawa-seasonal-forecast-archive.test.mjs
       - name: Commit daily hindcast archive
         if: always()
         run: |
