@@ -20,8 +20,8 @@ const WINDOW_DAYS = 5;
 const GOLF_ROUNDS = 3;
 const isFiniteNumber = value => typeof value === "number" && Number.isFinite(value);
 const clamp = (value, min = 0, max = 100) => Math.min(max, Math.max(min, value));
-const isIsoDate = value => typeof value === "string" && /^\\d{4}-\\d{2}-\\d{2}$/.test(value)
-  && !Number.isNaN(Date.parse(value + "T00:00:00Z"));
+const isIsoDate = value => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)
+  && !Number.isNaN(Date.parse(value + "T00:00:00Z"))\n  && new Date(value + "T00:00:00Z").toISOString().slice(0, 10) === value;
 const dayNumber = value => Date.parse(value + "T00:00:00Z") / 86400000;
 const leadDays = (asOf, date) => Math.round(dayNumber(date) - dayNumber(asOf));
 const horizonFor = lead => lead <= 16 ? "short" : lead <= 46 ? "ec46" : "seas5";
@@ -162,7 +162,7 @@ export function recommendGolfTripDates(input, options = {}) {
       missingDataPenalty: MISSING_DATA_PENALTY,
       windowFormula: "0.85 * mean(best 3 daily risk) + 0.15 * mean(5 daily risk) + data penalties"
     },
-    evaluatedDays: evaluated.length, validWindows: ranked.length,
+    evaluatedDays: evaluated.length, dailyAssessment: evaluated, validWindows: ranked.length,
     topThree: ranked.slice(0, 3), alternates: ranked.slice(3, 3 + alternateCount),
     excludedWindows: evaluated.length - WINDOW_DAYS + 1 - ranked.length,
     limitations: [
