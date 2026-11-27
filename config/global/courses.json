@@ -31,10 +31,10 @@
     "latitude": null,
     "longitude": null,
     "timezone": "Asia/Tokyo",
-    "coordinateSource": "Official PGM course address; independent course-point verification pending",
+    "coordinateSource": "Official PGM course address; no runtime GPS until independent course-point verification",
     "coordinateStatus": "pending",
     "officialUrl": "https://www.pacificgolf.co.jp/okinawa/",
-    "enabled": true,
+    "enabled": false,
     "prefecture": "沖繩縣"
   },
   {
