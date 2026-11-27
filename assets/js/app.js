@@ -5,7 +5,7 @@ import {fetchCourseForecast} from "./weather-api.js";
 import {fetchCourseSeasonalForecast,fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals} from "./long-range-api.js?v=era5-history-1991-2020-r6";
 import {buildDailyClimateOutlook} from "./daily-climate-outlook.js";
 import {buildFiveDayWindows,pickRecommendedFiveDayWindows} from "./recommendation-windows.js";
-import {classifyMonthlyDay,summarizeMonthlyWeather} from "./monthly-weather-summary.js";
+import {classifyMonthlyDay,summarizeMonthlyWeather,firstAvailableMetric} from "./monthly-weather-summary.js";
 import {renderTaiwanPwaHourly} from "./taiwan-hourly-renderer.js";
 import {orderCoursesByPriority,normalizeDepartureRegion} from "./departure-course-order.js";
 const $=id=>document.getElementById(id),S={};
@@ -776,13 +776,20 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const seasonal=seasonalDailyRows.filter(x=>x.date===date),historical=historicalNormals.map(n=>n.days?.find(x=>x.date===date)).filter(Boolean);
   const mean=(arr,key)=>{const v=arr.map(x=>x?.[key]).filter(Number.isFinite);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
   const isForecast=lead>=0&&lead<16&&actual.length>0;
-  const rainChance=isForecast?mean(actual,"prob"):seasonal.length?mean(seasonal,"rainChanceEstimate"):mean(historical,"rainFrequency");
-  const rainAmount=isForecast?mean(actual,"rain"):seasonal.length?mean(seasonal,"rainEstimate"):mean(historical,"rainMean");
-  const highTemp=isForecast?mean(actual,"high"):seasonal.length?mean(seasonal,"highEstimate"):mean(historical,"highMean");
+  // Resolve each metric independently: a partially populated source must not
+  // block a valid value from the next-best source.
+  const actualChance=mean(actual,"prob"),actualAmount=mean(actual,"rain"),actualHigh=mean(actual,"high");
+  const seasonalChance=mean(seasonal,"rainChanceEstimate"),seasonalAmount=mean(seasonal,"rainEstimate"),seasonalHigh=mean(seasonal,"highEstimate");
+  const historicalChance=mean(historical,"rainFrequency"),historicalAmount=mean(historical,"rainMean"),historicalHigh=mean(historical,"highMean");
+  const rainChance=firstAvailableMetric(actualChance,seasonalChance,historicalChance);
+  const rainAmount=firstAvailableMetric(actualAmount,seasonalAmount,historicalAmount);
+  const highTemp=firstAvailableMetric(actualHigh,seasonalHigh,historicalHigh);
   if(!Number.isFinite(rainChance)&&!Number.isFinite(rainAmount))return {date,valid:false};
   const classification=classifyMonthlyDay({rainFrequency:rainChance,rainAmount:rainAmount,highTemp});
   if(!classification)return {date,valid:false};
-  return {date,valid:true,...classification,chance:rainChance,amount:rainAmount,source:isForecast?"逐日預報":seasonal.length?"歷史＋季節模式估計":"歷史氣候參考"};
+  const source=Number.isFinite(actualChance)||Number.isFinite(actualAmount)||Number.isFinite(actualHigh)?"逐日預報":
+   Number.isFinite(seasonalChance)||Number.isFinite(seasonalAmount)||Number.isFinite(seasonalHigh)?"季節模式＋歷史估計":"歷史氣候參考";
+  return {date,valid:true,...classification,chance:rainChance,amount:rainAmount,highTemp,source};
  }).filter(x=>x.valid);
  const assessmentDays=dailyAssessment.filter(x=>x.date>=today());
  monthlyDailyAssessmentForWeeks=assessmentDays;
