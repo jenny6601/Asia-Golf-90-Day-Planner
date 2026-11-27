@@ -26,3 +26,15 @@ test("insufficient valid coverage does not issue an overall verdict", () => {
   const result=summarizeMonthlyWeather([{date:"2026-12-01",grade:0}],"2026-11-28",Array.from({length:30},(_,i)=>`2026-12-${String(i+1).padStart(2,"0")}`));
   assert.equal(result.label,"資料不足");
 });
+
+
+test("wind is deliberately excluded from daily playability classification", () => {
+  const baseline = classifyMonthlyDay({rainFrequency:20,rainAmount:0.4,highTemp:28});
+  const withStrongWind = classifyMonthlyDay({rainFrequency:20,rainAmount:0.4,highTemp:28,windSpeed:45,windGust:70});
+  assert.deepEqual(withStrongWind, baseline);
+});
+
+test("uses air temperature consistently and applies the heat threshold above 33 C", () => {
+  assert.equal(classifyMonthlyDay({rainFrequency:20,rainAmount:0.4,highTemp:33}).status,"適打");
+  assert.equal(classifyMonthlyDay({rainFrequency:20,rainAmount:0.4,highTemp:33.1}).status,"不適");
+});
