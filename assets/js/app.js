@@ -2,7 +2,7 @@ import {mountValidationPanel} from "./validation-panel.js";
 import {fetchAsiaGolfDirectory} from "./course-catalog.js";
 import {formatCourseDate} from "./course-time.js";
 import {fetchCourseForecast} from "./weather-api.js";
-import {fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals} from "./long-range-api.js?v=era5-history-1991-2020-r4";
+import {fetchCourseHistoricalMonthlyClimate,fetchCourseHistoricalWeekNormals} from "./long-range-api.js?v=era5-history-1991-2020-r5";
 import {buildDailyClimateOutlook} from "./daily-climate-outlook.js";
 import {scoreGolfRainWindow} from "./rain-risk.js";
 import {scoreGolfSuitabilityWindow} from "./suitability-engine.js";
@@ -760,7 +760,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const isForecast=lead>=0&&lead<16&&actual.length>0;
   const rainChance=isForecast?mean(actual,"prob"):seasonal.length?mean(seasonal,"rainChanceEstimate"):mean(historical,"rainFrequency");
   const rainAmount=isForecast?mean(actual,"rain"):seasonal.length?mean(seasonal,"rainEstimate"):mean(historical,"rainMean");
-  const highTemp=isForecast?mean(actual,"feel"):seasonal.length?mean(seasonal,"feelsLikeMaxEstimateC"):mean(historical,"feelsLikeMaxMeanC");
+  const highTemp=isForecast?mean(actual,"high"):seasonal.length?mean(seasonal,"feelsLikeMaxEstimateC"):mean(historical,"feelsLikeMaxMeanC");
   if(!Number.isFinite(rainChance)&&!Number.isFinite(rainAmount))return {date,valid:false};
   const chance=Number.isFinite(rainChance)?rainChance:100,amount=Number.isFinite(rainAmount)?rainAmount:0;
   const grade=chance<30&&amount<1?0:chance<45&&amount<2?1:chance<60&&amount<4?2:3;
