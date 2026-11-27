@@ -21,7 +21,7 @@ ALIASES = {
     "lat": ["위도", "latitude"],
     "lon": ["경도", "longitude"],
     "elevation": ["노장 해발고도(m)", "해발고도(m)", "고도", "elevation"],
-    "type": ["지점유형", "관측종류", "관측망", "장비구분"],
+    "type": ["지점유형", "관측종류", "관측망", "관측망구분", "장비구분", "장비명"],
 }
 
 def pick(row, key, required=False):
@@ -44,6 +44,9 @@ def parse_inventory(csv_text):
     reader = csv.DictReader(io.StringIO(csv_text.lstrip("\ufeff")))
     if not reader.fieldnames:
         raise ValueError("KMA station metadata CSV has no header")
+    type_columns = [name for name in ALIASES["type"] if name in reader.fieldnames]
+    if not type_columns:
+        raise ValueError("KMA metadata CSV must include an explicit observation-network/type column; refusing to infer ASOS from an unclassified inventory")
     for row in reader:
         try:
             sid = pick(row, "station_id", True)
@@ -54,8 +57,9 @@ def parse_inventory(csv_text):
         except (ValueError, TypeError):
             continue
         stype = pick(row, "type")
-        # The official export may contain multiple observation networks.
-        if stype and not any(token in stype.upper() for token in ("ASOS", "종관")):
+        # Fail closed: blank or non-ASOS network labels must never enter the ASOS shortlist.
+        normalized_type = stype.upper().replace(" ", "")
+        if not normalized_type or not ("ASOS" in normalized_type or "종관" in normalized_type):
             continue
         lo, hi = max(start, START), min(end, END)
         if lo > hi:
