@@ -1,0 +1,1736 @@
+{
+  "schemaVersion": 1,
+  "status": "official-jp-kr-acquisition-queue-not-station-matches",
+  "period": {
+    "start": "1991-01-01",
+    "end": "2020-12-31"
+  },
+  "selectionRule": "One queue item per golf-course-cluster representative point; other courses in the same cluster share its regional climate assessment.",
+  "sources": {
+    "JP": {
+      "agency": "Japan Meteorological Agency (JMA)",
+      "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+      "dailyElements": [
+        "daily precipitation total",
+        "daily maximum temperature",
+        "daily minimum temperature"
+      ],
+      "accessMode": "official web CSV download; request size limited; no bulk scraping",
+      "period": "1991-2020",
+      "notes": [
+        "JMA provides daily values and 1991-2020 normals.",
+        "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+        "JMA warns against excessive automated access; acquire bounded station/date requests only."
+      ]
+    },
+    "KR": {
+      "agency": "Korea Meteorological Administration (KMA)",
+      "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
+      "fileSetPortal": "https://data.kma.go.kr/data/grnd/selectAsosList.do?pgmNo=34",
+      "dailyElements": [
+        "daily precipitation",
+        "daily maximum temperature",
+        "daily minimum temperature"
+      ],
+      "accessMode": "official portal CSV or annual ASOS file-set downloads; API registration may be required for automated access",
+      "period": "1991-2020",
+      "notes": [
+        "ASOS provides daily data from 1904 onward depending on station and element; current portal lists 105 stations.",
+        "A single daily-data query is limited to 10 years; long periods should use file-set downloads.",
+        "Check station-specific start/end years and QC/metadata before matching."
+      ]
+    }
+  },
+  "summary": {
+    "queueItems": 43,
+    "JP": 37,
+    "KR": 6,
+    "matchedStations": 0,
+    "approvedStations": 0
+  },
+  "queue": [
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-HKD-SAPPORO",
+      "subregionLabel": "北海道・札幌市球場群",
+      "representativeCourseId": "jp-sapporo-teine",
+      "latitude": 43.1039996,
+      "longitude": 141.2091466,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-HKD-NISEKO",
+      "subregionLabel": "北海道・二世谷／留壽都度假球場群",
+      "representativeCourseId": "jp-niseko-village-golf",
+      "latitude": 42.847109,
+      "longitude": 140.685607,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-HKD-HAKODATE",
+      "subregionLabel": "北海道・函館／大沼球場群",
+      "representativeCourseId": "jp-hokkaido-country",
+      "latitude": 41.9892895,
+      "longitude": 140.6549955,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-THK-AOMORI-AKITA",
+      "subregionLabel": "東北・青森球場群",
+      "representativeCourseId": "jp-aomori-cc",
+      "latitude": 40.73722,
+      "longitude": 140.74876,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-THK-IWATE-APPI",
+      "subregionLabel": "東北・岩手／安比高原球場群",
+      "representativeCourseId": "jp-appi-kogen",
+      "latitude": 40.01249,
+      "longitude": 141.00652,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-THK-MIYAGI-SENDAI",
+      "subregionLabel": "東北・仙台／宮城球場群",
+      "representativeCourseId": "jp-rifu",
+      "latitude": 38.35994,
+      "longitude": 140.981828,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-THK-FUKUSHIMA-YAMAGATA",
+      "subregionLabel": "東北・福島／山形球場群",
+      "representativeCourseId": "jp-adatara",
+      "latitude": 37.57389,
+      "longitude": 140.362964,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KNT-TOKYO-KANAGAWA",
+      "subregionLabel": "關東・東京／神奈川球場群",
+      "representativeCourseId": "jp-hachioji-cc",
+      "latitude": 35.695169,
+      "longitude": 139.279074,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KNT-CHIBA-NARITA",
+      "subregionLabel": "關東・千葉／成田／市原球場群",
+      "representativeCourseId": "jp-narita-hills",
+      "latitude": 35.83503,
+      "longitude": 140.27659,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KNT-IBARAKI-TSUKUBA",
+      "subregionLabel": "關東・茨城／筑波球場群",
+      "representativeCourseId": "jp-31-country",
+      "latitude": 36.07964324951172,
+      "longitude": 139.82562255859375,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KNT-TOCHIGI-NASU",
+      "subregionLabel": "關東・栃木／那須球場群",
+      "representativeCourseId": "jp-seven-hundred",
+      "latitude": 36.709629,
+      "longitude": 140.004827,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KNT-GUNMA-SAITAMA",
+      "subregionLabel": "關東・群馬／埼玉球場群",
+      "representativeCourseId": "jp-iruma-country",
+      "latitude": 35.969597,
+      "longitude": 139.315163,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-CHB-SHIZUOKA-FUJI-IZU",
+      "subregionLabel": "中部・富士／御殿場／靜岡東部球場群",
+      "representativeCourseId": "jp-dai-atami-kokusai",
+      "latitude": 35.016667,
+      "longitude": 139.033333,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-CHB-FUJI-YAMANASHI",
+      "subregionLabel": "中部・山梨／河口湖球場群",
+      "representativeCourseId": "jp-kawaguchiko",
+      "latitude": 35.4682136,
+      "longitude": 138.7517012,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-CHB-NAGANO-KARUIZAWA",
+      "subregionLabel": "中部・長野／輕井澤球場群",
+      "representativeCourseId": "jp-eau-sol-vert-karuizawa",
+      "latitude": 36.296969,
+      "longitude": 138.584117,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-CHB-NAGOYA-GIFU",
+      "subregionLabel": "中部・名古屋／岐阜球場群",
+      "representativeCourseId": "jp-adonis",
+      "latitude": 35.31468298028144,
+      "longitude": 137.45991731575117,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-CHB-MIE-ISE",
+      "subregionLabel": "中部・三重／伊勢志摩球場群",
+      "representativeCourseId": "jp-tsu",
+      "latitude": 34.72587,
+      "longitude": 136.42721,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-CHB-HOKURIKU",
+      "subregionLabel": "中部・北陸／石川／富山／福井球場群",
+      "representativeCourseId": "jp-tokinodai",
+      "latitude": 36.91549,
+      "longitude": 136.775147,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KNS-OSAKA-HYOGO",
+      "subregionLabel": "關西・大阪／神戶／兵庫球場群",
+      "representativeCourseId": "jp-arima-royal",
+      "latitude": 34.826383,
+      "longitude": 135.123729,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KNS-KYOTO-SHIGA-NARA",
+      "subregionLabel": "關西・京都／滋賀／奈良球場群",
+      "representativeCourseId": "jp-kyoto-golf-club",
+      "latitude": 35.067014,
+      "longitude": 135.759207,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KNS-WAKAYAMA",
+      "subregionLabel": "關西・和歌山／紀伊半島球場群",
+      "representativeCourseId": "jp-leograd",
+      "latitude": 33.9232299832,
+      "longitude": 135.2723593476,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-CHG-SANYO",
+      "subregionLabel": "中國地方・廣島／岡山／山陽球場群",
+      "representativeCourseId": "jp-setouchi",
+      "latitude": 34.3061999,
+      "longitude": 132.864325,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-CHG-SANIN",
+      "subregionLabel": "中國地方・鳥取／島根／山陰球場群",
+      "representativeCourseId": "jp-green-park-daisen",
+      "latitude": 35.364639,
+      "longitude": 133.397062,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-SHK-KAGAWA-TOKUSHIMA",
+      "subregionLabel": "四國・高松／德島／瀨戶內球場群",
+      "representativeCourseId": "jp-anan-cc",
+      "latitude": 33.875869,
+      "longitude": 134.65131,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-SHK-EHIME-KOCHI",
+      "subregionLabel": "四國・高知／愛媛球場群",
+      "representativeCourseId": "jp-tosa",
+      "latitude": 33.5213,
+      "longitude": 133.7758,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KYS-FUKUOKA-SAGA",
+      "subregionLabel": "九州・福岡／佐賀球場群",
+      "representativeCourseId": "jp-the-classic",
+      "latitude": 33.770453,
+      "longitude": 130.644917,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KYS-NAGASAKI-KUMAMOTO",
+      "subregionLabel": "九州・長崎／熊本球場群",
+      "representativeCourseId": "jp-aino-cc",
+      "latitude": 32.8008,
+      "longitude": 130.1815,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KYS-OITA",
+      "subregionLabel": "九州・大分／阿蘇球場群",
+      "representativeCourseId": "jp-amagase-onsen",
+      "latitude": 33.2442744,
+      "longitude": 131.0166391,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KYS-MIYAZAKI-KAGOSHIMA",
+      "subregionLabel": "九州・宮崎／鹿兒島球場群",
+      "representativeCourseId": "jp-phoenix",
+      "latitude": 31.974525,
+      "longitude": 131.472898,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-OKI-MAIN-NORTH",
+      "subregionLabel": "沖繩・本島北部球場群",
+      "representativeCourseId": "kise",
+      "latitude": 26.524228,
+      "longitude": 127.939192,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-OKI-MAIN-CENTRAL",
+      "subregionLabel": "沖繩・本島中部球場群",
+      "representativeCourseId": "pgm-okinawa",
+      "latitude": 26.455335,
+      "longitude": 127.820344,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-OKI-MAIN-SOUTH",
+      "subregionLabel": "沖繩・本島南部球場群",
+      "representativeCourseId": "southern-links",
+      "latitude": 26.113785,
+      "longitude": 127.739021,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-OKI-OUTER-ISLANDS",
+      "subregionLabel": "沖繩・宮古島球場群",
+      "representativeCourseId": "jp-ocean-links-miyako",
+      "latitude": 24.734437,
+      "longitude": 125.437101,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-KNT-IZU-OSHIMA",
+      "subregionLabel": "關東・伊豆大島球場群",
+      "representativeCourseId": "jp-izu-oshima",
+      "latitude": 34.789,
+      "longitude": 139.393,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-THK-AKITA",
+      "subregionLabel": "東北・秋田球場群",
+      "representativeCourseId": "jp-akita-kita-kuko",
+      "latitude": 40.17,
+      "longitude": 140.37,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-OKI-YAEYAMA",
+      "subregionLabel": "沖繩・八重山／小濱島球場群",
+      "representativeCourseId": "jp-risonare-kohamajima",
+      "latitude": 24.346608,
+      "longitude": 123.980576,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "JP",
+      "subregionId": "JP-HKD-CHITOSE-TOMAKOMAI",
+      "subregionLabel": "北海道・千歲／苫小牧球場群",
+      "representativeCourseId": "jp-nidom-classic",
+      "latitude": 42.716198,
+      "longitude": 141.655636,
+      "timezone": "Asia/Tokyo",
+      "source": {
+        "agency": "Japan Meteorological Agency (JMA)",
+        "portal": "https://www.data.jma.go.jp/risk/obsdl/",
+        "dailyElements": [
+          "daily precipitation total",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official web CSV download; request size limited; no bulk scraping",
+        "period": "1991-2020",
+        "notes": [
+          "JMA provides daily values and 1991-2020 normals.",
+          "JMA flags records affected by >20% missing source data and non-homogeneous periods due to relocation/environment/observation changes; preserve these indicators.",
+          "JMA warns against excessive automated access; acquire bounded station/date requests only."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "KR",
+      "subregionId": "KR-CAP-01",
+      "subregionLabel": "首爾／京畿／仁川",
+      "representativeCourseId": "kr-kr-cap-01",
+      "latitude": 37.37985,
+      "longitude": 126.62439,
+      "timezone": "Asia/Seoul",
+      "source": {
+        "agency": "Korea Meteorological Administration (KMA)",
+        "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
+        "fileSetPortal": "https://data.kma.go.kr/data/grnd/selectAsosList.do?pgmNo=34",
+        "dailyElements": [
+          "daily precipitation",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official portal CSV or annual ASOS file-set downloads; API registration may be required for automated access",
+        "period": "1991-2020",
+        "notes": [
+          "ASOS provides daily data from 1904 onward depending on station and element; current portal lists 105 stations.",
+          "A single daily-data query is limited to 10 years; long periods should use file-set downloads.",
+          "Check station-specific start/end years and QC/metadata before matching."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "KR",
+      "subregionId": "KR-GW-01",
+      "subregionLabel": "江原道／春川",
+      "representativeCourseId": "kr-kr-gw-01",
+      "latitude": 37.7701,
+      "longitude": 127.6784,
+      "timezone": "Asia/Seoul",
+      "source": {
+        "agency": "Korea Meteorological Administration (KMA)",
+        "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
+        "fileSetPortal": "https://data.kma.go.kr/data/grnd/selectAsosList.do?pgmNo=34",
+        "dailyElements": [
+          "daily precipitation",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official portal CSV or annual ASOS file-set downloads; API registration may be required for automated access",
+        "period": "1991-2020",
+        "notes": [
+          "ASOS provides daily data from 1904 onward depending on station and element; current portal lists 105 stations.",
+          "A single daily-data query is limited to 10 years; long periods should use file-set downloads.",
+          "Check station-specific start/end years and QC/metadata before matching."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "KR",
+      "subregionId": "KR-CC-01",
+      "subregionLabel": "忠清道",
+      "representativeCourseId": "kr-kr-cc-01",
+      "latitude": 36.766741,
+      "longitude": 127.224659,
+      "timezone": "Asia/Seoul",
+      "source": {
+        "agency": "Korea Meteorological Administration (KMA)",
+        "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
+        "fileSetPortal": "https://data.kma.go.kr/data/grnd/selectAsosList.do?pgmNo=34",
+        "dailyElements": [
+          "daily precipitation",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official portal CSV or annual ASOS file-set downloads; API registration may be required for automated access",
+        "period": "1991-2020",
+        "notes": [
+          "ASOS provides daily data from 1904 onward depending on station and element; current portal lists 105 stations.",
+          "A single daily-data query is limited to 10 years; long periods should use file-set downloads.",
+          "Check station-specific start/end years and QC/metadata before matching."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "KR",
+      "subregionId": "KR-YN-01",
+      "subregionLabel": "釜山／慶州／嶺南",
+      "representativeCourseId": "kr-kr-yn-01",
+      "latitude": 35.36594,
+      "longitude": 129.19943,
+      "timezone": "Asia/Seoul",
+      "source": {
+        "agency": "Korea Meteorological Administration (KMA)",
+        "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
+        "fileSetPortal": "https://data.kma.go.kr/data/grnd/selectAsosList.do?pgmNo=34",
+        "dailyElements": [
+          "daily precipitation",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official portal CSV or annual ASOS file-set downloads; API registration may be required for automated access",
+        "period": "1991-2020",
+        "notes": [
+          "ASOS provides daily data from 1904 onward depending on station and element; current portal lists 105 stations.",
+          "A single daily-data query is limited to 10 years; long periods should use file-set downloads.",
+          "Check station-specific start/end years and QC/metadata before matching."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "KR",
+      "subregionId": "KR-HN-01",
+      "subregionLabel": "全羅道／湖南",
+      "representativeCourseId": "kr-kr-hn-01",
+      "latitude": 34.6979,
+      "longitude": 126.26506,
+      "timezone": "Asia/Seoul",
+      "source": {
+        "agency": "Korea Meteorological Administration (KMA)",
+        "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
+        "fileSetPortal": "https://data.kma.go.kr/data/grnd/selectAsosList.do?pgmNo=34",
+        "dailyElements": [
+          "daily precipitation",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official portal CSV or annual ASOS file-set downloads; API registration may be required for automated access",
+        "period": "1991-2020",
+        "notes": [
+          "ASOS provides daily data from 1904 onward depending on station and element; current portal lists 105 stations.",
+          "A single daily-data query is limited to 10 years; long periods should use file-set downloads.",
+          "Check station-specific start/end years and QC/metadata before matching."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    },
+    {
+      "countryCode": "KR",
+      "subregionId": "KR-JJ-01",
+      "subregionLabel": "濟州島",
+      "representativeCourseId": "kr-kr-jj-01",
+      "latitude": 33.3159979,
+      "longitude": 126.387643,
+      "timezone": "Asia/Seoul",
+      "source": {
+        "agency": "Korea Meteorological Administration (KMA)",
+        "portal": "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do",
+        "fileSetPortal": "https://data.kma.go.kr/data/grnd/selectAsosList.do?pgmNo=34",
+        "dailyElements": [
+          "daily precipitation",
+          "daily maximum temperature",
+          "daily minimum temperature"
+        ],
+        "accessMode": "official portal CSV or annual ASOS file-set downloads; API registration may be required for automated access",
+        "period": "1991-2020",
+        "notes": [
+          "ASOS provides daily data from 1904 onward depending on station and element; current portal lists 105 stations.",
+          "A single daily-data query is limited to 10 years; long periods should use file-set downloads.",
+          "Check station-specific start/end years and QC/metadata before matching."
+        ]
+      },
+      "searchRadiusKm": 100,
+      "stationMatchStatus": "not-yet-matched",
+      "dailyRecordsDownloaded": false,
+      "stationApproved": false,
+      "weatherIngestionEnabled": false,
+      "requiredReview": [
+        "station distance and elevation",
+        "1991-2020 PRCP/TMAX/TMIN element availability",
+        "daily record completeness by year and season",
+        "quality flags and missing-value conventions",
+        "station relocation/history and observation-day definition",
+        "coastal/mountain/urban representativeness",
+        "licence and permitted use"
+      ]
+    }
+  ]
+}
