@@ -25,6 +25,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Run archive schema tests
+        run: npm test
       - name: Collect six-course 16-day forecast snapshot
         id: collect
         continue-on-error: true
