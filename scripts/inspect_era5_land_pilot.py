@@ -144,9 +144,10 @@ def inspect_archive(archive: Path, subregion: str, start: date, end: date, mappi
                     }
                 report["files"].append(file_info)
 
+    for name in REQUIRED_VARIABLES:
+        variable_duplicates[name] = variable_duplicates[name] or (len(variable_times[name]) != len(set(variable_times[name])))
     ordered = sorted(all_times)
-    duplicates = False  # set-based collection also detects duplicates below via per-file counts
-    duplicates = any(item["duplicateTimestamps"] for item in report["files"])
+    duplicates = any(variable_duplicates.values())
     observed_in_window = [t for t in ordered if lower <= t <= upper]
     missing = sorted(set(expected_times) - set(observed_in_window))
     unexpected = [t for t in observed_in_window if t not in set(expected_times)]
