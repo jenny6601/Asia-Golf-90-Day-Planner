@@ -19,10 +19,10 @@ Directory: data/long-range-inputs/era5-daily/*.json
 Each record is keyed uniquely by (subregionId, dateLocal) and includes:
 - dateLocal: local calendar date YYYY-MM-DD
 - gridCell.latitude/longitude: actual returned ERA5 grid-cell coordinates, not merely requested golf-course coordinates
-- values: optional finite numeric precipitationMm, temperatureMinC, temperatureMaxC, temperatureMeanC, windSpeedMs, relativeHumidityPct
+- values: optional finite numeric precipitationMm, temperatureMinC, temperatureMaxC, dewpointMeanC, windSpeedMs, windDirectionDeg, cloudCoverMeanPct, relativeHumidityPct
 - qualityFlags: array of source/processing quality flags
 
-Units are declared per variable in the document: mm, degC, m/s, %. Precipitation and wind cannot be negative; humidity is 0-100%; Tmin cannot exceed Tmax. Preserve the ERA5 product's own accumulation semantics and document any conversion upstream; do not assume the time-series endpoint's deaccumulation rule applies to the full dataset.
+Units are declared per variable in the document: mm, degC, m/s, degrees, %. Precipitation and wind cannot be negative; humidity and cloud cover are 0-100%; Tmin cannot exceed Tmax. Mean air temperature is not a required product field. The daily feels-like estimate is derived from air-temperature bounds plus dewpoint/derived humidity and wind; daily aggregates are not time-paired, so the output must carry uncertainty and must not imply hourly precision. Preserve the ERA5 product's own accumulation semantics and document any conversion upstream; do not assume the time-series endpoint's deaccumulation rule applies to the full dataset.
 
 ## ECMWF extended-range weekly input
 
