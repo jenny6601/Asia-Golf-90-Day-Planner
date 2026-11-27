@@ -28,7 +28,7 @@ test("regression metrics compute MAE, bias and RMSE from paired values",()=>{
  const m=regressionMetrics([{forecast:2,observed:1},{forecast:4,observed:5},{forecast:3,observed:3}]);
  assert.equal(m.n,3);
  assert.ok(Math.abs(m.mae-2/3)<1e-12);
- assert.ok(Math.abs(m.bias+1/3)<1e-12);
+ assert.ok(Math.abs(m.bias)<1e-12);
  assert.ok(Math.abs(m.rmse-Math.sqrt(2/3))<1e-12);
 });
 
