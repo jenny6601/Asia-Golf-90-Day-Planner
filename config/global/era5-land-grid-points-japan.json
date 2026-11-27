@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "grid-point-mapping-only-not-data-download",
+  "status": "expected-grid-mapping-for-19-japan-subregions-not-yet-verified-by-CDS-download",
   "sourceId": "ERA5_HOURLY_SINGLE_LEVELS",
   "dataset": "reanalysis-era5-land",
   "sourceDocumentationUrl": "https://confluence.ecmwf.int/pages/viewpage.action?pageId=685246455",
@@ -8,7 +8,7 @@
   "longitudeConvention": "-180_to_180",
   "selectionMethod": "Round representative latitude and longitude independently to the nearest 0.1 degree, matching the CDS time-series location selector's nearest 0.1-degree grid-neighbour behaviour. Confirm returned grid coordinates from each downloaded file before accepting data.",
   "caveat": "This mapping is a pre-download expected grid coordinate, not proof of the exact grid coordinate returned by CDS. The actual latitude/longitude coordinates in each NetCDF/CSV response must be read back and compared before the subregion is marked mapped.",
-  "subregionCount": 16,
+  "subregionCount": 19,
   "points": [
     {
       "subregionId": "JP-HKD-CENTRAL",
@@ -294,6 +294,60 @@
         "longitude": 131.5
       },
       "gridDistanceKm": 3.815,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-OKI-NORTH",
+      "subregion": "沖繩北部",
+      "representativeCourseId": "kise",
+      "representativeCourseName": "Kanehide Kise Country Club",
+      "representativePoint": {
+        "latitude": 26.524228,
+        "longitude": 127.939192
+      },
+      "era5LandGridPoint": {
+        "latitude": 26.5,
+        "longitude": 127.9
+      },
+      "gridDistanceKm": 4.74,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-OKI-CENTRAL",
+      "subregion": "沖繩中部",
+      "representativeCourseId": "pgm-okinawa",
+      "representativeCourseName": "PGM Golf Resort Okinawa",
+      "representativePoint": {
+        "latitude": 26.455335,
+        "longitude": 127.820344
+      },
+      "era5LandGridPoint": {
+        "latitude": 26.5,
+        "longitude": 127.8
+      },
+      "gridDistanceKm": 5.363,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-OKI-SOUTH",
+      "subregion": "沖繩南部",
+      "representativeCourseId": "southern-links",
+      "representativeCourseName": "The Southern Links Golf Club",
+      "representativePoint": {
+        "latitude": 26.113785,
+        "longitude": 127.739021
+      },
+      "era5LandGridPoint": {
+        "latitude": 26.1,
+        "longitude": 127.7
+      },
+      "gridDistanceKm": 4.187,
       "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
       "coordinatePurpose": "regional-climate-representative-point",
       "timezone": "Asia/Tokyo"
