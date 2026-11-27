@@ -74,7 +74,7 @@ async function loadHistoricalDailyArchive(course,fetchImpl,now){
    const params=new URLSearchParams({latitude:String(course.latitude),longitude:String(course.longitude),
     start_date:startYear+"-01-01",end_date:endYear+"-12-31",
     daily:"temperature_2m_max,temperature_2m_min,dew_point_2m_mean,relative_humidity_2m_mean,wind_speed_10m_mean,wind_speed_10m_max,precipitation_sum,precipitation_hours,weather_code",
-    timezone,temperature_unit:"celsius",precipitation_unit:"mm",models:"era5"});
+    timezone,temperature_unit:"celsius",wind_speed_unit:"ms",precipitation_unit:"mm",models:"era5"});
    const response=await fetchImpl("https://archive-api.open-meteo.com/v1/archive?"+params);
    if(!response.ok)throw new Error("歷史逐日資料 API HTTP "+response.status);
    const payload=await response.json(),daily=payload.daily;
