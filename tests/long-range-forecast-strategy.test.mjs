@@ -28,7 +28,17 @@ test("long-range horizons use weekly ECMWF and monthly C3S signals", () => {
   assert.equal(d47.temporalResolution, "monthly and seasonal aggregates");
 });
 
-test("daily estimated weather records are required for every D19-D90 date", () => {
+test("D17-D18 are a daily-estimate transition band, not a trend-only gap", () => {
+  const transition = spec.horizons.find(x => x.id === "D17_D18");
+  assert.deepEqual(transition.leadDays, [17,18]);
+  assert.equal(transition.primarySource, "ECMWF_IFS_SUBSEASONAL");
+  assert.equal(transition.secondarySource, "ERA5_LAND_CLIMATOLOGY");
+  assert.match(transition.dailyOutput, /each local date D17 and D18/);
+  assert.equal(spec.operations.d17D18DailyOutputRequired, true);
+  assert.match(spec.operations.d17D18Source, /no D16 carry-forward/);
+});
+
+test("daily estimated weather records are required for every D17-D90 date", () => {
   assert.equal(spec.operations.dailyOutputRequired, true);
   assert.equal(spec.dailyOutputContract.granularity, "one record per local calendar date per regional representative point");
   assert.ok(spec.dailyOutputContract.requiredDailyFields.includes("precipitationAmountEstimateMm"));
@@ -39,6 +49,8 @@ test("daily estimated weather records are required for every D19-D90 date", () =
 test("daily estimates preserve sequence coherence and uncertainty", () => {
   assert.match(spec.dailyOutputContract.dailyVsPeriodSignalRule, /not get copied as identical values/);
   assert.ok(spec.dailyOutputContract.generationMethod.some(x => x.includes("multi-day weather persistence")));
+  assert.ok(spec.dailyOutputContract.generationMethod.some(x => x.includes("D17-D18")));
+  assert.ok(spec.dailyOutputContract.validation.requiredLeadBands.includes("D17-D18"));
   assert.ok(spec.dailyOutputContract.generationMethod.some(x => x.includes("prediction intervals")));
 });
 
