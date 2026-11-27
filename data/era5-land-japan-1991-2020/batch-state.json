@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "status": "in-progress",
+  "sourceId": "ERA5_LAND_HOURLY_TIMESERIES",
+  "dataset": "reanalysis-era5-land-timeseries",
+  "referencePeriod": [
+    1991,
+    1991
+  ],
+  "timezone": "Asia/Tokyo",
+  "climateBaselineEnabled": false,
+  "forecastEnabled": false,
+  "tasks": {
+    "JP-KNT-NORTH-1991": {
+      "taskId": "JP-KNT-NORTH-1991",
+      "subregionId": "JP-KNT-NORTH",
+      "year": 1991,
+      "start": "1991-01-01",
+      "end": "1991-12-31",
+      "representativeCourseId": "jp-seven-hundred",
+      "representativePoint": {
+        "latitude": 36.709629,
+        "longitude": 140.004827
+      },
+      "expectedGridPoint": {
+        "latitude": 36.7,
+        "longitude": 140
+      },
+      "timezone": "Asia/Tokyo",
+      "status": "failed",
+      "attempts": 3,
+      "error": "Traceback (most recent call last):\n  File \"/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/scripts/era5_land_pilot.py\", line 113, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/scripts/era5_land_pilot.py\", line 103, in main\n    client = cdsapi.Client()\n             ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/cdsapi/api.py\", line 281, in __new__\n    _, token, _ = get_url_key_verify(url, key, None)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/cdsapi/api.py\", line 69, in get_url_key_verify\n    raise Exception(\"Missing/incomplete configuration file: %s\" % (dotrc))\nException: Missing/incomplete configuration file: /home/runner/.cdsapirc",
+      "archive": "/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/data/era5-land-japan-1991-2020/raw/JP-KNT-NORTH_1991-01-01_1991-12-31.zip",
+      "inspection": "/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/data/era5-land-japan-1991-2020/reports/JP-KNT-NORTH-1991-inspection.json",
+      "daily": "/home/runner/work/Asia-Golf-90-Day-Planner/Asia-Golf-90-Day-Planner/data/era5-land-japan-1991-2020/daily/JP-KNT-NORTH-1991-daily.json",
+      "climatologyEligible": false
+    }
+  },
+  "updatedAt": "2026-11-27T09:32:42Z"
+}
