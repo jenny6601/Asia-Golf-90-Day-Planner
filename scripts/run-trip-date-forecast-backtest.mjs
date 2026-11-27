@@ -13,7 +13,7 @@ const dayNumber=date=>Date.parse(date+"T00:00:00Z")/86400000;
 const addDays=(date,n)=>new Date((dayNumber(date)+n)*86400000).toISOString().slice(0,10);
 await fs.mkdir(outDir,{recursive:true});
 let names=[];
-try{names=(await fs.readdir(snapshotDir)).filter(x=>/^\\d{4}-\\d{2}-\\d{2}\\.json$/.test(x)).sort()}catch{}
+try{names=(await fs.readdir(snapshotDir)).filter(x=>/^\d{4}-\d{2}-\d{2}\.json$/.test(x)).sort()}catch{}
 const snapshots=[];
 for(const name of names){
   try{snapshots.push(JSON.parse(await fs.readFile(new URL(name,snapshotDir),"utf8")))}
