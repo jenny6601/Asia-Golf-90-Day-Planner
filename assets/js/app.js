@@ -688,7 +688,22 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const host=$("region-report");host.replaceChildren();
  const back=()=>renderRegionMonths(group.country,group.rootRegion,group.months||monthOptions(),group.courses,group.subregion||"");
  showClimateScreen(month+"月 "+group.region+"天氣分析",back);
- const title=section(host,"① "+month+"｜地區月氣象分析");title.classList.add("monthly-analysis-section");
+ const jumpNav=node("nav",undefined,"monthly-jump-nav");
+ jumpNav.setAttribute("aria-label","月分析區塊快速跳轉");
+ [
+  ["① 地區月氣象分析","monthly-section-1"],
+  ["② 全月逐日天氣簡表","monthly-section-2"],
+  ["③ 本月高爾夫適打評估","monthly-section-3"]
+ ].forEach(([label,target])=>{
+  const button=node("button",label,"monthly-jump-button");button.type="button";
+  button.addEventListener("click",()=>{
+   const section=document.getElementById(target);
+   if(section)section.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+  jumpNav.append(button);
+ });
+ $("flow-nav").append(jumpNav);
+ const title=section(host,"① "+month+"｜地區月氣象分析");title.id="monthly-section-1";title.classList.add("monthly-analysis-section");
  const monthIndex=Number(month.slice(5,7)),season=[];
  for(const rec of seasonalRecords||[]){const m=rec.monthly||{},i=(m.time||[]).findIndex(t=>String(t).slice(0,7)===month);if(i<0)continue;const get=k=>Number.isFinite(m[k]?.[i])?m[k][i]:null;season.push({rain:get("precipitation_mean"),rainAnomaly:get("precipitation_anomaly"),temp:get("temperature_2m_mean"),tempAnomaly:get("temperature_2m_anomaly"),wind:get("wind_speed_10m_mean"),cloud:get("cloud_cover_mean")})}
  const hist=(historicalRecords||[]).map(r=>r.monthly?.find(x=>x.month===monthIndex)).filter(Boolean);
@@ -717,7 +732,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  const narrative=node("div",undefined,"monthly-analysis-narrative");
  narrative.append(node("p","正在彙整本月逐日天氣、降雨風險及歷史／季節模式訊號，完成後將計算適合打球的日期與建議時段。","monthly-analysis-note"));
  title.append(narrative,node("p","季節預報來源：Open-Meteo Seasonal Forecast API｜ECMWF seasonal seamless（EC46 + SEAS5）。歷史氣候來源：Open-Meteo Historical Weather API｜ERA5 reanalysis，使用最近十個完整年度。","monthly-source-note"));
- const dailySection=section(host,"② "+month+"｜全月逐日天氣簡表");dailySection.classList.add("monthly-calendar-section");
+ const dailySection=section(host,"② "+month+"｜全月逐日天氣簡表");dailySection.id="monthly-section-2";dailySection.classList.add("monthly-calendar-section");
  const daysInMonth=new Date(Date.UTC(Number(month.slice(0,4)),monthIndex,0)).getUTCDate(),dates=Array.from({length:daysInMonth},(_,i)=>month+"-"+String(i+1).padStart(2,"0"));
  const sampleCourses=(group.courses||[]).filter(c=>Number.isFinite(c.latitude)&&Number.isFinite(c.longitude)).slice(0,3),startForecast=today(),endForecast=add(startForecast,15),overlaps=dates.some(d=>d>=startForecast&&d<=endForecast);
  let forecastCourses=[],historicalNormals=[],seasonalDailyRows=[];
@@ -825,7 +840,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   historicalTypeLabel==="偏濕季"?"偏濕季，雨量或雨日較多。":
   historicalTypeLabel==="偏乾季"?"偏乾季，降雨相對較少。":
   "季節轉換型，雨量介於乾季與雨季之間。";
- const summary=node("div",undefined,"monthly-playability-card");
+ const summary=node("div",undefined,"monthly-playability-card");summary.id="monthly-section-3";
  const reportHeader=node("header",undefined,"monthly-playability-header");
  const headerTitle=node("strong",month.slice(0,4)+"年"+monthIndex+"月適打評估");
  const countryName=String(group.country||"").replace(/^[A-Z]{2,3}[・\\s]*/,"");
