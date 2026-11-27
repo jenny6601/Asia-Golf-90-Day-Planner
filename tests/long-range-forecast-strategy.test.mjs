@@ -43,7 +43,8 @@ test("historical climate source is ERA5 daily statistics only", () => {
   assert.ok(historical);
   assert.equal(historical.dataset, "derived-era5-single-levels-daily-statistics");
   assert.equal(spec.horizons.find(x => x.id === "D17_D18").secondarySource, "ERA5_DAILY_CLIMATOLOGY");
-  assert.ok(!JSON.stringify(spec).includes("ERA5-Land"));
+  assert.ok(!JSON.stringify(spec).includes("reanalysis-era5-land"));
+  assert.ok(!spec.sources.some(x => /ERA5_LAND/i.test(x.sourceId)));
 });
 
 test("daily estimated weather records are required for every D17-D90 date", () => {
