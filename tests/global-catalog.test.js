@@ -16,12 +16,15 @@ test("global course catalog preserves all six Okinawa pilot courses", () => {
   assert.ok(courses.every(x => x.countryCode === "JP" && x.timezone === "Asia/Tokyo"));
 });
 
-test("pending course coordinates are explicitly unavailable, not fabricated", () => {
-  const pgm = courses.find(x => x.id === "pgm-okinawa");
-  assert.equal(pgm.coordinateStatus, "pending");
-  assert.equal(pgm.latitude, null);
-  assert.equal(pgm.longitude, null);
-  assert.equal(pgm.enabled, false, "pending GPS must not be selectable in the runtime catalog");
+test("all six Okinawa courses have user-supplied Google Maps runtime coordinates", () => {
+  const ids = ["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"];
+  for (const id of ids) {
+    const course = courses.find(x => x.id === id);
+    assert.equal(course.coordinateStatus, "user_provided_google_maps", id);
+    assert.equal(course.coordinateSource, "User-provided Google Maps coordinate (2026-11-27)", id);
+    assert.ok(Number.isFinite(course.latitude) && Number.isFinite(course.longitude), id);
+    assert.equal(course.enabled, true, id);
+  }
 });
 
 test("global forecast policy uses two providers for preliminary screening and separates strict comparison", () => {
