@@ -1176,3 +1176,16 @@ button.monthly-calendar-day:active{transform:scale(.98);box-shadow:0 0 0 2px rgb
  .monthly-jump-nav{grid-template-columns:1fr;gap:7px}
  .monthly-jump-button{min-height:42px;font-size:.88rem}
 }
+
+/* Compact blue quick-jump controls: concise labels, balanced wrapping */
+.monthly-jump-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 16px;padding:0}
+.monthly-jump-button{display:flex;align-items:center;justify-content:center;min-width:0;min-height:68px;padding:10px 9px;border:1px solid #155a91;border-radius:13px;background:linear-gradient(145deg,#287bb8 0%,#17639e 100%);color:#fff;font-size:.98rem;font-weight:900;line-height:1.4;letter-spacing:.01em;text-align:center;white-space:pre-line;overflow-wrap:anywhere;box-shadow:0 2px 5px rgba(19,76,119,.16);cursor:pointer}
+.monthly-jump-button:active{background:#124f82;transform:translateY(1px)}
+@media(max-width:600px){
+ .monthly-jump-nav{gap:7px;margin:10px 0 14px}
+ .monthly-jump-button{min-height:66px;padding:9px 6px;font-size:.86rem;line-height:1.4;border-radius:11px}
+}
+@media(max-width:380px){
+ .monthly-jump-nav{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ .monthly-jump-button{min-height:62px;padding:7px 4px;font-size:.76rem;line-height:1.35}
+}
