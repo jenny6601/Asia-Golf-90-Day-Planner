@@ -33,7 +33,7 @@ export async function fetchOkinawaLongRange(fetchImpl=fetch){
   if(!response.ok)throw new Error(`${point.label} 長期展望 API HTTP ${response.status}`);
   const payload=await response.json();
   if(!payload.weekly?.time?.length && !payload.monthly?.time?.length)throw new Error(`${point.label} 未回傳週/月展望資料`);
-  return {point,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,timezone:payload.timezone,model:payload.model??"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),weekly:payload.weekly??null,monthly:payload.monthly??null,daily:payload.daily??null,hourly:payload.hourly??null};
+  return {point,latitude:payload.latitude,longitude:payload.longitude,elevation:payload.elevation,timezone:payload.timezone,model:payload.model??"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),weeklyUnits:payload.weekly_units??null,monthlyUnits:payload.monthly_units??null,weekly:payload.weekly??null,monthly:payload.monthly??null,daily:payload.daily??null,hourly:payload.hourly??null};
  }));
  return {provider:"Open-Meteo Seasonal Forecast API",model:"ECMWF seasonal seamless (EC46 + SEAS5)",fetchedAt:new Date().toISOString(),timezone:"Asia/Tokyo",points};
 }
