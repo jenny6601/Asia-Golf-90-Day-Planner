@@ -119,3 +119,10 @@ test("three golf rounds stay on the middle three consecutive days, not the trave
   );
   assert.equal(result.topThree[0].golfRiskScore,75);
 });
+
+test("missing forecast-direction stability prevents a high-confidence label",()=>{
+  const days=buildDays(5);
+  for(const day of days)for(const region of Object.values(day.regions))delete region.stability;
+  const result=recommendGolfTripDates({asOf,horizonDays:5,days});
+  assert.equal(result.topThree[0].confidence,"medium");
+});
