@@ -136,7 +136,7 @@ def audit_region_year(region, year, rows):
     complete_days = [
         row for row in dates.values()
         if row.get("validHourCount") == 24
-        and not row.get("qualityFlags")
+        and quality_flags_acceptable(row)
         and all(valid_number(row.get(metric), bounds) for metric, bounds in METRICS.items())
     ]
     month_summary = {}
