@@ -1274,3 +1274,31 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 .selected-week-five-page .taiwan-seven-row{display:grid!important;grid-template-columns:repeat(7,minmax(112px,1fr))!important;min-width:784px!important;width:784px!important;gap:0}
 .selected-week-five-page .taiwan-style-seven-day .seven-day-inline-graph{min-width:784px!important;width:784px!important}
 .selected-week-five-page .taiwan-seven-cell{min-width:112px!important;box-sizing:border-box}
+
+
+/* User adjustment 2026-11-27: seven-day chart shows five days per viewport,
+   while the full seven-day sequence remains in one smooth horizontal strip. */
+.selected-week-five-page .taiwan-style-seven-day{
+  width:100%!important;min-width:0!important;overflow-x:auto!important;overflow-y:hidden!important;
+  scroll-behavior:smooth;scroll-snap-type:none!important;-webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;touch-action:pan-x pan-y;
+}
+.selected-week-five-page .taiwan-seven-row{
+  display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;
+  width:140%!important;min-width:140%!important;max-width:none!important;gap:0!important;
+}
+.selected-week-five-page .seven-day-inline-graph{
+  width:140%!important;min-width:140%!important;max-width:none!important;overflow:visible!important;
+}
+.selected-week-five-page .seven-day-inline-graph svg{
+  display:block;width:100%!important;min-width:0!important;max-width:none!important;height:auto;
+}
+/* Weekend emphasis is limited to the date header; weather and playability
+   colors remain governed by the original weather/status palette. */
+.selected-week-five-page .taiwan-seven-weather .taiwan-seven-cell,
+.selected-week-five-page .taiwan-seven-rain .taiwan-seven-cell{
+  background:inherit!important;color:inherit!important;
+}
+.selected-week-five-page .taiwan-seven-weather .monthly-day-playability{
+  color:inherit;
+}
