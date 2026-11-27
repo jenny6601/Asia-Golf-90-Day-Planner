@@ -1,0 +1,35 @@
+name: Long-Range Source Contract Validation
+on:
+  push:
+    branches: [asia-eight-country-shared-engine]
+    paths:
+      - "config/global/weather-subregions.json"
+      - "data/long-range-inputs/**"
+      - "scripts/validate_long_range_source_contracts.py"
+      - "tests/test_long_range_source_contracts.py"
+      - ".github/workflows/long-range-source-contracts.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: long-range-source-contracts
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run contract tests
+        run: python -m unittest tests/test_long_range_source_contracts.py
+      - name: Validate any acquired source files
+        run: python scripts/validate_long_range_source_contracts.py
+      - name: Upload contract validation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: long-range-source-contract-validation
+          path: data/long-range-readiness/long-range-source-contract-validation.json
