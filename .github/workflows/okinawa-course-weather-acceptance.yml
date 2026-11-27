@@ -7,6 +7,7 @@ on:
       - asia-eight-country-shared-engine
     paths:
       - "config/okinawa/course-coordinate-candidates.json"
+      - "config/okinawa/jma-amedas-stations.json"
       - "config/global/courses.json"
       - "scripts/validate-okinawa-course-weather.mjs"
       - "tests/okinawa-course-weather-acceptance.test.js"
