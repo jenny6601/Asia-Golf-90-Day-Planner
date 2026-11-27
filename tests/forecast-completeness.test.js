@@ -18,7 +18,7 @@ test("16-day forecast passes only with all App daily and hourly fields fully pop
  assert.equal(result.hourlyCount,384);
  assert.equal(result.requiredFieldCount,20);
  assert.equal(result.completeFieldCount,20);
- assert.equal(result.coreFieldsComplete,true);
+ assert.equal(result.coreFieldsComplete,true,JSON.stringify(result));
  assert.equal(result.totalExpectedValues,4368);
  assert.equal(result.totalValidValues,4368);
  assert.equal(result.dailyDatesContinuous,true);
