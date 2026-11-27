@@ -182,8 +182,8 @@ test("Japan mainland GPS candidates have explicit evidence grades and none is fo
  const japan=registry.countries.find(x=>x.countryCode==="JP");
  const mainland=japan.subregions.filter(x=>!x.id.startsWith("JP-OKI-"));
  const count=grade=>mainland.filter(x=>x.coordinateQuality?.grade===grade).length;
- assert.equal(count("A"),1);
- assert.equal(count("B"),14);
+ assert.equal(count("A"),3);
+ assert.equal(count("B"),12);
  assert.equal(count("C"),1);
  assert.ok(mainland.every(x=>x.coordinateQuality.weatherPointEligible===false));
  assert.ok(mainland.every(x=>x.coordinateQuality.reviewStatus));
@@ -210,4 +210,24 @@ test("The North Country official map viewport center is stored as evidence, neve
  assert.equal(north.coordinateQuality.grade,"B");
  assert.equal(north.coordinateQuality.weatherPointEligible,false);
  assert.equal(north.candidateCoordinates.latitude,42.82058);
+});
+
+
+test("Japan official map cross-checks preserve pin versus viewport-center semantics",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const find=name=>japan.subregions.find(x=>x.candidateCourseName===name);
+ const hokkaido=find("Hokkaido Country Club");
+ assert.equal(hokkaido.candidateCoordinates.coordinateStatus,"official-operator-google-maps-place-pin");
+ assert.equal(hokkaido.candidateCoordinates.latitude,41.9892895);
+ assert.equal(hokkaido.candidateCoordinates.longitude,140.6549955);
+ assert.equal(hokkaido.coordinateQuality.officialMapReference.coordinateType,"place-pin-coordinate");
+ assert.equal(hokkaido.coordinateQuality.officialMapReference.distanceFromPreviousCandidateKm,0.583);
+ const seven=find("Seven Hundred Club");
+ assert.equal(seven.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
+ assert.equal(seven.coordinateQuality.officialMapReference.distanceFromCandidateKm,0.001);
+ const narita=find("Narita Hills Country Club");
+ assert.equal(narita.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
+ assert.equal(narita.coordinateQuality.officialMapReference.distanceFromCandidateKm,0.122);
+ assert.ok([hokkaido,seven,narita].every(x=>x.coordinateQuality.weatherPointEligible===false));
 });
