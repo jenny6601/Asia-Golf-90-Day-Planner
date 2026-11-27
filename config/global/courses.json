@@ -47,7 +47,7 @@
     "catalogStatus": "active",
     "weatherEnabled": true,
     "subregionLabel": "沖繩中部",
-    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "kise",
@@ -2471,7 +2471,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "jp-bel-beach",
@@ -2519,7 +2519,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-OUTER-ISLANDS"
   },
   {
     "id": "jp-ginoza-cc",
@@ -2591,7 +2591,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "jp-nanzan-cc",
@@ -2615,7 +2615,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-SOUTH"
   },
   {
     "id": "jp-ocean-castle",
@@ -2639,7 +2639,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "jp-ocean-links-miyako",
@@ -2663,7 +2663,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-OUTER-ISLANDS"
   },
   {
     "id": "jp-okinawa-country",
@@ -2687,7 +2687,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "jp-okinawa-royal",
@@ -2711,7 +2711,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "jp-onishi-terrace",
@@ -2735,7 +2735,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "jp-risonare-kohamajima",
@@ -2759,7 +2759,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-OUTER-ISLANDS"
   },
   {
     "id": "jp-ryukyu-golf",
@@ -2783,7 +2783,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-SOUTH"
   },
   {
     "id": "jp-sashiba-links",
@@ -2807,7 +2807,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-OUTER-ISLANDS"
   },
   {
     "id": "jp-shigira-bay",
@@ -2831,7 +2831,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-OUTER-ISLANDS"
   },
   {
     "id": "jp-shurei-cc",
@@ -2855,7 +2855,7 @@
     "weatherEnabled": false,
     "enabled": true,
     "operationalStatus": "not_independently_verified",
-    "golfClusterId": "JP-OKI-MAIN-NORTH"
+    "golfClusterId": "JP-OKI-MAIN-SOUTH"
   },
   {
     "id": "jp-aino-cc",
