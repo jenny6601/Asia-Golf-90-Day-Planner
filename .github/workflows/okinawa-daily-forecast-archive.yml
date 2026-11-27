@@ -1,0 +1,51 @@
+name: Okinawa Daily Forecast Archive
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 18 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: okinawa-daily-forecast-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout archive branch
+        uses: actions/checkout@v4
+        with:
+          ref: asia-eight-country-shared-engine
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Collect six-course 16-day forecast snapshot
+        id: collect
+        continue-on-error: true
+        run: node scripts/archive-okinawa-daily-forecast.mjs
+      - name: Commit daily snapshot
+        if: always()
+        run: |
+          if [ -d data/okinawa/forecast-archive ] && [ -n "$(git status --porcelain data/okinawa/forecast-archive)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/okinawa/forecast-archive/
+            git commit -m "Archive Okinawa daily six-course forecast snapshot"
+            git push
+          else
+            echo "No new archive files to commit."
+          fi
+      - name: Upload retrieval snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-daily-forecast-snapshot
+          path: data/okinawa/forecast-archive/
+          if-no-files-found: warn
+          retention-days: 90
