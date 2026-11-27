@@ -1,45 +1,50 @@
-# Daily-Only Historical Climate Acquisition Plan — ERA5 Only
+# Historical Climate Data — Simplified ERA5 Approach
 
 ## Decision
-ERA5-Land is removed from the operational source architecture. The eight-country historical daily climate pipeline uses **ERA5 single-level post-processed daily statistics only**. No ERA5-Land dataset is requested, downloaded, blended or used as a fallback.
+Use the existing Open-Meteo Historical Weather API with the explicit **ERA5** model. Do not use ERA5-Land, CDS credentials, NetCDF downloads, station discovery, or hourly time-series files.
 
-## Sole source
-Dataset: derived-era5-single-levels-daily-statistics (Copernicus CDS / ECMWF).
+## Reference period
+- Fixed baseline: 1991-01-01 through 2020-12-31.
+- Geography: the existing 80 representative points in \`config/global/weather-subregions.json\`.
+- Each golf-course cluster inherits the climate assessment of its regional representative point.
+- Timezone: each representative point's existing IANA timezone.
 
-ERA5 daily statistics provide daily minimum, mean, maximum and sum, with configurable local UTC offset and sub-daily sampling frequency. Daily aggregation is performed by CDS during retrieval; the returned NetCDF archives contain daily aggregates, not hourly time-series output. The dataset is global, has 0.25-degree atmospheric resolution and coverage from 1940 onward. See the official CDS dataset description and ERA5 family daily-statistics documentation:
-- https://cds.climate.copernicus.eu/datasets/derived-era5-single-levels-daily-statistics
-- https://confluence.ecmwf.int/spaces/CKB/pages/462888259/ERA5%2Bfamily%2Bpost-processed%2Bdaily%2Bstatistics%2Bdocumentation
+## Data retrieval
+The existing \`fetchCourseHistoricalWeekNormals()\` and \`fetchCourseHistoricalMonthlyClimate()\` functions share one cached daily archive request per coordinate/timezone.
 
-## Daily request design
-For each regional representative point and year, request four daily-statistic groups:
-1. daily_min: 2 m air temperature.
-2. daily_mean: 2 m dewpoint, 10 m U/V wind components, total cloud cover and mean sea-level pressure. Do not request daily mean 2 m air temperature.
-3. daily_max: 2 m air temperature.
-4. daily_sum: total precipitation.
+The request returns daily aggregates only:
+- Daily minimum and maximum 2 m temperature
+- Daily mean 2 m dewpoint
+- Daily mean relative humidity
+- Daily mean and maximum 10 m wind speed
+- Daily precipitation sum and precipitation hours
+- Daily weather code
 
-The request uses the point's local fixed UTC offset. The CDS frequency=1_hourly option controls the samples used internally to compute daily aggregates; it does not request or return hourly time-series files. No hourly data is stored by this project.
+No daily mean air temperature is required for the long-range display. Minimum/maximum air temperature are retained as inputs for the apparent-temperature estimate.
 
-## Pilot
-Workflow: .github/workflows/daily-climate-statistics-pilot.yml.
-- First pilot: JP-OKI-MAIN-NORTH, year 1991.
-- Four requests, all against the same ERA5 daily-statistics dataset.
-- API credentials continue to use the existing CDS_API_KEY repository secret.
-- The current pilot checks ZIP integrity and presence of NetCDF files only.
-- It does not yet prove complete daily coverage, correct units, correct returned grid, or climate skill.
-- productionEligible remains false.
+## Daily historical estimate
+For D19-D90, use a 31-day rolling calendar window centred on each target month/day, pooled across the 1991-2020 reference period. This provides a stable historical climate tendency rather than pretending to know the exact weather on a future date.
 
-## Quality gates before 80-region scale-up
-1. Confirm returned NetCDF schemas and variable names for all four statistic groups.
-2. Verify exactly one record per requested local calendar day, including leap days and year boundaries.
-3. Validate units, missing values, daily statistic and timezone alignment.
-4. Inspect returned 0.25-degree coordinates and regional representativeness for each region.
-5. Validate precipitation daily-sum semantics and compare selected periods with independent gauge observations where available.
-6. Normalize all daily records with source, dataset, grid, timezone, run and quality provenance.
-7. Run completeness, bias, MAE/RMSE, wet-day contingency and 30-year calendar-window checks before enabling the historical baseline.
+Outputs:
+- Historical wet-day frequency (daily precipitation >= 1 mm), explicitly not a future daily rain probability
+- Mean daily precipitation and 90th-percentile daily precipitation
+- Historical minimum/maximum air-temperature context
+- Estimated apparent-temperature low/high range, calculated from daily Tmin/Tmax, mean dewpoint and mean wind
+- Historical mean wind and relative humidity
+- Valid sample-year counts and data-quality flags
+
+The apparent-temperature calculation uses daily aggregate inputs that are not time-paired and does not include direct solar load. It is a regional estimate, not an hourly golf-course heat-stress measurement.
+
+## Missing data and confidence
+- Missing values remain null; missing precipitation is never converted to zero.
+- A calendar window is considered usable only when at least 90% of its daily samples are present in a year.
+- Confidence is based on valid historical sample years and field completeness.
+- Long-range outputs are always labelled as historical estimates, never deterministic daily forecasts.
 
 ## Scope protection
-- ERA5-Land is not used anywhere in the operational pipeline.
-- No full hourly time-series download.
-- No App UI, navigation, interaction or D01–D16 changes.
+- No CDS download workflow or credentials.
+- No ERA5-Land.
+- No station discovery or station observation ingestion.
+- No hourly historical time-series download or storage.
+- No changes to the App layout, navigation, interactions, or D01-D16 forecast.
 - No automatic date selection or booking.
-- D17–D90 daily estimates remain disabled until historical inputs and forecast-source hindcast calibration pass.
