@@ -13,7 +13,7 @@ ERA5 daily statistics provide daily minimum, mean, maximum and sum, with configu
 ## Daily request design
 For each regional representative point and year, request four daily-statistic groups:
 1. daily_min: 2 m air temperature.
-2. daily_mean: 2 m air temperature, 2 m dewpoint, 10 m U/V wind components, total cloud cover and mean sea-level pressure.
+2. daily_mean: 2 m dewpoint, 10 m U/V wind components, total cloud cover and mean sea-level pressure. Do not request daily mean 2 m air temperature.
 3. daily_max: 2 m air temperature.
 4. daily_sum: total precipitation.
 
