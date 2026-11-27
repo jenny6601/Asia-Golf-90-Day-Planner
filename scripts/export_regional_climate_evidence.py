@@ -71,8 +71,8 @@ def _interpolate_feb29(before: dict, after: dict) -> dict:
             "calendarMapping": "interpolated from 02-28 and 03-01; percentile and heavy-rain frequencies withheld"}
 
 
-def _usable_value(metric: dict, key: str):
-    return metric.get(key) if metric.get("validYears", 0) >= 24 else None
+def _usable_value(metric: dict, key: str, minimum_valid_years: int):
+    return metric.get(key) if metric.get("validYears", 0) >= minimum_valid_years else None
 
 
 def export_evidence(climatology: dict, start: date, days: int = 90) -> dict:
@@ -86,6 +86,10 @@ def export_evidence(climatology: dict, start: date, days: int = 90) -> dict:
         raise ValueError("Historical climatology input must remain non-activated")
     if not isinstance(climatology.get("regions"), dict) or not climatology["regions"]:
         raise ValueError("Climatology contains no regional records")
+
+    minimum_valid_years = int(climatology.get("minimumValidYears", 24))
+    if minimum_valid_years < 1:
+        raise ValueError("minimumValidYears must be positive")
 
     output = {
         "schemaVersion": 1,
@@ -124,15 +128,15 @@ def export_evidence(climatology: dict, start: date, days: int = 90) -> dict:
                 "sampleYears": min(rain_years, temp_years) if rain_years and temp_years else 0,
                 "rainSampleYears": rain_years,
                 "temperatureSampleYears": temp_years,
-                "rainFrequency": _usable_value(rain, "wetDayFrequencyPct"),
-                "rainMean": _usable_value(rain, "mean"),
+                "rainFrequency": _usable_value(rain, "wetDayFrequencyPct", minimum_valid_years),
+                "rainMean": _usable_value(rain, "mean", minimum_valid_years),
                 "rainP10": None,
-                "rainP90": _usable_value(rain, "p90"),
-                "highMean": _usable_value(tmax, "mean"),
-                "lowMean": _usable_value(tmin, "mean"),
-                "temperatureMean": _usable_value(tmean, "mean"),
-                "humidityMean": _usable_value(humidity, "mean"),
-                "windMean": _usable_value(wind, "mean"),
+                "rainP90": _usable_value(rain, "p90", minimum_valid_years),
+                "highMean": _usable_value(tmax, "mean", minimum_valid_years),
+                "lowMean": _usable_value(tmin, "mean", minimum_valid_years),
+                "temperatureMean": _usable_value(tmean, "mean", minimum_valid_years),
+                "humidityMean": _usable_value(humidity, "mean", minimum_valid_years),
+                "windMean": _usable_value(wind, "mean", minimum_valid_years),
                 "historicalStatus": {
                     "rain": rain.get("status", "missing"),
                     "temperatureMin": tmin.get("status", "missing"),
