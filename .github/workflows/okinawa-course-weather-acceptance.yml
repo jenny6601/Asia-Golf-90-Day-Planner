@@ -1,0 +1,47 @@
+name: Okinawa Six-Course Weather Acceptance
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - asia-eight-country-shared-engine
+    paths:
+      - "config/okinawa/course-coordinate-candidates.json"
+      - "config/global/courses.json"
+      - "scripts/validate-okinawa-course-weather.mjs"
+      - "tests/okinawa-course-weather-acceptance.test.js"
+      - ".github/workflows/okinawa-course-weather-acceptance.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: okinawa-six-course-weather-acceptance
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout development branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run course database and acceptance tests
+        run: |
+          node --test tests/okinawa-course-weather-acceptance.test.js
+          node --test tests/global-catalog.test.js
+      - name: Probe 16-day course-point forecast and 90-day seasonal data
+        run: node scripts/validate-okinawa-course-weather.mjs
+      - name: Upload Okinawa acceptance report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okinawa-six-course-weather-acceptance
+          path: |
+            artifacts/okinawa-acceptance/okinawa-course-weather-acceptance.json
+            artifacts/okinawa-acceptance/okinawa-course-weather-acceptance.md
+          if-no-files-found: warn
+          retention-days: 30
