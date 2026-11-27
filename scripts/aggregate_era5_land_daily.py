@@ -99,7 +99,14 @@ def aggregate_daily(hourly_records: list[dict], metadata: dict) -> list[dict]:
             precip = [float(v) * 1000.0 for v in fields["precipitationM"]]
             us = [float(v) for v in fields["u10Ms"]]
             vs = [float(v) for v in fields["v10Ms"]]
-            if any(v < -0.000001 for v in precip):
+            # CDS NetCDF may contain tiny floating-point negatives around zero
+            # (observed pilot minimum: about -0.000020 mm). Treat values in
+            # [-0.0001, 0) mm as numerical noise and clamp to zero below;
+            # materially negative precipitation remains a hard daily QA failure.
+            trace_negative = any(-0.0001 <= v < 0.0 for v in precip)
+            if trace_negative:
+                flags.append("trace_negative_precipitation_clamped")
+            if any(v < -0.0001 for v in precip):
                 complete = False
                 flags.append("negative_hourly_precipitation")
         if complete:
@@ -132,7 +139,7 @@ def aggregate_daily(hourly_records: list[dict], metadata: dict) -> list[dict]:
             "validHourCount": min([len(rows)] + [len(fields[k]) for k in VARS]),
             "qualityFlags": flags,
             "localDayTimezone": "Asia/Tokyo",
-            "precipitationUnitConversion": "hourly de-accumulated metres x 1000 to mm; sum JST day; no second de-accumulation",
+            "precipitationUnitConversion": "hourly de-accumulated metres x 1000 to mm; trace negatives >= -0.0001 mm clamped to zero; sum JST day; no second de-accumulation",
             "aggregationMethod": "JST calendar day 00:00-23:00; 24 valid hourly values required for all five source variables",
         })
     return output
