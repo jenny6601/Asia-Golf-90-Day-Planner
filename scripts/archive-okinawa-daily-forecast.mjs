@@ -1,9 +1,8 @@
 import fs from "node:fs/promises";
+import {HOURLY_FIELDS as fields,DAILY_FIELDS as dailyFields,buildFieldCoverage,missingCoverageFields,validateArchiveRecords} from "./okinawa-forecast-archive-schema.mjs";
 
 const courses=JSON.parse(await fs.readFile(new URL("../config/okinawa/course-coordinate-candidates.json",import.meta.url),"utf8"));
-const fields=["temperature_2m","apparent_temperature","relative_humidity_2m","precipitation_probability","precipitation","weather_code","wind_speed_10m","wind_direction_10m","wind_gusts_10m","cloud_cover"];
-const dailyFields=["weather_code","precipitation_sum","precipitation_probability_max","temperature_2m_min","temperature_2m_max","apparent_temperature_min","apparent_temperature_max","wind_speed_10m_max","wind_gusts_10m_max"];
-const finite=x=>typeof x==="number"&&Number.isFinite(x);
+
 const retrievedAt=new Date().toISOString();
 const records=[];
 for(const course of courses){
@@ -14,8 +13,8 @@ for(const course of courses){
  if(!response.ok)throw new Error(course.id+" forecast HTTP "+response.status+" "+(body.reason||body.error||""));
  const hourly=body.hourly||{},daily=body.daily||{};
  if(!hourly.time?.length||!daily.time?.length)throw new Error(course.id+" missing forecast time arrays");
- const hourlyCoverage=Object.fromEntries(fields.map(k=>[k,{valid:(hourly[k]||[]).filter(finite).length,expected:hourly.time.length}]));
- const dailyCoverage=Object.fromEntries(dailyFields.map(k=>[k,{valid:(daily[k]||[]).filter(finite).length,expected:daily.time.length}]));
+ const hourlyCoverage=buildFieldCoverage(hourly,fields,hourly.time.length);
+ const dailyCoverage=buildFieldCoverage(daily,dailyFields,daily.time.length);
  records.push({
   course:{id:course.id,name:course.name,latitude:course.latitude,longitude:course.longitude,coordinateStatus:course.coordinateStatus,coordinateSource:course.coordinateSource},
   provider:"Open-Meteo Forecast API",retrievedAt,timezone:body.timezone||"Asia/Tokyo",
@@ -23,12 +22,13 @@ for(const course of courses){
   grid:{latitude:body.latitude,longitude:body.longitude,elevation:body.elevation??null},
   units:{hourly:body.hourly_units??null,daily:body.daily_units??null},
   hourly,daily,hourlyCoverage,dailyCoverage,
-  missingRequiredFields:[...fields.filter(k=>hourlyCoverage[k].valid!==hourlyCoverage[k].expected),...dailyFields.filter(k=>dailyCoverage[k].valid!==dailyCoverage[k].expected)]
+  missingRequiredFields:missingCoverageFields(hourlyCoverage,dailyCoverage)
  });
  await new Promise(r=>setTimeout(r,300));
 }
 const date=retrievedAt.slice(0,10);
-const archive={schemaVersion:1,archiveType:"forecast-retrieval-snapshot",retrievedAt,validTimeZone:"Asia/Tokyo",courseCount:records.length,courseIds:records.map(x=>x.course.id),issueTimeStatus:"Provider forecast initialisation/issue time is not exposed by this endpoint; retrievedAt is recorded and must not be relabelled as issueTime.",records};
+const quality=validateArchiveRecords(records,courses.map(course=>course.id));
+const archive={schemaVersion:1,archiveType:"forecast-retrieval-snapshot",retrievedAt,validTimeZone:"Asia/Tokyo",courseCount:records.length,courseIds:records.map(x=>x.course.id),quality,issueTimeStatus:"Provider forecast initialisation/issue time is not exposed by this endpoint; retrievedAt is recorded and must not be relabelled as issueTime.",records};
 const path="data/okinawa/forecast-archive/"+date+".json";
 await fs.mkdir("data/okinawa/forecast-archive",{recursive:true});
 await fs.writeFile(path,JSON.stringify(archive,null,2));
@@ -54,4 +54,4 @@ const summary=[
 ].join("\n");
 await fs.writeFile("data/okinawa/forecast-archive/"+date+".md",summary);
 console.log(summary);
-if(records.length!==6||records.some(x=>x.missingRequiredFields.length))process.exitCode=1;
+if(!quality.recordsPass)process.exitCode=1;
