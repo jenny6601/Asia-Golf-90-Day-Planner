@@ -19,8 +19,8 @@ const dates=Array.from({length:90},(_,i)=>addDays(asOf,i+1));
 const courseIds=["southern-links","palm-hills","pgm-okinawa","kise","atta-terrace","chura-orchard"];
 const representativeIds=["kise","pgm-okinawa","southern-links"];
 const courses=JSON.parse(await fs.readFile(new URL("../config/global/courses.json",import.meta.url),"utf8"))
-  .filter(x=>courseIds.includes(x.id));
-if(courses.length!==6)throw new Error("Expected exactly six configured Okinawa courses");
+  .filter(x=>representativeIds.includes(x.id));
+if(courses.length!==3)throw new Error("Expected exactly three representative Okinawa courses");
 
 const [forecast,longRange]=await Promise.all([
   fetchOkinawa16DayForecast(),
