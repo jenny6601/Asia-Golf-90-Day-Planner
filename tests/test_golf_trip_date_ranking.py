@@ -45,7 +45,7 @@ class GolfTripDateRankingTests(unittest.TestCase):
             for i, value in enumerate([70, 10, 60, 20, 50])
         }
         result = MODULE.rank_trip_start(start, sample_calendar(frequencies))
-        self.assertEqual(result["playDates"], ["2026-06-02", "2026-06-04", "2026-06-05"])
+        self.assertEqual(result["playDates"], ["2026-06-02", "2026-06-03", "2026-06-04"])
         self.assertEqual(result["roundCount"], 3)
         self.assertEqual(len(result["restOrTransferDates"]), 2)
 
@@ -91,7 +91,8 @@ class GolfTripDateRankingTests(unittest.TestCase):
             path.write_text(json.dumps(payload), encoding="utf-8")
             result = MODULE.rank_departures(path, "JP-TEST", date(2026, 1, 1), horizon_days=90)
             self.assertEqual(result["candidateCount"], 86)
-            self.assertEqual(result["planningParameters"]["completeTripWindows"], 86)
+            self.assertEqual(result["planningParameters"]["candidateDepartureDates"], 90)
+            self.assertTrue(result["planningParameters"]["tripMayExtendBeyondDepartureHorizon"])
             self.assertEqual(result["recommendations"][0]["playDates"],
                              ["2026-01-02", "2026-01-03", "2026-01-04"])
 
