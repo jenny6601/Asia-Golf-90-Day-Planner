@@ -365,6 +365,9 @@ function showClimateScreen(title,backAction){
  const home=node("button","⌂ 回首頁","flow-home");home.type="button";home.addEventListener("click",()=>{climateBackAction=null;showCountryOverview()});actions.append(home);
  nav.append(actions);
  out.hidden=false;status.hidden=false;
+ // Every subpage transition starts at the destination page header, not the previous scroll position.
+ window.scrollTo(0,0);
+ requestAnimationFrame(()=>window.scrollTo(0,0));
 }
 function showCountryOverview(){
  climateBackAction=null;
@@ -712,6 +715,12 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   });
   jumpNav.append(button);
  });
+ const weekButton=node("button","本月週分析","monthly-jump-button");weekButton.type="button";
+ weekButton.addEventListener("click",()=>{
+  if((seasonalRecords||[]).length)renderRegionTopWeeks(group,seasonalRecords,month);
+  else renderEmptyWeekAnalysis(group.country,group.region,month,()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords));
+ });
+ jumpNav.append(weekButton);
  $("flow-nav").append(jumpNav);
  const title=section(host,"① "+month+"｜地區月氣象分析");title.id="monthly-section-1";title.classList.add("monthly-analysis-section");
  const monthIndex=Number(month.slice(5,7)),season=[];
