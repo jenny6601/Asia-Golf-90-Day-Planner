@@ -44,12 +44,16 @@ def inventory(root: Path=ROOT):
               "provider":p.get("seasonalProvider"),"model":p.get("seasonalModel"),"regions":regions})
         except Exception as exc: snapshots.append({"file":str(path.relative_to(root)),"error":str(exc)})
     n=len(subs); with_data=sum(x["hasHistoricalDailyInput"] for x in region_rows)
+    unmapped_regions=sorted(set(by_region)-{s["id"] for s in subs})
+    unmapped_rows=sum(len(by_region[rid]) for rid in unmapped_regions)
     seasonal_daily=sum(r["seasonalDailyRecords"] for s in snapshots for r in s.get("regions",[]))
     return {"schemaVersion":1,"inventoryType":"repository-file-presence-and-structure-only",
       "generatedAt":date.today().isoformat(),"status":"not-ready-for-production-daily-generation",
       "scope":{"expectedSubregions":n,"uniqueSubregionIds":len({s["id"] for s in subs})},
       "historicalEra5Land":{"fileCount":len(files),"regionsWithDailyRecords":with_data,
-        "regionsWithoutDailyRecords":n-with_data,"dailyRecordCount":sum(len(v) for v in by_region.values()),
+        "regionsWithoutDailyRecords":n-with_data,"dailyRecordCount":sum(len(by_region.get(s["id"],[])) for s in subs),
+        "allDailyRowsFoundIncludingUnmappedPilotFiles":sum(len(v) for v in by_region.values()),
+        "unmappedHistoricalSubregionIds":unmapped_regions,"unmappedHistoricalDailyRows":unmapped_rows,
         "referenceYearsPresent":sorted({y for x in region_rows for y in x["coveredYears"]}),
         "targetReferenceYears":[1991,2020],"full1991_2020BaselineAvailable":False,
         "regions":region_rows,"malformedFiles":malformed},
