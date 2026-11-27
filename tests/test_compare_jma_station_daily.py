@@ -23,7 +23,9 @@ class JmaCrosscheckTests(unittest.TestCase):
             "sourceId": MODULE.JMA_SOURCE, "qualityPolicyStatus": "validated", "stationId": "TEST", "name": "Test Station",
             "latitude": 35, "longitude": 139,
             "records": [
-                {"validDate": f"1991-01-0{i}", "precipitationMm": rain, "temperatureMinC": 4, "temperatureMaxC": 10}
+                {"validDate": f"1991-01-0{i}", "precipitationMm": rain, "temperatureMinC": 4, "temperatureMaxC": 10,
+                 "jmaQualityCodes": {"precipitationMm": 8, "temperatureMinC": 8, "temperatureMaxC": 8},
+                 "jmaHomogeneityNumbers": {"precipitationMm": "1", "temperatureMinC": "1", "temperatureMaxC": "1"}}
                 for i, rain in enumerate([0, 1, 5], 1)
             ]
         }
@@ -32,7 +34,22 @@ class JmaCrosscheckTests(unittest.TestCase):
         self.assertEqual(result["wetDayContingencyAt1mm"]["hit"], 2)
         self.assertEqual(result["status"], "paired-comparison-available")
 
-    def test_distance_and_insufficient_pairs_block_comparison_status(self):
+
+    def test_excludes_non_normal_jma_quality_and_flags_homogeneity_break(self):
+        region = {"subregionId": "JP-TEST", "representativePoint": {"latitude": 35, "longitude": 139}}
+        era5 = [{"validDate": "1991-01-01", "sourceId": MODULE.ERA5_SOURCE, "validHourCount": 24,
+                 "qualityFlags": [], "precipitationMm": 1, "temperatureMinC": 4, "temperatureMaxC": 10}]
+        station = {"sourceId": MODULE.JMA_SOURCE, "qualityPolicyStatus": "validated", "stationId": "TEST",
+                   "latitude": 35, "longitude": 139,
+                   "records": [{"validDate": "1991-01-01", "precipitationMm": 1, "temperatureMinC": 4, "temperatureMaxC": 10,
+                                "jmaQualityCodes": {"precipitationMm": 5, "temperatureMinC": 8, "temperatureMaxC": 8},
+                                "jmaHomogeneityNumbers": {"precipitationMm": "1", "temperatureMinC": "1", "temperatureMaxC": "1"}},
+                               {"validDate": "1991-01-02", "jmaHomogeneityNumbers": {"precipitationMm": "2"}}]}
+        result = MODULE.compare_region(region, era5, station, minimum_pairs=1)
+        self.assertEqual(result["pairedDays"], 0)
+        self.assertEqual(result["jmaQualityRejectedDays"], 1)
+        self.assertIn("jma_homogeneity_number_changes_within_period", result["issues"])
+\n    def test_distance_and_insufficient_pairs_block_comparison_status(self):
         region = {"subregionId": "JP-TEST", "representativePoint": {"latitude": 35, "longitude": 139}}
         station = {"sourceId": MODULE.JMA_SOURCE, "stationId": "FAR", "latitude": 36, "longitude": 140, "records": []}
         result = MODULE.compare_region(region, [], station, max_distance_km=10, minimum_pairs=1)
