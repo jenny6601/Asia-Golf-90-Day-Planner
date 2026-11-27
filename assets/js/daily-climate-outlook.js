@@ -1,5 +1,5 @@
 /**
- * D19-D90 historical-only daily climate outlook.
+ * D17-D90 historical-only daily climate outlook.
  * Uses 1991-2020 ERA5 31-day rolling calendar normals; no seasonal-model blend.
  * Outputs are regional climate estimates, not deterministic daily forecasts.
  */
@@ -39,10 +39,10 @@ function confidence(sampleYears,hasRain,hasTemperature,hasFeelsLike){
  */
 export function buildDailyClimateOutlook(seasonalPayload,historicalDays=[],today,days=90){
  if(!/^\d{4}-\d{2}-\d{2}$/.test(today||""))throw new TypeError("today must be YYYY-MM-DD");
- if(!Number.isInteger(days)||days<19||days>120)throw new TypeError("days must be between 19 and 120");
+ if(!Number.isInteger(days)||days<17||days>120)throw new TypeError("days must be between 17 and 120");
  const history=new Map((historicalDays||[]).map(row=>[row.date,row]));
  const output=[];
- for(let day=19;day<=Math.min(days,90);day++){
+ for(let day=17;day<=Math.min(days,90);day++){
   const date=addDays(today,day-1),h=history.get(date)||{};
   const samples=finite(h.sampleYears)?h.sampleYears:0;
   const rainSamples=finite(h.rainSampleYears)?h.rainSampleYears:0;
@@ -60,7 +60,7 @@ export function buildDailyClimateOutlook(seasonalPayload,historicalDays=[],today
   const quality=confidence(Math.min(rainSamples,temperatureSamples),finite(rainFrequency)&&finite(rainMean),finite(high)&&finite(low),finite(feelsLikeMin)&&finite(feelsLikeMax));
   const hasHistory=finite(rainMean)||finite(high)||finite(low)||finite(feelsLikeMin)||finite(feelsLikeMax);
   output.push({
-   date,lead:day,band:day<=46?"D19–D46":day<=60?"D47–D60":"D61–D90",
+   date,lead:day,band:day<=46?"D17–D46":day<=60?"D47–D60":"D61–D90",
    highEstimate:round(high),lowEstimate:round(low),
    feelsLikeMinEstimateC:round(feelsLikeMin),feelsLikeMaxEstimateC:round(feelsLikeMax),
    feelsLikeMinP10C:round(h.feelsLikeMinP10C),feelsLikeMinP90C:round(h.feelsLikeMinP90C),
