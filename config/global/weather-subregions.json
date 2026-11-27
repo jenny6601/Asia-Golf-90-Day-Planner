@@ -1271,7 +1271,25 @@
           "candidateCourseName": "BRG Kings Island Golf Resort",
           "candidateRationale": "河內周邊主要球場，54 洞度假球場候選",
           "candidateSourceUrl": "https://www.teetimevn.com/vi/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 21.060953,
+            "longitude": 105.472269,
+            "timezone": "Asia/Ho_Chi_Minh",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/vietnam/brg-kings-island-golf-resort-mountainview-course/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 BRG Kings Island coordinates; Dong Mo/Son Tay, Hanoi region",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "VN-CENTRAL-01",
@@ -1283,7 +1301,25 @@
           "candidateCourseName": "Hoiana Shores Golf Club",
           "candidateRationale": "會安海岸代表球場，亞洲排名及設計辨識度高",
           "candidateSourceUrl": "https://vietnam.travel/things-to-do/golf-courses-central-vietnam/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 15.821549,
+            "longitude": 108.404053,
+            "timezone": "Asia/Ho_Chi_Minh",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/vietnam/hoiana-shores-golf-club/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Hoiana Shores coordinates; coastal Hoi An/Da Nang region",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "VN-CENTRAL-02",
@@ -1295,7 +1331,25 @@
           "candidateCourseName": "Laguna Golf Lang Co",
           "candidateRationale": "順化／陵姑代表球場，官方旅遊資料介紹的中越球場",
           "candidateSourceUrl": "https://vietnam.travel/things-to-do/golf-courses-central-vietnam/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 16.324958,
+            "longitude": 107.959213,
+            "timezone": "Asia/Ho_Chi_Minh",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/vietnam/laguna-lang-co-golf-club/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Laguna Lang Co coordinates; Hue-Da Nang coastal corridor",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "VN-SOUTH-01",
@@ -1307,7 +1361,25 @@
           "candidateCourseName": "Tan Son Nhat Golf Course",
           "candidateRationale": "胡志明市市區代表球場，具明確城市定位",
           "candidateSourceUrl": "https://www.aseanlinksgolf.com/golf-courses",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 10.8184,
+            "longitude": 106.663,
+            "timezone": "Asia/Ho_Chi_Minh",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://playgolfvietnam.com/zh-TW/courses/tan-son-nhat-golf-course"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Tan Son Nhat Golf Course coordinates; Ho Chi Minh City",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "VN-SOUTH-02",
@@ -1319,7 +1391,25 @@
           "candidateCourseName": "Sea Links Golf & Country Club",
           "candidateRationale": "藩切／美奈海岸代表球場候選",
           "candidateSourceUrl": "https://www.teetimevn.com/vi/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 10.942919,
+            "longitude": 108.18188,
+            "timezone": "Asia/Ho_Chi_Minh",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/vietnam/sea-links-golf-country-club/"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "球場鄰近區域公開座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Sea Links coordinates; Mui Ne/Phan Thiet coastal region",
+            "checkedOn": "2026-11-27"
+          }
         },
         {
           "id": "VN-ISLAND-01",
@@ -1331,7 +1421,25 @@
           "candidateCourseName": "Eschuri Vung Bau Golf",
           "candidateRationale": "富國島北部海岸18洞球場候選，已找到球場地址線索",
           "candidateSourceUrl": "https://www.aseanlinksgolf.com/golf-courses",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "research-candidate",
+          "candidateCoordinates": {
+            "latitude": 10.3116,
+            "longitude": 103.9156,
+            "timezone": "Asia/Ho_Chi_Minh",
+            "coordinateStatus": "public-course-or-nearby-locality-coordinate",
+            "coordinateSourceUrl": "https://mapcarta.com/30729022"
+          },
+          "coordinateReviewStatus": "accepted-for-regional-climate-assessment;not-surveyed-course-pin",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "球場鄰近城鎮代表座標",
+            "reviewStatus": "regional-neighbourhood-point-accepted;climate-validation-pending",
+            "weatherPointEligible": true,
+            "regionalClimateEligible": true,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "符合使用者確認的鄰近區域代表點原則；不要求精確球場圖釘。 Cua Can locality representative coordinate near Vung Bau, Phu Quoc; regional point rather than exact course pin",
+            "checkedOn": "2026-11-27"
+          }
         }
       ]
     },
