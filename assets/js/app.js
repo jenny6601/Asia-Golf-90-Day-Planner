@@ -1,3 +1,4 @@
+import {mountValidationPanel} from "./validation-panel.js";
 import {fetchAsiaGolfDirectory} from "./course-catalog.js";
 import {formatCourseDate} from "./course-time.js";
 import {fetchCourseForecast} from "./weather-api.js";
@@ -535,6 +536,7 @@ function renderSubregionMenu(country,region){
  out.append(grid);
 }
 function initClimateExplorer(){
+ mountValidationPanel($("validation-panel"));
  const overview=$("asia-overview"),cc=$("climate-country");
  for(const c of S.directory.countries){
   const count=S.directory.courses.filter(x=>x.countryCode===c.code&&x.enabled&&Number.isFinite(x.latitude)&&Number.isFinite(x.longitude)).length;
