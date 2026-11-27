@@ -100,7 +100,7 @@
           "candidateCourseName": "Niseko Village Golf Course",
           "candidateRationale": "以二世谷／留壽都度假球場群作為目的地單位，納入 Niseko Village Golf Course 與 Niseko Golf Course；兩座球場共用一個代表點進行區域氣候分析。",
           "candidateSourceUrl": "https://niseko-golf.com/en/course/",
-          "candidateStatus": "official-operator-identity-and-two-course-cluster-confirmed-coordinate-review-pending",
+          "candidateStatus": "official-operator-identity-and-two-course-cluster-confirmed-regional-coordinate-approved",
           "candidateCoordinates": {
             "latitude": 42.847109,
             "longitude": 140.685607,
@@ -108,7 +108,7 @@
             "coordinateSourceUrl": "https://www.where2golf.com/japan/niseko-village-golf-course/",
             "timezone": "Asia/Tokyo"
           },
-          "coordinateReviewStatus": "third-party-coordinate-cross-check-pending",
+          "coordinateReviewStatus": "regional-climate-representative-coordinate-approved",
           "clusterCourseIds": [
             "jp-niseko-village-golf",
             "jp-niseko-golf-course"
@@ -117,12 +117,12 @@
           "climateUnit": "golf-course-cluster",
           "coordinateQuality": {
             "grade": "B",
-            "label": "區域氣候代表點候選座標",
-            "reviewStatus": "candidate-only-not-enabled",
+            "label": "區域氣候代表座標（約略位置）",
+            "reviewStatus": "regional-climate-approved-live-weather-ingestion-not-yet-enabled",
             "weatherPointEligible": false,
-            "regionalClimateEligible": false,
+            "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point",
-            "reason": "Official operator confirms course identity, address, 18 holes and 2026 seasonal operation. Published third-party candidate coordinate is retained for now; official map-pin extraction and independent coordinate reconciliation remain pending. No live weather ingestion."
+            "reason": "依使用者確認，座標只需代表二世谷／留壽都目的地球場群的區域天氣，不要求落在球場中心或官方地圖圖釘。採用現有公開球場座標 42.847109,140.685607 作為區域代表點；官方營運商確認 Niseko Village Golf Course 與 Niseko Golf Course 同屬二世谷目的地球場群，兩球場相距約17公里／車程約20分鐘。此點足以支援區域尺度氣候評估；正式逐時天氣擷取仍維持關閉。"
           },
           "regionId": "JP-REG-01",
           "regionName": "北海道",
