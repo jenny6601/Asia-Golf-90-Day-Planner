@@ -1,0 +1,349 @@
+{
+  "fetchedAt": "2026-11-27T06:07:14.903Z",
+  "localDate": "2026-11-27",
+  "provider": "Open-Meteo Forecast API",
+  "regions": {
+    "north": [
+      {
+        "date": "2026-11-27",
+        "riskScore": 100,
+        "coverage": 1,
+        "probability": 100,
+        "rainMm": 62.9
+      },
+      {
+        "date": "2026-11-28",
+        "riskScore": 12.05,
+        "coverage": 1,
+        "probability": 18,
+        "rainMm": 0.1
+      },
+      {
+        "date": "2026-11-29",
+        "riskScore": 0,
+        "coverage": 1,
+        "probability": 0,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-11-30",
+        "riskScore": 3.9000000000000004,
+        "coverage": 1,
+        "probability": 6,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-01",
+        "riskScore": 7.15,
+        "coverage": 1,
+        "probability": 11,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-02",
+        "riskScore": 32.15,
+        "coverage": 1,
+        "probability": 43,
+        "rainMm": 1.2
+      },
+      {
+        "date": "2026-12-03",
+        "riskScore": 54.85,
+        "coverage": 1,
+        "probability": 65,
+        "rainMm": 3.6
+      },
+      {
+        "date": "2026-12-04",
+        "riskScore": 31.85,
+        "coverage": 1,
+        "probability": 49,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-05",
+        "riskScore": 27.450000000000003,
+        "coverage": 1,
+        "probability": 39,
+        "rainMm": 0.6
+      },
+      {
+        "date": "2026-12-06",
+        "riskScore": 20.150000000000002,
+        "coverage": 1,
+        "probability": 31,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-07",
+        "riskScore": 39.150000000000006,
+        "coverage": 1,
+        "probability": 57,
+        "rainMm": 0.6
+      },
+      {
+        "date": "2026-12-08",
+        "riskScore": 43.050000000000004,
+        "coverage": 1,
+        "probability": 63,
+        "rainMm": 0.6
+      },
+      {
+        "date": "2026-12-09",
+        "riskScore": 66.85,
+        "coverage": 1,
+        "probability": 49,
+        "rainMm": 11.8
+      },
+      {
+        "date": "2026-12-10",
+        "riskScore": 48.35,
+        "coverage": 1,
+        "probability": 41,
+        "rainMm": 6.2
+      },
+      {
+        "date": "2026-12-11",
+        "riskScore": 30.3,
+        "coverage": 1,
+        "probability": 45,
+        "rainMm": 0.3
+      },
+      {
+        "date": "2026-12-12",
+        "riskScore": 43.05,
+        "coverage": 1,
+        "probability": 35,
+        "rainMm": 5.8
+      }
+    ],
+    "central": [
+      {
+        "date": "2026-11-27",
+        "riskScore": 100,
+        "coverage": 1,
+        "probability": 100,
+        "rainMm": 14.1
+      },
+      {
+        "date": "2026-11-28",
+        "riskScore": 14.3,
+        "coverage": 1,
+        "probability": 22,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-11-29",
+        "riskScore": 0.65,
+        "coverage": 1,
+        "probability": 1,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-11-30",
+        "riskScore": 2.6,
+        "coverage": 1,
+        "probability": 4,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-01",
+        "riskScore": 8.25,
+        "coverage": 1,
+        "probability": 10,
+        "rainMm": 0.5
+      },
+      {
+        "date": "2026-12-02",
+        "riskScore": 45.300000000000004,
+        "coverage": 1,
+        "probability": 53,
+        "rainMm": 3.1
+      },
+      {
+        "date": "2026-12-03",
+        "riskScore": 55.650000000000006,
+        "coverage": 1,
+        "probability": 63,
+        "rainMm": 4.2
+      },
+      {
+        "date": "2026-12-04",
+        "riskScore": 31.85,
+        "coverage": 1,
+        "probability": 49,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-05",
+        "riskScore": 20.950000000000003,
+        "coverage": 1,
+        "probability": 29,
+        "rainMm": 0.6
+      },
+      {
+        "date": "2026-12-06",
+        "riskScore": 16.25,
+        "coverage": 1,
+        "probability": 25,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-07",
+        "riskScore": 30.55,
+        "coverage": 1,
+        "probability": 47,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-08",
+        "riskScore": 37.7,
+        "coverage": 1,
+        "probability": 58,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-09",
+        "riskScore": 66.85,
+        "coverage": 1,
+        "probability": 49,
+        "rainMm": 19.4
+      },
+      {
+        "date": "2026-12-10",
+        "riskScore": 48.849999999999994,
+        "coverage": 1,
+        "probability": 45,
+        "rainMm": 5.6
+      },
+      {
+        "date": "2026-12-11",
+        "riskScore": 35.625,
+        "coverage": 1,
+        "probability": 47,
+        "rainMm": 1.45
+      },
+      {
+        "date": "2026-12-12",
+        "riskScore": 51.8,
+        "coverage": 1,
+        "probability": 35,
+        "rainMm": 8.3
+      }
+    ],
+    "south": [
+      {
+        "date": "2026-11-27",
+        "riskScore": 100,
+        "coverage": 1,
+        "probability": 100,
+        "rainMm": 16.6
+      },
+      {
+        "date": "2026-11-28",
+        "riskScore": 14.3,
+        "coverage": 1,
+        "probability": 22,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-11-29",
+        "riskScore": 0.65,
+        "coverage": 1,
+        "probability": 1,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-11-30",
+        "riskScore": 2.95,
+        "coverage": 1,
+        "probability": 4,
+        "rainMm": 0.1
+      },
+      {
+        "date": "2026-12-01",
+        "riskScore": 8.6,
+        "coverage": 1,
+        "probability": 10,
+        "rainMm": 0.6
+      },
+      {
+        "date": "2026-12-02",
+        "riskScore": 43.900000000000006,
+        "coverage": 1,
+        "probability": 53,
+        "rainMm": 2.7
+      },
+      {
+        "date": "2026-12-03",
+        "riskScore": 61.95,
+        "coverage": 1,
+        "probability": 63,
+        "rainMm": 6
+      },
+      {
+        "date": "2026-12-04",
+        "riskScore": 31.85,
+        "coverage": 1,
+        "probability": 49,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-05",
+        "riskScore": 20.950000000000003,
+        "coverage": 1,
+        "probability": 29,
+        "rainMm": 0.6
+      },
+      {
+        "date": "2026-12-06",
+        "riskScore": 16.25,
+        "coverage": 1,
+        "probability": 25,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-07",
+        "riskScore": 30.55,
+        "coverage": 1,
+        "probability": 47,
+        "rainMm": 0
+      },
+      {
+        "date": "2026-12-08",
+        "riskScore": 38.400000000000006,
+        "coverage": 1,
+        "probability": 58,
+        "rainMm": 0.2
+      },
+      {
+        "date": "2026-12-09",
+        "riskScore": 66.85,
+        "coverage": 1,
+        "probability": 49,
+        "rainMm": 19.4
+      },
+      {
+        "date": "2026-12-10",
+        "riskScore": 51.65,
+        "coverage": 1,
+        "probability": 45,
+        "rainMm": 6.4
+      },
+      {
+        "date": "2026-12-11",
+        "riskScore": 40.525,
+        "coverage": 1,
+        "probability": 47,
+        "rainMm": 2.85
+      },
+      {
+        "date": "2026-12-12",
+        "riskScore": 48.55,
+        "coverage": 1,
+        "probability": 30,
+        "rainMm": 8.3
+      }
+    ]
+  }
+}
