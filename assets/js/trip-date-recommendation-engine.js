@@ -130,7 +130,7 @@ function summarizeWindow(windowDays) {
     reasons: [
       "三場固定打球日：" + golfDays.map(x => x.date).join("、"),
       missingGolfDays ? "其中 " + missingGolfDays + " 個打球日缺少有效降雨資料，已降低推薦資格" : "三個連續打球日均有有效降雨評估",
-      golfRisk === null ? "三場降雨風險無法完整計算" : "已知打球日平均降雨風險指數 " + golfRisk.toFixed(1) + "/100",
+      golfRisk === null ? "三場降雨風險無法完整計算" : "已知打球日平均降雨風險指數 " + Number(golfRisk.toFixed(2)).toFixed(1) + "/100",
       "五天資料覆蓋率 " + Math.round(dataCoverage * 100) + "%",
       "完整三區資料日 " + completeDays + "/5",
       confidence === "low" ? "資料不足，推薦順位下調" : "資料完整度：" + confidence
@@ -172,6 +172,16 @@ export function recommendGolfTripDates(input, options = {}) {
   windows.sort((a, b) => a.score - b.score
     || b.dataCoverage - a.dataCoverage || a.startDate.localeCompare(b.startDate));
   const ranked = windows.map((window, index) => ({ rank: index + 1, ...window }));
+  // Keep recommendations actionable: the same 5-day travel window must not
+  // appear multiple times with a one-day shift. A five-day gap is non-overlapping.
+  const distinct = [];
+  for (const window of ranked) {
+    if (!distinct.some(x => Math.abs(dayNumber(x.startDate) - dayNumber(window.startDate)) < WINDOW_DAYS)) {
+      distinct.push(window);
+    }
+    if (distinct.length >= 3 + alternateCount) break;
+  }
+  const distinctRanked = distinct.map((window, index) => ({ ...window, rank: index + 1 }));
   return {
     model: "okinawa-five-day-three-round-v1", asOf, horizonDays,
     tripLengthDays: WINDOW_DAYS, golfRounds: GOLF_ROUNDS,
@@ -182,7 +192,7 @@ export function recommendGolfTripDates(input, options = {}) {
       windowFormula: "0.85 * mean(middle 3 golf-day risk) + 0.15 * mean(5 daily risk) + missing-data penalties"
     },
     evaluatedDays: evaluated.length, dailyAssessment: evaluated, validWindows: ranked.length,
-    topThree: ranked.slice(0, 3), alternates: ranked.slice(3, 3 + alternateCount),
+    topThree: distinctRanked.slice(0, 3), alternates: distinctRanked.slice(3, 3 + alternateCount),
     excludedWindows: evaluated.length - WINDOW_DAYS + 1 - ranked.length,
     limitations: [
       "Risk scores must be normalized by audited source adapters; EFI, anomalies and historical observations are not treated as probabilities.",
