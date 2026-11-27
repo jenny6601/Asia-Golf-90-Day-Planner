@@ -21,6 +21,7 @@ test("all 80 subregions have one assigned representative course and regional poi
     assert.ok(Number.isFinite(subregion.candidateCoordinates?.latitude), subregion.id);
     assert.ok(Number.isFinite(subregion.candidateCoordinates?.longitude), subregion.id);
     assert.ok(subregion.candidateCoordinates?.timezone, subregion.id);
+    assert.ok(subregion.regionDisplayName, subregion.id);
     assert.equal(subregion.coordinateQuality?.regionalClimateEligible, true, subregion.id);
     assert.ok(typeof subregion.coordinateQuality?.weatherPointEligible === "boolean", subregion.id);
   }
@@ -45,6 +46,7 @@ test("App directory loads regional representative metadata without changing pres
   for (const course of directory.courses) {
     assert.ok(course.regionalClimate, course.id);
     assert.ok(course.regionalRepresentativeCourseId, course.id);
+    assert.ok(course.regionalMacroRegionDisplayName, course.id);
     assert.equal(course.regionalClimate.weatherPointEligible, false, course.id);
   }
   for (const subregion of directory.subregions) {
