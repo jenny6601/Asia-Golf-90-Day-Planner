@@ -135,3 +135,16 @@ test("Japan Setouchi representative candidate uses official Google Maps place co
  assert.match(setouchi.candidateCoordinates.coordinateSourceUrl,/maps\.app\.goo\.gl/);
  assert.equal(setouchi.representativeCourseId,null);
 });
+
+
+test("an invalid explicitly designated representative never silently falls back to another course",()=>{
+ const registry=[
+  {countryCode:"JP",subregions:[{id:"JP-OKI-NORTH",region:"Okinawa",subregion:"北部",label:"沖繩北部",representativeCourseId:"missing-course-id"}]}
+ ];
+ const result=buildRegionalCoverage(countries,courses,registry);
+ const north=result.countries.find(x=>x.code==="JP").subregions.find(x=>x.area==="北部");
+ assert.equal(north.representative,null);
+ assert.equal(north.requestedRepresentativeCourseId,"missing-course-id");
+ assert.equal(north.coverageStatus,"invalid-representative-course-id");
+ assert.equal(result.countries.find(x=>x.code==="JP").readySubregionCount,1);
+});
