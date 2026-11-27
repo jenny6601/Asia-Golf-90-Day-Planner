@@ -17,14 +17,15 @@ class EightCountryRegistryTests(unittest.TestCase):
     def setUpClass(cls):
         cls.countries = json.loads((ROOT / "config/global/countries.json").read_text(encoding="utf-8"))
         cls.subregions = json.loads((ROOT / "config/global/weather-subregions.json").read_text(encoding="utf-8"))
+        cls.courses = json.loads((ROOT / "config/global/courses.json").read_text(encoding="utf-8"))
 
     def test_existing_registry_is_compiled_without_fabricating_missing_coordinates(self):
-        result = MODULE.compile_registry(self.countries, self.subregions)
+        result = MODULE.compile_registry(self.countries, self.subregions, self.courses)
         self.assertEqual(result["totalSubregions"], 62)
         self.assertEqual(result["readyPointCount"] + result["pendingPointCount"], 62)
-        self.assertEqual(result["readyPointCount"], 16)
-        self.assertEqual(result["pendingPointCount"], 46)
-        self.assertEqual(result["countsByCountry"]["JP"]["readyForAcquisition"], 16)
+        self.assertEqual(result["readyPointCount"], 19)
+        self.assertEqual(result["pendingPointCount"], 43)
+        self.assertEqual(result["countsByCountry"]["JP"]["readyForAcquisition"], 19)
         for code in ("KR", "CN", "VN", "TH", "MY", "SG", "ID"):
             self.assertEqual(result["countsByCountry"][code]["readyForAcquisition"], 0)
         self.assertFalse(result["activation"]["climateBaselineEnabled"])
@@ -32,15 +33,15 @@ class EightCountryRegistryTests(unittest.TestCase):
     def test_task_plan_scales_by_year_and_region_and_is_plan_only(self):
         registry = MODULE.compile_registry(self.countries, self.subregions)
         plan = MODULE.build_task_plan(registry, 1991, 1993)
-        self.assertEqual(plan["readySubregions"], 16)
-        self.assertEqual(plan["annualTaskCount"], 48)
+        self.assertEqual(plan["readySubregions"], 19)
+        self.assertEqual(plan["annualTaskCount"], 57)
         self.assertFalse(plan["safety"]["downloadPerformed"])
         self.assertFalse(plan["safety"]["decisionUseEligible"])
 
     def test_country_filter_and_unknown_country(self):
         registry = MODULE.compile_registry(self.countries, self.subregions)
         plan = MODULE.build_task_plan(registry, 1991, 1991, ["JP"])
-        self.assertEqual(plan["annualTaskCount"], 16)
+        self.assertEqual(plan["annualTaskCount"], 19)
         with self.assertRaises(ValueError):
             MODULE.build_task_plan(registry, 1991, 1991, ["XX"])
 
