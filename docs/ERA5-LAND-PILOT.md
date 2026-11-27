@@ -71,3 +71,21 @@ The builder creates a 365-day month/day calendar for each subregion. Each target
 For each metric independently, a baseline year qualifies only when at least 90% of the 31 calendar-day records have a valid value (at least 28 days). At least 24 qualifying seasonal years are required. Windows that include February 29 require 29 valid days (90% of 32) in leap years; other windows require 28 valid days (90% of 31). December/January samples are assigned to the target season year rather than their raw calendar year. Rainfall statistics include dry days; missing rainfall is excluded rather than converted to zero. Output includes median, mean, P90, wet-day frequency and 10/30 mm heavy-rain frequencies, plus temperature, humidity and wind summaries.
 
 The output is explicitly marked `historical-climatology-computed-not-activated`; both `climateBaselineEnabled` and `forecastEnabled` remain false. This is historical context only, not a deterministic 19-90 day forecast.
+
+
+## 7. Preview 5-day/4-night, 3-round departure-date ranking
+
+Once a region has a computed 1991-2020 climatology JSON, run:
+
+```bash
+python scripts/rank_golf_trip_dates.py --climatology data/processed/JP-KNT-NORTH-climatology-1991-2020.json --subregion JP-KNT-NORTH --from-date 2027-01-01 --horizon-days 90 --output data/processed/JP-KNT-NORTH-trip-date-ranking.json
+```
+
+For every possible five-day trip start in the requested horizon, the preview:
+- requires usable historical rainfall statistics for all five dates;
+- selects the three dates with the lowest historical wet-day frequency as golf days;
+- tie-breaks by >=10 mm frequency, >=30 mm frequency, then P90 rainfall;
+- ranks trip starts by the average rainfall risk of the three selected golf dates;
+- labels the other two dates as rest/transfer days.
+
+This is a historical seasonal-climate prior, not a deterministic daily forecast or a guarantee of future conditions. It does not change the live 1-16 day forecast path. Production activation remains disabled until the historical source data and independent quality checks are complete.
