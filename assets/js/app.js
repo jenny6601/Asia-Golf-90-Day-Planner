@@ -693,6 +693,7 @@ async function openMonthlyDateSevenDayReport(host,group,month,seasonalRecords,hi
  host.scrollIntoView({behavior:"smooth",block:"start"});
 }
 async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords){
+ let monthlyDailyAssessmentForWeeks=[];
  const host=$("region-report");host.replaceChildren();
  const back=()=>renderRegionMonths(group.country,group.rootRegion,group.months||monthOptions(),group.courses,group.subregion||"");
  showClimateScreen(month+"｜"+group.region+"天氣分析",back);
@@ -717,7 +718,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
  });
  const weekButton=node("button","本月週分析","monthly-jump-button");weekButton.type="button";
  weekButton.addEventListener("click",()=>{
-  if((seasonalRecords||[]).length)renderRegionTopWeeks(group,seasonalRecords,month);
+  if((seasonalRecords||[]).length)renderRegionTopWeeks(group,seasonalRecords,month,()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords),monthlyDailyAssessmentForWeeks);
   else renderEmptyWeekAnalysis(group.country,group.region,month,()=>renderMonthlyClimateAnalysis(group,month,seasonalRecords,historicalRecords));
  });
  jumpNav.append(weekButton);
@@ -807,6 +808,7 @@ async function renderMonthlyClimateAnalysis(group,month,seasonalRecords,historic
   const status=tooHot||grade===3?"不適":grade===2?"可打":"適打";
   return {date,valid:true,grade,status,playable:status==="適打",chance,amount,source:isForecast?"逐日預報":seasonal.length?"歷史＋季節模式估計":"歷史氣候參考"};
  }).filter(x=>x.valid);
+ monthlyDailyAssessmentForWeeks=dailyAssessment;
  const playable=dailyAssessment.filter(x=>x.playable),watch=dailyAssessment.filter(x=>x.grade===2),wet=dailyAssessment.filter(x=>x.grade===3);
  const seasonBaseline=Number.isFinite(seasonRain)&&Number.isFinite(rainAnomaly)?seasonRain-rainAnomaly:null;
  const seasonRatio=Number.isFinite(seasonBaseline)&&seasonBaseline>0?seasonRain/seasonBaseline:null;
@@ -998,17 +1000,28 @@ function renderEmptySevenDay(country,region,start){
  panel.append(strip);const choose=node("button","前往選擇出發日期及球場","week-back");choose.type="button";choose.addEventListener("click",()=>{$("departure").value=start;$("departure").scrollIntoView({behavior:"smooth",block:"center"})});panel.append(choose);out.append(panel);
 }
 
-async function renderRegionTopWeeks(group,records,month){
- const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜本月推薦週次",()=>renderRegionMonths(group.country||$("climate-country").value,group.rootRegion||group.region,group.months||monthOptions(),group.courses,group.subregion||""));
+async function renderRegionTopWeeks(group,records,month,backAction=null,dailyAssessment=null){
+ const out=$("region-report");out.replaceChildren();showClimateScreen("③ "+group.region+"｜"+month+"｜本月推薦週次",backAction||(()=>renderRegionMonths(group.country||$("climate-country").value,group.rootRegion||group.region,group.months||monthOptions(),group.courses,group.subregion||"")));
  const pageLoading=node("div",undefined,"monthly-page-loading");pageLoading.setAttribute("role","status");pageLoading.setAttribute("aria-live","polite");
  pageLoading.append(node("div",undefined,"monthly-page-spinner"),node("strong","正在開啟週分析…"),node("span","正在整理所選月份的推薦週次"));
  $("flow-nav").append(pageLoading);
  await new Promise(resolve=>requestAnimationFrame(resolve));
  const panel=node("section",undefined,"week-recommendations");
  const monthStart=month+"-01",monthEnd=new Date(Date.parse(monthStart+"T12:00:00Z"));monthEnd.setUTCMonth(monthEnd.getUTCMonth()+1);monthEnd.setUTCDate(0);const last=monthEnd.toISOString().slice(0,10),todayDate=today(),first=monthStart>todayDate?monthStart:todayDate,candidates=[];
+ const dailyGradeByDate=new Map((Array.isArray(dailyAssessment)?dailyAssessment:[]).map(x=>[x.date,x]));
  for(let start=first;start<=last;start=add(start,7)){
   const weekEnd=add(start,6);if(weekEnd>last)continue;
   const days=Array.from({length:7},(_,i)=>add(start,i)),signals=[];
+  if(dailyGradeByDate.size){
+   const assessed=days.map(d=>dailyGradeByDate.get(d)).filter(x=>x&&x.valid);
+   if(assessed.length===7){
+    const meanGrade=assessed.reduce((sum,x)=>sum+x.grade,0)/7;
+    const suitable=assessed.filter(x=>x.status==="適打").length,possible=assessed.filter(x=>x.status==="可打").length;
+    const rank=meanGrade<0.75?0:meanGrade<1.5?1:meanGrade<2.5?2:3;
+    candidates.push({start,end:weekEnd,rank,signal:meanGrade,coverage:7,source:"daily",suitable,possible});
+   }
+   continue;
+  }
   for(const rec of records){
    const w=rec.weekly,m=rec.monthly;
    const efiValues=days.map(d=>{let idx=-1;(w?.time||[]).forEach((t,i)=>{if(t<=d)idx=i});return idx>=0?w.precipitation_efi?.[idx]:null}).filter(Number.isFinite);
@@ -1026,7 +1039,7 @@ async function renderRegionTopWeeks(group,records,month){
  if(!picked.length){panel.append(node("div","目前沒有取得可用的 2 月週／月尺度降雨資料，因此暫時無法排序推薦週次。請檢查球場季節資料覆蓋。","risk-summary"))}
  else{
   const grid=node("div",undefined,"week-grid top-week-grid");
-  picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");const heading=node("div",undefined,"week-card-heading");heading.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")));const summary=node("div",undefined,"week-card-summary");summary.append(node("span","降雨趨勢："+["偏乾","接近基準","偏濕","顯著偏濕"][x.rank],"week-rain-summary"),node("span","資料可信度："+(x.source==="weekly"?"週尺度":"月尺度參考")+"｜覆蓋 "+x.coverage+"/"+records.length,"week-confidence"));card.append(heading,summary);const choose=node("button","查看此週 7 天報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month));card.append(choose);grid.append(card)});
+  picked.forEach((x,i)=>{const card=node("article",undefined,"week-card");const heading=node("div",undefined,"week-card-heading");heading.append(node("div","TOP "+(i+1),"week-rank"),node("h4",x.start.slice(5).replace("-","/")+" – "+x.end.slice(5).replace("-","/")));const summary=node("div",undefined,"week-card-summary");if(x.source==="daily"){summary.append(node("span","適打 "+x.suitable+" 天｜可打 "+x.possible+" 天","week-rain-summary"),node("span","依全月逐日適打分級統計，與月曆標示一致","week-confidence"))}else{summary.append(node("span","降雨趨勢："+["偏乾","接近基準","偏濕","顯著偏濕"][x.rank],"week-rain-summary"),node("span","資料可信度："+(x.source==="weekly"?"週尺度":"月尺度參考")+"｜覆蓋 "+x.coverage+"/"+records.length,"week-confidence"))}card.append(heading,summary);const choose=node("button","查看此週 7 天報告","week-open");choose.type="button";choose.addEventListener("click",()=>renderSelectedWeekReport(group,x,records,month));card.append(choose);grid.append(card)});
   panel.append(grid);
  }
  out.append(panel);
