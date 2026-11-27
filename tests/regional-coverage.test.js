@@ -251,3 +251,23 @@ test("Japan Kawaguchiko official place pin and low-zoom map centers are not conf
  assert.equal(appi.coordinateQuality.officialMapReference.coordinateType,"no-official-pin-extracted");
  assert.equal(appi.coordinateQuality.weatherPointEligible,false);
 });
+
+
+test("Japan remaining five GPS reviews retain conservative official map evidence",()=>{
+ const registry=JSON.parse(readFileSync(new URL("../config/global/weather-subregions.json",import.meta.url),"utf8"));
+ const japan=registry.countries.find(x=>x.countryCode==="JP");
+ const find=name=>japan.subregions.find(x=>x.candidateCourseName===name);
+ const rifu=find("Rifu Golf Club");
+ assert.equal(rifu.coordinateQuality.officialMapReference.coordinateType,"no-official-pin-extracted");
+ const tsu=find("Tsu Country Club");
+ assert.equal(tsu.coordinateQuality.officialMapReference.coordinateType,"no-official-pin-extracted");
+ const arima=find("Arima Royal Golf Club");
+ assert.equal(arima.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
+ assert.equal(arima.coordinateQuality.officialMapReference.distanceFromCandidateKm,1.724);
+ const leo=find("Leograd Golf Club");
+ assert.equal(leo.coordinateQuality.officialMapReference.coordinateType,"map-viewport-center-not-pin");
+ assert.equal(leo.coordinateQuality.grade,"C");
+ const daisen=find("Green Park Daisen Golf Club");
+ assert.equal(daisen.coordinateQuality.officialMapReference.coordinateType,"map-pin-not-extracted");
+ assert.ok([rifu,tsu,arima,leo,daisen].every(x=>x.coordinateQuality.weatherPointEligible===false));
+});
