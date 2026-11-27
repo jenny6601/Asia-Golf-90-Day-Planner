@@ -18,7 +18,14 @@
           "candidateCourseName": "The North Country Golf Club",
           "candidateRationale": "千歲、札幌與新千歲機場周邊的道央代表候選。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 42.82058,
+            "longitude": 141.59652,
+            "coordinateStatus": "public-map-coordinate",
+            "coordinateSourceUrl": "https://www.jgto.org/en/club/jgto"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-HKD-SOUTH",
@@ -29,7 +36,14 @@
           "representativeCourseId": null,
           "candidateCourseName": "Hokkaido Country Club",
           "candidateRationale": "位於七飯町大沼地區，作為道南與函館周邊候選；營運與精確座標仍待正式核對。",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 41.98934,
+            "longitude": 140.64794,
+            "coordinateStatus": "public-map-coordinate",
+            "coordinateSourceUrl": "https://mapcarta.com/36075708"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-THK-NORTH",
@@ -53,7 +67,14 @@
           "candidateCourseName": "Rifu Golf Club",
           "candidateRationale": "宮城縣利府町球場，位於仙台都會圈，作為南東北代表候選。",
           "candidateSourceUrl": "https://ir.pacificgolf.co.jp/course/index.asp",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 38.35994,
+            "longitude": 140.981828,
+            "coordinateStatus": "course-list-coordinate",
+            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/miyagi/miyagi/rifu-golf-club"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-KNT-NORTH",
@@ -65,7 +86,14 @@
           "candidateCourseName": "Seven Hundred Club",
           "candidateRationale": "栃木縣球場，代表北關東內陸區域候選。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 36.709629,
+            "longitude": 140.004827,
+            "coordinateStatus": "course-list-coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/tochigi/sakura/seven-hundred-club"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-KNT-SOUTH",
@@ -77,7 +105,14 @@
           "candidateCourseName": "Narita Hills Country Club",
           "candidateRationale": "千葉縣球場，作為南關東與成田周邊代表候選。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 35.83503,
+            "longitude": 140.27659,
+            "coordinateStatus": "osm-map-coordinate",
+            "coordinateSourceUrl": "https://mapcarta.com/W426264339"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-CHB-KOSHIN",
@@ -89,7 +124,14 @@
           "candidateCourseName": "Kawaguchiko Country Club",
           "candidateRationale": "山梨縣富士山周邊候選，代表內陸高地與富士山氣候帶。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 35.46897,
+            "longitude": 138.75275,
+            "coordinateStatus": "osm-map-coordinate",
+            "coordinateSourceUrl": "https://mapcarta.com/33942390"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-CHB-TOKAI",
@@ -101,7 +143,14 @@
           "candidateCourseName": "Tsu Country Club",
           "candidateRationale": "三重縣球場，代表東海沿岸與名古屋南側區域。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 34.72587,
+            "longitude": 136.42721,
+            "coordinateStatus": "previously-researched-public-coordinate",
+            "coordinateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-CHB-HOKURIKU",
@@ -113,7 +162,14 @@
           "candidateCourseName": "Tokinodai Country Club",
           "candidateRationale": "石川縣能登半島球場，海側風場與地形具北陸代表性。",
           "candidateSourceUrl": "https://www.apga-golf.org/golf-in-japan/tokinodai-country-club?lang=en",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 36.91549,
+            "longitude": 136.775147,
+            "coordinateStatus": "course-list-coordinate",
+            "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/ishikawa/hakui/tokinodai-country-club"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-KNS-CENTRAL",
@@ -149,7 +205,14 @@
           "candidateCourseName": "Green Park Daisen Golf Club",
           "candidateRationale": "鳥取縣大山周邊球場，代表日本海側山陰區域。",
           "candidateSourceUrl": "https://www.jgto.org/en/club/jgto",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 35.364639,
+            "longitude": 133.397062,
+            "coordinateStatus": "course-list-coordinate",
+            "coordinateSourceUrl": "https://fullgolf.com/en/golf-club/japan/tottori/saihaku/green-park-daisen-golf-club"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-CHG-SANYO",
@@ -173,7 +236,14 @@
           "candidateCourseName": "Tosa Country Club",
           "candidateRationale": "高知縣海岸球場，作為四國代表候選。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 33.5213,
+            "longitude": 133.7758,
+            "coordinateStatus": "previously-researched-public-coordinate",
+            "coordinateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-KYS-NORTH",
@@ -197,7 +267,14 @@
           "candidateCourseName": "Phoenix Country Club",
           "candidateRationale": "宮崎縣球場，代表南九州太平洋沿岸氣候帶。",
           "candidateSourceUrl": "https://www.japan.travel/en/sports/golf/courses/",
-          "candidateStatus": "research-candidate"
+          "candidateStatus": "identity-and-location-researched",
+          "candidateCoordinates": {
+            "latitude": 31.974525,
+            "longitude": 131.472898,
+            "coordinateStatus": "course-list-coordinate",
+            "coordinateSourceUrl": "https://www.where2golf.com/japan/phoenix-country-club/"
+          },
+          "coordinateReviewStatus": "coordinate-found-not-yet-officially-verified"
         },
         {
           "id": "JP-OKI-NORTH",
@@ -223,7 +300,13 @@
           "coverageStatus": "configured",
           "representativeCourseId": "southern-links"
         }
-      ]
+      ],
+      "coordinateResearchSummary": {
+        "totalSubregions": 19,
+        "coordinateFound": 11,
+        "stillNeedsCoordinate": 5,
+        "forecastEnabled": false
+      }
     },
     {
       "countryCode": "KR",
