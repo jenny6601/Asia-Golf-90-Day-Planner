@@ -11,7 +11,7 @@ const monthEnd=month=>{
   return new Date(Date.UTC(year,mm,0)).toISOString().slice(0,10);
 };
 const monthDays=month=>Number(monthEnd(month).slice(8,10));
-const validDate=value=>typeof value==="string"&&/^\\d{4}-\\d{2}-\\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+"T00:00:00Z"));
+const validDate=value=>typeof value==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+"T00:00:00Z"));
 function summarize(rows,periodDays){
   const valid=rows.filter(x=>finite(x.forecastMm)&&x.forecastMm>=0&&finite(x.observedMm)&&x.observedMm>=0);
   if(!valid.length)return {sampleCount:0,maeMm:null,meanBiasMm:null,rmseMm:null,wetDry:{hits:0,falseAlarms:0,misses:0,correctNegatives:0,accuracy:null}};
@@ -53,7 +53,7 @@ export function buildSeasonalVerificationTargets(snapshots=[],asOf){
       if(seasonal.monthlyUnits?.precipitation_mean==="mm"){
         for(let i=0;i<(monthly.time||[]).length;i++){
           const month=String(monthly.time[i]).slice(0,7),forecastMm=monthly.precipitation_mean?.[i];
-          if(/^\\d{4}-\\d{2}$/.test(month)&&finite(forecastMm)&&forecastMm>=0){
+          if(/^\d{4}-\d{2}$/.test(month)&&finite(forecastMm)&&forecastMm>=0){
             const start=month+"-01",end=monthEnd(month),days=monthDays(month);
             if(start>issueDate&&end<asOf)targets.push({source:"SEAS5",region,issueDate,periodStart:start,periodEnd:end,periodDays:days,forecastMm});
           }
