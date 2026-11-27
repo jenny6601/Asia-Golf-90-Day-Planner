@@ -40,10 +40,34 @@ class Era5LandDailyAggregationTests(unittest.TestCase):
         # UTC 2020-01-01 00-14 belongs to JST Jan 1; UTC 15-23 belongs to Jan 2.
         self.assertEqual(len(result), 2)
         jan1 = next(x for x in result if x["validDate"] == "2020-01-01")
-        jan2 = next(x for x in result if x["validDate"] == "2020-01-01")
+        jan2 = next(x for x in result if x["validDate"] == "2020-01-02")
         self.assertEqual(jan1["validHourCount"], 15)
-        self.assertIsNone(jan1["precipitationMm"])
         self.assertEqual(jan2["validHourCount"], 9)
+        self.assertIsNone(jan1["precipitationMm"])
+        self.assertIsNone(jan2["precipitationMm"])
+
+    def test_complete_jst_day_aggregates_metrics(self):
+        rows = []
+        start = datetime(2019, 12, 31, 15, tzinfo=timezone.utc)
+        for hour in range(24):
+            rows.append({
+                "time": start + timedelta(hours=hour),
+                "temperatureK": 293.15,
+                "dewpointK": 283.15,
+                "precipitationM": 0.0005,
+                "u10Ms": 1.0,
+                "v10Ms": 0.0,
+            })
+        result = MODULE.aggregate_daily(rows, {"subregionId": "JP-TEST"})
+        self.assertEqual(len(result), 1)
+        day = result[0]
+        self.assertEqual(day["validDate"], "2020-01-01")
+        self.assertEqual(day["validHourCount"], 24)
+        self.assertAlmostEqual(day["precipitationMm"], 12.0, places=3)
+        self.assertTrue(day["wetDay"])
+        self.assertAlmostEqual(day["temperatureMeanC"], 20.0, places=2)
+        self.assertAlmostEqual(day["windSpeedMeanMs"], 1.0, places=2)
+        self.assertAlmostEqual(day["windDirectionMeanDeg"], 270.0, places=1)
 
     def test_incomplete_day_never_becomes_zero_rain(self):
         rows = [{
