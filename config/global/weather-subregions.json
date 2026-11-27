@@ -178,8 +178,8 @@
           "id": "JP-THK-AOMORI-AKITA",
           "golfClusterId": "JP-THK-AOMORI-AKITA",
           "region": "東北",
-          "subregion": "青森／秋田北部球場群",
-          "label": "東北・青森／秋田北部球場群",
+          "subregion": "青森球場群",
+          "label": "東北・青森球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseId": "jp-aomori-cc",
@@ -196,11 +196,10 @@
           },
           "coordinateReviewStatus": "candidate-coordinate-review-pending",
           "clusterCourseIds": [
-            "jp-akita-kita-kuko",
             "jp-aomori-cc",
             "jp-aomori-royal"
           ],
-          "courseCount": 3,
+          "courseCount": 2,
           "climateUnit": "golf-course-cluster",
           "coordinateQuality": {
             "grade": "B",
@@ -397,10 +396,9 @@
             "jp-hayama-kokusai",
             "jp-fuchu-country",
             "jp-gmg-hachioji",
-            "jp-hachioji-cc",
-            "jp-izu-oshima"
+            "jp-hachioji-cc"
           ],
-          "courseCount": 5,
+          "courseCount": 4,
           "climateUnit": "golf-course-cluster",
           "coordinateQuality": {
             "grade": "B",
@@ -1573,13 +1571,13 @@
           "id": "JP-OKI-OUTER-ISLANDS",
           "golfClusterId": "JP-OKI-OUTER-ISLANDS",
           "region": "沖繩",
-          "subregion": "宮古島／八重山群島球場群",
-          "label": "沖繩・離島球場群",
+          "subregion": "宮古島球場群",
+          "label": "沖繩・宮古島球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
           "candidateCourseId": "jp-ocean-links-miyako",
           "candidateCourseName": "Ocean Links Miyakojima",
-          "candidateRationale": "以宮古島／八重山群島球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
+          "candidateRationale": "以宮古島及其相連島嶼的球場群作為獨立氣候群聚單位；區內球場共用 Ocean Links Miyakojima 作為代表候選點。",
           "candidateSourceUrl": "",
           "candidateStatus": "research-candidate",
           "candidateCoordinates": {
@@ -1593,11 +1591,10 @@
           "clusterCourseIds": [
             "jp-emerald-coast",
             "jp-ocean-links-miyako",
-            "jp-risonare-kohamajima",
             "jp-sashiba-links",
             "jp-shigira-bay"
           ],
-          "courseCount": 5,
+          "courseCount": 4,
           "climateUnit": "golf-course-cluster",
           "coordinateQuality": {
             "grade": "B",
@@ -1611,6 +1608,93 @@
           "regionId": "JP-REG-09",
           "regionName": "沖繩",
           "subregionUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-KNT-IZU-OSHIMA",
+          "golfClusterId": "JP-KNT-IZU-OSHIMA",
+          "region": "關東",
+          "subregion": "伊豆大島球場群",
+          "label": "關東・伊豆大島球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-izu-oshima",
+          "candidateCourseName": "Izu Oshima Resort Golf Club",
+          "candidateRationale": "以伊豆大島球場群作為獨立高爾夫球場群聚與區域氣候分析單位；區內球場共用此代表點。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "coordinateReviewStatus": "representative-coordinate-not-yet-reviewed",
+          "clusterCourseIds": [
+            "jp-izu-oshima"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "待核實",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "已依地理隔離或氣候差異拆分次分區；代表球場座標尚未核實，不可啟用正式天氣資料擷取。"
+          }
+        },
+        {
+          "id": "JP-THK-AKITA",
+          "golfClusterId": "JP-THK-AKITA",
+          "region": "東北",
+          "subregion": "秋田球場群",
+          "label": "東北・秋田球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-akita-kita-kuko",
+          "candidateCourseName": "Akita-kita Kuko Classic Golf Club",
+          "candidateRationale": "以秋田球場群作為獨立高爾夫球場群聚與區域氣候分析單位；區內球場共用此代表點。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "coordinateReviewStatus": "representative-coordinate-not-yet-reviewed",
+          "clusterCourseIds": [
+            "jp-akita-kita-kuko"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "待核實",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "已依地理隔離或氣候差異拆分次分區；代表球場座標尚未核實，不可啟用正式天氣資料擷取。"
+          }
+        },
+        {
+          "id": "JP-OKI-YAEYAMA",
+          "golfClusterId": "JP-OKI-YAEYAMA",
+          "region": "沖繩",
+          "subregion": "八重山／小濱島球場群",
+          "label": "沖繩・八重山／小濱島球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-risonare-kohamajima",
+          "candidateCourseName": "Risonare Kohamajima Country Club",
+          "candidateRationale": "以八重山／小濱島球場群作為獨立高爾夫球場群聚與區域氣候分析單位；區內球場共用此代表點。",
+          "candidateSourceUrl": "",
+          "candidateStatus": "research-candidate",
+          "coordinateReviewStatus": "representative-coordinate-not-yet-reviewed",
+          "clusterCourseIds": [
+            "jp-risonare-kohamajima"
+          ],
+          "courseCount": 1,
+          "climateUnit": "golf-course-cluster",
+          "coordinateQuality": {
+            "grade": "C",
+            "label": "待核實",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "已依地理隔離或氣候差異拆分次分區；代表球場座標尚未核實，不可啟用正式天氣資料擷取。"
+          }
         }
       ],
       "coordinateResearchSummary": {
@@ -1658,9 +1742,10 @@
             "JP-THK-AOMORI-AKITA",
             "JP-THK-IWATE-APPI",
             "JP-THK-MIYAGI-SENDAI",
-            "JP-THK-FUKUSHIMA-YAMAGATA"
+            "JP-THK-FUKUSHIMA-YAMAGATA",
+            "JP-THK-AKITA"
           ],
-          "subregionCount": 4,
+          "subregionCount": 5,
           "courseIds": [
             "jp-appi-kogen",
             "jp-rifu",
@@ -1680,9 +1765,10 @@
             "JP-KNT-CHIBA-NARITA",
             "JP-KNT-IBARAKI-TSUKUBA",
             "JP-KNT-TOCHIGI-NASU",
-            "JP-KNT-GUNMA-SAITAMA"
+            "JP-KNT-GUNMA-SAITAMA",
+            "JP-KNT-IZU-OSHIMA"
           ],
-          "subregionCount": 5,
+          "subregionCount": 6,
           "courseIds": [
             "jp-seven-hundred",
             "jp-narita-hills",
@@ -1812,9 +1898,10 @@
             "JP-OKI-MAIN-NORTH",
             "JP-OKI-MAIN-CENTRAL",
             "JP-OKI-MAIN-SOUTH",
-            "JP-OKI-OUTER-ISLANDS"
+            "JP-OKI-OUTER-ISLANDS",
+            "JP-OKI-YAEYAMA"
           ],
-          "subregionCount": 4,
+          "subregionCount": 5,
           "courseIds": [
             "southern-links",
             "pgm-okinawa",
