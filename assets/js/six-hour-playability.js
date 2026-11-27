@@ -23,3 +23,19 @@ export function evaluateSixHourPlayability(hourly,date,teeHour,durationHours=6){
 }
 
 export const SIX_HOUR_REQUIRED_FIELDS=Object.freeze([...REQUIRED_FIELDS]);
+export function evaluateSixHourPlayabilityFromRecords(records,date){
+ if(!Array.isArray(records)||records.length!==6)return {status:"insufficient-data",reason:"requires-exactly-six-records"};
+ const teeHour=Number(String(records[0]?.time||"").slice(0,2));
+ if(!Number.isInteger(teeHour)||records.some((r,i)=>r.time!==String(teeHour+i).padStart(2,"0")+":00"))return {status:"insufficient-data",reason:"non-consecutive-records"};
+ const hourly={
+  time:records.map(r=>date+"T"+r.time),
+  precipitation_probability:records.map(r=>r.rain),
+  precipitation:records.map(r=>r.mm),
+  temperature_2m:records.map(r=>r.temp),
+  apparent_temperature:records.map(r=>r.feel),
+  wind_speed_10m:records.map(r=>finite(r.wind)?r.wind/3.6:null),
+  wind_gusts_10m:records.map(r=>finite(r.gust)?r.gust/3.6:null),
+  weather_code:records.map(r=>r.code)
+ };
+ return evaluateSixHourPlayability(hourly,date,teeHour,6);
+}
