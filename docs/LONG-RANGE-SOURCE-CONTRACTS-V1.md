@@ -12,17 +12,17 @@ Each JSON document uses schemaVersion: 1, an exact contractType, sourceId, datas
 
 Source/model run IDs and initialization times must be retained; filenames and retrieval timestamps are not substitutes for model provenance. Missing is not zero. Omit unsupported variables rather than inserting sentinel values.
 
-## ERA5-Land historical daily input
+## ERA5 historical daily input
 
-Directory: data/long-range-inputs/era5-land-daily/*.json
+Directory: data/long-range-inputs/era5-daily/*.json
 
 Each record is keyed uniquely by (subregionId, dateLocal) and includes:
 - dateLocal: local calendar date YYYY-MM-DD
-- gridCell.latitude/longitude: actual returned ERA5-Land grid-cell coordinates, not merely requested golf-course coordinates
+- gridCell.latitude/longitude: actual returned ERA5 grid-cell coordinates, not merely requested golf-course coordinates
 - values: optional finite numeric precipitationMm, temperatureMinC, temperatureMaxC, temperatureMeanC, windSpeedMs, relativeHumidityPct
 - qualityFlags: array of source/processing quality flags
 
-Units are declared per variable in the document: mm, degC, m/s, %. Precipitation and wind cannot be negative; humidity is 0-100%; Tmin cannot exceed Tmax. Preserve the ERA5-Land product's own accumulation semantics and document any conversion upstream; do not assume the time-series endpoint's deaccumulation rule applies to the full dataset.
+Units are declared per variable in the document: mm, degC, m/s, %. Precipitation and wind cannot be negative; humidity is 0-100%; Tmin cannot exceed Tmax. Preserve the ERA5 product's own accumulation semantics and document any conversion upstream; do not assume the time-series endpoint's deaccumulation rule applies to the full dataset.
 
 ## ECMWF extended-range weekly input
 
