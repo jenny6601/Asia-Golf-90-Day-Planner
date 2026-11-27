@@ -1,0 +1,302 @@
+{
+  "schemaVersion": 1,
+  "status": "grid-point-mapping-only-not-data-download",
+  "sourceId": "ERA5_HOURLY_SINGLE_LEVELS",
+  "dataset": "reanalysis-era5-land",
+  "sourceDocumentationUrl": "https://confluence.ecmwf.int/pages/viewpage.action?pageId=685246455",
+  "gridResolutionDegrees": 0.1,
+  "longitudeConvention": "-180_to_180",
+  "selectionMethod": "Round representative latitude and longitude independently to the nearest 0.1 degree, matching the CDS time-series location selector's nearest 0.1-degree grid-neighbour behaviour. Confirm returned grid coordinates from each downloaded file before accepting data.",
+  "caveat": "This mapping is a pre-download expected grid coordinate, not proof of the exact grid coordinate returned by CDS. The actual latitude/longitude coordinates in each NetCDF/CSV response must be read back and compared before the subregion is marked mapped.",
+  "subregionCount": 16,
+  "points": [
+    {
+      "subregionId": "JP-HKD-CENTRAL",
+      "subregion": "道央／札幌近郊",
+      "representativeCourseId": "jp-north-country",
+      "representativeCourseName": "The North Country Golf Club",
+      "representativePoint": {
+        "latitude": 42.82058,
+        "longitude": 141.59652
+      },
+      "era5LandGridPoint": {
+        "latitude": 42.8,
+        "longitude": 141.6
+      },
+      "gridDistanceKm": 2.306,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-HKD-SOUTH",
+      "subregion": "道南／函館・大沼",
+      "representativeCourseId": "jp-hokkaido-country",
+      "representativeCourseName": "Hokkaido Country Club",
+      "representativePoint": {
+        "latitude": 41.9892895,
+        "longitude": 140.6549955
+      },
+      "era5LandGridPoint": {
+        "latitude": 42,
+        "longitude": 140.7
+      },
+      "gridDistanceKm": 3.905,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-THK-NORTH",
+      "subregion": "北東北／岩手・青森",
+      "representativeCourseId": "jp-appi-kogen",
+      "representativeCourseName": "Appi Kogen Golf Club",
+      "representativePoint": {
+        "latitude": 40.01249,
+        "longitude": 141.00652
+      },
+      "era5LandGridPoint": {
+        "latitude": 40,
+        "longitude": 141
+      },
+      "gridDistanceKm": 1.496,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-THK-SOUTH",
+      "subregion": "南東北／宮城・仙台",
+      "representativeCourseId": "jp-rifu",
+      "representativeCourseName": "Rifu Golf Club",
+      "representativePoint": {
+        "latitude": 38.35994,
+        "longitude": 140.981828
+      },
+      "era5LandGridPoint": {
+        "latitude": 38.4,
+        "longitude": 141
+      },
+      "gridDistanceKm": 4.728,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-KNT-NORTH",
+      "subregion": "北關東／栃木・群馬・茨城",
+      "representativeCourseId": "jp-seven-hundred",
+      "representativeCourseName": "Seven Hundred Club",
+      "representativePoint": {
+        "latitude": 36.709629,
+        "longitude": 140.004827
+      },
+      "era5LandGridPoint": {
+        "latitude": 36.7,
+        "longitude": 140
+      },
+      "gridDistanceKm": 1.154,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-KNT-SOUTH",
+      "subregion": "南關東／千葉・東京灣",
+      "representativeCourseId": "jp-narita-hills",
+      "representativeCourseName": "Narita Hills Country Club",
+      "representativePoint": {
+        "latitude": 35.83503,
+        "longitude": 140.27659
+      },
+      "era5LandGridPoint": {
+        "latitude": 35.8,
+        "longitude": 140.3
+      },
+      "gridDistanceKm": 4.43,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-CHB-KOSHIN",
+      "subregion": "甲信／富士・山梨",
+      "representativeCourseId": "jp-kawaguchiko",
+      "representativeCourseName": "Kawaguchiko Country Club",
+      "representativePoint": {
+        "latitude": 35.4682136,
+        "longitude": 138.7517012
+      },
+      "era5LandGridPoint": {
+        "latitude": 35.5,
+        "longitude": 138.8
+      },
+      "gridDistanceKm": 5.623,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-CHB-TOKAI",
+      "subregion": "東海／三重・名古屋周邊",
+      "representativeCourseId": "jp-tsu",
+      "representativeCourseName": "Tsu Country Club",
+      "representativePoint": {
+        "latitude": 34.72587,
+        "longitude": 136.42721
+      },
+      "era5LandGridPoint": {
+        "latitude": 34.7,
+        "longitude": 136.4
+      },
+      "gridDistanceKm": 3.803,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-CHB-HOKURIKU",
+      "subregion": "北陸／石川・能登",
+      "representativeCourseId": "jp-tokinodai",
+      "representativeCourseName": "Tokinodai Country Club",
+      "representativePoint": {
+        "latitude": 36.91549,
+        "longitude": 136.775147
+      },
+      "era5LandGridPoint": {
+        "latitude": 36.9,
+        "longitude": 136.8
+      },
+      "gridDistanceKm": 2.802,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-KNS-CENTRAL",
+      "subregion": "京阪神／兵庫・大阪・京都",
+      "representativeCourseId": "jp-arima-royal",
+      "representativeCourseName": "Arima Royal Golf Club",
+      "representativePoint": {
+        "latitude": 34.826383,
+        "longitude": 135.123729
+      },
+      "era5LandGridPoint": {
+        "latitude": 34.8,
+        "longitude": 135.1
+      },
+      "gridDistanceKm": 3.647,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-KNS-KII",
+      "subregion": "紀伊半島／和歌山",
+      "representativeCourseId": "jp-leograd",
+      "representativeCourseName": "Leograd Golf Club",
+      "representativePoint": {
+        "latitude": 33.9232299832,
+        "longitude": 135.2723593476
+      },
+      "era5LandGridPoint": {
+        "latitude": 33.9,
+        "longitude": 135.3
+      },
+      "gridDistanceKm": 3.63,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-CHG-SANIN",
+      "subregion": "山陰／鳥取・島根",
+      "representativeCourseId": "jp-green-park-daisen",
+      "representativeCourseName": "Green Park Daisen Golf Club",
+      "representativePoint": {
+        "latitude": 35.364639,
+        "longitude": 133.397062
+      },
+      "era5LandGridPoint": {
+        "latitude": 35.4,
+        "longitude": 133.4
+      },
+      "gridDistanceKm": 3.941,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-CHG-SANYO",
+      "subregion": "山陽／岡山・廣島",
+      "representativeCourseId": "jp-setouchi",
+      "representativeCourseName": "Setouchi Golf Resort",
+      "representativePoint": {
+        "latitude": 34.3061999,
+        "longitude": 132.864325
+      },
+      "era5LandGridPoint": {
+        "latitude": 34.3,
+        "longitude": 132.9
+      },
+      "gridDistanceKm": 3.349,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-SHK-01",
+      "subregion": "四國／高知・瀨戶內南岸",
+      "representativeCourseId": "jp-tosa",
+      "representativeCourseName": "Tosa Country Club",
+      "representativePoint": {
+        "latitude": 33.5213,
+        "longitude": 133.7758
+      },
+      "era5LandGridPoint": {
+        "latitude": 33.5,
+        "longitude": 133.8
+      },
+      "gridDistanceKm": 3.262,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-KYS-NORTH",
+      "subregion": "北九州／福岡・佐賀・長崎",
+      "representativeCourseId": "jp-the-classic",
+      "representativeCourseName": "The Classic Golf Club",
+      "representativePoint": {
+        "latitude": 33.770453,
+        "longitude": 130.644917
+      },
+      "era5LandGridPoint": {
+        "latitude": 33.8,
+        "longitude": 130.6
+      },
+      "gridDistanceKm": 5.294,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    },
+    {
+      "subregionId": "JP-KYS-SOUTH",
+      "subregion": "南九州／宮崎・鹿兒島",
+      "representativeCourseId": "jp-phoenix",
+      "representativeCourseName": "Phoenix Country Club",
+      "representativePoint": {
+        "latitude": 31.974525,
+        "longitude": 131.472898
+      },
+      "era5LandGridPoint": {
+        "latitude": 32,
+        "longitude": 131.5
+      },
+      "gridDistanceKm": 3.815,
+      "gridMethod": "nearest-neighbour 0.1-degree regular latitude/longitude grid; rounded to nearest 0.1 degree",
+      "coordinatePurpose": "regional-climate-representative-point",
+      "timezone": "Asia/Tokyo"
+    }
+  ]
+}
