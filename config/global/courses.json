@@ -653,7 +653,8 @@
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "KR-CAP-01"
   },
   {
     "id": "kr-kr-gw-01",
@@ -678,7 +679,8 @@
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "KR-GW-01"
   },
   {
     "id": "kr-kr-cc-01",
@@ -703,7 +705,8 @@
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "KR-CC-01"
   },
   {
     "id": "kr-kr-yn-01",
@@ -728,7 +731,8 @@
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "KR-YN-01"
   },
   {
     "id": "kr-kr-hn-01",
@@ -753,7 +757,8 @@
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "KR-HN-01"
   },
   {
     "id": "kr-kr-jj-01",
@@ -778,7 +783,8 @@
     "officialUrl": "https://kgba.or.kr/03sub02",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "KR-JJ-01"
   },
   {
     "id": "cn-cn-hn-north",
@@ -803,7 +809,8 @@
     "officialUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "CN-HN-NORTH"
   },
   {
     "id": "cn-cn-hn-east",
@@ -828,7 +835,8 @@
     "officialUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "CN-HN-EAST"
   },
   {
     "id": "cn-cn-hn-south",
@@ -853,7 +861,8 @@
     "officialUrl": "https://en.hainan.gov.cn/englishsite/Fitness/202601/0863ed7510f3446096b9a792ddbf68f0.shtml",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "CN-HN-SOUTH"
   },
   {
     "id": "cn-cn-sh-01",
@@ -878,7 +887,8 @@
     "officialUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "CN-SH-01"
   },
   {
     "id": "cn-cn-bj-01",
@@ -903,7 +913,8 @@
     "officialUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "CN-BJ-01"
   },
   {
     "id": "cn-cn-gd-01",
@@ -928,7 +939,8 @@
     "officialUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "CN-GD-01"
   },
   {
     "id": "cn-cn-yn-01",
@@ -953,7 +965,8 @@
     "officialUrl": "https://www.baigolf.com/news.php?act=news_detail&news_id=4428",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "CN-YN-01"
   },
   {
     "id": "vn-vn-north-01",
@@ -978,7 +991,8 @@
     "officialUrl": "https://www.teetimevn.com/vi/courses/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "VN-NORTH-01"
   },
   {
     "id": "vn-vn-central-01",
@@ -1003,7 +1017,8 @@
     "officialUrl": "https://vietnam.travel/things-to-do/golf-courses-central-vietnam/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "VN-CENTRAL-01"
   },
   {
     "id": "vn-vn-central-02",
@@ -1028,7 +1043,8 @@
     "officialUrl": "https://vietnam.travel/things-to-do/golf-courses-central-vietnam/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "VN-CENTRAL-02"
   },
   {
     "id": "vn-vn-south-01",
@@ -1053,7 +1069,8 @@
     "officialUrl": "https://www.aseanlinksgolf.com/golf-courses",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "VN-SOUTH-01"
   },
   {
     "id": "vn-vn-south-02",
@@ -1078,7 +1095,8 @@
     "officialUrl": "https://www.teetimevn.com/vi/courses/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "VN-SOUTH-02"
   },
   {
     "id": "vn-vn-island-01",
@@ -1103,7 +1121,8 @@
     "officialUrl": "https://www.aseanlinksgolf.com/golf-courses",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "VN-ISLAND-01"
   },
   {
     "id": "th-th-bkk-01",
@@ -1128,7 +1147,8 @@
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "TH-BKK-01"
   },
   {
     "id": "th-th-east-01",
@@ -1153,7 +1173,8 @@
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "TH-EAST-01"
   },
   {
     "id": "th-th-west-01",
@@ -1178,7 +1199,8 @@
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "TH-WEST-01"
   },
   {
     "id": "th-th-south-01",
@@ -1203,7 +1225,8 @@
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "TH-SOUTH-01"
   },
   {
     "id": "th-th-north-01",
@@ -1228,7 +1251,8 @@
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "TH-NORTH-01"
   },
   {
     "id": "th-th-ne-01",
@@ -1253,7 +1277,8 @@
     "officialUrl": "https://www.visit-thailand.org/plan-your-trip/golf-in-thailand",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "TH-NE-01"
   },
   {
     "id": "th-th-island-01",
@@ -1278,7 +1303,8 @@
     "officialUrl": "https://www.santiburigolfsamui.com/infomation/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "TH-ISLAND-01"
   },
   {
     "id": "my-my-central-01",
@@ -1303,7 +1329,8 @@
     "officialUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "MY-CENTRAL-01"
   },
   {
     "id": "my-my-north-01",
@@ -1328,7 +1355,8 @@
     "officialUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "MY-NORTH-01"
   },
   {
     "id": "my-my-south-01",
@@ -1353,7 +1381,8 @@
     "officialUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "MY-SOUTH-01"
   },
   {
     "id": "my-my-island-01",
@@ -1378,7 +1407,8 @@
     "officialUrl": "https://www.elsclubmalaysia.com/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "MY-ISLAND-01"
   },
   {
     "id": "my-my-borneo-01",
@@ -1403,7 +1433,8 @@
     "officialUrl": "https://www.malaysiagolfholiday.com/destinations/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "MY-BORNEO-01"
   },
   {
     "id": "my-my-borneo-02",
@@ -1428,7 +1459,8 @@
     "officialUrl": "https://www.malaysiagolfholiday.com/destinations/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "MY-BORNEO-02"
   },
   {
     "id": "my-my-east-01",
@@ -1453,7 +1485,8 @@
     "officialUrl": "https://golfcourseworld.com/golf-courses/country/malaysia/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "MY-EAST-01"
   },
   {
     "id": "my-my-highland-01",
@@ -1478,7 +1511,8 @@
     "officialUrl": "https://www.malaysiagolfholiday.com/destinations/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "MY-HIGHLAND-01"
   },
   {
     "id": "sg-sg-island-01",
@@ -1503,7 +1537,8 @@
     "officialUrl": "https://worldgolfawards.com/award/singapore-best-golf-course/2026",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "SG-ISLAND-01"
   },
   {
     "id": "id-id-jkt-01",
@@ -1528,7 +1563,8 @@
     "officialUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "ID-JKT-01"
   },
   {
     "id": "id-id-wjava-01",
@@ -1553,7 +1589,8 @@
     "officialUrl": "https://www.indonesiagolf.indonesiagolfcourses.com/members-by-region.php?abbr=JKT&v=en",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "ID-WJAVA-01"
   },
   {
     "id": "id-id-cjava-01",
@@ -1578,7 +1615,8 @@
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "ID-CJAVA-01"
   },
   {
     "id": "id-id-ejava-01",
@@ -1603,7 +1641,8 @@
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "ID-EJAVA-01"
   },
   {
     "id": "id-id-bali-01",
@@ -1628,7 +1667,8 @@
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "ID-BALI-01"
   },
   {
     "id": "id-id-riau-01",
@@ -1653,7 +1693,8 @@
     "officialUrl": "https://www.riabintan.com/golf/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "ID-RIAU-01"
   },
   {
     "id": "id-id-sumatra-01",
@@ -1678,7 +1719,8 @@
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "ID-SUMATRA-01"
   },
   {
     "id": "id-id-kal-01",
@@ -1703,7 +1745,8 @@
     "officialUrl": "https://ijg.or.id/venuelist",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "ID-KAL-01"
   },
   {
     "id": "jp-arita-resol",
