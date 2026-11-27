@@ -1,0 +1,4 @@
+# Optional dependencies for ERA5-Land download and inspection
+cdsapi>=0.7.7
+xarray>=2024.1.0
+netCDF4>=1.6.5
