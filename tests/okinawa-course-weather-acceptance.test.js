@@ -5,6 +5,7 @@ import fs from "node:fs/promises";
 const root = new URL("../", import.meta.url);
 const candidates = JSON.parse(await fs.readFile(new URL("config/okinawa/course-coordinate-candidates.json", root), "utf8"));
 const runtime = JSON.parse(await fs.readFile(new URL("config/global/courses.json", root), "utf8"));
+const weatherRegistry = JSON.parse(await fs.readFile(new URL("config/global/weather-subregions.json", root), "utf8"));
 const ids = ["southern-links","pgm-okinawa","kise","atta-terrace","palm-hills","chura-orchard"];
 const expected = {
   "southern-links":[26.113785,127.739021],
@@ -77,6 +78,9 @@ test("App runtime directory loads all six GPS points and sends exact points to O
     }
     if (url.pathname.endsWith("/courses.json")) {
       return {ok:true,json:async()=>runtime};
+    }
+    if (url.pathname.endsWith("/weather-subregions.json")) {
+      return {ok:true,json:async()=>weatherRegistry};
     }
     if (url.hostname === "api.open-meteo.com") {
       requests.push(url);
