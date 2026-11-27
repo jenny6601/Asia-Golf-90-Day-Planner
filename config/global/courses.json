@@ -21,7 +21,8 @@
     "subregionId": "JP-OKI-SOUTH",
     "catalogStatus": "active",
     "weatherEnabled": true,
-    "subregionLabel": "沖繩南部"
+    "subregionLabel": "沖繩南部",
+    "golfClusterId": "JP-OKI-MAIN-SOUTH"
   },
   {
     "id": "pgm-okinawa",
@@ -45,7 +46,8 @@
     "subregionId": "JP-OKI-CENTRAL",
     "catalogStatus": "active",
     "weatherEnabled": true,
-    "subregionLabel": "沖繩中部"
+    "subregionLabel": "沖繩中部",
+    "golfClusterId": "JP-OKI-MAIN-CENTRAL"
   },
   {
     "id": "kise",
@@ -69,7 +71,8 @@
     "subregionId": "JP-OKI-NORTH",
     "catalogStatus": "active",
     "weatherEnabled": true,
-    "subregionLabel": "沖繩北部"
+    "subregionLabel": "沖繩北部",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "atta-terrace",
@@ -93,7 +96,8 @@
     "subregionId": "JP-OKI-NORTH",
     "catalogStatus": "active",
     "weatherEnabled": true,
-    "subregionLabel": "沖繩北部"
+    "subregionLabel": "沖繩北部",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "palm-hills",
@@ -117,7 +121,8 @@
     "subregionId": "JP-OKI-SOUTH",
     "catalogStatus": "active",
     "weatherEnabled": true,
-    "subregionLabel": "沖繩南部"
+    "subregionLabel": "沖繩南部",
+    "golfClusterId": "JP-OKI-MAIN-SOUTH"
   },
   {
     "id": "chura-orchard",
@@ -141,7 +146,8 @@
     "subregionId": "JP-OKI-NORTH",
     "catalogStatus": "active",
     "weatherEnabled": true,
-    "subregionLabel": "沖繩北部"
+    "subregionLabel": "沖繩北部",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-north-country",
@@ -167,7 +173,8 @@
     "officialUrl": "https://www.the-north.co.jp/en/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-HKD-SAPPORO"
   },
   {
     "id": "jp-hokkaido-country",
@@ -193,7 +200,8 @@
     "officialUrl": "https://www.princehotels.co.jp/golf/hokkaido/faq/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-HKD-HAKODATE"
   },
   {
     "id": "jp-appi-kogen",
@@ -219,7 +227,8 @@
     "officialUrl": "https://www.appi.co.jp/en/golf-club/agc-appi-kogen-golf-club/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-THK-IWATE-APPI"
   },
   {
     "id": "jp-rifu",
@@ -245,7 +254,8 @@
     "officialUrl": "https://ir.pacificgolf.co.jp/rifu/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-THK-MIYAGI-SENDAI"
   },
   {
     "id": "jp-seven-hundred",
@@ -271,7 +281,8 @@
     "officialUrl": "https://www.visit-tochigi.com/plan-your-trip/things-to-do/25836/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-KNT-TOCHIGI-NASU"
   },
   {
     "id": "jp-narita-hills",
@@ -297,7 +308,8 @@
     "officialUrl": "https://www.japan.travel/en/sports/golf/courses/narita-hills-country-club/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-KNT-CHIBA-NARITA"
   },
   {
     "id": "jp-kawaguchiko",
@@ -323,7 +335,8 @@
     "officialUrl": "https://kcc.tatemono-golf.com/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-CHB-FUJI-YAMANASHI"
   },
   {
     "id": "jp-tsu",
@@ -349,7 +362,8 @@
     "officialUrl": "https://tsu.co.jp/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-CHB-MIE-ISE"
   },
   {
     "id": "jp-tokinodai",
@@ -375,7 +389,8 @@
     "officialUrl": "https://tokinodai.co.jp/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-CHB-HOKURIKU"
   },
   {
     "id": "jp-arima-royal",
@@ -401,7 +416,8 @@
     "officialUrl": "https://arima-royal.com/access",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-KNS-OSAKA-HYOGO"
   },
   {
     "id": "jp-leograd",
@@ -428,7 +444,8 @@
     "officialUrl": "https://www.leograd.jp/concept_outline/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-KNS-WAKAYAMA"
   },
   {
     "id": "jp-green-park-daisen",
@@ -454,7 +471,8 @@
     "officialUrl": "https://www.jgto.org/en/club/jgto",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-CHG-SANIN"
   },
   {
     "id": "jp-setouchi",
@@ -480,7 +498,8 @@
     "officialUrl": "https://www.resol-golf.jp/en/setouchi/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-CHG-SANYO"
   },
   {
     "id": "jp-tosa",
@@ -506,7 +525,8 @@
     "officialUrl": "https://www.japan.travel/en/sports/golf/courses/tosa-country-club/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-SHK-EHIME-KOCHI"
   },
   {
     "id": "jp-the-classic",
@@ -532,7 +552,8 @@
     "officialUrl": "https://cm-g.co.jp/the-classic/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-KYS-FUKUOKA-SAGA"
   },
   {
     "id": "jp-phoenix",
@@ -558,7 +579,8 @@
     "officialUrl": "https://en.seagaia.co.jp/hotel-facility/",
     "catalogStatus": "research_candidate",
     "weatherEnabled": false,
-    "enabled": true
+    "enabled": true,
+    "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA"
   },
   {
     "id": "kr-kr-cap-01",
@@ -1656,7 +1678,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNS-WAKAYAMA"
   },
   {
     "id": "jp-green-valley",
@@ -1679,7 +1702,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-FUJI-YAMANASHI"
   },
   {
     "id": "jp-dai-atami-kokusai",
@@ -1702,7 +1726,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-SHIZUOKA-FUJI-IZU"
   },
   {
     "id": "jp-daifuji",
@@ -1725,7 +1750,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-SHIZUOKA-FUJI-IZU"
   },
   {
     "id": "jp-eau-sol-vert-karuizawa",
@@ -1748,7 +1774,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-NAGANO-KARUIZAWA"
   },
   {
     "id": "jp-fuji-classic",
@@ -1771,7 +1798,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-FUJI-YAMANASHI"
   },
   {
     "id": "jp-fuji-golf-course",
@@ -1794,7 +1822,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-FUJI-YAMANASHI"
   },
   {
     "id": "jp-gora-kadan-fuji",
@@ -1817,7 +1846,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-SHIZUOKA-FUJI-IZU"
   },
   {
     "id": "jp-hanna-country",
@@ -1840,7 +1870,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNS-OSAKA-HYOGO"
   },
   {
     "id": "jp-hayama-kokusai",
@@ -1863,7 +1894,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-TOKYO-KANAGAWA"
   },
   {
     "id": "jp-hokkaido-golf-club",
@@ -1886,7 +1918,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-HKD-SAPPORO"
   },
   {
     "id": "jp-iruma-country",
@@ -1909,7 +1942,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-GUNMA-SAITAMA"
   },
   {
     "id": "jp-14-hills",
@@ -1932,7 +1966,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-NAGOYA-GIFU"
   },
   {
     "id": "jp-25-nasu",
@@ -1955,7 +1990,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-TOCHIGI-NASU"
   },
   {
     "id": "jp-31-country",
@@ -1978,7 +2014,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-IBARAKI-TSUKUBA"
   },
   {
     "id": "jp-adatara",
@@ -2001,7 +2038,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-THK-FUKUSHIMA-YAMAGATA"
   },
   {
     "id": "jp-adonis",
@@ -2024,7 +2062,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-NAGOYA-GIFU"
   },
   {
     "id": "jp-adonis-ogawa",
@@ -2047,7 +2086,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-GUNMA-SAITAMA"
   },
   {
     "id": "jp-aga-kogen",
@@ -2070,7 +2110,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-CHB-HOKURIKU"
   },
   {
     "id": "jp-fuchu-country",
@@ -2093,7 +2134,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-TOKYO-KANAGAWA"
   },
   {
     "id": "jp-gmg-hachioji",
@@ -2116,7 +2158,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-TOKYO-KANAGAWA"
   },
   {
     "id": "jp-hachioji-cc",
@@ -2139,7 +2182,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-TOKYO-KANAGAWA"
   },
   {
     "id": "jp-izu-oshima",
@@ -2162,7 +2206,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-TOKYO-KANAGAWA"
   },
   {
     "id": "jp-manna-country",
@@ -2185,7 +2230,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-CHIBA-NARITA"
   },
   {
     "id": "jp-mashiko-country",
@@ -2208,7 +2254,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-TOCHIGI-NASU"
   },
   {
     "id": "jp-murasakizuka",
@@ -2231,7 +2278,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KNT-TOCHIGI-NASU"
   },
   {
     "id": "jp-anan-cc",
@@ -2254,7 +2302,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-SHK-KAGAWA-TOKUSHIMA"
   },
   {
     "id": "jp-bizan-cc",
@@ -2277,7 +2326,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-SHK-KAGAWA-TOKUSHIMA"
   },
   {
     "id": "jp-reomakogen",
@@ -2300,7 +2350,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-SHK-KAGAWA-TOKUSHIMA"
   },
   {
     "id": "jp-shikoku-anabuki",
@@ -2323,7 +2374,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-SHK-KAGAWA-TOKUSHIMA"
   },
   {
     "id": "jp-akita-kita-kuko",
@@ -2346,7 +2398,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-THK-AOMORI-AKITA"
   },
   {
     "id": "jp-aomori-cc",
@@ -2369,7 +2422,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-THK-AOMORI-AKITA"
   },
   {
     "id": "jp-aomori-royal",
@@ -2392,7 +2446,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-THK-AOMORI-AKITA"
   },
   {
     "id": "jp-banyan-tree-okinawa",
@@ -2415,7 +2470,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-bel-beach",
@@ -2438,7 +2494,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-emerald-coast",
@@ -2461,7 +2518,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-ginoza-cc",
@@ -2484,7 +2542,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-kanucha-golf",
@@ -2507,7 +2566,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-naha-golf",
@@ -2530,7 +2590,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-nanzan-cc",
@@ -2553,7 +2614,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-ocean-castle",
@@ -2576,7 +2638,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-ocean-links-miyako",
@@ -2599,7 +2662,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-okinawa-country",
@@ -2622,7 +2686,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-okinawa-royal",
@@ -2645,7 +2710,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-onishi-terrace",
@@ -2668,7 +2734,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-risonare-kohamajima",
@@ -2691,7 +2758,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-ryukyu-golf",
@@ -2714,7 +2782,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-sashiba-links",
@@ -2737,7 +2806,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-shigira-bay",
@@ -2760,7 +2830,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-shurei-cc",
@@ -2783,7 +2854,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-OKI-MAIN-NORTH"
   },
   {
     "id": "jp-aino-cc",
@@ -2806,7 +2878,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KYS-NAGASAKI-KUMAMOTO"
   },
   {
     "id": "jp-aiwa-miyazaki",
@@ -2829,7 +2902,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA"
   },
   {
     "id": "jp-amagase-onsen",
@@ -2852,7 +2926,8 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KYS-OITA"
   },
   {
     "id": "jp-amami-cc",
@@ -2875,6 +2950,7 @@
     "longitude": null,
     "weatherEnabled": false,
     "enabled": true,
-    "operationalStatus": "not_independently_verified"
+    "operationalStatus": "not_independently_verified",
+    "golfClusterId": "JP-KYS-MIYAZAKI-KAGOSHIMA"
   }
 ]
