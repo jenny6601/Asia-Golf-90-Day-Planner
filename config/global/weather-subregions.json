@@ -11,56 +11,37 @@
         {
           "id": "JP-HKD-SAPPORO",
           "region": "北海道",
-          "subregion": "札幌／千歲球場群",
-          "label": "北海道・札幌／千歲球場群",
+          "subregion": "札幌市球場群",
+          "label": "北海道・札幌市球場群",
           "coverageStatus": "planned",
           "representativeCourseId": null,
-          "candidateCourseName": "The North Country Golf Club",
-          "candidateRationale": "以札幌／千歲球場群作為高爾夫旅遊與球場群聚單位；區內球場共用此代表點進行區域氣候分析。",
-          "candidateSourceUrl": "https://www.the-north.co.jp/en/",
-          "candidateStatus": "research-candidate",
-          "candidateCoordinates": {
-            "latitude": 42.82058,
-            "longitude": 141.59652,
-            "coordinateStatus": "public-map-coordinate",
-            "coordinateSourceUrl": "https://www.jgto.org/en/club/jgto",
-            "timezone": "Asia/Tokyo"
-          },
-          "coordinateReviewStatus": "candidate-coordinate-review-pending",
-          "candidateCourseId": "jp-north-country",
+          "candidateCourseName": "Sapporo Teine Golf Club",
+          "candidateRationale": "以札幌市行政區內的球場群作為獨立高爾夫目的地；札幌市球場共用此代表點進行區域氣候分析，不與千歲、苫小牧合併。",
+          "candidateSourceUrl": "https://sapporo-teine.com/golf/",
+          "candidateStatus": "identity-confirmed-coordinate-pending",
+          "coordinateReviewStatus": "representative-coordinate-pending",
+          "candidateCourseId": "jp-sapporo-teine",
           "courseIdentityVerification": {
-            "verificationLevel": "official-operator-and-JGTO-identity-address-confirmed",
-            "officialSourceUrl": "https://www.the-north.co.jp/en/",
-            "independentOfficialDirectoryUrl": "https://www.jgto.org/en/club/jgto",
-            "officialAddress": "26 Rankoshi, Chitose-shi, Hokkaido 066-0068, Japan",
-            "operationalEvidence": "official-website-present; JNTO notes seasonal winter closure; current play dates must be checked before trip planning",
+            "verificationLevel": "official-operator-course-identity-address-and-2026-operation-confirmed",
+            "officialSourceUrl": "https://sapporo-teine.com/golf/business-information/",
+            "officialAddress": "〒006-0029 北海道札幌市手稲区手稲本町593番地3, Japan",
+            "operationalEvidence": "Official operator lists the Sapporo-city address, 27-hole facility and 2026 operating season 2026-04-25 to 2026-11-03; 2026 season closure notice confirms next planned opening 2027-04-24.",
             "checkedOn": "2026-11-27"
           },
           "coordinateQuality": {
-            "grade": "B",
-            "label": "公開／第三方候選座標",
+            "grade": "pending",
+            "label": "官方球場身分已確認，區域代表座標待補",
             "reviewStatus": "candidate-only-not-enabled",
             "weatherPointEligible": false,
-            "reason": "依使用者確認，本座標用途為代表該次分區的區域氣候，不要求精確落在球場圖釘或球道範圍；現有代表球場附近候選點可用於區域尺度天氣評估。",
-            "officialMapReference": {
-              "type": "official-google-maps-embed-center",
-              "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2926.6358546078563!2d141.6011047!3d42.8171806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f75272b7ab3191d:0x709047ead59e4467!2sThe+-+North+Country+Golf+Club!5e0!3m2!1sen!2sjp!4v1708072517450!5m2!1sen!2sjp",
-              "latitude": 42.8171806,
-              "longitude": 141.6011047,
-              "coordinateType": "map-viewport-center-not-pin",
-              "distanceFromCandidateKm": 0.532,
-              "crossCheckResult": "candidate-public-map-coordinate-is-approximately-532m-from-official-map-viewport-center;cannot-interpret-as-pin-error",
-              "checkedOn": "2026-11-27"
-            },
             "regionalClimateEligible": false,
-            "coordinatePurpose": "regional-climate-representative-point"
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "球場身分與札幌市地址已由官方營運商確認；尚未取得並核實代表點座標，不得啟用正式天氣資料擷取。"
           },
           "golfClusterId": "JP-HKD-SAPPORO",
           "clusterCourseIds": [
-            "jp-north-country",
-            "jp-hokkaido-golf-club"
+            "jp-sapporo-teine"
           ],
-          "courseCount": 2,
+          "courseCount": 1,
           "climateUnit": "golf-course-cluster",
           "regionId": "JP-REG-01",
           "regionName": "北海道",
@@ -1704,6 +1685,54 @@
           "regionId": "JP-REG-09",
           "regionName": "沖繩",
           "subregionUnit": "golf-course-cluster"
+        },
+        {
+          "id": "JP-HKD-CHITOSE-TOMAKOMAI",
+          "golfClusterId": "JP-HKD-CHITOSE-TOMAKOMAI",
+          "region": "北海道",
+          "subregion": "千歲／苫小牧球場群",
+          "label": "北海道・千歲／苫小牧球場群",
+          "coverageStatus": "planned",
+          "representativeCourseId": null,
+          "candidateCourseId": "jp-north-country",
+          "candidateCourseName": "The North Country Golf Club",
+          "candidateRationale": "以千歲與苫小牧的球場群聚及新千歲空港交通圈作為獨立高爾夫目的地；區內球場共用一個代表點進行區域氣候分析。",
+          "candidateSourceUrl": "https://www.the-north.co.jp/en/",
+          "candidateStatus": "official-operator-and-JGTO-identity-address-confirmed-coordinate-review-pending",
+          "candidateCoordinates": {
+            "latitude": 42.82058,
+            "longitude": 141.59652,
+            "coordinateStatus": "public-map-coordinate",
+            "coordinateSourceUrl": "https://www.jgto.org/en/club/jgto",
+            "timezone": "Asia/Tokyo"
+          },
+          "coordinateReviewStatus": "candidate-coordinate-review-pending",
+          "clusterCourseIds": [
+            "jp-north-country",
+            "jp-hokkaido-golf-club"
+          ],
+          "courseCount": 2,
+          "climateUnit": "golf-course-cluster",
+          "regionId": "JP-REG-01",
+          "regionName": "北海道",
+          "subregionUnit": "golf-course-cluster",
+          "courseIdentityVerification": {
+            "verificationLevel": "official-operator-and-JGTO-identity-address-confirmed",
+            "officialSourceUrl": "https://www.the-north.co.jp/en/",
+            "independentOfficialDirectoryUrl": "https://www.jgto.org/en/club/jgto",
+            "officialAddress": "The North Country Golf Club: 26 Rankoshi, Chitose-shi, Hokkaido 066-0068, Japan; Hokkaido Golf Club: 440-1 Nishikioka, Tomakomai-shi, Hokkaido 059-1275, Japan",
+            "operationalEvidence": "The North Country official operator confirms its Chitose location and 2026 season closure notice; Hokkaido Golf Club directory entry confirms Tomakomai address. Both are geographically within the Chitose/Tomakomai destination corridor.",
+            "checkedOn": "2026-11-27"
+          },
+          "coordinateQuality": {
+            "grade": "B",
+            "label": "公開候選座標，待區域代表點核實",
+            "reviewStatus": "candidate-only-not-enabled",
+            "weatherPointEligible": false,
+            "regionalClimateEligible": false,
+            "coordinatePurpose": "regional-climate-representative-point",
+            "reason": "保留原 The North Country 候選座標作為千歲／苫小牧區域代表點候選；尚未完成座標來源與區域適配核實，不啟用正式天氣擷取。"
+          }
         }
       ],
       "coordinateResearchSummary": {
@@ -1732,16 +1761,18 @@
           "subregionIds": [
             "JP-HKD-SAPPORO",
             "JP-HKD-NISEKO",
-            "JP-HKD-HAKODATE"
+            "JP-HKD-HAKODATE",
+            "JP-HKD-CHITOSE-TOMAKOMAI"
           ],
-          "subregionCount": 3,
+          "subregionCount": 4,
           "courseIds": [
             "jp-north-country",
             "jp-hokkaido-country",
             "jp-hokkaido-golf-club",
-            "jp-niseko-village-golf"
+            "jp-niseko-village-golf",
+            "jp-sapporo-teine"
           ],
-          "courseCount": 4
+          "courseCount": 5
         },
         {
           "id": "JP-REG-02",
@@ -4035,7 +4066,7 @@
       "regionHierarchy": "region>subregion>golf-course"
     }
   ],
-  "planningNote": "Japan uses 36 destination-oriented golf clusters (3 Hokkaido, 5 Tohoku, 6 Kanto, 6 Chubu, 3 Kansai, 2 Chugoku, 2 Shikoku, 4 Kyushu, 5 Okinawa). Other seven countries retain their destination-oriented subregions, explicitly typed as golf-course clusters. Candidate representatives are not operational forecast points until validated.",
+  "planningNote": "Japan uses 36 destination-oriented golf clusters (3 Hokkaido, 5 Tohoku, 6 Kanto, 6 Chubu, 3 Kansai, 2 Chugoku, 2 Shikoku, 4 Kyushu, 5 Okinawa). Other seven countries retain their destination-oriented subregions, explicitly typed as golf-course clusters. Candidate representatives are not operational forecast points until validated. Hokkaido refinement: Sapporo city is separated from the Chitose/Tomakomai destination cluster; Sapporo Teine Golf Club is the identity-confirmed representative candidate, while The North Country remains the Chitose/Tomakomai candidate. Neither candidate point is enabled for live weather ingestion.",
   "candidatePolicy": "Candidate names are research selections only. They must not be used for weather ingestion or forecast generation until current operating status, exact official course identity, GPS coordinates, timezone, and subregion fit are verified. Candidate is not an enabled representative.",
-  "candidateCount": 76
+  "candidateCount": 77
 }
