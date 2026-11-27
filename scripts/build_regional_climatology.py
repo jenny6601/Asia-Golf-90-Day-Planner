@@ -41,11 +41,11 @@ def _calendar_distance(a: date, b: date) -> float:
 
 
 def _expected_window_days(year: int, target: date, window_days: int) -> int:
-    anchor = date(year, target.month, target.day)
-    return sum(1 for offset in range(-window_days, window_days + 1)
-               if date(anchor.year, 1, 1) <= anchor + timedelta(days=offset) <= date(anchor.year, 12, 31)
-               or (anchor + timedelta(days=offset)).year in {year - 1, year + 1})
-
+    expected = window_days * 2 + 1
+    is_leap = year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+    if is_leap and _calendar_distance(date(year, 2, 29), target) <= window_days:
+        expected += 1
+    return expected
 
 def _percentile(values: list[float], p: float) -> float | None:
     if not values:
