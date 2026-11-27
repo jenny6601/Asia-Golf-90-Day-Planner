@@ -20,7 +20,7 @@ class JmaCrosscheckTests(unittest.TestCase):
             for i, rain in enumerate([0, 2, 3], 1)
         ]
         station = {
-            "sourceId": MODULE.JMA_SOURCE, "stationId": "TEST", "name": "Test Station",
+            "sourceId": MODULE.JMA_SOURCE, "qualityPolicyStatus": "validated", "stationId": "TEST", "name": "Test Station",
             "latitude": 35, "longitude": 139,
             "records": [
                 {"validDate": f"1991-01-0{i}", "precipitationMm": rain, "temperatureMinC": 4, "temperatureMaxC": 10}
