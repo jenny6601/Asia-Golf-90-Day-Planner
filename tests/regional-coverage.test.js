@@ -41,7 +41,7 @@ test("invalid inputs are rejected",()=>{
 test("canonical registry retains planned countries and uses the designated representative course",()=>{
  const registry=[
   {countryCode:"JP",subregions:[{id:"JP-OKI-NORTH",region:"Okinawa",subregion:"北部",label:"沖繩北部",representativeCourseId:"north-b"}]},
-  {countryCode:"KR",subregions:[]}
+  {countryCode:"KR",coverageStatus:"planned",subregions:[]}
  ];
  const result=buildRegionalCoverage(countries,courses,registry);
  const japan=result.countries.find(x=>x.code==="JP");
