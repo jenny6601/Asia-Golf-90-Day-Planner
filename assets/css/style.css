@@ -1245,3 +1245,7 @@ nav.monthly-jump-nav button.monthly-jump-button:active{
 .monthly-status-watch{background:#dceeff;color:#0756a6;border:1px solid #79b7ed}
 .monthly-status-bad{background:#f9dfe1;color:#a12e37;border:1px solid #e8aeb4}
 .monthly-status-unknown{background:#edf0f2;color:#66727a;border:1px solid #d2d9dd}
+
+/* Departure 7-day summary: horizontal weekday labels and clearer playability badges */
+.departure-five-date small{writing-mode:horizontal-tb!important;text-orientation:mixed!important;white-space:nowrap!important;word-break:keep-all!important;letter-spacing:.02em;font-size:clamp(.78rem,2.8vw,.95rem)!important;line-height:1.2!important}
+.departure-five-card>.monthly-day-playability{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:3.8em!important;min-height:2em!important;padding:4px 9px!important;margin:3px 0 5px!important;font-size:clamp(.82rem,3.2vw,1rem)!important;line-height:1.2!important;font-weight:900!important;border-width:1.5px!important;border-radius:9px!important}
