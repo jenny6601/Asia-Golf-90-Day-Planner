@@ -336,7 +336,7 @@ def main():
     report = build_report(mapping, records, issues, args.start_year, args.end_year, batch_audit)
     target = ROOT / args.output
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    target.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     summary = {
         "status": report["status"], "regions": report["regionCount"],
         "filesScanned": len(paths), "fileIssues": len(issues),
