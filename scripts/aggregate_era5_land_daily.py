@@ -28,6 +28,18 @@ VARS = {
     "u10Ms": "10m_u_component_of_wind",
     "v10Ms": "10m_v_component_of_wind",
 }
+SOURCE_ALIASES = {
+    "2m_temperature": ("2m_temperature", "t2m"),
+    "2m_dewpoint_temperature": ("2m_dewpoint_temperature", "d2m"),
+    "total_precipitation": ("total_precipitation", "tp"),
+    "10m_u_component_of_wind": ("10m_u_component_of_wind", "u10"),
+    "10m_v_component_of_wind": ("10m_v_component_of_wind", "v10"),
+}
+
+
+def resolve_source_variable(available_names, canonical_name: str) -> str | None:
+    """Resolve CDS long names or the short GRIB names used in returned NetCDF files."""
+    return next((name for name in SOURCE_ALIASES[canonical_name] if name in available_names), None)
 
 
 def celsius(kelvin: float) -> float:
@@ -140,8 +152,9 @@ def _extract_hourly_records(archive: Path) -> list[dict]:
                 if time_name is None:
                     raise ValueError(f"No time/valid_time coordinate in {path.name}")
                 times = np.asarray(ds[time_name].values).reshape(-1)
-                for output_name, variable in VARS.items():
-                    if variable not in ds.data_vars:
+                for output_name, canonical_name in VARS.items():
+                    variable = resolve_source_variable(ds.data_vars, canonical_name)
+                    if variable is None:
                         continue
                     units = str(ds[variable].attrs.get("units", "")).strip().lower()
                     allowed = {
