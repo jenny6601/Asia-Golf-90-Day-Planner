@@ -37,3 +37,16 @@ test("countries without course data remain explicitly uncovered",()=>{
 test("invalid inputs are rejected",()=>{
  assert.throws(()=>buildRegionalCoverage({},[]),/arrays/);
 });
+
+test("canonical registry retains planned countries and uses the designated representative course",()=>{
+ const registry=[
+  {countryCode:"JP",subregions:[{id:"JP-OKI-NORTH",region:"Okinawa",subregion:"北部",label:"沖繩北部",representativeCourseId:"north-b"}]},
+  {countryCode:"KR",subregions:[]}
+ ];
+ const result=buildRegionalCoverage(countries,courses,registry);
+ const japan=result.countries.find(x=>x.code==="JP");
+ assert.equal(japan.subregionCount,2);
+ assert.equal(japan.subregions.find(x=>x.area==="北部").representative.id,"north-b");
+ assert.equal(japan.subregions.find(x=>x.area==="北部").coverageStatus,"ready");
+ assert.equal(result.countries.find(x=>x.code==="KR").registryStatus,"planned");
+});
