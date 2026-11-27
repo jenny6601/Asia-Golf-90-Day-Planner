@@ -1,7 +1,353 @@
 {
-  "fetchedAt": "2026-11-27T06:07:54.042Z",
+  "fetchedAt": "2026-11-27T06:10:18.646Z",
   "localDate": "2026-11-27",
   "provider": "Open-Meteo Forecast API",
+  "seasonalProvider": "Open-Meteo Seasonal Forecast API",
+  "seasonalModel": "ECMWF seasonal seamless (EC46 + SEAS5)",
+  "seasonal": {
+    "north": {
+      "place": "名護市",
+      "weeklyUnits": {
+        "time": "iso8601",
+        "precipitation_mean": "mm",
+        "precipitation_anomaly": "mm",
+        "precipitation_efi": "",
+        "precipitation_anomaly_gt0": "%",
+        "precipitation_anomaly_gt10": "%",
+        "precipitation_anomaly_gt20": "%",
+        "wind_speed_10m_mean": "m/s",
+        "wind_speed_10m_anomaly": "m/s",
+        "temperature_2m_mean": "°C",
+        "temperature_2m_anomaly": "K"
+      },
+      "monthlyUnits": {
+        "time": "iso8601",
+        "precipitation_mean": "mm",
+        "precipitation_anomaly": "mm",
+        "wind_speed_10m_mean": "m/s",
+        "wind_speed_10m_anomaly": "m/s",
+        "temperature_2m_mean": "°C",
+        "temperature_2m_anomaly": "K",
+        "temperature_min24h_2m_mean": "°C",
+        "temperature_max24h_2m_mean": "°C",
+        "cloud_cover_mean": "%",
+        "cloud_cover_anomaly": "%",
+        "sunshine_duration_mean": "s",
+        "sunshine_duration_anomaly": "s"
+      },
+      "weekly": {
+        "time": [
+          "2026-11-23",
+          "2026-11-30",
+          "2026-12-07",
+          "2026-12-14",
+          "2026-12-21",
+          "2026-12-28",
+          "2027-01-04",
+          "2027-01-11",
+          "2027-01-18",
+          "2027-01-25",
+          "2027-02-01",
+          "2027-02-08",
+          "2027-02-15",
+          "2027-02-22"
+        ],
+        "precipitation_mean": [
+          78.5,
+          8,
+          43.8,
+          48,
+          45.7,
+          43.3,
+          39.9,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "precipitation_anomaly": [
+          44,
+          -25.3,
+          13.4,
+          17.2,
+          14.9,
+          10.6,
+          9,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "precipitation_efi": [
+          0.5,
+          -0.5,
+          0.3,
+          0.3,
+          0.2,
+          0.2,
+          0.2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "monthly": {
+        "time": [
+          "2026-11-01",
+          "2026-12-01",
+          "2027-01-01"
+        ],
+        "precipitation_mean": [
+          131.6,
+          169.6,
+          178.7
+        ],
+        "precipitation_anomaly": [
+          9,
+          44.8,
+          65.1
+        ]
+      }
+    },
+    "central": {
+      "place": "沖繩市",
+      "weeklyUnits": {
+        "time": "iso8601",
+        "precipitation_mean": "mm",
+        "precipitation_anomaly": "mm",
+        "precipitation_efi": "",
+        "precipitation_anomaly_gt0": "%",
+        "precipitation_anomaly_gt10": "%",
+        "precipitation_anomaly_gt20": "%",
+        "wind_speed_10m_mean": "m/s",
+        "wind_speed_10m_anomaly": "m/s",
+        "temperature_2m_mean": "°C",
+        "temperature_2m_anomaly": "K"
+      },
+      "monthlyUnits": {
+        "time": "iso8601",
+        "precipitation_mean": "mm",
+        "precipitation_anomaly": "mm",
+        "wind_speed_10m_mean": "m/s",
+        "wind_speed_10m_anomaly": "m/s",
+        "temperature_2m_mean": "°C",
+        "temperature_2m_anomaly": "K",
+        "temperature_min24h_2m_mean": "°C",
+        "temperature_max24h_2m_mean": "°C",
+        "cloud_cover_mean": "%",
+        "cloud_cover_anomaly": "%",
+        "sunshine_duration_mean": "s",
+        "sunshine_duration_anomaly": "s"
+      },
+      "weekly": {
+        "time": [
+          "2026-11-23",
+          "2026-11-30",
+          "2026-12-07",
+          "2026-12-14",
+          "2026-12-21",
+          "2026-12-28",
+          "2027-01-04",
+          "2027-01-11",
+          "2027-01-18",
+          "2027-01-25",
+          "2027-02-01",
+          "2027-02-08",
+          "2027-02-15",
+          "2027-02-22"
+        ],
+        "precipitation_mean": [
+          84.7,
+          7,
+          41.8,
+          47.5,
+          44.6,
+          43.3,
+          40.2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "precipitation_anomaly": [
+          50,
+          -26.9,
+          11.3,
+          16.9,
+          13.8,
+          11,
+          9.7,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "precipitation_efi": [
+          0.5,
+          -0.5,
+          0.2,
+          0.3,
+          0.2,
+          0.2,
+          0.2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "monthly": {
+        "time": [
+          "2026-11-01",
+          "2026-12-01",
+          "2027-01-01"
+        ],
+        "precipitation_mean": [
+          129.2,
+          171.8,
+          176.1
+        ],
+        "precipitation_anomaly": [
+          5.5,
+          47.2,
+          65.3
+        ]
+      }
+    },
+    "south": {
+      "place": "那霸市",
+      "weeklyUnits": {
+        "time": "iso8601",
+        "precipitation_mean": "mm",
+        "precipitation_anomaly": "mm",
+        "precipitation_efi": "",
+        "precipitation_anomaly_gt0": "%",
+        "precipitation_anomaly_gt10": "%",
+        "precipitation_anomaly_gt20": "%",
+        "wind_speed_10m_mean": "m/s",
+        "wind_speed_10m_anomaly": "m/s",
+        "temperature_2m_mean": "°C",
+        "temperature_2m_anomaly": "K"
+      },
+      "monthlyUnits": {
+        "time": "iso8601",
+        "precipitation_mean": "mm",
+        "precipitation_anomaly": "mm",
+        "wind_speed_10m_mean": "m/s",
+        "wind_speed_10m_anomaly": "m/s",
+        "temperature_2m_mean": "°C",
+        "temperature_2m_anomaly": "K",
+        "temperature_min24h_2m_mean": "°C",
+        "temperature_max24h_2m_mean": "°C",
+        "cloud_cover_mean": "%",
+        "cloud_cover_anomaly": "%",
+        "sunshine_duration_mean": "s",
+        "sunshine_duration_anomaly": "s"
+      },
+      "weekly": {
+        "time": [
+          "2026-11-23",
+          "2026-11-30",
+          "2026-12-07",
+          "2026-12-14",
+          "2026-12-21",
+          "2026-12-28",
+          "2027-01-04",
+          "2027-01-11",
+          "2027-01-18",
+          "2027-01-25",
+          "2027-02-01",
+          "2027-02-08",
+          "2027-02-15",
+          "2027-02-22"
+        ],
+        "precipitation_mean": [
+          84.7,
+          7,
+          41.8,
+          47.5,
+          44.6,
+          43.3,
+          40.2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "precipitation_anomaly": [
+          50,
+          -26.9,
+          11.3,
+          16.9,
+          13.8,
+          11,
+          9.7,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "precipitation_efi": [
+          0.5,
+          -0.5,
+          0.2,
+          0.3,
+          0.2,
+          0.2,
+          0.2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "monthly": {
+        "time": [
+          "2026-11-01",
+          "2026-12-01",
+          "2027-01-01"
+        ],
+        "precipitation_mean": [
+          129.2,
+          171.8,
+          176.1
+        ],
+        "precipitation_anomaly": [
+          5.5,
+          47.2,
+          65.3
+        ]
+      }
+    }
+  },
   "regions": {
     "north": [
       {
