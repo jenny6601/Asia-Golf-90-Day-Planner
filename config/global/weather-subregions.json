@@ -88,7 +88,8 @@
             "timezone": "Asia/Tokyo"
           },
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "北海道"
         },
         {
           "id": "JP-HKD-NISEKO",
@@ -138,7 +139,8 @@
             "checkedOn": "2026-11-27"
           },
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "北海道"
         },
         {
           "id": "JP-HKD-HAKODATE",
@@ -201,7 +203,8 @@
           "regionName": "北海道",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "北海道"
         },
         {
           "id": "JP-THK-AOMORI-AKITA",
@@ -243,7 +246,8 @@
           "regionName": "東北",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "東北"
         },
         {
           "id": "JP-THK-IWATE-APPI",
@@ -303,7 +307,8 @@
           "regionName": "東北",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "東北"
         },
         {
           "id": "JP-THK-MIYAGI-SENDAI",
@@ -365,7 +370,8 @@
           "regionName": "東北",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "東北"
         },
         {
           "id": "JP-THK-FUKUSHIMA-YAMAGATA",
@@ -406,7 +412,8 @@
           "regionName": "東北",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "東北"
         },
         {
           "id": "JP-KNT-TOKYO-KANAGAWA",
@@ -450,7 +457,8 @@
           "regionName": "關東",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "關東"
         },
         {
           "id": "JP-KNT-CHIBA-NARITA",
@@ -509,7 +517,8 @@
           "regionName": "關東",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "關東"
         },
         {
           "id": "JP-KNT-IBARAKI-TSUKUBA",
@@ -550,7 +559,8 @@
           "regionName": "關東",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "關東"
         },
         {
           "id": "JP-KNT-TOCHIGI-NASU",
@@ -612,7 +622,8 @@
           "regionName": "關東",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "關東"
         },
         {
           "id": "JP-KNT-GUNMA-SAITAMA",
@@ -654,7 +665,8 @@
           "regionName": "關東",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "關東"
         },
         {
           "id": "JP-CHB-SHIZUOKA-FUJI-IZU",
@@ -697,7 +709,8 @@
           "regionName": "中部",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中部"
         },
         {
           "id": "JP-CHB-FUJI-YAMANASHI",
@@ -767,7 +780,8 @@
           "regionName": "中部",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中部"
         },
         {
           "id": "JP-CHB-NAGANO-KARUIZAWA",
@@ -808,7 +822,8 @@
           "regionName": "中部",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中部"
         },
         {
           "id": "JP-CHB-NAGOYA-GIFU",
@@ -850,7 +865,8 @@
           "regionName": "中部",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中部"
         },
         {
           "id": "JP-CHB-MIE-ISE",
@@ -908,7 +924,8 @@
           "regionName": "中部",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中部"
         },
         {
           "id": "JP-CHB-HOKURIKU",
@@ -970,7 +987,8 @@
           "regionName": "中部",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中部"
         },
         {
           "id": "JP-KNS-OSAKA-HYOGO",
@@ -1030,7 +1048,8 @@
           "regionName": "關西",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "關西"
         },
         {
           "id": "JP-KNS-KYOTO-SHIGA-NARA",
@@ -1071,7 +1090,8 @@
           "regionName": "關西",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "關西"
         },
         {
           "id": "JP-KNS-WAKAYAMA",
@@ -1131,7 +1151,8 @@
           "regionName": "關西",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "關西"
         },
         {
           "id": "JP-CHG-SANYO",
@@ -1191,7 +1212,8 @@
           "regionName": "中國地方",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中國地方"
         },
         {
           "id": "JP-CHG-SANIN",
@@ -1249,7 +1271,8 @@
           "regionName": "中國地方",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中國地方"
         },
         {
           "id": "JP-SHK-KAGAWA-TOKUSHIMA",
@@ -1293,7 +1316,8 @@
           "regionName": "四國",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "四國"
         },
         {
           "id": "JP-SHK-EHIME-KOCHI",
@@ -1354,7 +1378,8 @@
           "regionName": "四國",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "四國"
         },
         {
           "id": "JP-KYS-FUKUOKA-SAGA",
@@ -1419,7 +1444,8 @@
           "regionName": "九州",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "九州"
         },
         {
           "id": "JP-KYS-NAGASAKI-KUMAMOTO",
@@ -1460,7 +1486,8 @@
           "regionName": "九州",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "九州"
         },
         {
           "id": "JP-KYS-OITA",
@@ -1501,7 +1528,8 @@
           "regionName": "九州",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "九州"
         },
         {
           "id": "JP-KYS-MIYAZAKI-KAGOSHIMA",
@@ -1568,7 +1596,8 @@
           "regionName": "九州",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "九州"
         },
         {
           "id": "JP-OKI-MAIN-NORTH",
@@ -1608,7 +1637,8 @@
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point",
             "weatherPointEligible": false
-          }
+          },
+          "regionDisplayName": "沖繩"
         },
         {
           "id": "JP-OKI-MAIN-CENTRAL",
@@ -1652,7 +1682,8 @@
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point",
             "weatherPointEligible": false
-          }
+          },
+          "regionDisplayName": "沖繩"
         },
         {
           "id": "JP-OKI-MAIN-SOUTH",
@@ -1694,7 +1725,8 @@
             "regionalClimateEligible": true,
             "coordinatePurpose": "regional-climate-representative-point",
             "weatherPointEligible": false
-          }
+          },
+          "regionDisplayName": "沖繩"
         },
         {
           "id": "JP-OKI-OUTER-ISLANDS",
@@ -1738,7 +1770,8 @@
           "regionName": "沖繩",
           "subregionUnit": "golf-course-cluster",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "沖繩"
         },
         {
           "id": "JP-KNT-IZU-OSHIMA",
@@ -1779,7 +1812,8 @@
             "coordinateStatus": "regional_approximate_coordinate",
             "coordinateSourceUrl": "https://golf.nomaejapan.com/en/course/izu-oshima-resort-golf-club",
             "timezone": "Asia/Tokyo"
-          }
+          },
+          "regionDisplayName": "關東"
         },
         {
           "id": "JP-THK-AKITA",
@@ -1820,7 +1854,8 @@
             "coordinateStatus": "regional_approximate_coordinate",
             "coordinateSourceUrl": "https://golf-in-japan.com/courses/akita",
             "timezone": "Asia/Tokyo"
-          }
+          },
+          "regionDisplayName": "東北"
         },
         {
           "id": "JP-OKI-YAEYAMA",
@@ -1861,7 +1896,8 @@
             "coordinateStatus": "third_party_course_coordinate",
             "coordinateSourceUrl": "https://www.fullgolf.com/en/golf-club/japan/okinawa/yaeyama/risonare-kohamajima-country-club",
             "timezone": "Asia/Tokyo"
-          }
+          },
+          "regionDisplayName": "沖繩"
         },
         {
           "id": "JP-HKD-CHITOSE-TOMAKOMAI",
@@ -1955,7 +1991,8 @@
             }
           },
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "北海道"
         }
       ],
       "coordinateResearchSummary": {
@@ -2246,7 +2283,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "kr-kr-cap-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "首都圈"
         },
         {
           "id": "KR-GW-01",
@@ -2284,7 +2322,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "kr-kr-gw-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "江原道"
         },
         {
           "id": "KR-CC-01",
@@ -2322,7 +2361,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "kr-kr-cc-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "忠清道"
         },
         {
           "id": "KR-YN-01",
@@ -2360,7 +2400,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "kr-kr-yn-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "慶尚道"
         },
         {
           "id": "KR-HN-01",
@@ -2398,7 +2439,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "kr-kr-hn-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "全羅道"
         },
         {
           "id": "KR-JJ-01",
@@ -2436,7 +2478,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "kr-kr-jj-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "濟州島"
         }
       ],
       "subregionUnit": "golf-course-cluster",
@@ -2564,7 +2607,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "cn-cn-hn-north",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "華南"
         },
         {
           "id": "CN-HN-EAST",
@@ -2602,7 +2646,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "cn-cn-hn-east",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "華南"
         },
         {
           "id": "CN-HN-SOUTH",
@@ -2640,7 +2685,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "cn-cn-hn-south",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "華南"
         },
         {
           "id": "CN-SH-01",
@@ -2678,7 +2724,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "cn-cn-sh-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "華東"
         },
         {
           "id": "CN-BJ-01",
@@ -2716,7 +2763,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "cn-cn-bj-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "華北"
         },
         {
           "id": "CN-GD-01",
@@ -2754,7 +2802,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "cn-cn-gd-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "華南"
         },
         {
           "id": "CN-YN-01",
@@ -2792,7 +2841,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "cn-cn-yn-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "西南"
         }
       ],
       "subregionUnit": "golf-course-cluster",
@@ -2911,7 +2961,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "vn-vn-north-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "北部"
         },
         {
           "id": "VN-CENTRAL-01",
@@ -2949,7 +3000,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "vn-vn-central-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中部沿海"
         },
         {
           "id": "VN-CENTRAL-02",
@@ -2987,7 +3039,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "vn-vn-central-02",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中部沿海"
         },
         {
           "id": "VN-SOUTH-01",
@@ -3025,7 +3078,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "vn-vn-south-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "東南部"
         },
         {
           "id": "VN-SOUTH-02",
@@ -3063,7 +3117,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "vn-vn-south-02",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "東南部"
         },
         {
           "id": "VN-ISLAND-01",
@@ -3101,7 +3156,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "vn-vn-island-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "湄公河三角洲"
         }
       ],
       "subregionUnit": "golf-course-cluster",
@@ -3207,7 +3263,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "th-th-bkk-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中部"
         },
         {
           "id": "TH-EAST-01",
@@ -3245,7 +3302,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "th-th-east-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "東部"
         },
         {
           "id": "TH-WEST-01",
@@ -3283,7 +3341,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "th-th-west-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "西部"
         },
         {
           "id": "TH-SOUTH-01",
@@ -3321,7 +3380,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "th-th-south-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "南部"
         },
         {
           "id": "TH-NORTH-01",
@@ -3359,7 +3419,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "th-th-north-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "北部"
         },
         {
           "id": "TH-NE-01",
@@ -3397,7 +3458,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "th-th-ne-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "東北部"
         },
         {
           "id": "TH-ISLAND-01",
@@ -3435,7 +3497,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "th-th-island-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "南部"
         }
       ],
       "subregionUnit": "golf-course-cluster",
@@ -3576,7 +3639,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "my-my-central-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "中馬"
         },
         {
           "id": "MY-NORTH-01",
@@ -3614,7 +3678,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "my-my-north-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "北馬"
         },
         {
           "id": "MY-SOUTH-01",
@@ -3652,7 +3717,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "my-my-south-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "南馬"
         },
         {
           "id": "MY-ISLAND-01",
@@ -3690,7 +3756,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "my-my-island-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "北馬"
         },
         {
           "id": "MY-BORNEO-01",
@@ -3728,7 +3795,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "my-my-borneo-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "沙巴"
         },
         {
           "id": "MY-BORNEO-02",
@@ -3766,7 +3834,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "my-my-borneo-02",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "砂拉越"
         },
         {
           "id": "MY-EAST-01",
@@ -3804,7 +3873,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "my-my-east-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "東海岸"
         },
         {
           "id": "MY-HIGHLAND-01",
@@ -3842,7 +3912,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "my-my-highland-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "高原"
         }
       ],
       "subregionUnit": "golf-course-cluster",
@@ -3985,7 +4056,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "sg-sg-island-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "新加坡全島"
         }
       ],
       "subregionUnit": "golf-course-cluster",
@@ -4048,7 +4120,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "id-id-jkt-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "爪哇"
         },
         {
           "id": "ID-WJAVA-01",
@@ -4086,7 +4159,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "id-id-wjava-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "爪哇"
         },
         {
           "id": "ID-CJAVA-01",
@@ -4124,7 +4198,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "id-id-cjava-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "爪哇"
         },
         {
           "id": "ID-EJAVA-01",
@@ -4162,7 +4237,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "id-id-ejava-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "爪哇"
         },
         {
           "id": "ID-BALI-01",
@@ -4200,7 +4276,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "id-id-bali-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "峇里及努沙登加拉"
         },
         {
           "id": "ID-RIAU-01",
@@ -4238,7 +4315,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "id-id-riau-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "蘇門答臘"
         },
         {
           "id": "ID-SUMATRA-01",
@@ -4276,7 +4354,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "id-id-sumatra-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "蘇門答臘"
         },
         {
           "id": "ID-KAL-01",
@@ -4314,7 +4393,8 @@
           "subregionUnit": "golf-course-cluster",
           "candidateCourseId": "id-id-kal-01",
           "representativeAssignmentStatus": "assigned",
-          "regionalClimateEligible": true
+          "regionalClimateEligible": true,
+          "regionDisplayName": "加里曼丹"
         }
       ],
       "subregionUnit": "golf-course-cluster",
