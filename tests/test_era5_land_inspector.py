@@ -20,6 +20,11 @@ class Era5LandInspectorTests(unittest.TestCase):
         self.assertFalse(MODULE.coordinate_matches(36.702, 36.7))
         self.assertFalse(MODULE.coordinate_matches(float("nan"), 36.7))
 
+    def test_resolves_cds_short_grib_variable_names(self):
+        self.assertEqual(MODULE.resolve_variable_name({"t2m", "d2m"}, "2m_temperature"), "t2m")
+        self.assertEqual(MODULE.resolve_variable_name({"tp"}, "total_precipitation"), "tp")
+        self.assertIsNone(MODULE.resolve_variable_name({"t2m"}, "total_precipitation"))
+
 
 if __name__ == "__main__":
     unittest.main()
