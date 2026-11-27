@@ -175,7 +175,8 @@ export async function fetchCourseHistoricalWeekNormals(course,dates,fetchImpl=fe
   for(let i=0;i<daily.time.length;i++){
    const sourceDate=daily.time[i];
    if(historicalCircularDistance(historicalDayNumber(sourceDate),targetDay)>15)continue;
-   const year=Number(sourceDate.slice(0,4));
+   const actualYear=Number(sourceDate.slice(0,4)),sourceDay=historicalDayNumber(sourceDate);
+   const year=targetDay<=15&&sourceDay>=350?actualYear+1:targetDay>=350&&sourceDay<=15?actualYear-1:actualYear;
    if(!byYear.has(year))byYear.set(year,[]);
    const dew=daily.dew_point_2m_mean?.[i],wind=daily.wind_speed_10m_mean?.[i];
    const low=daily.temperature_2m_min?.[i],high=daily.temperature_2m_max?.[i];
