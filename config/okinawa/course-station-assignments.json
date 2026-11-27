@@ -1,0 +1,32 @@
+{
+  "southern-links": {
+    "precipitation": ["91241"],
+    "temperature": ["91241"],
+    "wind": ["91241"]
+  },
+  "palm-hills": {
+    "precipitation": ["91241"],
+    "temperature": ["91241"],
+    "wind": ["91241"]
+  },
+  "pgm-okinawa": {
+    "precipitation": ["91121"],
+    "temperature": ["91166"],
+    "wind": ["91166"]
+  },
+  "atta-terrace": {
+    "precipitation": ["91107"],
+    "temperature": ["91107"],
+    "wind": ["91107"]
+  },
+  "chura-orchard": {
+    "precipitation": ["91107"],
+    "temperature": ["91107"],
+    "wind": ["91107"]
+  },
+  "kise": {
+    "precipitation": ["91107"],
+    "temperature": ["91107"],
+    "wind": ["91107"]
+  }
+}
