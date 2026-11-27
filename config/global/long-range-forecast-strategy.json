@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "engineId": "ASIA_GOLF_LONG_RANGE_DECISION_ENGINE",
-  "status": "specification-v1-no-production-forecast-activation",
+  "status": "daily-estimate-decision-support-v2-specification-no-production-activation",
   "scope": {
     "countries": [
       "JP",
@@ -42,7 +42,8 @@
         "deterministic daily weather",
         "daily rain probability without calibrated hindcast mapping",
         "course-level precision"
-      ]
+      ],
+      "dailyOutput": "One estimated record per local date D19-D46, generated from historical daily analogues/stochastic sequences conditioned by weekly ECMWF ensemble signals."
     },
     {
       "id": "D47_D90",
@@ -63,7 +64,8 @@
         "deterministic daily weather",
         "specific-day rain forecast",
         "daily precision derived from monthly anomaly"
-      ]
+      ],
+      "dailyOutput": "One estimated record per local date D47-D90, generated from historical daily analogues/stochastic sequences conditioned by C3S monthly multi-model signals; lower confidence when monthly signals provide weak daily discrimination."
     }
   ],
   "sources": [
@@ -131,15 +133,16 @@
     }
   ],
   "decisionMethod": {
-    "unit": "one rolling seven-day destination window",
+    "unit": "one daily record per date, plus rolling seven-day trip-window analysis",
     "tripPattern": "five days four nights with three golf rounds",
-    "coreOutput": "relative suitability ranking of departure windows within the same planning horizon",
+    "coreOutput": "daily estimated weather series for D19-D90 plus advisory seven-day departure-window comparison; user makes final date choice",
     "metrics": [
-      "historical wet-day probability and rainfall amount distribution",
-      "forecast-adjusted wet-weather risk by weekly/monthly anomaly signal",
-      "historical daily Tmin/Tmax comfort distribution adjusted by calibrated temperature anomaly",
-      "extreme heat and cold risk",
-      "probability of at least three playable days within the seven-day window",
+      "daily estimated precipitation amount and uncertainty range",
+      "daily precipitation risk category (numeric probability only after calibration)",
+      "daily estimated Tmin/Tmax/mean temperature and uncertainty",
+      "daily wind/cloud/sunshine tendencies where source support exists",
+      "daily golf-conditions advisory",
+      "seven-day aggregation showing three-round planning suitability and risks",
       "ensemble agreement and hindcast-derived confidence"
     ],
     "calibration": {
@@ -161,8 +164,15 @@
       "noArbitraryNumericWeights": true,
       "noConfidenceUpgradeWithoutHindcastEvidence": true
     },
-    "probabilityPolicy": "Do not publish numeric daily rain or playable-day probabilities until matching hindcast validation demonstrates calibration. Until then publish categorical regional tendencies and relative ranking with explicit uncertainty.",
-    "missingDataPolicy": "Missing forecast or historical inputs remain unavailable; do not substitute zero or silently fall back to an unrelated model."
+    "probabilityPolicy": "Daily estimated weather values must be generated for every date D19-D90. Numeric daily rain/playability probabilities are withheld until date-level hindcast calibration passes; until then provide estimated amount/ranges, categorical risk, and explicit confidence. The app's date ranking is advisory only; the user reviews daily records and chooses.",
+    "missingDataPolicy": "Missing forecast or historical inputs remain unavailable; do not substitute zero or silently fall back to an unrelated model.",
+    "dailyGeneration": {
+      "method": "conditional historical analogue sequences / calibrated stochastic weather generator",
+      "sequencePreservation": "sample coherent multi-day sequences and preserve precipitation-temperature-wind dependence",
+      "conditioning": "date-specific day-of-year prior plus overlapping weekly/monthly forecast anomaly and validated daily model signals",
+      "uncertainty": "retain daily median, prediction interval, analogue/member count and confidence by variable",
+      "prohibited": "copy weekly/monthly mean to each day; independently randomize each date; infer rain probability from rainfall amount; present generated values as deterministic forecast"
+    }
   },
   "operations": {
     "realTimeObservationIngestion": false,
@@ -171,7 +181,9 @@
     "dailyOperationalRefreshRequired": false,
     "d19D46Refresh": "when new ECMWF extended-range cycle is available",
     "d47D90Refresh": "when new C3S seasonal cycle is available",
-    "d01D16Source": "existing application forecast provider; unchanged"
+    "d01D16Source": "existing application forecast provider; unchanged",
+    "dailyOutputRequired": true,
+    "dailyObservationIngestionRequired": false
   },
   "activationGates": [
     "80 regional representative points remain structurally valid",
@@ -180,5 +192,68 @@
     "C3S multi-system forecast and matching hindcasts are ingested with model/version provenance",
     "hindcast calibration and skill are reported separately for all four lead bands",
     "seven-day / three-round ranking passes backtest without modifying D01-D16 or UI"
-  ]
+  ],
+  "dailyOutputContract": {
+    "purpose": "Produce a date-by-date estimated weather dataset for every calendar day D19-D90. The daily estimates are decision-support inputs; app analysis is advisory and the user independently chooses the departure date.",
+    "granularity": "one record per local calendar date per regional representative point",
+    "requiredDailyFields": [
+      "dateLocal",
+      "leadDay",
+      "subregionId",
+      "representativePointId",
+      "weatherTendency",
+      "precipitationAmountEstimateMm",
+      "precipitationRiskCategory",
+      "temperatureMinEstimateC",
+      "temperatureMaxEstimateC",
+      "temperatureMeanEstimateC",
+      "windSpeedEstimateMs",
+      "cloudCoverTendency",
+      "sunshineTendency",
+      "dailyGolfConditionsAdvisory",
+      "uncertaintyRangeOrCategory",
+      "confidenceByVariable",
+      "sourceContribution",
+      "validPeriod",
+      "modelRunIds"
+    ],
+    "dataNature": "D19-D90 daily values are estimated daily distributions or representative daily scenarios, not deterministic forecasts. Preserve quantiles/ranges and uncertainty; never imply exact local weather.",
+    "generationMethod": [
+      "Use ERA5-Land 1991-2020 day-of-year daily distributions as the regional historical prior.",
+      "Use ECMWF D19-D46 weekly ensemble anomalies and probabilities as conditioning signals for each overlapping local date.",
+      "Use C3S D47-D90 monthly multi-system anomalies and tercile probabilities as conditioning signals for each local date.",
+      "Use validated daily-shaped seasonal model outputs from independent model systems as additional daily structure only where hindcast skill is demonstrated.",
+      "Generate date-specific estimates by conditional analog selection or a calibrated stochastic weather generator trained on historical daily sequences; condition on forecast anomalies and season.",
+      "Preserve realistic multi-day weather persistence and cross-variable dependence by sampling complete historical weather sequences or calibrated ensemble trajectories, not independent random values for each date.",
+      "Summarize daily ensemble/analog distributions with median and prediction intervals; retain the full member/analog trace for audit."
+    ],
+    "dailyVsPeriodSignalRule": "Weekly/monthly forecast anomalies adjust the distribution of each date in their valid period; they do not get copied as identical values to every day. Daily variability is supplied by historical analog sequences and validated daily model structure. If daily structure is not supported, expose broad uncertainty and lower confidence rather than fabricate detail.",
+    "userDecisionPolicy": {
+      "appRole": "Display daily estimated weather and a separate advisory summary/ranking to help compare candidate departure windows.",
+      "userRole": "User reviews the individual daily estimates and chooses the departure date; app must never imply the recommendation is a booking instruction or automatic decision.",
+      "advisoryOnly": true,
+      "automaticDateSelection": false,
+      "automaticBooking": false,
+      "rankingMustNotHideDailyRecords": true
+    },
+    "numericProbabilityPolicy": "Daily numeric precipitation/playability probabilities are permitted only after date-level hindcast calibration passes for that region, season and lead band. Before then show estimated rainfall amount/range and categorical risk with explicit uncertainty; do not invent a rain probability.",
+    "validation": {
+      "requiredLeadBands": [
+        "D19-D30",
+        "D31-D46",
+        "D47-D60",
+        "D61-D90"
+      ],
+      "dailyMetrics": [
+        "daily precipitation MAE and bias",
+        "wet-day Brier score and reliability",
+        "Tmin/Tmax MAE and bias",
+        "prediction-interval coverage",
+        "daily weather-category skill",
+        "multi-day wet-spell duration and persistence"
+      ],
+      "sequenceValidation": "Validate seven-day sequence properties and at-least-three-playable-days estimates against hindcast windows; do not assume daily independence.",
+      "sourceDiversityRule": "Count genuinely independent forecast systems only; do not treat multiple products derived from the same model family as independent votes."
+    }
+  }
 }
