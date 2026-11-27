@@ -44,7 +44,7 @@ test("90-day input returns ranked 5-day windows, three rounds, and alternates",(
 
 test("lead horizons select short forecast, EC46, and SEAS5 source bands",()=>{
   const result=recommendGolfTripDates({asOf,horizonDays:90,days:buildDays()});
-  const day1=result.topThree[0].daily.find(x=>x.leadDays===1);
+  const day1=result.dailyAssessment.find(x=>x.leadDays===1);
   assert.equal(day1.horizon,"short");
   const days=result.topThree[0].daily;
   const d20=days.find(x=>x.leadDays===20);
