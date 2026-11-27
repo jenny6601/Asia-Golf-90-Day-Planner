@@ -48,7 +48,7 @@
     {
       "sourceId": "ERA5_HOURLY_SINGLE_LEVELS",
       "provider": "ECMWF Copernicus Climate Data Store",
-      "dataset": "reanalysis-era5-single-levels",
+      "dataset": "reanalysis-era5-land",
       "role": "primary-gridded-historical-baseline",
       "status": "planned-not-downloaded",
       "variables": [
@@ -59,8 +59,10 @@
         "10m_v_component_of_wind"
       ],
       "temporalResolution": "hourly",
-      "spatialMethod": "Nearest grid cell to the subregion representative point; record grid-cell coordinates and point-to-cell distance. Do not imply the grid cell is a course observation.",
-      "limitations": "ERA5 is a model-based reanalysis, not an independent rain-gauge observation. Use as a consistent regional baseline and disclose grid-scale limitations."
+      "spatialMethod": "Nearest ERA5-Land 0.1-degree grid cell to the subregion representative point; record actual grid-cell coordinates and point-to-cell distance. This is a land-focused regional grid, not a course observation.",
+      "limitations": "ERA5-Land is a land-surface reanalysis forced by ERA5 atmospheric fields, not an independent rain-gauge observation. Its 0.1-degree grid is more spatially detailed than ERA5 single-level 0.25-degree grid but remains grid-scale and may smooth local coastal or mountain effects.",
+      "documentationUrl": "https://confluence.ecmwf.int/pages/viewpage.action?pageId=576394633",
+      "spatialResolutionDegrees": 0.1
     },
     {
       "sourceId": "JMA_STATION_OBSERVATIONS",
@@ -74,7 +76,27 @@
         "daily_temperature_max"
       ],
       "spatialMethod": "Select suitable nearby long-running stations by region and elevation/coastal context; retain station distance and elevation difference. Do not substitute station data for the regional grid without documenting representativeness.",
-      "limitations": "Station observations are point measurements and may not represent elevated, coastal, or mountainous golf areas."
+      "limitations": "Station observations are point measurements and may not represent elevated, coastal, or mountainous golf areas.",
+      "sourceDocumentationUrls": [
+        "https://www.data.jma.go.jp/obd/stats/etrn/index.php",
+        "https://www.data.jma.go.jp/risk/obsdl/index.php"
+      ]
+    },
+    {
+      "sourceId": "JMA_CLIMATE_NORMALS_1991_2020",
+      "provider": "Japan Meteorological Agency",
+      "dataset": "Climatological Normals (1991-2020)",
+      "role": "monthly-normal-cross-check",
+      "status": "planned-station-matching-not-started",
+      "documentationUrl": "https://www.data.jma.go.jp/stats/en/normal/normal.html",
+      "variables": [
+        "monthly_precipitation_normal",
+        "monthly_mean_temperature_normal",
+        "monthly_mean_wind_speed_normal",
+        "monthly_relative_humidity_normal"
+      ],
+      "spatialMethod": "Use nearby JMA stations as independent monthly context; choose stations by geography, elevation and coastal/mountain exposure and record distance/elevation difference.",
+      "limitations": "Monthly station normals are not daily time-series data and cannot alone produce date-specific wet-day frequency or daily rainfall percentiles."
     }
   ],
   "derivedMetrics": {
@@ -152,7 +174,8 @@
       "all 16 subregions pass spatial and temporal coverage checks",
       "daily aggregation and unit conversions are tested",
       "JMA cross-check coverage and limitations are documented",
-      "regional baseline summaries are independently inspected"
+      "regional baseline summaries are independently inspected",
+      "ERA5-Land grid resolution, nearest-cell coordinates and elevation/coastal representativeness are recorded for every subregion."
     ]
   }
 }
