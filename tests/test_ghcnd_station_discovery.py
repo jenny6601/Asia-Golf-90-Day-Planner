@@ -14,7 +14,7 @@ class GhcnStationDiscoveryTests(unittest.TestCase):
   points=[{"countryCode":"JP","subregionId":"JP-X","representativePoint":{"latitude":35.0,"longitude":139.0}}]
   stations={"JAA00000001":{"stationId":"JAA00000001","countryCode":"JA","latitude":35.1,"longitude":139.1,"elevationM":10,"name":"A","gsnFlag":None,"hcnFlag":None,"wmoId":None}}
   inv={"JAA00000001":{"PRCP":{"startYear":1980,"endYear":2020,"overlap1991_2020Years":30}}}
-  out=M.build_candidates(points,{"JP":"Japan"},stations,inv)
+  out=M.build_candidates(points,{"JA":"Japan"},stations,inv)
   self.assertEqual(out["summary"]["regionsWithCandidates"],1)
   self.assertFalse(out["regions"][0]["nearestCandidates"][0]["autoSelected"])
   self.assertEqual(out["regions"][0]["nearestCandidates"][0]["elements"]["PRCP"]["overlap1991_2020Years"],30)
