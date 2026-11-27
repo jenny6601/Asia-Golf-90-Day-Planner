@@ -26,9 +26,9 @@
       "status": "in_progress",
       "targetSubregions": 19,
       "seedRecords": 22,
-      "knownSourceCoverage": "Golf in Japan national directory states 2,308 courses and provides prefecture-specific course counts/cards; 26 directory records imported in three batches. An earlier rendered count of 2,138 remains a source-page discrepancy requiring reconciliation. JNTO curated list cross-checks selected courses.",
-      "next": "Next: continue prefecture extraction across all 47 prefectures, identify Okinawa facilities beyond the six pilot records, reconcile facility-versus-layout duplicates, then verify current operation and official coordinates.",
-      "importedDirectoryRecords": 26
+      "knownSourceCoverage": "Golf in Japan regional pages used for Tohoku (148 listed), Shikoku (64 listed), Okinawa (23 listed), and Kyushu prefecture listings. 54 Japan directory records imported in four batches (plus 22 original regional seed/pilot records; total Japan catalog now 76). Counts represent directory listings, not confirmed currently operating facilities; regional page scope and duplicates require reconciliation.",
+      "next": "Continue Japan directory extraction for remaining prefectures and Hokkaido/Kanto/Chubu/Kansai; reconcile all 19 subregions and 47 prefectures, facility/layout duplicates and current operating status; verify official addresses and coordinates before activation.",
+      "importedDirectoryRecords": 54
     },
     {
       "code": "KR",
