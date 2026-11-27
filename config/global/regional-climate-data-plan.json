@@ -31,7 +31,9 @@
       "JP-OKI-CENTRAL",
       "JP-OKI-SOUTH"
     ],
-    "pointPolicy": "Use the existing accepted regional representative point. Exact course pin/fairway precision is not required. Do not create per-course weather records within a subregion."
+    "pointPolicy": "Use the existing accepted regional representative point. Exact course pin/fairway precision is not required. Do not create per-course weather records within a subregion.",
+    "era5LandGridMappingPath": "config/global/era5-land-grid-points-japan.json",
+    "gridMappingStatus": "expected-nearest-grid-points-calculated;actual-CDS-returned-coordinates-not-yet-verified"
   },
   "baseline": {
     "startDate": "1991-01-01",
