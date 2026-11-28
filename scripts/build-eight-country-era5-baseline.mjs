@@ -121,6 +121,9 @@ async function fetchBatch(batch){
   throw new Error("ERA5 batch retry limit exceeded: "+(lastError?.cause?.code||lastError?.message||"unknown"));
 }
 const dayNumber=date=>{
+  // ERA5 leap days are excluded so the 30-year climatology maps to
+  // one consistent 365-day non-leap calendar without double-counting Mar 1.
+  if(date.slice(5,10)==="02-29")return null;
   const m=Number(date.slice(5,7)),d=Number(date.slice(8,10));
   return Math.floor((Date.UTC(2001,m-1,d)-Date.UTC(2001,0,1))/86400000)+1;
 };
@@ -134,7 +137,8 @@ function buildRegion(region,daily){
   for(let target=1;target<=365;target++){
     const values=[];
     for(let i=0;i<daily.time.length;i++){
-      if(circular(dayNumber(daily.time[i]),target)>15)continue;
+      const seasonalDay=dayNumber(daily.time[i]);
+      if(seasonalDay===null||circular(seasonalDay,target)>15)continue;
       values.push({rain:daily.precipitation_sum?.[i],high:daily.temperature_2m_max?.[i],low:daily.temperature_2m_min?.[i]});
     }
     const validRain=values.map(x=>x.rain).filter(Number.isFinite);
