@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-27T07:23:36.471Z",
-  "asOf": "2026-11-27",
+  "generatedAt": "2026-11-28T02:32:04.270Z",
+  "asOf": "2026-11-28",
   "archive": {
     "snapshotCount": 1,
     "firstSnapshot": "2026-11-27",
@@ -876,7 +876,7 @@
     }
   },
   "seasonalArchive": {
-    "asOf": "2026-11-27",
+    "asOf": "2026-11-28",
     "snapshotCount": 1,
     "byRegion": {
       "north": {
